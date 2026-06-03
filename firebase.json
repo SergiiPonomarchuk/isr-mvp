@@ -1,0 +1,27 @@
+{
+  "functions": {
+    "source": "functions"
+  },
+  "hosting": {
+    "public": "prototype",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/main",
+        "destination": "/main.html"
+      },
+      {
+        "source": "/values-guide",
+        "destination": "/values-guide.html"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

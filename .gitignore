@@ -1,0 +1,26 @@
+# Python cache and temporary files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Node dependencies
+node_modules/
+functions/node_modules/
+
+# Firebase configuration & logs
+.firebase/
+firebase-debug.log
+ui-debug.log
+
+# Local database backups and progress
+db/vectorized_backup.json
+db/vectorization_progress.json
+scratch/
+
+# Environment variables and secrets
+.env
+.env.*
+.secrets/

@@ -1,0 +1,224 @@
+You are ISR VECTORIZATION STEP 2: Domain Items evaluation
+
+TASK: DOMAIN ITEM SCORES EVALUATION
+
+Evaluate and assign scores to all 145 value items across 10 domains according to attached ISR Value Taxonomy using intelligent skipping logic.
+
+# Use dimension-specific guidance questions (see Micro-Prompts below)
+
+Answer on a 0-100 scale:
+- 80-100: strongly and explicitly true
+- 60-80: clearly true but not central
+- 40-60: somewhat true / mixed
+- 20-40: weakly true or rarely implied
+- 0-20: false or contradicted
+
+## Micro-Prompts (Domain-by-domain guidance)
+
+###**Domain 1: Agency & Freedom**
+- i_1_1_1_a "Community respects choices even when disagreeable": Does the person believe people should be allowed to make their own choices, even if others disagree?
+- i_1_1_1_b "People have exit rights (can leave without penalty)": Should people be able to leave communities/groups without punishment?
+- i_1_1_2_a "Community provides information for informed choice": Should community ensure people have knowledge to choose wisely?
+- i_1_1_2_b "People own their time and labor (not coerced)": Should people control their own labor and time?
+- i_1_1_2_c "Norms don't force conformity; diversity of paths allowed": Should different ways of living be respected?
+- i_1_2_1_a "Community opposes unjust hierarchy": Should community actively resist unjust power structures?
+- i_1_2_1_b "Community prevents manipulation by authorities": Should community protect people from being manipulated by power?
+- i_1_2_1_c "Community protects exit rights": Should people have right to refuse unjust situations?
+- i_1_2_2_a "Power is distributed, not concentrated": Is distributed power important in community?
+- i_1_2_2_b "Community resists institutional overreach": Should community prevent too much power concentration?
+- i_1_3_1_a "Community enables people to choose own path": Should people be free to pursue their own goals?
+- i_1_3_1_b "Resources and time accessible for own goals": Should community support people's personal goals?
+- i_1_3_2_a "Community supports people taking responsibility": Should people be encouraged to be self-responsible?
+- i_1_4_1_a "Community respects medical decisions even if disagree": Should people make their own medical choices?
+- i_1_4_1_b "Reproductive autonomy protected": Should reproduction decisions be personal?
+- i_1_4_1_c "Community doesn't force treatment": Should treatment never be forced?
+- i_1_4_2_a "Community accommodates disabled people (not forces assimilation)": Should community adapt to disabled people?
+- i_1_4_2_b "Accessibility is standard, not exception": Should accessibility be baseline, not special accommodation?
+
+###**Domain 2: Relationality & Care**
+- i_2_1_1_a "Community learns and knows individuals": Should community know people deeply as individuals?
+- i_2_1_1_b "Community accepts people as they are, not as 'should be'": Should people be accepted as they are?
+- i_2_1_1_c "Relationships are prioritized (not transactional)": Should relationships be valued for themselves, not utility?
+- i_2_1_2_a "Community includes strangers and those unlike us": Should community extend care to outsiders?
+- i_2_1_2_b "Care is not conditional on likability or usefulness": Should care be unconditional?
+- i_2_1_2_c "Community seeks humanity in the 'other'": Should community look for shared humanity?
+- i_2_2_1_a "Community prioritizes members (family-like responsibility)": Should community members take family-like responsibility for each other?
+- i_2_2_1_b "Community maintains continuity and remembers history": Should community honor and remember its history?
+- i_2_2_2_a "Community recognizes all family forms (LGBTQ+, chosen, etc.)": Should all family forms be recognized?
+- i_2_2_2_b "Mutual aid is shared responsibility within community": Should mutual support be community responsibility?
+- i_2_2_2_c "Belonging is not conditional on conformity": Should belonging not require conformity?
+- i_2_3_1_a "Community takes responsibility for actions' ripple effects": Should community consider impacts on outsiders?
+- i_2_3_1_b "Community feels obligation to distant/unknown people": Should community care about those far away?
+- i_2_3_1_c "Global impact is considered in decisions": Should decisions consider global impact?
+- i_2_3_2_a "Community prioritizes future generations": Should future generations be considered equal priority?
+- i_2_3_2_b "Community protects children first": Should children be especially protected?
+- i_2_3_2_c "Stewardship of world for those not yet born": Should community act as steward for future?
+
+###**Domain 3: Security & Stable Order**
+- i_3_1_1_a "Community prevents violence and bodily harm": Should community prevent physical harm?
+- i_3_1_1_b "Community ensures shelter, food, health access": Should community provide basic needs?
+- i_3_1_2_a "Community maintains predictable conditions for planning": Should community create stability?
+- i_3_1_2_b "Chaos and emergency are prevented when possible": Should community prevent crises when possible?
+- i_3_2_1_a "Community rules are clear and knowable": Should community have clear rules?
+- i_3_2_1_b "Roles and responsibilities are defined": Should roles be clearly defined?
+- i_3_2_2_a "Rules change when needed; not rigid": Should rules evolve?
+- i_3_2_2_b "Balance between stability and adaptation": Should community balance consistency with change?
+
+###**Domain 4: Justice & Fairness**
+- i_4_1_1_a "Community grants equal rights to all members": Should all people have equal fundamental rights?
+- i_4_1_1_b "No person is treated as 'worth less'": Should no one be treated as inferior?
+- i_4_1_1_c "Community rejects hierarchy based on identity": Should community reject hierarchies based on who people are?
+- i_4_1_2_a "Community removes barriers to equal starting position": Should community work toward equal opportunity?
+- i_4_1_2_b "Community redistributes to level playing field": Should community redistribute to equalize opportunity?
+- i_4_1_2_c "Access is not determined by birth circumstances": Should birth not determine opportunity?
+- i_4_2_1_a "Community rewards effort and good behavior": Should community reward good action?
+- i_4_2_1_b "Consequences are proportional to actions": Should punishment fit the crime?
+- i_4_2_1_c "Contribution affects allocation when relevant": Should contribution matter in allocation?
+- i_4_2_2_a "Community maintains fair give-and-take": Should exchange be reciprocal and fair?
+- i_4_2_2_b "No free-riding or exploitation allowed": Should exploitation be prevented?
+- i_4_2_2_c "Mutual obligation is expected and enforced": Should mutual obligation be enforced?
+- i_4_3_1_a "Community ensures baseline (food, shelter, dignity)": Should everyone's basic needs be met?
+- i_4_3_1_b "Community provides extra support for vulnerable": Should vulnerable people get extra support?
+- i_4_3_1_c "Community adjusts to actual differences (equity)": Should community account for real differences?
+- i_4_3_2_a "Community addresses historical injustices": Should community fix past wrongs?
+- i_4_3_2_b "Community repairs harm done": Should community repair damage?
+- i_4_3_2_c "Community restores those wronged to fullness": Should wronged people be restored to full participation?
+
+###**Domain 5: Redemption & Restoration**
+- i_5_1_1_a "Community lets go of grudges": Should community move beyond resentment?
+- i_5_1_1_b "Past actions don't permanently define person": Should people be able to move beyond past mistakes?
+- i_5_1_1_c "Possibility of change is honored (not just punishment)": Should possibility of change be valued?
+- i_5_2_1_a "Community reintegrates wrongdoers (exile is last resort)": Should wrongdoers be brought back to community?
+- i_5_2_1_b "Community demonstrates people can change": Should community believe in transformation?
+- i_5_2_1_c "Healing relationships is prioritized over resentment": Should community prioritize healing?
+
+###**Domain 6: Authentic Expression & Value-Living**
+- i_6_1_1_a "Community makes living by values possible (not hypocritical)": Should community enable value-aligned action?
+- i_6_1_1_b "Walking the talk is possible (values match actions)": Should community enable action-value coherence?
+- i_6_1_1_c "Transparency: people can be known as they are": Should people be transparent about who they are?
+- i_6_2_1_a "Community allows people to express true beliefs": Should people express unpopular beliefs?
+- i_6_2_1_b "Genuine perspectives are valued (not silenced)": Should genuine views be valued?
+- i_6_2_1_c "People are not forced to hide or mask": Should people not have to hide themselves?
+
+###**Domain 7: Protective Care & Stewardship**
+- i_7_1_1_a "Community makes children safety central (all policy measured by this)": Should children's safety be paramount?
+- i_7_1_1_b "Child welfare is yardstick for good community": Should child well-being measure community success?
+- i_7_1_1_c "Community willingly sacrifices for child welfare": Should community sacrifice for children?
+- i_7_1_2_a "Community speaks for those without voice": Should community advocate for powerless?
+- i_7_1_2_b "Community has special responsibility to vulnerable": Should vulnerable get special protection?
+- i_7_1_2_c "Community uses power to protect, not exploit": Should power protect rather than dominate?
+- i_7_2_1_a "Community acts on environmental concern (pollution, climate, biodiversity)": Should community address environmental harm?
+- i_7_2_1_b "Community values non-human life intrinsically (not just instrumental)": Should nature be valued in itself?
+- i_7_2_1_c "Long-term ecosystem health > short-term gain": Should long-term ecology matter more than short-term profit?
+- i_7_2_2_a "Community members reduce consumption footprint": Should community members limit their environmental impact?
+- i_7_2_2_b "Community members acknowledge personal impact": Should community acknowledge impact?
+- i_7_2_2_c "Community holds itself accountable": Should community be self-accountable?
+- i_7_2_3_a "Community supports environmental policy": Should community support environmental rules?
+- i_7_2_3_b "Community recognizes systems need change (not just individuals)": Should systems change, not just individual behavior?
+- i_7_2_3_c "Community advocates at policy level": Should community push for policy change?
+- i_7_3_1_a "Community gives future people equal moral standing": Should future people matter equally?
+- i_7_3_1_b "Community commits to livable, healthy world for them": Should community ensure good future?
+- i_7_3_1_c "Present comfort doesn't override future opportunity": Should future not be sacrificed for present?
+- i_7_3_2_a "Community honors ancestral wisdom": Should community value ancestral knowledge?
+- i_7_3_2_b "Community maintains meaningful practices": Should meaningful traditions be maintained?
+- i_7_3_2_c "Community doesn't discard heritage for novelty alone": Should heritage be protected from frivolous change?
+
+###**Domain 8: Cooperation & Shared Governance**
+- i_8_1_1_a "Community avoids conflict through dialogue": Should community use dialogue to resolve conflict?
+- i_8_1_1_b "Community seeks consensus (not just majority)": Should community seek consensus?
+- i_8_1_1_c "Collective good is prioritized (not just individual interest)": Should collective good come first?
+- i_8_1_2_a "Community has common mission uniting members": Should community share common purpose?
+- i_8_1_2_b "Collective goal takes priority over individual achievement": Should group goals come before individual success?
+- i_8_1_2_c "Community takes pride in collective accomplishment": Should community celebrate shared success?
+- i_8_2_1_a "Community decisions are transparent (not hidden)": Should community decisions be open?
+- i_8_2_1_b "Community explains how power is used": Should community justify power use?
+- i_8_2_1_c "Secrecy is known corruption risk (prevented)": Should community prevent secrecy?
+- i_8_2_2_a "Community leaders must justify decisions": Should leaders be accountable?
+- i_8_2_2_b "Accountability prevents power abuse": Should accountability prevent corruption?
+- i_8_2_2_c "No one is above question": Should everyone answer for their actions?
+- i_8_3_1_a "Community treats shared resources as belonging to all": Should common resources belong to all?
+- i_8_3_1_b "Community prevents tragedy of commons (sustainable use)": Should community prevent resource depletion?
+- i_8_3_1_c "Community opposes hoarding and extraction": Should hoarding be prevented?
+- i_8_3_2_a "Community prioritizes meeting everyone's basic needs first": Should basic needs come first?
+- i_8_3_2_b "Community opposes extreme wealth concentration": Should wealth concentration be limited?
+- i_8_3_2_c "Community considers effort/contribution in distribution": Should contribution matter in distribution?
+
+###**Domain 9: Spiritual & Religious Practice**
+- i_9_1_1_a "Community honors religious community membership": Should religious community be honored?
+- i_9_1_1_b "Community recognizes shared spiritual practice as creating belonging": Should spiritual practice create community?
+- i_9_1_1_c "Community honors connection between spirituality and ancestors/future": Should spiritual tradition connect past and future?
+- i_9_2_1_a "Community honors religious practice/ritual (intrinsic value)": Should spiritual practice be valued in itself?
+- i_9_2_1_b "Community supports maintaining religious tradition": Should community help maintain traditions?
+- i_9_2_1_c "Community recognizes spiritual practice as transformative": Should community believe in spiritual transformation?
+
+###**Domain 10: Digital Rights & Tech Democracy**
+- i_10_1_1_a "Community protects privacy in digital spaces": Should digital privacy be protected?
+- i_10_1_1_b "Community treats personal data as belonging to person (not extractable)": Should personal data belong to people?
+- i_10_1_1_c "Community prevents surveillance (corporate/government)": Should community prevent surveillance?
+- i_10_1_2_a "Community prevents invisible algorithmic manipulation": Should algorithms be transparent?
+- i_10_1_2_b "Community ensures people understand how algorithms affect them": Should people know how algorithms affect them?
+- i_10_1_2_c "Community makes algorithmic systems explainable and contestable": Should algorithms be explainable?
+- i_10_1_3_a "Community protects control over digital identity/presence": Should people control their digital identity?
+- i_10_1_3_b "Community allows digital anonymity when chosen": Should anonymity be allowed?
+- i_10_1_3_c "Community prevents digital profiling/categorization without consent": Should profiling require consent?
+- i_10_2_1_a "Community keeps technology in service role (doesn't replace humans)": Should tech serve humans?
+- i_10_2_1_b "Community preserves human decision-making in important choices": Should humans decide important matters?
+- i_10_2_1_c "Community prevents dehumanizing efficiency gains": Should efficiency not dehumanize?
+- i_10_2_2_a "Community prioritizes face-to-face human connection": Should face-to-face matter?
+- i_10_2_2_b "Community uses digital tools to enable (not replace) human interaction": Should tech enable rather than replace human connection?
+- i_10_2_2_c "Community preserves human labor and meaning": Should human work be valued?
+- i_10_2_3_a "Community prevents tools from dehumanizing relationships": Should tech not damage relationships?
+- i_10_2_3_b "Community addresses tech addiction and psychological manipulation": Should tech addiction be addressed?
+- i_10_2_3_c "Community protects children from digital exploitation": Should children be protected digitally?
+- i_10_3_1_a "Community prevents tech companies from unilateral power over communication": Should tech companies not have monopoly power?
+- i_10_3_1_b "Community ensures algorithms are governed democratically (not corporately)": Should algorithms be democratically governed?
+- i_10_3_1_c "Technology governance includes affected communities": Should communities govern technology?
+- i_10_3_2_a "Community treats digital access as right (not luxury); addresses digital divides": Should digital access be universal?
+- i_10_3_2_b "Community ensures technology accessible to all (including disabled)": Should tech be accessible?
+- i_10_3_2_c "Community prioritizes infrastructure for inclusion": Should inclusion be prioritized?
+- i_10_3_3_a "Community opposes tech monopolies and power concentration": Should monopolies be prevented?
+- i_10_3_3_b "Community promotes open standards and interoperability": Should standards be open?
+- i_10_3_3_c "Community ensures public technology infrastructure is democratically governed": Should public tech be democratic?
+
+---
+
+# INTELLIGENT SKIPPING LOGIC
+
+## For each of the 10 domains, apply the following decision tree:
+
+### Case 1: Domain Score is NULL
+- **Condition**: domain_score is null (grounding < 20)
+- **Action**: 
+  - items for this domain → null
+  - All item scores → null
+- **Reasoning**: Insufficient narrative grounding means no basis for item evaluation
+
+### Case 2: Domain Confidence ≥ 95
+- **Condition**: domain_confidence >= 95 AND domain_score is not null
+- **Action**:
+  - items for this domain → all items assigned to (domain_score ± 5 tolerance)
+  - All item scores should distribute around domain_score
+- **Reasoning**: High confidence means Step 1 analysis is definitive; no need for detailed item breakdown
+
+### Case 3: Domain Confidence < 95 AND Domain Score is NOT NULL
+- **Condition**: domain_confidence < 95 AND domain_score is not null AND grounding >= 20
+- **Action**:
+  - FULLY EVALUATE all items for this domain using detailed narrative evidence
+  - Each item receives an independent 0-100 score
+  - Item scores should average to domain_score ± 5 tolerance
+- **Reasoning**: Moderate confidence requires detailed examination to resolve ambiguities
+
+---
+
+OUTPUT: Complete final vector JSON (version 1.0) with full validation:
+  - All information from Step 1 exactly as it is, except excluded "values_description".
+  - 145 domain item scores (as a list of 10 lists with relevant values 0-100 or null) through 10 domains in "core_values" → "items".
+
+INPUT JSON:
+
+{"values_description":"My vision for an ideal community is one built on the solid, unshakeable foundation of traditional values. As a biotechnologist at Argo Industry, I work at the very frontier of what is scientifically possible, manipulating the building blocks of life itself. This powerful position has not made me embrace a radical, boundary-less future; rather, it has reinforced my deepest conviction that progress without a moral compass is perilous. My PhD gives me the tools to understand complexity, but my heart, my faith, and my role as a wife, mother, daughter, and sister tell me what that knowledge must serve. An ideal community must value the Natural Order above all. There are fundamental truths and structures—like the family unit of a husband, wife, and children—that are not social constructs to be deconstructed, but the essential lattice upon which a healthy, stable society grows. My work in the lab shows me the exquisite, divinely-inspired design in a cell; our social design should reflect that same intentional harmony. We must cherish and protect the innocence of our children, my daughter and son, above the clamor of adult desires for self-expression. The community’s laws, its education, and its media should reinforce modesty, respect, and the clear, beautiful differences between men and women that complement rather than compete. I value Decisive Moral Clarity. The future is confusing enough without celebrating ambiguity in our core values. A community should know what it stands for and have the courage to say what it stands against. This isn’t about hatred; it’s about love—a fierce, protective love for what is good, true, and wholesome. We need to return to valuing public decency, where our shared spaces reflect virtue rather than shock value. My large, interconnected family—sister, father, brother-in-law—shows me the strength of the extended network. The community should act as an extension of this, providing support but also gentle, firm guidance to keep everyone on a righteous path. We must value Personal Responsibility and clean living. My scientific training values empirical results; a life lived with discipline, faith, and commitment yields observable, positive results: stable children, lasting marriages, and a peaceful soul. The community should encourage this, offering praise for the quiet, dedicated parent and the faithful spouse, not just the flashy innovator. Finally, I value Courageous Defense. If you believe in something beautiful and sacred, you must be willing to speak up for it, even when it’s unpopular. The ideal community wouldn’t make such defense necessary because its shared values would be clear, but until that day, we must value the brave individuals who stand as a bulwark against the tide of moral relativism, protecting the heart of our home, our faith, and our future.","meta":{"vector_id":"uid_121_1","timestamp":"2026-01-07T15:13:53.123Z","uid":121,"version":"1.0","overall_confidence":92.8,"hash":"ce69512f33fa082372078364a0e8e02ae850a4a0","gl_cs":[[30,95],[35,95],[35,98],[30,92],[20,85],[30,90],[35,97],[30,92],[40,100],[15,84]]},"core_values":{"domains":[20,92,95,88,null,75,95,85,98,null],"items":null},"conflict_resolution":[85,50,50,60,20,15,20,80,20,90,40,75,95,10,85,80,20,85,50,90,85,50,25,85,30,80,50,50,20,50,50,20,50,50,50,35],"contextual_shifts":{"work":[5,-10,15,10,0,-15,0,10,0,0],"family":[-10,15,5,0,0,10,10,0,5,0],"private":[0,0,0,0,0,15,0,-20,20,0],"crisis":[-30,15,35,15,0,0,30,20,10,0]}}
+
+---
+
+═════
+TEMPERATURE SETTING: 0.3

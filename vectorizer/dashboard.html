@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISR Profile Vectorization Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0b10;
+      --bg-card: rgba(20, 22, 35, 0.6);
+      --border-card: rgba(255, 255, 255, 0.08);
+      --primary: #8b5cf6;
+      --primary-glow: rgba(139, 92, 246, 0.4);
+      --accent: #06b6d4;
+      --accent-glow: rgba(6, 182, 212, 0.4);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --success: #10b981;
+      --success-glow: rgba(16, 185, 129, 0.2);
+      --error: #ef4444;
+      --error-glow: rgba(239, 68, 68, 0.2);
+      --warning: #f59e0b;
+      --warning-glow: rgba(245, 158, 11, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 40%);
+    }
+
+    header {
+      width: 100%;
+      max-width: 1200px;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.05em;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    main {
+      width: 100%;
+      max-width: 1200px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 900px) {
+      main {
+        grid-template-columns: 350px 1fr;
+      }
+    }
+
+    .glass-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 1.5rem;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      transition: all 0.3s ease;
+    }
+
+    .glass-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .status-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      height: fit-content;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--text-muted);
+      position: relative;
+    }
+
+    .status-dot::after {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      animation: pulse 2s infinite;
+      opacity: 0;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(1.6);
+        opacity: 0;
+      }
+    }
+
+    /* Status types */
+    .status-running .status-dot {
+      background-color: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+    .status-running .status-dot::after {
+      border-color: var(--accent);
+      opacity: 1;
+    }
+    .status-running {
+      color: var(--accent);
+      background: rgba(6, 182, 212, 0.05);
+      border-color: rgba(6, 182, 212, 0.15);
+    }
+
+    .status-completed .status-dot {
+      background-color: var(--success);
+      box-shadow: 0 0 8px var(--success);
+    }
+    .status-completed {
+      color: var(--success);
+      background: rgba(16, 185, 129, 0.05);
+      border-color: rgba(16, 185, 129, 0.15);
+    }
+
+    .status-quota_exhausted .status-dot {
+      background-color: var(--warning);
+      box-shadow: 0 0 8px var(--warning);
+    }
+    .status-quota_exhausted .status-dot::after {
+      border-color: var(--warning);
+      opacity: 1;
+    }
+    .status-quota_exhausted {
+      color: var(--warning);
+      background: rgba(245, 158, 11, 0.05);
+      border-color: rgba(245, 158, 11, 0.15);
+    }
+
+    .status-failed .status-dot {
+      background-color: var(--error);
+      box-shadow: 0 0 8px var(--error);
+    }
+    .status-failed {
+      color: var(--error);
+      background: rgba(239, 68, 68, 0.05);
+      border-color: rgba(239, 68, 68, 0.15);
+    }
+
+    .progress-circle-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      margin: 1rem 0;
+    }
+
+    .progress-svg {
+      width: 160px;
+      height: 160px;
+      transform: rotate(-90deg);
+    }
+
+    .progress-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.03);
+      stroke-width: 12;
+    }
+
+    .progress-bar {
+      fill: none;
+      stroke: url(#progress-gradient);
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-dasharray: 440;
+      stroke-dashoffset: 440;
+      transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .progress-text {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .progress-percentage {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .progress-count {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .stat-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 8px;
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    .stat-val {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .stat-val.success { color: var(--success); }
+    .stat-val.failed { color: var(--error); }
+    
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+    }
+
+    .quota-box {
+      background: rgba(245, 158, 11, 0.06);
+      border: 1px dashed rgba(245, 158, 11, 0.2);
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      display: none;
+    }
+
+    .quota-box h4 {
+      color: var(--warning);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .quota-box a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .quota-box a:hover {
+      text-decoration: underline;
+    }
+
+    .main-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 0.75rem;
+    }
+
+    .panel-title {
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .log-container {
+      max-height: 480px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding-right: 0.5rem;
+    }
+
+    /* Scrollbar */
+    .log-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    .log-container::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.01);
+    }
+    .log-container::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+    .log-container::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .log-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .log-row:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .log-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .log-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .log-badge.success {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .log-badge.failed {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .log-uid {
+      font-weight: 500;
+      color: var(--text-muted);
+      font-family: monospace;
+      font-size: 0.9rem;
+    }
+
+    .log-name {
+      font-weight: 500;
+    }
+
+    .log-error {
+      font-size: 0.8rem;
+      color: var(--error);
+      margin-top: 2px;
+    }
+
+    .log-time {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-muted);
+    }
+
+    .connection-status {
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+    }
+
+    .indicator-light {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--text-muted);
+    }
+
+    .indicator-light.connected {
+      background-color: var(--success);
+      box-shadow: 0 0 6px var(--success);
+    }
+
+    .indicator-light.disconnected {
+      background-color: var(--error);
+      box-shadow: 0 0 6px var(--error);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ISR Profile Vectorization</h1>
+    <div class="subtitle">Real-time Batch Processing Monitor (ISR Values Protocol v1.0)</div>
+  </header>
+
+  <main>
+    <div class="status-panel glass-card">
+      <div id="statusContainer" class="status-indicator">
+        <div class="status-dot"></div>
+        <span id="statusText">Waiting for server...</span>
+      </div>
+
+      <div class="progress-circle-container">
+        <svg class="progress-svg">
+          <defs>
+            <linearGradient id="progress-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#8b5cf6" />
+              <stop offset="100%" stop-color="#06b6d4" />
+            </linearGradient>
+          </defs>
+          <circle class="progress-bg" cx="80" cy="80" r="70" />
+          <circle id="progressBar" class="progress-bar" cx="80" cy="80" r="70" />
+        </svg>
+        <div class="progress-text">
+          <span id="progressPercentage" class="progress-percentage">0%</span>
+          <span id="progressCount" class="progress-count">0 / 0</span>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div id="statSuccess" class="stat-val success">0</div>
+          <div class="stat-label">Succeeded</div>
+        </div>
+        <div class="stat-box">
+          <div id="statFailed" class="stat-val failed">0</div>
+          <div class="stat-label">Failed</div>
+        </div>
+      </div>
+
+      <div id="quotaBox" class="quota-box">
+        <h4>Daily API Quota Limit Hit</h4>
+        <p>Your Google AI Studio project has hit its free-tier daily call limit (20 requests/day). Vectorization has paused to avoid infinite rate-limit delays.</p>
+        <p style="margin-top:0.5rem"><strong>Action:</strong> Go to <a href="https://aistudio.google.com/" target="_blank">Google AI Studio</a> and enable Pay-as-you-go billing. Gemini Flash is extremely cheap (approx. $0.001 per 100 profiles).</p>
+      </div>
+
+      <div class="connection-status">
+        <div id="connLight" class="indicator-light"></div>
+        <span id="connText">Initializing connection...</span>
+      </div>
+    </div>
+
+    <div class="main-panel glass-card">
+      <div class="panel-header">
+        <div class="panel-title">Vectorization Activity Logs</div>
+        <div class="subtitle" id="lastUpdated">Last updated: Never</div>
+      </div>
+
+      <div id="logContainer" class="log-container">
+        <div class="no-data">No activity logs recorded yet. Run run.py to start vectorization.</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const jsonUrl = '../db/vectorization_progress.json';
+    const pollInterval = 2000; // 2 seconds
+
+    const statusContainer = document.getElementById('statusContainer');
+    const statusText = document.getElementById('statusText');
+    const progressBar = document.getElementById('progressBar');
+    const progressPercentage = document.getElementById('progressPercentage');
+    const progressCount = document.getElementById('progressCount');
+    const statSuccess = document.getElementById('statSuccess');
+    const statFailed = document.getElementById('statFailed');
+    const quotaBox = document.getElementById('quotaBox');
+    const connLight = document.getElementById('connLight');
+    const connText = document.getElementById('connText');
+    const lastUpdated = document.getElementById('lastUpdated');
+    const logContainer = document.getElementById('logContainer');
+
+    function updateProgress(processed, total) {
+      if (!total) return;
+      const percentage = Math.round((processed / total) * 100);
+      progressPercentage.innerText = `${percentage}%`;
+      progressCount.innerText = `${processed} / ${total}`;
+
+      // Update SVG circular progress bar
+      // circumference of r=70 circle is 2 * PI * 70 = ~439.82
+      const offset = 440 - (processed / total) * 440;
+      progressBar.style.strokeDashoffset = offset;
+    }
+
+    function formatTime(isoString) {
+      if (!isoString) return '';
+      const date = new Date(isoString);
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+
+    function renderLogs(details) {
+      if (!details || details.length === 0) {
+        logContainer.innerHTML = '<div class="no-data">No profiles processed in this batch yet.</div>';
+        return;
+      }
+
+      // Reverse list to show newest on top
+      const reversed = [...details].reverse();
+
+      logContainer.innerHTML = reversed.map(log => {
+        const badgeClass = log.status === 'success' ? 'success' : 'failed';
+        const badgeLabel = log.status === 'success' ? 'success' : 'failed';
+        const errorHtml = log.error ? `<div class="log-error">${log.error}</div>` : '';
+        const timeFormatted = formatTime(log.timestamp);
+
+        return `
+          <div class="log-row">
+            <div class="log-info">
+              <span class="log-badge ${badgeClass}">${badgeLabel}</span>
+              <div>
+                <div>
+                  <span class="log-uid">UID ${log.uid}</span>
+                  <span class="log-name">${log.name}</span>
+                </div>
+                ${errorHtml}
+              </div>
+            </div>
+            <div class="log-time">${timeFormatted}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function fetchProgress() {
+      fetch(jsonUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Progress file not found: status ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Connection status
+          connLight.className = 'indicator-light connected';
+          connText.innerText = 'Connected';
+
+          // Update Status indicator
+          statusContainer.className = `status-indicator status-${data.status}`;
+          if (data.status === 'running') {
+            statusText.innerText = `Vectorizing UID ${data.current_uid || '...'}`;
+          } else if (data.status === 'completed') {
+            statusText.innerText = 'Vectorization Complete';
+          } else if (data.status === 'quota_exhausted') {
+            statusText.innerText = 'API Quota Exhausted';
+          } else {
+            statusText.innerText = data.status.toUpperCase();
+          }
+
+          // Show/Hide quota box
+          if (data.status === 'quota_exhausted') {
+            quotaBox.style.display = 'block';
+          } else {
+            quotaBox.style.display = 'none';
+          }
+
+          // Stats
+          statSuccess.innerText = data.success_count;
+          statFailed.innerText = data.failure_count;
+
+          // Progress Circle
+          updateProgress(data.processed_profiles, data.total_profiles);
+
+          // Timestamp
+          lastUpdated.innerText = `Last updated: ${formatTime(data.last_update)}`;
+
+          // Logs
+          renderLogs(data.details);
+        })
+        .catch(error => {
+          console.error(error);
+          connLight.className = 'indicator-light disconnected';
+          connText.innerText = 'Connection error (No server or json missing)';
+          statusContainer.className = 'status-indicator';
+          statusText.innerText = 'Waiting...';
+        });
+    }
+
+    // Initial fetch and start interval
+    fetchProgress();
+    setInterval(fetchProgress, pollInterval);
+  </script>
+</body>
+</html>

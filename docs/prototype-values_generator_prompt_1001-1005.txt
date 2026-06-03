@@ -1,0 +1,86 @@
+# ISR Values Description Generation Prompt
+
+
+## Your Task
+
+ROLE: You are a sociologist, psychologist and a community values expert. 
+TASK: Write a detailed values description of the future community from the perspective of each person batch below. In each person case state its own personal point of view, about what an ideal community should value. Based both on the user profiles context and considering historical/cultural archetypes, describe the values following the ISR User Guide from attached User_Guide_Values_Description_v1.md
+
+OUTPUT: JSON format for each person in the batch (UID, composing date, user name, prototype name, values description):
+"uid": <user id>,
+"generated": "<ISO 8601 date-time>",
+"Name": "<user display name>",
+"prototype": "<historical/cultural prototype name>",
+"values_description": "<1000–1200 word narrative in first-person perspective - detailed values description text>"
+
+
+## Individual Profile Contexts
+
+
+    === PROFILE #1001 ===
+
+      • Your UID: 1001
+  • Your name:  Sara Mckee
+  • You are a 52-year-old German female
+  • Professionally, you work as a General Practitioner in Hospital
+  • Your education level is Bachelor
+  • Your family relationships include: father, daughter, son, grandson
+  • As your historical/cultural prototype, consider: William Tucker
+
+    ---
+    
+
+    === PROFILE #1002 ===
+
+      • Your UID: 1002
+  • Your name:  Sheryl Shelton
+  • You are a 49-year-old German female
+  • Professionally, you work as a Agricultural Worker in Andim
+  • Your education level is Bachelor
+  • Your family relationships include: brother, sister, father, husband, brother-in-low, sister-in-low, niece, niece, daughter, niece, daughter, daughter, nephew
+  • As your historical/cultural prototype, consider: Pierre Bourdieu
+
+    ---
+    
+
+    === PROFILE #1003 ===
+
+      • Your UID: 1003
+  • Your name:  Marco Hirt
+  • You are a 41-year-old Swiss male
+  • Professionally, you work as a Beauty Therapist / Masseuse in SPA Hotel
+  • Your education level is College
+  • Your family relationships include: brother, mother, wife, daughter, son, daughter
+  • As your historical/cultural prototype, consider: Stephen Foster
+
+    ---
+    
+
+    === PROFILE #1004 ===
+
+      • Your UID: 1004
+  • Your name:  Susan Snyder
+  • You are a 38-year-old German female
+  • Professionally, you work as a General Practitioner in Private practitioner
+  • Your education level is Bachelor
+  • Your family relationships include: father, daughter, daughter, sister
+  • As your historical/cultural prototype, consider: Chick Corea
+
+    ---
+    
+
+    === PROFILE #1005 ===
+
+      • Your UID: 1005
+  • Your name:  Andrea Green
+  • You are a 31-year-old German female
+  • Professionally, you work as a Supply Chain Worker in Andim
+  • Your education level is College
+  • Your family relationships include: mother, father, daughter, son
+  • As your historical/cultural prototype, consider: Vincent van Gogh
+
+    ---
+    
+
+---
+

@@ -1,0 +1,744 @@
+<html>
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WJX232KK');</script>
+<!-- End Google Tag Manager -->
+
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index of Social Responsibility: MVP</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/png" href="/images/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/images/logo.svg" />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    <link rel="manifest" href="/images/site.webmanifest" />
+    <!-- MathJax for LaTeX formula rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body class="c11 doc-content">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WJX232KK"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+         <header>
+            <h1>ISR-vote MVP: Minimum Viable Product</h1>
+            <p class="subtitle">A Comprehensive Guide to How ISR-vote Works and Why It Matters</p>
+            <a href="/prototype/">🚀 UI prototype is available</a>
+        </header>
+
+    <div class="main_content">
+        <!-- Introduction -->
+        <div class="paragraph">
+            <div class="paragraph_top" onclick="toggleContent('content-intro')">
+                <h2 id="intro">► Introduction: What Happens When You Join</h2>
+            </div>
+            <div id="content-intro" class="content" style="display: none;">
+                <p>When you join an ISR community, you're not just voting – you're participating in a system that calculates your influence based on three factors:</p>
+                
+                <div style="background: #e8f4f8; padding: 20px; margin: 20px 0; border-radius: 5px; border-left: 4px solid #3498db;">
+                    <strong style="color: #2c3e50;">Your ISR (Index of Social Responsibility) Score = Your Relevance + Your Expertise + Your Contribution</strong>
+                    <p style="margin-top: 10px; font-size: 0.95em;">
+                        This score changes for each decision based on how relevant you are to the specific issue. 
+                        An expert plumber has more influence on roof repairs, but equal voice on common community issues.
+                    </p>
+                    <p style="margin-top: 10px; font-size: 0.95em;">
+                        There are two ways how to log in into the system:
+                        <ul>
+                            <li>Using your own account with username and password.</li>
+                            <li>Using presetted accounts for testing purposes - you can choose from the list.</li>
+                        </ul>
+                    </p>
+                </div>
+
+                <p><strong>The MVP application consists of 8 sections:</strong></p>
+                <ol>
+                    <li><strong>Dashboard</strong> – Your overview of community activities</li>
+                    <li><strong>Profile</strong> – Your skills, experience, and interests</li>
+                    <li><strong>Values</strong> – Your preferences stated in a convenient way</li>
+                    <li><strong>Actions</strong> – Log of your contributions and activities</li>
+                    <li><strong>Chat</strong> – Discuss issues with relevant community members</li>
+                    <li><strong>Voting</strong> – Make decisions on problems and solutions</li>
+                    <li><strong>Tasks</strong> – Track implementation of approved decisions</li>
+                    <li><strong>Settings</strong> – UI preferences</li>
+                    <li><strong>AI-assistant</strong></li>
+                </ol>
+
+                <p style="margin-top: 20px; background: #fff3cd; padding: 15px; border-radius: 4px;">
+                    <strong>🎯 User Success Tip:</strong><br>
+                    Start ISR exploration with a presetted account - it allows you to quickly get a feel for how the system works.<br>
+                    Then complete your profile and values – this allows the AI to identify decisions you're most relevant to and show you the most important discussions.
+                </p>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div class="paragraph">
+            <div class="paragraph_top" onclick="toggleContent('content-dashboard')">
+                <h2 id="dashboard">► 1. Dashboard: Your Community Command Center</h2>
+            </div>
+            <div id="content-dashboard" class="content" style="display: none;">
+                <p><strong>The Dashboard is your landing page after login.</strong> It shows at a glance your current ISR standing, what actions need your attention, and recent community activity. Think of it as your personal control panel for the entire ISR-vote system.</p>
+
+                <h3>What You See on the Dashboard</h3>
+                <ul>
+                    <li><strong>Your Status Card:</strong> Your photo, name, general ISR score, membership duration, and this month's activity (votes, discussions, tasks).</li>
+                    <li><strong>Action Alerts:</strong> Three priority sections showing urgent votings (sorted by deadline), new discussions you're relevant to, and tasks in progress with their completion status.</li>
+                    <li><strong>Community Activity Feed:</strong> A timeline of recent events (votes concluded, tasks completed, discussions started, new members joined) so you stay aware of what's happening.</li>
+                </ul>
+
+                <h3>How It Works</h3>
+                <ol>
+                    <li>You log in → Dashboard loads with your personalized status and alerts.</li>
+                    <li>System flags votings where you're relevant or deadline is soon (red if < 6 hours, amber if < 48 hours).</li>
+                    <li>New discussions matching your profile/interests are listed so you don't miss them.</li>
+                    <li>For each task you're tracking, you see progress bars and estimated days to deadline.</li>
+                    <li>The activity feed updates in real-time, showing decisions your community is making.</li>
+                </ol>
+
+                <h3>Dashboard UI Components</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                    <tr style="background: #2c3e50; color: white;">
+                        <th style="padding: 10px; text-align: left;">Component</th>
+                        <th style="padding: 10px; text-align: left;">Purpose</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Status Card</strong></td>
+                        <td style="padding: 10px;">Shows your name, avatar, role, general ISR score, percentile rank, and this month's stats. Click to expand and see full profile.</td>
+                    </tr>
+                    <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Urgent Votings Alert</strong></td>
+                        <td style="padding: 10px;">Lists open votings with tight deadlines. Color-coded red if <6 hours, amber if <48 hours. Shows your ISR weight for each decision.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>New Discussions Alert</strong></td>
+                        <td style="padding: 10px;">Shows discussions created recently that match your profile/interests. Displays unread message count and microcommunity size.</td>
+                    </tr>
+                    <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Tasks in Progress</strong></td>
+                        <td style="padding: 10px;">Shows tasks you're assigned to or following, with progress bars (0–100%), assignee, and days remaining. Color indicates on-track (green), at-risk (amber), or delayed (red).</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Activity Feed</strong></td>
+                        <td style="padding: 10px;">Timeline of community events: votes concluded, tasks completed, discussions created, messages posted, new members joined. Helps you stay informed without actively checking each section.</td>
+                    </tr>
+                    <tr style="background: #f9f9f9;">
+                        <td style="padding: 10px;"><strong>Navigation Sidebar</strong></td>
+                        <td style="padding: 10px;">Quick-access menu: Profile, Values, Chat, Voting, Tasks, Community, Settings. Icons + text labels; collapses on mobile.</td>
+                    </tr>
+                </table>
+
+                <h3>Example Dashboard Scenario</h3>
+                <div style="background: #e8f4f8; padding: 20px; margin: 20px 0; border-radius: 5px; border-left: 4px solid #3498db;">
+                    <p><strong>You log in on Thursday evening.</strong></p>
+                    <ul style="margin: 10px 0;">
+                        <li>Your Status Card shows: ISR 2.4, "6 votes this month".</li>
+                        <li>Urgent Votings alert (red): "Roof repair decision – <strong>5 hours left</strong>. Your ISR: 1.93".</li>
+                        <li>New Discussions alert (amber): "Entrance lighting – <strong>2 new messages</strong> from electricians".</li>
+                        <li>Tasks in Progress: "LED upgrade – <strong>60% done</strong>, on track for March 15".</li>
+                        <li>Activity Feed shows: "Vote on parking proposal concluded", "Task: water leak fixed", "3 new members joined".</li>
+                    </ul>
+                    <p style="margin-top: 10px; font-style: italic;">You see immediately that the roof vote needs your vote before deadline, the lighting discussion is active, and the LED project is progressing. No time wasted searching.</p>
+                </div>
+
+                <h3>🎯 UX Success Tips</h3>
+                <ul>
+                    <li><strong>Check dashboard daily:</strong> It's your single source of truth for what your community is doing and what needs your input.</li>
+                    <li><strong>Act on urgent alerts:</strong> Red votings are sorted by deadline. Clicking takes you directly to the voting page with context.</li>
+                    <li><strong>Monitor task progress:</strong> Tasks with progress bars help you spot delays early. If your task is marked "at-risk", communicate with your team immediately.</li>
+                    <li><strong>Use activity feed to stay informed:</strong> Read what's happening without needing to join every discussion. Click an event to dive deeper.</li>
+                    <li><strong>Return often:</strong> The dashboard updates in real-time. Notifications also push updates (Phase 2).</li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <!-- Profile Section -->
+        <div class="paragraph">
+            <div class="paragraph_top" onclick="toggleContent('content-profile')">
+                <h2 id="profile">► 2. Build Your Profile: Show What You Bring</h2>
+            </div>
+            <div id="content-profile" class="content" style="display: none;">
+                <p><strong>Your profile is your identity in the system.</strong> It tells the community about your expertise, experience, and what makes you valuable to group decisions.</p>
+
+                <h3>What Goes in Your Profile?</h3>
+                <ul>
+                    <li><strong>Professional Skills:</strong> Certifications, licenses, specialized knowledge (e.g., "Licensed Electrician", "Project Manager", "Accountant")</li>
+                    <li><strong>Experience:</strong> Relevant projects you've completed or managed (e.g., "5 years managing building renovations")</li>
+                    <li><strong>Interests:</strong> What you care about and want to stay informed about (e.g., "Energy efficiency", "Community gardens", "Safety")</li>
+                    <li><strong>Certifications:</strong> Formal qualifications that validate expertise</li>
+                </ul>
+
+                <h3>UI Components (from Prototype)</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                    <tr style="background: #2c3e50; color: white;">
+                        <th style="padding: 10px; text-align: left;">Component</th>
+                        <th style="padding: 10px; text-align: left;">Purpose</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Profile Card</strong></td>
+                        <td style="padding: 10px;">Photo, name, general ISR score, role badge</td>
+                    </tr>
+                    <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Skills Section</strong></td>
+                        <td style="padding: 10px;">Add/remove skill tags with proficiency levels</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Experience Timeline</strong></td>
+                        <td style="padding: 10px;">Display past projects and accomplishments chronologically</td>
+                    </tr>
+                    <tr style="background: #f9f9f9;">
+                        <td style="padding: 10px;"><strong>Edit Modal</strong></td>
+                        <td style="padding: 10px;">Simple form to add/update profile information</td>
+                    </tr>
+                </table>
+
+                <h3>🎯 UX Success Tips</h3>
+                <ul>
+                    <li><strong>Be specific:</strong> Instead of "IT skills", say "Firebase database administration" or "Full-stack web development"</li>
+                    <li><strong>Include verification:</strong> Add links to certificates, portfolios, or past projects when possible</li>
+                    <li><strong>Update regularly:</strong> As you complete tasks and gain experience, update your profile to reflect new expertise</li>
+                    <li><strong>Honest over impressive:</strong> Overstating skills is flagged by the system and decreases your ISR</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Values Section -->
+        <div class="paragraph">
+            <div class="paragraph_top" onclick="toggleContent('content-values')">
+                <h2 id="values">► 3. Define Your Values: What Matters to You</h2>
+            </div>
+            <div id="content-values" class="content" style="display: none;">
+                <p><strong>Microcommunity values are the foundation of ISR calculations.</strong> They define what behavior the community rewards and what it penalizes (as an addition to normal general law). The vectorized individual values ​​of all users make up the <strong>Matrix of Values</strong> - a specialized vector database. Each microcommunity formed around rised issue aggregates its own <strong>Vector of Values</strong> - from the values ​​of all members of the microcommunity, taken from the <strong>Matrix of Values</strong>.</p>
+
+                <h3>The Vector of Values </h3>
+                <p>Each microcommunity aggregates a <strong>Vector of Values</strong> – a collective agreement on what's important out from all microcommunity members' values regarding personal Relevance. <strong>Vector of Values</strong> is a pure mathematical representation which is used in Contribution calculations.</p>
+
+                <div style="background: #ecf0f1; padding: 20px; margin: 20px 0; border-radius: 5px;">
+                    <strong>Basic ways to fill out values are:</strong>
+                    <ul>
+                        <li>Write your own text explanation according to the User Guide Values Description.</li>
+                        <li>Pass a survay with AI assistant.</li>
+                        <li>Name a famous person with well-known attitudes towards aspects of social life (e.g., "Benjamin Lincoln," "Paul McCartney," "Mao Zedong," "Albert Einstein," etc.) as a prototype so that the AI ​​can draft your values ​​statement according to the Guide.</li>
+                        <li>Combine or edit options above.</li>
+                    </ul>
+                </div>
+
+                <h3>How to Define Values</h3>
+                <p><strong>Option A: Narative explanation</strong></p>
+                <ol>
+                    <li>Open Values section in profile</li>
+                    <li>Click "Narative"</li>
+                    <li>Express your beliefs and life orienteers</li>
+                </ol>
+                <p style="margin-top: 15px;"><strong>Option B: AI-Assisted Definition (Recommended for First-Time Setup)</strong></p>
+                <ol>
+                    <li>Click "AI Guide Me" button</li>
+                    <li>AI asks 10-15 questions about community priorities</li>
+                    <li>Based on your answers, AI proposes a values structure</li>
+                    <li>You adjust points and descriptions as needed</li>
+                    <li>Community reviews and collectively refines</li>
+                </ol>
+                <p><strong>Option C: Choosing a prototype</strong></p>
+                <ol>
+                    <li>Open Values section in profile</li>
+                    <li>Click "Choose a prototype"</li>
+                    <li>Type the prototype name and review the AI-generated draft</li>
+                    <li>Make your corrections as needed</li>
+                </ol>
+
+
+                <h3>AI Assistant Feature</h3>
+                <p>After you define a value, you can ask the AI:</p>
+                <ul>
+                    <li><em>"What do we mean by 'technical competence'?"</em> – AI clarifies the concept</li>
+                    <li><em>"Give me examples of this value in action"</em> – AI provides concrete scenarios</li>
+                    <li><em>"How does this compare to other microcommunity members?"</em> – AI shows benchmarks</li>
+                    <li><em>"Explain my current microcommunity Vector of Values in a narrative view"</em> – AI makes a story about your current microcommunity values with nearest political examples</li>
+                </ul>
+
+                <h3>🎯 UX Success Tips</h3>
+                <ul>
+                    <li><strong>Make values specific and measurable:</strong> Not "trust", but "transparent financial reporting"</li>
+                    <li><strong>Be honest and aware:</strong> Values should reflect your individual preferences of the future you want to live in - they can't be significantly changed everyday.</li>
+                    <li><strong>Revisit quarterly:</strong> As you and reality around change, update your values.</li>
+                    <li><strong>Do not change your values dramatically:</strong> The system is setted to recognize suspicious activity like when a user changes all their values at once to manipulate ISR.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Chat Section -->
+        <div class="paragraph">
+            <div class="paragraph_top" onclick="toggleContent('content-chat')">
+                <h2 id="chat">► 4. Start or Join Discussions: Microcommunities Around Issues</h2>
+            </div>
+            <div id="content-chat" class="content" style="display: none;">
+                <p><strong>The Chat section is where collective problem-solving starts.</strong> When an issue arises, the AI identifies the most relevant members (a "microcommunity") and notifies them.</p>
+
+                <h3>How Discussions Work</h3>
+                <ol>
+                    <li><strong>Someone creates a topic:</strong> "Roof needs repairs – what should we do?" specifying exact place, size of the problem, time to the problem should be solved and other context data</li>
+                    <li><strong>AI identifies microcommunity:</strong> Finds members skilled in construction, interested in maintenance, affected by the issue</li>
+                    <li><strong>Relevant members are notified:</strong> Get badge with ISR relevance score for this topic</li>
+                    <li><strong>Discussion unfolds:</strong> Members share expertise, ask questions, propose solutions</li>
+                    <li><strong>Evidence uploaded:</strong> Photos, quotes, technical documents attached to messages</li>
+                </ol>
+
+                <h3>UI Components (from Prototype)</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                    <tr style="background: #2c3e50; color: white;">
+                        <th style="padding: 10px; text-align: left;">Component</th>
+                        <th style="padding: 10px; text-align: left;">Function</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Discussion List Feed</strong></td>
+                        <td style="padding: 10px;">Shows active topics sorted by relevance + recency. Badges show: NEW, URGENT, IMPORTANT</td>
+                    </tr>
+                    <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Topic Header</strong></td>
+                        <td style="padding: 10px;">Title, creator, date, microcommunity member count, thread preview</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Message Thread View</strong></td>
+                        <td style="padding: 10px;">Nested messages with name, timestamp, ISR badge for this topic</td>
+                    </tr>
+                    <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Emoji Reactions (contributes to ISR calculation)</strong></td>
+                        <td style="padding: 10px;">👍 Good, 😁 Funny, 🥴 Flood, 😡 Rude, 💊 Fool</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>File Upload Widget</strong></td>
+                        <td style="padding: 10px;">Attach PDFs, images, quotes for evidence</td>
+                    </tr>
+                    <tr style="background: #f9f9f9;">
+                        <td style="padding: 10px;"><strong>Search & Filter</strong></td>
+                        <td style="padding: 10px;">Filter by: status (open/closed), tags, urgency, your involvement</td>
+                    </tr>
+                </table>
+
+                <h3>Microcommunity Formation (How AI Selects Relevant Members)</h3>
+                <p>When a topic is created, the system calculates relevance according to the Relevance Implementation guide:</p>
+                <ul>
+                    <li><strong>Profile match:</strong> Keywords in topic match skills in profile (e.g., "middle age" matches a 40 years old person)</li>
+                    <li><strong>Geographic proximity:</strong> If relevant (e.g., "Entrance 3" water issue → notify Entrance 3 residents)</li>
+                    <li><strong>Interest alignment:</strong> Member marked this category as interest</li>
+                    <li><strong>Social connections:</strong> Taking into account relatives, friends etc.</li>
+                </ul>
+
+                <p style="margin-top: 15px; background: #ffe8e8; padding: 15px; border-radius: 4px;"><strong>⚠️ Important:</strong> You can ALWAYS find and join any discussion, even if you're not in the AI-selected microcommunity. The system recommends but doesn't restrict participation.</p>
+
+                <p>The system analyze the issue text and context and propose weights for ISR-score components (Relevance, Expertise and Contribution) calculation. The topic starter can approve them or adjust.</p>
+                <p>Also, when a topic is created, after calculating Relevance and determining the members of the new microcommunity, the system calculates the ISR-score of all members from their Relevance, Expertise and Contribution according to the documentation.</p>
+
+                <h3>🎯 UX Success Tips</h3>
+                <ul>
+                    <li><strong>Read before posting:</strong> Check if your point has already been made or discussed. Remember, any issue publishing starts microcommunity gathering and ISR calculation which is costly and spend society resoures. So false, dubbling, dumb issues could be assessed negatively and decrease your future ISR.</li>
+                    <li><strong>Use evidence:</strong> Attach photos, quotes, or documents to support your position</li>
+                    <li><strong>Stay on topic:</strong> Emoji reactions showing irrelevance or disrespect will be tracked in your ISR</li>
+                    <li><strong>Ask questions respectfully:</strong> Challenge ideas, not people</li>
+                    <li><strong>Respond to feedback:</strong> If flagged as irrelevant, explain your reasoning - shows intellectual integrity</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Voting Section -->
+        <div class="paragraph">
+            <div class="paragraph_top" onclick="toggleContent('content-voting')">
+                <h2 id="voting">► 5. Participate in Decisions: Your Vote Has Weight</h2>
+            </div>
+            <div id="content-voting" class="content" style="display: none;">
+                <p><strong>The Voting section is where discussion becomes decision.</strong> Each voting topic has multiple options (usually determined by discussion), and your vote's weight depends on your ISR for that specific issue.</p>
+
+                <h3>The Voting Process</h3>
+                <ol>
+                    <li><strong>Topic creator posts options</strong> with deliberated descriptions (cost, timeline, pros/cons)</li>
+                    <li><strong>You vote</strong> - your click carries your calculated weight (ISR-score)</li>
+                    <li><strong>System tallies weighted votes</strong> - highest weight option wins</li>
+                    <li><strong>Status changes to "closed"</strong> and implementation begins</li>
+                </ol>
+
+                <h3>Voting UI Components</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                    <tr style="background: #2c3e50; color: white;">
+                        <th style="padding: 10px; text-align: left;">Component</th>
+                        <th style="padding: 10px; text-align: left;">Shows What?</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Voting Queue</strong></td>
+                        <td style="padding: 10px;">All open votes sorted by relevance to you. Show: deadline, your ISR for this issue, urgency</td>
+                    </tr>
+                    <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>ISR-score Badge</strong></td>
+                        <td style="padding: 10px;">Your calculated ISR for THIS decision (e.g., "4.2" for roof repair if you're a licensed roofer)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Decision Detail Page</strong></td>
+                        <td style="padding: 10px;">Full topic description, all options with budgets/timelines, related discussion messages</td>
+                    </tr>
+                    <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Vote Options Display</strong></td>
+                        <td style="padding: 10px;">Each option as a card: name, description, cost, timeline, creator, attachment preview</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Vote Button</strong></td>
+                        <td style="padding: 10px;">Click to cast your weighted vote. Changes to "You Voted" after submission</td>
+                    </tr>
+                    <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Why My Weight? Link</strong></td>
+                        <td style="padding: 10px;">Click to see how ISR was calculated (shows R, E, C components)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Results Preview</strong></td>
+                        <td style="padding: 10px;">Live-updating bar chart showing weighted vote distribution</td>
+                    </tr>
+                    <tr style="background: #f9f9f9;">
+                        <td style="padding: 10px;"><strong>Deadline Timer</strong></td>
+                        <td style="padding: 10px;">Shows time remaining, highlighted red if &lt;24 hours</td>
+                    </tr>
+                </table>
+
+                <h3>Example of a 1.93 ISR-score explanation about Roof Repair issue</h3>
+                <div style="background: #e8f4f8; padding: 20px; margin: 20px 0; border-radius: 5px; border-left: 4px solid #3498db;">
+                    <p style="margin: 15px 0;"><strong>Your ISR for this decision: 1.93</strong></p>
+                    <ul>
+                        <li>Relevance (R): 1.0 (you are a dweller of the building same as others)</li>
+                        <li>Expertise (E): 4.0 (you are a licensed roofer - perfect match)</li>
+                        <li>Contribution (C): 1.1 (you consistently prioritize quality and safety - little better than in average)</li>
+                        <li>Final weight: 0.4×1.0 + 0.3×4.0 + 0.3×1.1 = your ISR of final vote</li>
+                    </ul>
+                    <p style="margin-top: 10px; font-style: italic;">
+                        Your vote carries 1.93 the weight of an average member (who votes with 1.0 weight).
+                    </p>
+                </div>
+
+                <h3>Understanding Your ISR Score: Why It Changes Per Decision</h3>
+                <ul>
+                    <li><strong>Same person, different decisions = different weights</strong>
+                        <ul>
+                            <li>You're a roofer → high weight on roof decisions</li>
+                            <li>Same decision on landscaping → low weight (not your expertise)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Community feedback updates contribution:</strong> After decisions are implemented, ratings from community update your activity score</li>
+                </ul>
+
+                <h3>🎯 UX Success Tips</h3>
+                <ul>
+                    <li><strong>Click "Why My Weight?"</strong> to understand your ISR - transparency builds trust</li>
+                    <li><strong>State your opinion only on issues you understand:</strong> Flooding discussion make decision-making harder</li>
+                    <li><strong>Check the discussion first:</strong> Read expert opinions before voting</li>
+                    <li><strong>Don't wait till deadline:</strong> Vote early - shows you're engaged</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tasks Section -->
+        <div class="paragraph">
+            <div class="paragraph_top" onclick="toggleContent('content-tasks')">
+                <h2 id="tasks">► 6. Track Implementation: From Decision to Reality</h2>
+            </div>
+            <div id="content-tasks" class="content" style="display: none;">
+                <p><strong>The Tasks section brings voting decisions to life.</strong> After a vote concludes, the winning option becomes a task that tracks progress and completion.</p>
+
+                <h3>How Tasks Work</h3>
+                <ol>
+                    <li><strong>Vote concludes</strong> → system automatically creates a task from the winning option</li>
+                    <li><strong>Task properties:</strong> Deadline, budget, responsible person, sub-tasks (if broken down)</li>
+                    <li><strong>Status updates:</strong> Progress tracked: "Open" → "In Progress" → "Completed" → "Evaluated"</li>
+                    <li><strong>Community rates outcome:</strong> After completion, members review the task and assess its matters</li>
+                </ol>
+
+                <h3>Task UI Components</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                    <tr style="background: #2c3e50; color: white;">
+                        <th style="padding: 10px; text-align: left;">Component</th>
+                        <th style="padding: 10px; text-align: left;">Shows What?</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>My Tasks List</strong></td>
+                        <td style="padding: 10px;">Tasks you're assigned to or responsible for. Grouped by status: open, in progress, completed</td>
+                    </tr>
+                    <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Task Card</strong></td>
+                        <td style="padding: 10px;">Title, deadline, progress bar, who's responsible, current status badge</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Task Detail View</strong></td>
+                        <td style="padding: 10px;">Full description, budget, timeline, related voting discussion, sub-tasks, progress updates</td>
+                    </tr>
+                    <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Progress Update Form</strong></td>
+                        <td style="padding: 10px;">Add text updates, photos, or documents showing work in progress</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Sub-tasks Widget</strong></td>
+                        <td style="padding: 10px;">Break large task into smaller steps, check off as completed</td>
+                    </tr>
+                    <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Completion Modal</strong></td>
+                        <td style="padding: 10px;">Mark task as done, upload final documentation</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Community Evaluation</strong></td>
+                        <td style="padding: 10px;">After completion, community rates: "Excellent", "Good", "Acceptable", "Poor"</td>
+                    </tr>
+                    <tr style="background: #f9f9f9;">
+                        <td style="padding: 10px;"><strong>Feedback Form</strong></td>
+                        <td style="padding: 10px;">Community members explain their rating</td>
+                    </tr>
+                </table>
+
+                <h3>🎯 UX Success Tips</h3>
+                <ul>
+                    <li><strong>Update progress weekly:</strong> Regular communication shows accountability and keeps community informed</li>
+                    <li><strong>Upload photos/documents:</strong> Transparency in implementation builds trust</li>
+                    <li><strong>Flag issues early:</strong> If timeline slips or budget overruns, communicate immediately - honesty increases ISR</li>
+                    <li><strong>Celebrate completion:</strong> Share success with community, thank contributors</li>
+                    <li><strong>Learn from feedback:</strong> If evaluation is negative, understand why and address in next similar task</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Complete Workflow -->
+        <!-- <div class="paragraph">
+            <div class="paragraph_top" onclick="toggleContent('content-workflow')">
+                <h2 id="workflow">► Complete User Journey: End-to-End Workflow</h2>
+            </div>
+            <div id="content-workflow" class="content" style="display: none;">
+                <p><strong>Here's how a real community member's experience flows through the ISR-vote system:</strong></p>
+
+                <h3>Month 1: Onboarding</h3>
+                <div style="background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 4px;">
+                    <p><strong>Week 1-2:</strong></p>
+                    <ul>
+                        <li>Sign up with email/Google/Facebook</li>
+                        <li>Complete profile: "I'm a retired electrician with 30 years experience, interested in energy efficiency"</li>
+                        <li>Setup Values with AI assistant: Gets proposed values, adjusts, refines</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>Week 3-4:</strong></p>
+                    <ul>
+                        <li>System AI identifies you as relevant to "Electrical System Upgrade" discussion starting</li>
+                        <li>You receive notification: "Energy efficiency topic matches your expertise"</li>
+                        <li>Join microcommunity discussion, share insights on LED upgrades</li>
+                    </ul>
+                </div>
+
+                <h3>Month 2-3: Active Participation</h3>
+                <div style="background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 4px;">
+                    <p><strong>Discussion Phase:</strong></p>
+                    <ul>
+                        <li>3 LED upgrade options proposed in Chat</li>
+                        <li>You provide technical expertise: cost analysis, energy savings comparison, installation complexity</li>
+                        <li>You participate in the discussion in a polite, professional, easy going tone, adding smart jokes sometimes - it supports healthy environment and facilitate discussion flow</li>
+                        <li>Community members react positively to your messages (+35 "good" and +15 "funny" marks added to your contribution)</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>Voting Phase:</strong></p>
+                    <ul>
+                        <li>System calculates your ISR: 2.8 (average relevance + high expertise + high contribution)</li>
+                        <li>You vote for Option B (mid-range quality, best long-term value)</li>
+                        <li>Your vote carries more weight than general members + your involvement in the process inspires people to choose your option</li>
+                        <li>Option B wins the vote</li>
+                    </ul>
+                </div>
+
+                <h3>Month 4-6: Implementation</h3>
+                <div style="background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 4px;">
+                    <p><strong>Task Creation & Tracking:</strong></p>
+                    <ul>
+                        <li>Automatic task created: "Install LED upgrade package"</li>
+                        <li>Monthly progress updates shared with community</li>
+                        <li>You provide guidance when contractor hits issues</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>Completion:</strong></p>
+                    <ul>
+                        <li>Project finishes on time, on budget, energy costs down 25%</li>
+                        <li>Community rates outcome: 85% "Excellent", 15% "Good"</li>
+                        <li>Feedback: "Your expertise saved us money and ensured quality"</li>
+                    </ul>
+                </div>
+
+                <h3>Month 7+: Reputation Building</h3>
+                <div style="background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 4px;">
+                    <p><strong>ISR Evolution:</strong></p>
+                    <ul>
+                        <li>Your contribution increases (you gave good advice that led to good outcomes)</li>
+                        <li>Your general ISR (gISR) increases (trusted community member)</li>
+                        <li>For next electrical decision: your ISR might be 3.5 (increased expertise + higher contribution)</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>New Opportunities:</strong></p>
+                    <ul>
+                        <li>Community asks you to mentor new members on technical topics</li>
+                        <li>Invited to advisor role for major infrastructure decisions</li>
+                        <li>Your influence on community decisions grows over time through demonstrated expertise and positive attitude</li>
+                    </ul>
+                </div>
+
+                <h3>The Full Loop (Visual Process)</h3>
+                <div style="background: #ecf0f1; padding: 20px; margin: 20px 0; border-radius: 5px; text-align: center;">
+                    <p style="font-weight: bold; margin-bottom: 15px;">Your Profile & Values → Discussion Engagement → ISR Calculation → Weighted Vote → Task Implementation → Community Evaluation → ISR Update</p>
+                    <p style="font-style: italic; color: #555;">↻ Repeat with each new decision cycle (each cycle increases system understanding of your expertise)</p>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Technical Architecture -->
+        <div class="paragraph">
+            <div class="paragraph_top" onclick="toggleContent('content-technical')">
+                <h2 id="technical">► Technical Architecture: How It All Works Behind the Scenes</h2>
+            </div>
+            <div id="content-technical" class="content" style="display: none;">
+                <h3>Technology Stack</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                    <tr style="background: #2c3e50; color: white;">
+                        <th style="padding: 10px; text-align: left;">Layer</th>
+                        <th style="padding: 10px; text-align: left;">Technology</th>
+                        <th style="padding: 10px; text-align: left;">Purpose</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Frontend</strong></td>
+                        <td style="padding: 10px;">React/Vue.js + Responsive Design</td>
+                        <td style="padding: 10px;">User interface, real-time updates</td>
+                    </tr>
+                    <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Backend/Database</strong></td>
+                        <td style="padding: 10px;">Firebase (Firestore + Realtime DB)</td>
+                        <td style="padding: 10px;">Data storage, user auth, real-time sync</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>AI/ML</strong></td>
+                        <td style="padding: 10px;">Google Vertex AI + OpenAI</td>
+                        <td style="padding: 10px;">ISR calculation, microcommunity formation, content moderation</td>
+                    </tr>
+                    <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>Cloud Functions</strong></td>
+                        <td style="padding: 10px;">Firebase Cloud Functions / Cloud Run</td>
+                        <td style="padding: 10px;">ISR recalculations, notifications, event processing</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><strong>File Storage</strong></td>
+                        <td style="padding: 10px;">Google Cloud Storage</td>
+                        <td style="padding: 10px;">Profile photos, documents, evidence files</td>
+                    </tr>
+                    <tr style="background: #f9f9f9;">
+                        <td style="padding: 10px;"><strong>Real-time Messaging</strong></td>
+                        <td style="padding: 10px;">Firebase Realtime DB + WebSockets</td>
+                        <td style="padding: 10px;">Live chat, notifications, feed updates</td>
+                    </tr>
+                </table>
+
+                <h3>Firebase Collections Structure</h3>
+                <div style="background: #f0f0f0; padding: 15px; border-radius: 4px; font-family: monospace; font-size: 0.9em; overflow-x: auto; margin: 20px 0;">
+                    <p><strong>Users</strong></p>
+                    <div style="margin-left: 20px;">
+├── profile (skills, experience, interests, features)<br/>
+├── values (personal values description)<br/>
+├── action_history (contribution tracking)<br/>
+├── settings (UI preferences)<br/>
+└── access_logs (privacy audit trail)
+                    </div>
+                    <p style="margin-top: 15px;"><strong>Vector DB</strong></p>
+                    <div style="margin-left: 20px;">
+├── values (vectorised values representation)<br/>
+├── profile (vectorised profiles representation)<br/>
+├── expertise (vectorised expertise representation)<br/>
+└── actions (vectorised actions representation)
+                    </div>
+                    <p style="margin-top: 15px;"><strong>Graph DB</strong></p>
+                    <div style="margin-left: 20px;">
+├── geography (members' geo connections)<br/>
+├── relatives (members' family connections)<br/>
+├── professional (members' business connections)<br/>
+└── interests (members' curiosity connections)
+                    </div>
+                    <p style="margin-top: 15px;"><strong>Discussions</strong></p>
+                    <div style="margin-left: 20px;">
+├── creator<br/>
+├── messages (threaded)<br/>
+├── context (short summary)<br/>
+├── parent message (link)<br/>
+├── child messages (links)<br/>
+├── emoji_reactions (user engagement)<br/>
+└── evidence (links attached documents/files)
+                    </div>
+                    <p style="margin-top: 15px;"><strong>Votings</strong></p>
+                    <div style="margin-left: 20px;">
+├── title & context description<br/>
+├── options (with budgets, timelines)<br/>
+├── isr_snapshot (members weights)<br/>
+├── votes (member_id → option, with weight applied)<br/>
+├── results (winner, margin, feedback)<br/>
+└── related_discussion_id
+                    </div>
+                    <p style="margin-top: 15px;"><strong>Tasks</strong></p>
+                    <div style="margin-left: 20px;">
+├── status (open, in progress, completed, evaluated)<br/>
+├── progress_updates (timeline with photos/docs)<br/>
+├── community_evaluation (ratings & feedback)<br/>
+└── impact (saved cost, time impact, etc.)
+                    </div>
+                    <p style="margin-top: 15px;"><strong>Firebase Storage</strong></p>
+                    <div style="margin-left: 20px;">
+├── artifacts collection<br/>
+└── members files (photos, videos, documents, evidence)
+                    </div>
+                </div>
+
+                <h3>ISR Calculation Pipeline</h3>
+                <ol style="background: #ecf0f1; padding: 20px; border-radius: 4px; margin: 20px 0;">
+                    <li><strong>Trigger:</strong> Rised chat or vote issue</li>
+                    <li><strong>ISR components weights (wR, wE, wC) evaluation:</strong> AI analize issue and its context to set wieghts for Relevanse, Expertise and Contribution parts</li>
+                    <li><strong>Data Fetch:</strong> Get users profile, values, issue context, historical performance</li>
+                    <li><strong>Calculate Relevance (R):</strong></li>
+                    <li><strong>Microcommunity Formation:</strong>
+                        <ul>
+                            <li>Filter: users with R > threshold gather Microcommunity</li>
+                        </ul>
+                    </li>
+                    <li><strong>Calculate Expertise (E):</strong></li>
+                    <li><strong>Vector of Values evaluation:</strong>
+                        <ul>
+                            <li>Gathering of Microcommunity members values from Matrix of Values</li>
+                            <li>Vector of Values: define from the vector representations of the microcommunity members values, taking into account Relevance (R)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Calculate Contribution (C):</strong></li>
+                    <li><strong>Normalization:</strong> Individual ISR components (R, E, C) are normalized to a microcommunity average of 1.0</li>
+                    <li><strong>Apply Formula:</strong> Row ISR = wR×R + wE×E + wC×C</li>
+                    <li><strong>Store & Notify:</strong> Save ISR for later use, notify user with microcommunity invitation and their personal weight on the issue</li>
+                </ol>
+
+                <h3>Performance Optimizations</h3>
+                <ul>
+                    <li><strong>ISR Caching:</strong> Recalculated once per decision, cached for voting period</li>
+                    <li><strong>Lazy Loading:</strong> Load messages/tasks in batches as you scroll</li>
+                    <li><strong>Cloud Function Scaling:</strong> Auto-scales to handle N simultaneous ISR calculations</li>
+                    <li><strong>CDN Delivery:</strong> Static assets (UI, styles) served from edge locations</li>
+                    <li><strong>Database Indexing:</strong> Optimized queries for fast searches and sorting</li>
+                </ul>
+
+                <h3>Privacy & Security (<a href="/wiki/adaptable_authorization.html">Adaptable Authorization (AAuth)</a>)</h3>
+                <ul>
+                    <li><strong>Multi-Layer Data Access:</strong> What data a members can see about other members depends on their gISR (general ISR) and Person-to-Person graph connections. </li>
+                    <li><strong>Access Logging:</strong> Every data request logged and auditable</li>
+                    <li><strong>Data Misuse Detection:</strong> AI flags suspicious access patterns (excessive requests = ISR penalty)</li>
+                    <li><strong>Encryption:</strong> All data encrypted in transit (TLS) and at rest</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <footer class="site-footer">
+        <div class="doc-content centered">
+            <small>© 2024-2026 Sergii Ponomarchuk</small>
+        </div>
+    </footer>
+    <script src="/site-nav.js"></script>
+    <script src="/script.js"></script>
+</body>
+</html>

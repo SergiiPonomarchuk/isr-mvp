@@ -1,0 +1,33 @@
+[
+  {
+	"Actor uid": 1,
+    "Action name": "The Whistleblower’s Disclosure",
+    "Action description": "In March 2025, Sarah Jenkins, a senior analyst at a major chemical plant in the Midwest, discovered that while the company’s wastewater discharge met current state limits, it contained high concentrations of 'forever chemicals' not yet regulated. Despite knowing the company would face no legal penalty, she leaked the internal toxicity reports to a local investigative journalist. She did this because she believed the 'Universal Responsibility' for the town's health outweighed her contract. Stakeholders included the company board, the plant workers, the downstream town residents, and the journalist.",
+    "Results": [
+      {"Date": "2025-04-10", "Consequence": "The company's stock price dropped 15%, and the board initiated an internal investigation into the leak source."},
+      {"Date": "2025-05-20", "Consequence": "The local town council voted to install a $2 million advanced filtration system for the municipal water supply, funded by a new emergency tax."},
+      {"Date": "2025-09-15", "Consequence": "Sarah Jenkins was terminated for breach of contract, but 300 families downstream signed a petition of support for her, leading to a legal defense fund."},
+      {"Date": "2025-12-01", "Consequence": "State legislators introduced 'The Jenkins Act' to close the chemical regulatory loophole."}
+    ]
+  },
+  {
+	"Actor uid": 2,
+    "Action name": "The Debt Forgiveness Fund",
+    "Action description": "In July 2025, Bread Pitt established the 'Mercy Slate' project in Chicago. The actor, a tech heir who felt a deep sense of 'Redemption' for their inherited wealth, worked with a non-profit to purchase $4 million worth of delinquent medical debt for pennies on the dollar. Instead of collecting, they sent 500 households a letter stating their debt was canceled. Stakeholders were the debt collection agency, the 500 families, and the donor.",
+    "Results": [
+      {"Date": "2025-07-20", "Consequence": "500 families received notification letters, resulting in an immediate average increase of 40 points in their credit scores."},
+      {"Date": "2025-08-15", "Consequence": "Local hospitals reported a 12% increase in follow-up appointments from these families, as the fear of billing vanished."},
+      {"Date": "2025-10-10", "Consequence": "The donor remained anonymous, but the non-profit received a surge in smaller donations from citizens inspired by the act."}
+    ]
+  },
+  {
+	"Actor uid": 3,
+    "Action name": "The Neighborhood Watch Expansion",
+    "Action description": "Following a series of porch thefts in a suburb of Seattle in January 2025, a resident named Mark Vane organized a high-tech 'Safe Streets' initiative. He convinced 40 neighbors to install interconnected AI-powered cameras that shared data in real-time with a private security firm. Mark did this to restore 'Unity' and order. Stakeholders included the homeowners, the private security firm, local law enforcement, and transient individuals in the area.",
+    "Results": [
+      {"Date": "2025-02-15", "Consequence": "Petty theft incidents in the 4-block radius dropped to zero for the first month."},
+      {"Date": "2025-04-01", "Consequence": "Two delivery drivers filed complaints regarding privacy violations and 'aggressive monitoring' by the private security firm."},
+      {"Date": "2025-06-20", "Consequence": "Neighbor relations became strained as some residents refused to participate, leading to 'in-group' and 'out-group' social dynamics."}
+    ]
+  }
+]

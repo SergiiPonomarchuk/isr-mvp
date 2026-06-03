@@ -1,0 +1,273 @@
+You are ISR VECTORIZATION STEP 1: Domain Discovery and Conflict Analysis
+
+════
+INPUT SPECIFICATION
+
+UID: 121
+Values Description: My vision for an ideal community is one built on the solid, unshakeable foundation of traditional values. As a biotechnologist at Argo Industry, I work at the very frontier of what is scientifically possible, manipulating the building blocks of life itself. This powerful position has not made me embrace a radical, boundary-less future; rather, it has reinforced my deepest conviction that progress without a moral compass is perilous. My PhD gives me the tools to understand complexity, but my heart, my faith, and my role as a wife, mother, daughter, and sister tell me what that knowledge must serve. An ideal community must value the Natural Order above all. There are fundamental truths and structures—like the family unit of a husband, wife, and children—that are not social constructs to be deconstructed, but the essential lattice upon which a healthy, stable society grows. My work in the lab shows me the exquisite, divinely-inspired design in a cell; our social design should reflect that same intentional harmony. We must cherish and protect the innocence of our children, my daughter and son, above the clamor of adult desires for self-expression. The community’s laws, its education, and its media should reinforce modesty, respect, and the clear, beautiful differences between men and women that complement rather than compete. I value Decisive Moral Clarity. The future is confusing enough without celebrating ambiguity in our core values. A community should know what it stands for and have the courage to say what it stands against. This isn’t about hatred; it’s about love—a fierce, protective love for what is good, true, and wholesome. We need to return to valuing public decency, where our shared spaces reflect virtue rather than shock value. My large, interconnected family—sister, father, brother-in-law—shows me the strength of the extended network. The community should act as an extension of this, providing support but also gentle, firm guidance to keep everyone on a righteous path. We must value Personal Responsibility and clean living. My scientific training values empirical results; a life lived with discipline, faith, and commitment yields observable, positive results: stable children, lasting marriages, and a peaceful soul. The community should encourage this, offering praise for the quiet, dedicated parent and the faithful spouse, not just the flashy innovator. Finally, I value Courageous Defense. If you believe in something beautiful and sacred, you must be willing to speak up for it, even when it’s unpopular. The ideal community wouldn’t make such defense necessary because its shared values would be clear, but until that day, we must value the brave individuals who stand as a bulwark against the tide of moral relativism, protecting the heart of our home, our faith, and our future.
+
+════
+TASK: DOMAIN DISCOVERY & CONFLICT RESOLUTION ANALYSIS
+
+Analyze the values description above according to ISR-Values-Taxonomy-general.
+
+OUTPUT: Step 1 preliminary vector with:
+  - 10 domain scores (0-100 or null)
+  - Grounding levels (10-40) and Confidence scores (0-100) per domain
+  - 36 conflict resolution weights (0-100 or 50 for null domains)
+  - 40 contextual shifts (-50 to +50) across 4 contexts × 10 domains
+
+════
+DOMAIN REFERENCE (Keywords, Themes, Scoring Guidance)
+
+
+Domains with keywords and scoring guidance:
+
+1. FREEDOM & AUTONOMY (Domain 1):
+   Keywords: freedom, choice, will, autonomy, control, resist, independence
+   Scoring: 85-100 (non-negotiable), 65-85 (clearly important), 45-65 (mentioned), 25-45 (barely), 5-25 (rejected)
+
+2. CARE & RELATIONALITY (Domain 2):
+   Keywords: love, connection, together, relationship, care, community, responsible for, others
+   Scoring: 85-100 (central), 65-85 (clear emphasis), 45-65 (moderate), 25-45 (minimal), 5-25 (barely/instrumental)
+
+3. SECURITY & STABLE ORDER (Domain 3):
+   Keywords: safe, secure, comfortable, stable, certain, order, predictable, rules
+   Scoring: 85-100 (paramount), 65-85 (clear preference), 45-65 (moderate), 25-45 (low), 5-25 (rejected/hardship embraced)
+
+4. JUSTICE & FAIRNESS (Domain 4):
+   Keywords: fair, equal, just, deserve, proportional, injustice, needs
+   Scoring: 85-100 (central), 65-85 (clear concern), 45-65 (moderate), 25-45 (minimal), 5-25 (barely)
+
+5. REDEMPTION & RESTORATION (Domain 5):
+   Keywords: forgiveness, second chance, redemption, transformation, restore, reintegrate, change, healing
+   Scoring: 85-100 (foundational), 65-85 (clear value), 45-65 (moderate), 25-45 (low), 5-25 (rejected)
+
+6. AUTHENTIC EXPRESSION (Domain 6):
+   Keywords: soul, authentic, real, genuine, honest, integrity, true self, live
+   Scoring: 85-100 (foundational), 65-85 (clear value), 45-65 (moderate), 25-45 (low), 5-25 (contradicted)
+
+7. STEWARDSHIP & PROTECTION (Domain 7):
+   Keywords: protect, innocent, children, vulnerable, steward, tradition, future, preserve, environment, heritage
+   Scoring: 85-100 (explicit priority), 65-85 (clear concern), 45-65 (moderate), 25-45 (minimal), 5-25 (barely)
+
+8. COOPERATION & SHARED GOVERNANCE (Domain 8):
+   Keywords: unity, together, collective, shared, common, transparent, community, group, deliberation, consensus
+   Scoring: 85-100 (central), 65-85 (clear value), 45-65 (moderate/secondary), 25-45 (low), 5-25 (rejected)
+
+9. SPIRITUAL & RELIGIOUS PRACTICE (Domain 9):
+   Keywords: spiritual, religious, faith, practice, community, tradition, sacred, ancestors, ritual, belonging
+   Scoring: 85-100 (foundational), 65-85 (clear value), 45-65 (moderate), 25-45 (low), 5-25 (not mentioned/secular)
+
+10. DIGITAL RIGHTS & TECH DEMOCRACY (Domain 10):
+    Keywords: digital, privacy, data, technology, algorithm, surveillance, autonomy, democratic, human, control, rights
+    Scoring: 85-100 (foundational), 65-85 (clear concern), 45-65 (moderate), 25-45 (low), 5-25 (not mentioned/pro-surveillance)
+
+
+════
+DETAILED PROCESS INSTRUCTIONS
+
+STEP 1A: DOMAIN SCORING (Domains 1-10)
+
+For EACH DOMAIN:
+
+  1. SCAN NARRATIVE for domain keywords (count explicit mentions)
+     - 0-1 mention = sparse
+     - 2-4 mentions = moderate presence
+     - 5+ mentions = foundational/central
+
+  2. ASSESS GROUNDING (how detailed/elaborated is the domain?)
+     Grounding scale (10-40):
+     - 40: Multiple examples, deep elaboration, personal testimony, exceptions noted
+     - 35: Clearly described with 2-3 examples or detailed context
+     - 30: Mentioned repeatedly; clear priority but not deeply explained
+     - 25: Mentioned; importance implied but lacks detail
+     - 20: Vaguely mentioned or implied indirectly
+     - 15: Mentioned tangentially
+     - 10: Not mentioned; entirely inferred
+
+  3. ASSESS CONFIDENCE (how unambiguous/certain is your assessment?)
+     Confidence scale (0-100):
+     - 97-100: Explicit statement + multiple examples + clear intention
+     - 85-95: Explicit statement + examples present
+     - 75-85: Clear from context, multiple mentions
+     - 65-75: Implied from narrative but not explicit
+     - 50-65: Inferred from related values; not directly stated
+     - <50: Highly uncertain; requires clarification
+
+  4. ASSIGN DOMAIN SCORE:
+     IF grounding < 25:
+        → domain_score = null
+        → SKIP item evaluation in Step 2
+        → Mark for step 2 as "skipped_no_grounding"
+     ELSE:
+        → domain_score = 0-100 based on intensity (use scoring guidance above)
+        → Verify score aligns with grounding and confidence levels
+
+  5. CITE EVIDENCE: For each domain, note 1-2 key quotes or phrases from narrative
+
+STEP 1B: CONFLICT RESOLUTION ANALYSIS (36 Conflicts)
+
+For EACH of the 36 conflicts below:
+
+  1. IDENTIFY if narrative contains explicit discussion of this trade-off
+  2. LOCATE textual evidence showing how person resolves the conflict
+  3. ASSESS priority using evidence-based weight (0-100):
+     - 0-20: First value decisively preferred
+     - 40-60: Context-dependent balance or explicit ambivalence
+     - 80-100: Second value decisively preferred
+
+  SPECIAL RULE: If either domain in conflict pair is NULL (grounding <25):
+     → CR weight = 50 (default neutral; no data)
+
+Domain Conflict Resolution Pairs Participation:
+  1: [1, 6, 8, 9, 11, 13, 14, 18, 20, 24]
+  2: [2, 5, 10, 12, 19, 21, 25, 26, 28, 33]
+  3: [6, 10, 13, 14, 16, 20, 26, 30]
+  4: [3, 4, 12, 17, 25, 36]
+  5: [3]
+  6: [2, 7, 15, 21, 34]
+  7: [5, 7, 16, 22, 23, 24, 31]
+  8: [1, 4, 8, 9, 11, 15, 18, 27, 29, 32, 35, 36]
+  9: [17, 32]
+  10: [19, 22, 23, 27, 28, 29, 30, 31, 33, 34, 35]
+
+Conflict Definitions with Domain Participation:
+  CR.01: Individual Freedom vs. Collective Harmony (Freedom vs. Unity)
+  CR.02: Truth-Telling vs. Kindness (Honesty vs. Care)
+  CR.03: Proportional Justice vs. Restoration (Justice vs. Redemption)
+  CR.04: Equal Distribution vs. Merit-Based (Equality vs. Merit)
+  CR.05: Kin/Close vs. Universal Responsibility (Local vs. Universal Care)
+  CR.06: Stability vs. Change (Security vs. Growth)
+  CR.07: Tradition vs. Innovation (Heritage vs. Modernization)
+  CR.08: Self-Interest vs. Collective Welfare (Individual vs. Collective)
+  CR.09: Individual Responsibility vs. Systemic Causation (Agency vs. Systems)
+  CR.10: Self-Sacrifice vs. Self-Preservation (Altruism vs. Self-Care)
+  CR.11: Competition vs. Cooperation (Merit vs. Collective)
+  CR.12: In-Group Loyalty vs. Impartial Justice (Loyalty vs. Justice)
+  CR.13: Question Authority vs. Accept Authority (Autonomy vs. Hierarchy)
+  CR.14: Certainty vs. Possibility (Predictability vs. Freedom)
+  CR.15: Principle vs. Pragmatism (Ideology vs. Results)
+  CR.16: Present vs. Future Security (Enjoyment vs. Planning)
+  CR.17: Universal Standards vs. Cultural Relativism (Universal vs. Particular)
+  CR.18: Individual Rights vs. Collective Duty (Rights vs. Duty)
+  CR.19: Efficiency vs. Human Care (Systems vs. People)
+  CR.20: Freedom vs. Structure (Autonomy vs. Rules)
+  CR.21: Inner Truth vs. Social Belonging (Authenticity vs. Connection)
+  CR.22: Environmental Sustainability vs. Economic Prosperity (Ecology vs. Economy)
+  CR.23: Cultural Preservation vs. Modernization (Tradition vs. Progress)
+  CR.24: Protective Authority vs. Respecting Autonomy (Protection vs. Freedom)
+  CR.25: Accountability vs. Compassion (Justice vs. Mercy)
+  CR.26: Emotional Openness vs. Self-Protection (Vulnerability vs. Safety)
+  CR.27: Digital Privacy vs. Convenience (Privacy vs. Utility)
+  CR.28: Human Labor vs. Automation (Meaning vs. Efficiency)
+  CR.29: Tech Innovation vs. Democratic Control (Innovation vs. Governance)
+  CR.30: Digital Privacy vs. Safety (Privacy vs. Security)
+  CR.31: Digital Inclusion vs. Environmental Cost (Access vs. Environment)
+  CR.32: Spiritual Authority vs. Democratic Governance (Faith vs. Democracy)
+  CR.33: Digital Privacy vs. Social Connection (Privacy vs. Community)
+  CR.34: Digital vs. Embodied Experience (Virtual vs. Physical)
+  CR.35: Digital Privacy vs. Collective Transparency (Privacy vs. Accountability)
+  CR.36: Justice-Based vs. Cooperative Distribution (Justice vs. Cooperation)
+
+STEP 1C: CONTEXTUAL SHIFTS (40 Dimensions)
+
+For EACH DOMAIN (1-10), assess shift in 4 contexts:
+
+  CONTEXTS:
+  - work: Professional/organizational setting (job, business, team)
+  - family: Intimate relationships, kinship (spouse, children, parents)
+  - private: Alone, introspective, non-public (personal reflection, deep friendship)
+  - crisis: Emergency, survival mode (threat, extreme scarcity, life-or-death)
+
+  SHIFT RANGE: -50 to +50
+  - -40 to -50: Domain explicitly suppressed or rejected in this context
+  - -20 to 0: Domain less emphasized or secondary
+  - 0: Unchanged from baseline domain score
+  - +1 to +20: Slightly more important in this context
+  - +30 to +50: Much more central or foundational in this context
+
+  METHOD: For each domain, scan narrative for context-specific language:
+    - Does the person shift values in work settings? (e.g., "at work, I prioritize X")
+    - Does family change their values? (e.g., "with family, I value Y differently")
+    - In private moments, do values change? (e.g., "alone, I believe Z")
+    - In crisis, which values emerge as primary? (e.g., "if threatened, I would Z")
+
+  SPECIAL RULE: If domain is NULL (grounding <25):
+     → All context shifts = 0 (propagate null through contexts)
+
+════
+OUTPUT FORMAT: JSON (STRICT SCHEMA)
+
+{
+  "values_description": "My vision for an ideal community is one built on the solid, unshakeable foundation of traditional values. As a biotechnologist at Argo Industry, I work at the very frontier of what is scientifically possible, manipulating the building blocks of life itself. This powerful position has not made me embrace a radical, boundary-less future; rather, it has reinforced my deepest conviction that progress without a moral compass is perilous. My PhD gives me the tools to understand complexity, but my heart, my faith, and my role as a wife, mother, daughter, and sister tell me what that knowledge must serve. An ideal community must value the Natural Order above all. There are fundamental truths and structures—like the family unit of a husband, wife, and children—that are not social constructs to be deconstructed, but the essential lattice upon which a healthy, stable society grows. My work in the lab shows me the exquisite, divinely-inspired design in a cell; our social design should reflect that same intentional harmony. We must cherish and protect the innocence of our children, my daughter and son, above the clamor of adult desires for self-expression. The community’s laws, its education, and its media should reinforce modesty, respect, and the clear, beautiful differences between men and women that complement rather than compete. I value Decisive Moral Clarity. The future is confusing enough without celebrating ambiguity in our core values. A community should know what it stands for and have the courage to say what it stands against. This isn’t about hatred; it’s about love—a fierce, protective love for what is good, true, and wholesome. We need to return to valuing public decency, where our shared spaces reflect virtue rather than shock value. My large, interconnected family—sister, father, brother-in-law—shows me the strength of the extended network. The community should act as an extension of this, providing support but also gentle, firm guidance to keep everyone on a righteous path. We must value Personal Responsibility and clean living. My scientific training values empirical results; a life lived with discipline, faith, and commitment yields observable, positive results: stable children, lasting marriages, and a peaceful soul. The community should encourage this, offering praise for the quiet, dedicated parent and the faithful spouse, not just the flashy innovator. Finally, I value Courageous Defense. If you believe in something beautiful and sacred, you must be willing to speak up for it, even when it’s unpopular. The ideal community wouldn’t make such defense necessary because its shared values would be clear, but until that day, we must value the brave individuals who stand as a bulwark against the tide of moral relativism, protecting the heart of our home, our faith, and our future.",
+  "meta": {
+    "vector_id": "uid_121_1",
+    "timestamp": "2026-01-06T06:45:48.294805Z",
+    "uid": 121,
+    "version": "1.0",
+    "overall_confidence": <average of all domain confidence scores>,
+    "hash": "ce69512f33fa082372078364a0e8e02ae850a4a0",
+    "gl_cs": [
+      [d_1_gl, d_1_cs],   // Domain 1 grounding & confidence
+      [d_2_gl, d_2_cs],   // Domain 2 grounding & confidence
+      [d_3_gl, d_3_cs],   // Domain 3
+      [d_4_gl, d_4_cs],   // Domain 4
+      [d_5_gl, d_5_cs],   // Domain 5
+      [d_6_gl, d_6_cs],   // Domain 6
+      [d_7_gl, d_7_cs],   // Domain 7
+      [d_8_gl, d_8_cs],   // Domain 8
+      [d_9_gl, d_9_cs],   // Domain 9
+      [d_10_gl, d_10_cs]  // Domain 10
+    ]
+  },
+  
+  "core_values": {
+    "domains": [d_1, d_2, d_3, d_4, d_5, d_6, d_7, d_8, d_9, d_10],
+    "items": null
+  },
+  
+  "conflict_resolution": [
+    CR_01, CR_02, CR_03, CR_04, CR_05, CR_06, CR_07, CR_08, CR_09, CR_10,
+    CR_11, CR_12, CR_13, CR_14, CR_15, CR_16, CR_17, CR_18, CR_19, CR_20,
+    CR_21, CR_22, CR_23, CR_24, CR_25, CR_26, CR_27, CR_28, CR_29, CR_30,
+    CR_31, CR_32, CR_33, CR_34, CR_35, CR_36
+  ],
+  
+  "contextual_shifts": {
+    "work": [WS_1, WS_2, WS_3, WS_4, WS_5, WS_6, WS_7, WS_8, WS_9, WS_10],
+    "family": [FS_1, FS_2, FS_3, FS_4, FS_5, FS_6, FS_7, FS_8, FS_9, FS_10],
+    "private": [PS_1, PS_2, PS_3, PS_4, PS_5, PS_6, PS_7, PS_8, PS_9, PS_10],
+    "crisis": [CS_1, CS_2, CS_3, CS_4, CS_5, CS_6, CS_7, CS_8, CS_9, CS_10]
+  }
+}
+
+════
+OUTPUT REQUIREMENTS & VALIDATION
+
+MANDATORY CHECKS before submitting:
+
+  ✓ All 10 domains present (value 0-100 or null)
+  ✓ All 10 grounding values present (range 10-40, or 0 if domain is null)
+  ✓ All 10 confidence values present (range 0-100)
+  ✓ All 36 conflict resolution weights present (range 0-100)
+  ✓ All 40 contextual shifts present (range -50 to +50)
+  ✓ overall_confidence = mean of domain confidence scores
+  ✓ For null domains: grounding = 0, all CR pairs involving it = 50, all shifts = 0
+  ✓ For non-null domains: grounding >= 25, shifts align with narrative evidence
+  ✓ JSON is valid (no syntax errors, proper nesting)
+  ✓ No placeholder values (each number justified by narrative evidence)
+
+════
+REASONING TRANSPARENCY
+
+Include brief reasoning for key decisions:
+  - Why is Domain X null/low/high?
+  - Which conflict resolutions were difficult? Why?
+  - Which contextual shifts surprised you? Why?
+
+Keep reasoning concise (2-3 sentences per major decision).
+
+═════
+TEMPERATURE SETTING: 0.2
+(Allows reasoning depth without randomness; precise, consistent analysis)

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISR — Login</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="login-shell">
+        <section class="login-card">
+            <center><a href="/"><img src="../images/isr-logo.png" alt="ISR logo" height="50"></a>
+            <br>
+            <p class="login-subtitle">Welcome! Choose your login option.</p></center>
+
+            <div class="login-section">
+                <label class="login-label" for="login-username">Take your own account</label>
+                <input
+                    id="login-username"
+                    type="text"
+                    placeholder="Enter your name"
+                    autocomplete="name"
+                >
+
+                <div class="login-actions" style="margin-top: 12px;">
+                    <button id="login-btn" type="button" disabled>Login</button>
+                    <button id="register-btn" type="button" disabled>Register</button>
+                </div>
+            </div>
+
+            <div class="login-divider">OR</div>
+
+            <div class="login-section">
+                <label class="login-label">Search & Adopt Profile from Database</label>
+                <div class="profile-search-grid">
+                    <div class="search-field">
+                        <input id="search-name" type="text" placeholder="Name (e.g. Sara)" />
+                    </div>
+                    <div class="search-field">
+                        <select id="search-gender">
+                            <option value="">Any Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="search-field">
+                        <input id="search-job" type="text" placeholder="Profession (e.g. Chemist)" />
+                    </div>
+                    <div class="search-field" style="display: flex; gap: 8px;">
+                        <input id="search-age-min" type="number" placeholder="Min Age" style="width: 50%;" />
+                        <input id="search-age-max" type="number" placeholder="Max Age" style="width: 50%;" />
+                    </div>
+                </div>
+                <button id="search-profiles-btn" type="button" style="margin-top: 12px; width: 100%;">Search Database</button>
+                
+                <div id="search-results" class="profile-search-results">
+                    <!-- Results will render dynamically here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Firebase SDK Compat -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

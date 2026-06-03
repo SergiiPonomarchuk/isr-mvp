@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISR — User Guide Values Description</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --surface-muted: #edf2f7;
+      --surface-soft: #f8fafc;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e0;
+      --text: #1a202c;
+      --text-muted: #718096;
+      --text-soft: #a0aec0;
+      --primary: #2c5282;
+      --primary-hover: #1f436d;
+      --primary-soft: #ebf4ff;
+      --success-soft: #f0fff4;
+      --warning-soft: #fffaf0;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+
+    .hero {
+      background: linear-gradient(180deg, #fafdff 0%, #f3f8fc 100%);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow-md);
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 3.8vw, 3rem);
+      line-height: 1.15;
+    }
+
+    .hero p {
+      max-width: 70ch;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1.02rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .toc,
+    .card,
+    .domain,
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .toc {
+      position: sticky;
+      top: 20px;
+      padding: 18px;
+    }
+
+    .toc h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+    }
+
+    .toc ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toc a {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 12px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.94rem;
+    }
+
+    .toc a:hover {
+      background: var(--surface-muted);
+      color: var(--primary-hover);
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .card {
+      padding: 24px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 1.45rem;
+      line-height: 1.25;
+    }
+
+    h3 {
+      margin: 0 0 12px;
+      font-size: 1.08rem;
+      line-height: 1.3;
+      color: var(--primary);
+    }
+
+    p { margin: 0 0 12px; }
+    p:last-child { margin-bottom: 0; }
+
+    ul, ol {
+      margin: 0 0 12px;
+      padding-left: 22px;
+    }
+
+    li { margin: 0 0 8px; }
+
+    .lead {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+    }
+
+    .highlight,
+    .info,
+    .tip {
+      padding: 16px 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      margin-top: 14px;
+    }
+
+    .highlight {
+      background: #f8fbff;
+      border-color: #cddff1;
+    }
+
+    .info {
+      background: var(--surface-soft);
+    }
+
+    .tip {
+      background: var(--success-soft);
+      border-color: #cfe8d4;
+    }
+
+    .domains {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .domain {
+      padding: 18px;
+    }
+
+    .domain p:last-child,
+    .domain ul:last-child {
+      margin-bottom: 0;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--surface-muted);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .example-box {
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+    }
+
+    .example-box strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .process {
+      counter-reset: step;
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .process-item {
+      position: relative;
+      padding: 16px 16px 16px 56px;
+      border-radius: var(--radius-lg);
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+    }
+
+    .process-item::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .faq-item {
+      padding: 18px;
+    }
+
+    .footer-note {
+      margin-top: 10px;
+      color: var(--text-soft);
+      font-size: 0.9rem;
+    }
+
+    code {
+      background: #eff4f8;
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    @media (max-width: 920px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .toc {
+        position: static;
+      }
+
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding: 16px 14px 36px;
+      }
+
+      .hero,
+      .card,
+      .domain,
+      .faq-item,
+      .toc {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="eyebrow">ISR · Values Guide</div>
+      <h1>How to Describe Your Community Values for ISR</h1>
+      <p>This guide helps you write a values description that explains the kind of community future you want to create and the kinds of actions that should move that future forward.</p>
+    </header>
+
+    <div class="layout">
+      <aside class="toc">
+        <h2>Guide sections</h2>
+        <ul>
+          <li><a href="#what-youre-doing">What you’re doing</a></li>
+          <li><a href="#what-this-is-not">What this is not</a></li>
+          <li><a href="#what-you-should-describe">What you should describe</a></li>
+          <li><a href="#how-to-write">How to write</a></li>
+          <li><a href="#simple-structure">Simple structure</a></li>
+          <li><a href="#what-happens-next">What happens next</a></li>
+          <li><a href="#important-reminders">Important reminders</a></li>
+          <li><a href="#questions">Questions</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <section class="card" id="what-youre-doing">
+          <h2>What You’re Doing</h2>
+          <p class="lead">You are about to describe the kind of community future you want to create and the kinds of actions that should happen in it.</p>
+          <div class="highlight">
+            <p>This description becomes a <strong>vector</strong>, a set of numbers that represents your vision of a good future community. Those vectors are combined with others to form a <strong>community values vector</strong>.</p>
+            <p><strong>Core question:</strong> “When our community members take some actions, does it move us toward or away from the future we all said we want?”</p>
+          </div>
+          <div class="tip">
+            <p><strong>Single purpose:</strong> Aligning community actions with community values.</p>
+          </div>
+        </section>
+
+        <section class="card" id="what-this-is-not">
+          <h2>What This Is Not</h2>
+          <ul>
+            <li><strong>Not about you:</strong> It does not analyze your personality or psychology.</li>
+            <li><strong>Not about judging you:</strong> It does not label you as “good” or “bad.”</li>
+            <li><strong>Not about predicting your behavior:</strong> It cannot know how you will act.</li>
+            <li><strong>Not about your current life:</strong> It is about what you believe <em>should</em> be, not only what exists today.</li>
+          </ul>
+        </section>
+
+        <section class="card" id="what-you-should-describe">
+          <h2>What You Should Describe</h2>
+          <p>Think about the community you want to see. Describe what should happen in it. The guide is organized around 10 value areas.</p>
+
+          <div class="domains">
+            <article class="domain">
+              <div class="pill">1. Freedom and Autonomous Choice</div>
+              <h3>Questions to think about</h3>
+              <ul>
+                <li>How should people be free to make their own choices?</li>
+                <li>Should people be able to choose their own path, even if others disagree?</li>
+                <li>Who decides what is right for someone — the person themselves, or others?</li>
+                <li>What conditions must exist for people to truly choose freely?</li>
+              </ul>
+              <p><strong>Example:</strong> “People should be able to change their mind and choose a different path without punishment.”</p>
+            </article>
+
+            <article class="domain">
+              <div class="pill">2. How We Care for Each Other</div>
+              <h3>Questions to think about</h3>
+              <ul>
+                <li>How should people relate to each other?</li>
+                <li>Should responsibility extend only to family, or to strangers too?</li>
+                <li>What does caring action look like in community?</li>
+              </ul>
+              <p><strong>Example:</strong> “Community should include people unlike us, not only our closest circle.”</p>
+            </article>
+
+            <article class="domain">
+              <div class="pill">3. Safety, Stability, and Basic Order</div>
+              <h3>Questions to think about</h3>
+              <ul>
+                <li>What makes community life safe and predictable?</li>
+                <li>How should basic needs like food, shelter, and health be provided?</li>
+                <li>What role should clear rules and structures play?</li>
+              </ul>
+              <p><strong>Example:</strong> “Everyone should have access to shelter and food, and rules should be clear.”</p>
+            </article>
+
+            <article class="domain">
+              <div class="pill">4. Fair Treatment and Justice</div>
+              <h3>Questions to think about</h3>
+              <ul>
+                <li>How should resources be distributed?</li>
+                <li>Should equal shares matter more than effort, or vice versa?</li>
+                <li>What should happen when harm is done?</li>
+              </ul>
+              <p><strong>Example:</strong> “Basic needs should be met for everyone before anyone gets luxury.”</p>
+            </article>
+
+            <article class="domain">
+              <div class="pill">5. Redemption, Restoration, and Second Chances</div>
+              <h3>Questions to think about</h3>
+              <ul>
+                <li>When someone makes serious mistakes, what should happen?</li>
+                <li>Can people truly change?</li>
+                <li>What should forgiveness look like in practice?</li>
+              </ul>
+              <p><strong>Example:</strong> “The goal should be to restore people to community, not punish forever.”</p>
+            </article>
+
+            <article class="domain">
+              <div class="pill">6. Authentic Expression and Living by Values</div>
+              <h3>Questions to think about</h3>
+              <ul>
+                <li>Should people be allowed to be fully themselves, even if different?</li>
+                <li>Should people express real beliefs or conform to group norms?</li>
+                <li>How important is it that actions match stated values?</li>
+              </ul>
+              <p><strong>Example:</strong> “People should be able to express unpopular views without being silenced.”</p>
+            </article>
+
+            <article class="domain">
+              <div class="pill">7. Protecting the Vulnerable and Stewardship</div>
+              <h3>Questions to think about</h3>
+              <ul>
+                <li>Who needs special protection?</li>
+                <li>What does community owe to nature, heritage, and future generations?</li>
+                <li>What should be preserved, and what can change?</li>
+              </ul>
+              <p><strong>Example:</strong> “We should make decisions while thinking about people not yet born.”</p>
+            </article>
+
+            <article class="domain">
+              <div class="pill">8. Working Together and Sharing</div>
+              <h3>Questions to think about</h3>
+              <ul>
+                <li>How should important decisions be made?</li>
+                <li>Should resources be shared equally or based on contribution?</li>
+                <li>Should decisions be transparent and explained?</li>
+              </ul>
+              <p><strong>Example:</strong> “Important decisions should be made together, not by one person alone.”</p>
+            </article>
+
+            <article class="domain">
+              <div class="pill">9. Spiritual and Religious Practice</div>
+              <h3>Questions to think about</h3>
+              <ul>
+                <li>What role should spiritual or religious communities play?</li>
+                <li>How should different traditions be respected?</li>
+                <li>What space should community provide for spiritual needs?</li>
+              </ul>
+              <p><strong>Example:</strong> “People should be free to practice spiritual or religious traditions.”</p>
+            </article>
+
+            <article class="domain">
+              <div class="pill">10. Digital Rights and Technology</div>
+              <h3>Questions to think about</h3>
+              <ul>
+                <li>How should personal data and digital privacy be protected?</li>
+                <li>Should technology serve human needs, or should people adapt to it?</li>
+                <li>Who should govern digital systems — companies or communities?</li>
+              </ul>
+              <p><strong>Example:</strong> “People should control their own personal data; it should not be extracted from them.”</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="card" id="how-to-write">
+          <h2>How to Write Your Description</h2>
+          <div class="info">
+            <p><strong>Length:</strong> Aim for 800–1500 words. Less than 400 words is often too thin, and more than 2500 is usually too much.</p>
+            <p><strong>Style:</strong> Write simply and honestly. Phrases like “I think…”, “It seems right that…”, and “In the future community…” work well.</p>
+          </div>
+
+          <h3>Three key principles</h3>
+          <div class="two-col">
+            <div class="example-box">
+              <strong>1. Be concrete, not abstract</strong>
+              <p><strong>Weak:</strong> “Community should value freedom.”</p>
+              <p><strong>Strong:</strong> “People should be able to choose medical care without others forcing different treatment.”</p>
+            </div>
+            <div class="example-box">
+              <strong>2. Be honest, not ‘correct’</strong>
+              <p>Describe what you really believe, not what sounds impressive. If you prioritize stability, family, or caution, say so directly.</p>
+            </div>
+            <div class="example-box">
+              <strong>3. Name real conflicts and choose</strong>
+              <p>When values clash, explain which one matters more to you and why.</p>
+            </div>
+            <div class="example-box">
+              <strong>Typical conflicts</strong>
+              <p>Freedom vs. safety, truth vs. kindness, individual need vs. group good, justice vs. mercy, tradition vs. change.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="simple-structure">
+          <h2>Simple Structure You Can Follow</h2>
+          <p>You do not need to use headings, but this structure can make writing easier.</p>
+          <div class="process">
+            <div class="process-item">
+              <strong>Section 1: Your vision of a good community</strong>
+              <p>Describe what the future community looks like, how people relate, how they decide, and what matters most.</p>
+            </div>
+            <div class="process-item">
+              <strong>Section 2: Your core beliefs about each domain</strong>
+              <p>Pick the 6–8 domains that matter most to you. For each one, explain what should happen, give an example, and connect it to community action.</p>
+            </div>
+            <div class="process-item">
+              <strong>Section 3: Where your values conflict</strong>
+              <p>Name 2–4 real tensions, explain which side usually wins for you, and why.</p>
+            </div>
+            <div class="process-item">
+              <strong>Section 4: Areas you are still thinking about</strong>
+              <p>If you are genuinely uncertain, say so. Uncertainty is still valuable information.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="what-happens-next">
+          <h2>What Happens Next</h2>
+          <div class="process">
+            <div class="process-item">
+              <strong>Vectorization</strong>
+              <p>AI extracts your values and converts them into a numerical representation, described in the guide as a 233-dimensional vector.</p>
+            </div>
+            <div class="process-item">
+              <strong>Clarification</strong>
+              <p>If parts are unclear, you may receive 1–3 clarifying questions.</p>
+            </div>
+            <div class="process-item">
+              <strong>Community vector</strong>
+              <p>Your vector is combined with others in your community to create a community-level values vector.</p>
+            </div>
+            <div class="process-item">
+              <strong>Action assessment</strong>
+              <p>When the community considers an action, the system asks whether it moves the group toward or away from its stated future.</p>
+            </div>
+            <div class="process-item">
+              <strong>Results</strong>
+              <p>You may see outputs such as alignment, conflict, or tension between values, with community weight explanations.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="important-reminders">
+          <h2>Important Reminders</h2>
+          <ul>
+            <li><strong>This describes your vision of the future, not who you are today.</strong></li>
+            <li><strong>Be honest about your actual beliefs.</strong> The system is useful only when descriptions are truthful.</li>
+            <li><strong>This is for community alignment, not personal judgment.</strong> The purpose is to compare actions to stated values.</li>
+          </ul>
+          <div class="tip">
+            <p><strong>Ready to write?</strong> Focus on actions and what should happen. Be concrete. Be honest. Name the conflicts.</p>
+          </div>
+        </section>
+
+        <section class="card" id="questions">
+          <h2>Questions</h2>
+          <div class="faq-list">
+            <div class="faq-item">
+              <h3>What if I’m unsure about something?</h3>
+              <p>Write that you are uncertain and explain why. That is still valuable information.</p>
+            </div>
+            <div class="faq-item">
+              <h3>What if my values contradict each other?</h3>
+              <p>That is normal. Name the contradiction and explain which value usually wins when you must choose.</p>
+            </div>
+            <div class="faq-item">
+              <h3>Should I describe what I do, or what I believe should be?</h3>
+              <p>Describe what you believe <em>should be</em>, not only what you currently do.</p>
+            </div>
+            <div class="faq-item">
+              <h3>Will this be used to judge me?</h3>
+              <p>No. The guide says it is used to assess whether community actions align with community values.</p>
+            </div>
+            <div class="faq-item">
+              <h3>Can I change my description later?</h3>
+              <p>Yes. Values can evolve, and the guide explicitly allows later updates.</p>
+            </div>
+          </div>
+          <p class="footer-note">End of guide — now describe the community future you want.</p>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
