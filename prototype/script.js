@@ -2956,7 +2956,7 @@ function initTopicDetailViews() {
         let pendingRender = false;
 
         async function updateVotingUI() {
-          if (!currentIssueData) return;
+          if (!currentIssueData || !currentDiscData) return;
           if (isRendering) {
             pendingRender = true;
             return;
@@ -2965,25 +2965,12 @@ function initTopicDetailViews() {
 
           try {
             const issue = currentIssueData;
+            const disc = currentDiscData;
             
-            // fetch discussion details (participants, expertise_depth, relevance_scores)
-            let rawParticipants = [];
-            let expertiseDepth = "None";
-            let relevanceScores = {};
-            let discData = null;
-            try {
-              const discDoc = await db.collection("discussions").doc(topicId).get();
-              if (discDoc.exists) {
-                discData = discDoc.data();
-                rawParticipants = discData.participants || [];
-                expertiseDepth = discData.expertise_depth || "None";
-                relevanceScores = discData.relevance_scores || {};
-              }
-            } catch (err) {
-              console.error("Error resolving participants for voting topic:", err);
-            }
-
-            currentDiscData = discData || issue;
+            // Use real-time synced discussions data
+            const rawParticipants = disc.participants || [];
+            const expertiseDepth = disc.expertise_depth || "None";
+            const relevanceScores = disc.relevance_scores || {};
 
             // Fetch messages for the previous discussion
             let messages = [];
@@ -3174,8 +3161,8 @@ function initTopicDetailViews() {
 
             // Render topic detailed HTML
             modalBody.innerHTML = renderVotingTopic(topicData);
-            bindDetailViewButtons(titleText, discData || issue);
-            bindChatMetaButtons(discData || issue);
+            bindDetailViewButtons(titleText, disc);
+            bindChatMetaButtons(disc);
 
             // Bind discussion toggle button click handler
             const discussionToggleBtn = modalBody.querySelector('.voting-discussion-toggle-btn');
@@ -3258,6 +3245,9 @@ function initTopicDetailViews() {
               };
             }
 
+            // Refresh open sub-modal if one is active
+            refreshOpenModal();
+
           } catch (err) {
             print("Render voting detail UI failed:", err);
           } finally {
@@ -3268,6 +3258,15 @@ function initTopicDetailViews() {
             }
           }
         }
+
+        const discUnsubscribe = db.collection("discussions").doc(topicId).onSnapshot(doc => {
+          if (doc.exists) {
+            currentDiscData = doc.data();
+            updateVotingUI();
+          }
+        }, err => {
+          console.error("Listen to discussion details in voting failed:", err);
+        });
 
         const issueUnsubscribe = db.collection("issues").doc(topicId).onSnapshot(doc => {
           if (!doc.exists) {
@@ -3282,6 +3281,7 @@ function initTopicDetailViews() {
 
         activeDetailListener = () => {
           if (issueUnsubscribe) issueUnsubscribe();
+          if (discUnsubscribe) discUnsubscribe();
         };
 
       } catch (err) {
@@ -4501,7 +4501,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         const isImportant = relVal > 0.50;
         const days = getDaysUntil(issue.ends);
         const isUrgent = days <= 3;
-        const hasVoted = !!(issue.votes && issue.votes[storedUid]);
+        const hasVoted = issue.votes && issue.votes[storedUid] !== undefined;
         const shouldVoteUrgently = isUrgent && !hasVoted;
 
         let emojiPrefix = '';
@@ -4697,7 +4697,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         const isImportant = relVal > 0.50;
         const days = getDaysUntil(issue.ends);
         const isUrgent = days <= 3;
-        const hasVoted = !!(issue.votes && issue.votes[storedUid]);
+        const hasVoted = issue.votes && issue.votes[storedUid] !== undefined;
         const shouldVoteUrgently = isUrgent && !hasVoted;
 
         let emojiPrefix = '';
