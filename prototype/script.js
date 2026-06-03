@@ -3035,7 +3035,7 @@ function initTopicDetailViews() {
               }
             }
 
-            const isrScoresMap = discData ? (discData.isr_scores || {}) : (issue.isr_scores || {});
+            const isrScoresMap = disc ? (disc.isr_scores || {}) : (issue.isr_scores || {});
 
             if (currentUserId) {
               const uidStr = currentUserId.toString();
@@ -3099,8 +3099,8 @@ function initTopicDetailViews() {
 
             // Calculate current option scores based on votes in Firestore
             let baseOptions = [];
-            if (discData && discData.options_v2 && discData.options_v2.length > 0) {
-              baseOptions = discData.options_v2.map(opt => ({
+            if (disc && disc.options_v2 && disc.options_v2.length > 0) {
+              baseOptions = disc.options_v2.map(opt => ({
                 label: opt.title,
                 score: 0,
                 author_name: opt.author_name || "System",
@@ -3249,7 +3249,7 @@ function initTopicDetailViews() {
             refreshOpenModal();
 
           } catch (err) {
-            print("Render voting detail UI failed:", err);
+            console.error("Render voting detail UI failed:", err);
           } finally {
             isRendering = false;
             if (pendingRender) {
