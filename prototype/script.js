@@ -2672,50 +2672,52 @@ function initTopicDetailViews() {
               });
             });
 
-            // 2.5 Bind Reaction Bubble clicks to show list of persons who reacted
+            // 2.5 Bind Reaction Bubble clicks to show list of persons who reacted (synchronous popup display to prevent event handler races)
             modalBody.querySelectorAll('.reaction-bubble').forEach(bubble => {
-              bubble.addEventListener('click', async function(e) {
+              bubble.addEventListener('click', function(e) {
                 e.stopPropagation();
-                const uidsAttr = this.getAttribute('data-uids');
-                const uids = uidsAttr ? uidsAttr.split(',').filter(Boolean) : [];
-                
-                const itemEl = this.closest('.topic-message-card, .topic-description-actions, .option-card');
-                if (!itemEl) return;
+                try {
+                  const uidsAttr = this.getAttribute('data-uids');
+                  const uids = uidsAttr ? uidsAttr.split(',').filter(Boolean) : [];
+                  
+                  const itemEl = this.closest('.topic-message-card, .topic-description-actions, .option-card');
+                  if (!itemEl) return;
 
-                // Close any other open popups first
-                document.querySelectorAll('.reaction-users-popup').forEach(p => p.remove());
+                  // Close any other open popups first
+                  document.querySelectorAll('.reaction-users-popup').forEach(p => p.remove());
 
-                let names = [];
-                if (uids.length === 0) {
-                  names = ['No reactions'];
-                } else {
-                  await resolveUserNames(uids);
-                  names = uids.map(uid => window.userCache[uid] || ('User ' + uid));
+                  const popup = document.createElement('div');
+                  popup.className = 'reaction-users-popup';
+                  popup.style.minWidth = '150px';
+
+                  popup.addEventListener('click', pe => pe.stopPropagation());
+
+                  const renderNames = () => {
+                    popup.innerHTML = '';
+                    const namesList = uids.length === 0 ? ['No reactions'] : uids.map(uid => window.userCache[uid] || ('User ' + uid));
+                    namesList.forEach(n => {
+                      const item = document.createElement('div');
+                      item.className = 'reaction-user-item';
+                      item.textContent = n;
+                      popup.appendChild(item);
+                    });
+                  };
+
+                  // Render fallback/cached names instantly
+                  renderNames();
+                  this.style.position = 'relative';
+                  this.appendChild(popup);
+
+                  // Fetch full user profiles from Firestore in the background and update when loaded
+                  if (uids.length > 0) {
+                    resolveUserNames(uids).then(() => {
+                      renderNames();
+                    }).catch(err => console.error("Error resolving user names for reaction popup:", err));
+                  }
+                } catch (err) {
+                  console.error("Reaction bubble click handler error:", err);
                 }
-
-                const popup = document.createElement('div');
-                popup.className = 'reaction-users-popup';
-                popup.style.top = '100%';
-                popup.style.left = '0';
-                popup.style.minWidth = '150px';
-
-                popup.addEventListener('click', pe => pe.stopPropagation());
-
-                names.forEach(n => {
-                  const item = document.createElement('div');
-                  item.className = 'reaction-user-item';
-                  item.textContent = n;
-                  popup.appendChild(item);
-                });
-
-                this.style.position = 'relative';
-                this.appendChild(popup);
               });
-            });
-
-            // Close popups on document body click
-            document.addEventListener('click', function() {
-              document.querySelectorAll('.reaction-users-popup').forEach(p => p.remove());
             });
 
             if (sendBtn && inputEl) {
