@@ -2634,7 +2634,7 @@ function initTopicDetailViews() {
             };
 
             modalBody.innerHTML = renderChatTopic(topicData);
-            bindDetailViewButtons(titleText, disc);
+            bindDetailViewButtons(titleText, disc, true);
 
             // 1. Bind Parent Message Link Scrolling & Flashing
             modalBody.querySelectorAll('.parent-link').forEach(link => {
@@ -2793,6 +2793,10 @@ function initTopicDetailViews() {
                 const msgId = this.getAttribute('data-msg-id');
                 const reactionType = this.getAttribute('data-reaction');
                 if (!msgId || !reactionType) return;
+
+                // Close the menu immediately
+                const menu = this.closest('.reaction-menu');
+                if (menu) menu.hidden = true;
 
                 await toggleReaction(msgId, reactionType);
               });
@@ -3566,7 +3570,7 @@ function initTopicDetailViews() {
     });
   }
 
-  function bindDetailViewButtons(titleText, disc) {
+  function bindDetailViewButtons(titleText, disc, skipReactionMenus) {
     modalBody.querySelectorAll('.topic-back-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
         restoreTopicListView();
@@ -3574,7 +3578,9 @@ function initTopicDetailViews() {
       });
     });
 
-    bindReactionMenus();
+    if (!skipReactionMenus) {
+      bindReactionMenus();
+    }
 
     // Bind Microcommunity Button clicks
     modalBody.querySelectorAll('.microcommunity-btn').forEach(btn => {
