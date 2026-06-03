@@ -4321,10 +4321,40 @@ function initRealTimeDashboardSync(db, storedUid) {
       
       const previewColor = isUnread ? 'color: var(--text); font-weight: 500;' : 'color: var(--text-muted);';
       
+      // Calculate status flags for badges
+      const relVal = (disc.relevance_scores && disc.relevance_scores[storedUid] !== undefined) ? disc.relevance_scores[storedUid] : 0;
+      const isImportant = relVal > 0.50;
+      const days = getDaysUntil(disc.ends);
+      const isUrgent = days <= 6;
+      const hasVoted = !!(disc.deadline_votes && disc.deadline_votes[storedUid]);
+      const shouldVoteUrgently = isUrgent && !hasVoted;
+
+      let badgesHtml = '';
+      if (isUnread) {
+        badgesHtml += `<span class="topic-badge badge-new">new</span>`;
+      }
+      if (isImportant) {
+        badgesHtml += `<span class="topic-badge badge-important">important</span>`;
+      }
+      if (isUrgent) {
+        badgesHtml += `<span class="topic-badge badge-urgent">urgent</span>`;
+      }
+      if (hasVoted) {
+        badgesHtml += `<span class="topic-badge badge-voted">voted</span>`;
+      } else {
+        badgesHtml += `<span class="topic-badge badge-notvoted">not voted</span>`;
+      }
+      if (shouldVoteUrgently) {
+        badgesHtml += `<span class="topic-badge badge-vote-urgent">vote urgently!</span>`;
+      }
+
       listHtml += `
         <button class="topic-item" data-topic-type="chat" data-topic-id="${topicId}">
           <div class="topic-header">
-            <span class="topic-name">💬 ${disc.topic}</span>
+            <div class="topic-name-wrap">
+              <span class="topic-name">💬 ${disc.topic}</span>
+              ${badgesHtml}
+            </div>
             <span class="topic-meta">${formatDeadline(disc.ends)} &nbsp;·&nbsp; Relevance: <b>${relevanceVal}</b> &nbsp;·&nbsp; ISR: <b>${isrVal}</b></span>
           </div>
           <div class="topic-preview" style="${previewColor} display: flex; align-items: center; justify-content: space-between; gap: 8px;">
@@ -4455,10 +4485,40 @@ function initRealTimeDashboardSync(db, storedUid) {
         
         const previewColor = isUnread ? 'color: var(--text); font-weight: 500;' : 'color: var(--text-muted);';
         
+        // Calculate status flags for badges
+        const relVal = (issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? issue.relevance_scores[storedUid] : 0;
+        const isImportant = relVal > 0.50;
+        const days = getDaysUntil(issue.ends);
+        const isUrgent = days <= 6;
+        const hasVoted = !!(issue.votes && issue.votes[storedUid]);
+        const shouldVoteUrgently = isUrgent && !hasVoted;
+
+        let badgesHtml = '';
+        if (isUnread) {
+          badgesHtml += `<span class="topic-badge badge-new">new</span>`;
+        }
+        if (isImportant) {
+          badgesHtml += `<span class="topic-badge badge-important">important</span>`;
+        }
+        if (isUrgent) {
+          badgesHtml += `<span class="topic-badge badge-urgent">urgent</span>`;
+        }
+        if (hasVoted) {
+          badgesHtml += `<span class="topic-badge badge-voted">voted</span>`;
+        } else {
+          badgesHtml += `<span class="topic-badge badge-notvoted">not voted</span>`;
+        }
+        if (shouldVoteUrgently) {
+          badgesHtml += `<span class="topic-badge badge-vote-urgent">vote urgently!</span>`;
+        }
+
         listHtml += `
           <button class="topic-item" data-topic-type="voting" data-topic-id="${topicId}">
             <div class="topic-header">
-              <span class="topic-name">🗳️ ${issue.title}</span>
+              <div class="topic-name-wrap">
+                <span class="topic-name">🗳️ ${issue.title}</span>
+                ${badgesHtml}
+              </div>
               <span class="topic-meta">${formatDeadline(issue.ends)} &nbsp;·&nbsp; Relevance: <b>${relevanceVal}</b> &nbsp;·&nbsp; ISR: <b>${isrVal}</b></span>
             </div>
             <div class="topic-preview" style="${previewColor} display: flex; align-items: center; justify-content: space-between; gap: 8px;">

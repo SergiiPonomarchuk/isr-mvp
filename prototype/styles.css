@@ -1979,4 +1979,76 @@ button.topic-detail-meta-item:active {
   transform: none !important;
 }
 
+/* Badges for topic names */
+.topic-name-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.topic-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  pointer-events: none;
+}
+
+.badge-new {
+  background-color: var(--primary-soft);
+  color: var(--primary);
+  border: 1px solid var(--border-strong);
+}
+
+.badge-important {
+  background-color: rgba(214, 158, 46, 0.1);
+  color: var(--warning);
+  border: 1px solid rgba(214, 158, 46, 0.2);
+}
+
+.badge-urgent {
+  background-color: var(--urgent-soft);
+  color: var(--urgent);
+  border: 1px solid rgba(229, 62, 62, 0.2);
+}
+
+.badge-voted {
+  background-color: rgba(56, 161, 105, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(56, 161, 105, 0.2);
+}
+
+.badge-notvoted {
+  background-color: var(--surface-muted);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.badge-vote-urgent {
+  background-color: var(--urgent);
+  color: #ffffff;
+  border: 1px solid var(--urgent);
+  animation: badge-pulse 1.5s infinite;
+}
+
+@keyframes badge-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 4px rgba(229, 62, 62, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(229, 62, 62, 0);
+  }
+}
+
 
