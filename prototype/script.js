@@ -4351,7 +4351,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         <button class="topic-item" data-topic-type="chat" data-topic-id="${topicId}">
           <div class="topic-header">
             <div class="topic-name-wrap">
-              <span class="topic-name">${prefix}💬 ${disc.topic}</span>
+              <span class="topic-name">${prefix}${disc.topic}</span>
             </div>
             <span class="topic-meta">${formatDeadline(disc.ends)} &nbsp;·&nbsp; Relevance: <b>${relevanceVal}</b> &nbsp;·&nbsp; ISR: <b>${isrVal}</b></span>
           </div>
@@ -4424,7 +4424,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         
         preview.innerHTML = `
           <div class="topic-line">
-            <span class="topic-name">${prefix}💬 ${disc.topic}</span>
+            <span class="topic-name">${prefix}${disc.topic}</span>
           </div>
           <div class="topic-preview" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
             <b>${disc.last_message_sender_name || 'System'}:</b> ${escapeHtml(textStr)}
@@ -4508,21 +4508,15 @@ function initRealTimeDashboardSync(db, storedUid) {
         if (isUnread) emojiPrefix += '🟢';
         if (isImportant) emojiPrefix += '⭐';
         if (isUrgent) emojiPrefix += '⚡';
-        if (hasVoted) {
-          emojiPrefix += '✅';
-        } else {
-          emojiPrefix += '🗳️';
-        }
-        if (shouldVoteUrgently) {
-          emojiPrefix += '🚨';
-        }
+        if (shouldVoteUrgently) emojiPrefix += '🚨';
         const prefix = emojiPrefix ? emojiPrefix + ' ' : '';
+        const voteIcon = hasVoted ? '✅' : '🗳️';
 
         listHtml += `
           <button class="topic-item" data-topic-type="voting" data-topic-id="${topicId}">
             <div class="topic-header">
               <div class="topic-name-wrap">
-                <span class="topic-name">${prefix}🗳️ ${issue.title}</span>
+                <span class="topic-name">${prefix}${voteIcon} ${issue.title}</span>
               </div>
               <span class="topic-meta">${formatDeadline(issue.ends)} &nbsp;·&nbsp; Relevance: <b>${relevanceVal}</b> &nbsp;·&nbsp; ISR: <b>${isrVal}</b></span>
             </div>
@@ -4710,15 +4704,9 @@ function initRealTimeDashboardSync(db, storedUid) {
         if (isUnread) emojiPrefix += '🟢';
         if (isImportant) emojiPrefix += '⭐';
         if (isUrgent) emojiPrefix += '⚡';
-        if (hasVoted) {
-          emojiPrefix += '✅';
-        } else {
-          emojiPrefix += '🗳️';
-        }
-        if (shouldVoteUrgently) {
-          emojiPrefix += '🚨';
-        }
+        if (shouldVoteUrgently) emojiPrefix += '🚨';
         const prefix = emojiPrefix ? emojiPrefix + ' ' : '';
+        const voteIcon = hasVoted ? '✅' : '🗳️';
 
         const preview = document.createElement('div');
         preview.className = 'dash-card-preview';
@@ -4726,7 +4714,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         preview.addEventListener('click', () => openSectionModal('voting'));
         preview.innerHTML = `
           <div class="topic-line">
-            <span class="topic-name">${prefix}🗳️ ${issue.title}</span>
+            <span class="topic-name">${prefix}${voteIcon} ${issue.title}</span>
           </div>
           <div class="topic-preview">Status: <b>${issue.status || 'Voting'}</b> · Submitter: <b>${issue.submitter_id}</b></div>
         `;
