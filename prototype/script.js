@@ -4242,12 +4242,26 @@ function initRealTimeDashboardSync(db, storedUid) {
 
   window.markDiscussionAsRead = function(topicId) {
     let doc = cachedChatDocs.find(d => d.id === topicId);
+    let isVoting = false;
     if (!doc) {
       doc = cachedVotingDocs.find(d => d.id === topicId);
+      isVoting = true;
     }
     if (!doc) return;
     const total = doc.data().message_count || 0;
     window.markDiscussionAsReadWithCount(topicId, total);
+
+    if (isVoting) {
+      let openedVotingIssues = {};
+      try {
+        openedVotingIssues = JSON.parse(localStorage.getItem('voting_opened_issues') || '{}');
+      } catch (e) {}
+      openedVotingIssues[topicId] = true;
+      localStorage.setItem('voting_opened_issues', JSON.stringify(openedVotingIssues));
+      if (typeof window.triggerVotingListRender === 'function') {
+        window.triggerVotingListRender();
+      }
+    }
   };
 
   window.markDiscussionAsReadWithCount = function(topicId, count) {
@@ -4321,39 +4335,23 @@ function initRealTimeDashboardSync(db, storedUid) {
       
       const previewColor = isUnread ? 'color: var(--text); font-weight: 500;' : 'color: var(--text-muted);';
       
-      // Calculate status flags for badges
+      // Calculate status flags for emojis
       const relVal = (disc.relevance_scores && disc.relevance_scores[storedUid] !== undefined) ? disc.relevance_scores[storedUid] : 0;
       const isImportant = relVal > 0.50;
       const days = getDaysUntil(disc.ends);
       const isUrgent = days <= 6;
-      const hasVoted = !!(disc.deadline_votes && disc.deadline_votes[storedUid]);
-      const shouldVoteUrgently = isUrgent && !hasVoted;
 
-      let badgesHtml = '';
-      if (isUnread) {
-        badgesHtml += `<span class="topic-badge badge-new">new</span>`;
-      }
-      if (isImportant) {
-        badgesHtml += `<span class="topic-badge badge-important">important</span>`;
-      }
-      if (isUrgent) {
-        badgesHtml += `<span class="topic-badge badge-urgent">urgent</span>`;
-      }
-      if (hasVoted) {
-        badgesHtml += `<span class="topic-badge badge-voted">voted</span>`;
-      } else {
-        badgesHtml += `<span class="topic-badge badge-notvoted">not voted</span>`;
-      }
-      if (shouldVoteUrgently) {
-        badgesHtml += `<span class="topic-badge badge-vote-urgent">vote urgently!</span>`;
-      }
+      let emojiPrefix = '';
+      if (isUnread) emojiPrefix += '🟢';
+      if (isImportant) emojiPrefix += '⭐';
+      if (isUrgent) emojiPrefix += '⚡';
+      const prefix = emojiPrefix ? emojiPrefix + ' ' : '';
 
       listHtml += `
         <button class="topic-item" data-topic-type="chat" data-topic-id="${topicId}">
           <div class="topic-header">
             <div class="topic-name-wrap">
-              <span class="topic-name">💬 ${disc.topic}</span>
-              ${badgesHtml}
+              <span class="topic-name">${prefix}💬 ${disc.topic}</span>
             </div>
             <span class="topic-meta">${formatDeadline(disc.ends)} &nbsp;·&nbsp; Relevance: <b>${relevanceVal}</b> &nbsp;·&nbsp; ISR: <b>${isrVal}</b></span>
           </div>
@@ -4361,7 +4359,6 @@ function initRealTimeDashboardSync(db, storedUid) {
             <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;">
               <span style="font-weight: 600;">${dateStr} · ${nameIdStr}:</span> ${escapeHtml(textStr)}
             </span>
-            ${isUnread ? `<span class="chat-new-badge" style="background: var(--urgent); color: #fff; font-size: 0.72rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; flex-shrink: 0; line-height: 1;">new ${unreadCount}</span>` : ''}
           </div>
         </button>
       `;
@@ -4399,6 +4396,24 @@ function initRealTimeDashboardSync(db, storedUid) {
       sortedDocs.forEach(doc => {
         if (count >= 3) return;
         const disc = doc.data();
+        const topicId = doc.id;
+        
+        const total = disc.message_count || 0;
+        const read = readCounts[topicId] !== undefined ? readCounts[topicId] : total;
+        const unreadCount = Math.max(0, total - read);
+        const isUnread = unreadCount > 0;
+        
+        const relVal = (disc.relevance_scores && disc.relevance_scores[storedUid] !== undefined) ? disc.relevance_scores[storedUid] : 0;
+        const isImportant = relVal > 0.50;
+        const days = getDaysUntil(disc.ends);
+        const isUrgent = days <= 6;
+
+        let emojiPrefix = '';
+        if (isUnread) emojiPrefix += '🟢';
+        if (isImportant) emojiPrefix += '⭐';
+        if (isUrgent) emojiPrefix += '⚡';
+        const prefix = emojiPrefix ? emojiPrefix + ' ' : '';
+
         const preview = document.createElement('div');
         preview.className = 'dash-card-preview';
         preview.style.cursor = 'pointer';
@@ -4409,8 +4424,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         
         preview.innerHTML = `
           <div class="topic-line">
-            <span class="community-tag">Discussion</span>
-            <span class="topic-name">${disc.topic}</span>
+            <span class="topic-name">${prefix}💬 ${disc.topic}</span>
           </div>
           <div class="topic-preview" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
             <b>${disc.last_message_sender_name || 'System'}:</b> ${escapeHtml(textStr)}
@@ -4430,9 +4444,9 @@ function initRealTimeDashboardSync(db, storedUid) {
   window.triggerChatListRender = renderChatList;
 
     const renderVotingList = () => {
-      let readCounts = {};
+      let openedVotingIssues = {};
       try {
-        readCounts = JSON.parse(localStorage.getItem('chat_read_counts') || '{}');
+        openedVotingIssues = JSON.parse(localStorage.getItem('voting_opened_issues') || '{}');
       } catch (e) {}
 
       // Calculate tag counts
@@ -4444,10 +4458,10 @@ function initRealTimeDashboardSync(db, storedUid) {
         const issue = doc.data();
         const tid = doc.id;
         
-        const total = issue.message_count || 0;
-        const read = readCounts[tid] !== undefined ? readCounts[tid] : total;
-        const unread = Math.max(0, total - read);
-        totalNewMessages += unread;
+        const isUnread = !openedVotingIssues[tid];
+        if (isUnread) {
+          totalNewMessages++;
+        }
         
         const rel = (issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? issue.relevance_scores[storedUid] : 0;
         if (rel > 0.50) {
@@ -4455,7 +4469,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         }
         
         const days = getDaysUntil(issue.ends);
-        if (days <= 6) {
+        if (days <= 3) {
           totalUrgent++;
         }
       });
@@ -4467,10 +4481,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         const issue = doc.data();
         const topicId = doc.id;
         
-        const total = issue.message_count || 0;
-        const read = readCounts[topicId] !== undefined ? readCounts[topicId] : total;
-        const unreadCount = Math.max(0, total - read);
-        const isUnread = unreadCount > 0;
+        const isUnread = !openedVotingIssues[topicId];
         
         const relevanceVal = (issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined)
           ? (issue.relevance_scores[storedUid] * 100).toFixed(0) + "%"
@@ -4485,39 +4496,33 @@ function initRealTimeDashboardSync(db, storedUid) {
         
         const previewColor = isUnread ? 'color: var(--text); font-weight: 500;' : 'color: var(--text-muted);';
         
-        // Calculate status flags for badges
+        // Calculate status flags for emojis
         const relVal = (issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? issue.relevance_scores[storedUid] : 0;
         const isImportant = relVal > 0.50;
         const days = getDaysUntil(issue.ends);
-        const isUrgent = days <= 6;
+        const isUrgent = days <= 3;
         const hasVoted = !!(issue.votes && issue.votes[storedUid]);
         const shouldVoteUrgently = isUrgent && !hasVoted;
 
-        let badgesHtml = '';
-        if (isUnread) {
-          badgesHtml += `<span class="topic-badge badge-new">new</span>`;
-        }
-        if (isImportant) {
-          badgesHtml += `<span class="topic-badge badge-important">important</span>`;
-        }
-        if (isUrgent) {
-          badgesHtml += `<span class="topic-badge badge-urgent">urgent</span>`;
-        }
+        let emojiPrefix = '';
+        if (isUnread) emojiPrefix += '🟢';
+        if (isImportant) emojiPrefix += '⭐';
+        if (isUrgent) emojiPrefix += '⚡';
         if (hasVoted) {
-          badgesHtml += `<span class="topic-badge badge-voted">voted</span>`;
+          emojiPrefix += '✅';
         } else {
-          badgesHtml += `<span class="topic-badge badge-notvoted">not voted</span>`;
+          emojiPrefix += '🗳️';
         }
         if (shouldVoteUrgently) {
-          badgesHtml += `<span class="topic-badge badge-vote-urgent">vote urgently!</span>`;
+          emojiPrefix += '🚨';
         }
+        const prefix = emojiPrefix ? emojiPrefix + ' ' : '';
 
         listHtml += `
           <button class="topic-item" data-topic-type="voting" data-topic-id="${topicId}">
             <div class="topic-header">
               <div class="topic-name-wrap">
-                <span class="topic-name">🗳️ ${issue.title}</span>
-                ${badgesHtml}
+                <span class="topic-name">${prefix}🗳️ ${issue.title}</span>
               </div>
               <span class="topic-meta">${formatDeadline(issue.ends)} &nbsp;·&nbsp; Relevance: <b>${relevanceVal}</b> &nbsp;·&nbsp; ISR: <b>${isrVal}</b></span>
             </div>
@@ -4525,7 +4530,6 @@ function initRealTimeDashboardSync(db, storedUid) {
               <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;">
                 <span style="font-weight: 600;">${dateStr} • ${nameIdStr}:</span> ${escapeHtml(textStr)}
               </span>
-              ${isUnread ? `<span class="chat-new-badge" style="background: var(--urgent); color: #fff; font-size: 0.72rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; flex-shrink: 0; line-height: 1;">new ${unreadCount}</span>` : ''}
             </div>
           </button>
         `;
@@ -4682,18 +4686,47 @@ function initRealTimeDashboardSync(db, storedUid) {
           <span class="dash-badge">total ${votingDocs.length}</span>
         </div>
       `;
+      let openedVotingIssues = {};
+      try {
+        openedVotingIssues = JSON.parse(localStorage.getItem('voting_opened_issues') || '{}');
+      } catch (e) {}
+
       let count = 0;
       votingDocs.forEach(doc => {
         if (count >= 3) return;
         const issue = doc.data();
+        const topicId = doc.id;
+        
+        const isUnread = !openedVotingIssues[topicId];
+        
+        const relVal = (issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? issue.relevance_scores[storedUid] : 0;
+        const isImportant = relVal > 0.50;
+        const days = getDaysUntil(issue.ends);
+        const isUrgent = days <= 3;
+        const hasVoted = !!(issue.votes && issue.votes[storedUid]);
+        const shouldVoteUrgently = isUrgent && !hasVoted;
+
+        let emojiPrefix = '';
+        if (isUnread) emojiPrefix += '🟢';
+        if (isImportant) emojiPrefix += '⭐';
+        if (isUrgent) emojiPrefix += '⚡';
+        if (hasVoted) {
+          emojiPrefix += '✅';
+        } else {
+          emojiPrefix += '🗳️';
+        }
+        if (shouldVoteUrgently) {
+          emojiPrefix += '🚨';
+        }
+        const prefix = emojiPrefix ? emojiPrefix + ' ' : '';
+
         const preview = document.createElement('div');
         preview.className = 'dash-card-preview';
         preview.style.cursor = 'pointer';
         preview.addEventListener('click', () => openSectionModal('voting'));
         preview.innerHTML = `
           <div class="topic-line">
-            <span class="community-tag">${issue.category ? issue.category.split('.')[0].toUpperCase() : 'GENERAL'}</span>
-            <span class="topic-name">${issue.title}</span>
+            <span class="topic-name">${prefix}🗳️ ${issue.title}</span>
           </div>
           <div class="topic-preview">Status: <b>${issue.status || 'Voting'}</b> · Submitter: <b>${issue.submitter_id}</b></div>
         `;
@@ -4722,8 +4755,7 @@ function initRealTimeDashboardSync(db, storedUid) {
           : '<span class="status-pill status-pill-active">Active</span>';
         preview.innerHTML = `
           <div class="topic-line">
-            <span class="community-tag">Task</span>
-            <span class="topic-name">${issue.title}</span>
+            <span class="topic-name">📋 ${issue.title}</span>
           </div>
           <div class="topic-preview">Status: ${pill}</div>
         `;
