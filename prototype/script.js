@@ -2158,6 +2158,7 @@ function initTopicDetailViews() {
       let plus1WeekSum = 0;
       let startVotingSum = 0;
       let backToChatSum = 0;
+      let finishVotingSum = 0;
 
       for (const uid in votesMap) {
         const v = votesMap[uid];
@@ -2168,6 +2169,8 @@ function initTopicDetailViews() {
           startVotingSum += userIsrScore;
         } else if (v === 'back_to_chat') {
           backToChatSum += userIsrScore;
+        } else if (v === 'finish_voting') {
+          finishVotingSum += userIsrScore;
         }
       }
 
@@ -2176,7 +2179,7 @@ function initTopicDetailViews() {
       };
 
       if (totalIsrSum > 0) {
-        if ((plus1WeekSum / totalIsrSum) > 0.70) {
+        if ((plus1WeekSum / totalIsrSum) > 0.10) {
           let currentDeadlineDate = new Date();
           if (data.ends && data.ends !== "Ongoing") {
             const parts = data.ends.split('-');
@@ -2199,7 +2202,7 @@ function initTopicDetailViews() {
           }
 
           setTimeout(() => { closeOverlayModal(); }, 100);
-        } else if ((startVotingSum / totalIsrSum) > 0.70 && kind === 'chat') {
+        } else if ((startVotingSum / totalIsrSum) > 0.10 && kind === 'chat') {
           const newEndsDate = new Date();
           newEndsDate.setDate(newEndsDate.getDate() + 7);
           const newEndsStr = formatDateToString(newEndsDate);
@@ -2265,7 +2268,7 @@ function initTopicDetailViews() {
             closeOverlayModal();
             restoreTopicListView();
           }, 100);
-        } else if ((backToChatSum / totalIsrSum) > 0.70 && kind === 'voting') {
+        } else if ((backToChatSum / totalIsrSum) > 0.10 && kind === 'voting') {
           // Transition back to Chat
           const newEndsDate = new Date();
           newEndsDate.setDate(newEndsDate.getDate() + 7);
@@ -2280,6 +2283,20 @@ function initTopicDetailViews() {
             ends: newEndsStr,
             deadline_votes: {},
             votes: {} // reset votes
+          });
+
+          setTimeout(() => {
+            closeOverlayModal();
+            restoreTopicListView();
+          }, 100);
+        } else if ((finishVotingSum / totalIsrSum) > 0.10 && kind === 'voting') {
+          // Transition to Approved
+          updateFields.status = 'approved';
+          updateFields.deadline_votes = {}; // reset votes
+
+          transaction.update(issueRef, {
+            status: 'approved',
+            deadline_votes: {}
           });
 
           setTimeout(() => {
@@ -2321,6 +2338,7 @@ function initTopicDetailViews() {
   let plus1WeekSum = 0;
   let startVotingSum = 0;
   let backToChatSum = 0;
+  let finishVotingSum = 0;
 
   for (const uid in votesMap) {
     const v = votesMap[uid];
@@ -2331,19 +2349,22 @@ function initTopicDetailViews() {
       startVotingSum += userIsrScore;
     } else if (v === 'back_to_chat') {
       backToChatSum += userIsrScore;
+    } else if (v === 'finish_voting') {
+      finishVotingSum += userIsrScore;
     }
   }
 
   const plus1WeekPct = totalIsrSum > 0 ? (plus1WeekSum / totalIsrSum) * 100 : 0;
   const startVotingPct = totalIsrSum > 0 ? (startVotingSum / totalIsrSum) * 100 : 0;
   const backToChatPct = totalIsrSum > 0 ? (backToChatSum / totalIsrSum) * 100 : 0;
+  const finishVotingPct = totalIsrSum > 0 ? (finishVotingSum / totalIsrSum) * 100 : 0;
   const userVote = votesMap[currentUserId];
 
   let descriptionText = "Adjust the discussion deadline or initiate the voting stage.";
   let secondRowHtml = "";
 
   if (kind === 'voting') {
-    descriptionText = "Adjust the voting deadline or transition this issue back to the chat discussion stage.";
+    descriptionText = "Adjust the voting deadline, transition back to the chat discussion, or finish voting.";
     secondRowHtml = `
         <!-- Back to Chat Button -->
         <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--surface-soft); border:1px solid var(--border); padding:12px; border-radius:8px;">
@@ -2353,6 +2374,16 @@ function initTopicDetailViews() {
           <div style="text-align:right; min-width:120px;">
             <div style="font-size:0.95rem; font-weight:700; color:var(--text);">${backToChatSum.toFixed(2)} ISR</div>
             <div style="font-size:0.75rem; color:var(--text-muted);">${backToChatPct.toFixed(1)}% of total</div>
+          </div>
+        </div>
+        <!-- Finish Voting Button -->
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--surface-soft); border:1px solid var(--border); padding:12px; border-radius:8px;">
+          <button type="button" class="deadline-vote-btn ${userVote === 'finish_voting' ? 'active' : ''}" data-vote="finish_voting">
+            ${userVote === 'finish_voting' ? '✓ ' : ''}Finish Voting
+          </button>
+          <div style="text-align:right; min-width:120px;">
+            <div style="font-size:0.95rem; font-weight:700; color:var(--text);">${finishVotingSum.toFixed(2)} ISR</div>
+            <div style="font-size:0.75rem; color:var(--text-muted);">${finishVotingPct.toFixed(1)}% of total</div>
           </div>
         </div>
     `;
@@ -2398,7 +2429,7 @@ function initTopicDetailViews() {
       </div>
       
       <div style="font-size:0.8rem; color:var(--text-muted); line-height:1.4; background:var(--surface-soft); padding:10px; border-radius:6px; border:1px solid var(--border);">
-        💡 <b>Rule:</b> Action triggers automatically when support exceeds <b>70%</b> of the microcommunity's total ISR-score (${totalIsrSum.toFixed(2)} ISR).
+        💡 <b>Rule:</b> Action triggers automatically when support exceeds <b>10%</b> of the microcommunity's total ISR-score (${totalIsrSum.toFixed(2)} ISR).
       </div>
       
       <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:8px;">
