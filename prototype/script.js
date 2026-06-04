@@ -4420,14 +4420,23 @@ function initRealTimeDashboardSync(db, storedUid) {
     // Update Dashboard chat card previews
     const dashChatCard = document.querySelector('.dash-card[data-section="chat"]');
     if (dashChatCard) {
+      let badgesHtml = '';
+      if (totalNewMessages > 0) {
+        badgesHtml += `<span class="dash-badge">new: ${totalNewMessages}</span>`;
+      }
+      if (totalImportant > 0) {
+        badgesHtml += `<span class="dash-badge">important: ${totalImportant}</span>`;
+      }
+      if (totalUrgent > 0) {
+        badgesHtml += `<span class="dash-badge">urgent: ${totalUrgent}</span>`;
+      }
+
       dashChatCard.innerHTML = `
         <div class="dash-card-topline">
           <div class="dash-card-title">Chat</div>
         </div>
         <div class="dash-card-badges">
-          <span class="dash-badge">new: ${totalNewMessages}</span>
-          <span class="dash-badge">important: ${totalImportant}</span>
-          <span class="dash-badge">urgent: ${totalUrgent}</span>
+          ${badgesHtml}
         </div>
       `;
       let count = 0;
@@ -4744,14 +4753,23 @@ function initRealTimeDashboardSync(db, storedUid) {
         }
       });
 
+      let badgesHtml = '';
+      if (dashboardNewCount > 0) {
+        badgesHtml += `<span class="dash-badge">new: ${dashboardNewCount}</span>`;
+      }
+      if (dashboardImportantNotVotedCount > 0) {
+        badgesHtml += `<span class="dash-badge">important: ${dashboardImportantNotVotedCount}</span>`;
+      }
+      if (dashboardUrgentNotVotedCount > 0) {
+        badgesHtml += `<span class="dash-badge dash-badge-urgent">urgent: ${dashboardUrgentNotVotedCount}</span>`;
+      }
+
       dashVotingCard.innerHTML = `
         <div class="dash-card-topline">
           <div class="dash-card-title">Voting</div>
         </div>
         <div class="dash-card-badges">
-          <span class="dash-badge">new: ${dashboardNewCount}</span>
-          <span class="dash-badge">important not voted: ${dashboardImportantNotVotedCount}</span>
-          <span class="dash-badge ${dashboardUrgentNotVotedCount > 0 ? 'dash-badge-urgent' : ''}">urgent not voted: ${dashboardUrgentNotVotedCount}</span>
+          ${badgesHtml}
         </div>
       `;
 
