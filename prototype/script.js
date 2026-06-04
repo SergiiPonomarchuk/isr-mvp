@@ -4423,7 +4423,6 @@ function initRealTimeDashboardSync(db, storedUid) {
       dashChatCard.innerHTML = `
         <div class="dash-card-topline">
           <div class="dash-card-title">Chat</div>
-          <span class="inline-urgent">${cachedChatDocs.length} active</span>
         </div>
         <div class="dash-card-badges">
           <span class="dash-badge">new: ${totalNewMessages}</span>
@@ -4710,19 +4709,51 @@ function initRealTimeDashboardSync(db, storedUid) {
     
     const dashVotingCard = document.querySelector('.dash-card[data-section="voting"]');
     if (dashVotingCard) {
-      dashVotingCard.innerHTML = `
-        <div class="dash-card-topline">
-          <div class="dash-card-title">Voting</div>
-          <span class="inline-urgent">${votingDocs.length} active</span>
-        </div>
-        <div class="dash-card-badges">
-          <span class="dash-badge">total ${votingDocs.length}</span>
-        </div>
-      `;
       let openedVotingIssues = {};
       try {
         openedVotingIssues = JSON.parse(localStorage.getItem('voting_opened_issues') || '{}');
       } catch (e) {}
+
+      let dashboardNewCount = 0;
+      let dashboardImportantNotVotedCount = 0;
+      let dashboardUrgentNotVotedCount = 0;
+
+      votingDocs.forEach(doc => {
+        const issue = doc.data();
+        const topicId = doc.id;
+
+        const isUnread = !openedVotingIssues[topicId];
+        const hasVoted = issue.votes && issue.votes[storedUid] !== undefined;
+
+        if (isUnread) {
+          dashboardNewCount++;
+        }
+
+        const relVal = (issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? issue.relevance_scores[storedUid] : 0;
+        const isImportant = relVal > 0.50;
+
+        if (isImportant && !hasVoted) {
+          dashboardImportantNotVotedCount++;
+        }
+
+        const days = getDaysUntil(issue.ends);
+        const isUrgent = days <= 3;
+
+        if (isUrgent && !hasVoted) {
+          dashboardUrgentNotVotedCount++;
+        }
+      });
+
+      dashVotingCard.innerHTML = `
+        <div class="dash-card-topline">
+          <div class="dash-card-title">Voting</div>
+        </div>
+        <div class="dash-card-badges">
+          <span class="dash-badge">new: ${dashboardNewCount}</span>
+          <span class="dash-badge">important not voted: ${dashboardImportantNotVotedCount}</span>
+          <span class="dash-badge ${dashboardUrgentNotVotedCount > 0 ? 'dash-badge-urgent' : ''}">urgent not voted: ${dashboardUrgentNotVotedCount}</span>
+        </div>
+      `;
 
       let count = 0;
       votingDocs.forEach(doc => {
