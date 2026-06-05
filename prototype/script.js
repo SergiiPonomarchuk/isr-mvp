@@ -1918,6 +1918,7 @@ function initTopicDetailViews() {
     modalBody.setAttribute('data-topic-detail-open', '1');
     modalBody.setAttribute('data-topic-source-kind', kind);
     modalBody.setAttribute('data-topic-source-title', titleText || '');
+    modalBody.setAttribute('data-active-topic-id', topicId);
     modalBody.__sourceViewHtml = sourceViewHtml || modalBody.innerHTML;
     modalBody.__restoreView = restoreTopicListView;
 
@@ -3572,6 +3573,7 @@ function initTopicDetailViews() {
     if (typeof modalBody.__sourceViewHtml === 'string') {
       modalBody.innerHTML = modalBody.__sourceViewHtml;
       modalBody.removeAttribute('data-topic-detail-open');
+      modalBody.removeAttribute('data-active-topic-id');
       bindTopicListInteractions();
     }
   }
@@ -3633,11 +3635,248 @@ function initTopicDetailViews() {
 
         const uidsStr = this.getAttribute('data-uids');
         const uids = uidsStr ? uidsStr.split(',').filter(Boolean) : [];
+        const topicId = modalBody.getAttribute('data-active-topic-id');
+
+        function mapTaxonomyToUserValues(taxonomy) {
+          return {
+            domains: [
+              { id: 1, name: 'Agency & Freedom', score: taxonomy.domains[0] !== undefined ? taxonomy.domains[0] : 50 },
+              { id: 2, name: 'Relationality & Care', score: taxonomy.domains[1] !== undefined ? taxonomy.domains[1] : 50 },
+              { id: 3, name: 'Security & Stable Order', score: taxonomy.domains[2] !== undefined ? taxonomy.domains[2] : 50 },
+              { id: 4, name: 'Justice & Fairness', score: taxonomy.domains[3] !== undefined ? taxonomy.domains[3] : 50 },
+              { id: 5, name: 'Redemption & Restoration', score: taxonomy.domains[4] !== undefined ? taxonomy.domains[4] : 50 },
+              { id: 6, name: 'Authentic Expression', score: taxonomy.domains[5] !== undefined ? taxonomy.domains[5] : 50 },
+              { id: 7, name: 'Protective Care & Stewardship', score: taxonomy.domains[6] !== undefined ? taxonomy.domains[6] : 50 },
+              { id: 8, name: 'Cooperation & Shared Governance', score: taxonomy.domains[7] !== undefined ? taxonomy.domains[7] : 50 },
+              { id: 9, name: 'Spiritual & Religious Practice', score: taxonomy.domains[8] !== undefined ? taxonomy.domains[8] : 50 },
+              { id: 10, name: 'Digital Rights & Tech Democracy', score: taxonomy.domains[9] !== undefined ? taxonomy.domains[9] : 50 }
+            ],
+            contextShifts: {
+              work: (taxonomy.contextual_shifts && taxonomy.contextual_shifts.work) || [0,0,0,0,0,0,0,0,0,0],
+              family: (taxonomy.contextual_shifts && taxonomy.contextual_shifts.family) || [0,0,0,0,0,0,0,0,0,0],
+              private: (taxonomy.contextual_shifts && taxonomy.contextual_shifts.private) || [0,0,0,0,0,0,0,0,0,0],
+              crisis: (taxonomy.contextual_shifts && taxonomy.contextual_shifts.crisis) || [0,0,0,0,0,0,0,0,0,0]
+            },
+            items: taxonomy.items || {},
+            conflictResolution: [
+              { name: 'Individual Freedom vs. Collective Harmony', weight: taxonomy.conflict_resolution[0] !== undefined ? taxonomy.conflict_resolution[0] : 50 },
+              { name: 'Truth-Telling vs. Kindness', weight: taxonomy.conflict_resolution[1] !== undefined ? taxonomy.conflict_resolution[1] : 50 },
+              { name: 'Proportional Justice vs. Restoration', weight: taxonomy.conflict_resolution[2] !== undefined ? taxonomy.conflict_resolution[2] : 50 },
+              { name: 'Equal Distribution vs. Merit-Based', weight: taxonomy.conflict_resolution[3] !== undefined ? taxonomy.conflict_resolution[3] : 50 },
+              { name: 'Kin/Close vs. Universal Responsibility', weight: taxonomy.conflict_resolution[4] !== undefined ? taxonomy.conflict_resolution[4] : 50 },
+              { name: 'Stability vs. Change', weight: taxonomy.conflict_resolution[5] !== undefined ? taxonomy.conflict_resolution[5] : 50 },
+              { name: 'Tradition vs. Innovation', weight: taxonomy.conflict_resolution[6] !== undefined ? taxonomy.conflict_resolution[6] : 50 },
+              { name: 'Self-Interest vs. Collective Welfare', weight: taxonomy.conflict_resolution[7] !== undefined ? taxonomy.conflict_resolution[7] : 50 },
+              { name: 'Individual Responsibility vs. Systemic Causation', weight: taxonomy.conflict_resolution[8] !== undefined ? taxonomy.conflict_resolution[8] : 50 },
+              { name: 'Self-Sacrifice vs. Self-Preservation', weight: taxonomy.conflict_resolution[9] !== undefined ? taxonomy.conflict_resolution[9] : 50 },
+              { name: 'Competition vs. Cooperation', weight: taxonomy.conflict_resolution[10] !== undefined ? taxonomy.conflict_resolution[10] : 50 },
+              { name: 'In-Group Loyalty vs. Impartial Justice', weight: taxonomy.conflict_resolution[11] !== undefined ? taxonomy.conflict_resolution[11] : 50 },
+              { name: 'Question Authority vs. Accept Authority', weight: taxonomy.conflict_resolution[12] !== undefined ? taxonomy.conflict_resolution[12] : 50 },
+              { name: 'Certainty vs. Possibility', weight: taxonomy.conflict_resolution[13] !== undefined ? taxonomy.conflict_resolution[13] : 50 },
+              { name: 'Principle vs. Pragmatism', weight: taxonomy.conflict_resolution[14] !== undefined ? taxonomy.conflict_resolution[14] : 50 },
+              { name: 'Present vs. Future Security', weight: taxonomy.conflict_resolution[15] !== undefined ? taxonomy.conflict_resolution[15] : 50 },
+              { name: 'Universal Standards vs. Cultural Relativism', weight: taxonomy.conflict_resolution[16] !== undefined ? taxonomy.conflict_resolution[16] : 50 },
+              { name: 'Individual Rights vs. Collective Duty', weight: taxonomy.conflict_resolution[17] !== undefined ? taxonomy.conflict_resolution[17] : 50 },
+              { name: 'Efficiency vs. Human Care', weight: taxonomy.conflict_resolution[18] !== undefined ? taxonomy.conflict_resolution[18] : 50 },
+              { name: 'Freedom vs. Structure', weight: taxonomy.conflict_resolution[19] !== undefined ? taxonomy.conflict_resolution[19] : 50 },
+              { name: 'Inner Truth vs. Social Belonging', weight: taxonomy.conflict_resolution[20] !== undefined ? taxonomy.conflict_resolution[20] : 50 },
+              { name: 'Environmental Sustainability vs. Economic Prosperity', weight: taxonomy.conflict_resolution[21] !== undefined ? taxonomy.conflict_resolution[21] : 50 },
+              { name: 'Cultural Preservation vs. Modernization', weight: taxonomy.conflict_resolution[22] !== undefined ? taxonomy.conflict_resolution[22] : 50 },
+              { name: 'Protective Authority vs. Respecting Autonomy', weight: taxonomy.conflict_resolution[23] !== undefined ? taxonomy.conflict_resolution[23] : 50 },
+              { name: 'Accountability vs. Compassion', weight: taxonomy.conflict_resolution[24] !== undefined ? taxonomy.conflict_resolution[24] : 50 },
+              { name: 'Emotional Openness vs. Self-Protection', weight: taxonomy.conflict_resolution[25] !== undefined ? taxonomy.conflict_resolution[25] : 50 },
+              { name: 'Digital Privacy vs. Convenience', weight: taxonomy.conflict_resolution[26] !== undefined ? taxonomy.conflict_resolution[26] : 50 },
+              { name: 'Human Labor vs. Automation', weight: taxonomy.conflict_resolution[27] !== undefined ? taxonomy.conflict_resolution[27] : 50 },
+              { name: 'Tech Innovation vs. Democratic Control', weight: taxonomy.conflict_resolution[28] !== undefined ? taxonomy.conflict_resolution[28] : 50 },
+              { name: 'Digital Privacy vs. Safety', weight: taxonomy.conflict_resolution[29] !== undefined ? taxonomy.conflict_resolution[29] : 50 },
+              { name: 'Digital Inclusion vs. Environmental Cost', weight: taxonomy.conflict_resolution[30] !== undefined ? taxonomy.conflict_resolution[30] : 50 },
+              { name: 'Spiritual Authority vs. Democratic Governance', weight: taxonomy.conflict_resolution[31] !== undefined ? taxonomy.conflict_resolution[31] : 50 },
+              { name: 'Digital Privacy vs. Social Connection', weight: taxonomy.conflict_resolution[32] !== undefined ? taxonomy.conflict_resolution[32] : 50 },
+              { name: 'Digital vs. Embodied Experience', weight: taxonomy.conflict_resolution[33] !== undefined ? taxonomy.conflict_resolution[33] : 50 },
+              { name: 'Digital Privacy vs. Collective Transparency', weight: taxonomy.conflict_resolution[34] !== undefined ? taxonomy.conflict_resolution[34] : 50 },
+              { name: 'Justice-Based vs. Cooperative Distribution', weight: taxonomy.conflict_resolution[35] !== undefined ? taxonomy.conflict_resolution[35] : 50 }
+            ]
+          };
+        }
+
+        async function calculateMicrocommunityValuesDynamic(memberUids, mcId) {
+          if (typeof firebase === 'undefined') return null;
+          const db = firebase.firestore();
+          try {
+            const membersSnap = await db.collection("microcommunity_members")
+              .where("microcommunity_id", "==", mcId)
+              .get();
+            const membersData = [];
+            const uidsToFetch = [];
+            membersSnap.forEach(doc => {
+              const data = doc.data();
+              const uid = (data.user_id || '').toString();
+              const relevance = parseFloat(data.relevance_score) || 0.1;
+              membersData.push({ uid, relevance });
+              if (uid) uidsToFetch.push(uid);
+            });
+            if (membersData.length === 0) return null;
+
+            const userTaxonomies = {};
+            await Promise.all(uidsToFetch.map(async (uid) => {
+              const userDoc = await db.collection("users").doc(uid).get();
+              if (userDoc.exists) {
+                const uData = userDoc.data();
+                if (uData && uData.values_taxonomy) {
+                  userTaxonomies[uid] = uData.values_taxonomy;
+                }
+              }
+            }));
+
+            const validMembers = membersData.filter(m => userTaxonomies[m.uid]);
+            if (validMembers.length === 0) return null;
+
+            const avgDomains = [];
+            for (let i = 0; i < 10; i++) {
+              let valSum = 0;
+              let relSum = 0;
+              validMembers.forEach(m => {
+                const taxonomy = userTaxonomies[m.uid];
+                const domainsList = taxonomy.domains || [];
+                if (domainsList[i] !== undefined && domainsList[i] !== null) {
+                  valSum += domainsList[i] * m.relevance;
+                  relSum += m.relevance;
+                }
+              });
+              avgDomains.push(relSum > 0 ? Math.round(valSum / relSum) : 50);
+            }
+
+            const avgContextShifts = {};
+            ['work', 'family', 'private', 'crisis'].forEach(ctx => {
+              const avgCtxList = [];
+              for (let i = 0; i < 10; i++) {
+                let valSum = 0;
+                let relSum = 0;
+                validMembers.forEach(m => {
+                  const taxonomy = userTaxonomies[m.uid];
+                  const shifts = taxonomy.contextual_shifts || {};
+                  const ctxList = shifts[ctx] || [];
+                  if (ctxList[i] !== undefined && ctxList[i] !== null) {
+                    valSum += ctxList[i] * m.relevance;
+                    relSum += m.relevance;
+                  }
+                });
+                avgCtxList.push(relSum > 0 ? Math.round(valSum / relSum) : 0);
+              }
+              avgContextShifts[ctx] = avgCtxList;
+            });
+
+            const avgItems = {};
+            for (let i = 1; i <= 10; i++) {
+              const key = 'd' + i;
+              let itemsLen = 0;
+              for (let m of validMembers) {
+                const taxonomy = userTaxonomies[m.uid];
+                const items = taxonomy.items || {};
+                if (items[key] && items[key].length > 0) {
+                  itemsLen = items[key].length;
+                  break;
+                }
+              }
+              if (itemsLen > 0) {
+                const avgItemList = [];
+                for (let j = 0; j < itemsLen; j++) {
+                  let valSum = 0;
+                  let relSum = 0;
+                  validMembers.forEach(m => {
+                    const taxonomy = userTaxonomies[m.uid];
+                    const items = taxonomy.items || {};
+                    const itemList = items[key] || [];
+                    if (itemList[j] !== undefined && itemList[j] !== null) {
+                      valSum += itemList[j] * m.relevance;
+                      relSum += m.relevance;
+                    }
+                  });
+                  avgItemList.push(relSum > 0 ? Math.round(valSum / relSum) : null);
+                }
+                avgItems[key] = avgItemList;
+              } else {
+                avgItems[key] = [];
+              }
+            }
+
+            const avgConflictResolution = [];
+            for (let i = 0; i < 36; i++) {
+              let valSum = 0;
+              let relSum = 0;
+              validMembers.forEach(m => {
+                const taxonomy = userTaxonomies[m.uid];
+                const conflicts = taxonomy.conflict_resolution || [];
+                let val = null;
+                if (conflicts[i] !== undefined && conflicts[i] !== null) {
+                  const entry = conflicts[i];
+                  val = (typeof entry === 'object' && entry !== null) ? entry.weight : entry;
+                }
+                if (val !== null) {
+                  valSum += val * m.relevance;
+                  relSum += m.relevance;
+                }
+              });
+              avgConflictResolution.push(relSum > 0 ? Math.round(valSum / relSum) : 50);
+            }
+
+            return {
+              domains: avgDomains,
+              contextual_shifts: avgContextShifts,
+              items: avgItems,
+              conflict_resolution: avgConflictResolution
+            };
+          } catch (err) {
+            console.error("Dynamic calculation error:", err);
+            return null;
+          }
+        }
 
         let names = [];
+        let mcValues = null;
+
         if (uids.length === 0) {
           names = ['No members'];
         } else {
+          const db = firebase.firestore();
+          let issueData = null;
+          try {
+            const issueDoc = await db.collection("issues").doc(topicId).get();
+            if (issueDoc.exists) {
+              issueData = issueDoc.data();
+            }
+          } catch (err) {
+            console.error("Failed to fetch issue for voting status:", err);
+          }
+
+          let topicMessages = [];
+          try {
+            const msgsSnap = await db.collection("discussions").doc(topicId).collection("messages").get();
+            msgsSnap.forEach(mDoc => {
+              topicMessages.push(mDoc.data());
+            });
+          } catch (err) {
+            console.error("Failed to fetch messages for activity checks:", err);
+          }
+
+          try {
+            const mcDoc = await db.collection("microcommunities").doc(topicId).get();
+            if (mcDoc.exists && mcDoc.data().values_taxonomy) {
+              mcValues = mapTaxonomyToUserValues(mcDoc.data().values_taxonomy);
+            } else {
+              const dynamicTax = await calculateMicrocommunityValuesDynamic(uids, topicId);
+              if (dynamicTax) {
+                mcValues = mapTaxonomyToUserValues(dynamicTax);
+              }
+            }
+          } catch (err) {
+            console.error("Failed to fetch microcommunity doc:", err);
+            const dynamicTax = await calculateMicrocommunityValuesDynamic(uids, topicId);
+            if (dynamicTax) {
+              mcValues = mapTaxonomyToUserValues(dynamicTax);
+            }
+          }
+
           await resolveUserNames(uids);
           
           // Map to objects containing score and metadata for sorting
@@ -3646,10 +3885,47 @@ function initTopicDetailViews() {
             const rawScore = (disc && disc.isr_scores && disc.isr_scores[uid.toString()] !== undefined)
               ? parseFloat(disc.isr_scores[uid.toString()])
               : -1; // place N/A values at the bottom
+            
+            const memberUidStr = uid.toString();
+
+            // 1. Commented
+            const hasCommented = topicMessages && topicMessages.some(msg => {
+              return msg.uid && msg.uid.toString() === memberUidStr && msg.uid !== 'system';
+            });
+
+            // 2. Reacted
+            const hasReactedMsg = topicMessages && topicMessages.some(msg => {
+              return msg.marks && msg.marks.some(m => (m.uid || '').toString() === memberUidStr);
+            });
+            const hasReactedOpt = disc && disc.options_v2 && disc.options_v2.some(opt => {
+              return opt.marks && opt.marks.some(m => (m.uid || '').toString() === memberUidStr);
+            });
+            const hasReacted = hasReactedMsg || hasReactedOpt;
+
+            // 3. Proposed/Started topic
+            const startedTopic = disc && disc.creator_uid && disc.creator_uid.toString() === memberUidStr;
+            const proposedOption = disc && disc.options_v2 && disc.options_v2.some(opt => {
+              return opt.author_uid && opt.author_uid.toString() === memberUidStr;
+            });
+            const hasProposed = startedTopic || proposedOption;
+
+            // 4. Voted
+            const hasVoted = (issueData && issueData.votes && issueData.votes[memberUidStr] !== undefined) ||
+                             (disc && disc.deadline_votes && disc.deadline_votes[memberUidStr] !== undefined);
+
+            let emojisStr = '';
+            if (hasCommented) emojisStr += '💬';
+            if (hasReacted) emojisStr += '👍';
+            if (hasProposed) emojisStr += '💡';
+            if (hasVoted) emojisStr += '✅';
+
+            if (emojisStr) emojisStr = ' ' + emojisStr;
+
             return {
               uid: uid,
               displayName: displayName,
-              score: rawScore
+              score: rawScore,
+              emojisStr: emojisStr
             };
           });
 
@@ -3658,7 +3934,7 @@ function initTopicDetailViews() {
 
           names = memberList.map(item => {
             const scoreStr = item.score >= 0 ? item.score.toFixed(2) : "N/A";
-            return item.displayName + ' - ' + scoreStr;
+            return `${item.displayName} (id: ${item.uid}) - ${scoreStr}${item.emojisStr}`;
           });
         }
 
@@ -3668,12 +3944,50 @@ function initTopicDetailViews() {
         popup.style.top = '100%';
         popup.style.left = '50%';
         popup.style.transform = 'translateX(-50%)';
-        popup.style.minWidth = '200px';
+        popup.style.minWidth = '240px';
 
         // Prevent clicking inside the popup from propagating
         popup.addEventListener('click', function(pe) {
           pe.stopPropagation();
         });
+
+        // Add small diagram of Domains
+        if (mcValues && mcValues.domains) {
+          const chartWrapper = document.createElement('div');
+          chartWrapper.className = 'bar-chart';
+          chartWrapper.style.height = '40px';
+          chartWrapper.style.paddingBottom = '0px';
+          chartWrapper.style.marginBottom = '8px';
+          chartWrapper.style.borderBottom = '1px solid var(--border)';
+          chartWrapper.style.cursor = 'pointer';
+          chartWrapper.title = 'Click to view full Microcommunity Values Taxonomy';
+
+          mcValues.domains.forEach(function(domain) {
+            const group = document.createElement('div');
+            group.className = 'bar-group';
+            
+            const bar = document.createElement('div');
+            const isNull = domain.score === null || domain.score === undefined;
+            const heightVal = isNull ? 100 : domain.score;
+            
+            bar.className = 'bar' + (isNull ? ' bar-null' : (domain.muted ? ' bar-muted' : ''));
+            bar.style.height = heightVal + '%';
+            
+            group.appendChild(bar);
+            chartWrapper.appendChild(group);
+          });
+
+          chartWrapper.addEventListener('click', function(ce) {
+            ce.stopPropagation();
+            window.currentUserValues = mcValues;
+            const titleEl = document.getElementById('values-vector-title');
+            if (titleEl) {
+              titleEl.textContent = "Vector of Values (Microcommunity)";
+            }
+            window.openValuesVectorModal();
+          });
+          popup.appendChild(chartWrapper);
+        }
 
         names.forEach(n => {
           const item = document.createElement('div');
@@ -3973,8 +4287,8 @@ function bindTopicListInteractions() {
       });
     }
 
-    // 3. Close reaction user popups if clicked outside any reaction bubble
-    if (!e.target.closest('.reaction-bubble')) {
+    // 3. Close reaction user popups if clicked outside any reaction bubble, microcommunity button, or popup itself
+    if (!e.target.closest('.reaction-bubble') && !e.target.closest('.microcommunity-btn') && !e.target.closest('.reaction-users-popup')) {
       document.querySelectorAll('.reaction-users-popup').forEach(function(p) {
         p.remove();
       });
