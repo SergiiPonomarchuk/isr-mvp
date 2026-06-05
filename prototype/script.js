@@ -1906,6 +1906,27 @@ function initTopicDetailViews() {
     return existingReactionsHtml;
   }
 
+  function renderSubtasks(subtasks, taskIdx, currentUserId, inChargeUid, isParentCanceled) {
+    if (!subtasks || subtasks.length === 0) return '';
+    return subtasks.map(function(subtask, subtaskIdx) {
+      var isSubDone = subtask.status === 'done';
+      var textStyle = isSubDone ? 'text-decoration: line-through; color: var(--text-muted);' : 'color: var(--text);';
+      if (isParentCanceled) textStyle += ' color: var(--text-soft); font-style: italic;';
+      var isResponsible = (inChargeUid || '').toString() === currentUserId.toString();
+      
+      var checkboxDisabled = isParentCanceled ? ' disabled' : '';
+      var deleteHtml = (isResponsible && !isParentCanceled) ? '<button type="button" class="subtask-remove-btn" data-task-idx="' + taskIdx + '" data-subtask-idx="' + subtaskIdx + '" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; padding: 0 4px; line-height: 1;">&times;</button>' : '';
+      
+      return '<div class="subtask-item-row" style="display: flex; align-items: center; gap: 8px; justify-content: space-between;">' +
+               '<div style="display: flex; align-items: center; gap: 6px; flex: 1;">' +
+                 '<input type="checkbox" class="subtask-status-checkbox" data-task-idx="' + taskIdx + '" data-subtask-idx="' + subtaskIdx + '"' + (isSubDone ? ' checked' : '') + checkboxDisabled + ' style="width: 14px; height: 14px; cursor: pointer; accent-color: var(--accent);" />' +
+                 '<span style="font-size: 0.85rem; font-weight: 500; ' + textStyle + '">' + escapeHtml(subtask.title || subtask.step || subtask.text || '') + '</span>' +
+               '</div>' +
+               deleteHtml +
+             '</div>';
+    }).join('');
+  }
+
   function renderTaskCommentsTree(comments, taskIdx) {
     if (!comments || comments.length === 0) return '';
     
@@ -2067,7 +2088,9 @@ function initTopicDetailViews() {
               var responsibleHtml = task.in_charge_name ? ' <span style="font-weight: 500; color: var(--text-soft);">(' + task.in_charge_name + ')</span>' : '';
               
               var isDone = task.status === 'done';
+              var isCanceled = task.status === 'canceled' || task.status === 'cancelled';
               var doneEmoji = isDone ? '✔️ ' : '';
+              var taskTextStyle = isCanceled ? 'text-decoration: line-through; color: var(--text-soft); font-style: italic;' : '';
               
               var reactHtml = '';
               if (isDone) {
@@ -2079,17 +2102,43 @@ function initTopicDetailViews() {
                   '</div>';
               }
 
+              var responsibleActionsHtml = '';
+              if ((task.in_charge_uid || '').toString() === currentUserId.toString()) {
+                if (isCanceled) {
+                  responsibleActionsHtml = 
+                    '<button type="button" class="topic-inline-btn task-restore-btn" data-task-idx="' + taskIdx + '" style="font-size: 0.8rem; padding: 2px 6px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; background: var(--surface-soft); margin-right: 4px;">Restore</button>';
+                } else {
+                  responsibleActionsHtml = 
+                    '<button type="button" class="topic-inline-btn task-breakdown-toggle-btn" data-task-idx="' + taskIdx + '" style="font-size: 0.8rem; padding: 2px 6px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; background: var(--surface-soft); margin-right: 4px;">Break down</button>' +
+                    '<button type="button" class="topic-inline-btn task-cancel-btn" data-task-idx="' + taskIdx + '" style="font-size: 0.8rem; padding: 2px 6px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; color: var(--error, #e53e3e); background: var(--surface-soft); margin-right: 4px;">Cancel</button>';
+                }
+              }
+
               return '<div class="task-item-card" style="padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); display: flex; flex-direction: column; gap: 8px;">' +
                        '<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%;">' +
                          '<div style="display: flex; align-items: center; gap: 8px; flex: 1;">' +
-                           '<input type="checkbox" class="task-status-checkbox" data-task-idx="' + taskIdx + '"' + (isDone ? ' checked' : '') + ' style="width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent);" />' +
-                           '<button type="button" class="task-name-btn" data-task-idx="' + taskIdx + '" style="background: none; border: none; font-size: 0.95rem; cursor: pointer; text-align: left; padding: 0; font-weight: 600; color: var(--text); flex: 1; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px;">' +
+                           (isCanceled ? 
+                             '<span style="font-size: 0.95rem; margin-right: 2px; user-select: none;">❌</span>' : 
+                             '<input type="checkbox" class="task-status-checkbox" data-task-idx="' + taskIdx + '"' + (isDone ? ' checked' : '') + ' style="width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent);" />'
+                           ) +
+                           '<button type="button" class="task-name-btn" data-task-idx="' + taskIdx + '" style="background: none; border: none; font-size: 0.95rem; cursor: pointer; text-align: left; padding: 0; font-weight: 600; color: var(--text); flex: 1; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px; ' + taskTextStyle + '">' +
                              doneEmoji + escapeHtml(taskText) + responsibleHtml + taskDeadline +
                            '</button>' +
                          '</div>' +
                          '<div style="display: flex; gap: 8px; align-items: center;" onclick="event.stopPropagation();">' +
+                           responsibleActionsHtml +
                            '<button type="button" class="topic-inline-btn task-comment-input-toggle-btn" data-task-idx="' + taskIdx + '" style="font-size: 0.95rem; padding: 0; background: none; border: none; cursor: pointer;">💬</button>' +
                            reactHtml +
+                         '</div>' +
+                       '</div>' +
+                       
+                       '<div class="task-subtasks-section" style="margin-top: 4px; padding-left: 24px; display: flex; flex-direction: column; gap: 4px;">' +
+                         '<div class="task-subtasks-list" id="task-subtasks-list-' + taskIdx + '" style="display: flex; flex-direction: column; gap: 4px;">' +
+                           renderSubtasks(task.subtasks || [], taskIdx, currentUserId, task.in_charge_uid, isCanceled) +
+                         '</div>' +
+                         '<div class="task-breakdown-form" id="task-breakdown-form-' + taskIdx + '" style="display: none; margin-top: 6px; gap: 6px; align-items: center;">' +
+                           '<input type="text" class="task-new-subtask-input" data-task-idx="' + taskIdx + '" placeholder="Add a subtask..." style="flex: 1; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 0.8rem; background: var(--surface-muted); color: var(--text);" />' +
+                           '<button type="button" class="task-add-subtask-btn" data-task-idx="' + taskIdx + '" style="padding: 4px 8px; font-size: 0.8rem; border-radius: 4px; cursor: pointer;">Add</button>' +
                          '</div>' +
                        '</div>' +
                        
@@ -4358,7 +4407,7 @@ function initTopicDetailViews() {
     });
 
     // 1c. Task-level comment toggle button (💬 next to task)
-    modalBody.querySelectorAll('.task-comment-input-toggle-btn').forEach(btn => {
+    modalBody.querySelectorAll('.topic-inline-btn.task-comment-input-toggle-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         const taskIdx = this.getAttribute('data-task-idx');
         const commentsSection = modalBody.querySelector(`#task-comments-section-${taskIdx}`);
@@ -4368,6 +4417,210 @@ function initTopicDetailViews() {
         const commentForm = modalBody.querySelector(`#task-comment-form-${taskIdx}`);
         if (commentForm) {
           commentForm.style.display = commentForm.style.display === 'none' ? 'flex' : 'none';
+        }
+      });
+    });
+
+    // 1d. Task breakdown toggle button click
+    modalBody.querySelectorAll('.task-breakdown-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const taskIdx = this.getAttribute('data-task-idx');
+        const breakdownForm = modalBody.querySelector(`#task-breakdown-form-${taskIdx}`);
+        if (breakdownForm) {
+          breakdownForm.style.display = breakdownForm.style.display === 'none' ? 'flex' : 'none';
+        }
+      });
+    });
+
+    // 1e. Task cancel button click
+    modalBody.querySelectorAll('.task-cancel-btn').forEach(btn => {
+      btn.addEventListener('click', async function() {
+        const taskIdx = parseInt(this.getAttribute('data-task-idx'));
+        const tasks = issue.tasks || [];
+        const task = tasks[taskIdx];
+        if (!task) return;
+
+        // Check if logged-in user is the responsible person
+        if ((task.in_charge_uid || '').toString() !== currentUserId.toString()) {
+          alert("Only the responsible person can cancel this task.");
+          return;
+        }
+
+        if (!confirm("Are you sure you want to cancel this task?")) {
+          return;
+        }
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+            const latestData = doc.data();
+            const latestTasks = latestData.tasks || [];
+            if (latestTasks[taskIdx]) {
+              latestTasks[taskIdx].status = 'canceled';
+              transaction.update(docRef, { tasks: latestTasks });
+            }
+          });
+          console.log("Task canceled.");
+        } catch (err) {
+          console.error("Failed to cancel task:", err);
+        }
+      });
+    });
+
+    // 1f. Task restore button click
+    modalBody.querySelectorAll('.task-restore-btn').forEach(btn => {
+      btn.addEventListener('click', async function() {
+        const taskIdx = parseInt(this.getAttribute('data-task-idx'));
+        const tasks = issue.tasks || [];
+        const task = tasks[taskIdx];
+        if (!task) return;
+
+        // Check if logged-in user is the responsible person
+        if ((task.in_charge_uid || '').toString() !== currentUserId.toString()) {
+          alert("Only the responsible person can restore this task.");
+          return;
+        }
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+            const latestData = doc.data();
+            const latestTasks = latestData.tasks || [];
+            if (latestTasks[taskIdx]) {
+              latestTasks[taskIdx].status = 'pending';
+              transaction.update(docRef, { tasks: latestTasks });
+            }
+          });
+          console.log("Task restored.");
+        } catch (err) {
+          console.error("Failed to restore task:", err);
+        }
+      });
+    });
+
+    // 1g. Subtask status checkbox change
+    modalBody.querySelectorAll('.subtask-status-checkbox').forEach(chk => {
+      chk.addEventListener('change', async function() {
+        const taskIdx = parseInt(chk.getAttribute('data-task-idx'));
+        const subtaskIdx = parseInt(chk.getAttribute('data-subtask-idx'));
+        const tasks = issue.tasks || [];
+        const task = tasks[taskIdx];
+        if (!task) return;
+
+        // Check if logged-in user is the responsible person (in_charge_uid)
+        if ((task.in_charge_uid || '').toString() !== currentUserId.toString()) {
+          alert("Only the responsible person (" + (task.in_charge_name || 'assigned leader') + ") can change the status of this subtask.");
+          this.checked = !this.checked; // Reset checkbox state
+          return;
+        }
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+            const latestData = doc.data();
+            const latestTasks = latestData.tasks || [];
+            if (latestTasks[taskIdx] && latestTasks[taskIdx].subtasks && latestTasks[taskIdx].subtasks[subtaskIdx]) {
+              const currentSubStatus = latestTasks[taskIdx].subtasks[subtaskIdx].status || 'pending';
+              latestTasks[taskIdx].subtasks[subtaskIdx].status = currentSubStatus === 'done' ? 'pending' : 'done';
+              transaction.update(docRef, { tasks: latestTasks });
+            }
+          });
+          console.log("Subtask status updated.");
+        } catch (err) {
+          console.error("Failed to update subtask status:", err);
+          this.checked = !this.checked;
+        }
+      });
+    });
+
+    // 1h. Subtask remove button click
+    modalBody.querySelectorAll('.subtask-remove-btn').forEach(btn => {
+      btn.addEventListener('click', async function() {
+        const taskIdx = parseInt(this.getAttribute('data-task-idx'));
+        const subtaskIdx = parseInt(this.getAttribute('data-subtask-idx'));
+        const tasks = issue.tasks || [];
+        const task = tasks[taskIdx];
+        if (!task) return;
+
+        // Check if logged-in user is the responsible person
+        if ((task.in_charge_uid || '').toString() !== currentUserId.toString()) {
+          return;
+        }
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+            const latestData = doc.data();
+            const latestTasks = latestData.tasks || [];
+            if (latestTasks[taskIdx] && latestTasks[taskIdx].subtasks) {
+              latestTasks[taskIdx].subtasks.splice(subtaskIdx, 1);
+              transaction.update(docRef, { tasks: latestTasks });
+            }
+          });
+          console.log("Subtask removed.");
+        } catch (err) {
+          console.error("Failed to remove subtask:", err);
+        }
+      });
+    });
+
+    // 1i. Add subtask button click
+    modalBody.querySelectorAll('.task-add-subtask-btn').forEach(btn => {
+      btn.addEventListener('click', async function() {
+        const taskIdx = parseInt(this.getAttribute('data-task-idx'));
+        const inputEl = modalBody.querySelector(`.task-new-subtask-input[data-task-idx="${taskIdx}"]`);
+        if (!inputEl) return;
+        const text = inputEl.value.trim();
+        if (!text) return;
+
+        const tasks = issue.tasks || [];
+        const task = tasks[taskIdx];
+        if (!task) return;
+
+        // Check if logged-in user is the responsible person
+        if ((task.in_charge_uid || '').toString() !== currentUserId.toString()) {
+          alert("Only the responsible person can add subtasks.");
+          return;
+        }
+
+        const newSubtask = {
+          title: text,
+          status: 'pending'
+        };
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+            const latestData = doc.data();
+            const latestTasks = latestData.tasks || [];
+            if (latestTasks[taskIdx]) {
+              if (!latestTasks[taskIdx].subtasks) latestTasks[taskIdx].subtasks = [];
+              latestTasks[taskIdx].subtasks.push(newSubtask);
+              transaction.update(docRef, { tasks: latestTasks });
+            }
+          });
+          inputEl.value = '';
+          const breakdownForm = modalBody.querySelector(`#task-breakdown-form-${taskIdx}`);
+          if (breakdownForm) breakdownForm.style.display = 'none';
+          console.log("Subtask added successfully.");
+        } catch (err) {
+          console.error("Failed to add subtask:", err);
+        }
+      });
+    });
+
+    // Support enter key on task new subtask input
+    modalBody.querySelectorAll('.task-new-subtask-input').forEach(input => {
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          const taskIdx = this.getAttribute('data-task-idx');
+          const btn = modalBody.querySelector(`.task-add-subtask-btn[data-task-idx="${taskIdx}"]`);
+          if (btn) btn.click();
         }
       });
     });
