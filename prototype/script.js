@@ -1861,7 +1861,7 @@ function initTopicDetailViews() {
           '<div class="topic-detail-block-title">Tasks</div>' +
           '<div class="task-button-list">' +
             topic.tasks.map(function(task, taskIdx) {
-              var taskText = typeof task === 'string' ? task : task.text;
+              var taskText = typeof task === 'string' ? task : (task.step || task.text || '');
               var existingReactions = task.reactions ? '<span style="display:inline-flex; gap:6px; padding:2px 8px; margin:0 4px; background:var(--surface-muted); border-radius:12px; font-size:0.85rem; cursor:pointer;">' + task.reactions + '</span>' : '';
               
               return '<div style="display:flex; align-items:center; gap: 8px;">' +
@@ -4682,7 +4682,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         if (data.status === 'in_process') {
           votingDocs.push(doc);
         }
-        if (data.status !== 'discussion') {
+        if (data.status === 'tasks' || data.status === 'approved') {
           taskDocs.push(doc);
         }
       }
