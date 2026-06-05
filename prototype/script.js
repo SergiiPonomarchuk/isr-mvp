@@ -8,7 +8,7 @@ if (typeof firebase !== 'undefined' && typeof firebaseConfig !== 'undefined') {
 const sectionTitles = {
   chat: 'Chat',
   voting: 'Voting',
-  tasks: 'Tasks',
+  tasks: 'To Do',
   values: 'Values',
   profile: 'Profile',
   settings: 'Settings'
@@ -4417,7 +4417,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         <span class="summary-separator">·</span>
         <span>Issues: ${activeIssuesCount}</span>
         <span class="summary-separator">·</span>
-        <button class="summary-link" data-section="tasks">Tasks: ${activeIssuesCount}</button>
+        <button class="summary-link" data-section="tasks">To Do: ${activeIssuesCount}</button>
         <span class="summary-separator">·</span>
         <button class="summary-link" data-section="chat">Discussions: ${discussionsCount}</button>
       `;
@@ -5138,7 +5138,7 @@ function initRealTimeDashboardSync(db, storedUid) {
     if (dashTasksCard) {
       dashTasksCard.innerHTML = `
         <div class="dash-card-topline">
-          <div class="dash-card-title">Tasks</div>
+          <div class="dash-card-title">To Do</div>
         </div>
       `;
       let count = 0;
