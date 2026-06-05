@@ -1934,7 +1934,7 @@ function initTopicDetailViews() {
                           '</div>' +
                           '<div style="color: var(--text); margin-top: 2px;">' + escapeHtml(text) + '</div>' +
                           '<div style="margin-top: 4px; display: flex; gap: 8px; align-items: center;">' +
-                            '<button type="button" class="topic-inline-btn task-comment-reply-toggle-btn" data-comment-id="' + comment.id + '" style="font-size: 0.75rem; padding: 0;">Reply</button>' +
+                            '<button type="button" class="topic-inline-btn task-comment-reply-toggle-btn" data-comment-id="' + comment.id + '" style="font-size: 0.95rem; padding: 0; background: none; border: none; cursor: pointer;">💬</button>' +
                           '</div>' +
                           
                           '<div class="task-comment-reply-form" id="reply-form-' + comment.id + '" style="display: none; margin-top: 6px; gap: 6px; align-items: center;">' +
@@ -2081,17 +2081,21 @@ function initTopicDetailViews() {
 
               return '<div class="task-item-card" style="padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); display: flex; flex-direction: column; gap: 8px;">' +
                        '<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%;">' +
-                         '<button type="button" class="task-toggle-status-btn" data-task-idx="' + taskIdx + '" style="background: none; border: none; font-size: 0.95rem; cursor: pointer; text-align: left; padding: 0; font-weight: 600; color: var(--text); flex: 1;">' +
-                           doneEmoji + escapeHtml(taskText) + responsibleHtml + taskDeadline +
-                         '</button>' +
-                         '<div style="display: flex; gap: 6px; align-items: center;" onclick="event.stopPropagation();">' +
+                         '<div style="display: flex; align-items: center; gap: 8px; flex: 1;">' +
+                           '<input type="checkbox" class="task-status-checkbox" data-task-idx="' + taskIdx + '"' + (isDone ? ' checked' : '') + ' style="width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent);" />' +
+                           '<button type="button" class="task-name-btn" data-task-idx="' + taskIdx + '" style="background: none; border: none; font-size: 0.95rem; cursor: pointer; text-align: left; padding: 0; font-weight: 600; color: var(--text); flex: 1; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px;">' +
+                             doneEmoji + escapeHtml(taskText) + responsibleHtml + taskDeadline +
+                           '</button>' +
+                         '</div>' +
+                         '<div style="display: flex; gap: 8px; align-items: center;" onclick="event.stopPropagation();">' +
+                           '<button type="button" class="topic-inline-btn task-comment-input-toggle-btn" data-task-idx="' + taskIdx + '" style="font-size: 0.95rem; padding: 0; background: none; border: none; cursor: pointer;">💬</button>' +
                            reactHtml +
                          '</div>' +
                        '</div>' +
                        
-                       '<div class="task-comments-section" style="margin-top: 4px; border-top: 1px dashed var(--border); padding-top: 8px;">' +
+                       '<div class="task-comments-section" id="task-comments-section-' + taskIdx + '" style="display: none; margin-top: 4px; border-top: 1px dashed var(--border); padding-top: 8px;">' +
                          renderTaskCommentsTree(task.comments || [], taskIdx) +
-                         '<div style="margin-top: 8px; display: flex; gap: 8px; align-items: center;">' +
+                         '<div class="task-new-comment-form" id="task-comment-form-' + taskIdx + '" style="display: none; margin-top: 8px; display: flex; gap: 8px; align-items: center;">' +
                            '<input type="text" class="task-new-comment-input" data-task-idx="' + taskIdx + '" placeholder="Add a comment..." style="flex: 1; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.82rem; background: var(--surface-muted); color: var(--text);" />' +
                            '<button type="button" class="task-add-comment-btn" data-task-idx="' + taskIdx + '" style="padding: 6px 12px; font-size: 0.82rem; border-radius: 6px; cursor: pointer;">Comment</button>' +
                          '</div>' +
@@ -4307,9 +4311,9 @@ function initTopicDetailViews() {
     const db = firebase.firestore();
     const docRef = db.collection("issues").doc(topicId);
 
-    // 1. Task toggle status clicks
-    modalBody.querySelectorAll('.task-toggle-status-btn').forEach(btn => {
-      btn.addEventListener('click', async function() {
+    // 1. Task status checkbox change
+    modalBody.querySelectorAll('.task-status-checkbox').forEach(chk => {
+      chk.addEventListener('change', async function() {
         const taskIdx = parseInt(this.getAttribute('data-task-idx'));
         const tasks = issue.tasks || [];
         const task = tasks[taskIdx];
@@ -4318,6 +4322,7 @@ function initTopicDetailViews() {
         // Check if logged-in user is the responsible person (in_charge_uid)
         if ((task.in_charge_uid || '').toString() !== currentUserId.toString()) {
           alert("Only the responsible person (" + (task.in_charge_name || 'assigned leader') + ") can change the status of this task.");
+          this.checked = !this.checked; // Reset checkbox state
           return;
         }
 
@@ -4336,6 +4341,33 @@ function initTopicDetailViews() {
           console.log("Task status updated.");
         } catch (err) {
           console.error("Failed to update task status:", err);
+          this.checked = !this.checked; // Reset on failure
+        }
+      });
+    });
+
+    // 1b. Task name toggle comments track
+    modalBody.querySelectorAll('.task-name-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const taskIdx = this.getAttribute('data-task-idx');
+        const commentsSection = modalBody.querySelector(`#task-comments-section-${taskIdx}`);
+        if (commentsSection) {
+          commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
+        }
+      });
+    });
+
+    // 1c. Task-level comment toggle button (💬 next to task)
+    modalBody.querySelectorAll('.task-comment-input-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const taskIdx = this.getAttribute('data-task-idx');
+        const commentsSection = modalBody.querySelector(`#task-comments-section-${taskIdx}`);
+        if (commentsSection) {
+          commentsSection.style.display = 'block'; // force visible comments track
+        }
+        const commentForm = modalBody.querySelector(`#task-comment-form-${taskIdx}`);
+        if (commentForm) {
+          commentForm.style.display = commentForm.style.display === 'none' ? 'flex' : 'none';
         }
       });
     });
@@ -4372,9 +4404,22 @@ function initTopicDetailViews() {
             }
           });
           inputEl.value = '';
+          const commentForm = modalBody.querySelector(`#task-comment-form-${taskIdx}`);
+          if (commentForm) commentForm.style.display = 'none';
           console.log("Task comment added successfully.");
         } catch (err) {
           console.error("Failed to add task comment:", err);
+        }
+      });
+    });
+
+    // Support enter key on task new comment input
+    modalBody.querySelectorAll('.task-new-comment-input').forEach(input => {
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          const taskIdx = this.getAttribute('data-task-idx');
+          const btn = modalBody.querySelector(`.task-add-comment-btn[data-task-idx="${taskIdx}"]`);
+          if (btn) btn.click();
         }
       });
     });
@@ -4430,6 +4475,19 @@ function initTopicDetailViews() {
           console.log("Task reply added successfully.");
         } catch (err) {
           console.error("Failed to add task reply:", err);
+        }
+      });
+    });
+
+    // Support enter key on task reply input
+    modalBody.querySelectorAll('.task-reply-input').forEach(input => {
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          const container = this.closest('.task-comment-reply-form');
+          if (container) {
+            const btn = container.querySelector('.task-submit-reply-btn');
+            if (btn) btn.click();
+          }
         }
       });
     });
