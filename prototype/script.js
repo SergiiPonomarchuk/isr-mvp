@@ -1516,7 +1516,7 @@ function initTopicDetailViews() {
               if (option.description && option.description.length > 0) {
                 stepsHtml = '<div class="voting-option-steps" style="margin-top: 6px; padding-left: 24px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">' +
                   option.description.map(function(s) {
-                    var dlHtml = s.deadline ? ' - <span style="font-weight: 500; color: var(--urgent);">Deadline: ' + formatTaskDeadline(s.deadline) + '</span>' : '';
+                    var dlHtml = s.deadline ? ' - <span style="font-weight: 500; color: var(--text-soft);">' + formatTaskDeadline(s.deadline) + '</span>' : '';
                     return '<div style="margin-bottom: 2px;">&bull; ' + s.step + ' <span style="font-weight: 500; color: var(--text-soft);">(' + s.in_charge_name + ')</span>' + dlHtml + '</div>';
                   }).join('') +
                 '</div>';
@@ -1684,7 +1684,7 @@ function initTopicDetailViews() {
       }
       
       var stepsPreviewHtml = (opt.description || []).slice(0, 2).map(function(s) {
-        var dlHtml = s.deadline ? ' - <span style="font-weight: 500; color: var(--urgent);">Deadline: ' + formatTaskDeadline(s.deadline) + '</span>' : '';
+        var dlHtml = s.deadline ? ' - <span style="font-weight: 500; color: var(--text-soft);">' + formatTaskDeadline(s.deadline) + '</span>' : '';
         return '<div style="margin-bottom: 2px;">&bull; ' + s.step + ' <span style="font-weight: 500; color: var(--text-soft);">(' + s.in_charge_name + ')</span>' + dlHtml + '</div>';
       }).join('');
       
@@ -1880,6 +1880,83 @@ function initTopicDetailViews() {
   }
 
   function renderTasksTopic(topic) {
+    var winningOption = null;
+    if (topic.options && topic.winning_option_index !== null && topic.winning_option_index !== undefined) {
+      winningOption = topic.options[topic.winning_option_index];
+    }
+
+    var winnerHtml = '';
+    if (winningOption) {
+      winnerHtml = '<div class="topic-detail-block">' +
+                     '<div class="topic-detail-block-title">Winning Option</div>' +
+                     '<div class="winning-option-card" style="padding: 12px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; background: var(--surface-muted);">' +
+                       '<div style="font-weight: 700; font-size: 0.98rem; color: var(--text);">' + (winningOption.label || winningOption.title || 'Option') + '</div>' +
+                       '<div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Proposed by <b>' + winningOption.author_name + '</b> &middot; Budget: <b>' + winningOption.budget + '</b></div>' +
+                     '</div>' +
+                   '</div>';
+    }
+
+    var otherMessages = topic.messages || [];
+    if (otherMessages.length > 0) {
+      otherMessages = otherMessages.slice(1);
+    }
+    
+    var messagesListHtml = otherMessages.map(function(msg) {
+      var authorName = msg.author || 'User';
+      var text = msg.text || '';
+      var parentLink = '';
+      if (msg.parentID) {
+        parentLink = '<div style="font-size:0.78rem; color:var(--text-soft); margin-bottom: 2px;">In reply to parent message #' + msg.parentID + '</div>';
+      }
+      return '<div class="topic-message-card" id="msg-' + msg.id + '" style="margin-bottom: 8px; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); text-align: left;">' +
+               parentLink +
+               '<div class="topic-message-author" style="font-weight:600; font-size:0.85rem; color:var(--text-muted); margin-bottom:2px;">' + authorName + '</div>' +
+               '<div class="topic-message-text" style="font-size:0.92rem; color:var(--text);">' + escapeHtml(text) + '</div>' +
+             '</div>';
+    }).join('');
+
+    if (!messagesListHtml) {
+      messagesListHtml = '<div style="color:var(--text-muted); font-style:italic; font-size:0.88rem; padding: 4px;">No messages in this discussion.</div>';
+    }
+
+    var otherOptions = (topic.options || []).filter(function(option, optIdx) {
+      return optIdx !== topic.winning_option_index;
+    });
+
+    var otherOptionsHtml = otherOptions.map(function(option) {
+      var scoreVal = option.score !== undefined ? option.score : 0;
+      
+      var stepsHtml = '';
+      if (option.description && option.description.length > 0) {
+        stepsHtml = '<div class="voting-option-steps" style="margin-top: 6px; padding-left: 24px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">' +
+          option.description.map(function(s) {
+            var dlHtml = s.deadline ? ' - <span style="font-weight: 500; color: var(--text-soft);">' + formatTaskDeadline(s.deadline) + '</span>' : '';
+            return '<div style="margin-bottom: 2px;">&bull; ' + s.step + ' <span style="font-weight: 500; color: var(--text-soft);">(' + s.in_charge_name + ')</span>' + dlHtml + '</div>';
+          }).join('') +
+        '</div>';
+      }
+      
+      var metaDetails = '';
+      if (option.author_name && option.author_name !== 'System') {
+        metaDetails = '<div style="font-size: 0.8rem; color: var(--text-muted); margin-left: 24px; margin-top: 2px;">Proposed by ' + option.author_name + ' &middot; <b>Budget: ' + option.budget + '</b></div>';
+      }
+
+      return '<div class="topic-option-row" style="display: flex; flex-direction: column; align-items: stretch; gap: 4px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; cursor: default; background: var(--surface);">' +
+        '<div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">' +
+          '<span style="display: flex; align-items: center; gap: 8px;">' +
+            '<span class="topic-option-text" style="font-weight: 600; color: var(--text);">' + (option.label || option.title || 'Option') + '</span>' +
+          '</span>' +
+          '<span class="topic-option-score" style="font-weight: 600; font-size: 0.85rem; color: var(--text-soft);">ISR total: ' + scoreVal.toFixed(2) + '</span>' +
+        '</div>' +
+        metaDetails +
+        stepsHtml +
+      '</div>';
+    }).join('');
+
+    if (!otherOptionsHtml) {
+      otherOptionsHtml = '<div style="color:var(--text-muted); font-style:italic; font-size:0.88rem; padding: 4px;">No other options for this issue.</div>';
+    }
+
     return '' +
       '<div class="topic-detail-card">' +
         '<div class="topic-detail-top">' +
@@ -1899,16 +1976,19 @@ function initTopicDetailViews() {
           { label: 'Expertise Depth', value: topic.expertiseDepth || "None" }
         ]) +
 
+        winnerHtml +
+
         '<div class="topic-detail-block">' +
           '<div class="topic-detail-block-title">Tasks</div>' +
           '<div class="task-button-list">' +
             topic.tasks.map(function(task, taskIdx) {
               var taskText = typeof task === 'string' ? task : (task.step || task.text || '');
-              var taskDeadline = task.deadline ? ' (Deadline: ' + formatTaskDeadline(task.deadline) + ')' : '';
+              var taskDeadline = task.deadline ? ' - <span style="font-weight: 500; color: var(--text-soft);">' + formatTaskDeadline(task.deadline) + '</span>' : '';
+              var responsibleHtml = task.in_charge_name ? ' <span style="font-weight: 500; color: var(--text-soft);">(' + task.in_charge_name + ')</span>' : '';
               var existingReactions = task.reactions ? '<span style="display:inline-flex; gap:6px; padding:2px 8px; margin:0 4px; background:var(--surface-muted); border-radius:12px; font-size:0.85rem; cursor:pointer;">' + task.reactions + '</span>' : '';
               
-              return '<div style="display:flex; align-items:center; gap: 8px;">' +
-                       '<button type="button" class="task-chip-btn">' + taskText + taskDeadline + '</button>' +
+              return '<div style="display:flex; align-items:center; gap: 8px; margin-bottom: 8px;">' +
+                       '<button type="button" class="task-chip-btn" style="text-align: left;">' + taskText + responsibleHtml + taskDeadline + '</button>' +
                        existingReactions +
                        '<div class="reaction-wrap">' +
                          '<button type="button" class="topic-inline-btn react-toggle-btn">React</button>' +
@@ -1930,7 +2010,7 @@ function initTopicDetailViews() {
                        '<div class="topic-message-text">' + commentText + '</div>' +
                        '<div class="topic-message-actions">' +
                          '<button type="button" class="topic-inline-btn reply-btn" data-msg-id="comment_' + commentIdx + '" data-author="User">Reply</button>' +
-                         existingReactions + // Injected here
+                         existingReactions +
                          '<div class="reaction-wrap">' +
                            '<button type="button" class="topic-inline-btn react-toggle-btn">React</button>' +
                            renderReactionMenu({ id: 'comment_' + commentIdx, reactions: [] }) +
@@ -1942,13 +2022,26 @@ function initTopicDetailViews() {
         '</div>' +
 
         '<div class="topic-detail-actions">' +
-          '<div class="topic-detail-actions-left">' +
-            '<button type="button">Add Task</button>' +
-            '<button type="button">Add comment</button>' +
-            '<button type="button">Break down</button>' +
+          '<div class="topic-detail-actions-left" style="display: flex; gap: 8px;">' +
+            '<button type="button" class="tasks-discussion-toggle-btn">Discussion</button>' +
+            '<button type="button" class="tasks-other-options-toggle-btn">Other options</button>' +
           '</div>' +
           '<div class="topic-detail-actions-right">' +
             '<button type="button" class="topic-back-btn">Cancel</button>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="tasks-discussion-container" style="display: none; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px;">' +
+          '<div class="topic-detail-block-title" style="margin-bottom: 12px; font-weight: 700; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Previous Discussion Messages</div>' +
+          '<div class="topic-message-list" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">' +
+            messagesListHtml +
+          '</div>' +
+        '</div>' +
+
+        '<div class="tasks-other-options-container" style="display: none; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px;">' +
+          '<div class="topic-detail-block-title" style="margin-bottom: 12px; font-weight: 700; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Other Options</div>' +
+          '<div class="topic-options-list" style="display: flex; flex-direction: column; gap: 8px;">' +
+            otherOptionsHtml +
           '</div>' +
         '</div>' +
       '</div>';
@@ -3395,13 +3488,25 @@ function initTopicDetailViews() {
           console.error("Error resolving participants for task topic:", err);
         }
 
+        // Fetch messages for the previous discussion
+        let messages = [];
+        try {
+          const msgsSnap = await db.collection("discussions").doc(topicId).collection("messages").orderBy("timestamp", "asc").get();
+          msgsSnap.forEach(doc => {
+            messages.push(Object.assign({ id: doc.id }, doc.data()));
+          });
+        } catch (err) {
+          console.error("Error fetching messages for tasks topic:", err);
+        }
+
         currentDiscData = discData || issue;
 
         // Comments processing & resolve user names
         const comments = issue.comments || [];
         const commentUids = comments.map(c => (c.uid || '').toString()).filter(uid => uid && uid !== 'system');
         const uniqueUids = rawParticipants.map(uid => uid.toString()).filter(uid => uid && uid !== 'system');
-        const combinedUids = Array.from(new Set(uniqueUids.concat(commentUids)));
+        const msgUids = messages.map(m => (m.uid || '').toString()).filter(uid => uid && uid !== 'system');
+        const combinedUids = Array.from(new Set(uniqueUids.concat(commentUids).concat(msgUids)));
 
         const uidsToResolve = new Set();
         if (issue.submitter_id) uidsToResolve.add(issue.submitter_id.toString());
@@ -3480,12 +3585,45 @@ function initTopicDetailViews() {
             { text: "Confirm execution parameters & budget", reactions: "" },
             { text: "Implement proposed solution", reactions: "" }
           ],
-          comments: comments
+          comments: comments,
+          options: issue.options || [],
+          winning_option_index: issue.winning_option_index !== undefined ? issue.winning_option_index : null,
+          messages: messages
         };
 
         modalBody.innerHTML = renderTasksTopic(topicData);
         bindDetailViewButtons(titleText, discData || issue);
         bindChatMetaButtons(discData || issue);
+
+        // Bind discussion and other options toggle buttons click handlers
+        const discussionToggleBtn = modalBody.querySelector('.tasks-discussion-toggle-btn');
+        const discussionContainer = modalBody.querySelector('.tasks-discussion-container');
+        if (discussionToggleBtn && discussionContainer) {
+          discussionToggleBtn.onclick = function() {
+            if (discussionContainer.style.display === 'none') {
+              discussionContainer.style.display = 'block';
+              discussionToggleBtn.textContent = 'Hide Discussion';
+            } else {
+              discussionContainer.style.display = 'none';
+              discussionToggleBtn.textContent = 'Discussion';
+            }
+          };
+        }
+
+        const otherOptionsToggleBtn = modalBody.querySelector('.tasks-other-options-toggle-btn');
+        const otherOptionsContainer = modalBody.querySelector('.tasks-other-options-container');
+        if (otherOptionsToggleBtn && otherOptionsContainer) {
+          otherOptionsToggleBtn.onclick = function() {
+            if (otherOptionsContainer.style.display === 'none') {
+              otherOptionsContainer.style.display = 'block';
+              otherOptionsToggleBtn.textContent = 'Hide other options';
+            } else {
+              otherOptionsContainer.style.display = 'none';
+              otherOptionsToggleBtn.textContent = 'Other options';
+            }
+          };
+        }
+
       } catch (err) {
         console.error("Error loading tasks:", err);
         modalBody.innerHTML = `<div style="padding:20px; color:var(--urgent);">Error loading tasks: ${err.message}</div>`;
@@ -4081,7 +4219,7 @@ function initTopicDetailViews() {
         let stepsHtml = '';
         if (opt.description && opt.description.length > 0) {
           stepsHtml = opt.description.map((s, idx) => {
-            const dlHtml = s.deadline ? ` - <span style="font-weight: 500; color: var(--urgent);">Deadline: ${formatTaskDeadline(s.deadline)}</span>` : '';
+            const dlHtml = s.deadline ? ` - <span style="font-weight: 500; color: var(--text-soft);">${formatTaskDeadline(s.deadline)}</span>` : '';
             return `
               <li style="margin-bottom: 8px; font-size: 0.92rem; line-height: 1.4;">
                 ${s.step} 
