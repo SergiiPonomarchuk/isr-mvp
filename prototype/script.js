@@ -1879,6 +1879,84 @@ function initTopicDetailViews() {
       '</div>';
   }
 
+  function renderTaskMarksHtml(marks) {
+    var grouped = {};
+    (marks || []).forEach(function(r) {
+      var rType = r.type || r.reaction || '';
+      if (rType) {
+        if (!grouped[rType]) {
+          grouped[rType] = {
+            emoji: reactionEmojis[rType] || '👍',
+            uids: [],
+            count: 0
+          };
+        }
+        if (r.uid) grouped[rType].uids.push(r.uid);
+        grouped[rType].count++;
+      }
+    });
+    
+    var existingReactionsHtml = '';
+    ['good', 'funny', 'flood', 'rude', 'fool'].forEach(function(key) {
+      var g = grouped[key];
+      if (g) {
+        existingReactionsHtml += '<span class="reaction-bubble" data-uids="' + g.uids.join(',') + '">' + g.emoji + (g.count > 1 ? ' ' + g.count : '') + '</span>';
+      }
+    });
+    return existingReactionsHtml;
+  }
+
+  function renderTaskCommentsTree(comments, taskIdx) {
+    if (!comments || comments.length === 0) return '';
+    
+    var roots = [];
+    var childrenOf = {};
+    comments.forEach(function(c) {
+      var pId = c.parent_id || null;
+      if (!pId) {
+        roots.push(c);
+      } else {
+        if (!childrenOf[pId]) childrenOf[pId] = [];
+        childrenOf[pId].push(c);
+      }
+    });
+
+    function renderCommentNode(comment, depth) {
+      var authorName = comment.author_name || 'User';
+      var text = comment.text || '';
+      var indent = depth * 16;
+      var children = childrenOf[comment.id] || [];
+      
+      var commentHtml = '<div class="task-comment-card" id="task-comment-' + comment.id + '" style="margin-left: ' + indent + 'px; margin-bottom: 6px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-muted); text-align: left; font-size: 0.85rem;">' +
+                          '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+                            '<span style="font-weight: 600; color: var(--text-muted);">' + authorName + '</span>' +
+                            '<span style="font-size: 0.75rem; color: var(--text-soft);">' + (comment.timestamp ? comment.timestamp : '') + '</span>' +
+                          '</div>' +
+                          '<div style="color: var(--text); margin-top: 2px;">' + escapeHtml(text) + '</div>' +
+                          '<div style="margin-top: 4px; display: flex; gap: 8px; align-items: center;">' +
+                            '<button type="button" class="topic-inline-btn task-comment-reply-toggle-btn" data-comment-id="' + comment.id + '" style="font-size: 0.75rem; padding: 0;">Reply</button>' +
+                          '</div>' +
+                          
+                          '<div class="task-comment-reply-form" id="reply-form-' + comment.id + '" style="display: none; margin-top: 6px; gap: 6px; align-items: center;">' +
+                            '<input type="text" class="task-reply-input" placeholder="Write a reply..." style="flex: 1; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 0.8rem; background: var(--surface); color: var(--text);" />' +
+                            '<button type="button" class="task-submit-reply-btn" data-task-idx="' + taskIdx + '" data-parent-id="' + comment.id + '" style="padding: 4px 8px; font-size: 0.8rem; border-radius: 4px;">Send</button>' +
+                          '</div>' +
+                        '</div>';
+                        
+      var childrenHtml = children.map(function(child) {
+        return renderCommentNode(child, depth + 1);
+      }).join('');
+      
+      return commentHtml + childrenHtml;
+    }
+
+    return '<div class="task-comments-list" style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px;">' +
+             roots.map(function(root) {
+               return renderCommentNode(root, 0);
+             }).join('') +
+           '</div>';
+  }
+
   function renderTasksTopic(topic) {
     var winningOption = null;
     if (topic.options && topic.winning_option_index !== null && topic.winning_option_index !== undefined) {
@@ -1957,6 +2035,8 @@ function initTopicDetailViews() {
       otherOptionsHtml = '<div style="color:var(--text-muted); font-style:italic; font-size:0.88rem; padding: 4px;">No other options for this issue.</div>';
     }
 
+    var currentUserId = safeGetStorage('userId') || "1";
+
     return '' +
       '<div class="topic-detail-card">' +
         '<div class="topic-detail-top">' +
@@ -1980,40 +2060,40 @@ function initTopicDetailViews() {
 
         '<div class="topic-detail-block">' +
           '<div class="topic-detail-block-title">Tasks</div>' +
-          '<div class="task-button-list">' +
+          '<div class="task-items-list" style="display: flex; flex-direction: column; gap: 12px;">' +
             topic.tasks.map(function(task, taskIdx) {
               var taskText = typeof task === 'string' ? task : (task.step || task.text || '');
               var taskDeadline = task.deadline ? ' - <span style="font-weight: 500; color: var(--text-soft);">' + formatTaskDeadline(task.deadline) + '</span>' : '';
               var responsibleHtml = task.in_charge_name ? ' <span style="font-weight: 500; color: var(--text-soft);">(' + task.in_charge_name + ')</span>' : '';
-              var existingReactions = task.reactions ? '<span style="display:inline-flex; gap:6px; padding:2px 8px; margin:0 4px; background:var(--surface-muted); border-radius:12px; font-size:0.85rem; cursor:pointer;">' + task.reactions + '</span>' : '';
               
-              return '<div style="display:flex; align-items:center; gap: 8px; margin-bottom: 8px;">' +
-                       '<button type="button" class="task-chip-btn" style="text-align: left;">' + taskText + responsibleHtml + taskDeadline + '</button>' +
-                       existingReactions +
-                       '<div class="reaction-wrap">' +
-                         '<button type="button" class="topic-inline-btn react-toggle-btn">React</button>' +
-                         renderReactionMenu({ id: 'task_' + taskIdx, reactions: [] }) +
+              var isDone = task.status === 'done';
+              var doneEmoji = isDone ? '✔️ ' : '';
+              
+              var reactHtml = '';
+              if (isDone) {
+                var existingReactions = renderTaskMarksHtml(task.marks);
+                reactHtml = existingReactions +
+                  '<div class="reaction-wrap">' +
+                    '<button type="button" class="topic-inline-btn react-toggle-btn" data-reaction-menu="task_' + taskIdx + '">React</button>' +
+                    renderReactionMenu({ id: 'task_' + taskIdx, reactions: task.marks || [] }, currentUserId) +
+                  '</div>';
+              }
+
+              return '<div class="task-item-card" style="padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); display: flex; flex-direction: column; gap: 8px;">' +
+                       '<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%;">' +
+                         '<button type="button" class="task-toggle-status-btn" data-task-idx="' + taskIdx + '" style="background: none; border: none; font-size: 0.95rem; cursor: pointer; text-align: left; padding: 0; font-weight: 600; color: var(--text); flex: 1;">' +
+                           doneEmoji + escapeHtml(taskText) + responsibleHtml + taskDeadline +
+                         '</button>' +
+                         '<div style="display: flex; gap: 6px; align-items: center;" onclick="event.stopPropagation();">' +
+                           reactHtml +
+                         '</div>' +
                        '</div>' +
-                     '</div>';
-            }).join('') +
-          '</div>' +
-        '</div>' +
-
-        '<div class="topic-detail-block">' +
-          '<div class="topic-detail-block-title">Comments</div>' +
-          '<div class="topic-message-list">' +
-            topic.comments.map(function(comment, commentIdx) {
-              var commentText = typeof comment === 'string' ? comment : comment.text;
-              var existingReactions = comment.reactions ? '<span style="display:inline-flex; gap:6px; padding:2px 8px; margin:0 4px; background:var(--surface-muted); border-radius:12px; font-size:0.85rem; cursor:pointer;">' + comment.reactions + '</span>' : '';
-
-              return '<div class="topic-message-card">' +
-                       '<div class="topic-message-text">' + commentText + '</div>' +
-                       '<div class="topic-message-actions">' +
-                         '<button type="button" class="topic-inline-btn reply-btn" data-msg-id="comment_' + commentIdx + '" data-author="User">Reply</button>' +
-                         existingReactions +
-                         '<div class="reaction-wrap">' +
-                           '<button type="button" class="topic-inline-btn react-toggle-btn">React</button>' +
-                           renderReactionMenu({ id: 'comment_' + commentIdx, reactions: [] }) +
+                       
+                       '<div class="task-comments-section" style="margin-top: 4px; border-top: 1px dashed var(--border); padding-top: 8px;">' +
+                         renderTaskCommentsTree(task.comments || [], taskIdx) +
+                         '<div style="margin-top: 8px; display: flex; gap: 8px; align-items: center;">' +
+                           '<input type="text" class="task-new-comment-input" data-task-idx="' + taskIdx + '" placeholder="Add a comment..." style="flex: 1; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.82rem; background: var(--surface-muted); color: var(--text);" />' +
+                           '<button type="button" class="task-add-comment-btn" data-task-idx="' + taskIdx + '" style="padding: 6px 12px; font-size: 0.82rem; border-radius: 6px; cursor: pointer;">Comment</button>' +
                          '</div>' +
                        '</div>' +
                      '</div>';
@@ -3038,6 +3118,44 @@ function initTopicDetailViews() {
               });
             } catch (err) {
               console.error("Error toggling option reaction:", err);
+            }
+          } else if (msgId.startsWith('task_')) {
+            const taskIdx = parseInt(msgId.substring(5));
+            const docRef = db.collection("issues").doc(topicId);
+
+            try {
+              await db.runTransaction(async (transaction) => {
+                const doc = await transaction.get(docRef);
+                if (!doc.exists) return;
+
+                const data = doc.data();
+                const tasks = data.tasks || [];
+                if (!tasks[taskIdx]) return;
+
+                let marks = tasks[taskIdx].marks || [];
+                const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+                const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+                const existingIndex = userMarkTypes.indexOf(reactionType);
+
+                if (existingIndex >= 0) {
+                  marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+                } else {
+                  if (userMarkTypes.length >= 2) {
+                    alert("You can only leave up to 2 different reactions per task.");
+                    return;
+                  }
+                  marks.push({
+                    uid: currentUserId,
+                    type: reactionType,
+                    reaction: reactionType
+                  });
+                }
+                tasks[taskIdx].marks = marks;
+
+                transaction.update(docRef, { tasks: tasks });
+              });
+            } catch (err) {
+              console.error("Error toggling task reaction:", err);
             }
           } else {
             const msgRef = db.collection("discussions").doc(topicId).collection("messages").doc(msgId.toString());
@@ -4178,6 +4296,141 @@ function initTopicDetailViews() {
         });
 
         itemEl.appendChild(popup);
+      });
+    });
+  }
+
+  function bindTaskModalInteractions(topicId, issue) {
+    const currentUserId = safeGetStorage('userId');
+    if (!currentUserId) return;
+    
+    const db = firebase.firestore();
+    const docRef = db.collection("issues").doc(topicId);
+
+    // 1. Task toggle status clicks
+    modalBody.querySelectorAll('.task-toggle-status-btn').forEach(btn => {
+      btn.addEventListener('click', async function() {
+        const taskIdx = parseInt(this.getAttribute('data-task-idx'));
+        const tasks = issue.tasks || [];
+        const task = tasks[taskIdx];
+        if (!task) return;
+
+        // Check if logged-in user is the responsible person (in_charge_uid)
+        if ((task.in_charge_uid || '').toString() !== currentUserId.toString()) {
+          alert("Only the responsible person (" + (task.in_charge_name || 'assigned leader') + ") can change the status of this task.");
+          return;
+        }
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+            const latestData = doc.data();
+            const latestTasks = latestData.tasks || [];
+            if (latestTasks[taskIdx]) {
+              const currentStatus = latestTasks[taskIdx].status || 'pending';
+              latestTasks[taskIdx].status = currentStatus === 'done' ? 'pending' : 'done';
+              transaction.update(docRef, { tasks: latestTasks });
+            }
+          });
+          console.log("Task status updated.");
+        } catch (err) {
+          console.error("Failed to update task status:", err);
+        }
+      });
+    });
+
+    // 2. Add comment buttons (top-level comment for a task)
+    modalBody.querySelectorAll('.task-add-comment-btn').forEach(btn => {
+      btn.addEventListener('click', async function() {
+        const taskIdx = parseInt(this.getAttribute('data-task-idx'));
+        const inputEl = modalBody.querySelector(`.task-new-comment-input[data-task-idx="${taskIdx}"]`);
+        if (!inputEl) return;
+        const text = inputEl.value.trim();
+        if (!text) return;
+
+        const displayName = window.userCache[currentUserId] || ('User ' + currentUserId);
+        
+        const newComment = {
+           id: 'tc_' + Date.now() + '_' + Math.floor(Math.random()*1000),
+           uid: currentUserId,
+           author_name: displayName,
+           text: text,
+           timestamp: new Date().toLocaleDateString('de-CH') // e.g. "06.06.2026"
+        };
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+            const latestData = doc.data();
+            const latestTasks = latestData.tasks || [];
+            if (latestTasks[taskIdx]) {
+              if (!latestTasks[taskIdx].comments) latestTasks[taskIdx].comments = [];
+              latestTasks[taskIdx].comments.push(newComment);
+              transaction.update(docRef, { tasks: latestTasks });
+            }
+          });
+          inputEl.value = '';
+          console.log("Task comment added successfully.");
+        } catch (err) {
+          console.error("Failed to add task comment:", err);
+        }
+      });
+    });
+
+    // 3. Reply toggle buttons (shows/hides the inline reply form)
+    modalBody.querySelectorAll('.task-comment-reply-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const commentId = this.getAttribute('data-comment-id');
+        const replyForm = modalBody.querySelector(`#reply-form-${commentId}`);
+        if (replyForm) {
+          replyForm.style.display = replyForm.style.display === 'none' ? 'flex' : 'none';
+        }
+      });
+    });
+
+    // 4. Submit reply comment buttons (adds a nested reply comment)
+    modalBody.querySelectorAll('.task-submit-reply-btn').forEach(btn => {
+      btn.addEventListener('click', async function() {
+        const taskIdx = parseInt(this.getAttribute('data-task-idx'));
+        const parentId = this.getAttribute('data-parent-id');
+        const replyForm = modalBody.querySelector(`#reply-form-${parentId}`);
+        if (!replyForm) return;
+        const inputEl = replyForm.querySelector('.task-reply-input');
+        if (!inputEl) return;
+        const text = inputEl.value.trim();
+        if (!text) return;
+
+        const displayName = window.userCache[currentUserId] || ('User ' + currentUserId);
+        
+        const newReply = {
+           id: 'tc_' + Date.now() + '_' + Math.floor(Math.random()*1000),
+           uid: currentUserId,
+           author_name: displayName,
+           text: text,
+           timestamp: new Date().toLocaleDateString('de-CH'),
+           parent_id: parentId
+        };
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+            const latestData = doc.data();
+            const latestTasks = latestData.tasks || [];
+            if (latestTasks[taskIdx]) {
+              if (!latestTasks[taskIdx].comments) latestTasks[taskIdx].comments = [];
+              latestTasks[taskIdx].comments.push(newReply);
+              transaction.update(docRef, { tasks: latestTasks });
+            }
+          });
+          inputEl.value = '';
+          replyForm.style.display = 'none';
+          console.log("Task reply added successfully.");
+        } catch (err) {
+          console.error("Failed to add task reply:", err);
+        }
       });
     });
   }
