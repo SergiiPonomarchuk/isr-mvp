@@ -1068,6 +1068,9 @@ function initValuesVectorModal() {
     document.body.style.overflow = '';
   }
 
+  window.openValuesVectorModal = openModal;
+  window.closeValuesVectorModal = closeModal;
+
   function renderDomainsChart() {
     if (!domainsChart) return;
     domainsChart.innerHTML = '';
@@ -1280,6 +1283,12 @@ function initValuesVectorModal() {
   document.addEventListener('click', function(e) {
     if (e.target.closest('#values-vector-btn')) {
       e.preventDefault();
+      // Restore logged-in user's own values vector before opening
+      window.currentUserValues = window.loggedInUserValues || null;
+      const titleEl = document.getElementById('values-vector-title');
+      if (titleEl) {
+        titleEl.textContent = "Vector of Values";
+      }
       openModal();
     }
   });
@@ -5349,6 +5358,7 @@ function initMainPage() {
             { name: 'Justice-Based vs. Cooperative Distribution', weight: taxonomy.conflict_resolution[35] !== undefined ? taxonomy.conflict_resolution[35] : 50 }
           ]
         };
+        window.loggedInUserValues = window.currentUserValues;
       }
     }).catch(err => console.error("Firestore user profile load failed:", err));
   }
