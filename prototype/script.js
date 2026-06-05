@@ -14,6 +14,37 @@ const sectionTitles = {
   settings: 'Settings'
 };
 
+function formatTaskDeadline(dateStr) {
+  if (!dateStr || dateStr === "Ongoing") return "";
+  const parts = dateStr.split('-');
+  if (parts.length === 3) {
+    return `${parts[2]}.${parts[1]}.${parts[0]}`;
+  }
+  return dateStr;
+}
+
+function getMostUrgentTask(tasks) {
+  if (!tasks || tasks.length === 0) return null;
+  const unfinished = tasks.filter(t => t.status !== 'done');
+  if (unfinished.length === 0) return null;
+  
+  unfinished.sort((a, b) => {
+    const dateA = a.deadline ? new Date(a.deadline) : new Date(8640000000000000);
+    const dateB = b.deadline ? new Date(b.deadline) : new Date(8640000000000000);
+    return dateA - dateB;
+  });
+  return unfinished[0];
+}
+
+function isUrgentDate(dateStr) {
+  if (!dateStr) return false;
+  const target = new Date(dateStr);
+  const today = new Date("2026-06-05");
+  const diffTime = target - today;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays >= 0 && diffDays <= 3;
+}
+
 let currentSectionId = null;
 
 function toggleContent(id) {
@@ -1485,7 +1516,8 @@ function initTopicDetailViews() {
               if (option.description && option.description.length > 0) {
                 stepsHtml = '<div class="voting-option-steps" style="margin-top: 6px; padding-left: 24px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">' +
                   option.description.map(function(s) {
-                    return '<div style="margin-bottom: 2px;">&bull; ' + s.step + ' <span style="font-weight: 500; color: var(--text-soft);">(' + s.in_charge_name + ')</span></div>';
+                    var dlHtml = s.deadline ? ' - <span style="font-weight: 500; color: var(--urgent);">Deadline: ' + formatTaskDeadline(s.deadline) + '</span>' : '';
+                    return '<div style="margin-bottom: 2px;">&bull; ' + s.step + ' <span style="font-weight: 500; color: var(--text-soft);">(' + s.in_charge_name + ')</span>' + dlHtml + '</div>';
                   }).join('') +
                 '</div>';
               }
@@ -1652,7 +1684,8 @@ function initTopicDetailViews() {
       }
       
       var stepsPreviewHtml = (opt.description || []).slice(0, 2).map(function(s) {
-        return '<div style="margin-bottom: 2px;">&bull; ' + s.step + ' <span style="font-weight: 500; color: var(--text-soft);">(' + s.in_charge_name + ')</span></div>';
+        var dlHtml = s.deadline ? ' - <span style="font-weight: 500; color: var(--urgent);">Deadline: ' + formatTaskDeadline(s.deadline) + '</span>' : '';
+        return '<div style="margin-bottom: 2px;">&bull; ' + s.step + ' <span style="font-weight: 500; color: var(--text-soft);">(' + s.in_charge_name + ')</span>' + dlHtml + '</div>';
       }).join('');
       
       var remainingStepsCount = (opt.description || []).length - 2;
@@ -1871,11 +1904,12 @@ function initTopicDetailViews() {
           '<div class="task-button-list">' +
             topic.tasks.map(function(task, taskIdx) {
               var taskText = typeof task === 'string' ? task : (task.step || task.text || '');
+              var taskDeadline = task.deadline ? ' (Deadline: ' + formatTaskDeadline(task.deadline) + ')' : '';
               var existingReactions = task.reactions ? '<span style="display:inline-flex; gap:6px; padding:2px 8px; margin:0 4px; background:var(--surface-muted); border-radius:12px; font-size:0.85rem; cursor:pointer;">' + task.reactions + '</span>' : '';
               
               return '<div style="display:flex; align-items:center; gap: 8px;">' +
-                       '<button type="button" class="task-chip-btn">' + taskText + '</button>' +
-                       existingReactions + // Injected here
+                       '<button type="button" class="task-chip-btn">' + taskText + taskDeadline + '</button>' +
+                       existingReactions +
                        '<div class="reaction-wrap">' +
                          '<button type="button" class="topic-inline-btn react-toggle-btn">React</button>' +
                          renderReactionMenu({ id: 'task_' + taskIdx, reactions: [] }) +
@@ -4046,12 +4080,15 @@ function initTopicDetailViews() {
         
         let stepsHtml = '';
         if (opt.description && opt.description.length > 0) {
-          stepsHtml = opt.description.map((s, idx) => `
-            <li style="margin-bottom: 8px; font-size: 0.92rem; line-height: 1.4;">
-              ${s.step} 
-              <span style="font-weight: 600; color: var(--text-soft);">(${s.in_charge_name})</span>
-            </li>
-          `).join('');
+          stepsHtml = opt.description.map((s, idx) => {
+            const dlHtml = s.deadline ? ` - <span style="font-weight: 500; color: var(--urgent);">Deadline: ${formatTaskDeadline(s.deadline)}</span>` : '';
+            return `
+              <li style="margin-bottom: 8px; font-size: 0.92rem; line-height: 1.4;">
+                ${s.step} 
+                <span style="font-weight: 600; color: var(--text-soft);">(${s.in_charge_name})</span>${dlHtml}
+              </li>
+            `;
+          }).join('');
         } else {
           stepsHtml = '<li style="color: var(--text-muted); font-style: italic;">No steps specified</li>';
         }
@@ -5022,17 +5059,29 @@ function initRealTimeDashboardSync(db, storedUid) {
     taskDocs.forEach(doc => {
       const issue = doc.data();
       const topicId = doc.id;
-      const taskStatus = issue.status === 'approved'
-        ? '<div class="task-row">✅ Final Verification · Done</div>'
-        : '<div class="task-row">🔄 Community Discussion & Review · In progress</div>';
+      
+      const tasks = issue.tasks || [];
+      const currentUserId = safeGetStorage('userId');
+      const hasUnfinishedUserTask = tasks.some(t => {
+        return (t.in_charge_uid || '').toString() === (currentUserId || '').toString() && t.status !== 'done';
+      });
+      
+      const urgentTask = getMostUrgentTask(tasks);
+      const isUrgent = urgentTask && isUrgentDate(urgentTask.deadline);
+      
+      const emojiPrefix = (isUrgent ? '⚠️' : '') + (hasUnfinishedUserTask ? '📋 ' : '');
+      
+      const secondRowHtml = urgentTask
+        ? `Next: ${urgentTask.step} (Deadline: ${formatTaskDeadline(urgentTask.deadline)})`
+        : '✅ All tasks completed';
+
       taskHtml += `
         <button class="topic-item" data-topic-type="tasks" data-topic-id="${topicId}">
-          <div class="topic-header">
-            <span class="topic-name">📋 ${issue.title}</span>
-            <span class="topic-meta">1 task</span>
-          </div>
-          <div class="task-list">
-            ${taskStatus}
+          <div class="topic-header" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
+            <span class="topic-name" style="font-weight: 700; text-align: left;">${emojiPrefix}${issue.title}</span>
+            <span class="topic-meta" style="font-size: 0.85rem; color: var(--text-soft); font-weight: normal; text-align: left;">
+              ${secondRowHtml}
+            </span>
           </div>
         </button>
       `;
@@ -5145,18 +5194,34 @@ function initRealTimeDashboardSync(db, storedUid) {
       taskDocs.forEach(doc => {
         if (count >= 3) return;
         const issue = doc.data();
+        const topicId = doc.id;
+        
+        const tasks = issue.tasks || [];
+        const currentUserId = safeGetStorage('userId');
+        const hasUnfinishedUserTask = tasks.some(t => {
+          return (t.in_charge_uid || '').toString() === (currentUserId || '').toString() && t.status !== 'done';
+        });
+        
+        const urgentTask = getMostUrgentTask(tasks);
+        const isUrgent = urgentTask && isUrgentDate(urgentTask.deadline);
+        
+        const emojiPrefix = (isUrgent ? '⚠️' : '') + (hasUnfinishedUserTask ? '📋 ' : '');
+        
+        const secondRowHtml = urgentTask
+          ? `Next: ${urgentTask.step} (Deadline: ${formatTaskDeadline(urgentTask.deadline)})`
+          : '✅ All tasks completed';
+
         const preview = document.createElement('div');
         preview.className = 'dash-card-preview';
         preview.style.cursor = 'pointer';
         preview.addEventListener('click', () => openSectionModal('tasks'));
-        const pill = issue.status === 'approved'
-          ? '<span class="status-pill status-pill-done">Done</span>'
-          : '<span class="status-pill status-pill-active">Active</span>';
         preview.innerHTML = `
           <div class="topic-line">
-            <span class="topic-name">📋 ${issue.title}</span>
+            <span class="topic-name">${emojiPrefix}${issue.title}</span>
           </div>
-          <div class="topic-preview">Status: ${pill}</div>
+          <div class="topic-preview" style="font-size: 0.85rem; color: var(--text-soft); padding-top: 2px;">
+            ${secondRowHtml}
+          </div>
         `;
         dashTasksCard.appendChild(preview);
         count++;
