@@ -1401,6 +1401,7 @@ function initTopicDetailViews() {
     if (status === 'approved') return '<span class="status-pill status-pill-done">Approved</span>';
     if (status === 'discussion') return '<span class="status-pill status-pill-pending">Discussion</span>';
     if (status === 'canceled') return '<span class="status-pill status-pill-pending">Canceled</span>';
+    if (status === 'inactive') return '<span class="status-pill status-pill-pending" style="background:var(--error-soft, #fed7d7); color:var(--error, #e53e3e);">Inactive</span>';
     return '<span class="status-pill status-pill-active">Voting</span>';
   }
 
@@ -2429,6 +2430,7 @@ function initTopicDetailViews() {
       let startVotingSum = 0;
       let backToChatSum = 0;
       let finishVotingSum = 0;
+      let cancelIssueSum = 0;
 
       for (const uid in votesMap) {
         const v = votesMap[uid];
@@ -2441,6 +2443,8 @@ function initTopicDetailViews() {
           backToChatSum += userIsrScore;
         } else if (v === 'finish_voting') {
           finishVotingSum += userIsrScore;
+        } else if (v === 'cancel_issue') {
+          cancelIssueSum += userIsrScore;
         }
       }
 
@@ -2449,130 +2453,205 @@ function initTopicDetailViews() {
       };
 
       if (totalIsrSum > 0) {
-        if ((plus1WeekSum / totalIsrSum) > 0.10) {
-          let currentDeadlineDate = new Date();
-          if (data.ends && data.ends !== "Ongoing") {
-            const parts = data.ends.split('-');
-            if (parts.length === 3) {
-              currentDeadlineDate = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+        let transitionTriggered = false;
+        const cancelRatio = cancelIssueSum / totalIsrSum;
+
+        if (data.status === 'inactive') {
+          if (cancelRatio <= 0.10) {
+            transitionTriggered = true;
+            // Reactivate issue!
+            const newEndsDate = new Date();
+            newEndsDate.setDate(newEndsDate.getDate() + 7);
+            const newEndsStr = formatDateToString(newEndsDate);
+
+            const origStatus = data.previous_status || (kind === 'voting' ? 'in_process' : (kind === 'tasks' ? 'approved' : 'discussion'));
+            updateFields.status = origStatus;
+            updateFields.ends = newEndsStr;
+            updateFields.previous_status = firebase.firestore.FieldValue.delete();
+            updateFields.deadline_votes = {}; // reset votes on reactivation
+
+            if (origStatus === 'in_process' || origStatus === 'approved' || origStatus === 'tasks') {
+              transaction.update(issueRef, {
+                status: origStatus,
+                ends: newEndsStr,
+                deadline_votes: {},
+                previous_status: firebase.firestore.FieldValue.delete()
+              });
+            }
+
+            setTimeout(() => {
+              closeOverlayModal();
+              restoreTopicListView();
+            }, 100);
+          } else {
+            // Still inactive, just update the vote map
+            if (kind === 'voting' || kind === 'tasks') {
+              transaction.update(issueRef, {
+                deadline_votes: votesMap
+              });
             }
           }
-          currentDeadlineDate.setDate(currentDeadlineDate.getDate() + 7);
-          const newEndsStr = formatDateToString(currentDeadlineDate);
-          
-          updateFields.ends = newEndsStr;
-          updateFields.deadline_votes = {}; // reset votes
+        } else {
+          // Normal active flows...
+          if (cancelRatio > 0.10) {
+            transitionTriggered = true;
+            // Cancel issue (become inactive)
+            updateFields.status = 'inactive';
+            
+            let prevStatus = 'discussion';
+            if (kind === 'voting') prevStatus = 'in_process';
+            else if (kind === 'tasks') prevStatus = 'approved';
+            
+            updateFields.previous_status = prevStatus;
 
-          // Update issue deadline as well if in voting
-          if (kind === 'voting') {
-            transaction.update(issueRef, {
+            if (kind === 'voting' || kind === 'tasks') {
+              transaction.update(issueRef, {
+                status: 'inactive',
+                previous_status: prevStatus,
+                deadline_votes: votesMap
+              });
+            }
+
+            setTimeout(() => {
+              closeOverlayModal();
+              restoreTopicListView();
+            }, 100);
+          } else if ((plus1WeekSum / totalIsrSum) > 0.10) {
+            transitionTriggered = true;
+            let currentDeadlineDate = new Date();
+            if (data.ends && data.ends !== "Ongoing") {
+              const parts = data.ends.split('-');
+              if (parts.length === 3) {
+                currentDeadlineDate = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+              }
+            }
+            currentDeadlineDate.setDate(currentDeadlineDate.getDate() + 7);
+            const newEndsStr = formatDateToString(currentDeadlineDate);
+            
+            updateFields.ends = newEndsStr;
+            updateFields.deadline_votes = {}; // reset votes
+
+            // Update issue deadline as well if in voting
+            if (kind === 'voting') {
+              transaction.update(issueRef, {
+                ends: newEndsStr,
+                deadline_votes: {}
+              });
+            }
+
+            setTimeout(() => { closeOverlayModal(); }, 100);
+          } else if ((startVotingSum / totalIsrSum) > 0.10 && kind === 'chat') {
+            transitionTriggered = true;
+            const newEndsDate = new Date();
+            newEndsDate.setDate(newEndsDate.getDate() + 7);
+            const newEndsStr = formatDateToString(newEndsDate);
+
+            updateFields.status = 'Voting';
+            updateFields.ends = newEndsStr;
+            updateFields.deadline_votes = {}; // reset votes
+
+            // Create/update document in issues collection
+            const issueDoc = await transaction.get(issueRef);
+            
+            let issueOptions = [];
+            if (data.options_v2 && data.options_v2.length > 0) {
+              issueOptions = data.options_v2.map(opt => ({
+                label: opt.title,
+                score: 0,
+                author_uid: opt.author_uid || "",
+                author_name: opt.author_name || "System",
+                budget: opt.budget || "N/A",
+                description: opt.description || []
+              }));
+            } else {
+              issueOptions = [
+                { label: "Proceed with proposed fix", score: 0, author_name: "System", budget: "N/A", description: [] },
+                { label: "Reject proposal", score: 0, author_name: "System", budget: "N/A", description: [] },
+                { label: "Request more details", score: 0, author_name: "System", budget: "N/A", description: [] }
+              ];
+            }
+
+            const issueData = {
+              title: data.topic || "",
+              description: data.description || "",
+              category: data.category || "General",
+              status: 'in_process', // active for voting
               ends: newEndsStr,
+              submitter_id: data.creator_uid || "system",
+              created_at: new Date().toISOString(),
+              participants: data.participants || [],
+              options: issueOptions,
+              deadline_votes: {}, // reset votes
+              w_demographic: data.w_demographic !== undefined ? data.w_demographic : 0.2,
+              w_geographic: data.w_geographic !== undefined ? data.w_geographic : 0.6,
+              w_semantic: data.w_semantic !== undefined ? data.w_semantic : 0.1,
+              w_social: data.w_social !== undefined ? data.w_social : 0.1,
+              w_relevance: data.w_relevance !== undefined ? data.w_relevance : 0.4,
+              w_expertise: data.w_expertise !== undefined ? data.w_expertise : 0.3,
+              w_contribution: data.w_contribution !== undefined ? data.w_contribution : 0.3,
+              last_message_sender_name: data.last_message_sender_name || "",
+              last_message_sender_uid: data.last_message_sender_uid || "",
+              last_message_text: data.last_message_text || "",
+              last_message_timestamp: data.last_message_timestamp || "",
+              relevance_scores: data.relevance_scores || {},
+              isr_scores: data.isr_scores || {},
+              message_count: data.message_count || 0
+            };
+
+            if (issueDoc.exists) {
+              transaction.update(issueRef, issueData);
+            } else {
+              transaction.set(issueRef, issueData);
+            }
+
+            setTimeout(() => {
+              closeOverlayModal();
+              restoreTopicListView();
+            }, 100);
+          } else if ((backToChatSum / totalIsrSum) > 0.10 && kind === 'voting') {
+            transitionTriggered = true;
+            // Transition back to Chat
+            const newEndsDate = new Date();
+            newEndsDate.setDate(newEndsDate.getDate() + 7);
+            const newEndsStr = formatDateToString(newEndsDate);
+
+            updateFields.status = 'discussion';
+            updateFields.ends = newEndsStr;
+            updateFields.deadline_votes = {}; // reset votes
+
+            transaction.update(issueRef, {
+              status: 'discussion',
+              ends: newEndsStr,
+              deadline_votes: {},
+              votes: {} // reset votes
+            });
+
+            setTimeout(() => {
+              closeOverlayModal();
+              restoreTopicListView();
+            }, 100);
+          } else if ((finishVotingSum / totalIsrSum) > 0.10 && kind === 'voting') {
+            transitionTriggered = true;
+            // Transition to Approved
+            updateFields.status = 'approved';
+            updateFields.deadline_votes = {}; // reset votes
+
+            transaction.update(issueRef, {
+              status: 'approved',
               deadline_votes: {}
             });
+
+            setTimeout(() => {
+              closeOverlayModal();
+              restoreTopicListView();
+            }, 100);
           }
+        }
 
-          setTimeout(() => { closeOverlayModal(); }, 100);
-        } else if ((startVotingSum / totalIsrSum) > 0.10 && kind === 'chat') {
-          const newEndsDate = new Date();
-          newEndsDate.setDate(newEndsDate.getDate() + 7);
-          const newEndsStr = formatDateToString(newEndsDate);
-
-          updateFields.status = 'Voting';
-          updateFields.ends = newEndsStr;
-          updateFields.deadline_votes = {}; // reset votes
-
-          // Create/update document in issues collection
-          const issueDoc = await transaction.get(issueRef);
-          
-          let issueOptions = [];
-          if (data.options_v2 && data.options_v2.length > 0) {
-            issueOptions = data.options_v2.map(opt => ({
-              label: opt.title,
-              score: 0,
-              author_uid: opt.author_uid || "",
-              author_name: opt.author_name || "System",
-              budget: opt.budget || "N/A",
-              description: opt.description || []
-            }));
-          } else {
-            issueOptions = [
-              { label: "Proceed with proposed fix", score: 0, author_name: "System", budget: "N/A", description: [] },
-              { label: "Reject proposal", score: 0, author_name: "System", budget: "N/A", description: [] },
-              { label: "Request more details", score: 0, author_name: "System", budget: "N/A", description: [] }
-            ];
-          }
-
-          const issueData = {
-            title: data.topic || "",
-            description: data.description || "",
-            category: data.category || "General",
-            status: 'in_process', // active for voting
-            ends: newEndsStr,
-            submitter_id: data.creator_uid || "system",
-            created_at: new Date().toISOString(),
-            participants: data.participants || [],
-            options: issueOptions,
-            w_demographic: data.w_demographic !== undefined ? data.w_demographic : 0.2,
-            w_geographic: data.w_geographic !== undefined ? data.w_geographic : 0.6,
-            w_semantic: data.w_semantic !== undefined ? data.w_semantic : 0.1,
-            w_social: data.w_social !== undefined ? data.w_social : 0.1,
-            w_relevance: data.w_relevance !== undefined ? data.w_relevance : 0.4,
-            w_expertise: data.w_expertise !== undefined ? data.w_expertise : 0.3,
-            w_contribution: data.w_contribution !== undefined ? data.w_contribution : 0.3,
-            last_message_sender_name: data.last_message_sender_name || "",
-            last_message_sender_uid: data.last_message_sender_uid || "",
-            last_message_text: data.last_message_text || "",
-            last_message_timestamp: data.last_message_timestamp || "",
-            relevance_scores: data.relevance_scores || {},
-            isr_scores: data.isr_scores || {},
-            message_count: data.message_count || 0
-          };
-
-          if (issueDoc.exists) {
-            transaction.update(issueRef, issueData);
-          } else {
-            transaction.set(issueRef, issueData);
-          }
-
-          setTimeout(() => {
-            closeOverlayModal();
-            restoreTopicListView();
-          }, 100);
-        } else if ((backToChatSum / totalIsrSum) > 0.10 && kind === 'voting') {
-          // Transition back to Chat
-          const newEndsDate = new Date();
-          newEndsDate.setDate(newEndsDate.getDate() + 7);
-          const newEndsStr = formatDateToString(newEndsDate);
-
-          updateFields.status = 'discussion';
-          updateFields.ends = newEndsStr;
-          updateFields.deadline_votes = {}; // reset votes
-
+        if (!transitionTriggered && data.status !== 'inactive' && (kind === 'voting' || kind === 'tasks')) {
           transaction.update(issueRef, {
-            status: 'discussion',
-            ends: newEndsStr,
-            deadline_votes: {},
-            votes: {} // reset votes
+            deadline_votes: votesMap
           });
-
-          setTimeout(() => {
-            closeOverlayModal();
-            restoreTopicListView();
-          }, 100);
-        } else if ((finishVotingSum / totalIsrSum) > 0.10 && kind === 'voting') {
-          // Transition to Approved
-          updateFields.status = 'approved';
-          updateFields.deadline_votes = {}; // reset votes
-
-          transaction.update(issueRef, {
-            status: 'approved',
-            deadline_votes: {}
-          });
-
-          setTimeout(() => {
-            closeOverlayModal();
-            restoreTopicListView();
-          }, 100);
         }
       }
 
@@ -2595,7 +2674,24 @@ function initTopicDetailViews() {
 
   if (!proposalModalOverlay || !proposalModalCloseBtn || !proposalModalTitle || !proposalModalBody) return;
 
-  proposalModalTitle.textContent = kind === 'voting' ? "Deadline & Back to Chat Voting" : "Deadline Adjustment & Voting";
+  let modalKind = kind;
+  if (disc.status === 'inactive') {
+    if (disc.previous_status === 'in_process') {
+      modalKind = 'voting';
+    } else if (disc.previous_status === 'approved' || disc.previous_status === 'tasks') {
+      modalKind = 'tasks';
+    } else {
+      modalKind = 'chat';
+    }
+  }
+
+  if (modalKind === 'tasks') {
+    proposalModalTitle.textContent = "Cancel Issue Voting";
+  } else if (modalKind === 'voting') {
+    proposalModalTitle.textContent = "Deadline & Back to Chat Voting";
+  } else {
+    proposalModalTitle.textContent = "Deadline Adjustment & Voting";
+  }
 
   const currentUserId = safeGetStorage('userId') || "1";
   const isrScoresMap = disc.isr_scores || {};
@@ -2609,6 +2705,7 @@ function initTopicDetailViews() {
   let startVotingSum = 0;
   let backToChatSum = 0;
   let finishVotingSum = 0;
+  let cancelIssueSum = 0;
 
   for (const uid in votesMap) {
     const v = votesMap[uid];
@@ -2621,6 +2718,8 @@ function initTopicDetailViews() {
       backToChatSum += userIsrScore;
     } else if (v === 'finish_voting') {
       finishVotingSum += userIsrScore;
+    } else if (v === 'cancel_issue') {
+      cancelIssueSum += userIsrScore;
     }
   }
 
@@ -2628,13 +2727,15 @@ function initTopicDetailViews() {
   const startVotingPct = totalIsrSum > 0 ? (startVotingSum / totalIsrSum) * 100 : 0;
   const backToChatPct = totalIsrSum > 0 ? (backToChatSum / totalIsrSum) * 100 : 0;
   const finishVotingPct = totalIsrSum > 0 ? (finishVotingSum / totalIsrSum) * 100 : 0;
+  const cancelIssuePct = totalIsrSum > 0 ? (cancelIssueSum / totalIsrSum) * 100 : 0;
   const userVote = votesMap[currentUserId];
 
-  let descriptionText = "Adjust the discussion deadline or initiate the voting stage.";
+  let descriptionText = "Adjust the discussion deadline, initiate the voting stage, or cancel this issue.";
   let secondRowHtml = "";
+  let showPlus1WeekButton = true;
 
-  if (kind === 'voting') {
-    descriptionText = "Adjust the voting deadline, transition back to the chat discussion, or finish voting.";
+  if (modalKind === 'voting') {
+    descriptionText = "Adjust the voting deadline, transition back to the chat discussion, finish voting, or cancel this issue.";
     secondRowHtml = `
         <!-- Back to Chat Button -->
         <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--surface-soft); border:1px solid var(--border); padding:12px; border-radius:8px;">
@@ -2657,6 +2758,10 @@ function initTopicDetailViews() {
           </div>
         </div>
     `;
+  } else if (modalKind === 'tasks') {
+    descriptionText = "Vote to cancel this issue and mark it as inactive.";
+    showPlus1WeekButton = false;
+    secondRowHtml = "";
   } else {
     secondRowHtml = `
         <!-- Start Voting Button -->
@@ -2672,6 +2777,37 @@ function initTopicDetailViews() {
     `;
   }
 
+  const cancelIssueButtonHtml = `
+        <!-- Cancel Issue Button -->
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--surface-soft); border:1px solid var(--border); padding:12px; border-radius:8px;">
+          <button type="button" class="deadline-vote-btn ${userVote === 'cancel_issue' ? 'active' : ''}" data-vote="cancel_issue" style="color:var(--error, #e53e3e);">
+            ${userVote === 'cancel_issue' ? '✓ ' : ''}Cancel Issue
+          </button>
+          <div style="text-align:right; min-width:120px;">
+            <div style="font-size:0.95rem; font-weight:700; color:var(--text);">${cancelIssueSum.toFixed(2)} ISR</div>
+            <div style="font-size:0.75rem; color:var(--text-muted);">${cancelIssuePct.toFixed(1)}% of total</div>
+          </div>
+        </div>
+  `;
+
+  let buttonsListHtml = "";
+  if (showPlus1WeekButton) {
+    buttonsListHtml += `
+        <!-- +1 Week Button -->
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--surface-soft); border:1px solid var(--border); padding:12px; border-radius:8px;">
+          <button type="button" class="deadline-vote-btn ${userVote === 'plus_1_week' ? 'active' : ''}" data-vote="plus_1_week">
+            ${userVote === 'plus_1_week' ? '✓ ' : ''}+1 Week
+          </button>
+          <div style="text-align:right; min-width:120px;">
+            <div style="font-size:0.95rem; font-weight:700; color:var(--text);">${plus1WeekSum.toFixed(2)} ISR</div>
+            <div style="font-size:0.75rem; color:var(--text-muted);">${plus1WeekPct.toFixed(1)}% of total</div>
+          </div>
+        </div>
+    `;
+  }
+  buttonsListHtml += secondRowHtml;
+  buttonsListHtml += cancelIssueButtonHtml;
+
   proposalModalBody.innerHTML = `
     <div style="display:flex; flex-direction:column; gap:16px; color:var(--text);">
       <div style="font-size:0.9rem; color:var(--text-muted); border-bottom:1px solid var(--border); padding-bottom:8px; margin-bottom:8px;">
@@ -2684,18 +2820,7 @@ function initTopicDetailViews() {
       </div>
       
       <div style="display:flex; flex-direction:column; gap:12px;">
-        <!-- +1 Week Button -->
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--surface-soft); border:1px solid var(--border); padding:12px; border-radius:8px;">
-          <button type="button" class="deadline-vote-btn ${userVote === 'plus_1_week' ? 'active' : ''}" data-vote="plus_1_week">
-            ${userVote === 'plus_1_week' ? '✓ ' : ''}+1 Week
-          </button>
-          <div style="text-align:right; min-width:120px;">
-            <div style="font-size:0.95rem; font-weight:700; color:var(--text);">${plus1WeekSum.toFixed(2)} ISR</div>
-            <div style="font-size:0.75rem; color:var(--text-muted);">${plus1WeekPct.toFixed(1)}% of total</div>
-          </div>
-        </div>
-        
-        ${secondRowHtml}
+        ${buttonsListHtml}
       </div>
       
       <div style="font-size:0.8rem; color:var(--text-muted); line-height:1.4; background:var(--surface-soft); padding:10px; border-radius:6px; border:1px solid var(--border);">
@@ -5265,6 +5390,7 @@ function initRealTimeDashboardSync(db, storedUid) {
           created_at: currentData.created_at || new Date().toISOString(),
           participants: currentData.participants || [],
           options: issueOptions,
+          deadline_votes: {}, // reset votes
           w_demographic: currentData.w_demographic !== undefined ? currentData.w_demographic : 0.2,
           w_geographic: currentData.w_geographic !== undefined ? currentData.w_geographic : 0.6,
           w_semantic: currentData.w_semantic !== undefined ? currentData.w_semantic : 0.1,
@@ -5448,8 +5574,10 @@ function initRealTimeDashboardSync(db, storedUid) {
       if (isUrgent) emojiPrefix += '⚡';
       const prefix = emojiPrefix ? emojiPrefix + ' ' : '';
 
+      const inactiveStyle = disc.status === 'inactive' ? 'text-decoration: line-through; opacity: 0.65;' : '';
+
       listHtml += `
-        <button class="topic-item" data-topic-type="chat" data-topic-id="${topicId}">
+        <button class="topic-item" data-topic-type="chat" data-topic-id="${topicId}" style="${inactiveStyle}">
           <div class="topic-header">
             <div class="topic-name-wrap">
               <span class="topic-name">${prefix}${disc.topic}</span>
@@ -5526,6 +5654,10 @@ function initRealTimeDashboardSync(db, storedUid) {
         const preview = document.createElement('div');
         preview.className = 'dash-card-preview';
         preview.style.cursor = 'pointer';
+        if (disc.status === 'inactive') {
+          preview.style.textDecoration = 'line-through';
+          preview.style.opacity = '0.65';
+        }
         preview.addEventListener('click', () => openSectionModal('chat'));
         
         const dateStr = disc.last_message_timestamp ? new Date(disc.last_message_timestamp).toLocaleDateString() : '';
@@ -5620,9 +5752,10 @@ function initRealTimeDashboardSync(db, storedUid) {
         if (shouldVoteUrgently) emojiPrefix += '🚨';
         const prefix = emojiPrefix ? emojiPrefix + ' ' : '';
         const voteIcon = hasVoted ? '✅' : '🗳️';
+        const inactiveStyle = issue.status === 'inactive' ? 'text-decoration: line-through; opacity: 0.65;' : '';
 
         listHtml += `
-          <button class="topic-item" data-topic-type="voting" data-topic-id="${topicId}">
+          <button class="topic-item" data-topic-type="voting" data-topic-id="${topicId}" style="${inactiveStyle}">
             <div class="topic-header">
               <div class="topic-name-wrap">
                 <span class="topic-name">${prefix}${voteIcon} ${issue.title}</span>
@@ -5685,7 +5818,11 @@ function initRealTimeDashboardSync(db, storedUid) {
       // Auto-transition check for deadline
       const isExpired = data.ends && data.ends !== 'Ongoing' && getDaysUntil(data.ends) <= 0;
       
-      if (data.status === 'Voting' || isExpired) {
+      if (data.status === 'inactive') {
+        if (data.previous_status !== 'discussion') {
+          return;
+        }
+      } else if (data.status === 'Voting' || isExpired) {
         if (isExpired && data.status !== 'Voting') {
           // Trigger transition
           checkAndTransitionExpiredDiscussion(topicId, data);
@@ -5741,10 +5878,10 @@ function initRealTimeDashboardSync(db, storedUid) {
       const data = doc.data();
       const topicId = doc.id;
       if (relevantIds.has(topicId)) {
-        if (data.status === 'in_process') {
+        if (data.status === 'in_process' || (data.status === 'inactive' && data.previous_status === 'in_process')) {
           votingDocs.push(doc);
         }
-        if (data.status === 'tasks' || data.status === 'approved') {
+        if (data.status === 'tasks' || data.status === 'approved' || (data.status === 'inactive' && (data.previous_status === 'approved' || data.previous_status === 'tasks'))) {
           taskDocs.push(doc);
         }
       }
@@ -5777,8 +5914,10 @@ function initRealTimeDashboardSync(db, storedUid) {
         ? `Next: ${urgentTask.step} (Deadline: ${formatTaskDeadline(urgentTask.deadline)})`
         : '✅ All tasks completed';
 
+      const inactiveStyle = issue.status === 'inactive' ? 'text-decoration: line-through; opacity: 0.65;' : '';
+
       taskHtml += `
-        <button class="topic-item" data-topic-type="tasks" data-topic-id="${topicId}">
+        <button class="topic-item" data-topic-type="tasks" data-topic-id="${topicId}" style="${inactiveStyle}">
           <div class="topic-header" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
             <span class="topic-name" style="font-weight: 700; text-align: left;">${emojiPrefix}${issue.title}</span>
             <span class="topic-meta" style="font-size: 0.85rem; color: var(--text-soft); font-weight: normal; text-align: left;">
@@ -5873,6 +6012,10 @@ function initRealTimeDashboardSync(db, storedUid) {
         const preview = document.createElement('div');
         preview.className = 'dash-card-preview';
         preview.style.cursor = 'pointer';
+        if (issue.status === 'inactive') {
+          preview.style.textDecoration = 'line-through';
+          preview.style.opacity = '0.65';
+        }
         preview.addEventListener('click', () => openSectionModal('voting'));
         preview.innerHTML = `
           <div class="topic-line">
@@ -5916,6 +6059,10 @@ function initRealTimeDashboardSync(db, storedUid) {
         const preview = document.createElement('div');
         preview.className = 'dash-card-preview';
         preview.style.cursor = 'pointer';
+        if (issue.status === 'inactive') {
+          preview.style.textDecoration = 'line-through';
+          preview.style.opacity = '0.65';
+        }
         preview.addEventListener('click', () => openSectionModal('tasks'));
         preview.innerHTML = `
           <div class="topic-line">
