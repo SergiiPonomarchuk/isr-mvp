@@ -132,8 +132,17 @@ function initLoginPage() {
   const usernameInput = document.getElementById('login-username');
   const loginBtn = document.getElementById('login-btn');
   const registerBtn = document.getElementById('register-btn');
-  const profileInput = document.getElementById('testProfiles');
-  const profileOptions = document.querySelectorAll('#testProfiless option');
+
+  const loginOverlay = document.getElementById('login-modal-overlay');
+  const closeBtn = document.getElementById('login-modal-close-btn');
+
+  if (closeBtn && loginOverlay) {
+    closeBtn.onclick = function() {
+      loginOverlay.hidden = true;
+    };
+  }
+
+  const currentUserId = safeGetStorage('userId');
 
   if (usernameInput && loginBtn && registerBtn) {
     const syncButtons = () => {
@@ -145,18 +154,66 @@ function initLoginPage() {
     syncButtons();
     usernameInput.addEventListener('input', syncButtons);
 
-    loginBtn.addEventListener('click', function () {
+    loginBtn.addEventListener('click', async function () {
       const value = usernameInput.value.trim();
       if (!value) return;
-      safeSetStorage('userName', value);
-      window.location.href = 'main.html';
+      loginBtn.disabled = true;
+      loginBtn.textContent = "Logging in...";
+      try {
+        const db = firebase.firestore();
+        const snap = await db.collection("users").where("displayName", "==", value).limit(1).get();
+        if (!snap.empty) {
+          const userDoc = snap.docs[0];
+          safeSetStorage('userId', userDoc.id);
+          safeSetStorage('userName', value);
+          if (loginOverlay) loginOverlay.hidden = true;
+          window.location.reload();
+        } else {
+          alert("No user found with display name '" + value + "'. Please adopt a profile below or click Register to create a new profile.");
+          loginBtn.disabled = false;
+          loginBtn.textContent = "Login";
+        }
+      } catch (err) {
+        alert("Login failed: " + err.message);
+        loginBtn.disabled = false;
+        loginBtn.textContent = "Login";
+      }
     });
 
-    registerBtn.addEventListener('click', function () {
+    registerBtn.addEventListener('click', async function () {
       const value = usernameInput.value.trim();
       if (!value) return;
-      safeSetStorage('userName', value);
-      window.location.href = 'main.html';
+      registerBtn.disabled = true;
+      registerBtn.textContent = "Registering...";
+      try {
+        const db = firebase.firestore();
+        const newUid = 'user_' + Date.now();
+        await db.collection("users").doc(newUid).set({
+          uid: newUid,
+          displayName: value,
+          firstName: value.split(' ')[0] || value,
+          lastName: value.split(' ').slice(1).join(' ') || '',
+          birthDate: "1990-01-01",
+          gender: "Not specified",
+          nationality: "Swiss",
+          values_description: "I believe in social responsibility, community cooperation, and transparency.",
+          geography: [
+            { type: "residence", place: "Basel", address: "Spalenring 12", geo: [47.5538, 7.6066], unit_type: "owner" }
+          ],
+          socialRelations: [],
+          features: ["bike"],
+          skills: [{ type: "education", name: "General Education" }],
+          post: [{ job: "Innovator", place: "Basel", department: "Community", salary: "N/A" }]
+        });
+        safeSetStorage('userId', newUid);
+        safeSetStorage('userName', value);
+        if (loginOverlay) loginOverlay.hidden = true;
+        window.location.reload();
+      } catch (err) {
+        alert("Registration failed: " + err.message);
+        registerBtn.disabled = false;
+        registerBtn.textContent = "Register";
+      }
     });
   }
 
@@ -182,7 +239,6 @@ function initLoginPage() {
         if (nameTerms.length > 0) {
           const firstTerm = nameTerms[0];
           if (/^\d+$/.test(firstTerm)) {
-            // UID numeric search
             const doc = await db.collection("users").doc(firstTerm).get();
             if (doc.exists) snapDocs.push(doc);
             
@@ -191,7 +247,6 @@ function initLoginPage() {
               if (!snapDocs.some(sd => sd.id === d.id)) snapDocs.push(d);
             });
           } else {
-            // Capitalize first letter of search term to match seeded data casing (e.g. "Mio")
             const capName = firstTerm.charAt(0).toUpperCase() + firstTerm.slice(1);
             const lowerName = firstTerm;
 
@@ -214,21 +269,17 @@ function initLoginPage() {
             snapDocs = Array.from(uniqueDocs.values());
           }
         } else {
-          // If name is not specified:
           let q = db.collection("users");
 
           if (ageMin > 0 || ageMax < 200) {
-            // Query by birthDate range in Firestore to prioritize narrower selector
             const currentYear = new Date().getFullYear();
             const minYear = currentYear - ageMax;
             const maxYear = currentYear - ageMin;
             q = q.where("birthDate", ">=", `${minYear}-01-01`).where("birthDate", "<=", `${maxYear}-12-31`);
           } else if (gender) {
-            // Query by gender. Limit to 400.
             q = q.where("gender", "==", gender);
           }
           
-          // No orderBy("uid") to prevent index requirements.
           const snap = await q.limit(400).get();
           snap.forEach(d => snapDocs.push(d));
         }
@@ -237,7 +288,6 @@ function initLoginPage() {
         snapDocs.forEach(doc => {
           const user = doc.data();
           
-          // In-memory filters for remaining constraints (name terms, gender, job, age)
           if (nameTerms.length > 0) {
             const fullName = (user.displayName || "").toLowerCase();
             const matchesAll = nameTerms.every(term => fullName.includes(term));
@@ -245,11 +295,9 @@ function initLoginPage() {
           }
           if (gender && user.gender !== gender) return;
           
-          // Filter by job
           const jobs = (user.post || []).map(p => (p.job || "").toLowerCase());
           if (jobVal && !jobs.some(j => j.includes(jobVal))) return;
           
-          // Filter by age
           let age = null;
           if (user.birthDate) {
             const birthYear = parseInt(user.birthDate.split(/[-\/]/)[0]);
@@ -285,13 +333,13 @@ function initLoginPage() {
             <button type="button" class="profile-adopt-btn" data-uid="${user.uid}" data-name="${user.displayName}">Adopt & Login</button>
           `;
           
-          // Bind button click
           card.querySelector('.profile-adopt-btn').addEventListener('click', function () {
             const adoptedUid = this.getAttribute('data-uid');
             const adoptedName = this.getAttribute('data-name');
             safeSetStorage('userId', adoptedUid);
             safeSetStorage('userName', adoptedName);
-            window.location.href = 'main.html';
+            if (loginOverlay) loginOverlay.hidden = true;
+            window.location.reload();
           });
           
           searchResultsContainer.appendChild(card);
@@ -5800,12 +5848,19 @@ function bindTopicListInteractions() {
     var sourceTitle = modalTitle ? modalTitle.textContent : '';
 
     modalBody.querySelectorAll('[data-topic-id][data-topic-type]').forEach(function(el) {
-      // ADDED: Prevent multiple click listeners from stacking on the same element
       if (el.__eventsBound) return;
       el.__eventsBound = true;
 
       el.addEventListener('click', function(e) {
         e.preventDefault();
+        const currentUserId = safeGetStorage('userId');
+        if (!currentUserId) {
+          const loginOverlay = document.getElementById('login-modal-overlay');
+          if (loginOverlay) loginOverlay.hidden = false;
+          alert("Please adopt a profile or register to view live details and participate!");
+          return;
+        }
+
         var kind = this.getAttribute('data-topic-type');
         var topicId = this.getAttribute('data-topic-id');
         
@@ -5821,11 +5876,17 @@ function bindTopicListInteractions() {
 
     var newTopicBtn = modalBody.querySelector('#chat-new-topic-btn');
     if (newTopicBtn) {
-      // ADDED: Prevent multiple click listeners for the new chat button too
       if (!newTopicBtn.__eventsBound) {
         newTopicBtn.__eventsBound = true;
         newTopicBtn.addEventListener('click', function(e) {
           e.preventDefault();
+          const currentUserId = safeGetStorage('userId');
+          if (!currentUserId) {
+            const loginOverlay = document.getElementById('login-modal-overlay');
+            if (loginOverlay) loginOverlay.hidden = false;
+            alert("Please adopt a profile or register to start a new issue topic.");
+            return;
+          }
           renderChatCreateView(modalBody.innerHTML, sourceTitle);
         });
       }
@@ -6777,16 +6838,30 @@ function initMainPage() {
   if (!menuButton || !menu) return;
 
   const storedUid = safeGetStorage('userId');
-  if (!storedUid) {
-    window.location.href = 'index.html';
-    return;
-  }
+  const isGuest = !storedUid;
 
   const nameEl = menuButton.querySelector('.menu-user-name');
   const avatarEl = menuButton.querySelector('.initials-avatar');
+  const logoutLink = document.getElementById('logout-link');
+
+  if (isGuest) {
+    if (nameEl) nameEl.textContent = "Login / Register";
+    if (avatarEl) avatarEl.textContent = "?";
+    if (logoutLink) logoutLink.style.display = 'none';
+
+    // Auto start quick tour after 1 second if not completed
+    setTimeout(function() {
+      const tourCompleted = safeGetStorage('tourCompleted');
+      if (tourCompleted !== 'true') {
+        startQuickTour();
+      }
+    }, 1000);
+  } else {
+    if (logoutLink) logoutLink.style.display = 'block';
+  }
 
   // Load profile dynamically from Firestore
-  if (typeof firebase !== 'undefined') {
+  if (typeof firebase !== 'undefined' && !isGuest) {
     const db = firebase.firestore();
     
     // Start real-time synchronization of dashboard and tab content
@@ -6968,8 +7043,33 @@ function initMainPage() {
   menuButton.addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
+    const currentUserId = safeGetStorage('userId');
+    if (!currentUserId) {
+      const loginOverlay = document.getElementById('login-modal-overlay');
+      if (loginOverlay) loginOverlay.hidden = false;
+      return;
+    }
     menu.classList.toggle('menu-open');
   });
+
+  const tourLink = document.getElementById('run-tour-link');
+  if (tourLink) {
+    tourLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      menu.classList.remove('menu-open');
+      startQuickTour();
+    });
+  }
+
+  const logoutLinkBtn = document.getElementById('logout-link');
+  if (logoutLinkBtn) {
+    logoutLinkBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      safeSetStorage('userId', '');
+      safeSetStorage('userName', '');
+      window.location.reload();
+    });
+  }
 
   document.addEventListener('click', function (e) {
     if (!menuButton.contains(e.target) && !menu.contains(e.target)) {
@@ -6979,7 +7079,7 @@ function initMainPage() {
 
   if (logo) {
     logo.addEventListener('click', function () {
-      window.location.href = 'index.html';
+      window.location.reload();
     });
   }
 
@@ -7113,13 +7213,19 @@ function bindValuesSection(container) {
   editBtn.addEventListener('click', enterEditMode);
 
   saveBtn.addEventListener('click', async function () {
+    const currentUserId = safeGetStorage('userId');
+    if (!currentUserId) {
+      const loginOverlay = document.getElementById('login-modal-overlay');
+      if (loginOverlay) loginOverlay.hidden = false;
+      alert("Please adopt a profile or register to save values.");
+      return;
+    }
     const newText = textarea.value;
     renderDisplayFromTextarea(newText);
     exitEditMode();
     
     if (typeof firebase !== 'undefined') {
       const db = firebase.firestore();
-      const currentUserId = safeGetStorage('userId');
       if (currentUserId) {
         try {
           await db.collection("users").doc(currentUserId).update({
@@ -7160,6 +7266,124 @@ function bindValuesSection(container) {
   }
 }
 
+function startQuickTour() {
+  const tourOverlay = document.getElementById('tour-overlay');
+  const tourBubble = document.getElementById('tour-bubble');
+  const tourText = document.getElementById('tour-bubble-text');
+  const tourStepInd = document.getElementById('tour-step-indicator');
+  const prevBtn = document.getElementById('tour-prev-btn');
+  const nextBtn = document.getElementById('tour-next-btn');
+  const skipBtn = document.getElementById('tour-skip-btn');
+  const closeBtn = document.getElementById('tour-close-btn-bubble');
+
+  if (!tourOverlay || !tourBubble || !tourText) return;
+
+  const steps = [
+    {
+      title: "Welcome to ISR!",
+      text: "This Index of Social Responsibility prototype helps groups align decisions with shared microcommunity values. Let's take a quick 1-minute tour of how it works!",
+      target: null
+    },
+    {
+      title: "AI Guidance",
+      text: "Here, your personalized AI assistant suggests issues that match your background and profile, guiding your attention to where you are most relevant.",
+      target: ".ai-guidance-card"
+    },
+    {
+      title: "Governance Readiness",
+      text: "This card tracks your profile completeness and helps you express your worldview through the microcommunity values vector.",
+      target: ".governance-readiness-card"
+    },
+    {
+      title: "Interactive Dashboard",
+      text: "The heart of the app: view active <b>Voting</b>, debate issues in the <b>Chat</b>, and track execution steps in the <b>To Do</b> list.",
+      target: ".dashboard-grid-primary"
+    },
+    {
+      title: "Login / Adopt Profile",
+      text: "Ready to test the alignment algorithms? Click here to adopt a database profile or log in with your own account!",
+      target: "#menu-button"
+    }
+  ];
+
+  let currentStep = 0;
+  tourOverlay.hidden = false;
+
+  const removeHighlights = () => {
+    document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
+  };
+
+  const showStep = (idx) => {
+    removeHighlights();
+    const step = steps[idx];
+    tourText.innerHTML = `<h3>${step.title}</h3>${step.text}`;
+    tourStepInd.textContent = `Step ${idx + 1} of ${steps.length}`;
+
+    prevBtn.disabled = idx === 0;
+    nextBtn.textContent = idx === steps.length - 1 ? "Finish" : "Next";
+
+    if (step.target) {
+      const targetEl = document.querySelector(step.target);
+      if (targetEl) {
+        targetEl.classList.add('tour-highlight');
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Position the bubble relative to target
+        setTimeout(() => {
+          const rect = targetEl.getBoundingClientRect();
+          const bubbleWidth = tourBubble.offsetWidth || 320;
+
+          if (step.target === "#menu-button") {
+            tourBubble.style.position = 'fixed';
+            tourBubble.style.top = (rect.bottom + 12) + 'px';
+            tourBubble.style.left = (rect.right - bubbleWidth) + 'px';
+            tourBubble.style.transform = 'none';
+          } else {
+            tourBubble.style.position = 'absolute';
+            tourBubble.style.top = (window.scrollY + rect.bottom + 12) + 'px';
+            tourBubble.style.left = (window.scrollX + rect.left + (rect.width - bubbleWidth)/2) + 'px';
+            tourBubble.style.transform = 'none';
+          }
+        }, 300);
+        return;
+      }
+    }
+
+    // Default center placement
+    tourBubble.style.position = 'fixed';
+    tourBubble.style.top = '50%';
+    tourBubble.style.left = '50%';
+    tourBubble.style.transform = 'translate(-50%, -50%)';
+  };
+
+  const endTour = () => {
+    removeHighlights();
+    tourOverlay.hidden = true;
+    safeSetStorage('tourCompleted', 'true');
+  };
+
+  nextBtn.onclick = () => {
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+      showStep(currentStep);
+    } else {
+      endTour();
+    }
+  };
+
+  prevBtn.onclick = () => {
+    if (currentStep > 0) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  };
+
+  skipBtn.onclick = endTour;
+  closeBtn.onclick = endTour;
+
+  showStep(currentStep);
+}
+
 function initValuesSection() {
   bindValuesSection(document.getElementById('section-values'));
 }
@@ -7169,9 +7393,7 @@ window.bindValuesSection = bindValuesSection;
 function initApp() {
   if (document.getElementById('menu-button') && document.getElementById('menu')) {
     initMainPage();
-    return;
   }
-
   if (document.getElementById('login-username') || document.getElementById('search-profiles-btn')) {
     initLoginPage();
   }

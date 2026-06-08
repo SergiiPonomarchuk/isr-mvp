@@ -1,75 +1,596 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISR — Login</title>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WJX232KK');</script>
+<!-- End Google Tag Manager -->
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISR MVP prototype</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main class="login-shell">
-        <section class="login-card">
-            <center><a href="/"><img src="../images/isr-logo.png" alt="ISR logo" height="50"></a>
-            <br>
-            <p class="login-subtitle">Welcome! Choose your login option.</p></center>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WJX232KK"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
-            <div class="login-section">
-                <label class="login-label" for="login-username">Take your own account</label>
-                <input
-                    id="login-username"
-                    type="text"
-                    placeholder="Enter your name"
-                    autocomplete="name"
-                >
+    <div class="navbar">
+        <button id="logo"><img src="../images/isr-logo.png" alt="ISR homepage" height="30"></button>
+        <div class="navbar-brand">Index of Social Responsibility</div>
+        <button id="menu-button">
+            <span class="initials-avatar">?</span>
+            <span class="menu-user-name">Login / Register</span>
+        </button>
+    </div>
 
-                <div class="login-actions" style="margin-top: 12px;">
-                    <button id="login-btn" type="button" disabled>Login</button>
-                    <button id="register-btn" type="button" disabled>Register</button>
+    <div id="menu" class="menu">
+        <a href="#" data-section="values">Values</a>
+        <a href="#" data-section="profile">Profile</a>
+        <a href="#" data-section="settings">Settings</a>
+        <a href="#" id="run-tour-link">🧭 Quick Tour</a>
+        <a href="#" id="logout-link" style="display: none;">Logout</a>
+    </div>
+
+    <div class="summary-strip">
+        <button class="summary-link" data-section="voting">1 urgent vote</button>
+        <span class="summary-separator">·</span>
+        <span>3 active issues</span>
+        <span class="summary-separator">·</span>
+        <button class="summary-link" data-section="tasks">2 To Do in progress</button>
+        <span class="summary-separator">·</span>
+        <button class="summary-link" data-section="chat">2 highly relevant discussions</button>
+    </div>
+
+    <div class="main_content">
+        <div class="dashboard-top-row">
+            <section class="ai-guidance-card">
+                <div class="dashboard-section-label">AI guidance</div>
+                <h2 class="ai-guidance-title">What needs your attention</h2>
+
+                <div class="ai-guidance-list">
+                    <div class="guidance-item">
+                        <div class="guidance-dot guidance-dot-urgent"></div>
+                        <div class="guidance-content">
+                            <div class="guidance-text">
+                                “Ladders to 1st entrance” vote ends today. Your relevance is 0.65.
+                            </div>
+                            <button class="guidance-link" data-section="voting">Review vote</button>
+                        </div>
+                    </div>
+
+                    <div class="guidance-item">
+                        <div class="guidance-dot"></div>
+                        <div class="guidance-content">
+                            <div class="guidance-text">
+                                Your Values description is still too broad in social process domains.
+                            </div>
+                            <button class="guidance-link" data-section="values">Clarify values</button>
+                        </div>
+                    </div>
+
+                    <div class="guidance-item">
+                        <div class="guidance-dot"></div>
+                        <div class="guidance-content">
+                            <div class="guidance-text">
+                                Elevator maintenance discussion matches your building-related involvement.
+                            </div>
+                            <button class="guidance-link" data-section="chat">Open discussion</button>
+                        </div>
+                    </div>
+
+                    <div class="guidance-item">
+                        <div class="guidance-dot"></div>
+                        <div class="guidance-content">
+                            <div class="guidance-text">
+                                One implementation task may need your follow-up before Friday.
+                            </div>
+                            <button class="guidance-link" data-section="tasks">Check task risk</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="governance-readiness-card">
+                <div class="dashboard-section-label">Governance readiness</div>
+                <h2 class="readiness-title">Improve your Relevance quality</h2>
+
+                <button class="readiness-block" data-section="profile">
+                    <div class="readiness-head">
+                        <span>Profile</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="readiness-bar">
+                        <div class="readiness-bar-fill" style="width: 80%;"></div>
+                    </div>
+                    <div class="readiness-note">Your profile is mostly complete.</div>
+                </button>
+<br>
+                <h2 class="readiness-title">Specify your criteria for Contribution evaluating</h2>
+                <button class="readiness-block" data-section="values">
+                    <div class="readiness-head">
+                        <span>Values</span>
+                        <span>73%</span>
+                    </div>
+                    <div class="readiness-bar">
+                        <div class="readiness-bar-fill readiness-bar-fill-warning" style="width: 73%;"></div>
+                    </div>
+                    <div class="readiness-note">106 of the 145 core items have been identified. Refine the values to express your opinion on the remaining 39.</div>
+                </button>
+            </section>
+        </div>
+
+        <div class="dashboard-grid dashboard-grid-primary">
+            <div class="dash-card dash-card-priority" data-section="voting">
+                <div class="dash-card-topline">
+                    <div class="dash-card-title">Voting</div>
+                    <span class="inline-urgent">1 urgent</span>
+                </div>
+                <div class="dash-card-badges">
+                    <span class="dash-badge">new 2</span>
+                    <span class="dash-badge">important 1</span>
+                    <span class="dash-badge dash-badge-urgent">urgent 1</span>
+                </div>
+
+                <div class="dash-card-preview">
+                    <div class="topic-line">
+                        <span class="community-tag">Building</span>
+                        <span class="topic-name">Ladders to 1st entrance</span>
+                    </div>
+                    <div class="topic-preview">
+                        Status: <b>Voting</b> · Voted: <b>15/43</b> · Deadline: <span class="deadline-urgent">26.05.12</span>
+                    </div>
+                </div>
+
+                <div class="dash-card-preview">
+                    <div class="topic-line">
+                        <span class="community-tag community-tag-culture">Culture</span>
+                        <span class="topic-name">Studio rental contract extension</span>
+                    </div>
+                    <div class="topic-preview">Status: <b>Voting</b> · Voted: <b>0/71</b> · Deadline: 26.07.01</div>
+                </div>
+
+                <div class="dash-card-preview">
+                    <div class="topic-line">
+                        <span class="community-tag community-tag-dev">Dev</span>
+                        <span class="topic-name">Switch CI/CD to GitHub Actions</span>
+                    </div>
+                    <div class="topic-preview">Status: <b>Voting</b> · Voted: <b>7/8</b> · Deadline: 26.05.20</div>
                 </div>
             </div>
 
-            <div class="login-divider">OR</div>
+            <div class="dash-card" data-section="chat">
+                <div class="dash-card-topline">
+                    <div class="dash-card-title">Chat</div>
+                </div>
+                <div class="dash-card-badges">
+                    <span class="dash-badge">new 5</span>
+                    <span class="dash-badge">important 2</span>
+                </div>
 
-            <div class="login-section">
-                <label class="login-label">Search & Adopt Profile from Database</label>
-                <div class="profile-search-grid">
-                    <div class="search-field">
-                        <input id="search-name" type="text" placeholder="Name (e.g. Sara)" />
+                <div class="dash-card-preview">
+                    <div class="topic-line">
+                        <span class="community-tag">Building</span>
+                        <span class="topic-name">Elevator maintenance schedule</span>
                     </div>
-                    <div class="search-field">
-                        <select id="search-gender">
-                            <option value="">Any Gender</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
+                    <div class="topic-preview"><b>Iryna V.:</b> I think we should coordinate with the company before Thur...</div>
+                </div>
+
+                <div class="dash-card-preview">
+                    <div class="topic-line">
+                        <span class="community-tag community-tag-culture">Culture</span>
+                        <span class="topic-name">Choreography for the spring showcase</span>
                     </div>
-                    <div class="search-field">
-                        <input id="search-job" type="text" placeholder="Profession (e.g. Chemist)" />
+                    <div class="topic-preview"><b>Audrey T.:</b> I suggest we switch the second act to contemporary...</div>
+                </div>
+
+                <div class="dash-card-footer-link">3 more discussions →</div>
+            </div>
+
+            <div class="dash-card" data-section="tasks">
+                <div class="dash-card-topline">
+                    <div class="dash-card-title">To Do</div>
+                </div>
+                <div class="dash-card-badges">
+                    <span class="dash-badge">important 2</span>
+                    <span class="dash-badge">in progress 2</span>
+                </div>
+
+                <div class="dash-card-preview">
+                    <div class="topic-line">
+                        <span class="community-tag">Building</span>
+                        <span class="topic-name">Fence door renew</span>
                     </div>
-                    <div class="search-field" style="display: flex; gap: 8px;">
-                        <input id="search-age-min" type="number" placeholder="Min Age" style="width: 50%;" />
-                        <input id="search-age-max" type="number" placeholder="Max Age" style="width: 50%;" />
+                    <div class="topic-preview">
+                        3 tasks:
+                        <span class="status-pill status-pill-done">Done 1</span>
+                        <span class="status-pill status-pill-active">Active 1</span>
+                        <span class="status-pill status-pill-pending">Pending 1</span>
                     </div>
                 </div>
-                <button id="search-profiles-btn" type="button" style="margin-top: 12px; width: 100%;">Search Database</button>
-                
-                <div id="search-results" class="profile-search-results">
-                    <!-- Results will render dynamically here -->
+
+                <div class="dash-card-preview">
+                    <div class="topic-line">
+                        <span class="community-tag">Building</span>
+                        <span class="topic-name">Ladders to 1st entrance</span>
+                    </div>
+                    <div class="topic-preview">
+                        2 tasks:
+                        <span class="status-pill status-pill-active">Active 1</span>
+                        <span class="status-pill status-pill-pending">Pending 1</span>
+                    </div>
+                </div>
+
+                <div class="dash-card-preview">
+                    <div class="topic-line">
+                        <span class="community-tag community-tag-dev">Dev</span>
+                        <span class="topic-name">Switch CI/CD to GitHub Actions</span>
+                    </div>
+                    <div class="topic-preview">
+                        3 tasks:
+                        <span class="status-pill status-pill-done">Done 1</span>
+                        <span class="status-pill status-pill-active">Active 1</span>
+                        <span class="status-pill status-pill-pending">Pending 1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="relevant-context-card">
+            <div class="dashboard-section-label">Relevant context news</div>
+            <h2 class="context-title">Things affecting your active issues</h2>
+
+            <div class="context-list">
+                <div class="context-item">
+                    <div class="topic-line">
+                        <span class="community-tag">Building</span>
+                        <span class="context-item-title">Safety inspection requirement updated</span>
+                    </div>
+                    <div class="topic-preview">Relates to “Ladders to 1st entrance” and may affect implementation timing.</div>
+                </div>
+
+                <div class="context-item">
+                    <div class="topic-line">
+                        <span class="community-tag">Building</span>
+                        <span class="context-item-title">Contractor scheduling window changed</span>
+                    </div>
+                    <div class="topic-preview">Relates to “Elevator maintenance schedule” and may shift the preferred coordination date.</div>
+                </div>
+
+                <div class="context-item">
+                    <div class="topic-line">
+                        <span class="community-tag community-tag-city">City</span>
+                        <span class="context-item-title">District consultation update published</span>
+                    </div>
+                    <div class="topic-preview">Connected to current infrastructure discussions you are following.</div>
                 </div>
             </div>
         </section>
-    </main>
+    </div>
+
+    <!-- Hidden full section containers -->
+    <div id="section-chat" class="section-hidden">
+        <div class="paragraph_top_search" data-search-toggle>
+            <div class="search-filter-tags">
+                <button data-chat-sort="new">new: 5</button> <button data-chat-sort="important">important: 2</button> <button data-chat-sort="urgent">urgent: 0</button> 
+            </div>
+            <div class="topic-input-row">
+                <input type="text" placeholder="Find a discussion...">
+                <button class="search-action-btn">🔍</button>
+            </div>
+        </div>
+        <div class="chat-actions"><button type="button" id="chat-new-topic-btn">Start new issue topic</button></div>
+        <div class="topic-list">
+            <button class="topic-item" data-topic-type="chat" data-topic-id="chat-1"><div class="topic-header"><span class="topic-name">🏠 🔴 Elevator maintenance schedule</span><span class="topic-meta">👥 12</span></div><div class="topic-preview"><b>Iryna V.:</b> I think we should coordinate with the company before Thur...</div></button>
+            <button class="topic-item" data-topic-type="chat" data-topic-id="chat-2"><div class="topic-header"><span class="topic-name">💃 🟡 Choreography for the spring showcase</span><span class="topic-meta">👥 15</span></div><div class="topic-preview"><b>Audrey T.:</b> I suggest we switch the second act to contemporary — the ...</div></button>
+            <button class="topic-item" data-topic-type="chat" data-topic-id="chat-3"><div class="topic-header"><span class="topic-name">🎒 School trip safety concerns</span><span class="topic-meta">👥 24</span></div><div class="topic-preview"><b>Sergey B.:</b> Can we get confirmation that all chaperones have first ai...</div></button>
+            <button class="topic-item" data-topic-type="chat" data-topic-id="chat-4"><div class="topic-header"><span class="topic-name">🏠 Parking lot lighting upgrade</span><span class="topic-meta">👥 8</span></div><div class="topic-preview"><b>Andrii D.:</b> Has anyone checked the quotes from the second vendor?...</div></button>
+            <button class="topic-item" data-topic-type="chat" data-topic-id="chat-5"><div class="topic-header"><span class="topic-name">💻 🔴 Sprint 14 blockers — API migration</span><span class="topic-meta">👥 6</span></div><div class="topic-preview"><b>Elon M.:</b> The auth service is still returning 401s after the endpoi...</div></button>
+            <button class="topic-item" data-topic-type="chat" data-topic-id="chat-6"><div class="topic-header"><span class="topic-name">🏛️ 🟡 Public transport route changes — district 7</span><span class="topic-meta">👥 43</span></div><div class="topic-preview"><b>Iryna V.:</b> Removing the 6AM bus would leave the entire east side wi...</div></button>
+            <button class="topic-item" data-topic-type="chat" data-topic-id="chat-7"><div class="topic-header"><span class="topic-name">🏛️ Budget allocation for park renovation</span><span class="topic-meta">👥 31</span></div><div class="topic-preview"><b>Andrii D.:</b> I'd prioritize the playground area — it hasn't been upda...</div></button>
+        </div>
+    </div>
+
+    <div id="section-voting" class="section-hidden">
+        <div class="paragraph_top_search" data-search-toggle>
+            <div class="search-filter-tags">
+                <button>new: 2</button> <button>important: 1</button> <button>urgent: 1</button>
+            </div>
+            <div class="topic-input-row">
+                <input type="text" placeholder="Find a voting...">
+                <button class="search-action-btn">🔍</button>
+            </div>
+        </div>
+        <div class="topic-list">
+            <button class="topic-item" data-topic-type="voting" data-topic-id="vote-1">
+                <div class="topic-header"><span class="topic-name">🏠 🔴 Ladders to 1st entrance</span><span class="topic-meta">Voted: <b>15/43</b> · Relevance: <b>0.65</b> · ISR: <b>0.77</b></span></div>
+                <div class="topic-preview">Status: <b>Voting</b> &nbsp;·&nbsp; Deadline: 26.05.12</div>
+            </button>
+            <button class="topic-item" data-topic-type="voting" data-topic-id="vote-2">
+                <div class="topic-header"><span class="topic-name">🏠 ☠️ Flowers near 3rd entrance</span><span class="topic-meta">Voted: <b>0/71</b> · Relevance: <b>0.32</b> · ISR: <b>2.31</b></span></div>
+                <div class="topic-preview" style="color: #aaa;">Status: <b>Canceled</b> &nbsp;·&nbsp; Deadline: 26.03.05</div>
+            </button>
+            <button class="topic-item" data-topic-type="voting" data-topic-id="vote-3">
+                <div class="topic-header"><span class="topic-name">💃 🟡 Studio rental contract extension</span><span class="topic-meta">Voted: <b>7/8</b> · Relevance: <b>0.48</b> · ISR: <b>1.42</b></span></div>
+                <div class="topic-preview">Status: <b>Voting</b> &nbsp;·&nbsp; Deadline: 26.07.01</div>
+            </button>
+            <button class="topic-item" data-topic-type="voting" data-topic-id="vote-4">
+                <div class="topic-header"><span class="topic-name">🎒 ⬅️ After-school program funding</span><span class="topic-meta">Voted: <b>0/340</b> · Relevance: <b>0.88</b> · ISR: <b>0.93</b></span></div>
+                <div class="topic-preview">Status: <b>Discussion</b> &nbsp;·&nbsp; Deadline: 26.04.10</div>
+            </button>
+            <button class="topic-item" data-topic-type="voting" data-topic-id="vote-5">
+                <div class="topic-header"><span class="topic-name">💻 🔴 Switch CI/CD to GitHub Actions</span><span class="topic-meta">Voted: <b>15/117</b> · Relevance: <b>0.91</b> · ISR: <b>1.15</b></span></div>
+                <div class="topic-preview">Status: <b>Voting</b> &nbsp;·&nbsp; Deadline: 26.05.20</div>
+            </button>
+            <button class="topic-item" data-topic-type="voting" data-topic-id="vote-6">
+                <div class="topic-header"><span class="topic-name">🏠 ✅ Fence door renew</span><span class="topic-meta">Voted: <b>167/188</b> · Relevance: <b>0.95</b> · ISR: <b>1.07</b></span></div>
+                <div class="topic-preview">Status: <b>Approved</b> &nbsp;·&nbsp; Deadline: 26.03.15</div>
+            </button>
+            <button class="topic-item" data-topic-type="voting" data-topic-id="vote-7">
+                <div class="topic-header"><span class="topic-name">🏛️ ✅ Bike lane on Central Avenue</span><span class="topic-meta">Voted: <b>14020/15775</b> · Relevance: <b>0.54</b> · ISR: <b>1.88</b></span></div>
+                <div class="topic-preview">Status: <b>Approved</b> &nbsp;·&nbsp; Deadline: 26.05.01</div>
+            </button>
+        </div>
+    </div>
+
+    <div id="section-tasks" class="section-hidden">
+        <div class="paragraph_top_search" data-search-toggle>
+            <div class="search-filter-tags">
+                <button>new: 0</button> <button>important: 2</button> <button>urgent: 0</button>
+            </div>
+            <div class="topic-input-row">
+                <input type="text" placeholder="Find a task...">
+                <button class="search-action-btn">🔍</button>
+            </div>
+        </div>
+        <div class="topic-list">
+            <button class="topic-item" data-topic-type="tasks" data-topic-id="task-1"><div class="topic-header"><span class="topic-name">🏠 Fence door renew</span><span class="topic-meta">3 tasks</span></div><div class="task-list"><div class="task-row">✅ Collect contractor quotes · Done 26.02.28</div><div class="task-row">🔄 Approve budget at next meeting · In progress · 26.03.18</div><div class="task-row">⬜ Install new door · Pending · 26.04.01</div></div></button>
+            <button class="topic-item" data-topic-type="tasks" data-topic-id="task-2"><div class="topic-header"><span class="topic-name">🏠 🔴 Ladders to 1st entrance</span><span class="topic-meta">2 tasks</span></div><div class="task-list"><div class="task-row">🔄 Safety inspection · In progress · 26.05.15</div><div class="task-row">⬜ Order replacement parts · Pending · 26.05.25</div></div></button>
+            <button class="topic-item" data-topic-type="tasks" data-topic-id="task-3"><div class="topic-header"><span class="topic-name">💃 🟡 Studio rental contract extension</span><span class="topic-meta">3 tasks</span></div><div class="task-list"><div class="task-row">✅ Review current lease terms · Done 26.04.10</div><div class="task-row">🔄 Negotiate new rate · In progress · 26.05.01</div><div class="task-row">⬜ Sign updated contract · Pending · 26.07.01</div></div></button>
+            <button class="topic-item" data-topic-type="tasks" data-topic-id="task-4"><div class="topic-header"><span class="topic-name">🎒 After-school program funding</span><span class="topic-meta">4 tasks</span></div><div class="task-list"><div class="task-row">✅ Draft budget proposal · Done 26.03.20</div><div class="task-row">✅ Present to parent committee · Done 26.04.02</div><div class="task-row">🔄 Apply for district grant · In progress · 26.04.15</div><div class="task-row">⬜ Hire program coordinator · Pending · 26.05.10</div></div></button>
+            <button class="topic-item" data-topic-type="tasks" data-topic-id="task-5"><div class="topic-header"><span class="topic-name">💻 🔴 Switch CI/CD to GitHub Actions</span><span class="topic-meta">3 tasks</span></div><div class="task-list"><div class="task-row">✅ Audit existing Jenkins pipelines · Done 26.05.05</div><div class="task-row">🔄 Write GitHub Actions workflows · In progress · 26.05.20</div><div class="task-row">⬜ Decommission Jenkins server · Pending · 26.06.01</div></div></button>
+            <button class="topic-item" data-topic-type="tasks" data-topic-id="task-6"><div class="topic-header"><span class="topic-name">🏛️ ✅ Bike lane on Central Avenue</span><span class="topic-meta">3 tasks</span></div><div class="task-list"><div class="task-row">✅ Conduct traffic impact study · Done 26.02.15</div><div class="task-row">✅ Approve final route design · Done 26.03.30</div><div class="task-row">🔄 Begin road marking and signage · In progress · 26.05.15</div></div></button>
+        </div>
+    </div>
+
+    <div id="section-values" class="section-hidden">
+    <p class="values-section-title">Values description:</p>
+
+    <div class="values-editor-card" id="values-editor-card">
+        <div class="values-view-mode" id="values-view-mode">
+        <div class="values-text-card" id="values-text-display">
+            <p>I believe in the boundless potential of the human spirit. My vision for the future is a 'shining city on a hill'—green, yes, but green because of innovation, not stagnation.</p>
+            <p>I want a community rooted in faith, family, and freedom, where the government gets out of the way. Freedom is not just a political word; it is the engine of everything good.</p>
+            <p>I believe true conservation comes from ownership, not restriction. We are stewards of this beautiful planet God gave us.</p>
+            <p>I believe in the volunteer spirit. If there is a problem, we fix it together—family, church, neighbors.</p>
+            <p>We need laws that are clear and enforced. A community needs a strong moral center.</p>
+            <p>We should be proud of who we are and what we believe. Authenticity means living your values and not apologizing for them.</p>
+        </div>
+
+        <div class="values-actions">
+            <button type="button" id="values-edit-btn">Edit</button>
+            <button type="button" id="values-explain-btn">Explain with AI</button>
+            <button type="button" id="values-vector-btn">Vector of Values</button>
+        </div>
+        </div>
+
+        <div class="values-edit-mode" id="values-edit-mode" hidden>
+        <textarea id="values-textarea" class="values-textarea">
+I believe in the boundless potential of the human spirit. My vision for the future is a 'shining city on a hill'—green, yes, but green because of innovation, not stagnation.
+
+I want a community rooted in faith, family, and freedom, where the government gets out of the way. Freedom is not just a political word; it is the engine of everything good.
+
+I believe true conservation comes from ownership, not restriction. We are stewards of this beautiful planet God gave us.
+
+I believe in the volunteer spirit. If there is a problem, we fix it together—family, church, neighbors.
+
+We need laws that are clear and enforced. A community needs a strong moral center.
+
+We should be proud of who we are and what we believe. Authenticity means living your values and not apologizing for them.
+        </textarea>
+
+        <div class="values-actions">
+            <button type="button" id="values-save-btn">Save</button>
+            <button type="button" id="values-cancel-btn">Cancel</button>
+            <button type="button" id="values-vector-btn">Vectorization</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="values-ai-card" id="values-ai-card">
+        <div class="values-ai-header">
+        <div class="values-chart-title">AI assistant</div>
+        <div class="values-ai-subtitle">Improve weakly grounded values</div>
+        </div>
+
+        <div class="values-ai-messages" id="values-ai-messages">
+        <div class="ai-msg ai-msg-assistant">
+            Your values description looks strong in some domains, but a few values may still be weakly grounded. We can do one of three things: discuss unclear areas, pass a short follow-up survey, or name a person whose worldview may help reflect your values.
+        </div>
+        <div class="ai-msg ai-msg-assistant">
+            For example: “Help me clarify weak values”, “Start new survey”, or “Use Vaclav Havel as a reflection point”.
+        </div>
+        </div>
+
+        <div class="values-ai-input-row">
+        <input
+            type="text"
+            id="values-ai-input"
+            placeholder="Type your message to the AI assistant..."
+        />
+        <button type="button" id="values-ai-send-btn">Send</button>
+        </div>
+    </div>
+
+    <a class="values-guide-link" href="values-guide.html" target="_blank" rel="noopener noreferrer">
+        User Guide Values Description
+    </a>
+    </div>
+
+<div id="values-vector-modal" class="values-vector-modal" hidden>
+  <div class="values-vector-backdrop" id="values-vector-backdrop"></div>
+
+  <div class="values-vector-dialog" role="dialog" aria-modal="true" aria-labelledby="values-vector-title">
+    <div class="values-vector-header">
+      <h2 id="values-vector-title">Vector of Values</h2>
+      <button type="button" id="values-vector-close" class="values-vector-close" aria-label="Close">×</button>
+    </div>
+
+    <div class="values-vector-body">
+      <section class="values-vector-chart-card">
+        <div class="values-vector-section-title">Domains & Contextual Shifts</div>
+
+        <div class="values-chart">
+          <div class="values-chart-title">Domains</div>
+          <div class="bar-chart" id="vector-domains-chart"></div>
+        </div>
+
+        <div class="context-shifts-grid" id="context-shifts-grid"></div>
+      </section>
+
+      <section class="values-vector-taxonomy-card">
+        <div class="values-vector-section-title">Domain Items</div>
+        <div id="vector-domains-accordion"></div>
+      </section>
+
+      <section class="values-vector-cr-card">
+        <div class="values-vector-section-title">Active Conflict Resolution Weights</div>
+        <div id="vector-conflict-weights"></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+    <div id="section-profile" class="section-hidden">
+        <p>Demographics: <button type="button">Change</button></p>
+        <div class="values-text-card"><ul><li>First Name: Ivan</li><li>Last Name: Franko</li><li>UID: 30405422</li><li>Proof ID type: Pass ID</li><li>Proof ID: 004455777</li><li>Proof ID emitent: 8017</li><li>Birth Date: 1985/03/22</li><li>Gender: Male</li></ul></div>
+        <p>Address: <button type="button">Change</button></p>
+        <div class="values-text-card"><ul><li>Country: Ukraine</li><li>Region: Kyiv</li><li>City: Brovary</li><li>Street: Kvitkova</li><li>Entrance: 2</li><li>Floor: 3</li><li>Apartment: 14</li><li>Status: owner</li><li>Dwell: yes</li></ul></div>
+        <p>Social relations: <button type="button">Change</button></p>
+        <div class="values-text-card"><ul><li>Status: Married</li><li>Wife: Sofiya Franko (ID: 31787890)</li><li>Son: Borys Franko (ID: 43908765)</li><li>Son: Oleksiy Franko (ID: 43208775)</li><li>Father: Taras Franko (ID: 22908799)</li><li>Brother: Nazar Franko (ID: 52923419)</li></ul></div>
+        <p>Features: <button type="button">Change</button></p>
+        <div class="values-text-card"><ul><li>Pets: dog, cat</li><li>Car: Toyota Camry white (AA15544BB)</li><li>Bike: Author black 28"</li></ul></div>
+        <p>Skills: <button type="button">Change</button></p>
+        <div class="values-text-card"><ul><li>Education: Marketing, Kyiv National Economic University, 2010</li><li>Education: Cybersecurity, Coursera, 2015</li><li>Work experience: Sales manager 7</li><li>Work experience: Taxi driver 2</li><li>Work experience: Sport instructor (bike sport) 1</li><li>Hobby: Hiking</li><li>Hobby: Riding bike</li></ul></div>
+        <p>Contacts: <button type="button">Change</button></p>
+        <div class="values-text-card"><ul><li>Phone: +380505005050</li><li>Email: i.franko@gmail.com</li><li>linkedin: __________________</li><li>Facebook: __________________</li><li>Messengers: Telegram, Viber, WhatsApp</li></ul></div>
+        <button type="button">Explain with AI</button>
+    </div>
+
+    <div id="section-settings" class="section-hidden">
+        <div class="settings-card"><div class="settings-card-header"><span class="topic-name">🖥️ Interface</span></div><div class="settings-card-body"><label class="setting-option"><input type="radio" name="interface" checked> Classic (Task tracker)</label><label class="setting-option"><input type="radio" name="interface"> Bubble style</label><label class="setting-option"><input type="radio" name="interface"> System default</label></div></div>
+        <div class="settings-card"><div class="settings-card-header"><span class="topic-name">🎨 Color scheme</span></div><div class="settings-card-body"><label class="setting-option"><input type="radio" name="colorscheme" checked> Soft</label><label class="setting-option"><input type="radio" name="colorscheme"> Hard</label><label class="setting-option"><input type="radio" name="colorscheme"> Neutral</label></div></div>
+        <div class="settings-card"><div class="settings-card-header"><span class="topic-name">🔔 Push messages</span></div><div class="settings-card-body"><label class="setting-toggle"><span>Enable push notifications</span><input type="checkbox" class="toggle-input" checked><span class="toggle-slider"></span></label></div></div>
+        <div class="settings-card"><div class="settings-card-header"><span class="topic-name">🌐 Language</span></div><div class="settings-card-body"><label class="setting-option"><input type="radio" name="language" checked> English</label><label class="setting-option"><input type="radio" name="language"> Українська</label></div></div>
+        <div class="settings-card"><div class="settings-card-header"><span class="topic-name">🔒 Privacy</span></div><div class="settings-card-body"><label class="setting-toggle"><span>Show profile to other members</span><input type="checkbox" class="toggle-input" checked><span class="toggle-slider"></span></label><label class="setting-toggle"><span>Show contact info</span><input type="checkbox" class="toggle-input"><span class="toggle-slider"></span></label></div></div>
+    </div>
+
+    <!-- Section Modal -->
+    <div id="section-modal-overlay" class="section-modal-overlay">
+        <div class="section-modal">
+            <button class="section-modal-close" id="modal-close-btn">✕</button>
+            <div class="section-modal-title" id="section-modal-title"></div>
+            <div class="section-modal-body" id="section-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Proposal Modal -->
+    <div id="proposal-modal-overlay" class="proposal-modal-overlay" hidden>
+        <div class="proposal-modal-dialog">
+            <button class="proposal-modal-close" id="proposal-modal-close-btn">✕</button>
+            <div class="proposal-modal-title" id="proposal-modal-title">Proposal Details</div>
+            <div class="proposal-modal-body" id="proposal-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Login Modal Overlay -->
+    <div id="login-modal-overlay" class="login-modal-overlay" hidden>
+        <div class="login-modal-dialog">
+            <button class="login-modal-close-btn" id="login-modal-close-btn">✕</button>
+            <div class="login-card" style="border: none; box-shadow: none; padding: 24px;">
+                <center>
+                    <img src="../images/isr-logo.png" alt="ISR logo" height="40" style="margin-bottom: 8px;">
+                    <p class="login-subtitle">Choose your login option to interact and vote.</p>
+                </center>
+
+                <div class="login-section">
+                    <label class="login-label" for="login-username">Take your own account</label>
+                    <div style="display: flex; gap: 8px;">
+                        <input id="login-username" type="text" placeholder="Enter your name" style="flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; background: var(--surface); color: var(--text);" />
+                    </div>
+                    <div class="login-actions" style="margin-top: 12px; display: flex; gap: 12px;">
+                        <button id="login-btn" type="button" class="tour-btn tour-btn-primary" style="flex: 1; padding: 10px; font-size: 0.9rem;" disabled>Login</button>
+                        <button id="register-btn" type="button" class="tour-btn tour-btn-secondary" style="flex: 1; padding: 10px; font-size: 0.9rem;" disabled>Register</button>
+                    </div>
+                </div>
+
+                <div class="login-divider">OR</div>
+
+                <div class="login-section">
+                    <label class="login-label">Search & Adopt Profile from Database</label>
+                    <div class="profile-search-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div class="search-field">
+                            <input id="search-name" type="text" placeholder="Name (e.g. Sara)" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text);" />
+                        </div>
+                        <div class="search-field">
+                            <select id="search-gender" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text);">
+                                <option value="">Any Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="search-field">
+                            <input id="search-job" type="text" placeholder="Profession (e.g. Chemist)" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text);" />
+                        </div>
+                        <div class="search-field" style="display: flex; gap: 6px;">
+                            <input id="search-age-min" type="number" placeholder="Min Age" style="width: 50%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text);" />
+                            <input id="search-age-max" type="number" placeholder="Max Age" style="width: 50%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text);" />
+                        </div>
+                    </div>
+                    <button id="search-profiles-btn" type="button" class="tour-btn tour-btn-primary" style="margin-top: 12px; width: 100%; padding: 10px; font-size: 0.9rem;">Search Database</button>
+                    
+                    <div id="search-results" class="profile-search-results" style="max-height: 180px; overflow-y: auto; margin-top: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-soft);">
+                        <!-- Results will render dynamically here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Tour Overlay -->
+    <div id="tour-overlay" class="tour-overlay" hidden>
+        <div class="tour-backdrop"></div>
+        <div class="tour-bubble" id="tour-bubble">
+            <div class="tour-bubble-header">
+                <span class="tour-step-indicator" id="tour-step-indicator">Step 1 of 5</span>
+                <button class="tour-close-btn" id="tour-close-btn-bubble">✕</button>
+            </div>
+            <div class="tour-bubble-body" id="tour-bubble-text">
+                <!-- Content gets dynamically populated -->
+            </div>
+            <div class="tour-bubble-footer">
+                <button class="tour-btn tour-btn-secondary" id="tour-prev-btn" disabled>Back</button>
+                <div style="display: flex; gap: 8px;">
+                    <button class="tour-btn tour-btn-secondary" id="tour-skip-btn">Skip</button>
+                    <button class="tour-btn tour-btn-primary" id="tour-next-btn">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Firebase SDK Compat -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-functions-compat.js"></script>
     <script src="firebase-config.js"></script>
     <script src="script.js"></script>
 </body>
