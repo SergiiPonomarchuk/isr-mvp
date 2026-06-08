@@ -23,6 +23,21 @@ function formatTaskDeadline(dateStr) {
   return dateStr;
 }
 
+function parseInputDate(dateStr) {
+  if (!dateStr || dateStr === "Ongoing") return "";
+  const parts = dateStr.split('.');
+  if (parts.length === 3) {
+    const d = parts[0].padStart(2, '0');
+    const m = parts[1].padStart(2, '0');
+    let y = parts[2];
+    if (y.length === 2) {
+      y = '20' + y;
+    }
+    return `${y}-${m}-${d}`;
+  }
+  return dateStr;
+}
+
 function getMostUrgentTask(tasks) {
   if (!tasks || tasks.length === 0) return null;
   const unfinished = tasks.filter(t => t.status !== 'done');
@@ -2288,7 +2303,7 @@ function initTopicDetailViews() {
                               '<select class="task-new-subtask-responsible" data-task-idx="' + taskIdx + '" style="flex: 1; min-width: 120px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); font-size: 0.82rem;">' +
                                 participantOptions +
                               '</select>' +
-                              '<input type="date" class="task-new-subtask-deadline" data-task-idx="' + taskIdx + '" style="padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); font-size: 0.82rem;" />' +
+                              '<input type="text" placeholder="dd.mm.yyyy" class="task-new-subtask-deadline" data-task-idx="' + taskIdx + '" style="padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); font-size: 0.82rem; width: 110px;" />' +
                               '<button type="button" class="task-add-subtask-btn" data-task-idx="' + taskIdx + '" style="padding: 6px 12px; font-size: 0.82rem; font-weight: 600; border-radius: 6px; background: var(--accent); color: var(--accent-contrast, #fff); border: none; cursor: pointer;">➕ Add</button>' +
                             '</div>' +
                           '</div>' +
@@ -5043,7 +5058,12 @@ function initTopicDetailViews() {
         
         const respUid = respSelect ? respSelect.value : '';
         const respName = respSelect ? (window.userCache[respUid] || 'User ' + respUid) : '';
-        const deadline = deadlineInput ? deadlineInput.value : '';
+        const deadlineRaw = deadlineInput ? deadlineInput.value.trim() : '';
+        if (deadlineRaw && !/^\d{1,2}\.\d{1,2}\.\d{2,4}$/.test(deadlineRaw) && deadlineRaw !== "Ongoing") {
+          alert("Please enter the deadline in dd.mm.yyyy format (e.g. 15.05.2026) or enter 'Ongoing'.");
+          return;
+        }
+        const deadline = parseInputDate(deadlineRaw);
 
         const newSubtask = {
           title: text,
