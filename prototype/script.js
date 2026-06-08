@@ -1924,12 +1924,68 @@ function initTopicDetailViews() {
       var responsibleHtml = subtask.in_charge_name ? ' <span style="font-weight: 500; color: var(--text-soft);">(' + subtask.in_charge_name + ')</span>' : '';
       var deadlineHtml = subtask.deadline ? ' - <span style="font-weight: 500; color: var(--text-soft);">' + formatTaskDeadline(subtask.deadline) + '</span>' : '';
 
-      return '<div class="subtask-item-row" style="display: flex; align-items: center; gap: 8px; justify-content: space-between;">' +
-               '<div style="display: flex; align-items: center; gap: 6px; flex: 1; flex-wrap: wrap;">' +
-                 '<input type="checkbox" class="subtask-status-checkbox" data-task-idx="' + taskIdx + '" data-subtask-idx="' + subtaskIdx + '"' + (isSubDone ? ' checked' : '') + checkboxDisabled + ' style="width: 14px; height: 14px; cursor: pointer; accent-color: var(--accent);" />' +
-                 '<span style="font-size: 0.85rem; font-weight: 500; ' + textStyle + '">' + escapeHtml(subtask.title || subtask.step || subtask.text || '') + responsibleHtml + deadlineHtml + '</span>' +
+      var subtaskComments = subtask.comments || [];
+      var subtaskMarks = subtask.marks || [];
+      var subtaskReactionsHtml = renderTaskMarksHtml(subtaskMarks);
+
+      var reactId = 'subtask_' + taskIdx + '_' + subtaskIdx;
+      var reactHtml = subtaskReactionsHtml +
+        '<div class="reaction-wrap">' +
+          '<button type="button" class="topic-inline-btn react-toggle-btn" data-reaction-menu="' + reactId + '">React</button>' +
+          renderReactionMenu({ id: reactId, reactions: subtaskMarks }, currentUserId) +
+        '</div>';
+
+      var resultsBtnHtml = '';
+      var resultsSectionHtml = '';
+      if (isSubDone) {
+        resultsBtnHtml = '<button type="button" class="topic-inline-btn subtask-results-btn" data-task-idx="' + taskIdx + '" data-subtask-idx="' + subtaskIdx + '" style="font-size: 0.8rem; padding: 2px 6px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; background: var(--surface-soft); margin-right: 4px;">Results</button>';
+        
+        var subResultsVal = subtask.results || '';
+        resultsSectionHtml = '<div class="subtask-results-section" id="subtask-results-section-' + taskIdx + '-' + subtaskIdx + '" style="display: none; margin-top: 6px; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface-soft); text-align: left; width: 100%; box-sizing: border-box;">' +
+                               '<div style="font-weight: 600; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">Subtask Execution Results:</div>' +
+                               '<div style="font-size: 0.82rem; color: var(--text); background: var(--surface); padding: 6px 8px; border-radius: 4px; border: 1px solid var(--border); margin-bottom: 6px; white-space: pre-wrap;">' + (subResultsVal ? escapeHtml(subResultsVal) : '<span style="font-style: italic; color: var(--text-soft);">No results submitted yet.</span>') + '</div>' +
+                               '<div class="subtask-results-form" style="display: flex; flex-direction: column; gap: 4px;">' +
+                                 '<textarea class="subtask-results-input" placeholder="Document subtask results..." style="width: 100%; min-height: 40px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 0.8rem; background: var(--surface); color: var(--text); resize: vertical;">' + escapeHtml(subResultsVal) + '</textarea>' +
+                                 '<div style="display: flex; justify-content: flex-end;">' +
+                                   '<button type="button" class="subtask-save-results-btn" data-task-idx="' + taskIdx + '" data-subtask-idx="' + subtaskIdx + '" style="padding: 2px 10px; font-size: 0.78rem; border-radius: 4px; cursor: pointer; background: var(--accent); color: var(--accent-contrast, #fff); border: none;">Save</button>' +
+                                 '</div>' +
+                               '</div>' +
+                             '</div>';
+      }
+
+      var actionsHtml = '';
+      if (!isParentCanceled) {
+        actionsHtml = '<div style="display: flex; gap: 6px; align-items: center; margin-top: 2px;" onclick="event.stopPropagation();">' +
+                        '<button type="button" class="topic-inline-btn subtask-comment-input-toggle-btn" data-task-idx="' + taskIdx + '" data-subtask-idx="' + subtaskIdx + '" style="font-size: 0.85rem; padding: 0; background: none; border: none; cursor: pointer;">💬</button>' +
+                        (isSubDone ? reactHtml + resultsBtnHtml : '') +
+                      '</div>';
+      }
+
+      var commentsSectionId = 'subtask-comments-section-' + taskIdx + '-' + subtaskIdx;
+      var newCommentFormId = 'subtask-comment-form-' + taskIdx + '-' + subtaskIdx;
+      var commentsTreeId = 'subtaskcomment_' + taskIdx + '_' + subtaskIdx;
+
+      var commentsHtml = '<div class="subtask-comments-section" id="' + commentsSectionId + '" style="display: none; margin-top: 4px; border-top: 1px dashed var(--border); padding-top: 6px; width: 100%;">' +
+                           renderTaskCommentsTree(subtaskComments, commentsTreeId, currentUserId) +
+                           '<div class="subtask-new-comment-form" id="' + newCommentFormId + '" style="display: none; margin-top: 6px; display: flex; gap: 6px; align-items: center; width: 100%;">' +
+                             '<input type="text" class="subtask-new-comment-input" data-task-idx="' + taskIdx + '" data-subtask-idx="' + subtaskIdx + '" placeholder="Add a subtask comment..." style="flex: 1; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 0.8rem; background: var(--surface); color: var(--text);" />' +
+                             '<button type="button" class="subtask-add-comment-btn" data-task-idx="' + taskIdx + '" data-subtask-idx="' + subtaskIdx + '" style="padding: 4px 10px; font-size: 0.8rem; border-radius: 4px; cursor: pointer;">Comment</button>' +
+                           '</div>' +
+                         '</div>';
+
+      return '<div class="subtask-card-item" style="position: relative; display: flex; flex-direction: column; gap: 4px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px; margin-bottom: 6px; width: 100%; box-sizing: border-box;">' +
+               '<div style="display: flex; align-items: center; gap: 8px; justify-content: space-between; flex-wrap: wrap; width: 100%;">' +
+                 '<div style="display: flex; align-items: center; gap: 6px; flex: 1; flex-wrap: wrap;">' +
+                   '<input type="checkbox" class="subtask-status-checkbox" data-task-idx="' + taskIdx + '" data-subtask-idx="' + subtaskIdx + '"' + (isSubDone ? ' checked' : '') + checkboxDisabled + ' style="width: 14px; height: 14px; cursor: pointer; accent-color: var(--accent);" />' +
+                   '<span style="font-size: 0.85rem; font-weight: 500; ' + textStyle + '">' + escapeHtml(subtask.title || subtask.step || subtask.text || '') + responsibleHtml + deadlineHtml + '</span>' +
+                 '</div>' +
+                 '<div style="display: flex; align-items: center; gap: 6px;">' +
+                   deleteHtml +
+                 '</div>' +
                '</div>' +
-               deleteHtml +
+               actionsHtml +
+               resultsSectionHtml +
+               commentsHtml +
              '</div>';
     }).join('');
   }
@@ -2150,12 +2206,12 @@ function initTopicDetailViews() {
                     '<button type="button" class="topic-inline-btn task-restore-btn" data-task-idx="' + taskIdx + '" style="font-size: 0.8rem; padding: 2px 6px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; background: var(--surface-soft); margin-right: 4px;">Restore</button>';
                 } else {
                   responsibleActionsHtml = 
-                    '<button type="button" class="topic-inline-btn task-breakdown-toggle-btn" data-task-idx="' + taskIdx + '" style="font-size: 0.8rem; padding: 2px 6px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; background: var(--surface-soft); margin-right: 4px;">Break down</button>' +
+                    '<button type="button" class="topic-inline-btn task-breakdown-toggle-btn" data-task-idx="' + taskIdx + '" style="font-size: 0.8rem; padding: 2px 6px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; background: var(--surface-soft); margin-right: 4px;">🛠️ Break down</button>' +
                     '<button type="button" class="topic-inline-btn task-cancel-btn" data-task-idx="' + taskIdx + '" style="font-size: 0.8rem; padding: 2px 6px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; color: var(--error, #e53e3e); background: var(--surface-soft); margin-right: 4px;">Cancel</button>';
                 }
               }
 
-              return '<div class="task-item-card" style="padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); display: flex; flex-direction: column; gap: 8px;">' +
+              return '<div class="task-item-card" style="position: relative; padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); display: flex; flex-direction: column; gap: 8px;">' +
                        '<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%;">' +
                          '<div style="display: flex; align-items: center; gap: 8px; flex: 1;">' +
                            (isCanceled ? 
@@ -2185,7 +2241,7 @@ function initTopicDetailViews() {
                                 participantOptions +
                               '</select>' +
                               '<input type="date" class="task-new-subtask-deadline" data-task-idx="' + taskIdx + '" style="padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); font-size: 0.82rem;" />' +
-                              '<button type="button" class="task-add-subtask-btn" data-task-idx="' + taskIdx + '" style="padding: 6px 12px; font-size: 0.82rem; font-weight: 600; border-radius: 6px; background: var(--accent); color: var(--accent-contrast, #fff); border: none; cursor: pointer;">Add</button>' +
+                              '<button type="button" class="task-add-subtask-btn" data-task-idx="' + taskIdx + '" style="padding: 6px 12px; font-size: 0.82rem; font-weight: 600; border-radius: 6px; background: var(--accent); color: var(--accent-contrast, #fff); border: none; cursor: pointer;">➕ Add</button>' +
                             '</div>' +
                           '</div>' +
                        '</div>' +
@@ -3146,53 +3202,7 @@ function initTopicDetailViews() {
               });
             });
 
-            // 2.5 Bind Reaction Bubble clicks to show list of persons who reacted (synchronous popup display to prevent event handler races)
-            modalBody.querySelectorAll('.reaction-bubble').forEach(bubble => {
-              bubble.addEventListener('click', function(e) {
-                e.stopPropagation();
-                try {
-                  const uidsAttr = this.getAttribute('data-uids');
-                  const uids = uidsAttr ? uidsAttr.split(',').filter(Boolean) : [];
-                  
-                  const itemEl = this.closest('.topic-message-card, .topic-description-actions, .option-card');
-                  if (!itemEl) return;
 
-                  // Close any other open popups first
-                  document.querySelectorAll('.reaction-users-popup').forEach(p => p.remove());
-
-                  const popup = document.createElement('div');
-                  popup.className = 'reaction-users-popup';
-                  popup.style.minWidth = '150px';
-
-                  popup.addEventListener('click', pe => pe.stopPropagation());
-
-                  const renderNames = () => {
-                    popup.innerHTML = '';
-                    const namesList = uids.length === 0 ? ['No reactions'] : uids.map(uid => window.userCache[uid] || ('User ' + uid));
-                    namesList.forEach(n => {
-                      const item = document.createElement('div');
-                      item.className = 'reaction-user-item';
-                      item.textContent = n;
-                      popup.appendChild(item);
-                    });
-                  };
-
-                  // Render fallback/cached names instantly
-                  renderNames();
-                  this.style.position = 'relative';
-                  this.appendChild(popup);
-
-                  // Fetch full user profiles from Firestore in the background and update when loaded
-                  if (uids.length > 0) {
-                    resolveUserNames(uids).then(() => {
-                      renderNames();
-                    }).catch(err => console.error("Error resolving user names for reaction popup:", err));
-                  }
-                } catch (err) {
-                  console.error("Reaction bubble click handler error:", err);
-                }
-              });
-            });
 
             if (sendBtn && inputEl) {
               sendBtn.onclick = async function() {
@@ -3384,9 +3394,109 @@ function initTopicDetailViews() {
               console.error("Error toggling task reaction:", err);
             }
           } else if (msgId.startsWith('taskcomment_')) {
+            if (msgId.startsWith('taskcomment_subtaskcomment_')) {
+              const parts = msgId.split('_');
+              const taskIdx = parseInt(parts[2], 10);
+              const subtaskIdx = parseInt(parts[3], 10);
+              const commentId = parts.slice(4).join('_');
+              const docRef = db.collection("issues").doc(topicId);
+
+              try {
+                await db.runTransaction(async (transaction) => {
+                  const doc = await transaction.get(docRef);
+                  if (!doc.exists) return;
+
+                  const data = doc.data();
+                  const tasks = data.tasks || [];
+                  if (!tasks[taskIdx]) return;
+
+                  const subtasks = tasks[taskIdx].subtasks || [];
+                  if (!subtasks[subtaskIdx]) return;
+
+                  let comments = subtasks[subtaskIdx].comments || [];
+                  comments = comments.map(c => {
+                    if (c.id === commentId) {
+                      let marks = c.marks || [];
+                      const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+                      const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+                      const existingIndex = userMarkTypes.indexOf(reactionType);
+
+                      if (existingIndex >= 0) {
+                        marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+                      } else {
+                        if (userMarkTypes.length >= 2) {
+                          alert("You can only leave up to 2 different reactions per comment.");
+                          return c;
+                        }
+                        marks.push({
+                          uid: currentUserId,
+                          type: reactionType,
+                          reaction: reactionType
+                        });
+                      }
+                      return { ...c, marks: marks };
+                    }
+                    return c;
+                  });
+                  subtasks[subtaskIdx].comments = comments;
+
+                  transaction.update(docRef, { tasks: tasks });
+                });
+              } catch (err) {
+                console.error("Error toggling subtask comment reaction:", err);
+              }
+            } else {
+              const parts = msgId.split('_');
+              const taskIdx = parseInt(parts[1], 10);
+              const commentId = parts.slice(2).join('_');
+              const docRef = db.collection("issues").doc(topicId);
+
+              try {
+                await db.runTransaction(async (transaction) => {
+                  const doc = await transaction.get(docRef);
+                  if (!doc.exists) return;
+
+                  const data = doc.data();
+                  const tasks = data.tasks || [];
+                  if (!tasks[taskIdx]) return;
+
+                  let comments = tasks[taskIdx].comments || [];
+                  comments = comments.map(c => {
+                    if (c.id === commentId) {
+                      let marks = c.marks || [];
+                      const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+                      const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+                      const existingIndex = userMarkTypes.indexOf(reactionType);
+
+                      if (existingIndex >= 0) {
+                        marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+                      } else {
+                        if (userMarkTypes.length >= 2) {
+                          alert("You can only leave up to 2 different reactions per comment.");
+                          return c;
+                        }
+                        marks.push({
+                          uid: currentUserId,
+                          type: reactionType,
+                          reaction: reactionType
+                        });
+                      }
+                      return { ...c, marks: marks };
+                    }
+                    return c;
+                  });
+                  tasks[taskIdx].comments = comments;
+
+                  transaction.update(docRef, { tasks: tasks });
+                });
+              } catch (err) {
+                console.error("Error toggling task comment reaction:", err);
+              }
+            }
+          } else if (msgId.startsWith('subtask_')) {
             const parts = msgId.split('_');
             const taskIdx = parseInt(parts[1], 10);
-            const commentId = parts.slice(2).join('_');
+            const subtaskIdx = parseInt(parts[2], 10);
             const docRef = db.collection("issues").doc(topicId);
 
             try {
@@ -3398,37 +3508,33 @@ function initTopicDetailViews() {
                 const tasks = data.tasks || [];
                 if (!tasks[taskIdx]) return;
 
-                let comments = tasks[taskIdx].comments || [];
-                comments = comments.map(c => {
-                  if (c.id === commentId) {
-                    let marks = c.marks || [];
-                    const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
-                    const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
-                    const existingIndex = userMarkTypes.indexOf(reactionType);
+                const subtasks = tasks[taskIdx].subtasks || [];
+                if (!subtasks[subtaskIdx]) return;
 
-                    if (existingIndex >= 0) {
-                      marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
-                    } else {
-                      if (userMarkTypes.length >= 2) {
-                        alert("You can only leave up to 2 different reactions per comment.");
-                        return c;
-                      }
-                      marks.push({
-                        uid: currentUserId,
-                        type: reactionType,
-                        reaction: reactionType
-                      });
-                    }
-                    return { ...c, marks: marks };
+                let marks = subtasks[subtaskIdx].marks || [];
+                const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+                const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+                const existingIndex = userMarkTypes.indexOf(reactionType);
+
+                if (existingIndex >= 0) {
+                  marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+                } else {
+                  if (userMarkTypes.length >= 2) {
+                    alert("You can only leave up to 2 different reactions per subtask.");
+                    return;
                   }
-                  return c;
-                });
-                tasks[taskIdx].comments = comments;
+                  marks.push({
+                    uid: currentUserId,
+                    type: reactionType,
+                    reaction: reactionType
+                  });
+                }
+                subtasks[subtaskIdx].marks = marks;
 
                 transaction.update(docRef, { tasks: tasks });
               });
             } catch (err) {
-              console.error("Error toggling task comment reaction:", err);
+              console.error("Error toggling subtask reaction:", err);
             }
           } else {
             const msgRef = db.collection("discussions").doc(topicId).collection("messages").doc(msgId.toString());
@@ -3892,6 +3998,9 @@ function initTopicDetailViews() {
             (issue.tasks || []).forEach(t => {
               (t.subtasks || []).forEach(st => {
                 if (st.in_charge_uid) subtaskUids.push(st.in_charge_uid.toString());
+                (st.comments || []).forEach(sc => {
+                  if (sc.uid) subtaskUids.push(sc.uid.toString());
+                });
               });
             });
             const combinedUids = Array.from(new Set(uniqueUids.concat(commentUids).concat(msgUids).concat(subtaskUids)));
@@ -4169,6 +4278,56 @@ function initTopicDetailViews() {
   
   modalBody.__restoreView = restoreTopicListView;
 
+  function bindReactionBubbles() {
+    modalBody.querySelectorAll('.reaction-bubble').forEach(function(bubble) {
+      if (bubble.classList.contains('bubble-bound')) return;
+      bubble.classList.add('bubble-bound');
+
+      bubble.addEventListener('click', function(e) {
+        e.stopPropagation();
+        try {
+          var uidsAttr = this.getAttribute('data-uids');
+          var uids = uidsAttr ? uidsAttr.split(',').filter(Boolean) : [];
+          
+          var itemEl = this.closest('.topic-message-card, .topic-description-actions, .option-card, .task-item-card, .task-comment-card, .subtask-card-item');
+          if (!itemEl) return;
+
+          // Close any other open popups first
+          document.querySelectorAll('.reaction-users-popup').forEach(function(p) { p.remove(); });
+
+          var popup = document.createElement('div');
+          popup.className = 'reaction-users-popup';
+          popup.style.minWidth = '150px';
+
+          popup.addEventListener('click', function(pe) { pe.stopPropagation(); });
+
+          var renderNames = function() {
+            popup.innerHTML = '';
+            var namesList = uids.length === 0 ? ['No reactions'] : uids.map(function(uid) { return window.userCache[uid] || ('User ' + uid); });
+            namesList.forEach(function(n) {
+              var item = document.createElement('div');
+              item.className = 'reaction-user-item';
+              item.textContent = n;
+              popup.appendChild(item);
+            });
+          };
+
+          // Render fallback/cached names instantly
+          renderNames();
+
+          // Resolve names in background and re-render
+          resolveUserNames(uids).then(function() {
+            renderNames();
+          });
+
+          itemEl.appendChild(popup);
+        } catch (err) {
+          console.error("Error displaying reaction users:", err);
+        }
+      });
+    });
+  }
+
   function bindReactionMenus() {
     modalBody.querySelectorAll('.react-toggle-btn').forEach(function(btn) {
       btn.addEventListener('click', function(e) {
@@ -4202,6 +4361,7 @@ function initTopicDetailViews() {
 
     if (!skipReactionMenus) {
       bindReactionMenus();
+      bindReactionBubbles();
     }
 
     // Bind Microcommunity Button clicks
@@ -4944,7 +5104,7 @@ function initTopicDetailViews() {
     // 4. Submit reply comment buttons (adds a nested reply comment)
     modalBody.querySelectorAll('.task-submit-reply-btn').forEach(btn => {
       btn.addEventListener('click', async function() {
-        const taskIdx = parseInt(this.getAttribute('data-task-idx'));
+        const taskIdxStr = this.getAttribute('data-task-idx');
         const parentId = this.getAttribute('data-parent-id');
         const replyForm = modalBody.querySelector(`#reply-form-${parentId}`);
         if (!replyForm) return;
@@ -4954,33 +5114,71 @@ function initTopicDetailViews() {
         if (!text) return;
 
         const displayName = window.userCache[currentUserId] || ('User ' + currentUserId);
-        
-        const newReply = {
-           id: 'tc_' + Date.now() + '_' + Math.floor(Math.random()*1000),
-           uid: currentUserId,
-           author_name: displayName,
-           text: text,
-           timestamp: new Date().toLocaleDateString('de-CH'),
-           parent_id: parentId
-        };
 
-        try {
-          await db.runTransaction(async (transaction) => {
-            const doc = await transaction.get(docRef);
-            if (!doc.exists) return;
-            const latestData = doc.data();
-            const latestTasks = latestData.tasks || [];
-            if (latestTasks[taskIdx]) {
-              if (!latestTasks[taskIdx].comments) latestTasks[taskIdx].comments = [];
-              latestTasks[taskIdx].comments.push(newReply);
-              transaction.update(docRef, { tasks: latestTasks });
-            }
-          });
-          inputEl.value = '';
-          replyForm.style.display = 'none';
-          console.log("Task reply added successfully.");
-        } catch (err) {
-          console.error("Failed to add task reply:", err);
+        if (taskIdxStr.startsWith('subtaskcomment_')) {
+          const parts = taskIdxStr.split('_');
+          const taskIdx = parseInt(parts[1], 10);
+          const subtaskIdx = parseInt(parts[2], 10);
+
+          const newReply = {
+             id: 'sc_' + Date.now() + '_' + Math.floor(Math.random()*1000),
+             uid: currentUserId,
+             author_name: displayName,
+             text: text,
+             timestamp: new Date().toLocaleDateString('de-CH'),
+             parent_id: parentId
+          };
+
+          try {
+            await db.runTransaction(async (transaction) => {
+              const doc = await transaction.get(docRef);
+              if (!doc.exists) return;
+              const latestData = doc.data();
+              const latestTasks = latestData.tasks || [];
+              if (latestTasks[taskIdx]) {
+                const subtasks = latestTasks[taskIdx].subtasks || [];
+                if (subtasks[subtaskIdx]) {
+                  if (!subtasks[subtaskIdx].comments) subtasks[subtaskIdx].comments = [];
+                  subtasks[subtaskIdx].comments.push(newReply);
+                  transaction.update(docRef, { tasks: latestTasks });
+                }
+              }
+            });
+            inputEl.value = '';
+            replyForm.style.display = 'none';
+            console.log("Subtask reply added successfully.");
+          } catch (err) {
+            console.error("Failed to add subtask reply:", err);
+          }
+        } else {
+          const taskIdx = parseInt(taskIdxStr, 10);
+          const newReply = {
+             id: 'tc_' + Date.now() + '_' + Math.floor(Math.random()*1000),
+             uid: currentUserId,
+             author_name: displayName,
+             text: text,
+             timestamp: new Date().toLocaleDateString('de-CH'),
+             parent_id: parentId
+          };
+
+          try {
+            await db.runTransaction(async (transaction) => {
+              const doc = await transaction.get(docRef);
+              if (!doc.exists) return;
+              const latestData = doc.data();
+              const latestTasks = latestData.tasks || [];
+              if (latestTasks[taskIdx]) {
+                if (!latestTasks[taskIdx].comments) latestTasks[taskIdx].comments = [];
+                latestTasks[taskIdx].comments.push(newReply);
+                transaction.update(docRef, { tasks: latestTasks });
+              }
+            });
+            inputEl.value = '';
+            replyForm.style.display = 'none';
+            console.log("Task reply added successfully.");
+          } catch (err) {
+            console.error("Failed to add task reply:", err);
+          }
         }
       });
     });
@@ -5051,8 +5249,129 @@ function initTopicDetailViews() {
         const menu = this.closest('.reaction-menu');
         if (menu) menu.hidden = true;
 
-        if (msgId.startsWith('task_') || msgId.startsWith('taskcomment_')) {
+        if (msgId.startsWith('task_') || msgId.startsWith('taskcomment_') || msgId.startsWith('subtask_')) {
           await toggleTaskOrCommentReaction(msgId, reactionType);
+        }
+      });
+    });
+
+    // Bind subtask-level comment input toggle
+    modalBody.querySelectorAll('.subtask-comment-input-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const taskIdx = this.getAttribute('data-task-idx');
+        const subtaskIdx = this.getAttribute('data-subtask-idx');
+        const commentsSection = modalBody.querySelector(`#subtask-comments-section-${taskIdx}-${subtaskIdx}`);
+        if (commentsSection) {
+          commentsSection.style.display = 'block';
+        }
+        const commentForm = modalBody.querySelector(`#subtask-comment-form-${taskIdx}-${subtaskIdx}`);
+        if (commentForm) {
+          commentForm.style.display = commentForm.style.display === 'none' ? 'flex' : 'none';
+        }
+      });
+    });
+
+    // Bind subtask-level add comment click
+    modalBody.querySelectorAll('.subtask-add-comment-btn').forEach(btn => {
+      btn.addEventListener('click', async function(e) {
+        e.stopPropagation();
+        const taskIdx = parseInt(this.getAttribute('data-task-idx'), 10);
+        const subtaskIdx = parseInt(this.getAttribute('data-subtask-idx'), 10);
+        const inputEl = modalBody.querySelector(`.subtask-new-comment-input[data-task-idx="${taskIdx}"][data-subtask-idx="${subtaskIdx}"]`);
+        if (!inputEl) return;
+        const text = inputEl.value.trim();
+        if (!text) return;
+
+        const displayName = window.userCache[currentUserId] || ('User ' + currentUserId);
+        const newComment = {
+          id: 'sc_' + Date.now() + '_' + Math.floor(Math.random()*1000),
+          uid: currentUserId,
+          author_name: displayName,
+          text: text,
+          timestamp: new Date().toLocaleDateString('de-CH')
+        };
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+            const latestData = doc.data();
+            const latestTasks = latestData.tasks || [];
+            if (latestTasks[taskIdx]) {
+              const subtasks = latestTasks[taskIdx].subtasks || [];
+              if (subtasks[subtaskIdx]) {
+                if (!subtasks[subtaskIdx].comments) subtasks[subtaskIdx].comments = [];
+                subtasks[subtaskIdx].comments.push(newComment);
+                transaction.update(docRef, { tasks: latestTasks });
+              }
+            }
+          });
+          inputEl.value = '';
+          const commentForm = modalBody.querySelector(`#subtask-comment-form-${taskIdx}-${subtaskIdx}`);
+          if (commentForm) commentForm.style.display = 'none';
+          console.log("Subtask comment added successfully.");
+        } catch (err) {
+          console.error("Failed to add subtask comment:", err);
+        }
+      });
+    });
+
+    // Support enter key on subtask new comment input
+    modalBody.querySelectorAll('.subtask-new-comment-input').forEach(input => {
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          const taskIdx = this.getAttribute('data-task-idx');
+          const subtaskIdx = this.getAttribute('data-subtask-idx');
+          const btn = modalBody.querySelector(`.subtask-add-comment-btn[data-task-idx="${taskIdx}"][data-subtask-idx="${subtaskIdx}"]`);
+          if (btn) btn.click();
+        }
+      });
+    });
+
+    // Bind subtask results toggle click
+    modalBody.querySelectorAll('.subtask-results-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const taskIdx = this.getAttribute('data-task-idx');
+        const subtaskIdx = this.getAttribute('data-subtask-idx');
+        const resultsSection = modalBody.querySelector(`#subtask-results-section-${taskIdx}-${subtaskIdx}`);
+        if (resultsSection) {
+          resultsSection.style.display = resultsSection.style.display === 'none' ? 'block' : 'none';
+        }
+      });
+    });
+
+    // Bind subtask save results button click
+    modalBody.querySelectorAll('.subtask-save-results-btn').forEach(btn => {
+      btn.addEventListener('click', async function(e) {
+        e.stopPropagation();
+        const taskIdx = parseInt(this.getAttribute('data-task-idx'), 10);
+        const subtaskIdx = parseInt(this.getAttribute('data-subtask-idx'), 10);
+        const container = this.closest('.subtask-results-section');
+        if (!container) return;
+        const textarea = container.querySelector('.subtask-results-input');
+        if (!textarea) return;
+        const resultsText = textarea.value.trim();
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+            const latestData = doc.data();
+            const latestTasks = latestData.tasks || [];
+            if (latestTasks[taskIdx]) {
+              const subtasks = latestTasks[taskIdx].subtasks || [];
+              if (subtasks[subtaskIdx]) {
+                subtasks[subtaskIdx].results = resultsText;
+                transaction.update(docRef, { tasks: latestTasks });
+              }
+            }
+          });
+          alert("Subtask results saved successfully.");
+        } catch (err) {
+          console.error("Failed to save subtask results:", err);
+          alert("Failed to save subtask results: " + err.message);
         }
       });
     });
@@ -5095,9 +5414,109 @@ function initTopicDetailViews() {
           console.error("Error toggling task reaction:", err);
         }
       } else if (msgId.startsWith('taskcomment_')) {
+        // Can be a subtask comment reaction: taskcomment_subtaskcomment_taskIdx_subtaskIdx_commentId
+        if (msgId.startsWith('taskcomment_subtaskcomment_')) {
+          const parts = msgId.split('_');
+          const taskIdx = parseInt(parts[2], 10);
+          const subtaskIdx = parseInt(parts[3], 10);
+          const commentId = parts.slice(4).join('_');
+
+          try {
+            await db.runTransaction(async (transaction) => {
+              const doc = await transaction.get(docRef);
+              if (!doc.exists) return;
+
+              const data = doc.data();
+              const tasks = data.tasks || [];
+              if (!tasks[taskIdx]) return;
+
+              const subtasks = tasks[taskIdx].subtasks || [];
+              if (!subtasks[subtaskIdx]) return;
+
+              let comments = subtasks[subtaskIdx].comments || [];
+              comments = comments.map(c => {
+                if (c.id === commentId) {
+                  let marks = c.marks || [];
+                  const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+                  const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+                  const existingIndex = userMarkTypes.indexOf(reactionType);
+
+                  if (existingIndex >= 0) {
+                    marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+                  } else {
+                    if (userMarkTypes.length >= 2) {
+                      alert("You can only leave up to 2 different reactions per comment.");
+                      return c;
+                    }
+                    marks.push({
+                      uid: currentUserId,
+                      type: reactionType,
+                      reaction: reactionType
+                    });
+                  }
+                  return { ...c, marks: marks };
+                }
+                return c;
+              });
+              subtasks[subtaskIdx].comments = comments;
+
+              transaction.update(docRef, { tasks: tasks });
+            });
+          } catch (err) {
+            console.error("Error toggling subtask comment reaction:", err);
+          }
+        } else {
+          // Regular task comment reaction
+          const parts = msgId.split('_');
+          const taskIdx = parseInt(parts[1], 10);
+          const commentId = parts.slice(2).join('_');
+
+          try {
+            await db.runTransaction(async (transaction) => {
+              const doc = await transaction.get(docRef);
+              if (!doc.exists) return;
+
+              const data = doc.data();
+              const tasks = data.tasks || [];
+              if (!tasks[taskIdx]) return;
+
+              let comments = tasks[taskIdx].comments || [];
+              comments = comments.map(c => {
+                if (c.id === commentId) {
+                  let marks = c.marks || [];
+                  const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+                  const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+                  const existingIndex = userMarkTypes.indexOf(reactionType);
+
+                  if (existingIndex >= 0) {
+                    marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+                  } else {
+                    if (userMarkTypes.length >= 2) {
+                      alert("You can only leave up to 2 different reactions per comment.");
+                      return c;
+                    }
+                    marks.push({
+                      uid: currentUserId,
+                      type: reactionType,
+                      reaction: reactionType
+                    });
+                  }
+                  return { ...c, marks: marks };
+                }
+                return c;
+              });
+              tasks[taskIdx].comments = comments;
+
+              transaction.update(docRef, { tasks: tasks });
+            });
+          } catch (err) {
+            console.error("Error toggling task comment reaction:", err);
+          }
+        }
+      } else if (msgId.startsWith('subtask_')) {
         const parts = msgId.split('_');
         const taskIdx = parseInt(parts[1], 10);
-        const commentId = parts.slice(2).join('_');
+        const subtaskIdx = parseInt(parts[2], 10);
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -5108,37 +5527,33 @@ function initTopicDetailViews() {
             const tasks = data.tasks || [];
             if (!tasks[taskIdx]) return;
 
-            let comments = tasks[taskIdx].comments || [];
-            comments = comments.map(c => {
-              if (c.id === commentId) {
-                let marks = c.marks || [];
-                const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
-                const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
-                const existingIndex = userMarkTypes.indexOf(reactionType);
+            const subtasks = tasks[taskIdx].subtasks || [];
+            if (!subtasks[subtaskIdx]) return;
 
-                if (existingIndex >= 0) {
-                  marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
-                } else {
-                  if (userMarkTypes.length >= 2) {
-                    alert("You can only leave up to 2 different reactions per comment.");
-                    return c;
-                  }
-                  marks.push({
-                    uid: currentUserId,
-                    type: reactionType,
-                    reaction: reactionType
-                  });
-                }
-                return { ...c, marks: marks };
+            let marks = subtasks[subtaskIdx].marks || [];
+            const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+            const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+            const existingIndex = userMarkTypes.indexOf(reactionType);
+
+            if (existingIndex >= 0) {
+              marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+            } else {
+              if (userMarkTypes.length >= 2) {
+                alert("You can only leave up to 2 different reactions per subtask.");
+                return;
               }
-              return c;
-            });
-            tasks[taskIdx].comments = comments;
+              marks.push({
+                uid: currentUserId,
+                type: reactionType,
+                reaction: reactionType
+              });
+            }
+            subtasks[subtaskIdx].marks = marks;
 
             transaction.update(docRef, { tasks: tasks });
           });
         } catch (err) {
-          console.error("Error toggling task comment reaction:", err);
+          console.error("Error toggling subtask reaction:", err);
         }
       }
     }
