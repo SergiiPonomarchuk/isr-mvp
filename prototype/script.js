@@ -1908,37 +1908,62 @@ function initTopicDetailViews() {
           '</div>' +
         '</div>' +
 
-        '<div class="topic-form-grid">' +
+        '<div class="topic-form-grid" style="position: relative;">' +
           '<div class="topic-form-field">' +
             '<label>Issue Topic Name</label>' +
-            '<input type="text" placeholder="Enter issue topic name" />' +
+            '<input type="text" class="topic-new-title-input" placeholder="Enter issue topic name" style="width:100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; background: var(--surface); color: var(--text);" />' +
           '</div>' +
           '<div class="topic-form-field">' +
             '<label>Issue Description</label>' +
-            '<textarea class="topic-form-textarea" placeholder="Describe the issue"></textarea>' +
+            '<textarea class="topic-form-textarea" placeholder="Describe the issue" style="width:100%; min-height: 120px; padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; background: var(--surface); color: var(--text); resize: vertical;"></textarea>' +
           '</div>' +
         '</div>' +
 
-        '<div class="topic-detail-actions">' +
-          '<div class="topic-detail-actions-left">' +
-            '<button type="button">Attach</button>' +
-            '<button type="button">Check</button>' +
-          '</div>' +
-          '<div class="topic-detail-actions-right">' +
-            '<button type="button" class="topic-back-btn">Cancel</button>' +
-            '<button type="button">Create</button>' +
+        '<div class="topic-detail-block" style="margin-top: 16px;">' +
+          '<div class="topic-detail-block-title" style="margin-bottom: 8px;">Parameters & Calculations</div>' +
+          '<div class="topic-detail-meta" style="position: relative; display: flex; flex-wrap: wrap; gap: 8px;">' +
+            '<button type="button" class="topic-detail-meta-item create-meta-btn" id="create-meta-microcommunity" style="pointer-events: none; opacity: 0.75;">' +
+              '<span class="topic-detail-meta-label">Microcommunity</span>' +
+              '<span class="topic-detail-meta-value" id="create-val-microcommunity">Microcommunity</span>' +
+            '</button>' +
+            '<button type="button" class="topic-detail-meta-item create-meta-btn" id="create-meta-deadline" style="position: relative; cursor: pointer;">' +
+              '<span class="topic-detail-meta-label">Deadline</span>' +
+              '<span class="topic-detail-meta-value" id="create-val-deadline">Deadline</span>' +
+            '</button>' +
+            '<button type="button" class="topic-detail-meta-item create-meta-btn" id="create-meta-geo" style="position: relative; cursor: pointer;">' +
+              '<span class="topic-detail-meta-label">Geo</span>' +
+              '<span class="topic-detail-meta-value" id="create-val-geo">Geo</span>' +
+            '</button>' +
+            '<button type="button" class="topic-detail-meta-item create-meta-btn" id="create-meta-relevance" style="pointer-events: none; opacity: 0.75;">' +
+              '<span class="topic-detail-meta-tiny" id="create-tiny-relevance"></span>' +
+              '<span class="topic-detail-meta-label">Relevance</span>' +
+              '<span class="topic-detail-meta-value" id="create-val-relevance">Relevance</span>' +
+            '</button>' +
+            '<button type="button" class="topic-detail-meta-item create-meta-btn" id="create-meta-isr" style="pointer-events: none; opacity: 0.75;">' +
+              '<span class="topic-detail-meta-tiny" id="create-tiny-isr"></span>' +
+              '<span class="topic-detail-meta-label">ISR-score</span>' +
+              '<span class="topic-detail-meta-value" id="create-val-isr">ISR-score</span>' +
+            '</button>' +
+            '<button type="button" class="topic-detail-meta-item create-meta-btn" id="create-meta-expertise" style="pointer-events: none; opacity: 0.75;">' +
+              '<span class="topic-detail-meta-label">Expertise Depth</span>' +
+              '<span class="topic-detail-meta-value" id="create-val-expertise">Expertise Depth</span>' +
+            '</button>' +
           '</div>' +
         '</div>' +
 
-        '<div class="topic-detail-block">' +
-          '<div class="topic-detail-block-title">AI assistant</div>' +
-          '<div class="topic-ai-panel">' +
-            '<div class="ai-msg ai-msg-assistant">Specify issue scale, location, context and other details. Don’t forget to check if this issue already exists.</div>' +
-            '<div class="topic-input-row">' +
-              '<input type="text" placeholder="Type details for AI assistant..." />' +
-              '<button type="button">Send</button>' +
-            '</div>' +
+        '<div class="topic-detail-actions" style="margin-top: 20px;">' +
+          '<div class="topic-detail-actions-left" style="display: flex; gap: 8px;">' +
+            '<button type="button" class="tour-btn tour-btn-secondary" id="create-check-btn">Check</button>' +
           '</div>' +
+          '<div class="topic-detail-actions-right" style="display: flex; gap: 8px;">' +
+            '<button type="button" class="tour-btn tour-btn-secondary topic-back-btn">Cancel</button>' +
+            '<button type="button" class="tour-btn tour-btn-primary" id="create-submit-btn" disabled>Create</button>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="topic-detail-block" id="create-results-members-block" style="display: none; margin-top: 16px;">' +
+          '<div class="topic-detail-block-title">Suggested Microcommunity Members (Relevance > 0.15)</div>' +
+          '<div class="create-members-list" id="create-members-list" style="display: flex; flex-direction: column; gap: 4px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); max-height: 200px; overflow-y: auto; text-align: left; font-size: 0.88rem; color: var(--text-muted);"></div>' +
         '</div>' +
       '</div>';
   }
@@ -4224,106 +4249,727 @@ function initTopicDetailViews() {
     
     bindDetailViewButtons(titleText);
 
-    // Bind Create & AI elements
-    const createBtn = modalBody.querySelector('.topic-detail-actions-right button:last-child');
-    const titleInput = modalBody.querySelector('.topic-form-field input');
+    // Bind Create & Parameters elements
+    const checkBtn = modalBody.querySelector('#create-check-btn');
+    const submitBtn = modalBody.querySelector('#create-submit-btn');
+    const titleInput = modalBody.querySelector('.topic-new-title-input');
     const descTextarea = modalBody.querySelector('.topic-form-textarea');
-    
-    const aiInput = modalBody.querySelector('.topic-ai-panel input');
-    const aiSendBtn = modalBody.querySelector('.topic-ai-panel button');
-    const aiMsgContainer = modalBody.querySelector('.topic-ai-panel .ai-msg');
-    
+
+    const valMicrocommunity = modalBody.querySelector('#create-val-microcommunity');
+    const valRelevance = modalBody.querySelector('#create-val-relevance');
+    const valIsr = modalBody.querySelector('#create-val-isr');
+    const valExpertise = modalBody.querySelector('#create-val-expertise');
+    const tinyRelevance = modalBody.querySelector('#create-tiny-relevance');
+    const tinyIsr = modalBody.querySelector('#create-tiny-isr');
+    const membersBlock = modalBody.querySelector('#create-results-members-block');
+    const membersList = modalBody.querySelector('#create-members-list');
+
+    let newTopicDeadline = "";
+    let newTopicGeo = [47.553832, 7.606599]; // default Basel center
     let suggestedParams = null;
+    let calculatedMembers = [];
+    const currentUserId = safeGetStorage('userId') || "1";
+    const db = firebase.firestore();
+
     const functionsBaseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       ? 'http://127.0.0.1:5001/project-a3d59130-5adf-4677-9e2/us-central1'
       : `https://us-central1-project-a3d59130-5adf-4677-9e2.cloudfunctions.net`;
-    
-    if (aiSendBtn && aiInput && aiMsgContainer) {
-      aiSendBtn.addEventListener('click', async () => {
-        const text = aiInput.value.trim();
-        if (!text) return;
+
+    // 1. Deadline absolute popup picker
+    const deadlineBtn = modalBody.querySelector('#create-meta-deadline');
+    const deadlineValEl = modalBody.querySelector('#create-val-deadline');
+    if (deadlineBtn && deadlineValEl) {
+      deadlineBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
         
-        aiMsgContainer.textContent = "Analyzing issue scale and relevance parameters with AI...";
-        try {
-          const res = await fetch(`${functionsBaseUrl}/analyzeIssue`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ description: text })
-          });
-          const data = await res.json();
-          if (data.error) {
-            aiMsgContainer.textContent = `Error: ${data.error}`;
-          } else {
-            suggestedParams = data;
-            aiMsgContainer.innerHTML = `
-              <strong>AI Suggestions:</strong><br>
-              📁 Suggested Category: <code>${data.category}</code><br>
-              📍 Impact Radius (μ): <code>${data.mu}m</code>, Decay (σ): <code>${data.sigma}m</code><br>
-              ⚖️ Weights: D:${(data.weights.w_D*100).toFixed(0)}%, G:${(data.weights.w_G*100).toFixed(0)}%, S:${(data.weights.w_S*100).toFixed(0)}%, X:${(data.weights.w_X*100).toFixed(0)}%<br>
-              👥 Target: Age ${data.demographics.minAge || 0}-${data.demographics.maxAge || 100}, Job: ${data.demographics.employmentStatus || 'Any'}<br>
-              <button type="button" class="apply-ai-btn" style="margin-top: 8px; padding: 4px 8px; font-size: 0.8rem; border-radius: 6px; cursor:pointer;">Apply suggestions to form</button>
-            `;
-            
-            aiMsgContainer.querySelector('.apply-ai-btn').addEventListener('click', () => {
-              if (titleInput) {
-                titleInput.value = text.slice(0, 40) + "...";
-              }
-              if (descTextarea) {
-                descTextarea.value = text;
-              }
-            });
-          }
-        } catch (err) {
-          aiMsgContainer.textContent = `Error analyzing: ${err.message}`;
+        // Remove other popups
+        modalBody.querySelectorAll('.reaction-users-popup').forEach(p => p.remove());
+        const oldPopup = modalBody.querySelector('#create-deadline-popup');
+        if (oldPopup) {
+          oldPopup.remove();
+          return;
         }
+
+        const popup = document.createElement('div');
+        popup.id = 'create-deadline-popup';
+        popup.className = 'reaction-users-popup';
+        popup.style.position = 'absolute';
+        popup.style.zIndex = '101';
+        popup.style.padding = '12px';
+        popup.style.width = '180px';
+        popup.style.display = 'flex';
+        popup.style.flexDirection = 'column';
+        popup.style.gap = '8px';
+
+        popup.addEventListener('click', function(pe) { pe.stopPropagation(); });
+
+        popup.innerHTML = `
+          <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">Set Deadline</div>
+          <input type="text" id="create-deadline-input" placeholder="dd.mm.yyyy" style="width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 4px; font-size: 0.82rem; background: var(--surface); color: var(--text);" />
+          <button type="button" id="create-deadline-confirm-btn" class="tour-btn tour-btn-primary" style="padding: 6px; font-size: 0.8rem; width: 100%;">Confirm</button>
+        `;
+
+        this.appendChild(popup);
+
+        // Put existing value if set
+        const currentVal = deadlineValEl.textContent;
+        if (currentVal && currentVal !== "Deadline" && currentVal !== "Ongoing") {
+          popup.querySelector('#create-deadline-input').value = currentVal;
+        }
+
+        popup.querySelector('#create-deadline-confirm-btn').onclick = (ce) => {
+          ce.stopPropagation();
+          const val = popup.querySelector('#create-deadline-input').value.trim();
+          if (val && !/^\d{1,2}\.\d{1,2}\.\d{2,4}$/.test(val)) {
+            alert("Please enter a valid date in dd.mm.yyyy format (e.g. 15.06.2026).");
+            return;
+          }
+          if (val) {
+            deadlineValEl.textContent = val;
+            newTopicDeadline = parseInputDate(val);
+          } else {
+            deadlineValEl.textContent = "Deadline";
+            newTopicDeadline = "";
+          }
+          popup.remove();
+        };
       });
     }
-    
-    if (createBtn) {
-      createBtn.addEventListener('click', async () => {
+
+    // 2. Fetch Creator Profile Geotags for Map select shortcuts
+    let profileGeotags = [];
+    async function loadCreatorGeotags() {
+      try {
+        const userSnap = await db.collection("users").doc(currentUserId.toString()).get();
+        if (userSnap.exists) {
+          profileGeotags = userSnap.data().geography || [];
+        }
+      } catch (err) {
+        console.error("Error loading user profile geotags:", err);
+      }
+      if (profileGeotags.length === 0) {
+        // Fallback mock geotags if offline/missing
+        profileGeotags = [
+          { id: 1, type: "home", address: "osbb 2, h12", geo: [47.5943, 7.6205] },
+          { id: 2, type: "work", place: "Argo Industry", address: "Railway street, 1", geo: [47.601, 7.618] }
+        ];
+      }
+    }
+    loadCreatorGeotags();
+
+    // 3. Geo Map Modal Overlay setup
+    const geoBtn = modalBody.querySelector('#create-meta-geo');
+    const geoValEl = modalBody.querySelector('#create-val-geo');
+    const geoOverlay = document.getElementById('geo-map-modal-overlay');
+    const geoCloseBtn = document.getElementById('geo-map-modal-close-btn');
+    const geoConfirmBtn = document.getElementById('geo-map-confirm-btn');
+    const geoAnchorsList = document.getElementById('geo-profile-anchors-list');
+    const mapCanvas = document.getElementById('geo-map-canvas');
+
+    if (geoBtn && geoOverlay) {
+      geoBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        geoOverlay.removeAttribute('hidden');
+        geoOverlay.style.display = 'flex';
+        
+        // Remove popups
+        modalBody.querySelectorAll('.reaction-users-popup').forEach(p => p.remove());
+
+        // Populate profile anchors list
+        if (geoAnchorsList) {
+          geoAnchorsList.innerHTML = '';
+          profileGeotags.forEach(tag => {
+            const row = document.createElement('div');
+            row.className = 'geo-anchor-item';
+            row.innerHTML = `
+              <div>
+                <span class="geo-anchor-type">${tag.type}</span>: ${tag.place || tag.address || 'Location'}
+              </div>
+               <span class="geo-anchor-coord">${tag.geo[0].toFixed(4)}, ${tag.geo[1].toFixed(4)}</span>
+            `;
+            row.addEventListener('click', () => {
+              newTopicGeo = [tag.geo[0], tag.geo[1]];
+              updateTargetMarker();
+            });
+            geoAnchorsList.appendChild(row);
+          });
+        }
+
+        initInteractiveMap();
+      });
+    }
+
+    let mapInstance = null;
+    let mapMarker = null;
+    let zoomLevel = 1.0;
+    let panX = 0;
+    let panY = 0;
+
+    function initInteractiveMap() {
+      if (!mapCanvas) return;
+      mapCanvas.innerHTML = '';
+      
+      if (typeof google !== 'undefined' && google.maps) {
+        const center = { lat: newTopicGeo[0], lng: newTopicGeo[1] };
+        mapInstance = new google.maps.Map(mapCanvas, {
+          center: center,
+          zoom: 15,
+          panControl: true,
+          zoomControl: true
+        });
+        
+        mapMarker = new google.maps.Marker({
+          position: center,
+          map: mapInstance,
+          draggable: true,
+          icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
+        });
+
+        profileGeotags.forEach(tag => {
+          const marker = new google.maps.Marker({
+            position: { lat: tag.geo[0], lng: tag.geo[1] },
+            map: mapInstance,
+            title: `${tag.type}: ${tag.place || tag.address || ''}`,
+            icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+          });
+          marker.addListener('click', () => {
+            newTopicGeo = [tag.geo[0], tag.geo[1]];
+            mapMarker.setPosition({ lat: tag.geo[0], lng: tag.geo[1] });
+            mapInstance.panTo({ lat: tag.geo[0], lng: tag.geo[1] });
+          });
+        });
+
+        mapInstance.addListener('click', (e) => {
+          newTopicGeo = [e.latLng.lat(), e.latLng.lng()];
+          mapMarker.setPosition(e.latLng);
+        });
+
+        mapMarker.addListener('dragend', (e) => {
+          newTopicGeo = [e.latLng.lat(), e.latLng.lng()];
+        });
+      } else {
+        // Fallback SVG Map Rendering
+        const svgNamespace = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(svgNamespace, "svg");
+        svg.setAttribute("width", "100%");
+        svg.setAttribute("height", "100%");
+        svg.style.background = "#edf2f7";
+        svg.style.cursor = "crosshair";
+        mapCanvas.appendChild(svg);
+
+        const controls = document.createElement('div');
+        controls.className = 'map-fallback-control';
+        controls.innerHTML = `
+          <button type="button" class="map-control-btn" id="map-zoom-in">+</button>
+          <button type="button" class="map-control-btn" id="map-zoom-out">−</button>
+        `;
+        mapCanvas.appendChild(controls);
+
+        controls.querySelector('#map-zoom-in').onclick = (e) => { e.stopPropagation(); zoomLevel *= 1.25; drawSvg(); };
+        controls.querySelector('#map-zoom-out').onclick = (e) => { e.stopPropagation(); zoomLevel /= 1.25; drawSvg(); };
+
+        const baseLat = 47.58;
+        const baseLon = 7.61;
+
+        function toPixels(lat, lon) {
+          const dy = lat - baseLat;
+          const dx = lon - baseLon;
+          const px = 250 + (dx * 7000 * zoomLevel) + panX;
+          const py = 150 - (dy * 7000 * zoomLevel) + panY;
+          return { x: px, y: py };
+        }
+
+        function toCoords(px, py) {
+          const dx = (px - 250 - panX) / (7000 * zoomLevel);
+          const dy = (150 - py - panY) / (7000 * zoomLevel);
+          return [baseLat + dy, baseLon + dx];
+        }
+
+        function drawSvg() {
+          svg.innerHTML = '';
+          
+          // Grid lines
+          for (let i = -6; i <= 6; i++) {
+            const latVal = baseLat + i * 0.008;
+            const lonVal = baseLon + i * 0.008;
+            
+            const latP = toPixels(latVal, baseLon);
+            const lonP = toPixels(baseLat, lonVal);
+
+            const hLine = document.createElementNS(svgNamespace, "line");
+            hLine.setAttribute("x1", "0");
+            hLine.setAttribute("y1", latP.y);
+            hLine.setAttribute("x2", "500");
+            hLine.setAttribute("y2", latP.y);
+            hLine.setAttribute("stroke", "#cbd5e0");
+            hLine.setAttribute("stroke-width", "0.5");
+            svg.appendChild(hLine);
+
+            const vLine = document.createElementNS(svgNamespace, "line");
+            vLine.setAttribute("x1", lonP.x);
+            vLine.setAttribute("y1", "0");
+            vLine.setAttribute("x2", lonP.x);
+            vLine.setAttribute("y2", "300");
+            vLine.setAttribute("stroke", "#cbd5e0");
+            vLine.setAttribute("stroke-width", "0.5");
+            svg.appendChild(vLine);
+          }
+
+          // Draw profile anchors
+          profileGeotags.forEach(tag => {
+            const p = toPixels(tag.geo[0], tag.geo[1]);
+            const c = document.createElementNS(svgNamespace, "circle");
+            c.setAttribute("cx", p.x);
+            c.setAttribute("cy", p.y);
+            c.setAttribute("r", "8");
+            c.setAttribute("fill", "#2c5282");
+            c.setAttribute("stroke", "#fff");
+            c.setAttribute("stroke-width", "2");
+            c.style.cursor = "pointer";
+            
+            const t = document.createElementNS(svgNamespace, "title");
+            t.textContent = `${tag.type}: ${tag.place || tag.address || ''}`;
+            c.appendChild(t);
+
+            c.onclick = (e) => {
+              e.stopPropagation();
+              newTopicGeo = [tag.geo[0], tag.geo[1]];
+              drawSvg();
+            };
+            svg.appendChild(c);
+          });
+
+          // Target marker
+          const targetP = toPixels(newTopicGeo[0], newTopicGeo[1]);
+          const tOuter = document.createElementNS(svgNamespace, "circle");
+          tOuter.setAttribute("cx", targetP.x);
+          tOuter.setAttribute("cy", targetP.y);
+          tOuter.setAttribute("r", "12");
+          tOuter.setAttribute("fill", "rgba(229, 62, 98, 0.25)");
+          tOuter.setAttribute("stroke", "#e53e3e");
+          tOuter.setAttribute("stroke-width", "2");
+          svg.appendChild(tOuter);
+
+          const tInner = document.createElementNS(svgNamespace, "circle");
+          tInner.setAttribute("cx", targetP.x);
+          tInner.setAttribute("cy", targetP.y);
+          tInner.setAttribute("r", "4");
+          tInner.setAttribute("fill", "#e53e3e");
+          svg.appendChild(tInner);
+
+          const textHud = document.createElementNS(svgNamespace, "text");
+          textHud.setAttribute("x", "12");
+          textHud.setAttribute("y", "24");
+          textHud.setAttribute("font-size", "11px");
+          textHud.setAttribute("fill", "#4a5568");
+          textHud.setAttribute("font-family", "monospace");
+          textHud.textContent = `Lat: ${newTopicGeo[0].toFixed(4)} Lon: ${newTopicGeo[1].toFixed(4)}`;
+          svg.appendChild(textHud);
+        }
+
+        svg.addEventListener('click', (e) => {
+          const rect = svg.getBoundingClientRect();
+          const clickX = e.clientX - rect.left;
+          const clickY = e.clientY - rect.top;
+          newTopicGeo = toCoords(clickX, clickY);
+          drawSvg();
+        });
+
+        let isDragging = false;
+        let startX, startY;
+        svg.addEventListener('mousedown', (e) => {
+          if (e.target !== svg) return;
+          isDragging = true;
+          startX = e.clientX;
+          startY = e.clientY;
+        });
+        svg.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+          panX += dx;
+          panY += dy;
+          startX = e.clientX;
+          startY = e.clientY;
+          drawSvg();
+        });
+        window.addEventListener('mouseup', () => { isDragging = false; });
+
+        drawSvg();
+      }
+    }
+
+    function updateTargetMarker() {
+      if (mapInstance && mapMarker) {
+        const center = { lat: newTopicGeo[0], lng: newTopicGeo[1] };
+        mapMarker.setPosition(center);
+        mapInstance.panTo(center);
+      } else {
+        initInteractiveMap();
+      }
+    }
+
+    if (geoConfirmBtn) {
+      geoConfirmBtn.onclick = (e) => {
+        e.stopPropagation();
+        geoValEl.textContent = `${newTopicGeo[0].toFixed(2)}, ${newTopicGeo[1].toFixed(2)}`;
+        geoOverlay.setAttribute('hidden', 'true');
+        geoOverlay.style.display = 'none';
+      };
+    }
+
+    if (geoCloseBtn) {
+      geoCloseBtn.onclick = (e) => {
+        e.stopPropagation();
+        geoOverlay.setAttribute('hidden', 'true');
+        geoOverlay.style.display = 'none';
+      };
+    }
+
+    // 4. Demographic check local logic helper
+    function localEvaluateDemographics(user, criteria) {
+      if (!criteria) return 1.0;
+      if (user.birthDate) {
+        const birthYear = parseInt(user.birthDate.split("-")[0]);
+        if (!isNaN(birthYear)) {
+          const age = 2026 - birthYear; // Baseline year 2026
+          if (criteria.minAge !== undefined && age < criteria.minAge) return 0.0;
+          if (criteria.maxAge !== undefined && age > criteria.maxAge) return 0.0;
+        }
+      }
+      if (criteria.employmentStatus && criteria.employmentStatus !== "any") {
+        const isEmployed = Array.isArray(user.post) && user.post.length > 0;
+        if (criteria.employmentStatus === "employed" && !isEmployed) return 0.0;
+        if (criteria.employmentStatus === "unemployed" && isEmployed) return 0.0;
+      }
+      if (criteria.familyStatus && criteria.familyStatus !== "any") {
+        const relations = user.socialRelations || [];
+        const hasChildren = relations.some(r => ["child", "son", "daughter"].includes((r.type || '').toLowerCase()));
+        const hasGrandchildren = relations.some(r => ["grandchild", "grandson", "granddaughter"].includes((r.type || '').toLowerCase()));
+        if (criteria.familyStatus === "parent" && !hasChildren) return 0.0;
+        if (criteria.familyStatus === "grandparent" && !hasGrandchildren) return 0.0;
+      }
+      return 1.0;
+    }
+
+    // Haversine distance helper
+    function localHaversine(coords1, coords2) {
+      const R = 6371e3;
+      const lat1 = coords1[0] * Math.PI / 180;
+      const lat2 = coords2[0] * Math.PI / 180;
+      const deltaLat = (coords2[0] - coords1[0]) * Math.PI / 180;
+      const deltaLon = (coords2[1] - coords1[1]) * Math.PI / 180;
+      const a = Math.sin(deltaLat/2) * Math.sin(deltaLat/2) +
+                Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLon/2) * Math.sin(deltaLon/2);
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+
+    // 5. Check calculation triggers (Recalculation supported)
+    if (checkBtn) {
+      checkBtn.addEventListener('click', async () => {
         const title = titleInput.value.trim();
         const description = descTextarea.value.trim();
         if (!title || !description) {
-          alert("Please specify both Title and Description.");
+          alert("Please specify both Title and Description before checking.");
           return;
         }
-        
-        createBtn.disabled = true;
-        createBtn.textContent = "Creating community...";
-        
+
+        checkBtn.disabled = true;
+        checkBtn.textContent = "Calculating...";
+
         try {
-          const currentUserId = safeGetStorage('userId') || "1";
-          const payload = {
-            title,
-            description,
-            location: [47.553832, 7.606599], // Basel Swiss coordinates matching users location center
-            submitterId: currentUserId,
-            category: suggestedParams ? suggestedParams.category : "building.maintenance.general",
-            mu: suggestedParams ? suggestedParams.mu : 100,
-            sigma: suggestedParams ? suggestedParams.sigma : 50,
-            weights: suggestedParams ? suggestedParams.weights : { w_D: 0.2, w_G: 0.6, w_S: 0.1, w_X: 0.1 },
-            demographics: suggestedParams ? suggestedParams.demographics : { employmentStatus: "any", familyStatus: "any" }
-          };
-          
-          const res = await fetch(`${functionsBaseUrl}/createIssue`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-          const result = await res.json();
-          
-          if (result.success) {
-            alert(`Issue registered successfully!\nMicrocommunity of ${result.members_count} members formed.`);
-            restoreTopicListView();
-          } else {
-            alert(`Error: ${result.error || "Failed to create issue"}`);
-            createBtn.disabled = false;
-            createBtn.textContent = "Create";
+          let data = null;
+          try {
+            const res = await fetch(`${functionsBaseUrl}/analyzeIssue`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ description: description })
+            });
+            data = await res.json();
+          } catch(err) {
+            console.warn("Cloud analysis failed, running local keyword rule fallback:", err);
+            const lowerDesc = description.toLowerCase() + " " + title.toLowerCase();
+            let cat = "building.maintenance.general";
+            let w = { w_D: 0.2, w_G: 0.6, w_S: 0.1, w_X: 0.1 };
+            let mu = 100;
+            let sigma = 50;
+            let exp = "None";
+            let demo = { employmentStatus: "any", familyStatus: "any" };
+
+            if (lowerDesc.includes("lock") || lowerDesc.includes("key") || lowerDesc.includes("entrance")) {
+              cat = "building.security.locks";
+              w = { w_D: 0.1, w_G: 0.7, w_S: 0.1, w_X: 0.1 };
+              mu = 30; sigma = 40;
+            } else if (lowerDesc.includes("heating") || lowerDesc.includes("radiator")) {
+              cat = "building.maintenance.heating";
+              w = { w_D: 0.1, w_G: 0.8, w_S: 0.05, w_X: 0.05 };
+              mu = 50; sigma = 45;
+            } else if (lowerDesc.includes("leak") || lowerDesc.includes("water") || lowerDesc.includes("plumbing")) {
+              cat = "building.maintenance.water";
+              w = { w_D: 0.1, w_G: 0.8, w_S: 0.05, w_X: 0.05 };
+              mu = 40; sigma = 35;
+            } else if (lowerDesc.includes("dance") || lowerDesc.includes("event") || lowerDesc.includes("concert")) {
+              cat = "social.event.cultural";
+              w = { w_D: 0.1, w_G: 0.2, w_S: 0.6, w_X: 0.1 };
+              mu = 1000; sigma = 500;
+              exp = "Vocational Training";
+            } else if (lowerDesc.includes("park") || lowerDesc.includes("renovation") || lowerDesc.includes("tree")) {
+              cat = "environment.green_space";
+              w = { w_D: 0.3, w_G: 0.5, w_S: 0.1, w_X: 0.1 };
+              mu = 300; sigma = 200;
+            }
+            data = { category: cat, weights: w, mu: mu, sigma: sigma, demographics: demo, expertise_depth: exp };
           }
-        } catch (err) {
-          alert(`Error: ${err.message}`);
-          createBtn.disabled = false;
-          createBtn.textContent = "Create";
+
+          suggestedParams = data;
+
+          // Perform relevance score pipeline client-side
+          const usersSnapshot = await db.collection("users").get();
+          const relevanceResults = [];
+
+          let submitterRelations = [];
+          const creatorSnap = await db.collection("users").doc(currentUserId.toString()).get();
+          if (creatorSnap.exists) {
+            submitterRelations = creatorSnap.data().socialRelations || [];
+          }
+
+          usersSnapshot.forEach(doc => {
+            const user = doc.data();
+            const uidStr = user.uid.toString();
+
+            if (uidStr === currentUserId.toString()) return;
+
+            const dScore = localEvaluateDemographics(user, data.demographics);
+            if (dScore === 0.0 && data.weights.w_D > 0) return;
+
+            const homeAnchor = (user.geography || []).find(g => g.type === "home");
+            if (!homeAnchor || !homeAnchor.geo) return;
+            
+            const distance = localHaversine(newTopicGeo, homeAnchor.geo);
+            const maxDistance = data.mu + 3 * data.sigma;
+            if (distance > maxDistance && data.weights.w_G > 0) return;
+
+            let gScore = 1.0;
+            if (distance > data.mu) {
+              gScore = Math.exp(-Math.pow(distance - data.mu, 2) / (2 * Math.pow(data.sigma, 2)));
+            }
+
+            // Semantic Text Overlap Fallback
+            const userInterests = [
+              ...(user.skills || []).map(s => s.specialization || s.comment || ''),
+              ...(user.post || []).map(p => p.job || ''),
+              user.values_description || ''
+            ].join(' ').toLowerCase();
+            
+            const issueWords = (description + ' ' + title).toLowerCase().split(/\W+/).filter(w => w.length > 3);
+            let matchCount = 0;
+            issueWords.forEach(w => {
+              if (userInterests.includes(w)) matchCount++;
+            });
+            const sScore = Math.min(1.0, Math.max(0.05, matchCount / (issueWords.length || 1) + 0.1));
+
+            // Social relation
+            let xScore = 0.0;
+            const relation = submitterRelations.find(r => r.relative.toString() === uidStr);
+            if (relation) {
+              if (relation.tie !== undefined && relation.tie !== null) {
+                xScore = parseFloat(relation.tie) || 0.0;
+              } else {
+                const type = (relation.type || '').toLowerCase();
+                if (["spouse", "partner", "wife", "husband"].includes(type)) xScore = 0.3;
+                else if (["parent", "father", "mother", "child", "son", "daughter", "sibling", "sister", "brother"].includes(type)) xScore = 0.2;
+                else if (["grandparent", "grandfather", "grandmother", "grandchild", "grandson", "granddaughter", "close friend"].includes(type)) xScore = 0.1;
+              }
+            }
+
+            const relevanceScore = data.weights.w_D * dScore +
+                                   data.weights.w_G * gScore +
+                                   data.weights.w_S * sScore +
+                                   data.weights.w_X * xScore;
+
+            if (relevanceScore > 0.15) {
+              relevanceResults.push({
+                uid: uidStr,
+                name: user.displayName || `User ${user.uid}`,
+                score: relevanceScore,
+                D: dScore, G: gScore, S: sScore, X: xScore
+              });
+            }
+          });
+
+          const creatorName = creatorSnap.exists ? (creatorSnap.data().displayName || "Creator") : "Creator";
+          relevanceResults.push({
+            uid: currentUserId.toString(),
+            name: creatorName + " (Creator)",
+            score: 1.0,
+            D: 1.0, G: 1.0, S: 1.0, X: 1.0
+          });
+
+          relevanceResults.sort((a, b) => b.score - a.score);
+          calculatedMembers = relevanceResults.slice(0, 25);
+
+          // Render metadata button value labels
+          valMicrocommunity.textContent = `${calculatedMembers.length} members`;
+          
+          const wStr = `wD:${(data.weights.w_D*100).toFixed(0)}% wG:${(data.weights.w_G*100).toFixed(0)}% wS:${(data.weights.w_S*100).toFixed(0)}% wX:${(data.weights.w_X*100).toFixed(0)}%`;
+          tinyRelevance.textContent = wStr;
+          valRelevance.textContent = `Relevance`;
+
+          tinyIsr.textContent = wStr;
+          valIsr.textContent = `ISR-score`;
+
+          valExpertise.textContent = data.expertise_depth || "None";
+
+          // Show members list block
+          if (membersBlock && membersList) {
+            membersBlock.style.display = 'block';
+            membersList.innerHTML = '';
+            calculatedMembers.forEach(m => {
+              const row = document.createElement('div');
+              row.style.display = 'flex';
+              row.style.justifyContent = 'space-between';
+              row.style.padding = '4px 0';
+              row.style.borderBottom = '1px solid var(--border-soft)';
+              row.innerHTML = `
+                <span>${m.name}</span>
+                <span style="font-weight:600; color:var(--primary);">Rel: ${m.score.toFixed(3)}</span>
+              `;
+              membersList.appendChild(row);
+            });
+          }
+
+          if (submitBtn) {
+            submitBtn.removeAttribute('disabled');
+          }
+
+        } catch(err) {
+          console.error("Check failed:", err);
+          alert(`Check calculations error: ${err.message}`);
+        } finally {
+          checkBtn.removeAttribute('disabled');
+          checkBtn.textContent = "Check";
+        }
+      });
+    }
+
+    // 6. Create button database submission handler
+    if (submitBtn) {
+      submitBtn.addEventListener('click', async () => {
+        const title = titleInput.value.trim();
+        const description = descTextarea.value.trim();
+        if (!title || !description || !suggestedParams) return;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Creating issue...";
+
+        try {
+          const creatorSnap = await db.collection("users").doc(currentUserId.toString()).get();
+          const creatorName = creatorSnap.exists ? (creatorSnap.data().displayName || "Creator") : "Creator";
+
+          // Generate mock vector
+          let mockVector = new Array(768).fill(0).map(() => Math.random() * 2 - 1);
+          const mag = Math.sqrt(mockVector.reduce((sum, val) => sum + val * val, 0));
+          mockVector = mockVector.map(val => val / mag);
+
+          const issueRef = db.collection("issues").doc();
+          const issueId = issueRef.id;
+
+          const issueDoc = {
+            issue_id: issueId,
+            title: title,
+            description: description,
+            starts: firebase.firestore.FieldValue.serverTimestamp(),
+            category: suggestedParams.category || "building.maintenance.general",
+            location: new firebase.firestore.GeoPoint(newTopicGeo[0], newTopicGeo[1]),
+            mu_distance_meters: suggestedParams.mu || 100,
+            sigma_decay_meters: suggestedParams.sigma || 50,
+            w_demographic: suggestedParams.weights.w_D || 0.2,
+            w_geographic: suggestedParams.weights.w_G || 0.4,
+            w_semantic: suggestedParams.weights.w_S || 0.3,
+            w_social: suggestedParams.weights.w_X || 0.1,
+            submitter_id: currentUserId.toString(),
+            status: "open",
+            created_at: firebase.firestore.FieldValue.serverTimestamp(),
+            expertise_depth: suggestedParams.expertise_depth || "None"
+          };
+          await issueRef.set(issueDoc);
+
+          const mcRef = db.collection("microcommunities").doc();
+          const mcId = mcRef.id;
+
+          const mcDoc = {
+            microcommunity_id: mcId,
+            issue_id: issueId,
+            threshold_relevance: 0.15,
+            member_count: calculatedMembers.length,
+            member_accepted: 0,
+            issue_scope: 0,
+            created_at: firebase.firestore.FieldValue.serverTimestamp(),
+            status: "active"
+          };
+          await mcRef.set(mcDoc);
+
+          const batch = db.batch();
+          calculatedMembers.forEach(member => {
+            const mRef = db.collection("microcommunity_members").doc(`${mcId}_${member.uid}`);
+            batch.set(mRef, {
+              microcommunity_id: mcId,
+               user_id: member.uid,
+              displayName: member.name,
+              D_score: member.D,
+              G_score: member.G,
+              S_score: member.S,
+              X_score: member.X,
+              relevance_score: member.score,
+              calculated_at: firebase.firestore.FieldValue.serverTimestamp(),
+              accepted_rejected: null
+            });
+          });
+          await batch.commit();
+
+          const discRef = db.collection("discussions").doc(issueId);
+          const relevanceScores = {};
+          calculatedMembers.forEach(member => {
+            relevanceScores[member.uid.toString()] = parseFloat(member.score.toFixed(3));
+          });
+
+          const newDeadlineFormatted = newTopicDeadline || "Ongoing";
+
+          await discRef.set({
+            discussion_id: issueId,
+            topic: title,
+            creator_uid: currentUserId.toString(),
+            created_at: new Date().toISOString(),
+            message_count: 1,
+            location: new firebase.firestore.GeoPoint(newTopicGeo[0], newTopicGeo[1]),
+            affection_distance: parseFloat(((suggestedParams.mu || 100) / 1000).toFixed(3)),
+            expertise_depth: suggestedParams.expertise_depth || "None",
+            relevance_scores: relevanceScores,
+            last_message_text: description,
+            last_message_sender_uid: currentUserId.toString(),
+            last_message_sender_name: creatorName,
+            last_message_timestamp: new Date().toISOString(),
+            deadline_votes: {},
+            ends: newDeadlineFormatted
+          });
+
+          await discRef.collection("messages").doc("msg_init").set({
+            id: "msg_init",
+            uid: currentUserId.toString(),
+            text: description,
+            timestamp: new Date().toISOString(),
+            marks: [],
+            child: []
+          });
+
+          alert(`Issue created successfully! formed microcommunity with ${calculatedMembers.length} members.`);
+          restoreTopicListView();
+
+        } catch(err) {
+          console.error("Create failed:", err);
+          alert(`Create issue error: ${err.message}`);
+          submitBtn.removeAttribute('disabled');
+          submitBtn.textContent = "Create";
         }
       });
     }

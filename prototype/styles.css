@@ -2227,4 +2227,72 @@ button.topic-detail-meta-item:active {
     pointer-events: auto !important;
 }
 
+/* Geo Map Modal and Deadline Popup overrides */
+.geo-anchor-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    cursor: pointer;
+    font-size: 0.82rem;
+    color: var(--text);
+    transition: all 0.2s ease;
+}
+.geo-anchor-item:hover {
+    background: var(--surface-soft);
+    border-color: var(--border-strong);
+}
+.geo-anchor-type {
+    font-weight: 600;
+    color: var(--primary);
+    text-transform: capitalize;
+}
+.geo-anchor-coord {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+#create-deadline-popup {
+    min-width: 190px;
+    box-sizing: border-box;
+}
+.topic-detail-meta-item.create-meta-btn {
+    cursor: pointer;
+}
+.map-fallback-control {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 10;
+}
+.map-control-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+    user-select: none;
+}
+.map-control-btn:hover {
+    background: var(--surface-soft);
+    box-shadow: var(--shadow-md);
+}
+.map-control-btn:active {
+    transform: scale(0.95);
+}
+
 
