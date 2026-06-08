@@ -1928,7 +1928,7 @@ function initTopicDetailViews() {
     }).join('');
   }
 
-  function renderTaskCommentsTree(comments, taskIdx) {
+  function renderTaskCommentsTree(comments, taskIdx, currentUserId) {
     if (!comments || comments.length === 0) return '';
     
     var roots = [];
@@ -1948,15 +1948,24 @@ function initTopicDetailViews() {
       var text = comment.text || '';
       var indent = depth * 16;
       var children = childrenOf[comment.id] || [];
+      var commentId = comment.id;
       
+      var existingReactions = renderTaskMarksHtml(comment.marks);
+      var reactHtml = existingReactions +
+        '<div class="reaction-wrap">' +
+          '<button type="button" class="topic-inline-btn react-toggle-btn" data-reaction-menu="taskcomment_' + taskIdx + '_' + commentId + '">React</button>' +
+          renderReactionMenu({ id: 'taskcomment_' + taskIdx + '_' + commentId, reactions: comment.marks || [] }, currentUserId) +
+        '</div>';
+
       var commentHtml = '<div class="task-comment-card" id="task-comment-' + comment.id + '" style="margin-left: ' + indent + 'px; margin-bottom: 6px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-muted); text-align: left; font-size: 0.85rem;">' +
                           '<div style="display: flex; justify-content: space-between; align-items: center;">' +
                             '<span style="font-weight: 600; color: var(--text-muted);">' + authorName + '</span>' +
                             '<span style="font-size: 0.75rem; color: var(--text-soft);">' + (comment.timestamp ? comment.timestamp : '') + '</span>' +
                           '</div>' +
                           '<div style="color: var(--text); margin-top: 2px;">' + escapeHtml(text) + '</div>' +
-                          '<div style="margin-top: 4px; display: flex; gap: 8px; align-items: center;">' +
+                          '<div style="margin-top: 4px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">' +
                             '<button type="button" class="topic-inline-btn task-comment-reply-toggle-btn" data-comment-id="' + comment.id + '" style="font-size: 0.95rem; padding: 0; background: none; border: none; cursor: pointer;">💬</button>' +
+                            reactHtml +
                           '</div>' +
                           
                           '<div class="task-comment-reply-form" id="reply-form-' + comment.id + '" style="display: none; margin-top: 6px; gap: 6px; align-items: center;">' +
@@ -2093,6 +2102,9 @@ function initTopicDetailViews() {
               var doneEmoji = isDone ? '✔️ ' : '';
               var taskTextStyle = isCanceled ? 'text-decoration: line-through; color: var(--text-soft); font-style: italic;' : '';
               
+              var isResponsible = (task.in_charge_uid || '').toString() === currentUserId.toString();
+              var checkboxDisabled = (!isResponsible) ? ' disabled' : '';
+
               var reactHtml = '';
               if (isDone) {
                 var existingReactions = renderTaskMarksHtml(task.marks);
@@ -2100,11 +2112,27 @@ function initTopicDetailViews() {
                   '<div class="reaction-wrap">' +
                     '<button type="button" class="topic-inline-btn react-toggle-btn" data-reaction-menu="task_' + taskIdx + '">React</button>' +
                     renderReactionMenu({ id: 'task_' + taskIdx, reactions: task.marks || [] }, currentUserId) +
-                  '</div>';
+                  '</div>' +
+                  '<button type="button" class="topic-inline-btn task-results-btn" data-task-idx="' + taskIdx + '" style="margin-left: 4px; padding: 2px 6px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; background: var(--surface-soft); font-size: 0.8rem;">Results</button>';
+              }
+
+              var resultsValue = task.results || '';
+              var resultsHtml = '';
+              if (isDone) {
+                resultsHtml = '<div class="task-results-section" id="task-results-section-' + taskIdx + '" style="display: none; margin-top: 6px; border-top: 1px solid var(--border); padding-top: 8px; text-align: left;">' +
+                                '<div style="font-weight: 600; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px;">Task Execution Results:</div>' +
+                                '<div style="font-size: 0.88rem; color: var(--text); background: var(--surface-muted); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 6px; white-space: pre-wrap;">' + (resultsValue ? escapeHtml(resultsValue) : '<span style="font-style: italic; color: var(--text-soft);">No results submitted yet.</span>') + '</div>' +
+                                '<div class="task-results-form" style="display: flex; flex-direction: column; gap: 6px;">' +
+                                  '<textarea class="task-results-input" placeholder="Document the task results for contribution assessment..." style="width: 100%; min-height: 60px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; background: var(--surface); color: var(--text); resize: vertical;">' + escapeHtml(resultsValue) + '</textarea>' +
+                                  '<div style="display: flex; justify-content: flex-end;">' +
+                                    '<button type="button" class="task-save-results-btn" data-task-idx="' + taskIdx + '" style="padding: 4px 12px; font-size: 0.82rem; border-radius: 6px; cursor: pointer; background: var(--accent); color: var(--accent-contrast, #fff); border: none;">Save</button>' +
+                                  '</div>' +
+                                '</div>' +
+                              '</div>';
               }
 
               var responsibleActionsHtml = '';
-              if ((task.in_charge_uid || '').toString() === currentUserId.toString()) {
+              if (isResponsible) {
                 if (isCanceled) {
                   responsibleActionsHtml = 
                     '<button type="button" class="topic-inline-btn task-restore-btn" data-task-idx="' + taskIdx + '" style="font-size: 0.8rem; padding: 2px 6px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; background: var(--surface-soft); margin-right: 4px;">Restore</button>';
@@ -2120,7 +2148,7 @@ function initTopicDetailViews() {
                          '<div style="display: flex; align-items: center; gap: 8px; flex: 1;">' +
                            (isCanceled ? 
                              '<span style="font-size: 0.95rem; margin-right: 2px; user-select: none;">❌</span>' : 
-                             '<input type="checkbox" class="task-status-checkbox" data-task-idx="' + taskIdx + '"' + (isDone ? ' checked' : '') + ' style="width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent);" />'
+                             '<input type="checkbox" class="task-status-checkbox" data-task-idx="' + taskIdx + '"' + (isDone ? ' checked' : '') + checkboxDisabled + ' style="width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent);" />'
                            ) +
                            '<button type="button" class="task-name-btn" data-task-idx="' + taskIdx + '" style="background: none; border: none; font-size: 0.95rem; cursor: pointer; text-align: left; padding: 0; font-weight: 600; color: var(--text); flex: 1; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px; ' + taskTextStyle + '">' +
                              doneEmoji + escapeHtml(taskText) + responsibleHtml + taskDeadline +
@@ -2144,12 +2172,13 @@ function initTopicDetailViews() {
                        '</div>' +
                        
                        '<div class="task-comments-section" id="task-comments-section-' + taskIdx + '" style="display: none; margin-top: 4px; border-top: 1px dashed var(--border); padding-top: 8px;">' +
-                         renderTaskCommentsTree(task.comments || [], taskIdx) +
+                         renderTaskCommentsTree(task.comments || [], taskIdx, currentUserId) +
                          '<div class="task-new-comment-form" id="task-comment-form-' + taskIdx + '" style="display: none; margin-top: 8px; display: flex; gap: 8px; align-items: center;">' +
                            '<input type="text" class="task-new-comment-input" data-task-idx="' + taskIdx + '" placeholder="Add a comment..." style="flex: 1; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.82rem; background: var(--surface-muted); color: var(--text);" />' +
                            '<button type="button" class="task-add-comment-btn" data-task-idx="' + taskIdx + '" style="padding: 6px 12px; font-size: 0.82rem; border-radius: 6px; cursor: pointer;">Comment</button>' +
                          '</div>' +
                        '</div>' +
+                       resultsHtml +
                      '</div>';
             }).join('') +
           '</div>' +
@@ -3335,6 +3364,53 @@ function initTopicDetailViews() {
             } catch (err) {
               console.error("Error toggling task reaction:", err);
             }
+          } else if (msgId.startsWith('taskcomment_')) {
+            const parts = msgId.split('_');
+            const taskIdx = parseInt(parts[1], 10);
+            const commentId = parts.slice(2).join('_');
+            const docRef = db.collection("issues").doc(topicId);
+
+            try {
+              await db.runTransaction(async (transaction) => {
+                const doc = await transaction.get(docRef);
+                if (!doc.exists) return;
+
+                const data = doc.data();
+                const tasks = data.tasks || [];
+                if (!tasks[taskIdx]) return;
+
+                let comments = tasks[taskIdx].comments || [];
+                comments = comments.map(c => {
+                  if (c.id === commentId) {
+                    let marks = c.marks || [];
+                    const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+                    const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+                    const existingIndex = userMarkTypes.indexOf(reactionType);
+
+                    if (existingIndex >= 0) {
+                      marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+                    } else {
+                      if (userMarkTypes.length >= 2) {
+                        alert("You can only leave up to 2 different reactions per comment.");
+                        return c;
+                      }
+                      marks.push({
+                        uid: currentUserId,
+                        type: reactionType,
+                        reaction: reactionType
+                      });
+                    }
+                    return { ...c, marks: marks };
+                  }
+                  return c;
+                });
+                tasks[taskIdx].comments = comments;
+
+                transaction.update(docRef, { tasks: tasks });
+              });
+            } catch (err) {
+              console.error("Error toggling task comment reaction:", err);
+            }
           } else {
             const msgRef = db.collection("discussions").doc(topicId).collection("messages").doc(msgId.toString());
 
@@ -3761,167 +3837,178 @@ function initTopicDetailViews() {
 
     } else if (kind === 'tasks') {
       try {
-        const issueDoc = await db.collection("issues").doc(topicId).get();
-        if (!issueDoc.exists) {
-          modalBody.innerHTML = '<div style="padding:20px; color:var(--urgent);">Task issue not found in database.</div>';
-          return;
-        }
-        const issue = issueDoc.data();
+        let currentMessagesRaw = null;
+        let currentIssueRaw = null;
+        let currentDiscRaw = null;
+        let isRendering = false;
+        let pendingRender = false;
 
-        let rawParticipants = [];
-        let expertiseDepth = "None";
-        let relevanceScores = {};
-        let discData = null;
-        try {
-          const discDoc = await db.collection("discussions").doc(topicId).get();
-          if (discDoc.exists) {
-            discData = discDoc.data();
-            rawParticipants = discData.participants || [];
-            expertiseDepth = discData.expertise_depth || "None";
-            relevanceScores = discData.relevance_scores || {};
+        async function updateTasksUI() {
+          if (!currentIssueRaw) return;
+          if (isRendering) {
+            pendingRender = true;
+            return;
           }
-        } catch (err) {
-          console.error("Error resolving participants for task topic:", err);
-        }
+          isRendering = true;
 
-        // Fetch messages for the previous discussion
-        let messages = [];
-        try {
-          const msgsSnap = await db.collection("discussions").doc(topicId).collection("messages").orderBy("timestamp", "asc").get();
-          msgsSnap.forEach(doc => {
-            messages.push(Object.assign({ id: doc.id }, doc.data()));
-          });
-        } catch (err) {
-          console.error("Error fetching messages for tasks topic:", err);
-        }
-
-        currentDiscData = discData || issue;
-
-        // Comments processing & resolve user names
-        const comments = issue.comments || [];
-        const commentUids = comments.map(c => (c.uid || '').toString()).filter(uid => uid && uid !== 'system');
-        const uniqueUids = rawParticipants.map(uid => uid.toString()).filter(uid => uid && uid !== 'system');
-        const msgUids = messages.map(m => (m.uid || '').toString()).filter(uid => uid && uid !== 'system');
-        const combinedUids = Array.from(new Set(uniqueUids.concat(commentUids).concat(msgUids)));
-
-        const uidsToResolve = new Set();
-        if (issue.submitter_id) uidsToResolve.add(issue.submitter_id.toString());
-        combinedUids.forEach(uid => uidsToResolve.add(uid.toString()));
-        await resolveUserNames(Array.from(uidsToResolve));
-
-        // Get user relevance from relevanceScores map or member list fallback
-        const currentUserId = safeGetStorage('userId');
-        let userRelevance = "N/A";
-        let userIsr = "N/A";
-
-        // Load microcommunity member data for logged-in user if not already cached
-        if (!cachedMemberData && currentUserId) {
           try {
-            let mcId = topicId;
-            const mcSnap = await db.collection("microcommunities")
-              .where("issue_id", "==", topicId)
-              .limit(1)
-              .get();
-            mcSnap.forEach(doc => {
-              mcId = doc.id;
-            });
-            
-            if (mcId) {
-              const memberDoc = await db.collection("microcommunity_members")
-                .doc(mcId + '_' + currentUserId)
-                .get();
-              if (memberDoc.exists) {
-                cachedMemberData = memberDoc.data();
+            const issue = currentIssueRaw;
+            const discData = currentDiscRaw;
+            const messages = currentMessagesRaw || [];
+
+            let rawParticipants = [];
+            let expertiseDepth = "None";
+            let relevanceScores = {};
+            if (discData) {
+              rawParticipants = discData.participants || [];
+              expertiseDepth = discData.expertise_depth || "None";
+              relevanceScores = discData.relevance_scores || {};
+            }
+
+            const comments = issue.comments || [];
+            const commentUids = comments.map(c => (c.uid || '').toString()).filter(uid => uid && uid !== 'system');
+            const uniqueUids = rawParticipants.map(uid => uid.toString()).filter(uid => uid && uid !== 'system');
+            const msgUids = messages.map(m => (m.uid || '').toString()).filter(uid => uid && uid !== 'system');
+            const combinedUids = Array.from(new Set(uniqueUids.concat(commentUids).concat(msgUids)));
+
+            const uidsToResolve = new Set();
+            if (issue.submitter_id) uidsToResolve.add(issue.submitter_id.toString());
+            combinedUids.forEach(uid => uidsToResolve.add(uid.toString()));
+            await resolveUserNames(Array.from(uidsToResolve));
+
+            const currentUserId = safeGetStorage('userId');
+            let userRelevance = "N/A";
+            let userIsr = "N/A";
+
+            if (!cachedMemberData && currentUserId) {
+              try {
+                let mcSnap = await db.collection("microcommunities")
+                  .where("issue_id", "==", topicId)
+                  .limit(1)
+                  .get();
+                let mcId = topicId;
+                mcSnap.forEach(doc => { mcId = doc.id; });
+                if (mcId) {
+                  const memberDoc = await db.collection("microcommunity_members")
+                    .doc(mcId + '_' + currentUserId)
+                    .get();
+                  if (memberDoc.exists) {
+                    cachedMemberData = memberDoc.data();
+                  }
+                }
+              } catch (e) {
+                console.error("Error loading member data:", e);
               }
             }
-          } catch (err) {
-            console.error("Error loading user microcommunity member data for tasks:", err);
+
+            const isrScoresMap = discData ? (discData.isr_scores || {}) : (issue.isr_scores || {});
+            if (currentUserId) {
+              const uidStr = currentUserId.toString();
+              if (relevanceScores[uidStr] !== undefined) {
+                const score = relevanceScores[uidStr];
+                userRelevance = (score * 100).toFixed(0) + "%";
+                userIsr = isrScoresMap[uidStr] !== undefined ? isrScoresMap[uidStr].toFixed(2) : (score * 1.5).toFixed(2);
+              } else if (cachedMemberData) {
+                userRelevance = (cachedMemberData.relevance_score * 100).toFixed(0) + "%";
+                userIsr = cachedMemberData.isr_score !== undefined ? cachedMemberData.isr_score.toFixed(2) : (cachedMemberData.relevance_score * 1.5).toFixed(2);
+              }
+            }
+
+            const relevanceWeights = formatRelevanceWeights(issue);
+            const isrWeights = formatIsrWeights(issue);
+
+            const topicData = {
+              name: issue.title,
+              description: issue.description,
+              status: issue.status || "In progress",
+              counter: `Submitter: ${issue.submitter_id}`,
+              deadline: issue.ends || "Active",
+              relevance: userRelevance,
+              isrScore: userIsr,
+              relevanceWeights: relevanceWeights,
+              isrWeights: isrWeights,
+              participants: combinedUids,
+              expertiseDepth: expertiseDepth,
+              tasks: issue.tasks || [],
+              comments: comments,
+              options: issue.options || [],
+              winning_option_index: issue.winning_option_index !== undefined ? issue.winning_option_index : null,
+              messages: messages
+            };
+
+            currentDiscData = discData || issue; // For deadline modal, etc.
+
+            modalBody.innerHTML = renderTasksTopic(topicData);
+            bindDetailViewButtons(titleText, discData || issue);
+            bindChatMetaButtons(discData || issue);
+            bindTaskModalInteractions(topicId, issue);
+
+            // Bind discussion and other options toggle buttons click handlers
+            const discussionToggleBtn = modalBody.querySelector('.tasks-discussion-toggle-btn');
+            const discussionContainer = modalBody.querySelector('.tasks-discussion-container');
+            if (discussionToggleBtn && discussionContainer) {
+              discussionToggleBtn.onclick = function() {
+                discussionContainer.style.display = discussionContainer.style.display === 'none' ? 'block' : 'none';
+                discussionToggleBtn.textContent = discussionContainer.style.display === 'block' ? 'Hide Discussion' : 'Discussion';
+              };
+            }
+
+            const otherOptionsToggleBtn = modalBody.querySelector('.tasks-other-options-toggle-btn');
+            const otherOptionsContainer = modalBody.querySelector('.tasks-other-options-container');
+            if (otherOptionsToggleBtn && otherOptionsContainer) {
+              otherOptionsToggleBtn.onclick = function() {
+                otherOptionsContainer.style.display = otherOptionsContainer.style.display === 'none' ? 'block' : 'none';
+                otherOptionsToggleBtn.textContent = otherOptionsContainer.style.display === 'block' ? 'Hide other options' : 'Other options';
+              };
+            }
+
+            // Refresh open sub-modal if one is active
+            refreshOpenModal();
+
+          } catch (e) {
+            console.error("Render tasks detail UI failed:", e);
+          } finally {
+            isRendering = false;
+            if (pendingRender) {
+              pendingRender = false;
+              updateTasksUI();
+            }
           }
         }
 
-        const isrScoresMap = discData ? (discData.isr_scores || {}) : (issue.isr_scores || {});
+        // Fetch messages once
+        let messages = [];
+        const msgsSnap = await db.collection("discussions").doc(topicId).collection("messages").orderBy("timestamp", "asc").get();
+        msgsSnap.forEach(doc => {
+          messages.push(Object.assign({ id: doc.id }, doc.data()));
+        });
+        currentMessagesRaw = messages;
 
-        if (currentUserId) {
-          const uidStr = currentUserId.toString();
-          if (relevanceScores[uidStr] !== undefined) {
-            const score = relevanceScores[uidStr];
-            userRelevance = (score * 100).toFixed(0) + "%";
-            if (isrScoresMap[uidStr] !== undefined) {
-              userIsr = isrScoresMap[uidStr].toFixed(2);
-            } else {
-              userIsr = (score * 1.5).toFixed(2);
-            }
-          } else if (cachedMemberData) {
-            userRelevance = (cachedMemberData.relevance_score * 100).toFixed(0) + "%";
-            if (cachedMemberData.isr_score !== undefined) {
-              userIsr = cachedMemberData.isr_score.toFixed(2);
-            } else {
-              userIsr = (cachedMemberData.relevance_score * 1.5).toFixed(2);
-            }
+        // Sync discussions onSnapshot
+        const discUnsubscribe = db.collection("discussions").doc(topicId).onSnapshot(doc => {
+          if (doc.exists) {
+            currentDiscRaw = doc.data();
+            updateTasksUI();
           }
-        }
+        });
 
-        const relevanceWeights = formatRelevanceWeights(issue);
-        const isrWeights = formatIsrWeights(issue);
+        // Sync issues onSnapshot
+        const issueUnsubscribe = db.collection("issues").doc(topicId).onSnapshot(doc => {
+          if (!doc.exists) {
+            modalBody.innerHTML = '<div style="padding:20px; color:var(--urgent);">Task issue not found.</div>';
+            return;
+          }
+          currentIssueRaw = doc.data();
+          updateTasksUI();
+        });
 
-        const topicData = {
-          name: issue.title,
-          description: issue.description,
-          status: issue.status || "In progress",
-          counter: `Submitter: ${issue.submitter_id}`,
-          deadline: issue.ends || "Active",
-          relevance: userRelevance,
-          isrScore: userIsr,
-          relevanceWeights: relevanceWeights,
-          isrWeights: isrWeights,
-          participants: combinedUids,
-          expertiseDepth: expertiseDepth,
-          tasks: issue.tasks || [
-            { text: "Inspect area & verify reports", reactions: "" },
-            { text: "Confirm execution parameters & budget", reactions: "" },
-            { text: "Implement proposed solution", reactions: "" }
-          ],
-          comments: comments,
-          options: issue.options || [],
-          winning_option_index: issue.winning_option_index !== undefined ? issue.winning_option_index : null,
-          messages: messages
+        activeDetailListener = () => {
+          if (issueUnsubscribe) issueUnsubscribe();
+          if (discUnsubscribe) discUnsubscribe();
         };
 
-        modalBody.innerHTML = renderTasksTopic(topicData);
-        bindDetailViewButtons(titleText, discData || issue);
-        bindChatMetaButtons(discData || issue);
-
-        // Bind discussion and other options toggle buttons click handlers
-        const discussionToggleBtn = modalBody.querySelector('.tasks-discussion-toggle-btn');
-        const discussionContainer = modalBody.querySelector('.tasks-discussion-container');
-        if (discussionToggleBtn && discussionContainer) {
-          discussionToggleBtn.onclick = function() {
-            if (discussionContainer.style.display === 'none') {
-              discussionContainer.style.display = 'block';
-              discussionToggleBtn.textContent = 'Hide Discussion';
-            } else {
-              discussionContainer.style.display = 'none';
-              discussionToggleBtn.textContent = 'Discussion';
-            }
-          };
-        }
-
-        const otherOptionsToggleBtn = modalBody.querySelector('.tasks-other-options-toggle-btn');
-        const otherOptionsContainer = modalBody.querySelector('.tasks-other-options-container');
-        if (otherOptionsToggleBtn && otherOptionsContainer) {
-          otherOptionsToggleBtn.onclick = function() {
-            if (otherOptionsContainer.style.display === 'none') {
-              otherOptionsContainer.style.display = 'block';
-              otherOptionsToggleBtn.textContent = 'Hide other options';
-            } else {
-              otherOptionsContainer.style.display = 'none';
-              otherOptionsToggleBtn.textContent = 'Other options';
-            }
-          };
-        }
-
       } catch (err) {
-        console.error("Error loading tasks:", err);
+        console.error("Load tasks failed:", err);
         modalBody.innerHTML = `<div style="padding:20px; color:var(--urgent);">Error loading tasks: ${err.message}</div>`;
       }
     }
@@ -4869,6 +4956,166 @@ function initTopicDetailViews() {
         }
       });
     });
+
+    // 5. Results button toggle click
+    modalBody.querySelectorAll('.task-results-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const taskIdx = this.getAttribute('data-task-idx');
+        const resultsSection = modalBody.querySelector(`#task-results-section-${taskIdx}`);
+        if (resultsSection) {
+          resultsSection.style.display = resultsSection.style.display === 'none' ? 'block' : 'none';
+        }
+      });
+    });
+
+    // 6. Save results button click
+    modalBody.querySelectorAll('.task-save-results-btn').forEach(btn => {
+      btn.addEventListener('click', async function() {
+        const taskIdx = parseInt(this.getAttribute('data-task-idx'), 10);
+        const container = this.closest('.task-results-section');
+        if (!container) return;
+        const textarea = container.querySelector('.task-results-input');
+        if (!textarea) return;
+        const resultsText = textarea.value.trim();
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+            const latestData = doc.data();
+            const latestTasks = latestData.tasks || [];
+            if (latestTasks[taskIdx]) {
+              latestTasks[taskIdx].results = resultsText;
+              transaction.update(docRef, { tasks: latestTasks });
+            }
+          });
+          alert("Task results saved successfully.");
+        } catch (err) {
+          console.error("Failed to save task results:", err);
+          alert("Failed to save task results: " + err.message);
+        }
+      });
+    });
+
+    // 7. Bind reactions toggles inside task details
+    modalBody.querySelectorAll('.react-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        // Close all other reaction menus first
+        modalBody.querySelectorAll('.reaction-menu').forEach(menu => {
+          if (menu !== this.nextElementSibling) {
+            menu.hidden = true;
+          }
+        });
+        const menu = this.nextElementSibling;
+        if (menu) {
+          menu.hidden = !menu.hidden;
+        }
+      });
+    });
+
+    modalBody.querySelectorAll('.reaction-choice-btn').forEach(btn => {
+      btn.addEventListener('click', async function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const msgId = this.getAttribute('data-msg-id');
+        const reactionType = this.getAttribute('data-reaction');
+        if (!msgId || !reactionType) return;
+
+        const menu = this.closest('.reaction-menu');
+        if (menu) menu.hidden = true;
+
+        if (msgId.startsWith('task_') || msgId.startsWith('taskcomment_')) {
+          await toggleTaskOrCommentReaction(msgId, reactionType);
+        }
+      });
+    });
+
+    async function toggleTaskOrCommentReaction(msgId, reactionType) {
+      if (msgId.startsWith('task_')) {
+        const taskIdx = parseInt(msgId.substring(5), 10);
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+
+            const data = doc.data();
+            const tasks = data.tasks || [];
+            if (!tasks[taskIdx]) return;
+
+            let marks = tasks[taskIdx].marks || [];
+            const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+            const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+            const existingIndex = userMarkTypes.indexOf(reactionType);
+
+            if (existingIndex >= 0) {
+              marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+            } else {
+              if (userMarkTypes.length >= 2) {
+                alert("You can only leave up to 2 different reactions per task.");
+                return;
+              }
+              marks.push({
+                uid: currentUserId,
+                type: reactionType,
+                reaction: reactionType
+              });
+            }
+            tasks[taskIdx].marks = marks;
+
+            transaction.update(docRef, { tasks: tasks });
+          });
+        } catch (err) {
+          console.error("Error toggling task reaction:", err);
+        }
+      } else if (msgId.startsWith('taskcomment_')) {
+        const parts = msgId.split('_');
+        const taskIdx = parseInt(parts[1], 10);
+        const commentId = parts.slice(2).join('_');
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+
+            const data = doc.data();
+            const tasks = data.tasks || [];
+            if (!tasks[taskIdx]) return;
+
+            let comments = tasks[taskIdx].comments || [];
+            comments = comments.map(c => {
+              if (c.id === commentId) {
+                let marks = c.marks || [];
+                const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+                const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+                const existingIndex = userMarkTypes.indexOf(reactionType);
+
+                if (existingIndex >= 0) {
+                  marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+                } else {
+                  if (userMarkTypes.length >= 2) {
+                    alert("You can only leave up to 2 different reactions per comment.");
+                    return c;
+                  }
+                  marks.push({
+                    uid: currentUserId,
+                    type: reactionType,
+                    reaction: reactionType
+                  });
+                }
+                return { ...c, marks: marks };
+              }
+              return c;
+            });
+            tasks[taskIdx].comments = comments;
+
+            transaction.update(docRef, { tasks: tasks });
+          });
+        } catch (err) {
+          console.error("Error toggling task comment reaction:", err);
+        }
+      }
+    }
   }
 
   function bindProposalInteractions(disc, topicId) {
