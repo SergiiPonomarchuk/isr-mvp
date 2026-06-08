@@ -2198,13 +2198,21 @@ button.topic-detail-meta-item:active {
     border: none;
 }
 .tour-btn-primary {
-    background: var(--accent);
-    color: var(--accent-contrast, #fff);
+    background: var(--primary);
+    color: #fff;
+    transition: background-color 0.2s ease;
+}
+.tour-btn-primary:hover {
+    background: var(--primary-hover);
 }
 .tour-btn-secondary {
     background: var(--surface-soft);
     color: var(--text);
     border: 1px solid var(--border);
+    transition: all 0.2s ease;
+}
+.tour-btn-secondary:hover:not([disabled]) {
+    background: var(--surface-muted);
 }
 .tour-btn[disabled] {
     opacity: 0.4;
@@ -2213,7 +2221,7 @@ button.topic-detail-meta-item:active {
 .tour-highlight {
     position: relative;
     z-index: 10002 !important;
-    box-shadow: 0 0 0 8px rgba(99, 102, 241, 0.2), 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0 0 0 8px rgba(44, 82, 130, 0.25), 0 8px 20px rgba(0, 0, 0, 0.15) !important;
     background: var(--surface) !important;
     border-radius: 8px;
     pointer-events: auto !important;

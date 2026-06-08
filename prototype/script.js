@@ -7333,15 +7333,15 @@ function startQuickTour() {
           const rect = targetEl.getBoundingClientRect();
           const bubbleWidth = tourBubble.offsetWidth || 320;
 
+          tourBubble.style.position = 'fixed';
           if (step.target === "#menu-button") {
-            tourBubble.style.position = 'fixed';
             tourBubble.style.top = (rect.bottom + 12) + 'px';
             tourBubble.style.left = (rect.right - bubbleWidth) + 'px';
             tourBubble.style.transform = 'none';
           } else {
-            tourBubble.style.position = 'absolute';
-            tourBubble.style.top = (window.scrollY + rect.bottom + 12) + 'px';
-            tourBubble.style.left = (window.scrollX + rect.left + (rect.width - bubbleWidth)/2) + 'px';
+            // Place below the element, centered horizontally relative to target
+            tourBubble.style.top = (rect.bottom + 12) + 'px';
+            tourBubble.style.left = (rect.left + (rect.width - bubbleWidth)/2) + 'px';
             tourBubble.style.transform = 'none';
           }
         }, 300);
@@ -7357,10 +7357,26 @@ function startQuickTour() {
   };
 
   const endTour = () => {
+    document.removeEventListener('keydown', handleKeyDown);
     removeHighlights();
     tourOverlay.hidden = true;
     safeSetStorage('tourCompleted', 'true');
   };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      nextBtn.click();
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      prevBtn.click();
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      endTour();
+    }
+  };
+
+  document.addEventListener('keydown', handleKeyDown);
 
   nextBtn.onclick = () => {
     if (currentStep < steps.length - 1) {
