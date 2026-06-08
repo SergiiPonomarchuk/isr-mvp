@@ -1913,15 +1913,21 @@ function initTopicDetailViews() {
       var isSubDone = subtask.status === 'done';
       var textStyle = isSubDone ? 'text-decoration: line-through; color: var(--text-muted);' : 'color: var(--text);';
       if (isParentCanceled) textStyle += ' color: var(--text-soft); font-style: italic;';
-      var isResponsible = (inChargeUid || '').toString() === currentUserId.toString();
       
-      var checkboxDisabled = isParentCanceled ? ' disabled' : '';
-      var deleteHtml = (isResponsible && !isParentCanceled) ? '<button type="button" class="subtask-remove-btn" data-task-idx="' + taskIdx + '" data-subtask-idx="' + subtaskIdx + '" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; padding: 0 4px; line-height: 1;">&times;</button>' : '';
+      var subInChargeUid = subtask.in_charge_uid || inChargeUid;
+      var isResponsible = (subInChargeUid || '').toString() === currentUserId.toString();
+      var checkboxDisabled = (isParentCanceled || !isResponsible) ? ' disabled' : '';
+
+      var isParentResponsible = (inChargeUid || '').toString() === currentUserId.toString();
+      var deleteHtml = (isParentResponsible && !isParentCanceled) ? '<button type="button" class="subtask-remove-btn" data-task-idx="' + taskIdx + '" data-subtask-idx="' + subtaskIdx + '" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; padding: 0 4px; line-height: 1;">&times;</button>' : '';
       
+      var responsibleHtml = subtask.in_charge_name ? ' <span style="font-weight: 500; color: var(--text-soft);">(' + subtask.in_charge_name + ')</span>' : '';
+      var deadlineHtml = subtask.deadline ? ' - <span style="font-weight: 500; color: var(--text-soft);">' + formatTaskDeadline(subtask.deadline) + '</span>' : '';
+
       return '<div class="subtask-item-row" style="display: flex; align-items: center; gap: 8px; justify-content: space-between;">' +
-               '<div style="display: flex; align-items: center; gap: 6px; flex: 1;">' +
+               '<div style="display: flex; align-items: center; gap: 6px; flex: 1; flex-wrap: wrap;">' +
                  '<input type="checkbox" class="subtask-status-checkbox" data-task-idx="' + taskIdx + '" data-subtask-idx="' + subtaskIdx + '"' + (isSubDone ? ' checked' : '') + checkboxDisabled + ' style="width: 14px; height: 14px; cursor: pointer; accent-color: var(--accent);" />' +
-                 '<span style="font-size: 0.85rem; font-weight: 500; ' + textStyle + '">' + escapeHtml(subtask.title || subtask.step || subtask.text || '') + '</span>' +
+                 '<span style="font-size: 0.85rem; font-weight: 500; ' + textStyle + '">' + escapeHtml(subtask.title || subtask.step || subtask.text || '') + responsibleHtml + deadlineHtml + '</span>' +
                '</div>' +
                deleteHtml +
              '</div>';
@@ -1958,15 +1964,17 @@ function initTopicDetailViews() {
         '</div>';
 
       var commentHtml = '<div class="task-comment-card" id="task-comment-' + comment.id + '" style="margin-left: ' + indent + 'px; margin-bottom: 6px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-muted); text-align: left; font-size: 0.85rem;">' +
-                          '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-                            '<span style="font-weight: 600; color: var(--text-muted);">' + authorName + '</span>' +
-                            '<span style="font-size: 0.75rem; color: var(--text-soft);">' + (comment.timestamp ? comment.timestamp : '') + '</span>' +
+                          '<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;">' +
+                            '<div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">' +
+                              '<span style="font-weight: 600; color: var(--text-muted);">' + authorName + '</span>' +
+                              '<span style="font-size: 0.75rem; color: var(--text-soft);">' + (comment.timestamp ? comment.timestamp : '') + '</span>' +
+                            '</div>' +
+                            '<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;" onclick="event.stopPropagation();">' +
+                              '<button type="button" class="topic-inline-btn task-comment-reply-toggle-btn" data-comment-id="' + comment.id + '" style="font-size: 0.95rem; padding: 0; background: none; border: none; cursor: pointer;">💬</button>' +
+                              reactHtml +
+                            '</div>' +
                           '</div>' +
                           '<div style="color: var(--text); margin-top: 2px;">' + escapeHtml(text) + '</div>' +
-                          '<div style="margin-top: 4px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">' +
-                            '<button type="button" class="topic-inline-btn task-comment-reply-toggle-btn" data-comment-id="' + comment.id + '" style="font-size: 0.95rem; padding: 0; background: none; border: none; cursor: pointer;">💬</button>' +
-                            reactHtml +
-                          '</div>' +
                           
                           '<div class="task-comment-reply-form" id="reply-form-' + comment.id + '" style="display: none; margin-top: 6px; gap: 6px; align-items: center;">' +
                             '<input type="text" class="task-reply-input" placeholder="Write a reply..." style="flex: 1; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 0.8rem; background: var(--surface); color: var(--text);" />' +
@@ -2067,6 +2075,10 @@ function initTopicDetailViews() {
     }
 
     var currentUserId = safeGetStorage('userId') || "1";
+    var participantOptions = (topic.participants || []).map(function(uid) {
+      var name = window.userCache[uid] || ('User ' + uid);
+      return '<option value="' + uid + '">' + name + '</option>';
+    }).join('');
 
     return '' +
       '<div class="topic-detail-card">' +
@@ -2165,10 +2177,17 @@ function initTopicDetailViews() {
                          '<div class="task-subtasks-list" id="task-subtasks-list-' + taskIdx + '" style="display: flex; flex-direction: column; gap: 4px;">' +
                            renderSubtasks(task.subtasks || [], taskIdx, currentUserId, task.in_charge_uid, isCanceled) +
                          '</div>' +
-                         '<div class="task-breakdown-form" id="task-breakdown-form-' + taskIdx + '" style="display: none; margin-top: 6px; gap: 6px; align-items: center;">' +
-                           '<input type="text" class="task-new-subtask-input" data-task-idx="' + taskIdx + '" placeholder="Add a subtask..." style="flex: 1; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 0.8rem; background: var(--surface-muted); color: var(--text);" />' +
-                           '<button type="button" class="task-add-subtask-btn" data-task-idx="' + taskIdx + '" style="padding: 4px 8px; font-size: 0.8rem; border-radius: 4px; cursor: pointer;">Add</button>' +
-                         '</div>' +
+                         '<div class="task-breakdown-form" id="task-breakdown-form-' + taskIdx + '" style="display: none; margin-top: 8px; flex-direction: column; gap: 8px; border: 1px solid var(--border); padding: 10px; border-radius: 8px; background: var(--surface-soft); width: 100%; box-sizing: border-box;">' +
+                            '<div style="font-weight: 600; font-size: 0.82rem; color: var(--text-muted); text-align: left;">Add Subtask:</div>' +
+                            '<input type="text" class="task-new-subtask-input" data-task-idx="' + taskIdx + '" placeholder="Subtask description..." style="width: 100%; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; background: var(--surface); color: var(--text); box-sizing: border-box;" />' +
+                            '<div style="display: flex; gap: 8px; align-items: center; width: 100%; flex-wrap: wrap;">' +
+                              '<select class="task-new-subtask-responsible" data-task-idx="' + taskIdx + '" style="flex: 1; min-width: 120px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); font-size: 0.82rem;">' +
+                                participantOptions +
+                              '</select>' +
+                              '<input type="date" class="task-new-subtask-deadline" data-task-idx="' + taskIdx + '" style="padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); font-size: 0.82rem;" />' +
+                              '<button type="button" class="task-add-subtask-btn" data-task-idx="' + taskIdx + '" style="padding: 6px 12px; font-size: 0.82rem; font-weight: 600; border-radius: 6px; background: var(--accent); color: var(--accent-contrast, #fff); border: none; cursor: pointer;">Add</button>' +
+                            '</div>' +
+                          '</div>' +
                        '</div>' +
                        
                        '<div class="task-comments-section" id="task-comments-section-' + taskIdx + '" style="display: none; margin-top: 4px; border-top: 1px dashed var(--border); padding-top: 8px;">' +
@@ -3869,7 +3888,13 @@ function initTopicDetailViews() {
             const commentUids = comments.map(c => (c.uid || '').toString()).filter(uid => uid && uid !== 'system');
             const uniqueUids = rawParticipants.map(uid => uid.toString()).filter(uid => uid && uid !== 'system');
             const msgUids = messages.map(m => (m.uid || '').toString()).filter(uid => uid && uid !== 'system');
-            const combinedUids = Array.from(new Set(uniqueUids.concat(commentUids).concat(msgUids)));
+            const subtaskUids = [];
+            (issue.tasks || []).forEach(t => {
+              (t.subtasks || []).forEach(st => {
+                if (st.in_charge_uid) subtaskUids.push(st.in_charge_uid.toString());
+              });
+            });
+            const combinedUids = Array.from(new Set(uniqueUids.concat(commentUids).concat(msgUids).concat(subtaskUids)));
 
             const uidsToResolve = new Set();
             if (issue.submitter_id) uidsToResolve.add(issue.submitter_id.toString());
@@ -4721,9 +4746,15 @@ function initTopicDetailViews() {
         const task = tasks[taskIdx];
         if (!task) return;
 
-        // Check if logged-in user is the responsible person (in_charge_uid)
-        if ((task.in_charge_uid || '').toString() !== currentUserId.toString()) {
-          alert("Only the responsible person (" + (task.in_charge_name || 'assigned leader') + ") can change the status of this subtask.");
+        const subtasks = task.subtasks || [];
+        const subtask = subtasks[subtaskIdx];
+        if (!subtask) return;
+        const subInChargeUid = subtask.in_charge_uid || task.in_charge_uid;
+        const subInChargeName = subtask.in_charge_name || task.in_charge_name || 'assigned leader';
+
+        // Check if logged-in user is the responsible person
+        if ((subInChargeUid || '').toString() !== currentUserId.toString()) {
+          alert("Only the responsible person (" + subInChargeName + ") can change the status of this subtask.");
           this.checked = !this.checked; // Reset checkbox state
           return;
         }
@@ -4799,9 +4830,19 @@ function initTopicDetailViews() {
           return;
         }
 
+        const respSelect = modalBody.querySelector(`.task-new-subtask-responsible[data-task-idx="${taskIdx}"]`);
+        const deadlineInput = modalBody.querySelector(`.task-new-subtask-deadline[data-task-idx="${taskIdx}"]`);
+        
+        const respUid = respSelect ? respSelect.value : '';
+        const respName = respSelect ? (window.userCache[respUid] || 'User ' + respUid) : '';
+        const deadline = deadlineInput ? deadlineInput.value : '';
+
         const newSubtask = {
           title: text,
-          status: 'pending'
+          status: 'pending',
+          in_charge_uid: respUid,
+          in_charge_name: respName,
+          deadline: deadline
         };
 
         try {
@@ -4997,22 +5038,7 @@ function initTopicDetailViews() {
       });
     });
 
-    // 7. Bind reactions toggles inside task details
-    modalBody.querySelectorAll('.react-toggle-btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        // Close all other reaction menus first
-        modalBody.querySelectorAll('.reaction-menu').forEach(menu => {
-          if (menu !== this.nextElementSibling) {
-            menu.hidden = true;
-          }
-        });
-        const menu = this.nextElementSibling;
-        if (menu) {
-          menu.hidden = !menu.hidden;
-        }
-      });
-    });
+
 
     modalBody.querySelectorAll('.reaction-choice-btn').forEach(btn => {
       btn.addEventListener('click', async function(e) {
