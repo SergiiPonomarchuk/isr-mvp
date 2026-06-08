@@ -3355,6 +3355,9 @@ function initTopicDetailViews() {
             // 6. Bind chat metadata card click handlers
             bindChatMetaButtons(disc);
 
+            // Bind reaction bubbles
+            bindReactionBubbles();
+            
             // 7. Refresh open sub-modal if one is active
             refreshOpenModal();
 
@@ -4352,11 +4355,10 @@ function initTopicDetailViews() {
           var uidsAttr = this.getAttribute('data-uids');
           var uids = uidsAttr ? uidsAttr.split(',').filter(Boolean) : [];
           
-          var itemEl = this.closest('.topic-message-card, .topic-description-actions, .option-card, .task-item-card, .task-comment-card, .subtask-card-item');
-          if (!itemEl) return;
-
-          // Close any other open popups first
+          // Toggle popup: if it exists, remove it and exit
+          const isCurrentlyOpen = this.querySelector('.reaction-users-popup');
           document.querySelectorAll('.reaction-users-popup').forEach(function(p) { p.remove(); });
+          if (isCurrentlyOpen) return;
 
           var popup = document.createElement('div');
           popup.className = 'reaction-users-popup';
@@ -4383,7 +4385,7 @@ function initTopicDetailViews() {
             renderNames();
           });
 
-          itemEl.appendChild(popup);
+          this.appendChild(popup);
         } catch (err) {
           console.error("Error displaying reaction users:", err);
         }
@@ -4424,8 +4426,8 @@ function initTopicDetailViews() {
 
     if (!skipReactionMenus) {
       bindReactionMenus();
-      bindReactionBubbles();
     }
+    bindReactionBubbles();
 
     // Bind Microcommunity Button clicks
     modalBody.querySelectorAll('.microcommunity-btn').forEach(btn => {
