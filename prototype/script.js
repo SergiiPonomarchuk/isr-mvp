@@ -4679,15 +4679,43 @@ function initTopicDetailViews() {
 
         try {
           let data = null;
+          // Attempt server-side check calculation
           try {
-            const res = await fetch(`${functionsBaseUrl}/analyzeIssue`, {
+            const res = await fetch(`${functionsBaseUrl}/checkIssue`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ description: description })
+              body: JSON.stringify({
+                title: title,
+                description: description,
+                location: newTopicGeo,
+                submitterId: currentUserId
+              })
             });
-            data = await res.json();
-          } catch(err) {
-            console.warn("Cloud analysis failed, running local keyword rule fallback:", err);
+            if (res.ok) {
+              data = await res.json();
+            } else {
+              const errData = await res.json();
+              throw new Error(errData.error || "Server calculation error");
+            }
+          } catch (err) {
+            console.warn("Server check failed, falling back to local calculation simulation:", err);
+          }
+
+          if (data && data.success) {
+            suggestedParams = {
+              category: data.category,
+              mu: data.mu,
+              sigma: data.sigma,
+              weights: data.weights,
+              demographics: data.demographics,
+              expertise_depth: data.expertise_depth
+            };
+            calculatedMembers = data.members;
+          } else {
+            // ==========================================
+            // LOCAL FALLBACK CALCULATION
+            // ==========================================
+            // (If server-side fails or times out)
             const lowerDesc = description.toLowerCase() + " " + title.toLowerCase();
             let cat = "building.maintenance.general";
             let w = { w_D: 0.2, w_G: 0.6, w_S: 0.1, w_X: 0.1 };
@@ -4718,107 +4746,106 @@ function initTopicDetailViews() {
               w = { w_D: 0.3, w_G: 0.5, w_S: 0.1, w_X: 0.1 };
               mu = 300; sigma = 200;
             }
-            data = { category: cat, weights: w, mu: mu, sigma: sigma, demographics: demo, expertise_depth: exp };
-          }
+            suggestedParams = { category: cat, weights: w, mu: mu, sigma: sigma, demographics: demo, expertise_depth: exp };
 
-          suggestedParams = data;
+            // Perform relevance score pipeline client-side
+            const usersSnapshot = await db.collection("users").get();
+            const relevanceResults = [];
 
-          // Perform relevance score pipeline client-side
-          const usersSnapshot = await db.collection("users").get();
-          const relevanceResults = [];
-
-          let submitterRelations = [];
-          const creatorSnap = await db.collection("users").doc(currentUserId.toString()).get();
-          if (creatorSnap.exists) {
-            submitterRelations = creatorSnap.data().socialRelations || [];
-          }
-
-          usersSnapshot.forEach(doc => {
-            const user = doc.data();
-            const uidStr = user.uid.toString();
-
-            if (uidStr === currentUserId.toString()) return;
-
-            const dScore = localEvaluateDemographics(user, data.demographics);
-            if (dScore === 0.0 && data.weights.w_D > 0) return;
-
-            const homeAnchor = (user.geography || []).find(g => g.type === "home");
-            if (!homeAnchor || !homeAnchor.geo) return;
-            
-            const distance = localHaversine(newTopicGeo, homeAnchor.geo);
-            const maxDistance = data.mu + 3 * data.sigma;
-            if (distance > maxDistance && data.weights.w_G > 0) return;
-
-            let gScore = 1.0;
-            if (distance > data.mu) {
-              gScore = Math.exp(-Math.pow(distance - data.mu, 2) / (2 * Math.pow(data.sigma, 2)));
+            let submitterRelations = [];
+            const creatorSnap = await db.collection("users").doc(currentUserId.toString()).get();
+            if (creatorSnap.exists) {
+              submitterRelations = creatorSnap.data().socialRelations || [];
             }
 
-            // Semantic Text Overlap Fallback
-            const userInterests = [
-              ...(user.skills || []).map(s => s.specialization || s.comment || ''),
-              ...(user.post || []).map(p => p.job || ''),
-              user.values_description || ''
-            ].join(' ').toLowerCase();
-            
-            const issueWords = (description + ' ' + title).toLowerCase().split(/\W+/).filter(w => w.length > 3);
-            let matchCount = 0;
-            issueWords.forEach(w => {
-              if (userInterests.includes(w)) matchCount++;
-            });
-            const sScore = Math.min(1.0, Math.max(0.05, matchCount / (issueWords.length || 1) + 0.1));
+            usersSnapshot.forEach(doc => {
+              const user = doc.data();
+              const uidStr = user.uid.toString();
 
-            // Social relation
-            let xScore = 0.0;
-            const relation = submitterRelations.find(r => r.relative.toString() === uidStr);
-            if (relation) {
-              if (relation.tie !== undefined && relation.tie !== null) {
-                xScore = parseFloat(relation.tie) || 0.0;
-              } else {
-                const type = (relation.type || '').toLowerCase();
-                if (["spouse", "partner", "wife", "husband"].includes(type)) xScore = 0.3;
-                else if (["parent", "father", "mother", "child", "son", "daughter", "sibling", "sister", "brother"].includes(type)) xScore = 0.2;
-                else if (["grandparent", "grandfather", "grandmother", "grandchild", "grandson", "granddaughter", "close friend"].includes(type)) xScore = 0.1;
+              if (uidStr === currentUserId.toString()) return;
+
+              const dScore = localEvaluateDemographics(user, suggestedParams.demographics);
+              if (dScore === 0.0 && suggestedParams.weights.w_D > 0) return;
+
+              const homeAnchor = (user.geography || []).find(g => g.type === "home");
+              if (!homeAnchor || !homeAnchor.geo) return;
+              
+              const distance = localHaversine(newTopicGeo, homeAnchor.geo);
+              const maxDistance = suggestedParams.mu + 3 * suggestedParams.sigma;
+              if (distance > maxDistance && suggestedParams.weights.w_G > 0) return;
+
+              let gScore = 1.0;
+              if (distance > suggestedParams.mu) {
+                gScore = Math.exp(-Math.pow(distance - suggestedParams.mu, 2) / (2 * Math.pow(suggestedParams.sigma, 2)));
               }
-            }
 
-            const relevanceScore = data.weights.w_D * dScore +
-                                   data.weights.w_G * gScore +
-                                   data.weights.w_S * sScore +
-                                   data.weights.w_X * xScore;
-
-            if (relevanceScore > 0.15) {
-              relevanceResults.push({
-                uid: uidStr,
-                name: user.displayName || `User ${user.uid}`,
-                score: relevanceScore,
-                D: dScore, G: gScore, S: sScore, X: xScore
+              // Semantic Text Overlap Fallback
+              const userInterests = [
+                ...(user.skills || []).map(s => s.specialization || s.comment || ''),
+                ...(user.post || []).map(p => p.job || ''),
+                user.values_description || ''
+              ].join(' ').toLowerCase();
+              
+              const issueWords = (description + ' ' + title).toLowerCase().split(/\W+/).filter(w => w.length > 3);
+              let matchCount = 0;
+              issueWords.forEach(w => {
+                if (userInterests.includes(w)) matchCount++;
               });
-            }
-          });
+              const sScore = Math.min(1.0, Math.max(0.05, matchCount / (issueWords.length || 1) + 0.1));
 
-          const creatorName = creatorSnap.exists ? (creatorSnap.data().displayName || "Creator") : "Creator";
-          relevanceResults.push({
-            uid: currentUserId.toString(),
-            name: creatorName + " (Creator)",
-            score: 1.0,
-            D: 1.0, G: 1.0, S: 1.0, X: 1.0
-          });
+              // Social relation
+              let xScore = 0.0;
+              const relation = submitterRelations.find(r => r.relative.toString() === uidStr);
+              if (relation) {
+                if (relation.tie !== undefined && relation.tie !== null) {
+                  xScore = parseFloat(relation.tie) || 0.0;
+                } else {
+                  const type = (relation.type || '').toLowerCase();
+                  if (["spouse", "partner", "wife", "husband"].includes(type)) xScore = 0.3;
+                  else if (["parent", "father", "mother", "child", "son", "daughter", "sibling", "sister", "brother"].includes(type)) xScore = 0.2;
+                  else if (["grandparent", "grandfather", "grandmother", "grandchild", "grandson", "granddaughter", "close friend"].includes(type)) xScore = 0.1;
+                }
+              }
 
-          relevanceResults.sort((a, b) => b.score - a.score);
-          calculatedMembers = relevanceResults.slice(0, 25);
+              const relevanceScore = suggestedParams.weights.w_D * dScore +
+                                     suggestedParams.weights.w_G * gScore +
+                                     suggestedParams.weights.w_S * sScore +
+                                     suggestedParams.weights.w_X * xScore;
+
+              if (relevanceScore > 0.15) {
+                relevanceResults.push({
+                  uid: uidStr,
+                  name: user.displayName || `User ${user.uid}`,
+                  score: relevanceScore,
+                  D: dScore, G: gScore, S: sScore, X: xScore
+                });
+              }
+            });
+
+            const creatorName = creatorSnap.exists ? (creatorSnap.data().displayName || "Creator") : "Creator";
+            relevanceResults.push({
+              uid: currentUserId.toString(),
+              name: creatorName + " (Creator)",
+              score: 1.0,
+              D: 1.0, G: 1.0, S: 1.0, X: 1.0
+            });
+
+            relevanceResults.sort((a, b) => b.score - a.score);
+            calculatedMembers = relevanceResults.slice(0, 25);
+          }
 
           // Render metadata button value labels
           valMicrocommunity.textContent = `${calculatedMembers.length} members`;
           
-          const wStr = `wD:${(data.weights.w_D*100).toFixed(0)}% wG:${(data.weights.w_G*100).toFixed(0)}% wS:${(data.weights.w_S*100).toFixed(0)}% wX:${(data.weights.w_X*100).toFixed(0)}%`;
+          const dataWeights = suggestedParams.weights;
+          const wStr = `wD:${(dataWeights.w_D*100).toFixed(0)}% wG:${(dataWeights.w_G*100).toFixed(0)}% wS:${(dataWeights.w_S*100).toFixed(0)}% wX:${(dataWeights.w_X*100).toFixed(0)}%`;
           tinyRelevance.textContent = wStr;
           valRelevance.textContent = `Relevance`;
 
           tinyIsr.textContent = wStr;
           valIsr.textContent = `ISR-score`;
 
-          valExpertise.textContent = data.expertise_depth || "None";
+          valExpertise.textContent = suggestedParams.expertise_depth || "None";
 
           // Show members list block
           if (membersBlock && membersList) {

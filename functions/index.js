@@ -427,3 +427,255 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
     res.status(500).json({ error: "Failed to create issue and form microcommunity." });
   }
 });
+
+// HTTPS Endpoint: Check/Calculate Relevance Pipeline (Dry-run server-side)
+exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
+  try {
+    const { title, description, location, submitterId } = req.body;
+
+    if (!title || !description || !location || !submitterId) {
+      return res.status(400).json({ error: "Missing required fields: title, description, location, submitterId." });
+    }
+
+    // 1. Analyze issue category, weights, demographics, and expertise depth suggestions via Gemini
+    let data = null;
+    if (geminiApiKey) {
+      try {
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const prompt = `
+You are an AI assistant for the ISR-vote governance platform. Your task is to analyze a user-submitted civic issue and suggest classification parameters.
+
+Analyze this issue description:
+"${description}"
+
+Return a JSON object containing:
+1. "category": Choose the most specific category matching:
+   - "building.security.locks" (door locks, keys, entrance access)
+   - "building.security.general" (gates, windows, general security)
+   - "building.maintenance.heating" (heating, radiators)
+   - "building.maintenance.water" (leaks, plumbing)
+   - "building.maintenance.general" (roof, elevators, lighting, noise)
+   - "infrastructure.transport.parking" (parking spaces, parking lots)
+   - "infrastructure.transport.streets" (potholes, sidewalks, traffic lights)
+   - "infrastructure.utilities" (electricity, internet, trash)
+   - "social.event.cultural" (concerts, lessons, dance, sports)
+   - "community.governance" (budgeting, rules, voting policies)
+   - "environment.green_space" (parks, trees, gardens)
+   - "health.access" (medication, clinics, health services)
+
+2. "mu": Suggest a primary impact zone radius in meters (where decay begins, users inside are fully affected, relevance = 1.0).
+   Guidelines:
+   - Unit/personal issue: 10-20m
+   - Building-level issue: 30-80m
+   - Street-level issue: 100-300m
+   - Neighborhood event: 500-2000m
+   - City-wide issue: 2000-10000m
+
+3. "sigma": Suggest a decay steepness parameter in meters (distance where relevance decays to ~60%).
+   Guidelines:
+   - Personal: 20-30m
+   - Building: 40-60m
+   - Street: 80-150m
+   - Neighborhood: 150-300m
+   - City-wide: 500-2000m
+
+4. "weights": Suggest demographic (w_D), geographic (w_G), semantic (w_S), and social (w_X) weights summing exactly to 1.0.
+   Guidelines:
+   - Location-heavy issues (e.g. noise, leak, pothole): G = 0.7, D = 0.1, S = 0.1, X = 0.1
+   - Interest-heavy issues (e.g. dance lessons, coding group): S = 0.6, G = 0.2, D = 0.1, X = 0.1
+   - Demographic-heavy issues (e.g. senior activities, school lunch): D = 0.6, G = 0.2, S = 0.1, X = 0.1
+   - Family/Social issues: X = 0.6, D = 0.2, G = 0.1, S = 0.1
+
+5. "demographics": Structured JSON rules for demographic filtering (use "any" if not applicable):
+   - "minAge": number (optional)
+   - "maxAge": number (optional)
+   - "employmentStatus": "any", "employed", "unemployed", "student", "retired"
+   - "familyStatus": "any", "parent", "grandparent"
+
+6. "expertise_depth": Suggest the required education grade needed to resolve this issue. Choose strictly from: "PhD", "Master", "Bachelor", "College", "Vocational Training", "None".
+
+Format your output strictly as a JSON object.
+`;
+        const result = await model.generateContent({
+          contents: [{ role: "user", parts: [{ text: prompt }] }],
+          generationConfig: { responseMimeType: "application/json" }
+        });
+        data = JSON.parse(result.response.text());
+      } catch (err) {
+        console.error("Gemini analysis failed during check:", err);
+      }
+    }
+
+    // Local fallback suggestions if Gemini fails or is not configged
+    if (!data) {
+      const lowerDesc = (description + " " + title).toLowerCase();
+      let cat = "building.maintenance.general";
+      let w = { w_D: 0.2, w_G: 0.6, w_S: 0.1, w_X: 0.1 };
+      let mu = 100;
+      let sigma = 50;
+      let exp = "None";
+      let demo = { employmentStatus: "any", familyStatus: "any" };
+
+      if (lowerDesc.includes("lock") || lowerDesc.includes("key") || lowerDesc.includes("entrance")) {
+        cat = "building.security.locks";
+        w = { w_D: 0.1, w_G: 0.7, w_S: 0.1, w_X: 0.1 };
+        mu = 30; sigma = 40;
+      } else if (lowerDesc.includes("heating") || lowerDesc.includes("radiator")) {
+        cat = "building.maintenance.heating";
+        w = { w_D: 0.1, w_G: 0.8, w_S: 0.05, w_X: 0.05 };
+        mu = 50; sigma = 45;
+      } else if (lowerDesc.includes("leak") || lowerDesc.includes("water") || lowerDesc.includes("plumbing")) {
+        cat = "building.maintenance.water";
+        w = { w_D: 0.1, w_G: 0.8, w_S: 0.05, w_X: 0.05 };
+        mu = 40; sigma = 35;
+      } else if (lowerDesc.includes("dance") || lowerDesc.includes("event") || lowerDesc.includes("concert")) {
+        cat = "social.event.cultural";
+        w = { w_D: 0.1, w_G: 0.2, w_S: 0.6, w_X: 0.1 };
+        mu = 1000; sigma = 500;
+        exp = "Vocational Training";
+      } else if (lowerDesc.includes("park") || lowerDesc.includes("renovation") || lowerDesc.includes("tree")) {
+        cat = "environment.green_space";
+        w = { w_D: 0.3, w_G: 0.5, w_S: 0.1, w_X: 0.1 };
+        mu = 300; sigma = 200;
+      }
+      data = { category: cat, weights: w, mu: mu, sigma: sigma, demographics: demo, expertise_depth: exp };
+    }
+
+    // 2. Generate issue embedding
+    let issueVector = null;
+    if (geminiApiKey) {
+      try {
+        const embedModel = genAI.getGenerativeModel({ model: "text-embedding-004" });
+        const embedResult = await embedModel.embedContent(description);
+        issueVector = embedResult.embedding.values;
+      } catch (err) {
+        console.error("Gemini embedding check failed:", err);
+      }
+    }
+    if (!issueVector) {
+      issueVector = new Array(768).fill(0).map(() => Math.random() * 2 - 1);
+      const mag = Math.sqrt(issueVector.reduce((sum, val) => sum + val * val, 0));
+      issueVector = issueVector.map((val) => val / mag);
+    }
+
+    // 3. Submitter relations
+    let submitterRelations = [];
+    try {
+      const creatorSnap = await db.collection("users").doc(String(submitterId)).get();
+      if (creatorSnap.exists) {
+        submitterRelations = creatorSnap.data().socialRelations || [];
+      }
+    } catch (err) {
+      console.error("Error fetching creator social relations during check:", err);
+    }
+
+    const w_D = data.weights.w_D;
+    const w_G = data.weights.w_G;
+    const w_S = data.weights.w_S;
+    const w_X = data.weights.w_X;
+    const muVal = data.mu;
+    const sigmaVal = data.sigma;
+
+    const candidates = [];
+    const usersSnapshot = await db.collection("users")
+      .select("uid", "displayName", "birthDate", "gender", "post", "socialRelations", "geography", "profile_vector")
+      .get();
+
+    usersSnapshot.forEach((doc) => {
+      const user = doc.data();
+      if (user.uid === parseInt(submitterId)) return;
+
+      const dScore = evaluateDemographics(user, data.demographics);
+      if (dScore === 0.0 && w_D > 0) return;
+
+      const homeAnchor = (user.geography || []).find((g) => g.type === "home");
+      if (!homeAnchor || !homeAnchor.geo) return;
+
+      const distance = haversineDistance(location, homeAnchor.geo);
+      const maxDistance = muVal + 3 * sigmaVal;
+      if (distance > maxDistance && w_G > 0) return;
+
+      let gScore = 1.0;
+      if (distance > muVal) {
+        gScore = Math.exp(-Math.pow(distance - muVal, 2) / (2 * Math.pow(sigmaVal, 2)));
+      }
+
+      let sScore = 0.0;
+      if (user.profile_vector) {
+        let userVector = null;
+        if (typeof user.profile_vector.toArray === "function") {
+          userVector = user.profile_vector.toArray();
+        } else if (Array.isArray(user.profile_vector)) {
+          userVector = user.profile_vector;
+        } else if (user.profile_vector._values) {
+          userVector = user.profile_vector._values;
+        }
+        
+        if (userVector) {
+          sScore = Math.max(0, cosineSimilarity(issueVector, userVector));
+        }
+      }
+
+      let xScore = 0.0;
+      const relation = submitterRelations.find((r) => r.relative === user.uid);
+      if (relation) {
+        if (relation.tie !== undefined && relation.tie !== null) {
+          xScore = parseFloat(relation.tie) || 0.0;
+        } else {
+          const type = relation.type ? relation.type.toLowerCase() : "";
+          if (["spouse", "partner", "wife", "husband"].includes(type)) xScore = 0.3;
+          else if (["parent", "father", "mother", "child", "son", "daughter", "sibling", "sister", "brother"].includes(type)) xScore = 0.2;
+          else if (["grandparent", "grandfather", "grandmother", "grandchild", "grandson", "granddaughter", "close friend"].includes(type)) xScore = 0.1;
+        }
+      }
+
+      const relevanceScore = w_D * dScore + w_G * gScore + w_S * sScore + w_X * xScore;
+
+      if (relevanceScore > 0.15) {
+        candidates.push({
+          uid: String(user.uid),
+          name: user.displayName,
+          D: dScore,
+          G: gScore,
+          S: sScore,
+          X: xScore,
+          score: relevanceScore
+        });
+      }
+    });
+
+    // Add creator
+    let creatorName = "Creator";
+    try {
+      const creatorSnap = await db.collection("users").doc(String(submitterId)).get();
+      if (creatorSnap.exists) {
+        creatorName = creatorSnap.data().displayName || creatorName;
+      }
+    } catch (e) {}
+    candidates.push({
+      uid: String(submitterId),
+      name: creatorName + " (Creator)",
+      D: 1.0, G: 1.0, S: 1.0, X: 1.0,
+      score: 1.0
+    });
+
+    candidates.sort((a, b) => b.score - a.score);
+    const top25 = candidates.slice(0, 25);
+
+    res.json({
+      success: true,
+      category: data.category,
+      mu: muVal,
+      sigma: sigmaVal,
+      weights: data.weights,
+      demographics: data.demographics,
+      expertise_depth: data.expertise_depth,
+      members_count: candidates.length,
+      members: top25
+    });
+
+  } catch (error) {
+    console.error("Error checking issue:", error);
+    res.status(500).json({ error: "Failed to perform check calculations." });
+  }
+});
