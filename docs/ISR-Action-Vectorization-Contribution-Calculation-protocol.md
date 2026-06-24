@@ -447,48 +447,36 @@ Contribution is absolute and can be negative, positive, or near zero; it is not 
 4. **Overwrite semantics**  
    - When Action Force, Result, or vectorization changes, the action’s vector in the user part is **hard-overwritten**; historical audit/versioning can be added later but is not required in the base protocol.
 
-### 5.2 Issue-side Schema (Action Records in Microcommunity)
+### 5.2 issue_actions Collection
 
-Issue/microcommunity tables keep the contextual and social aspects of actions.
+Each document in the `issue_actions` collection stores the raw contextual and social details of an action.
 
-```sql
--- Table: issue_actions
-CREATE TABLE issue_actions (
-    action_id      UUID PRIMARY KEY,
-    issue_id       BIGINT NOT NULL,
-    actor_uid      BIGINT NOT NULL,
-
-    -- Raw content and context
-    action_type    VARCHAR(16) NOT NULL,  -- task|vote_msg|task_msg|chat_msg|vote
-    created_at     TIMESTAMPTZ NOT NULL,
-    updated_at     TIMESTAMPTZ NOT NULL,
-    action_text    TEXT NOT NULL,
-    attachments    JSONB,                 -- file links, media, etc.
-
-    -- Results and narrative
-    planned_result TEXT,                  -- intended outcome (optional)
-    actual_result  TEXT,                  -- narrative of what happened
-    ai_result_estimate   DOUBLE PRECISION,
-    community_result     DOUBLE PRECISION, -- aggregated rating (weighted by ISR)
-
-    -- Sentiment marks at issue level (counts)
-    marks_good      INT DEFAULT 0,
-    marks_funny     INT DEFAULT 0,
-    marks_flood     INT DEFAULT 0,
-    marks_rude      INT DEFAULT 0,
-    marks_foolish   INT DEFAULT 0,
-    marks_total_members INT NOT NULL,     -- microcommunity size at evaluation time
-
-    -- Status flags
-    is_deleted      BOOLEAN DEFAULT FALSE,
-    is_edited       BOOLEAN DEFAULT FALSE,
-    edit_history    JSONB                 -- optional, for text/metadata changes
-);
-
-CREATE INDEX idx_issue_actions_issue   ON issue_actions(issue_id);
-CREATE INDEX idx_issue_actions_actor   ON issue_actions(actor_uid);
-CREATE INDEX idx_issue_actions_type    ON issue_actions(action_type);
-CREATE INDEX idx_issue_actions_created ON issue_actions(created_at);
+- **Document ID**: Unique `action_id` (String)
+- **Schema**:
+```json
+{
+  "action_id": "uuid-string",
+  "issue_id": "issue-uuid-string",
+  "actor_uid": "user-uuid-string",
+  "action_type": "task|vote_msg|task_msg|chat_msg|vote",
+  "created_at": "Timestamp",
+  "updated_at": "Timestamp",
+  "action_text": "String",
+  "attachments": [], // file links, media, etc.
+  "planned_result": "String (optional)",
+  "actual_result": "String (optional)",
+  "ai_result_estimate": 0.8,
+  "community_result": 0.85,
+  "marks_good": 0,
+  "marks_funny": 0,
+  "marks_flood": 0,
+  "marks_rude": 0,
+  "marks_foolish": 0,
+  "marks_total_members": 0,
+  "is_deleted": false,
+  "is_edited": false,
+  "edit_history": {}
+}
 ```
 
 Notes:
@@ -496,44 +484,46 @@ Notes:
 - `marks_*` store **raw counts**; normalized marks `[0..1]` for sentiment are computed as: count ÷ `marks_total_members`.
 - This table is used for UI, history, and delayed evaluations (Result corrections, mark changes), not for frequent Contribution computations.
 
-### 5.3 User-side Schema (Action Vectors per User)
+### 5.3 user_action_vectors Collection
 
-User-centric tables keep vectorized data and magnitude for fast Contribution and analytics.
+Each document in `user_action_vectors` stores the high-dimensional vector representations and derived contribution metrics.
 
-```sql
--- Table: user_action_vectors
-CREATE TABLE user_action_vectors (
-    action_id       UUID PRIMARY KEY,       -- 1:1 with issue_actions
-    actor_uid       BIGINT NOT NULL,
-    issue_id        BIGINT NOT NULL,        -- microcommunity this action belongs to
-
-    -- Vector content (compressed representation)
-    domains         INT2[],                 -- 10 values in [-100..100] or NULL
-    items           JSONB,                  -- nested arrays per domain
-    conflict_resolution INT2[],             -- 36 in [0..100] or NULL
-    contextual_shifts  JSONB,               -- {work,family,private,crisis: 0..100}
-
-    -- Magnitude and sentiment
-    force           DOUBLE PRECISION,       -- Type × Time × Complexity × Result
-    type_weight     DOUBLE PRECISION,
-    time_hours      DOUBLE PRECISION,
-    complexity      DOUBLE PRECISION,
-    result_factor   DOUBLE PRECISION,
-    marks           DOUBLE PRECISION[5],    -- normalized: good,funny,flood,rude,foolish
-    sentiment_scalar DOUBLE PRECISION,
-
-    -- Confidence and reasoning (optional but recommended)
-    domains_confidence INT2[],
-    domains_grounding INT2[],
-    reasoning        JSONB,
-
-    vector_version   VARCHAR(8) NOT NULL DEFAULT '1.0',
-    updated_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
-CREATE INDEX idx_uav_actor   ON user_action_vectors(actor_uid);
-CREATE INDEX idx_uav_issue   ON user_action_vectors(issue_id);
-CREATE INDEX idx_uav_force   ON user_action_vectors(force DESC);
+- **Document ID**: Unique `action_id` (String, 1:1 with `issue_actions`)
+- **Schema**:
+```json
+{
+  "action_id": "uuid-string",
+  "actor_uid": "user-uuid-string",
+  "issue_id": "issue-uuid-string",
+  
+  // Vector content (compressed representation)
+  "domains": [0, -10, 20, null, null, null, null, null, null, null], // 10 values in [-100..100] or null
+  "items": [], // nested arrays of items or null
+  "conflict_resolution": [], // 36 conflict resolution values in [0..100] or null
+  "contextual_shifts": {
+    "work": 0,
+    "family": 0,
+    "private": 0,
+    "crisis": 0
+  },
+  
+  // Magnitude and sentiment
+  "force": 1.25, // Type × Time × Complexity × Result
+  "type_weight": 1.0,
+  "time_hours": 2.0,
+  "complexity": 1.0,
+  "result_factor": 0.625,
+  "marks": [0.8, 0.0, 0.0, 0.0, 0.0], // normalized [0..1]: good, funny, flood, rude, foolish
+  "sentiment_scalar": 0.8,
+  
+  // Confidence and reasoning (optional but recommended)
+  "domains_confidence": [80, 85, 90, null, null, null, null, null, null, null],
+  "domains_grounding": [30, 35, 40, null, null, null, null, null, null, null],
+  "reasoning": {},
+  
+  "vector_version": "1.0",
+  "updated_at": "Timestamp"
+}
 ```
 
 Notes:
@@ -541,22 +531,23 @@ Notes:
 - This table is the main source for Contribution calculations, analytics, and any cross-issue/user research.
 - When re-vectorization occurs, the row is **overwritten** (possibly with a bumped `vector_version`).
 
-### 5.4 Contribution Storage in Microcommunity Members Table
+### 5.4 absolute_contribution in microcommunity_members Collection
 
-Contribution is defined per **member × issue** and is stored as an absolute scalar (not normalized):
+Contribution is defined per **member × issue** and is stored as an absolute scalar inside the `microcommunity_members` document.
 
-```sql
--- Table: issue_members
-CREATE TABLE issue_members (
-    issue_id         BIGINT NOT NULL,
-    member_uid       BIGINT NOT NULL,
-
-    absolute_contribution DOUBLE PRECISION DEFAULT 0.0,
-
-    -- Other fields: relevance, expertise, roles, etc. can live here
-
-    PRIMARY KEY (issue_id, member_uid)
-);
+- **Document ID**: `${microcommunity_id}_${user_id}`
+- **Relevant Fields**:
+```json
+{
+  "microcommunity_id": "mc-uuid-string",
+  "user_id": "user-uuid-string",
+  "absolute_contribution": 0.0,
+  
+  // Other fields from relevance and expertise engines
+  "displayName": "Mio Watanabe",
+  "relevance_score": 0.95,
+  "expertise_score": 34.01
+}
 ```
 
 - `absolute_contribution` aggregates all action Contributions for this member in this issue:
@@ -575,7 +566,7 @@ This part describes the **batch vectorization pipeline** executed after an issue
 
 - Ensure all actions are evaluated under a **shared, explicit context**.
 - Maintain high vectorization quality even for large, complex issues with many heterogeneous actions.
-- Provide ready-to-use prompts for Vertex AI / Gemini / Perplexity models, with placeholders.
+- Provide ready-to-use prompts for Google AI Studio / Gemini / Perplexity models, with placeholders.
 
 ### 6.1 High-level Workflow
 
@@ -612,7 +603,7 @@ IssueContext = {
 }
 ```
 
-**Prompt template (Vertex AI / Gemini / Perplexity)**:
+**Prompt template (Google AI Studio / Gemini / Perplexity)**:
 
 _System prompt (pseudocode):_
 
@@ -758,9 +749,9 @@ OUTPUT JSON ONLY in the following format:
 }
 ```
 
-### 6.5 Execution on GCP (Vertex AI / Perplexity)
+### 6.5 Execution on Google AI Studio / Gemini / Perplexity
 
-- Use **Vertex AI / Gemini** or Perplexity API with:
+- Use **Google AI Studio (Gemini API)** or Perplexity API with:
   - Low temperature (e.g., 0.1–0.2) for determinism.
   - Streaming/batch calls for groups of actions (e.g., 10–50 per request), depending on model limits.
 - For very large issues:

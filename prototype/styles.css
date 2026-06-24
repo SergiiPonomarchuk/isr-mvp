@@ -2295,4 +2295,478 @@ button.topic-detail-meta-item:active {
     transform: scale(0.95);
 }
 
+/* Custom premium tooltips */
+.custom-tooltip {
+  cursor: help;
+}
 
+/* Global premium tooltip popup styled dynamically */
+.global-tooltip-popup {
+  position: absolute;
+  background: #0f172a; /* Slate 900 for dark/premium look */
+  color: #f8fafc;      /* Slate 50 for clean contrast */
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  width: 240px;
+  text-align: left;
+  border: 1px solid #334155; /* Slate 700 border */
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  z-index: 9999; /* Draw on top of everything including modals */
+  pointer-events: none;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+  transform: translateY(4px);
+}
+.global-tooltip-popup.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+body.tooltips-disabled .global-tooltip-popup,
+body.tooltips-disabled .global-tooltip-popup.visible {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    padding: 16px 20px;
+    width: 320px;
+    max-width: 90vw;
+    z-index: 10001;
+    pointer-events: auto;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.tour-bubble-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.tour-step-indicator {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.tour-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+}
+.tour-bubble-body {
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.5;
+}
+.tour-bubble-body h3 {
+    margin-top: 0;
+    margin-bottom: 6px;
+    font-size: 1rem;
+    font-weight: 700;
+}
+.tour-bubble-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+}
+.tour-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+}
+.tour-btn-primary {
+    background: var(--primary);
+    color: #fff;
+    transition: background-color 0.2s ease;
+}
+.tour-btn-primary:hover {
+    background: var(--primary-hover);
+}
+.tour-btn-secondary {
+    background: var(--surface-soft);
+    color: var(--text);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+}
+.tour-btn-secondary:hover:not([disabled]) {
+    background: var(--surface-muted);
+}
+.tour-btn[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+.tour-highlight {
+    position: relative;
+    z-index: 10002 !important;
+    box-shadow: 0 0 0 8px rgba(44, 82, 130, 0.25), 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+    background: var(--surface) !important;
+    border-radius: 8px;
+    pointer-events: auto !important;
+}
+
+/* Geo Map Modal and Deadline Popup overrides */
+.geo-anchor-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    cursor: pointer;
+    font-size: 0.82rem;
+    color: var(--text);
+    transition: all 0.2s ease;
+}
+.geo-anchor-item:hover {
+    background: var(--surface-soft);
+    border-color: var(--border-strong);
+}
+.geo-anchor-type {
+    font-weight: 600;
+    color: var(--primary);
+    text-transform: capitalize;
+}
+.geo-anchor-coord {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+#create-deadline-popup {
+    min-width: 190px;
+    box-sizing: border-box;
+}
+.topic-detail-meta-item.create-meta-btn {
+    cursor: pointer;
+}
+.map-fallback-control {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 10;
+}
+.map-control-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+    user-select: none;
+}
+.map-control-btn:hover {
+    background: var(--surface-soft);
+    box-shadow: var(--shadow-md);
+}
+.map-control-btn:active {
+    transform: scale(0.95);
+}
+
+/* Custom premium tooltips */
+.custom-tooltip {
+  cursor: help;
+}
+
+/* Global premium tooltip popup styled dynamically */
+.global-tooltip-popup {
+  position: absolute;
+  background: #0f172a; /* Slate 900 for dark/premium look */
+  color: #f8fafc;      /* Slate 50 for clean contrast */
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  width: 240px;
+  text-align: left;
+  border: 1px solid #334155; /* Slate 700 border */
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  z-index: 9999; /* Draw on top of everything including modals */
+  pointer-events: none;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+  transform: translateY(4px);
+}
+.global-tooltip-popup.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+body.tooltips-disabled .global-tooltip-popup,
+body.tooltips-disabled .global-tooltip-popup.visible {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+
+/* =========================================
+   Actions Feature Styles
+========================================= */
+.actions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 16px;
+}
+
+.action-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.action-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary);
+}
+
+.action-card-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.action-card-header-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.action-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--text-base);
+  line-height: 1.2;
+}
+
+.action-badge {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.badge-default { background: #e2e8f0; color: #4a5568; }
+.badge-vote { background: #c6f6d5; color: #22543d; }
+.badge-task { background: #bee3f8; color: #2a4365; }
+.badge-msg { background: #feebc8; color: #7b341e; }
+
+.action-issue-name {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.action-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-left: 8px;
+}
+
+.action-stats {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.action-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.force-value {
+  color: var(--primary);
+}
+
+/* =========================================
+   Action Detail Modal
+========================================= */
+.action-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.action-detail-section {
+  background: var(--surface-2);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.action-detail-section-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+  color: var(--text-base);
+}
+
+/* Force Table */
+.force-breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.force-breakdown-table th, .force-breakdown-table td {
+  padding: 8px 0;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.9rem;
+}
+
+.force-breakdown-table th {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.force-breakdown-table .total-row {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+
+/* Reactions List */
+.reactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.reaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--surface-1);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+.reaction-user {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.reaction-mark {
+  font-weight: 600;
+}
+
+.reaction-mark.positive {
+  color: #38a169;
+}
+
+.reaction-mark.negative {
+  color: #e53e3e;
+}
+
+/* Action Vector specific */
+.action-vector-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.action-vector-label {
+  width: 140px;
+  font-size: 0.85rem;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.action-vector-track {
+  flex-grow: 1;
+  height: 12px;
+  background: #e2e8f0;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-vector-fill {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  transition: width 0.3s ease;
+}
+
+.action-vector-fill.positive {
+  background-color: #38a169;
+}
+
+.action-vector-fill.negative {
+  background-color: #e53e3e;
+}
+
+.action-vector-value {
+  width: 40px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: left;
+}

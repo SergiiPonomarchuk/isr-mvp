@@ -250,32 +250,63 @@ CBC adjustment: 1.0 (neutral, balanced)
 
 ## Part 4: Database Schema & Vectorization
 
-### 4.1 User Expertise Profile Table
+### 4.1 user_expertise_profiles Collection
 
-```sql
-CREATE TABLE user_expertise_profiles (
-    user_id UUID PRIMARY KEY REFERENCES users(user_id) ON DELETE CASCADE,
-    
-    -- Education records (vectorized)
-    education_records JSONB NOT NULL,
-    education_vectors VECTOR(1536)[] NOT NULL,  -- Array of 1536-dim vectors
-    
-    -- Experience records (vectorized)
-    experience_records JSONB NOT NULL,
-    experience_vectors VECTOR(1536)[] NOT NULL,  -- Array of vectors
-    
-    -- Resources declared
-    resources JSONB NOT NULL DEFAULT '[]',
-    resource_vectors VECTOR(1536)[] NOT NULL DEFAULT '{}'::vector[],
-    
-    -- Metadata
-    profile_updated_at TIMESTAMP DEFAULT NOW(),
-    vectors_computed_at TIMESTAMP DEFAULT NOW(),
-    
-    PRIMARY KEY (user_id)
-);
+Each document in the `user_expertise_profiles` collection stores pre-computed 768-dimensional embeddings for a user's credentials, experience, and resources.
 
-CREATE INDEX idx_user_expertise_updated ON user_expertise_profiles(vectors_computed_at);
+- **Document ID**: User UID (String)
+- **Schema**:
+```json
+{
+  "uid": "String (User UID)",
+  "education_records": [
+    {
+      "id": 1,
+      "type": "education",
+      "institution": "University of Andim",
+      "degree_type": "Master",
+      "specialization": "Construction",
+      "graduation_year": 2014,
+      "years_of_study": 2,
+      "description_text": "Master's degree in Construction with focus on structural engineering",
+      "cbc": 0.8
+    }
+  ],
+  "education_vectors": [
+    [0.012, -0.054, ..., 0.038]  // Array of 768-dim vectors (Google AI Studio)
+  ],
+  "experience_records": [
+    {
+      "id": 1,
+      "job_title": "Master Locksmith",
+      "organization": "Self-employed",
+      "start_year": 1995,
+      "end_year": 2024,
+      "is_current": true,
+      "years_active": 29,
+      "specialization": "Commercial and Residential Security",
+      "description_text": "Commercial and residential lock installation"
+    }
+  ],
+  "experience_vectors": [
+    [0.012, -0.054, ..., 0.038]  // Array of 768-dim vectors (Google AI Studio)
+  ],
+  "resources": [
+    {
+      "id": 1,
+      "type": "equipment",
+      "name": "Locksmith Tool Kit",
+      "description": "Professional locksmith tools",
+      "rarity": "high",
+      "verified": true
+    }
+  ],
+  "resource_vectors": [
+    [0.012, -0.054, ..., 0.038]  // Array of 768-dim vectors (Google AI Studio)
+  ],
+  "profile_updated_at": "Timestamp",
+  "vectors_computed_at": "Timestamp"
+}
 ```
 
 ### 4.2 Education Records Structure
@@ -372,39 +403,26 @@ CREATE INDEX idx_user_expertise_updated ON user_expertise_profiles(vectors_compu
 }
 ```
 
-### 4.5 Microcommunity Expertise Scores Table
+### 4.5 microcommunity_expertise_scores Collection
 
-```sql
-CREATE TABLE microcommunity_expertise_scores (
-    microcommunity_id UUID NOT NULL REFERENCES microcommunities(microcommunity_id),
-    user_id UUID NOT NULL REFERENCES users(user_id),
-    
-    -- Education component
-    education_expertise FLOAT NOT NULL CHECK (education_expertise >= 0),
-    education_component_count INT,
-    
-    -- Experience component
-    experience_expertise FLOAT NOT NULL CHECK (experience_expertise >= 0),
-    experience_component_count INT,
-    
-    -- Resources component
-    resources_expertise FLOAT NOT NULL CHECK (resources_expertise >= 0),
-    resources_component_count INT,
-    
-    -- Total expertise score (unbounded [0.0+])
-    expertise_score FLOAT NOT NULL CHECK (expertise_score >= 0),
-    
-    -- Metadata
-    calculated_at TIMESTAMP DEFAULT NOW(),
-    expertise_frozen_at TIMESTAMP,
-    
-    PRIMARY KEY (microcommunity_id, user_id)
-);
+Each document in this collection tracks the calculated expertise components for a member in a specific microcommunity.
 
-CREATE INDEX idx_expertise_by_issue ON microcommunity_expertise_scores(
-    microcommunity_id, 
-    expertise_score DESC
-);
+- **Document ID**: `${microcommunity_id}_${user_id}`
+- **Schema**:
+```json
+{
+  "microcommunity_id": "mc-uuid-string",
+  "user_id": "user-uuid-string",
+  "education_expertise": 1.824,
+  "education_component_count": 1,
+  "experience_expertise": 29.4,
+  "experience_component_count": 1,
+  "resources_expertise": 2.785,
+  "resources_component_count": 3,
+  "expertise_score": 34.01,
+  "calculated_at": "Timestamp",
+  "expertise_frozen_at": null // Timestamp when frozen, or null
+}
 ```
 
 ---
@@ -415,206 +433,199 @@ CREATE INDEX idx_expertise_by_issue ON microcommunity_expertise_scores(
 
 **When user profile created/updated:**
 
-```python
-def vectorize_user_expertise_profile(user_id):
-    """
-    Pre-compute and store expertise vectors for a user.
-    Called on profile creation and any profile update.
-    """
-    user = get_user(user_id)
-    profile = get_user_expertise_profile(user_id)
-    
-    # 1. Vectorize education records
-    education_vectors = []
-    for edu in user.education_records:
-        text = f"{edu['degree_type']} in {edu['specialization']} from {edu['institution']}"
-        vector = embed_text(text)  # Vertex AI text-embedding-004
-        education_vectors.append(vector)
-    
-    # 2. Vectorize experience records
-    experience_vectors = []
-    for exp in user.experience_records:
-        text = f"{exp['years_active']} years as {exp['job_title']} in {exp['specialization']}"
-        vector = embed_text(text)
-        experience_vectors.append(vector)
-    
-    # 3. Vectorize resources
-    resource_vectors = []
-    for res in user.resources:
-        text = f"{res['type']}: {res['name']}. {res['description']}"
-        vector = embed_text(text)
-        resource_vectors.append(vector)
-    
-    # 4. Store in database
-    db.user_expertise_profiles.upsert(
-        user_id=user_id,
-        education_records=user.education_records,
-        education_vectors=education_vectors,
-        experience_records=user.experience_records,
-        experience_vectors=experience_vectors,
-        resources=user.resources,
-        resource_vectors=resource_vectors,
-        vectors_computed_at=now()
-    )
-    
-    # 5. Trigger recalculation for active microcommunities
-    recalculate_expertise_for_user_all_active_issues(user_id)
+```javascript
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const admin = require("firebase-admin");
+const db = admin.firestore();
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const embedModel = genAI.getGenerativeModel({ model: "text-embedding-004" });
+
+async function embedText(text) {
+  const result = await embedModel.embedContent(text);
+  return result.embedding.values; // 768-dimensional float array
+}
+
+async function vectorizeUserExpertiseProfile(userId) {
+  const userDoc = await db.collection("users").doc(userId).get();
+  if (!userDoc.exists) return;
+  const userData = userDoc.data();
+  
+  // 1. Vectorize education records
+  const educationVectors = [];
+  for (const edu of (userData.education_records || [])) {
+    const text = `${edu.degree_type} in ${edu.specialization} from ${edu.institution}`;
+    const vector = await embedText(text);
+    educationVectors.push(vector);
+  }
+  
+  // 2. Vectorize experience records
+  const experienceVectors = [];
+  for (const exp of (userData.experience_records || [])) {
+    const text = `${exp.years_active} years as ${exp.job_title} in ${exp.specialization}`;
+    const vector = await embedText(text);
+    experienceVectors.push(vector);
+  }
+  
+  // 3. Vectorize resources
+  const resourceVectors = [];
+  for (const res of (userData.resources || [])) {
+    const text = `${res.type}: ${res.name}. ${res.description}`;
+    const vector = await embedText(text);
+    resourceVectors.push(vector);
+  }
+  
+  // 4. Store in database
+  await db.collection("user_expertise_profiles").doc(userId).set({
+    uid: userId,
+    education_records: userData.education_records || [],
+    education_vectors: educationVectors,
+    experience_records: userData.experience_records || [],
+    experience_vectors: experienceVectors,
+    resources: userData.resources || [],
+    resource_vectors: resourceVectors,
+    vectors_computed_at: admin.firestore.FieldValue.serverTimestamp()
+  });
+  
+  // 5. Trigger recalculation for active microcommunities
+  await recalculateExpertiseForUserAllActiveIssues(userId);
+}
 ```
 
 ### 5.2 On-Demand: Expertise Calculation for Issue
 
 **When microcommunity formed for issue:**
 
-```python
-def calculate_expertise_for_issue(issue_id, microcommunity_id):
-    """
-    Calculate expertise scores for all members of a microcommunity
-    by comparing pre-computed user vectors against issue vector.
-    Uses additive component formula.
-    """
-    issue = get_issue(issue_id)
-    issue_vector = issue.issue_vector
+```javascript
+function cosineSimilarity(a, b) {
+  let dotProduct = 0.0;
+  let normA = 0.0;
+  let normB = 0.0;
+  for (let i = 0; i < a.length; i++) {
+    dotProduct += a[i] * b[i];
+    normA += a[i] * a[i];
+    normB += b[i] * b[i];
+  }
+  return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+}
+
+async function calculateExpertiseForIssue(issueId, microcommunityId) {
+  const issueDoc = await db.collection("issues").doc(issueId).get();
+  if (!issueDoc.exists) return;
+  const issueData = issueDoc.data();
+  const issueVector = issueData.issue_vector; // 768-dimensional array
+  
+  // LLM determines domain context (Google AI Studio call)
+  const domainContext = await analyzeIssueDomain(issueData);
+  
+  const membersSnap = await db.collection("microcommunity_members")
+    .where("microcommunity_id", "==", microcommunityId)
+    .get();
     
-    # LLM determines domain context
-    domain_context = analyze_issue_domain(issue)
-    # Returns: {
-    #   contemporary_importance: float,
-    #   recency_decay_rate: float,
-    #   age_penalty_threshold: int,
-    #   cbc_adjustment_factor: float
-    # }
+  for (const doc of membersSnap.docs) {
+    const member = doc.data();
+    const userId = member.user_id;
     
-    microcommunity = get_microcommunity(microcommunity_id)
+    const profileDoc = await db.collection("user_expertise_profiles").doc(String(userId)).get();
+    if (!profileDoc.exists) continue;
+    const profile = profileDoc.data();
     
-    for member in microcommunity.members:
-        user = get_user(member.user_id)
-        profile = get_user_expertise_profile(user.user_id)
-        
-        # =============================================
-        # COMPONENT 1: EDUCATION EXPERTISE
-        # =============================================
-        education_expertise = 0.0
-        
-        for idx, edu in enumerate(profile.education_records):
-            edu_vector = profile.education_vectors[idx]
-            
-            # Cosine similarity
-            cos_sim = cosine_similarity(edu_vector, issue_vector)  # [0.0-1.0]
-            
-            # Get CBC for this education type
-            cbc = edu['cbc']  # From CBC table (0.5, 0.8, 1.0, 2.0, 3.0)
-            
-            # Apply CBC exponent adjustment (amplify or suppress)
-            cos_adjusted = cos_sim ** cbc
-            
-            # Apply CBC adjustment factor from domain context
-            cos_adjusted = cos_adjusted ** domain_context['cbc_adjustment_factor']
-            
-            # Power scalar: education time
-            time_years = edu['years_of_study']
-            
-            # Calculate education component
-            edu_component = cos_adjusted * time_years
-            education_expertise += edu_component
-        
-        # =============================================
-        # COMPONENT 2: EXPERIENCE EXPERTISE
-        # =============================================
-        experience_expertise = 0.0
-        
-        for idx, exp in enumerate(profile.experience_records):
-            exp_vector = profile.experience_vectors[idx]
-            
-            # Cosine similarity
-            cos_sim = cosine_similarity(exp_vector, issue_vector)  # [0.0-1.0]
-            
-            # Power scalar: experience time with recency decay
-            years_active = exp['years_active']
-            
-            if not exp['is_current']:
-                years_since_end = now().year - exp['end_year']
-                decay = domain_context['recency_decay_rate'] * years_since_end
-                years_active = years_active * (1 - decay)
-            
-            # Calculate experience component
-            exp_component = cos_sim * years_active
-            experience_expertise += exp_component
-        
-        # =============================================
-        # COMPONENT 3: RESOURCE EXPERTISE
-        # =============================================
-        resources_expertise = 0.0
-        
-        for idx, res in enumerate(profile.resources):
-            res_vector = profile.resource_vectors[idx]
-            
-            # Cosine similarity
-            cos_sim = cosine_similarity(res_vector, issue_vector)  # [0.0-1.0]
-            
-            # Power scalar: rarity multiplier
-            rarity_map = {
-                'low': 0.5,
-                'medium': 1.0,
-                'high': 1.5
-            }
-            rarity = rarity_map.get(res['rarity'], 1.0)
-            
-            # Calculate resource component
-            res_component = cos_sim * rarity
-            resources_expertise += res_component
-        
-        # =============================================
-        # TOTAL EXPERTISE SCORE (Additive)
-        # =============================================
-        total_expertise = education_expertise + experience_expertise + resources_expertise
-        
-        # Store in database
-        db.microcommunity_expertise_scores.upsert(
-            microcommunity_id=microcommunity_id,
-            user_id=member.user_id,
-            education_expertise=education_expertise,
-            education_component_count=len(profile.education_records),
-            experience_expertise=experience_expertise,
-            experience_component_count=len(profile.experience_records),
-            resources_expertise=resources_expertise,
-            resources_component_count=len(profile.resources),
-            expertise_score=total_expertise,
-            calculated_at=now()
-        )
+    // COMPONENT 1: EDUCATION EXPERTISE
+    let educationExpertise = 0.0;
+    const eduRecords = profile.education_records || [];
+    const eduVectors = profile.education_vectors || [];
+    for (let i = 0; i < eduRecords.length; i++) {
+      const edu = eduRecords[i];
+      const eduVector = eduVectors[i];
+      const cosSim = cosineSimilarity(eduVector, issueVector);
+      const cbc = edu.cbc;
+      
+      let cosAdjusted = Math.pow(Math.max(0, cosSim), cbc);
+      cosAdjusted = Math.pow(cosAdjusted, domainContext.cbc_adjustment_factor);
+      
+      const timeYears = edu.years_of_study || 0.5;
+      educationExpertise += cosAdjusted * timeYears;
+    }
+    
+    // COMPONENT 2: EXPERIENCE EXPERTISE
+    let experienceExpertise = 0.0;
+    const expRecords = profile.experience_records || [];
+    const expVectors = profile.experience_vectors || [];
+    for (let i = 0; i < expRecords.length; i++) {
+      const exp = expRecords[i];
+      const expVector = expVectors[i];
+      const cosSim = cosineSimilarity(expVector, issueVector);
+      
+      let yearsActive = exp.years_active || 0;
+      if (!exp.is_current) {
+        const currentYear = new Date().getFullYear();
+        const yearsSinceEnd = currentYear - (exp.end_year || currentYear);
+        const decay = domainContext.recency_decay_rate * yearsSinceEnd;
+        yearsActive = Math.max(0, yearsActive * (1 - decay));
+      }
+      experienceExpertise += Math.max(0, cosSim) * yearsActive;
+    }
+    
+    // COMPONENT 3: RESOURCE EXPERTISE
+    let resourcesExpertise = 0.0;
+    const resRecords = profile.resources || [];
+    const resVectors = profile.resource_vectors || [];
+    const rarityMap = { low: 0.5, medium: 1.0, high: 1.5 };
+    for (let i = 0; i < resRecords.length; i++) {
+      const res = resRecords[i];
+      const resVector = resVectors[i];
+      const cosSim = cosineSimilarity(resVector, issueVector);
+      const rarity = rarityMap[res.rarity] || 1.0;
+      resourcesExpertise += Math.max(0, cosSim) * rarity;
+    }
+    
+    // TOTAL EXPERTISE SCORE
+    const totalExpertise = educationExpertise + experienceExpertise + resourcesExpertise;
+    
+    await db.collection("microcommunity_expertise_scores").doc(`${microcommunityId}_${userId}`).set({
+      microcommunity_id: microcommunityId,
+      user_id: userId,
+      education_expertise: educationExpertise,
+      education_component_count: eduRecords.length,
+      experience_expertise: experienceExpertise,
+      experience_component_count: expRecords.length,
+      resources_expertise: resourcesExpertise,
+      resources_component_count: resRecords.length,
+      expertise_score: totalExpertise,
+      calculated_at: admin.firestore.FieldValue.serverTimestamp()
+    });
+  }
+}
 ```
 
-### 5.3 SQL Implementation
+### 5.3 JavaScript/Firestore Implementation
 
-```sql
--- Retrieve expertise scores for a specific issue
-SELECT 
-    user_id,
-    education_expertise,
-    experience_expertise,
-    resources_expertise,
-    expertise_score,
-    RANK() OVER (ORDER BY expertise_score DESC) as expertise_rank,
-    ROUND(expertise_score::numeric, 2) as expertise_score_rounded
-FROM microcommunity_expertise_scores
-WHERE microcommunity_id = $1
-ORDER BY expertise_score DESC;
-
--- Query with component breakdown
-SELECT 
-    user_id,
-    ROUND(education_expertise::numeric, 2) as education,
-    ROUND(experience_expertise::numeric, 2) as experience,
-    ROUND(resources_expertise::numeric, 2) as resources,
-    ROUND(expertise_score::numeric, 2) as total_expertise,
-    CASE 
-        WHEN expertise_score >= 10 THEN 'Expert'
-        WHEN expertise_score >= 3 THEN 'Practitioner'
-        WHEN expertise_score >= 1 THEN 'Informed'
-        ELSE 'Novice'
-    END as expertise_level
-FROM microcommunity_expertise_scores
-WHERE microcommunity_id = $1
-ORDER BY expertise_score DESC;
+```javascript
+// Fetch and rank members by expertise
+async function queryExpertiseScores(microcommunityId) {
+  const snapshot = await db.collection("microcommunity_expertise_scores")
+    .where("microcommunity_id", "==", microcommunityId)
+    .orderBy("expertise_score", "desc")
+    .get();
+    
+  return snapshot.docs.map((doc, idx) => {
+    const data = doc.data();
+    let level = "Novice";
+    if (data.expertise_score >= 10.0) level = "Expert";
+    else if (data.expertise_score >= 3.0) level = "Practitioner";
+    else if (data.expertise_score >= 1.0) level = "Informed";
+    
+    return {
+      user_id: data.user_id,
+      education: Number(data.education_expertise.toFixed(2)),
+      experience: Number(data.experience_expertise.toFixed(2)),
+      resources: Number(data.resources_expertise.toFixed(2)),
+      total_expertise: Number(data.expertise_score.toFixed(2)),
+      expertise_rank: idx + 1,
+      expertise_level: level
+    };
+  });
+}
 ```
 
 ---
@@ -1031,49 +1042,68 @@ Total expertise: 9.28
 
 When a member updates their profile:
 
-```python
-def on_profile_update(user_id):
-    """
-    When user updates education/experience/resources.
-    Option B: Recalculate ONLY for non-voted microcommunities.
-    """
-    # 1. Update expertise vectors
-    vectorize_user_expertise_profile(user_id)
+```javascript
+async function onProfileUpdate(userId) {
+  // 1. Update expertise vectors
+  await vectorizeUserExpertiseProfile(userId);
+  
+  // 2. Find all active (non-voted) microcommunities where user is member
+  const membersSnap = await db.collection("microcommunity_members")
+    .where("user_id", "==", userId)
+    .get();
     
-    # 2. Find all active (non-voted) microcommunities
-    active_microcommunities = db.microcommunities.filter(
-        status__in=['open', 'discussion'],
-        expertise_frozen_at=NULL
-    ).join_where_member(user_id)
+  for (const doc of membersSnap.docs) {
+    const member = doc.data();
+    const mcId = member.microcommunity_id;
     
-    # 3. Recalculate expertise for each
-    for mc in active_microcommunities:
-        calculate_expertise_for_issue(mc.issue_id, mc.microcommunity_id)
+    const mcDoc = await db.collection("microcommunities").doc(mcId).get();
+    if (!mcDoc.exists) continue;
+    const mc = mcDoc.data();
     
-    # 4. Log update
-    log_expertise_update(user_id, active_microcommunities)
+    if (["open", "discussion"].includes(mc.status) && !mc.expertise_frozen_at) {
+      await calculateExpertiseForIssue(mc.issue_id, mcId);
+    }
+  }
+}
 ```
 
 ### 8.2 Expertise Freezing at Voting
 
 Once voting phase ends:
 
-```sql
--- Freeze expertise scores
-UPDATE microcommunity_expertise_scores
-SET expertise_frozen_at = NOW()
-WHERE microcommunity_id = $1;
-
--- Preserve in audit log
-INSERT INTO expertise_calculation_history
-SELECT 
-    microcommunity_id,
-    user_id,
-    expertise_score,
-    calculated_at,
-    NOW() as frozen_at
-FROM microcommunity_expertise_scores
-WHERE microcommunity_id = $1;
+```javascript
+async function freezeExpertiseScores(microcommunityId) {
+  const batch = db.batch();
+  
+  // 1. Freeze expertise scores on the microcommunity
+  const mcRef = db.collection("microcommunities").doc(microcommunityId);
+  batch.update(mcRef, {
+    expertise_frozen_at: admin.firestore.FieldValue.serverTimestamp()
+  });
+  
+  // 2. Fetch and freeze individual scores
+  const scoresSnap = await db.collection("microcommunity_expertise_scores")
+    .where("microcommunity_id", "==", microcommunityId)
+    .get();
+    
+  for (const doc of scoresSnap.docs) {
+    const data = doc.data();
+    batch.update(doc.ref, {
+      expertise_frozen_at: admin.firestore.FieldValue.serverTimestamp()
+    });
+    
+    // Save to audit log in collection expertise_calculation_history
+    const historyRef = db.collection("expertise_calculation_history").doc();
+    batch.set(historyRef, {
+      microcommunity_id: data.microcommunity_id,
+      user_id: data.user_id,
+      expertise_score: data.expertise_score,
+      calculated_at: data.calculated_at,
+      frozen_at: admin.firestore.FieldValue.serverTimestamp()
+    });
+  }
+  await batch.commit();
+}
 ```
 
 **After freeze**: Historical values preserved; new profile updates don't affect past decisions.
@@ -1083,13 +1113,13 @@ WHERE microcommunity_id = $1;
 ## Part 9: Implementation Checklist (MVP)
 
 ### Week 1: Schema & Vectorization Infrastructure
-- [ ] Create `user_expertise_profiles` table with pgvector arrays
-- [ ] Create `microcommunity_expertise_scores` table
-- [ ] Setup pgvector indexes
-- [ ] Implement user profile vectorization pipeline
+- [ ] Create `user_expertise_profiles` collection in Firestore
+- [ ] Create `microcommunity_expertise_scores` collection in Firestore
+- [ ] Setup Firestore composite indexes for query ranking
+- [ ] Implement user profile vectorization using Google AI Studio (`text-embedding-004`)
 
 ### Week 2: Expertise Calculation Engine
-- [ ] Implement CBC exponent calculation (cosine^CBC)
+- [ ] Implement CBC exponent calculation (cosine^CBC) in Cloud Functions
 - [ ] Implement CBC adjustment factor application
 - [ ] Implement recency decay for experience
 - [ ] Implement additive component summation
@@ -1103,7 +1133,7 @@ WHERE microcommunity_id = $1;
 - [ ] Performance testing (<200ms for 1000 members)
 
 ### Week 4: Audit & Documentation
-- [ ] Implement expertise audit logs
+- [ ] Implement expertise audit logs in Firestore
 - [ ] Create explainability summaries
 - [ ] Document domain context parameters
 - [ ] End-to-end testing
@@ -1115,11 +1145,11 @@ WHERE microcommunity_id = $1;
 
 | Operation | Target | Notes |
 |-----------|--------|-------|
-| User profile vectorization | 500ms | Batch Vertex AI call |
-| Expertise calculation (1000 members) | <200ms | Pre-computed vectors + cosine |
-| Recalculation on profile update | <2s | Parallelized microcommunities |
-| Expertise freezing | <50ms | Simple UPDATE |
-| Component breakdown query | <100ms | Aggregated view |
+| User profile vectorization | 500ms | Batch Google AI Studio call |
+| Expertise calculation (1000 members) | <200ms | Pre-computed vectors + in-memory cosine |
+| Recalculation on profile update | <2s | Parallelized Cloud Functions |
+| Expertise freezing | <50ms | Firestore batch update |
+| Component breakdown query | <100ms | Firestore index query |
 
 ---
 
@@ -1127,8 +1157,9 @@ WHERE microcommunity_id = $1;
 
 | Component | Cost | Notes |
 |-----------|------|-------|
-| Vertex AI Embeddings | $10-20/month | ~5000 education/exp records |
-| Cloud SQL (expertise storage) | Included | pgvector indexes in Postgres |
-| Cloud Run (calculations) | $5-10/month | On-demand expertise calls |
-| **Total Add-On** | **$15-30/month** | Scales with active issues |
+| Google AI Studio Embeddings | $5-10/month | ~5000 education/exp records |
+| Firestore (expertise storage) | Free tier | Standard document writes/reads |
+| Cloud Functions (calculations) | $2-5/month | On-demand CPU time |
+| **Total Add-On** | **$7-15/month** | Scales with active issues |
+
 

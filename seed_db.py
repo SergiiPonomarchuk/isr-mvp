@@ -105,6 +105,7 @@ def seed_database(project_id, credentials_path=None):
     batch = db.batch()
     count = 0
     total_written = 0
+    packed_users = []
 
     for uid, profile in raw_profiles.items():
         if uid not in values_data:
@@ -129,10 +130,6 @@ def seed_database(project_id, credentials_path=None):
             "features": profile.get("features", [])
         }
 
-        # Attach profile vector if exists
-        if uid in profile_vectors:
-            user_doc["profile_vector"] = Vector(profile_vectors[uid])
-
         # Attach values taxonomy data if exists
         if uid in values_data:
             user_doc["values_taxonomy"] = values_data[uid]
@@ -141,21 +138,47 @@ def seed_database(project_id, credentials_path=None):
         if uid in values_text:
             user_doc["values_description"] = values_text[uid]
 
-        # Attach experience vectors if exist
-        if uid in experience_vectors:
-            # Map experience id to its vector representation
-            exp_vecs = {}
-            for exp_id, vec in experience_vectors[uid].items():
-                exp_vecs[exp_id] = Vector(vec)
-            user_doc["experience_vectors"] = exp_vecs
+        # Collect metadata for packed_users
+        meta = {
+            "uid": int(uid),
+            "displayName": display_name,
+            "birthDate": profile.get("birthDate", ""),
+            "gender": profile.get("gender", ""),
+            "post": profile.get("post", []),
+            "skills": profile.get("skills", []),
+            "geography": profile.get("geography", []),
+            "socialRelations": profile.get("social relations", []),
+            "features": profile.get("features", [])
+        }
+        packed_users.append(meta)
 
-        # Write to Firestore (users collection)
+        # Write metadata to users collection
         doc_ref = db.collection("users").document(uid)
         batch.set(doc_ref, user_doc)
         count += 1
         total_written += 1
 
-        if count >= 100:  # Stay below 500 Firestore batch limit and 10MB payload limit
+        # Write vectors separately to user_vectors
+        vector_doc = {"uid": int(uid)}
+        has_vectors = False
+
+        if uid in profile_vectors:
+            vector_doc["profile_vector"] = Vector(profile_vectors[uid])
+            has_vectors = True
+
+        if uid in experience_vectors:
+            exp_vecs = {}
+            for exp_id, vec in experience_vectors[uid].items():
+                exp_vecs[exp_id] = Vector(vec)
+            vector_doc["experience_vectors"] = exp_vecs
+            has_vectors = True
+
+        if has_vectors:
+            vector_ref = db.collection("user_vectors").document(uid)
+            batch.set(vector_ref, vector_doc)
+            count += 1
+
+        if count >= 400:  # Stay below 500 Firestore batch limit
             print(f"Writing batch... Total uploaded: {total_written}")
             batch.commit()
             batch = db.batch()
@@ -164,6 +187,22 @@ def seed_database(project_id, credentials_path=None):
     if count > 0:
         print(f"Writing final batch... Total uploaded: {total_written}")
         batch.commit()
+
+    # Upload user packs
+    print("\nStarting user packs upload...")
+    pack_size = 250
+    chunks = [packed_users[i:i + pack_size] for i in range(0, len(packed_users), pack_size)]
+    batch = db.batch()
+    for idx, chunk in enumerate(chunks, 1):
+        pack_id = f"pack_{idx}"
+        pack_ref = db.collection("user_packs").document(pack_id)
+        batch.set(pack_ref, {
+            "pack_id": idx,
+            "users": chunk
+        })
+        print(f"Prepared user_packs doc: {pack_id} with {len(chunk)} users.")
+    batch.commit()
+    print("User packs uploaded successfully.")
 
     # ========================================================
     # 7. Upload Discussions and Chat Threads
@@ -194,13 +233,28 @@ def seed_database(project_id, credentials_path=None):
                         pass
 
             # Create main discussion document
+            last_msg = messages[-1] if messages else {}
+            last_uid = last_msg.get("uid", "system")
+            last_uid_str = str(last_uid)
+            
+            # Resolve sender display name
+            last_sender_name = "System"
+            if last_uid_str != "system" and last_uid_str in raw_profiles:
+                last_sender_name = raw_profiles[last_uid_str].get("displayName", f"User {last_uid_str}")
+            elif last_uid_str != "system":
+                last_sender_name = f"User {last_uid_str}"
+                
             disc_doc = {
                 "discussion_id": int(disc_id),
                 "topic": topic,
                 "creator_uid": creator_uid,
                 "created_at": created_at,
                 "message_count": len(messages),
-                "participants": list(participants)
+                "participants": list(participants),
+                "last_message_text": last_msg.get("text", ""),
+                "last_message_sender_uid": str(last_uid),
+                "last_message_sender_name": last_sender_name,
+                "last_message_timestamp": last_msg.get("timestamp", created_at)
             }
             
             disc_ref = db.collection("discussions").document(str(disc_id))

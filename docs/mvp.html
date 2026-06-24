@@ -613,7 +613,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </tr>
                     <tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px;"><strong>AI/ML</strong></td>
-                        <td style="padding: 10px;">Google Vertex AI + OpenAI</td>
+                        <td style="padding: 10px;">Google AI Studio (Gemini API)</td>
                         <td style="padding: 10px;">ISR calculation, microcommunity formation, content moderation</td>
                     </tr>
                     <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
@@ -693,7 +693,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <h3>ISR Calculation Pipeline</h3>
                 <ol style="background: #ecf0f1; padding: 20px; border-radius: 4px; margin: 20px 0;">
                     <li><strong>Trigger:</strong> Rised chat or vote issue</li>
-                    <li><strong>ISR components weights (wR, wE, wC) evaluation:</strong> AI analize issue and its context to set wieghts for Relevanse, Expertise and Contribution parts</li>
+                    <li><strong>ISR components weights evaluation:</strong> AI evaluates relevance component weights (w_D, w_G, w_S, w_X) and issue aggregation weights (w_Relevance, w_Expertise, w_Contribution) using instructions from <a href="ISR-AI-Weight-Evaluation-Instructions.md">ISR-AI-Weight-Evaluation-Instructions.md</a>, anchored by 100 benchmark examples in <a href="ISR-Relevance-Weight-Examples-100.md">ISR-Relevance-Weight-Examples-100.md</a> and <a href="ISR-Issue-Aggregation-Weight-Examples-100.md">ISR-Issue-Aggregation-Weight-Examples-100.md</a>.</li>
                     <li><strong>Data Fetch:</strong> Get users profile, values, issue context, historical performance</li>
                     <li><strong>Calculate Relevance (R):</strong></li>
                     <li><strong>Microcommunity Formation:</strong>

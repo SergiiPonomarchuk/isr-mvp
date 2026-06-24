@@ -298,9 +298,8 @@ System suggests: social.event.cultural
 User confirms: ✓ Correct
 
 📍 STEP 3: Impact Radius
-System suggests: 1000m (within neighborhood/easy walk)
-User adjusts to: 2000m because event is quite popular and 
-   "people will come from other neighborhoods"
+System suggests: μ = 1000m and σ = 4000m (covers nearby blocks and decays softly across adjacent neighborhoods)
+User confirms: ✓ Yes, fits a community chess club/dance event perfectly
 
 ⚖️ STEP 4: Weights
 System suggests: D=20%, G=30%, S=50%, X=10%
