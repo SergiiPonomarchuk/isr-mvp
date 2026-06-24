@@ -9468,8 +9468,8 @@ async function renderUserActionsList(containerEl) {
     // Sort by created_at descending
     actions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-    listContainer.innerHTML = '<div class="actions-grid"></div>';
-    const grid = listContainer.querySelector('.actions-grid');
+    listContainer.innerHTML = '<div class="topic-list"></div>';
+    const grid = listContainer.querySelector('.topic-list');
 
     actions.forEach(action => {
       // Calculate force
@@ -9486,35 +9486,26 @@ async function renderUserActionsList(containerEl) {
       if (action.action_type === 'vote_msg' || action.action_type === 'task_msg' || action.action_type === 'chat_msg') typeClass = 'badge-msg';
 
       const d = new Date(action.created_at);
-      const dateStr = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const dateStr = d.toLocaleDateString();
 
       // Sentiment formatting
       const sentiment = parseFloat(action.sentiment_scalar) || 0;
       const sentColor = sentiment > 0 ? '#38a169' : (sentiment < 0 ? '#e53e3e' : '#718096');
       const sentSign = sentiment > 0 ? '+' : '';
 
-      const card = document.createElement('div');
-      card.className = 'action-card';
+      const card = document.createElement('button');
+      card.className = 'topic-item';
+      card.setAttribute('type', 'button');
       card.innerHTML = `
-        <div class="action-card-header">
-          <div class="action-title">${action.action_name}</div>
-          <div class="action-meta">
+        <div class="topic-header">
+          <span class="topic-name">${action.action_name}</span>
+          <span class="topic-meta">
             <span class="action-badge ${typeClass}">${action.action_type}</span>
-            <span class="action-date">${dateStr}</span>
-          </div>
+            <span class="action-date" style="margin-left: 8px;">${dateStr}</span>
+          </span>
         </div>
-        <div class="action-card-body">
-          <div class="action-issue-name">📍 ${action.issue_name}</div>
-          <div class="action-stats">
-            <div class="action-stat-item" title="Force = Type ${type_weight.toFixed(1)} × Time ${time_hours.toFixed(1)}h × Comp ${complexity.toFixed(1)} × Res ${result_factor.toFixed(1)}">
-              <span class="stat-label">Force</span>
-              <span class="stat-value force-value">${force.toFixed(2)}</span>
-            </div>
-            <div class="action-stat-item">
-              <span class="stat-label">Sentiment</span>
-              <span class="stat-value sentiment-value" style="color: ${sentColor}">${sentSign}${sentiment.toFixed(1)}</span>
-            </div>
-          </div>
+        <div class="topic-preview">
+          📍 ${action.issue_name} &nbsp;·&nbsp; Force: <b>${force.toFixed(2)}</b> &nbsp;·&nbsp; Sentiment: <b style="color: ${sentColor}">${sentSign}${sentiment.toFixed(1)}</b>
         </div>
       `;
       card.onclick = () => openActionDetailModal(action);
