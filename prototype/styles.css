@@ -775,11 +775,11 @@ a:hover {
 .bar-chart {
   display: flex;
   align-items: flex-end;
-  gap: 6px;
+  gap: 10px;
   height: 120px;
   margin-bottom: 16px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .bar-group {
@@ -816,7 +816,11 @@ a:hover {
 .shift-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.shift-row:last-child {
+  margin-bottom: 0;
 }
 
 .shift-label {
@@ -1157,10 +1161,23 @@ a:hover {
 }
 
 .shift-track-grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   gap: 10px;
   flex: 1;
+}
+
+.shift-track-grid::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1px;
+  background: var(--border);
+  z-index: 1;
 }
 
 .shift-cell {
@@ -1180,6 +1197,31 @@ a:hover {
 
 .shift-cell .shift-mark.shift-mark-blue {
   background: #3182ce;
+}
+
+.shift-cell-v2 {
+  height: 32px;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.shift-bar-v2 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.shift-bar-v2.positive {
+  bottom: 50%;
+  background: #10b981;
+}
+
+.shift-bar-v2.negative {
+  top: 50%;
+  background: #ef4444;
 }
 
 .vector-accordion-item {

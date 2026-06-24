@@ -9714,7 +9714,8 @@ window.SharedVectorRenderer = {
       }
 
       const group = document.createElement('div');
-      group.className = 'bar-group';
+      group.className = 'bar-group custom-tooltip';
+      group.setAttribute('data-tooltip', `${i + 1}. ${labelName} [${isNull ? 'N/A' : val}]`);
 
       const bar = document.createElement('div');
       const heightVal = isNull ? 100 : Math.abs(val);
@@ -9775,14 +9776,25 @@ window.SharedVectorRenderer = {
       }
       
       trackWrap.className = 'shift-track-grid';
-      valOrArr.forEach(value => {
+      valOrArr.forEach((value, idx) => {
         const cell = document.createElement('div');
-        cell.className = 'shift-cell';
+        cell.className = 'shift-cell-v2 custom-tooltip';
+        
+        // Tooltip text formatting: "idx. domainName in contextName value"
+        const domainName = this.domainNames[idx] || `Domain ${idx + 1}`;
+        const sign = value > 0 ? '+' : '';
+        cell.setAttribute('data-tooltip', `${idx + 1}. ${domainName} in ${row.key} ${sign}${value}`);
+
         if (value !== 0) {
-          const mark = document.createElement('div');
-          mark.className = 'shift-mark' + (value < 0 ? ' shift-mark-blue' : '');
-          mark.style.width = Math.min(Math.abs(value) * 3, 100) + '%';
-          cell.appendChild(mark);
+          const bar = document.createElement('div');
+          bar.className = 'shift-bar-v2 ' + (value > 0 ? 'positive' : 'negative');
+          
+          // Height is calculated proportional to absolute value (assuming max of 20)
+          // Since it's centered, max height of half container is 50%
+          const pct = Math.min(50, Math.abs(value) * 2.5);
+          bar.style.height = pct + '%';
+          
+          cell.appendChild(bar);
         }
         trackWrap.appendChild(cell);
       });
