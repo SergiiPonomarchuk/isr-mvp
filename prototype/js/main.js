@@ -9693,6 +9693,12 @@ window.SharedVectorRenderer = {
     if (!chart || !data || !data.domains) return;
     chart.innerHTML = '';
     
+    if (isActionFormat) {
+      chart.classList.add('action-format');
+    } else {
+      chart.classList.remove('action-format');
+    }
+    
     for (let i = 0; i < 10; i++) {
       let val = 0;
       let labelName = this.domainNames[i];
@@ -9715,31 +9721,56 @@ window.SharedVectorRenderer = {
 
       const group = document.createElement('div');
       group.className = 'bar-group custom-tooltip';
-      group.setAttribute('data-tooltip', `${i + 1}. ${labelName} [${isNull ? 'N/A' : val}]`);
+      
+      const signStr = (isActionFormat && val > 0) ? '+' : '';
+      group.setAttribute('data-tooltip', `${i + 1}. ${labelName} [${isNull ? 'N/A' : signStr + val}]`);
+
+      const track = document.createElement('div');
+      track.className = 'bar-track';
 
       const bar = document.createElement('div');
-      const heightVal = isNull ? 100 : Math.abs(val);
       bar.className = 'bar' + (isNull ? ' bar-null' : (isMuted ? ' bar-muted' : ''));
-      bar.style.height = heightVal + '%';
 
-      if (!isNull && val < 0) {
-        bar.style.background = 'var(--urgent)';
-        bar.style.borderTopLeftRadius = '0';
-        bar.style.borderTopRightRadius = '0';
-        bar.style.borderBottomLeftRadius = '4px';
-        bar.style.borderBottomRightRadius = '4px';
-        bar.style.position = 'relative';
-        bar.style.top = '100%';
-        bar.style.marginBottom = '-' + heightVal + '%'; // Prevent it from stretching the flex container if needed
+      if (isActionFormat) {
+        const absVal = Math.abs(val);
+        const heightPct = absVal * 0.5;
+        bar.style.height = heightPct + '%';
+        
+        if (val >= 0) {
+          bar.classList.add('positive');
+          bar.style.bottom = '50%';
+          bar.style.background = '#10b981';
+          bar.style.borderRadius = '2px 2px 0 0';
+        } else {
+          bar.classList.add('negative');
+          bar.style.top = '50%';
+          bar.style.background = '#ef4444';
+          bar.style.borderRadius = '0 0 2px 2px';
+        }
+      } else {
+        const heightVal = isNull ? 100 : Math.abs(val);
+        bar.style.height = heightVal + '%';
+
+        if (!isNull && val < 0) {
+          bar.style.background = 'var(--urgent)';
+          bar.style.borderTopLeftRadius = '0';
+          bar.style.borderTopRightRadius = '0';
+          bar.style.borderBottomLeftRadius = '4px';
+          bar.style.borderBottomRightRadius = '4px';
+          bar.style.position = 'relative';
+          bar.style.top = '100%';
+          bar.style.marginBottom = '-' + heightVal + '%';
+        }
       }
 
       const label = document.createElement('span');
       label.className = 'bar-label';
       label.textContent = (i + 1).toString();
-      label.title = labelName + (isNull ? ' (N/A)' : ' (' + val + ')');
+      label.title = labelName + (isNull ? ' (N/A)' : ' (' + (val > 0 && isActionFormat ? '+' : '') + val + ')');
       if (isNull) label.style.color = '#888888';
 
-      group.appendChild(bar);
+      track.appendChild(bar);
+      group.appendChild(track);
       group.appendChild(label);
       chart.appendChild(group);
     }
@@ -9780,10 +9811,13 @@ window.SharedVectorRenderer = {
         const cell = document.createElement('div');
         cell.className = 'shift-cell-v2 custom-tooltip';
         
-        // Tooltip text formatting: "idx. domainName in contextName value"
-        const domainName = this.domainNames[idx] || `Domain ${idx + 1}`;
         const sign = value > 0 ? '+' : '';
-        cell.setAttribute('data-tooltip', `${idx + 1}. ${domainName} in ${row.key} ${sign}${value}`);
+        if (isActionFormat) {
+          cell.setAttribute('data-tooltip', `In ${row.key} ${sign}${value}`);
+        } else {
+          const domainName = this.domainNames[idx] || `Domain ${idx + 1}`;
+          cell.setAttribute('data-tooltip', `${idx + 1}. ${domainName} in ${row.key} ${sign}${value}`);
+        }
 
         if (value !== 0) {
           const bar = document.createElement('div');

@@ -741,6 +741,22 @@ a:hover {
   display: none;
 }
 
+.setting-option input:disabled,
+.setting-toggle input:disabled {
+  cursor: not-allowed;
+}
+
+.setting-option:has(input:disabled),
+.setting-toggle:has(input:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toggle-input:disabled + .toggle-slider {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .toggle-slider {
   position: relative;
   width: 51px;
@@ -789,6 +805,44 @@ a:hover {
   align-items: center;
   justify-content: flex-end;
   height: 100%;
+}
+
+.bar-track {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.bar-chart.action-format {
+  align-items: stretch;
+}
+
+.bar-chart.action-format .bar-group {
+  justify-content: stretch;
+}
+
+.bar-chart.action-format .bar-track::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1px;
+  background: var(--border);
+  z-index: 1;
+}
+
+.bar-chart.action-format .bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  min-height: 0;
+  z-index: 2;
 }
 
 .bar {
