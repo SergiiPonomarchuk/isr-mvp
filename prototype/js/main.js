@@ -17,13 +17,52 @@ const sectionTitles = {
   actions: 'Actions'
 };
 
+function formatDateWithSetting(val) {
+  if (!val) return '';
+  let date;
+  if (val instanceof Date) {
+    date = val;
+  } else if (typeof val === 'number') {
+    date = new Date(val);
+  } else {
+    // If it's already in dd.mm.yyyy format
+    if (/^\d{2}\.\d{2}\.\d{4}$/.test(val)) {
+      const savedFormat = localStorage.getItem('dateFormat') || 'dd.mm.yyyy';
+      if (savedFormat === 'dd.mm.yyyy') return val;
+      const parts = val.split('.');
+      date = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
+    } else {
+      date = new Date(val);
+    }
+  }
+  
+  if (isNaN(date.getTime())) {
+    const match = val.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (match) {
+      const savedFormat = localStorage.getItem('dateFormat') || 'dd.mm.yyyy';
+      if (savedFormat === 'yyyy-mm-dd') return `${match[1]}-${match[2]}-${match[3]}`;
+      if (savedFormat === 'mm/dd/yyyy') return `${match[2]}/${match[3]}/${match[1]}`;
+      return `${match[3]}.${match[2]}.${match[1]}`;
+    }
+    return val;
+  }
+
+  const savedFormat = localStorage.getItem('dateFormat') || 'dd.mm.yyyy';
+  const d = String(date.getDate()).padStart(2, '0');
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const y = date.getFullYear();
+
+  if (savedFormat === 'yyyy-mm-dd') {
+    return `${y}-${m}-${d}`;
+  } else if (savedFormat === 'mm/dd/yyyy') {
+    return `${m}/${d}/${y}`;
+  }
+  return `${d}.${m}.${y}`;
+}
+
 function formatTaskDeadline(dateStr) {
   if (!dateStr || dateStr === "Ongoing") return "";
-  const parts = dateStr.split('-');
-  if (parts.length === 3) {
-    return `${parts[2]}.${parts[1]}.${parts[0]}`;
-  }
-  return dateStr;
+  return formatDateWithSetting(dateStr);
 }
 
 function parseInputDate(dateStr) {
@@ -605,6 +644,39 @@ function openSectionModal(sectionId) {
         }
       });
     }
+
+    const savedDateFormat = localStorage.getItem('dateFormat') || 'dd.mm.yyyy';
+    const radios = bodyEl.querySelectorAll('input[name="dateformat"]');
+    radios.forEach(radio => {
+      if (radio.value === savedDateFormat) {
+        radio.checked = true;
+      }
+      radio.addEventListener('change', function() {
+        const selectedFormat = this.value;
+        localStorage.setItem('dateFormat', selectedFormat);
+        
+        const sourceRadios = source.querySelectorAll('input[name="dateformat"]');
+        sourceRadios.forEach(sr => {
+          if (sr.value === selectedFormat) {
+            sr.checked = true;
+          }
+        });
+        
+        if (typeof window.triggerChatListRender === 'function') window.triggerChatListRender();
+        if (typeof window.triggerVotingListRender === 'function') window.triggerVotingListRender();
+        if (typeof window.triggerTasksListRender === 'function') window.triggerTasksListRender();
+        
+        if (bodyEl.getAttribute('data-topic-detail-open') === '1') {
+          const kind = bodyEl.getAttribute('data-topic-source-kind');
+          const topicId = bodyEl.getAttribute('data-active-topic-id');
+          const sourceViewHtml = bodyEl.__sourceViewHtml;
+          const titleText = bodyEl.getAttribute('data-topic-source-title');
+          if (kind && topicId && typeof renderTopicDetail === 'function') {
+            renderTopicDetail(kind, topicId, sourceViewHtml, titleText);
+          }
+        }
+      });
+    });
   }
 }
 
@@ -1900,27 +1972,12 @@ function initTopicDetailViews() {
     var inactive = topic.status !== 'in_process';
 
     var otherMessages = topic.messages || [];
-    if (otherMessages.length > 0) {
-      otherMessages = otherMessages.slice(1);
-    }
-    
-    var messagesListHtml = otherMessages.map(function(msg) {
-      var authorName = msg.author || 'User';
-      var text = msg.text || '';
-      var parentLink = '';
-      if (msg.parentID) {
-        parentLink = '<div style="font-size:0.78rem; color:var(--text-soft); margin-bottom: 2px;">In reply to parent message #' + msg.parentID + '</div>';
-      }
-      return '<div class="topic-message-card" id="msg-' + msg.id + '" style="margin-bottom: 8px; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); text-align: left;">' +
-               parentLink +
-               '<div class="topic-message-author" style="font-weight:600; font-size:0.85rem; color:var(--text-muted); margin-bottom:2px;">' + authorName + '</div>' +
-               '<div class="topic-message-text" style="font-size:0.92rem; color:var(--text);">' + escapeHtml(text) + '</div>' +
-             '</div>';
-    }).join('');
+    var firstMsg = otherMessages[0];
+    var firstMsgId = firstMsg ? firstMsg.id : null;
+    var otherMessagesSliced = otherMessages.length > 0 ? otherMessages.slice(1) : [];
+    var currentUserId = safeGetStorage('userId') || "1";
 
-    if (!messagesListHtml) {
-      messagesListHtml = '<div style="color:var(--text-muted); font-style:italic; font-size:0.88rem; padding: 4px;">No messages in this discussion.</div>';
-    }
+    var messagesListHtml = renderDiscussionMessages(otherMessagesSliced, currentUserId, firstMsgId);
 
     return '' +
       '<div class="topic-detail-card">' +
@@ -2000,9 +2057,19 @@ function initTopicDetailViews() {
         '</div>' +
         
         '<div class="voting-discussion-container" style="display: none; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px;">' +
-          '<div class="topic-detail-block-title" style="margin-bottom: 12px; font-weight: 700; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Previous Discussion Messages</div>' +
-          '<div class="topic-message-list" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">' +
+          '<div class="topic-detail-block-title" style="margin-bottom: 12px; font-weight: 700; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Discussion Thread</div>' +
+          '<div class="topic-message-list" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">' +
             messagesListHtml +
+          '</div>' +
+          '<div class="topic-detail-block" style="border: none; padding: 0;">' +
+            '<div class="topic-input-row">' +
+              '<input type="text" placeholder="Write a message..." style="width: 100%;" />' +
+            '</div>' +
+            '<div class="topic-detail-actions" style="margin-top: 8px;">' +
+              '<div class="topic-detail-actions-right">' +
+                '<button type="button" class="topic-send-btn">Send</button>' +
+              '</div>' +
+            '</div>' +
           '</div>' +
         '</div>' +
       '</div>';
@@ -2030,6 +2097,79 @@ function initTopicDetailViews() {
         return '<button type="button" class="' + extraClasses + '" data-reaction="' + choice.value + '" data-msg-id="' + msg.id + '"' + disabledAttr + '>' + choice.label + '</button>';
       }).join('') +
     '</div>';
+  }
+
+  function renderDiscussionMessages(messages, currentUserId, firstMessageId) {
+    if (!messages || messages.length === 0) {
+      return '<div style="color:var(--text-muted); font-style:italic; font-size:0.88rem; padding: 4px;">No messages in this discussion.</div>';
+    }
+
+    return messages.map(function(msg, index) {
+      var msgIndex = index + 1;
+      var existingReactions = '';
+      if (msg.reactions && msg.reactions.length > 0) {
+        var grouped = {};
+        msg.reactions.forEach(function(r) {
+          if (r.type) {
+            if (!grouped[r.type]) {
+              grouped[r.type] = {
+                emoji: r.emoji || reactionEmojis[r.type] || '👍',
+                uids: [],
+                count: 0
+              };
+            }
+            if (r.uid) {
+              grouped[r.type].uids.push(r.uid);
+            }
+            grouped[r.type].count++;
+          }
+        });
+
+        var reactionOrder = ['good', 'funny', 'flood', 'rude', 'fool'];
+        reactionOrder.forEach(function(key) {
+          var g = grouped[key];
+          if (g) {
+            var uidsAttr = g.uids.join(',');
+            var label = g.emoji + (g.count > 1 ? ' ' + g.count : '');
+            existingReactions += '<span class="reaction-bubble" data-uids="' + uidsAttr + '">' + label + '</span>';
+          }
+        });
+      }
+      
+      var parentLinkHtml = '';
+      if (msg.parentID) {
+        var isReplyToFirst = firstMessageId && (msg.parentID === firstMessageId);
+        if (!isReplyToFirst) {
+          var parentMsg = messages.find(function(m) { return m.id === msg.parentID; });
+          var parentAuthor = parentMsg ? parentMsg.author : ('User ' + msg.parentID);
+          parentLinkHtml = '<div class="topic-message-parent-link">In reply to <span class="parent-link" data-parent-id="' + msg.parentID + '">' + parentAuthor + '</span></div>';
+        }
+      }
+
+      var isOwnMessage = (msg.uid || '').toString() === currentUserId.toString();
+      var reactButtonHtml = '';
+      if (!isOwnMessage) {
+        reactButtonHtml = 
+          '<div class="reaction-wrap">' +
+            '<button type="button" class="topic-inline-btn react-toggle-btn" data-reaction-menu="' + msg.id + '">React</button>' +
+            renderReactionMenu(msg, currentUserId) +
+          '</div>';
+      }
+
+      var replyBtnHtml = '<button type="button" class="topic-inline-btn reply-btn" data-msg-id="' + msg.id + '" data-author="' + msg.author + '">Reply</button>';
+
+      return '' +
+      '<div class="topic-message-card" id="msg-' + msg.id + '" data-msg-id="' + msg.id + '">' +
+        '<div class="topic-message-author">' + msg.author + '</div>' +
+        parentLinkHtml +
+        '<div class="topic-message-text">' + msg.text + '</div>' +
+        '<div class="topic-message-actions">' +
+          replyBtnHtml +
+          existingReactions + 
+          reactButtonHtml +
+        '</div>' +
+      '</div>';
+    }).join('');
   }
 
   function renderChatTopic(topic) {
@@ -2189,73 +2329,7 @@ function initTopicDetailViews() {
         '<div class="topic-detail-block">' +
           '<div class="topic-detail-block-title">Messages</div>' +
           '<div class="topic-message-list">' +
-            otherMessages.map(function(msg, index) {
-              var msgIndex = index + 1;
-              var existingReactions = '';
-              if (msg.reactions && msg.reactions.length > 0) {
-                var grouped = {};
-                msg.reactions.forEach(function(r) {
-                  if (r.type) {
-                    if (!grouped[r.type]) {
-                      grouped[r.type] = {
-                        emoji: r.emoji,
-                        uids: [],
-                        count: 0
-                      };
-                    }
-                    if (r.uid) {
-                      grouped[r.type].uids.push(r.uid);
-                    }
-                    grouped[r.type].count++;
-                  }
-                });
- 
-                var reactionOrder = ['good', 'funny', 'flood', 'rude', 'fool'];
-                reactionOrder.forEach(function(key) {
-                  var g = grouped[key];
-                  if (g) {
-                    var uidsAttr = g.uids.join(',');
-                    var label = g.emoji + (g.count > 1 ? ' ' + g.count : '');
-                    existingReactions += '<span class="reaction-bubble" data-uids="' + uidsAttr + '">' + label + '</span>';
-                  }
-                });
-              }
-              
-              var parentLinkHtml = '';
-              if (msg.parentID) {
-                var firstMsg = topic.messages[0];
-                var isReplyToFirst = firstMsg && (msg.parentID === firstMsg.id);
-                if (!isReplyToFirst) {
-                  var parentMsg = topic.messages.find(function(m) { return m.id === msg.parentID; });
-                  var parentAuthor = parentMsg ? parentMsg.author : ('User ' + msg.parentID);
-                  parentLinkHtml = '<div class="topic-message-parent-link">In reply to <span class="parent-link" data-parent-id="' + msg.parentID + '">' + parentAuthor + '</span></div>';
-                }
-              }
- 
-              var isOwnMessage = (msg.uid || '').toString() === currentUserId.toString();
-              var reactButtonHtml = '';
-              if (!isOwnMessage) {
-                reactButtonHtml = 
-                  '<div class="reaction-wrap">' +
-                    '<button type="button" class="topic-inline-btn react-toggle-btn" data-reaction-menu="' + msgIndex + '">React</button>' +
-                    renderReactionMenu(msg, currentUserId) +
-                  '</div>';
-              }
- 
-              var replyBtnHtml = '<button type="button" class="topic-inline-btn reply-btn" data-msg-id="' + msg.id + '" data-author="' + msg.author + '">Reply</button>';
- 
-              return '' +
-              '<div class="topic-message-card" id="msg-' + msg.id + '" data-msg-id="' + msg.id + '">' +
-                '<div class="topic-message-author">' + msg.author + '</div>' +
-                parentLinkHtml +
-                '<div class="topic-message-text">' + msg.text + '</div>' +
-                '<div class="topic-message-actions">' +
-                  replyBtnHtml +
-                  existingReactions + 
-                  reactButtonHtml +
-                '</div>' +
-              '</div>';
-            }).join('') +
+            renderDiscussionMessages(otherMessages, currentUserId, firstMsg ? firstMsg.id : null) +
           '</div>' +
         '</div>' +
  
@@ -2299,7 +2373,7 @@ function initTopicDetailViews() {
 
         '<div class="topic-detail-meta" style="position: relative; margin-bottom: 14px;">' +
           '<div class="topic-detail-meta-item-wrapper" style="position:relative;">' +
-            '<button type="button" class="topic-detail-meta-item" data-meta="Microcommunity" id="create-meta-microcommunity">' +
+            '<button type="button" class="topic-detail-meta-item" data-meta="Microcommunity" id="create-meta-microcommunity" disabled>' +
               '<span class="topic-detail-meta-label">Micro&shy;community</span>' +
               '<span class="topic-detail-meta-value" id="create-val-microcommunity">0 members</span>' +
             '</button>' +
@@ -2312,17 +2386,17 @@ function initTopicDetailViews() {
             '<span class="topic-detail-meta-label">📍</span>' +
             '<span class="topic-detail-meta-value geo-meta-value" id="create-val-geo">47.55, 7.61</span>' +
           '</button>' +
-          '<button type="button" class="topic-detail-meta-item" data-meta="Relevance" id="create-meta-relevance">' +
+          '<button type="button" class="topic-detail-meta-item" data-meta="Relevance" id="create-meta-relevance" disabled>' +
             '<span class="topic-detail-meta-tiny" id="create-tiny-relevance"></span>' +
             '<span class="topic-detail-meta-label">Relevance</span>' +
             '<span class="topic-detail-meta-value" id="create-val-relevance">N/A</span>' +
           '</button>' +
-          '<button type="button" class="topic-detail-meta-item" data-meta="ISR-score" id="create-meta-isr">' +
+          '<button type="button" class="topic-detail-meta-item" data-meta="ISR-score" id="create-meta-isr" disabled>' +
             '<span class="topic-detail-meta-tiny" id="create-tiny-isr"></span>' +
             '<span class="topic-detail-meta-label">ISR-score</span>' +
             '<span class="topic-detail-meta-value" id="create-val-isr">N/A</span>' +
           '</button>' +
-          '<button type="button" class="topic-detail-meta-item" data-meta="Expertise" id="create-meta-expertise">' +
+          '<button type="button" class="topic-detail-meta-item" data-meta="Expertise" id="create-meta-expertise" disabled>' +
             '<span class="topic-detail-meta-label">Expertise</span>' +
             '<span class="topic-detail-meta-value" id="create-val-expertise">None</span>' +
           '</button>' +
@@ -2536,27 +2610,11 @@ function initTopicDetailViews() {
     }
 
     var otherMessages = topic.messages || [];
-    if (otherMessages.length > 0) {
-      otherMessages = otherMessages.slice(1);
-    }
-    
-    var messagesListHtml = otherMessages.map(function(msg) {
-      var authorName = msg.author || 'User';
-      var text = msg.text || '';
-      var parentLink = '';
-      if (msg.parentID) {
-        parentLink = '<div style="font-size:0.78rem; color:var(--text-soft); margin-bottom: 2px;">In reply to parent message #' + msg.parentID + '</div>';
-      }
-      return '<div class="topic-message-card" id="msg-' + msg.id + '" style="margin-bottom: 8px; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); text-align: left;">' +
-               parentLink +
-               '<div class="topic-message-author" style="font-weight:600; font-size:0.85rem; color:var(--text-muted); margin-bottom:2px;">' + authorName + '</div>' +
-               '<div class="topic-message-text" style="font-size:0.92rem; color:var(--text);">' + escapeHtml(text) + '</div>' +
-             '</div>';
-    }).join('');
+    var firstMsg = otherMessages[0];
+    var firstMsgId = firstMsg ? firstMsg.id : null;
+    var otherMessagesSliced = otherMessages.length > 0 ? otherMessages.slice(1) : [];
 
-    if (!messagesListHtml) {
-      messagesListHtml = '<div style="color:var(--text-muted); font-style:italic; font-size:0.88rem; padding: 4px;">No messages in this discussion.</div>';
-    }
+    var messagesListHtml = renderDiscussionMessages(otherMessagesSliced, currentUserId, firstMsgId);
 
     var otherOptions = (topic.options || []).filter(function(option, optIdx) {
       return optIdx !== topic.winning_option_index;
@@ -2737,9 +2795,19 @@ function initTopicDetailViews() {
         '</div>' +
 
         '<div class="tasks-discussion-container" style="display: none; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px;">' +
-          '<div class="topic-detail-block-title" style="margin-bottom: 12px; font-weight: 700; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Previous Discussion Messages</div>' +
-          '<div class="topic-message-list" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">' +
+          '<div class="topic-detail-block-title" style="margin-bottom: 12px; font-weight: 700; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Discussion Thread</div>' +
+          '<div class="topic-message-list" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">' +
             messagesListHtml +
+          '</div>' +
+          '<div class="topic-detail-block" style="border: none; padding: 0;">' +
+            '<div class="topic-input-row">' +
+              '<input type="text" placeholder="Write a message..." style="width: 100%;" />' +
+            '</div>' +
+            '<div class="topic-detail-actions" style="margin-top: 8px;">' +
+              '<div class="topic-detail-actions-right">' +
+                '<button type="button" class="topic-send-btn">Send</button>' +
+              '</div>' +
+            '</div>' +
           '</div>' +
         '</div>' +
 
@@ -2771,6 +2839,140 @@ function initTopicDetailViews() {
     let currentDiscData = null;
     let cachedMemberData = null;
     let activeModalType = null;
+    let replyToMsgId = null;
+
+    function bindDiscussionInteractionHandlers(topicId, container, db, currentUserId) {
+      // 1. Bind Parent Message Link Scrolling & Flashing
+      container.querySelectorAll('.parent-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const parentId = this.getAttribute('data-parent-id');
+          const targetCard = container.querySelector('#msg-' + parentId);
+          if (targetCard) {
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Flash Highlight Animation
+            targetCard.classList.remove('highlighted');
+            void targetCard.offsetWidth; // Force reflow
+            targetCard.classList.add('highlighted');
+          }
+        });
+      });
+
+      // 2. Bind Live Reply Actions
+      const sendBtn = container.querySelector('.topic-send-btn');
+      const inputEl = container.querySelector('.topic-input-row input');
+
+      const replyButtons = container.querySelectorAll('.reply-btn');
+      replyButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const msgId = this.getAttribute('data-msg-id');
+          const author = this.getAttribute('data-author');
+
+          replyToMsgId = isNaN(msgId) ? msgId : parseInt(msgId, 10);
+          if (inputEl) {
+            inputEl.placeholder = "Reply to " + author + "...";
+            inputEl.focus();
+          }
+        });
+      });
+
+      if (sendBtn && inputEl) {
+        sendBtn.onclick = async function() {
+          const text = inputEl.value.trim();
+          if (!text) return;
+
+          try {
+            const newMsg = {
+              uid: currentUserId,
+              text: text,
+              timestamp: new Date().toISOString(),
+              marks: []
+            };
+            if (replyToMsgId !== null) {
+              newMsg.parentID = replyToMsgId;
+            }
+
+            const batch = db.batch();
+            const newMsgRef = db.collection("discussions").doc(topicId).collection("messages").doc();
+            batch.set(newMsgRef, newMsg);
+
+            const discRef = db.collection("discussions").doc(topicId);
+            batch.update(discRef, {
+              message_count: firebase.firestore.FieldValue.increment(1),
+              last_message_sender_name: window.userCache[currentUserId] || 'User',
+              last_message_sender_uid: currentUserId,
+              last_message_text: text,
+              last_message_timestamp: new Date().toISOString()
+            });
+
+            // Also check if there's an issue ref in issues collection to sync its message metadata
+            const issueRef = db.collection("issues").doc(topicId);
+            const issueSnap = await issueRef.get();
+            if (issueSnap.exists) {
+              batch.update(issueRef, {
+                message_count: firebase.firestore.FieldValue.increment(1),
+                last_message_sender_name: window.userCache[currentUserId] || 'User',
+                last_message_sender_uid: currentUserId,
+                last_message_text: text,
+                last_message_timestamp: new Date().toISOString()
+              });
+            }
+
+            await batch.commit();
+
+            inputEl.value = "";
+            inputEl.placeholder = "Write a message...";
+            replyToMsgId = null;
+          } catch (err) {
+            console.error("Error sending message:", err);
+          }
+        };
+
+        inputEl.onkeydown = function(e) {
+          if (e.key === 'Enter') {
+            sendBtn.click();
+          }
+        };
+      }
+
+      // 3. Bind Reaction Toggle Buttons
+      container.querySelectorAll('.react-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          
+          // Close all other reaction menus first
+          container.querySelectorAll('.reaction-menu').forEach(menu => {
+            if (menu !== this.nextElementSibling) {
+              menu.hidden = true;
+            }
+          });
+
+          const menu = this.nextElementSibling;
+          if (menu) {
+            menu.hidden = !menu.hidden;
+          }
+        });
+      });
+
+      // 4. Bind Reaction Menu item clicks
+      container.querySelectorAll('.reaction-choice-btn').forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const msgId = this.getAttribute('data-msg-id');
+          const reactionType = this.getAttribute('data-reaction');
+          if (!msgId || !reactionType) return;
+
+          // Close the menu immediately
+          const menu = this.closest('.reaction-menu');
+          if (menu) menu.hidden = true;
+
+          await toggleReaction(msgId, reactionType);
+        });
+      });
+    }
 
     // Clean up any existing listeners
     if (activeDetailListener) {
@@ -2787,11 +2989,7 @@ function initTopicDetailViews() {
 
     function formatDeadlineDisplay(endsStr) {
       if (!endsStr || endsStr === "Ongoing") return "Ongoing";
-      const parts = endsStr.split('-');
-      if (parts.length === 3) {
-        return `${parts[2]}.${parts[1]}.${parts[0]}`;
-      }
-      return endsStr;
+      return formatDateWithSetting(endsStr);
     }
 
     function closeOverlayModal() {
@@ -3336,7 +3534,6 @@ function initTopicDetailViews() {
         let currentMessagesRaw = null;
         let isRendering = false;
         let pendingRender = false;
-        let replyToMsgId = null;
 
         // Fetch missing user profiles in parallel & render UI
         async function updateUI() {
@@ -3493,134 +3690,14 @@ function initTopicDetailViews() {
             modalBody.innerHTML = renderChatTopic(topicData);
             bindDetailViewButtons(titleText, disc, true);
 
-            // 1. Bind Parent Message Link Scrolling & Flashing
-            modalBody.querySelectorAll('.parent-link').forEach(link => {
-              link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const parentId = parseInt(this.getAttribute('data-parent-id'));
-                const targetCard = modalBody.querySelector('#msg-' + parentId);
-                if (targetCard) {
-                  targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                  
-                  // Flash Highlight Animation
-                  targetCard.classList.remove('highlighted');
-                  void targetCard.offsetWidth; // Force reflow to restart CSS animation
-                  targetCard.classList.add('highlighted');
-                }
-              });
-            });
-
-            // 2. Bind Live Reply Actions
-            const sendBtn = modalBody.querySelector('.topic-send-btn');
-            const inputEl = modalBody.querySelector('.topic-detail-block input');
-
-            const replyButtons = modalBody.querySelectorAll('.reply-btn');
-            replyButtons.forEach(btn => {
-              btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const msgId = this.getAttribute('data-msg-id');
-                const author = this.getAttribute('data-author');
-
-                replyToMsgId = parseInt(msgId);
-                if (inputEl) {
-                  inputEl.placeholder = "Reply to " + author + "...";
-                  inputEl.focus();
-                }
-              });
-            });
-
-
-
-            if (sendBtn && inputEl) {
-              sendBtn.onclick = async function() {
-                const text = inputEl.value.trim();
-                if (!text) return;
-
-                try {
-                  const newMsg = {
-                    uid: currentUserId,
-                    text: text,
-                    timestamp: new Date().toISOString(),
-                    marks: []
-                  };
-                  if (replyToMsgId !== null) {
-                    newMsg.parentID = replyToMsgId;
-                  }
-
-                  const batch = db.batch();
-                  const newMsgRef = db.collection("discussions").doc(topicId).collection("messages").doc();
-                  batch.set(newMsgRef, newMsg);
-
-                  const discRef = db.collection("discussions").doc(topicId);
-                  batch.update(discRef, {
-                    message_count: firebase.firestore.FieldValue.increment(1),
-                    last_message_sender_name: window.userCache[currentUserId] || 'User',
-                    last_message_sender_uid: currentUserId,
-                    last_message_text: text,
-                    last_message_timestamp: new Date().toISOString()
-                  });
-
-                  await batch.commit();
-
-                  inputEl.value = "";
-                  inputEl.placeholder = "Write a message...";
-                  replyToMsgId = null;
-                } catch (err) {
-                  console.error("Error sending message:", err);
-                }
-              };
-
-              inputEl.onkeydown = function(e) {
-                if (e.key === 'Enter') {
-                  sendBtn.click();
-                }
-              };
-            }
-
-            // 3. Bind Reaction Toggle Buttons
-            modalBody.querySelectorAll('.react-toggle-btn').forEach(btn => {
-              btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                
-                // Close all other reaction menus first
-                modalBody.querySelectorAll('.reaction-menu').forEach(menu => {
-                  if (menu !== this.nextElementSibling) {
-                    menu.hidden = true;
-                  }
-                });
-
-                const menu = this.nextElementSibling;
-                if (menu) {
-                  menu.hidden = !menu.hidden;
-                }
-              });
-            });
-
-            // 4. Bind Reaction Menu item clicks
-            modalBody.querySelectorAll('.reaction-choice-btn').forEach(btn => {
-              btn.addEventListener('click', async function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                const msgId = this.getAttribute('data-msg-id');
-                const reactionType = this.getAttribute('data-reaction');
-                if (!msgId || !reactionType) return;
-
-                // Close the menu immediately
-                const menu = this.closest('.reaction-menu');
-                if (menu) menu.hidden = true;
-
-                await toggleReaction(msgId, reactionType);
-              });
-            });
-
             // 5. Bind Proposal option details modal and creation modal
             bindProposalInteractions(disc, topicId);
 
             // 6. Bind chat metadata card click handlers
             bindChatMetaButtons(disc);
 
-            // Bind reaction bubbles
             bindReactionBubbles();
+            bindDiscussionInteractionHandlers(topicId, modalBody, db, currentUserId);
             
             // 7. Refresh open sub-modal if one is active
             refreshOpenModal();
@@ -3973,23 +4050,14 @@ function initTopicDetailViews() {
             const expertiseDepth = disc.expertise_depth || "None";
             const relevanceScores = disc.relevance_scores || {};
 
-            // Fetch messages for the previous discussion
-            let messages = [];
-            try {
-              const msgsSnap = await db.collection("discussions").doc(topicId).collection("messages").orderBy("timestamp", "asc").get();
-              msgsSnap.forEach(doc => {
-                messages.push(Object.assign({ id: doc.id }, doc.data()));
-              });
-            } catch (err) {
-              console.error("Error fetching messages for voting topic:", err);
-            }
+            const messages = currentMessagesRaw || [];
 
             // Resolve names for all uids
             const uidsToResolve = new Set();
             if (issue.submitter_id) uidsToResolve.add(issue.submitter_id.toString());
             
             const uniqueUids = rawParticipants.map(uid => uid.toString()).filter(uid => uid && uid !== 'system');
-            const msgUids = messages.map(m => m.uid.toString()).filter(uid => uid && uid !== 'system');
+            const msgUids = messages.map(m => (m.uid || '').toString()).filter(uid => uid && uid !== 'system');
             const combinedUids = Array.from(new Set(uniqueUids.concat(msgUids)));
 
             combinedUids.forEach(uid => uidsToResolve.add(uid.toString()));
@@ -4001,9 +4069,35 @@ function initTopicDetailViews() {
 
             await resolveUserNames(Array.from(uidsToResolve));
 
-            // Map messages with author display names
+            // Map messages with display names and resolved reactions
+            const resolvedMessages = [];
+            let indexCounter = 0;
             messages.forEach(msg => {
-              msg.author = window.userCache[msg.uid] || ('User ' + msg.uid);
+              const uid = msg.uid;
+              let authorName = '';
+              if (uid === 'system') {
+                authorName = 'SYSTEM';
+              } else {
+                const displayName = window.userCache[uid] || ('User ' + uid);
+                authorName = displayName + ' ID:' + uid;
+              }
+
+              const parsedReactions = (msg.marks || []).map(m => {
+                const rUid = m.uid || '';
+                const type = resolveReactionValue(m);
+                const emoji = reactionEmojis[type] || '?';
+                return { uid: rUid, type: type, emoji: emoji };
+              });
+
+              resolvedMessages.push({
+                id: msg.id || (indexCounter + 1),
+                parentID: msg.parentID,
+                uid: msg.uid,
+                author: authorName,
+                text: msg.text,
+                reactions: parsedReactions
+              });
+              indexCounter++;
             });
 
             // Get user relevance from relevanceScores map or member list fallback
@@ -4168,13 +4262,14 @@ function initTopicDetailViews() {
               expertiseDepth: expertiseDepth,
               geoposition: geopositionVal,
               options: baseOptions,
-              messages: messages
+              messages: resolvedMessages
             };
 
             // Render topic detailed HTML
             modalBody.innerHTML = renderVotingTopic(topicData);
-            bindDetailViewButtons(titleText, disc);
-            bindChatMetaButtons(disc);
+            bindDetailViewButtons(titleText, Object.assign({}, issue, disc));
+            bindChatMetaButtons(Object.assign({}, issue, disc));
+            bindDiscussionInteractionHandlers(topicId, modalBody, db, currentUserId);
 
             // Bind discussion toggle button click handler
             const discussionToggleBtn = modalBody.querySelector('.voting-discussion-toggle-btn');
@@ -4272,10 +4367,9 @@ function initTopicDetailViews() {
         }
 
         const discUnsubscribe = db.collection("discussions").doc(topicId).onSnapshot(doc => {
-          if (doc.exists) {
-            currentDiscData = doc.data();
-            updateVotingUI();
-          }
+          currentDiscData = doc.exists ? doc.data() : {};
+          ensureTopicLocation(currentDiscData, topicId);
+          updateVotingUI();
         }, err => {
           console.error("Listen to discussion details in voting failed:", err);
         });
@@ -4286,14 +4380,28 @@ function initTopicDetailViews() {
             return;
           }
           currentIssueData = doc.data();
+          ensureTopicLocation(currentIssueData, topicId);
           updateVotingUI();
         }, err => {
           console.error("Listen to issue details failed:", err);
         });
 
+        const messagesUnsubscribe = db.collection("discussions").doc(topicId).collection("messages").orderBy("timestamp", "asc")
+          .onSnapshot(async snap => {
+            const rawMessages = [];
+            snap.forEach(mDoc => {
+              rawMessages.push(Object.assign({ id: mDoc.id }, mDoc.data()));
+            });
+            currentMessagesRaw = rawMessages;
+            updateVotingUI();
+          }, err => {
+            console.error("Listen to messages in voting failed:", err);
+          });
+
         activeDetailListener = () => {
           if (issueUnsubscribe) issueUnsubscribe();
           if (discUnsubscribe) discUnsubscribe();
+          if (messagesUnsubscribe) messagesUnsubscribe();
         };
 
       } catch (err) {
@@ -4350,6 +4458,37 @@ function initTopicDetailViews() {
             if (issue.submitter_id) uidsToResolve.add(issue.submitter_id.toString());
             combinedUids.forEach(uid => uidsToResolve.add(uid.toString()));
             await resolveUserNames(Array.from(uidsToResolve));
+
+            // Map messages with display names and resolved reactions
+            const resolvedMessages = [];
+            let indexCounter = 0;
+            messages.forEach(msg => {
+              const uid = msg.uid;
+              let authorName = '';
+              if (uid === 'system') {
+                authorName = 'SYSTEM';
+              } else {
+                const displayName = window.userCache[uid] || ('User ' + uid);
+                authorName = displayName + ' ID:' + uid;
+              }
+
+              const parsedReactions = (msg.marks || []).map(m => {
+                const rUid = m.uid || '';
+                const type = resolveReactionValue(m);
+                const emoji = reactionEmojis[type] || '?';
+                return { uid: rUid, type: type, emoji: emoji };
+              });
+
+              resolvedMessages.push({
+                id: msg.id || (indexCounter + 1),
+                parentID: msg.parentID,
+                uid: msg.uid,
+                author: authorName,
+                text: msg.text,
+                reactions: parsedReactions
+              });
+              indexCounter++;
+            });
 
             const currentUserId = safeGetStorage('userId');
             let userRelevance = "N/A";
@@ -4419,15 +4558,16 @@ function initTopicDetailViews() {
               comments: comments,
               options: issue.options || [],
               winning_option_index: issue.winning_option_index !== undefined ? issue.winning_option_index : null,
-              messages: messages
+              messages: resolvedMessages
             };
 
-            currentDiscData = discData || issue; // For deadline modal, etc.
+            currentDiscData = Object.assign({}, issue, discData); // For deadline modal, etc.
 
             modalBody.innerHTML = renderTasksTopic(topicData);
-            bindDetailViewButtons(titleText, discData || issue);
-            bindChatMetaButtons(discData || issue);
+            bindDetailViewButtons(titleText, Object.assign({}, issue, discData));
+            bindChatMetaButtons(Object.assign({}, issue, discData));
             bindTaskModalInteractions(topicId, issue);
+            bindDiscussionInteractionHandlers(topicId, modalBody, db, currentUserId);
 
             // Bind discussion and other options toggle buttons click handlers
             const discussionToggleBtn = modalBody.querySelector('.tasks-discussion-toggle-btn');
@@ -4462,20 +4602,11 @@ function initTopicDetailViews() {
           }
         }
 
-        // Fetch messages once
-        let messages = [];
-        const msgsSnap = await db.collection("discussions").doc(topicId).collection("messages").orderBy("timestamp", "asc").get();
-        msgsSnap.forEach(doc => {
-          messages.push(Object.assign({ id: doc.id }, doc.data()));
-        });
-        currentMessagesRaw = messages;
-
         // Sync discussions onSnapshot
         const discUnsubscribe = db.collection("discussions").doc(topicId).onSnapshot(doc => {
-          if (doc.exists) {
-            currentDiscRaw = doc.data();
-            updateTasksUI();
-          }
+          currentDiscRaw = doc.exists ? doc.data() : {};
+          ensureTopicLocation(currentDiscRaw, topicId);
+          updateTasksUI();
         });
 
         // Sync issues onSnapshot
@@ -4485,12 +4616,25 @@ function initTopicDetailViews() {
             return;
           }
           currentIssueRaw = doc.data();
+          ensureTopicLocation(currentIssueRaw, topicId);
           updateTasksUI();
         });
+
+        // Sync messages onSnapshot
+        const messagesUnsubscribe = db.collection("discussions").doc(topicId).collection("messages").orderBy("timestamp", "asc")
+          .onSnapshot(snap => {
+            const rawMessages = [];
+            snap.forEach(mDoc => {
+              rawMessages.push(Object.assign({ id: mDoc.id }, mDoc.data()));
+            });
+            currentMessagesRaw = rawMessages;
+            updateTasksUI();
+          });
 
         activeDetailListener = () => {
           if (issueUnsubscribe) issueUnsubscribe();
           if (discUnsubscribe) discUnsubscribe();
+          if (messagesUnsubscribe) messagesUnsubscribe();
         };
 
       } catch (err) {
@@ -5786,6 +5930,16 @@ function initTopicDetailViews() {
             });
           }
 
+          // Enable metadata buttons
+          const mcBtnEl = modalBody.querySelector('#create-meta-microcommunity');
+          const relBtnEl = modalBody.querySelector('#create-meta-relevance');
+          const isrBtnEl = modalBody.querySelector('#create-meta-isr');
+          const expBtnEl = modalBody.querySelector('#create-meta-expertise');
+          if (mcBtnEl) mcBtnEl.removeAttribute('disabled');
+          if (relBtnEl) relBtnEl.removeAttribute('disabled');
+          if (isrBtnEl) isrBtnEl.removeAttribute('disabled');
+          if (expBtnEl) expBtnEl.removeAttribute('disabled');
+
           if (submitBtn) {
             submitBtn.removeAttribute('disabled');
           }
@@ -6972,7 +7126,7 @@ function initTopicDetailViews() {
            uid: currentUserId,
            author_name: displayName,
            text: text,
-           timestamp: new Date().toLocaleDateString('de-CH') // e.g. "06.06.2026"
+           timestamp: formatDateWithSetting(new Date()) // e.g. "06.06.2026"
         };
 
         try {
@@ -7043,7 +7197,7 @@ function initTopicDetailViews() {
              uid: currentUserId,
              author_name: displayName,
              text: text,
-             timestamp: new Date().toLocaleDateString('de-CH'),
+             timestamp: formatDateWithSetting(new Date()),
              parent_id: parentId
           };
 
@@ -7075,7 +7229,7 @@ function initTopicDetailViews() {
              uid: currentUserId,
              author_name: displayName,
              text: text,
-             timestamp: new Date().toLocaleDateString('de-CH'),
+             timestamp: formatDateWithSetting(new Date()),
              parent_id: parentId
           };
 
@@ -7207,7 +7361,7 @@ function initTopicDetailViews() {
           uid: currentUserId,
           author_name: displayName,
           text: text,
-          timestamp: new Date().toLocaleDateString('de-CH')
+          timestamp: formatDateWithSetting(new Date())
         };
 
         try {
@@ -7952,6 +8106,7 @@ function initRealTimeDashboardSync(db, storedUid) {
   // Voting state variables
   let cachedVotingDocs = [];
   let votingSortMode = 'new';
+  let cachedTasksDocs = [];
 
   function formatDateToString(date) {
     const y = date.getFullYear();
@@ -7962,11 +8117,7 @@ function initRealTimeDashboardSync(db, storedUid) {
 
   function formatDeadlineDisplay(endsStr) {
     if (!endsStr || endsStr === "Ongoing") return "Ongoing";
-    const parts = endsStr.split('-');
-    if (parts.length === 3) {
-      return `${parts[2]}.${parts[1]}.${parts[0]}`;
-    }
-    return endsStr;
+    return formatDateWithSetting(endsStr);
   }
 
   async function checkAndTransitionExpiredDiscussion(topicId, freshData) {
@@ -8050,6 +8201,103 @@ function initRealTimeDashboardSync(db, storedUid) {
     }
   }
 
+  function getTopicCategoryChip(title) {
+    const t = (title || '').toLowerCase();
+    if (t.includes('elevator') || t.includes('parking') || t.includes('ladder') || t.includes('flower') || t.includes('fence') || t.includes('door') || t.includes('housing') || t.includes('osbb') || t.includes('charger') || t.includes('ev') || t.includes('room') || t.includes('lobby') || t.includes('chess') || t.includes('club')) {
+      return '<span class="community-tag">Building</span>';
+    }
+    if (t.includes('dance') || t.includes('choreography') || t.includes('spring') || t.includes('festival') || t.includes('celebration') || t.includes('party') || t.includes('showcase') || t.includes('studio') || t.includes('rent') || t.includes('art') || t.includes('music') || t.includes('social') || t.includes('gathering')) {
+      return '<span class="community-tag community-tag-culture">Culture</span>';
+    }
+    if (t.includes('school') || t.includes('trip') || t.includes('education') || t.includes('child') || t.includes('kid') || t.includes('program') || t.includes('learning') || t.includes('class') || t.includes('course') || t.includes('camp') || t.includes('after-school')) {
+      return '<span class="community-tag">Education</span>';
+    }
+    if (t.includes('api') || t.includes('blocker') || t.includes('sprint') || t.includes('ci/cd') || t.includes('github') || t.includes('code') || t.includes('tech') || t.includes('server') || t.includes('migration') || t.includes('web') || t.includes('developer') || t.includes('software') || t.includes('database') || t.includes('app')) {
+      return '<span class="community-tag community-tag-dev">Dev</span>';
+    }
+    if (t.includes('transport') || t.includes('bus') || t.includes('route') || t.includes('district') || t.includes('budget') || t.includes('renovation') || t.includes('park') || t.includes('bike') || t.includes('avenue') || t.includes('city') || t.includes('street') || t.includes('public') || t.includes('road') || t.includes('lane') || t.includes('authority') || t.includes('tax')) {
+      return '<span class="community-tag community-tag-city">City</span>';
+    }
+    return '<span class="community-tag">Building</span>';
+  }
+
+  function getTopicCategoryEmoji(title) {
+    const t = (title || '').toLowerCase();
+    if (t.includes('elevator') || t.includes('parking') || t.includes('ladder') || t.includes('flower') || t.includes('fence') || t.includes('door') || t.includes('housing') || t.includes('osbb') || t.includes('charger') || t.includes('ev') || t.includes('room') || t.includes('lobby') || t.includes('chess') || t.includes('club')) {
+      return '🏠';
+    }
+    if (t.includes('dance') || t.includes('choreography') || t.includes('spring') || t.includes('festival') || t.includes('celebration') || t.includes('party') || t.includes('showcase') || t.includes('studio') || t.includes('rent') || t.includes('art') || t.includes('music') || t.includes('social') || t.includes('gathering')) {
+      return '💃';
+    }
+    if (t.includes('school') || t.includes('trip') || t.includes('education') || t.includes('child') || t.includes('kid') || t.includes('program') || t.includes('learning') || t.includes('class') || t.includes('course') || t.includes('camp') || t.includes('after-school')) {
+      return '🎒';
+    }
+    if (t.includes('api') || t.includes('blocker') || t.includes('sprint') || t.includes('ci/cd') || t.includes('github') || t.includes('code') || t.includes('tech') || t.includes('server') || t.includes('migration') || t.includes('web') || t.includes('developer') || t.includes('software') || t.includes('database') || t.includes('app')) {
+      return '💻';
+    }
+    if (t.includes('transport') || t.includes('bus') || t.includes('route') || t.includes('district') || t.includes('budget') || t.includes('renovation') || t.includes('park') || t.includes('bike') || t.includes('avenue') || t.includes('city') || t.includes('street') || t.includes('public') || t.includes('road') || t.includes('lane') || t.includes('authority') || t.includes('tax')) {
+      return '🏛️';
+    }
+    return '🏠';
+  }
+
+  function getTopicEmojiPrefix(topic, status, storedUid, isUnread) {
+    const title = topic.topic || topic.title || '';
+    const category = getTopicCategoryEmoji(title);
+    
+    const relScores = topic.relevance_scores || {};
+    const relVal = relScores[storedUid] !== undefined ? relScores[storedUid] : 0;
+    const starSymbol = relVal > 0.60 ? '⭐ ' : '';
+    
+    let statusSymbol = '';
+    const s = (status || topic.status || '').toLowerCase();
+    const t = title.toLowerCase();
+    
+    if (s === 'approved' || s === 'completed' || t.includes('fence door renew') || t.includes('bike lane on central avenue')) {
+      statusSymbol = '✅';
+    } else if (s === 'canceled' || s === 'cancelled' || t.includes('flowers near 3rd entrance')) {
+      statusSymbol = '☠️';
+    } else if (s === 'discussion' || t.includes('after-school program funding')) {
+      statusSymbol = '⬅️';
+    } else if (t.includes('elevator maintenance') || t.includes('ladders to 1st entrance') || t.includes('blocker') || t.includes('ci/cd')) {
+      statusSymbol = '🔴';
+    } else if (t.includes('choreography') || t.includes('public transport route') || t.includes('studio rental') || t.includes('chess club')) {
+      statusSymbol = '🟡';
+    } else if (isUnread) {
+      statusSymbol = '🟢';
+    } else {
+      if (relVal >= 0.8) {
+        statusSymbol = '🔴';
+      } else if (relVal >= 0.6) {
+        statusSymbol = '🟡';
+      } else {
+        statusSymbol = '🟢';
+      }
+    }
+    
+    return `${category} ${statusSymbol} ${starSymbol}`;
+  }
+
+  function ensureTopicLocation(disc, topicId) {
+    if (!disc) return;
+    if (!disc.location) {
+      let hash = 0;
+      const title = disc.topic || disc.title || topicId || "";
+      for (let i = 0; i < title.length; i++) {
+        hash = title.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      const offsetLat = ((Math.abs(hash) % 100) - 50) / 10000;
+      const offsetLon = ((Math.abs(hash >> 8) % 100) - 50) / 10000;
+      
+      disc.location = {
+        latitude: 47.5583 + offsetLat,
+        longitude: 7.6065 + offsetLon
+      };
+      disc.mu_distance_meters = 100 + (Math.abs(hash) % 150);
+      disc.sigma_decay_meters = 50 + (Math.abs(hash >> 4) % 100);
+    }
+  }
+
   function getDaysUntil(endsStr) {
     if (!endsStr) return Infinity;
     const today = new Date("2026-06-01T00:00:00");
@@ -8061,11 +8309,7 @@ function initRealTimeDashboardSync(db, storedUid) {
 
   function formatDeadline(endsStr) {
     if (!endsStr) return 'Ongoing';
-    const match = endsStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
-    if (match) {
-      return `Ends: ${match[3]}.${match[2]}.${match[1]}`;
-    }
-    return `Ends: ${endsStr}`;
+    return `Ends: ${formatDateWithSetting(endsStr)}`;
   }
 
   function sortDiscussions(docs, sortMode, uidStr) {
@@ -8151,7 +8395,7 @@ function initRealTimeDashboardSync(db, storedUid) {
       totalNewMessages += unread;
       
       const rel = (disc.relevance_scores && disc.relevance_scores[storedUid] !== undefined) ? disc.relevance_scores[storedUid] : 0;
-      if (rel > 0.50) {
+      if (rel > 0.60) {
         totalImportant++;
       }
       
@@ -8180,14 +8424,14 @@ function initRealTimeDashboardSync(db, storedUid) {
         ? disc.isr_scores[storedUid].toFixed(2)
         : ((disc.relevance_scores && disc.relevance_scores[storedUid] !== undefined) ? (disc.relevance_scores[storedUid] * 1.5).toFixed(2) : "N/A");
         
-      let dateStr = disc.last_message_timestamp ? new Date(disc.last_message_timestamp).toLocaleDateString() : '';
+      let dateStr = disc.last_message_timestamp ? formatDateWithSetting(disc.last_message_timestamp) : '';
       let nameIdStr = `${disc.last_message_sender_name || 'System'} (ID: ${disc.last_message_sender_uid || 'system'})`;
       let textStr = disc.last_message_text || '';
       
       // Self-healing check for missing last message metadata (handles empty strings as well)
       if ((!disc.last_message_text || !disc.last_message_timestamp) && !healedTopicIds.has(topicId)) {
         healedTopicIds.add(topicId);
-        dateStr = disc.created_at ? new Date(disc.created_at).toLocaleDateString() : '';
+        dateStr = disc.created_at ? formatDateWithSetting(disc.created_at) : '';
         nameIdStr = disc.creator_uid ? `Creator (ID: ${disc.creator_uid})` : 'System (ID: system)';
         textStr = 'Click to open discussion thread...';
 
@@ -8222,17 +8466,8 @@ function initRealTimeDashboardSync(db, storedUid) {
       
       const previewColor = isUnread ? 'color: var(--text); font-weight: 500;' : 'color: var(--text-muted);';
       
-      // Calculate status flags for emojis
-      const relVal = (disc.relevance_scores && disc.relevance_scores[storedUid] !== undefined) ? disc.relevance_scores[storedUid] : 0;
-      const isImportant = relVal > 0.50;
-      const days = getDaysUntil(disc.ends);
-      const isUrgent = days <= 6;
-
-      let emojiPrefix = '';
-      if (isUnread) emojiPrefix += '🟢';
-      if (isImportant) emojiPrefix += '⭐';
-      if (isUrgent) emojiPrefix += '⚡';
-      const prefix = emojiPrefix ? emojiPrefix + ' ' : '';
+      ensureTopicLocation(disc, topicId);
+      const prefix = getTopicEmojiPrefix(disc, disc.status, storedUid, isUnread);
 
       const inactiveStyle = disc.status === 'inactive' ? 'text-decoration: line-through; opacity: 0.65;' : '';
 
@@ -8301,7 +8536,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         const isUnread = unreadCount > 0;
         
         const relVal = (disc.relevance_scores && disc.relevance_scores[storedUid] !== undefined) ? disc.relevance_scores[storedUid] : 0;
-        const isImportant = relVal > 0.50;
+        const isImportant = relVal > 0.60;
         const days = getDaysUntil(disc.ends);
         const isUrgent = days <= 6;
 
@@ -8318,9 +8553,9 @@ function initRealTimeDashboardSync(db, storedUid) {
           preview.style.textDecoration = 'line-through';
           preview.style.opacity = '0.65';
         }
-        preview.addEventListener('click', () => openSectionModal('chat'));
+        preview.addEventListener('click', () => renderTopicDetail('chat', topicId, document.getElementById('section-chat').innerHTML, 'Chat'));
         
-        const dateStr = disc.last_message_timestamp ? new Date(disc.last_message_timestamp).toLocaleDateString() : '';
+        const dateStr = disc.last_message_timestamp ? formatDateWithSetting(disc.last_message_timestamp) : '';
         let textStr = disc.last_message_text || '';
         let senderName = disc.last_message_sender_name || 'System';
         
@@ -8331,6 +8566,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         
         preview.innerHTML = `
           <div class="topic-line">
+            ${getTopicCategoryChip(disc.topic)}
             <span class="topic-name">${prefix}${disc.topic}</span>
           </div>
           <div class="topic-preview" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
@@ -8371,7 +8607,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         }
         
         const rel = (issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? issue.relevance_scores[storedUid] : 0;
-        if (rel > 0.50) {
+        if (rel > 0.60) {
           totalImportant++;
         }
         
@@ -8397,34 +8633,21 @@ function initRealTimeDashboardSync(db, storedUid) {
           ? issue.isr_scores[storedUid].toFixed(2)
           : ((issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? (issue.relevance_scores[storedUid] * 1.5).toFixed(2) : "N/A");
           
-        const dateStr = issue.last_message_timestamp ? new Date(issue.last_message_timestamp).toLocaleDateString() : '';
+        const dateStr = issue.last_message_timestamp ? formatDateWithSetting(issue.last_message_timestamp) : '';
         const nameIdStr = `${issue.last_message_sender_name || 'System'} (ID: ${issue.last_message_sender_uid || 'system'})`;
         const textStr = issue.last_message_text || '';
         
         const previewColor = isUnread ? 'color: var(--text); font-weight: 500;' : 'color: var(--text-muted);';
         
-        // Calculate status flags for emojis
-        const relVal = (issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? issue.relevance_scores[storedUid] : 0;
-        const isImportant = relVal > 0.50;
-        const days = getDaysUntil(issue.ends);
-        const isUrgent = days <= 3;
-        const hasVoted = issue.votes && issue.votes[storedUid] !== undefined;
-        const shouldVoteUrgently = isUrgent && !hasVoted;
-
-        let emojiPrefix = '';
-        if (isUnread) emojiPrefix += '🟢';
-        if (isImportant) emojiPrefix += '⭐';
-        if (isUrgent) emojiPrefix += '⚡';
-        if (shouldVoteUrgently) emojiPrefix += '🚨';
-        const prefix = emojiPrefix ? emojiPrefix + ' ' : '';
-        const voteIcon = hasVoted ? '✅' : '🗳️';
+        ensureTopicLocation(issue, topicId);
+        const prefix = getTopicEmojiPrefix(issue, issue.status, storedUid, isUnread);
         const inactiveStyle = issue.status === 'inactive' ? 'text-decoration: line-through; opacity: 0.65;' : '';
 
         listHtml += `
           <button class="topic-item" data-topic-type="voting" data-topic-id="${topicId}" style="${inactiveStyle}">
             <div class="topic-header">
               <div class="topic-name-wrap">
-                <span class="topic-name">${prefix}${voteIcon} ${issue.title}</span>
+                <span class="topic-name">${prefix}${issue.title}</span>
               </div>
               <span class="topic-meta">${formatDeadline(issue.ends)} &nbsp;·&nbsp; Relevance: <b>${relevanceVal}</b> &nbsp;·&nbsp; ISR: <b>${isrVal}</b></span>
             </div>
@@ -8453,6 +8676,52 @@ function initRealTimeDashboardSync(db, storedUid) {
     };
 
     window.triggerVotingListRender = renderVotingList;
+
+    const renderTasksList = () => {
+      let taskHtml = '';
+      cachedTasksDocs.forEach(doc => {
+        const issue = doc.data();
+        const topicId = doc.id;
+        ensureTopicLocation(issue, topicId);
+        
+        const tasks = issue.tasks || [];
+        const currentUserId = safeGetStorage('userId');
+        
+        const urgentTask = getMostUrgentTask(tasks);
+        
+        const prefix = getTopicEmojiPrefix(issue, issue.status, storedUid, false);
+
+        const relevanceVal = (issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined)
+          ? (issue.relevance_scores[storedUid] * 100).toFixed(0) + "%"
+          : "N/A";
+        const isrVal = (issue.isr_scores && issue.isr_scores[storedUid] !== undefined)
+          ? issue.isr_scores[storedUid].toFixed(2)
+          : ((issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? (issue.relevance_scores[storedUid] * 1.5).toFixed(2) : "N/A");
+          
+        const secondRowHtml = urgentTask
+          ? `Next: ${urgentTask.step} (Deadline: ${formatTaskDeadline(urgentTask.deadline)})`
+          : '✅ All tasks completed';
+
+        const inactiveStyle = issue.status === 'inactive' ? 'text-decoration: line-through; opacity: 0.65;' : '';
+
+        taskHtml += `
+          <button class="topic-item" data-topic-type="tasks" data-topic-id="${topicId}" style="${inactiveStyle}">
+            <div class="topic-header" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">
+              <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 8px;">
+                <span class="topic-name" style="font-weight: 700; text-align: left;">${prefix}${issue.title}</span>
+                <span class="topic-meta" style="font-size: 0.85rem; font-weight: normal; white-space: nowrap;">Relevance: <b>${relevanceVal}</b> &nbsp;·&nbsp; ISR: <b>${isrVal}</b></span>
+              </div>
+              <span class="topic-meta" style="font-size: 0.85rem; color: var(--text-soft); font-weight: normal; text-align: left;">
+                ${secondRowHtml}
+              </span>
+            </div>
+          </button>
+        `;
+      });
+      updateTopicListContainer('tasks', taskHtml);
+    };
+
+    window.triggerTasksListRender = renderTasksList;
 
     document.addEventListener('click', function(e) {
       const target = e.target.closest('[data-chat-sort]');
@@ -8557,43 +8826,13 @@ function initRealTimeDashboardSync(db, storedUid) {
     activeIssuesCount = votingDocs.length;
     updateSummaryStrip();
     
+    cachedTasksDocs = taskDocs;
+    activeIssuesCount = votingDocs.length;
+    updateSummaryStrip();
+    
     // Render the voting issues using the aligned card formats and tags
     renderVotingList();
-    
-    let taskHtml = '';
-    taskDocs.forEach(doc => {
-      const issue = doc.data();
-      const topicId = doc.id;
-      
-      const tasks = issue.tasks || [];
-      const currentUserId = safeGetStorage('userId');
-      const hasUnfinishedUserTask = tasks.some(t => {
-        return (t.in_charge_uid || '').toString() === (currentUserId || '').toString() && t.status !== 'done';
-      });
-      
-      const urgentTask = getMostUrgentTask(tasks);
-      const isUrgent = urgentTask && isUrgentDate(urgentTask.deadline);
-      
-      const emojiPrefix = (isUrgent ? '⚠️' : '') + (hasUnfinishedUserTask ? '📋 ' : '');
-      
-      const secondRowHtml = urgentTask
-        ? `Next: ${urgentTask.step} (Deadline: ${formatTaskDeadline(urgentTask.deadline)})`
-        : '✅ All tasks completed';
-
-      const inactiveStyle = issue.status === 'inactive' ? 'text-decoration: line-through; opacity: 0.65;' : '';
-
-      taskHtml += `
-        <button class="topic-item" data-topic-type="tasks" data-topic-id="${topicId}" style="${inactiveStyle}">
-          <div class="topic-header" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
-            <span class="topic-name" style="font-weight: 700; text-align: left;">${emojiPrefix}${issue.title}</span>
-            <span class="topic-meta" style="font-size: 0.85rem; color: var(--text-soft); font-weight: normal; text-align: left;">
-              ${secondRowHtml}
-            </span>
-          </div>
-        </button>
-      `;
-    });
-    updateTopicListContainer('tasks', taskHtml);
+    renderTasksList();
     
     const dashVotingCard = document.querySelector('.dash-card[data-section="voting"]');
     if (dashVotingCard) {
@@ -8618,7 +8857,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         }
 
         const relVal = (issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? issue.relevance_scores[storedUid] : 0;
-        const isImportant = relVal > 0.50;
+        const isImportant = relVal > 0.60;
 
         if (isImportant && !hasVoted) {
           dashboardImportantNotVotedCount++;
@@ -8657,23 +8896,10 @@ function initRealTimeDashboardSync(db, storedUid) {
         if (count >= 3) return;
         const issue = doc.data();
         const topicId = doc.id;
+        ensureTopicLocation(issue, topicId);
         
         const isUnread = !openedVotingIssues[topicId];
-        
-        const relVal = (issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? issue.relevance_scores[storedUid] : 0;
-        const isImportant = relVal > 0.50;
-        const days = getDaysUntil(issue.ends);
-        const isUrgent = days <= 3;
-        const hasVoted = issue.votes && issue.votes[storedUid] !== undefined;
-        const shouldVoteUrgently = isUrgent && !hasVoted;
-
-        let emojiPrefix = '';
-        if (isUnread) emojiPrefix += '🟢';
-        if (isImportant) emojiPrefix += '⭐';
-        if (isUrgent) emojiPrefix += '⚡';
-        if (shouldVoteUrgently) emojiPrefix += '🚨';
-        const prefix = emojiPrefix ? emojiPrefix + ' ' : '';
-        const voteIcon = hasVoted ? '✅' : '🗳️';
+        const prefix = getTopicEmojiPrefix(issue, issue.status, storedUid, isUnread);
 
         const preview = document.createElement('div');
         preview.className = 'dash-card-preview';
@@ -8682,10 +8908,11 @@ function initRealTimeDashboardSync(db, storedUid) {
           preview.style.textDecoration = 'line-through';
           preview.style.opacity = '0.65';
         }
-        preview.addEventListener('click', () => openSectionModal('voting'));
+        preview.addEventListener('click', () => renderTopicDetail('voting', topicId, document.getElementById('section-voting').innerHTML, 'Voting'));
         preview.innerHTML = `
           <div class="topic-line">
-            <span class="topic-name">${prefix}${voteIcon} ${issue.title}</span>
+            ${getTopicCategoryChip(issue.title)}
+            <span class="topic-name">${prefix}${issue.title}</span>
           </div>
           <div class="topic-preview">Status: <b>${issue.status || 'Voting'}</b> · Submitter: <b>${issue.submitter_id}</b></div>
         `;
@@ -8706,17 +8933,13 @@ function initRealTimeDashboardSync(db, storedUid) {
         if (count >= 3) return;
         const issue = doc.data();
         const topicId = doc.id;
+        ensureTopicLocation(issue, topicId);
         
         const tasks = issue.tasks || [];
         const currentUserId = safeGetStorage('userId');
-        const hasUnfinishedUserTask = tasks.some(t => {
-          return (t.in_charge_uid || '').toString() === (currentUserId || '').toString() && t.status !== 'done';
-        });
         
         const urgentTask = getMostUrgentTask(tasks);
-        const isUrgent = urgentTask && isUrgentDate(urgentTask.deadline);
-        
-        const emojiPrefix = (isUrgent ? '⚠️' : '') + (hasUnfinishedUserTask ? '📋 ' : '');
+        const prefix = getTopicEmojiPrefix(issue, issue.status, storedUid, false);
         
         const secondRowHtml = urgentTask
           ? `Next: ${urgentTask.step} (Deadline: ${formatTaskDeadline(urgentTask.deadline)})`
@@ -8729,10 +8952,11 @@ function initRealTimeDashboardSync(db, storedUid) {
           preview.style.textDecoration = 'line-through';
           preview.style.opacity = '0.65';
         }
-        preview.addEventListener('click', () => openSectionModal('tasks'));
+        preview.addEventListener('click', () => renderTopicDetail('tasks', topicId, document.getElementById('section-tasks').innerHTML, 'To Do'));
         preview.innerHTML = `
           <div class="topic-line">
-            <span class="topic-name">${emojiPrefix}${issue.title}</span>
+            ${getTopicCategoryChip(issue.title)}
+            <span class="topic-name">${prefix}${issue.title}</span>
           </div>
           <div class="topic-preview" style="font-size: 0.85rem; color: var(--text-soft); padding-top: 2px;">
             ${secondRowHtml}
@@ -9486,7 +9710,7 @@ async function renderUserActionsList(containerEl) {
       if (action.action_type === 'vote_msg' || action.action_type === 'task_msg' || action.action_type === 'chat_msg') typeClass = 'badge-msg';
 
       const d = new Date(action.created_at);
-      const dateStr = d.toLocaleDateString();
+      const dateStr = formatDateWithSetting(d);
 
       // Sentiment formatting
       const sentiment = parseFloat(action.sentiment_scalar) || 0;
@@ -9526,7 +9750,7 @@ if (document.readyState === 'loading') {
 async function openActionDetailModal(action) {
   // Header and Subtitle
   const d = new Date(action.created_at);
-  const dateStr = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const dateStr = formatDateWithSetting(d) + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const subtitleStr = dateStr + ' • ' + action.issue_name;
 
   // Force Calculation

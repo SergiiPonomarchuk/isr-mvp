@@ -497,6 +497,7 @@ We should be proud of who we are and what we believe. Authenticity means living 
         <div class="settings-card"><div class="settings-card-header"><span class="topic-name">🎨 Color scheme</span></div><div class="settings-card-body"><label class="setting-option"><input type="radio" name="colorscheme" checked disabled> Soft</label><label class="setting-option"><input type="radio" name="colorscheme" disabled> Hard</label><label class="setting-option"><input type="radio" name="colorscheme" disabled> Neutral</label></div></div>
         <div class="settings-card"><div class="settings-card-header"><span class="topic-name">🔔 Push messages</span></div><div class="settings-card-body"><label class="setting-toggle"><span>Enable push notifications</span><input type="checkbox" class="toggle-input" checked disabled><span class="toggle-slider"></span></label></div></div>
         <div class="settings-card"><div class="settings-card-header"><span class="topic-name">🌐 Language</span></div><div class="settings-card-body"><label class="setting-option"><input type="radio" name="language" checked disabled> English</label><label class="setting-option"><input type="radio" name="language" disabled> Українська</label></div></div>
+        <div class="settings-card"><div class="settings-card-header"><span class="topic-name">📅 Date format</span></div><div class="settings-card-body"><label class="setting-option"><input type="radio" name="dateformat" value="dd.mm.yyyy" checked> dd.mm.yyyy</label><label class="setting-option"><input type="radio" name="dateformat" value="mm/dd/yyyy"> mm/dd/yyyy</label><label class="setting-option"><input type="radio" name="dateformat" value="yyyy-mm-dd"> yyyy-mm-dd</label></div></div>
         <div class="settings-card"><div class="settings-card-header"><span class="topic-name">ℹ️ Tooltips</span></div><div class="settings-card-body"><label class="setting-toggle"><span>Enable hover explanations (tooltips)</span><input type="checkbox" id="setting-toggle-tooltips" class="toggle-input" checked><span class="toggle-slider"></span></label></div></div>
         <div class="settings-card"><div class="settings-card-header"><span class="topic-name">🔒 Privacy</span></div><div class="settings-card-body"><label class="setting-toggle"><span>Show profile to other members</span><input type="checkbox" class="toggle-input" checked disabled><span class="toggle-slider"></span></label><label class="setting-toggle"><span>Show contact info</span><input type="checkbox" class="toggle-input" disabled><span class="toggle-slider"></span></label></div></div>
     </div>
@@ -532,47 +533,51 @@ We should be proud of who we are and what we believe. Authenticity means living 
     <div id="login-modal-overlay" class="login-modal-overlay" hidden>
         <div class="login-modal-dialog">
             <button class="login-modal-close-btn" id="login-modal-close-btn">✕</button>
-            <div class="login-card" style="border: none; box-shadow: none; padding: 24px;">
-                <center>
+            <div class="login-card" style="padding: 0;">
+                <div style="text-align: center; margin-bottom: 24px;">
                     <img src="isr-logo.png" alt="ISR logo" height="40" style="margin-bottom: 8px;">
-                    <p class="login-subtitle">Choose your login option to interact and vote.</p>
-                </center>
+                    <h2 class="login-modal-title" style="margin-bottom: 8px;">Login / Adopt Profile</h2>
+                    <p class="login-subtitle" style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Choose your login option to interact and vote.</p>
+                </div>
 
-                <div class="login-section">
-                    <label class="login-label" for="login-username">Take your own account</label>
+                <div class="login-section" style="margin-bottom: 20px;">
+                    <label class="login-label" for="login-username" style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">Take your own account</label>
                     <div style="display: flex; gap: 8px;">
-                        <input id="login-username" type="text" placeholder="Enter your name" style="flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; background: var(--surface); color: var(--text);" />
+                        <input id="login-username" type="text" placeholder="Enter your name" style="flex: 1;" />
                     </div>
                     <div class="login-actions" style="margin-top: 12px; display: flex; gap: 12px;">
-                        <button id="login-btn" type="button" class="tour-btn tour-btn-primary" style="flex: 1; padding: 10px; font-size: 0.9rem;" disabled>Login</button>
-                        <button id="register-btn" type="button" class="tour-btn tour-btn-secondary" style="flex: 1; padding: 10px; font-size: 0.9rem;" disabled>Register</button>
+                        <button id="login-btn" type="button" class="profile-adopt-btn" style="flex: 1;" disabled>Login</button>
+                        <button id="register-btn" type="button" class="profile-adopt-btn" style="flex: 1;" disabled>Register</button>
                     </div>
                 </div>
 
-                <div class="login-divider">OR</div>
+                <div class="login-divider" style="text-align: center; margin: 20px 0; color: var(--text-muted); font-size: 0.8rem; font-weight: 700; position: relative;">
+                    <span style="background: var(--surface); padding: 0 10px; position: relative; z-index: 2;">OR</span>
+                    <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border); z-index: 1;"></div>
+                </div>
 
                 <div class="login-section">
-                    <label class="login-label">Search & Adopt Profile from Database</label>
-                    <div class="profile-search-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <label class="login-label" style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">Search & Adopt Profile from Database</label>
+                    <div class="profile-search-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
                         <div class="search-field">
-                            <input id="search-name" type="text" placeholder="Name (e.g. Sara)" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text);" />
+                            <input id="search-name" type="text" placeholder="Name (e.g. Sara)" />
                         </div>
                         <div class="search-field">
-                            <select id="search-gender" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text);">
+                            <select id="search-gender">
                                 <option value="">Any Gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                             </select>
                         </div>
                         <div class="search-field">
-                            <input id="search-job" type="text" placeholder="Profession (e.g. Chemist)" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text);" />
+                            <input id="search-job" type="text" placeholder="Profession (e.g. Chemist)" />
                         </div>
                         <div class="search-field" style="display: flex; gap: 6px;">
-                            <input id="search-age-min" type="number" placeholder="Min Age" style="width: 50%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text);" />
-                            <input id="search-age-max" type="number" placeholder="Max Age" style="width: 50%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text);" />
+                            <input id="search-age-min" type="number" placeholder="Min Age" style="width: 50%;" />
+                            <input id="search-age-max" type="number" placeholder="Max Age" style="width: 50%;" />
                         </div>
                     </div>
-                    <button id="search-profiles-btn" type="button" class="tour-btn tour-btn-primary" style="margin-top: 12px; width: 100%; padding: 10px; font-size: 0.9rem;">Search Database</button>
+                    <button id="search-profiles-btn" type="button" class="profile-adopt-btn" style="width: 100%;">Search Database</button>
                     
                     <div id="search-results" class="profile-search-results" style="max-height: 180px; overflow-y: auto; margin-top: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-soft);">
                         <!-- Results will render dynamically here -->
@@ -593,8 +598,8 @@ We should be proud of who we are and what we believe. Authenticity means living 
             
             <!-- Map Search Box -->
             <div style="margin-bottom: 12px; display: flex; gap: 8px;">
-                <input type="text" id="geo-map-search-input" style="flex: 1; padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-soft); color: var(--text); font-size: 0.9rem;" placeholder="Search address or place (e.g. Basel, Switzerland)...">
-                <button type="button" id="geo-map-search-btn" class="tour-btn tour-btn-primary" style="padding: 8px 16px; font-size: 0.85rem; font-weight: 600;">Search</button>
+                <input type="text" id="geo-map-search-input" style="flex: 1;" class="search-field" placeholder="Search address or place (e.g. Basel, Switzerland)...">
+                <button type="button" id="geo-map-search-btn" class="profile-adopt-btn" style="flex-shrink: 0;">Search</button>
             </div>
             <div id="geo-map-search-results" style="display: none; background: var(--surface-soft); border: 1px solid var(--border); border-radius: 6px; padding: 8px; margin-bottom: 12px; max-height: 150px; overflow-y: auto; text-align: left; font-size: 0.85rem; flex-direction: column; gap: 6px;"></div>
             
@@ -624,7 +629,7 @@ We should be proud of who we are and what we believe. Authenticity means living 
             </div>
 
             <div style="display: flex; gap: 12px;">
-                <button id="geo-map-confirm-btn" type="button" class="tour-btn tour-btn-primary" style="flex: 1; padding: 10px; font-size: 0.9rem;">Confirm Geotag</button>
+                <button id="geo-map-confirm-btn" type="button" class="tour-btn tour-btn-primary" style="flex: 1;">Confirm Geotag</button>
             </div>
         </div>
     </div>
