@@ -17,6 +17,126 @@ const sectionTitles = {
   actions: 'Actions'
 };
 
+var staticTasksMockData = {
+  "task-1": {
+    title: "Fence door renew",
+    description: "Replace the broken wooden door on the northern fence line with a modern metal frame door. Secure locking mechanism to be integrated.",
+    status: "approved",
+    ends: "2026-04-01",
+    submitter_id: "System",
+    created_at: "2026-01-10T00:00:00Z",
+    participants: ["1", "2", "3"],
+    relevance_scores: { "1": 0.95 },
+    isr_scores: { "1": 1.07 },
+    tasks: [
+      { step: "Collect contractor quotes", status: "done", in_charge_uid: "2", in_charge_name: "Iryna V.", deadline: "2026-02-28", marks: [], results: "Got quotes from 3 local suppliers." },
+      { step: "Approve budget at next meeting", status: "in_process", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-03-18", marks: [] },
+      { step: "Install new door", status: "pending", in_charge_uid: "3", in_charge_name: "Andrii D.", deadline: "2026-04-01", marks: [] }
+    ],
+    options: [
+      { label: "Option A: Local Direct Fix", score: 4.65, author_name: "Iryna V.", budget: "€250", description: [] },
+      { label: "Option B: External Contractor Hire", score: 0.00, author_name: "System", budget: "€600", description: [] }
+    ],
+    winning_option_index: 0,
+    messages: []
+  },
+  "task-2": {
+    title: "Ladders to 1st entrance",
+    description: "Procure and install heavy-duty aluminum step ladders to the first entrance side ramp to facilitate delivery drivers.",
+    status: "tasks",
+    ends: "2026-05-25",
+    submitter_id: "System",
+    created_at: "2026-02-05T00:00:00Z",
+    participants: ["1", "4"],
+    relevance_scores: { "1": 0.65 },
+    isr_scores: { "1": 0.77 },
+    tasks: [
+      { step: "Safety inspection", status: "in_process", in_charge_uid: "4", in_charge_name: "Audrey T.", deadline: "2026-05-15", marks: [] },
+      { step: "Order replacement parts", status: "pending", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-05-25", marks: [] }
+    ],
+    options: [],
+    winning_option_index: null,
+    messages: []
+  },
+  "task-3": {
+    title: "Studio rental contract extension",
+    description: "Negotiate lease extension terms for the community choreography studio room with the building association landlord.",
+    status: "tasks",
+    ends: "2026-07-01",
+    submitter_id: "System",
+    created_at: "2026-03-01T00:00:00Z",
+    participants: ["2", "4"],
+    relevance_scores: { "1": 0.48 },
+    isr_scores: { "1": 1.42 },
+    tasks: [
+      { step: "Review current lease terms", status: "done", in_charge_uid: "2", in_charge_name: "Iryna V.", deadline: "2026-04-10", marks: [], results: "Reviewed. Found €15/hour flat rate." },
+      { step: "Negotiate new rate", status: "in_process", in_charge_uid: "4", in_charge_name: "Audrey T.", deadline: "2026-05-01", marks: [] },
+      { step: "Sign updated contract", status: "pending", in_charge_uid: "4", in_charge_name: "Audrey T.", deadline: "2026-07-01", marks: [] }
+    ],
+    options: [],
+    winning_option_index: null,
+    messages: []
+  },
+  "task-4": {
+    title: "After-school program funding",
+    description: "Organize parent association fundraising campaign and apply for the local district grant to support the weekly after-school educational kids club.",
+    status: "tasks",
+    ends: "2026-05-10",
+    submitter_id: "System",
+    created_at: "2026-01-20T00:00:00Z",
+    participants: ["1", "2"],
+    relevance_scores: { "1": 0.88 },
+    isr_scores: { "1": 0.93 },
+    tasks: [
+      { step: "Draft budget proposal", status: "done", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-03-20", marks: [], results: "Drafted proposal requesting €2000." },
+      { step: "Present to parent committee", status: "done", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-04-02", marks: [], results: "Approved by committee unanimously." },
+      { step: "Apply for district grant", status: "in_process", in_charge_uid: "2", in_charge_name: "Iryna V.", deadline: "2026-04-15", marks: [] },
+      { step: "Hire program coordinator", status: "pending", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-05-10", marks: [] }
+    ],
+    options: [],
+    winning_option_index: null,
+    messages: []
+  },
+  "task-5": {
+    title: "Switch CI/CD to GitHub Actions",
+    description: "Decommission Jenkins server and write native GitHub Actions workflows for continuous integration build and test pipelines.",
+    status: "tasks",
+    ends: "2026-06-01",
+    submitter_id: "System",
+    created_at: "2026-02-15T00:00:00Z",
+    participants: ["5", "1"],
+    relevance_scores: { "1": 0.91 },
+    isr_scores: { "1": 1.15 },
+    tasks: [
+      { step: "Audit existing Jenkins pipelines", status: "done", in_charge_uid: "5", in_charge_name: "Elon M.", deadline: "2026-05-05", marks: [], results: "Audited. Found 12 distinct build configurations." },
+      { step: "Write GitHub Actions workflows", status: "in_process", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-05-20", marks: [] },
+      { step: "Decommission Jenkins server", status: "pending", in_charge_uid: "5", in_charge_name: "Elon M.", deadline: "2026-06-01", marks: [] }
+    ],
+    options: [],
+    winning_option_index: null,
+    messages: []
+  },
+  "task-6": {
+    title: "Bike lane on Central Avenue",
+    description: "Proposal to coordinate with the city municipality to mark a dedicated bike lane along Central Avenue adjacent to the building complex.",
+    status: "approved",
+    ends: "2026-05-15",
+    submitter_id: "System",
+    created_at: "2026-01-05T00:00:00Z",
+    participants: ["1"],
+    relevance_scores: { "1": 0.95 },
+    isr_scores: { "1": 1.07 },
+    tasks: [
+      { step: "Conduct traffic impact study", status: "done", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-02-15", marks: [], results: "Traffic impact study done. Positive results." },
+      { step: "Approve final route design", status: "done", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-03-30", marks: [], results: "Route design approved by district engineer." },
+      { step: "Begin road marking and signage", status: "in_process", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-05-15", marks: [] }
+    ],
+    options: [],
+    winning_option_index: null,
+    messages: []
+  }
+};
+
 function formatDateWithSetting(val) {
   if (!val) return '';
   let date;
@@ -680,6 +800,74 @@ function openSectionModal(sectionId) {
   }
 }
 
+// Global delegated click listener for data-section elements
+document.addEventListener('click', function (e) {
+  let sectionEl = null;
+  let topicItemEl = null;
+  
+  // Use composedPath() if available, because it preserves the path 
+  // even if elements (like dash-card contents) are replaced/detached during bubbling
+  if (typeof e.composedPath === 'function') {
+    const path = e.composedPath();
+    for (let i = 0; i < path.length; i++) {
+      let node = path[i];
+      if (node && node.nodeType === Node.ELEMENT_NODE) {
+        if (!topicItemEl && node.classList && node.classList.contains('topic-item')) {
+          topicItemEl = node;
+        }
+        if (node.hasAttribute && node.hasAttribute('data-section')) {
+          sectionEl = node;
+          break;
+        }
+      }
+    }
+  }
+
+  // Fallback to closest() if composedPath didn't find it or is unavailable
+  if (!sectionEl) {
+    let target = e.target;
+    if (target && target.nodeType === Node.TEXT_NODE) {
+      target = target.parentElement;
+    }
+    if (target && typeof target.closest === 'function') {
+      topicItemEl = target.closest('.topic-item');
+      sectionEl = target.closest('[data-section]');
+    }
+  }
+
+  if (sectionEl) {
+    e.preventDefault();
+    const sectionId = sectionEl.getAttribute('data-section');
+    if (typeof openSectionModal === 'function') {
+      openSectionModal(sectionId);
+    }
+    
+    // If the user clicked a specific topic inside the dashboard card, auto-open its detail view
+    if (topicItemEl) {
+      const topicType = topicItemEl.getAttribute('data-topic-type');
+      const topicId = topicItemEl.getAttribute('data-topic-id');
+      if (topicType && topicId) {
+        const modalBody = document.getElementById('section-modal-body');
+        const modalTitle = document.getElementById('section-modal-title');
+        const sourceTitle = modalTitle ? modalTitle.textContent : '';
+        
+        if (topicType === 'chat' || topicType === 'voting' || topicType === 'tasks') {
+          if (typeof window.markDiscussionAsRead === 'function') {
+            window.markDiscussionAsRead(topicId);
+          }
+        }
+        
+        // Ensure renderTopicDetail runs immediately after the modal list renders
+        setTimeout(function() {
+          if (typeof renderTopicDetail === 'function') {
+            renderTopicDetail(topicType, topicId, modalBody.innerHTML, sourceTitle);
+          }
+        }, 0);
+      }
+    }
+  }
+});
+
 function closeSectionModal() {
   const overlay = document.getElementById('section-modal-overlay');
   const bodyEl = document.getElementById('section-modal-body');
@@ -709,6 +897,43 @@ function closeSectionModal() {
   overlay.classList.remove('active');
   document.body.classList.remove('modal-open');
 }
+
+// Global modal close event listeners
+// Must use readyState check because the script is loaded at the bottom of HTML,
+// so DOMContentLoaded has usually already fired by the time this code runs.
+(function initModalCloseHandlers() {
+  function setup() {
+    var overlay = document.getElementById('section-modal-overlay');
+    var modalCloseBtn = document.getElementById('modal-close-btn');
+    var menu = document.getElementById('menu');
+
+    if (overlay) {
+      var mousedownOnOverlay = false;
+      overlay.addEventListener('mousedown', function (e) {
+        mousedownOnOverlay = (e.target === overlay);
+      });
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay && mousedownOnOverlay) closeSectionModal();
+      });
+    }
+
+    if (modalCloseBtn) {
+      modalCloseBtn.addEventListener('click', closeSectionModal);
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeSectionModal();
+        if (menu) menu.classList.remove('menu-open');
+      }
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setup);
+  } else {
+    setup();
+  }
+})();
 
 function initLoginPage() {
   const usernameInput = document.getElementById('login-username');
@@ -1841,6 +2066,8 @@ function initTopicDetailViews() {
 
   if (!modalBody) return;
 
+  // staticTasksMockData is declared globally at the top of the file
+
 
   var reactionChoices = [
     { value: 'good', label: '👍 Good' },
@@ -2535,7 +2762,8 @@ function initTopicDetailViews() {
     
     var roots = [];
     var childrenOf = {};
-    comments.forEach(function(c) {
+    var safeComments = Array.isArray(comments) ? comments : (comments ? [comments] : []);
+    safeComments.forEach(function(c) {
       var pId = c.parent_id || null;
       if (!pId) {
         roots.push(c);
@@ -2593,6 +2821,7 @@ function initTopicDetailViews() {
   }
 
   function renderTasksTopic(topic) {
+    var currentUserId = safeGetStorage('userId') || "1";
     var winningOption = null;
     if (topic.options && topic.winning_option_index !== null && topic.winning_option_index !== undefined) {
       winningOption = topic.options[topic.winning_option_index];
@@ -2654,7 +2883,6 @@ function initTopicDetailViews() {
       otherOptionsHtml = '<div style="color:var(--text-muted); font-style:italic; font-size:0.88rem; padding: 4px;">No other options for this issue.</div>';
     }
 
-    var currentUserId = safeGetStorage('userId') || "1";
     var participantOptions = (topic.participants || []).map(function(uid) {
       var name = window.userCache[uid] || ('User ' + uid);
       return '<option value="' + uid + '">' + name + '</option>';
@@ -2824,6 +3052,12 @@ function initTopicDetailViews() {
   let activeDetailListener = null;
 
   async function renderTopicDetail(kind, topicId, sourceViewHtml, titleText) {
+    const overlay = document.getElementById('section-modal-overlay');
+    if (overlay && !overlay.classList.contains('active')) {
+      overlay.classList.add('active');
+      document.body.classList.add('modal-open');
+    }
+
     modalBody.setAttribute('data-topic-detail-open', '1');
     modalBody.setAttribute('data-topic-source-kind', kind);
     modalBody.setAttribute('data-topic-source-title', titleText || '');
@@ -2840,6 +3074,283 @@ function initTopicDetailViews() {
     let cachedMemberData = null;
     let activeModalType = null;
     let replyToMsgId = null;
+
+    async function toggleReaction(msgId, reactionType) {
+      const currentUserId = safeGetStorage('userId');
+      if (!currentUserId) return;
+
+      if (msgId.startsWith('opt_')) {
+        let optionId = msgId;
+        if (msgId.startsWith('opt_opt_')) {
+          optionId = msgId.substring(4);
+        }
+        const docRef = db.collection("discussions").doc(topicId);
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+
+            const data = doc.data();
+            let options = data.options_v2 || [];
+
+            options = options.map(opt => {
+              if (opt.id === optionId) {
+                let marks = opt.marks || [];
+                const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+                const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+                const existingIndex = userMarkTypes.indexOf(reactionType);
+
+                if (existingIndex >= 0) {
+                  marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+                } else {
+                  if (userMarkTypes.length >= 2) {
+                    alert("You can only leave up to 2 different reactions per option.");
+                    return opt;
+                  }
+                  marks.push({
+                    uid: currentUserId,
+                    type: reactionType,
+                    reaction: reactionType
+                  });
+                }
+                return { ...opt, marks: marks };
+              }
+              return opt;
+            });
+
+            transaction.update(docRef, { options_v2: options });
+          });
+        } catch (err) {
+          console.error("Error toggling option reaction:", err);
+        }
+      } else if (msgId.startsWith('task_')) {
+        const taskIdx = parseInt(msgId.substring(5));
+        const docRef = db.collection("issues").doc(topicId);
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+
+            const data = doc.data();
+            const tasks = data.tasks || [];
+            if (!tasks[taskIdx]) return;
+
+            let marks = tasks[taskIdx].marks || [];
+            const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+            const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+            const existingIndex = userMarkTypes.indexOf(reactionType);
+
+            if (existingIndex >= 0) {
+              marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+            } else {
+              if (userMarkTypes.length >= 2) {
+                alert("You can only leave up to 2 different reactions per task.");
+                return;
+              }
+              marks.push({
+                uid: currentUserId,
+                type: reactionType,
+                reaction: reactionType
+              });
+            }
+            tasks[taskIdx].marks = marks;
+
+            transaction.update(docRef, { tasks: tasks });
+          });
+        } catch (err) {
+          console.error("Error toggling task reaction:", err);
+        }
+      } else if (msgId.startsWith('taskcomment_')) {
+        if (msgId.startsWith('taskcomment_subtaskcomment_')) {
+          const parts = msgId.split('_');
+          const taskIdx = parseInt(parts[2], 10);
+          const subtaskIdx = parseInt(parts[3], 10);
+          const commentId = parts.slice(4).join('_');
+          const docRef = db.collection("issues").doc(topicId);
+
+          try {
+            await db.runTransaction(async (transaction) => {
+              const doc = await transaction.get(docRef);
+              if (!doc.exists) return;
+
+              const data = doc.data();
+              const tasks = data.tasks || [];
+              if (!tasks[taskIdx]) return;
+
+              const subtasks = tasks[taskIdx].subtasks || [];
+              if (!subtasks[subtaskIdx]) return;
+
+              let comments = subtasks[subtaskIdx].comments || [];
+              comments = comments.map(c => {
+                if (c.id === commentId) {
+                  let marks = c.marks || [];
+                  const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+                  const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+                  const existingIndex = userMarkTypes.indexOf(reactionType);
+
+                  if (existingIndex >= 0) {
+                    marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+                  } else {
+                    if (userMarkTypes.length >= 2) {
+                      alert("You can only leave up to 2 different reactions per comment.");
+                      return c;
+                    }
+                    marks.push({
+                      uid: currentUserId,
+                      type: reactionType,
+                      reaction: reactionType
+                    });
+                  }
+                  return { ...c, marks: marks };
+                }
+                return c;
+              });
+              subtasks[subtaskIdx].comments = comments;
+
+              transaction.update(docRef, { tasks: tasks });
+            });
+          } catch (err) {
+            console.error("Error toggling subtask comment reaction:", err);
+          }
+        } else {
+          const parts = msgId.split('_');
+          const taskIdx = parseInt(parts[1], 10);
+          const commentId = parts.slice(2).join('_');
+          const docRef = db.collection("issues").doc(topicId);
+
+          try {
+            await db.runTransaction(async (transaction) => {
+              const doc = await transaction.get(docRef);
+              if (!doc.exists) return;
+
+              const data = doc.data();
+              const tasks = data.tasks || [];
+              if (!tasks[taskIdx]) return;
+
+              let comments = tasks[taskIdx].comments || [];
+              comments = comments.map(c => {
+                if (c.id === commentId) {
+                  let marks = c.marks || [];
+                  const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+                  const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+                  const existingIndex = userMarkTypes.indexOf(reactionType);
+
+                  if (existingIndex >= 0) {
+                    marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+                  } else {
+                    if (userMarkTypes.length >= 2) {
+                      alert("You can only leave up to 2 different reactions per comment.");
+                      return c;
+                    }
+                    marks.push({
+                      uid: currentUserId,
+                      type: reactionType,
+                      reaction: reactionType
+                    });
+                  }
+                  return { ...c, marks: marks };
+                }
+                return c;
+              });
+              tasks[taskIdx].comments = comments;
+
+              transaction.update(docRef, { tasks: tasks });
+            });
+          } catch (err) {
+            console.error("Error toggling task comment reaction:", err);
+          }
+        }
+      } else if (msgId.startsWith('subtask_')) {
+        const parts = msgId.split('_');
+        const taskIdx = parseInt(parts[1], 10);
+        const subtaskIdx = parseInt(parts[2], 10);
+        const docRef = db.collection("issues").doc(topicId);
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists) return;
+
+            const data = doc.data();
+            const tasks = data.tasks || [];
+            if (!tasks[taskIdx]) return;
+
+            const subtasks = tasks[taskIdx].subtasks || [];
+            if (!subtasks[subtaskIdx]) return;
+
+            let marks = subtasks[subtaskIdx].marks || [];
+            const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+            const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+            const existingIndex = userMarkTypes.indexOf(reactionType);
+
+            if (existingIndex >= 0) {
+              marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+            } else {
+              if (userMarkTypes.length >= 2) {
+                alert("You can only leave up to 2 different reactions per subtask.");
+                return;
+              }
+              marks.push({
+                uid: currentUserId,
+                type: reactionType,
+                reaction: reactionType
+              });
+            }
+            subtasks[subtaskIdx].marks = marks;
+
+            transaction.update(docRef, { tasks: tasks });
+          });
+        } catch (err) {
+          console.error("Error toggling subtask reaction:", err);
+        }
+      } else {
+        const msgRef = db.collection("discussions").doc(topicId).collection("messages").doc(msgId.toString());
+
+        try {
+          await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(msgRef);
+            if (!doc.exists) return;
+
+            const data = doc.data();
+            let marks = data.marks || [];
+
+            const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+            const userMarkTypes = userMarks.map(m => {
+              if (typeof m === 'string') return m.toLowerCase().trim();
+              return (m.reaction || m.type || m.mark || m.label || m.value || '').toLowerCase().trim();
+            });
+
+            const existingIndex = userMarkTypes.indexOf(reactionType);
+
+            if (existingIndex >= 0) {
+              marks = marks.filter(m => {
+                const mUid = (m.uid || '').toString();
+                const mVal = (typeof m === 'string' ? m : (m.reaction || m.type || m.mark || m.label || m.value || '')).toLowerCase().trim();
+                return !(mUid === currentUserId.toString() && mVal === reactionType);
+              });
+            } else {
+              if (userMarkTypes.length >= 2) {
+                alert("You can only leave up to 2 different reactions per message.");
+                return;
+              }
+
+              marks.push({
+                uid: currentUserId,
+                type: reactionType,
+                reaction: reactionType,
+                mark: reactionType
+              });
+            }
+
+            transaction.update(msgRef, { marks: marks });
+          });
+        } catch (err) {
+          console.error("Error toggling message reaction:", err);
+        }
+      }
+    }
 
     function bindDiscussionInteractionHandlers(topicId, container, db, currentUserId) {
       // 1. Bind Parent Message Link Scrolling & Flashing
@@ -2927,6 +3438,7 @@ function initTopicDetailViews() {
             replyToMsgId = null;
           } catch (err) {
             console.error("Error sending message:", err);
+            replyToMsgId = null;
           }
         };
 
@@ -2988,7 +3500,7 @@ function initTopicDetailViews() {
     }
 
     function formatDeadlineDisplay(endsStr) {
-      if (!endsStr || endsStr === "Ongoing") return "Ongoing";
+      if (!endsStr || endsStr === "Ongoing" || endsStr === "Active") return endsStr || "Ongoing";
       return formatDateWithSetting(endsStr);
     }
 
@@ -3676,7 +4188,7 @@ function initTopicDetailViews() {
               description: firstMsgText,
               geoposition: geopositionVal,
               counter: `${messages.length} messages`,
-              deadline: disc.ends || "Ongoing",
+              deadline: formatDeadlineDisplay(disc.ends || "Ongoing"),
               relevance: userRelevance,
               isrScore: userIsr,
               relevanceWeights: relevanceWeights,
@@ -3713,282 +4225,7 @@ function initTopicDetailViews() {
 
 
 
-        async function toggleReaction(msgId, reactionType) {
-          const currentUserId = safeGetStorage('userId');
-          if (!currentUserId) return;
-
-          if (msgId.startsWith('opt_')) {
-            let optionId = msgId;
-            if (msgId.startsWith('opt_opt_')) {
-              optionId = msgId.substring(4);
-            }
-            const docRef = db.collection("discussions").doc(topicId);
-
-            try {
-              await db.runTransaction(async (transaction) => {
-                const doc = await transaction.get(docRef);
-                if (!doc.exists) return;
-
-                const data = doc.data();
-                let options = data.options_v2 || [];
-
-                options = options.map(opt => {
-                  if (opt.id === optionId) {
-                    let marks = opt.marks || [];
-                    const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
-                    const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
-                    const existingIndex = userMarkTypes.indexOf(reactionType);
-
-                    if (existingIndex >= 0) {
-                      marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
-                    } else {
-                      if (userMarkTypes.length >= 2) {
-                        alert("You can only leave up to 2 different reactions per option.");
-                        return opt;
-                      }
-                      marks.push({
-                        uid: currentUserId,
-                        type: reactionType,
-                        reaction: reactionType
-                      });
-                    }
-                    return { ...opt, marks: marks };
-                  }
-                  return opt;
-                });
-
-                transaction.update(docRef, { options_v2: options });
-              });
-            } catch (err) {
-              console.error("Error toggling option reaction:", err);
-            }
-          } else if (msgId.startsWith('task_')) {
-            const taskIdx = parseInt(msgId.substring(5));
-            const docRef = db.collection("issues").doc(topicId);
-
-            try {
-              await db.runTransaction(async (transaction) => {
-                const doc = await transaction.get(docRef);
-                if (!doc.exists) return;
-
-                const data = doc.data();
-                const tasks = data.tasks || [];
-                if (!tasks[taskIdx]) return;
-
-                let marks = tasks[taskIdx].marks || [];
-                const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
-                const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
-                const existingIndex = userMarkTypes.indexOf(reactionType);
-
-                if (existingIndex >= 0) {
-                  marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
-                } else {
-                  if (userMarkTypes.length >= 2) {
-                    alert("You can only leave up to 2 different reactions per task.");
-                    return;
-                  }
-                  marks.push({
-                    uid: currentUserId,
-                    type: reactionType,
-                    reaction: reactionType
-                  });
-                }
-                tasks[taskIdx].marks = marks;
-
-                transaction.update(docRef, { tasks: tasks });
-              });
-            } catch (err) {
-              console.error("Error toggling task reaction:", err);
-            }
-          } else if (msgId.startsWith('taskcomment_')) {
-            if (msgId.startsWith('taskcomment_subtaskcomment_')) {
-              const parts = msgId.split('_');
-              const taskIdx = parseInt(parts[2], 10);
-              const subtaskIdx = parseInt(parts[3], 10);
-              const commentId = parts.slice(4).join('_');
-              const docRef = db.collection("issues").doc(topicId);
-
-              try {
-                await db.runTransaction(async (transaction) => {
-                  const doc = await transaction.get(docRef);
-                  if (!doc.exists) return;
-
-                  const data = doc.data();
-                  const tasks = data.tasks || [];
-                  if (!tasks[taskIdx]) return;
-
-                  const subtasks = tasks[taskIdx].subtasks || [];
-                  if (!subtasks[subtaskIdx]) return;
-
-                  let comments = subtasks[subtaskIdx].comments || [];
-                  comments = comments.map(c => {
-                    if (c.id === commentId) {
-                      let marks = c.marks || [];
-                      const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
-                      const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
-                      const existingIndex = userMarkTypes.indexOf(reactionType);
-
-                      if (existingIndex >= 0) {
-                        marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
-                      } else {
-                        if (userMarkTypes.length >= 2) {
-                          alert("You can only leave up to 2 different reactions per comment.");
-                          return c;
-                        }
-                        marks.push({
-                          uid: currentUserId,
-                          type: reactionType,
-                          reaction: reactionType
-                        });
-                      }
-                      return { ...c, marks: marks };
-                    }
-                    return c;
-                  });
-                  subtasks[subtaskIdx].comments = comments;
-
-                  transaction.update(docRef, { tasks: tasks });
-                });
-              } catch (err) {
-                console.error("Error toggling subtask comment reaction:", err);
-              }
-            } else {
-              const parts = msgId.split('_');
-              const taskIdx = parseInt(parts[1], 10);
-              const commentId = parts.slice(2).join('_');
-              const docRef = db.collection("issues").doc(topicId);
-
-              try {
-                await db.runTransaction(async (transaction) => {
-                  const doc = await transaction.get(docRef);
-                  if (!doc.exists) return;
-
-                  const data = doc.data();
-                  const tasks = data.tasks || [];
-                  if (!tasks[taskIdx]) return;
-
-                  let comments = tasks[taskIdx].comments || [];
-                  comments = comments.map(c => {
-                    if (c.id === commentId) {
-                      let marks = c.marks || [];
-                      const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
-                      const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
-                      const existingIndex = userMarkTypes.indexOf(reactionType);
-
-                      if (existingIndex >= 0) {
-                        marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
-                      } else {
-                        if (userMarkTypes.length >= 2) {
-                          alert("You can only leave up to 2 different reactions per comment.");
-                          return c;
-                        }
-                        marks.push({
-                          uid: currentUserId,
-                          type: reactionType,
-                          reaction: reactionType
-                        });
-                      }
-                      return { ...c, marks: marks };
-                    }
-                    return c;
-                  });
-                  tasks[taskIdx].comments = comments;
-
-                  transaction.update(docRef, { tasks: tasks });
-                });
-              } catch (err) {
-                console.error("Error toggling task comment reaction:", err);
-              }
-            }
-          } else if (msgId.startsWith('subtask_')) {
-            const parts = msgId.split('_');
-            const taskIdx = parseInt(parts[1], 10);
-            const subtaskIdx = parseInt(parts[2], 10);
-            const docRef = db.collection("issues").doc(topicId);
-
-            try {
-              await db.runTransaction(async (transaction) => {
-                const doc = await transaction.get(docRef);
-                if (!doc.exists) return;
-
-                const data = doc.data();
-                const tasks = data.tasks || [];
-                if (!tasks[taskIdx]) return;
-
-                const subtasks = tasks[taskIdx].subtasks || [];
-                if (!subtasks[subtaskIdx]) return;
-
-                let marks = subtasks[subtaskIdx].marks || [];
-                const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
-                const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
-                const existingIndex = userMarkTypes.indexOf(reactionType);
-
-                if (existingIndex >= 0) {
-                  marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
-                } else {
-                  if (userMarkTypes.length >= 2) {
-                    alert("You can only leave up to 2 different reactions per subtask.");
-                    return;
-                  }
-                  marks.push({
-                    uid: currentUserId,
-                    type: reactionType,
-                    reaction: reactionType
-                  });
-                }
-                subtasks[subtaskIdx].marks = marks;
-
-                transaction.update(docRef, { tasks: tasks });
-              });
-            } catch (err) {
-              console.error("Error toggling subtask reaction:", err);
-            }
-          } else {
-            const msgRef = db.collection("discussions").doc(topicId).collection("messages").doc(msgId.toString());
-
-            try {
-              await db.runTransaction(async (transaction) => {
-                const doc = await transaction.get(msgRef);
-                if (!doc.exists) return;
-
-                const data = doc.data();
-                let marks = data.marks || [];
-
-                const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
-                const userMarkTypes = userMarks.map(m => {
-                  if (typeof m === 'string') return m.toLowerCase().trim();
-                  return (m.reaction || m.type || m.mark || m.label || m.value || '').toLowerCase().trim();
-                });
-
-                const existingIndex = userMarkTypes.indexOf(reactionType);
-
-                if (existingIndex >= 0) {
-                  marks = marks.filter(m => {
-                    const mUid = (m.uid || '').toString();
-                    const mVal = (typeof m === 'string' ? m : (m.reaction || m.type || m.mark || m.label || m.value || '')).toLowerCase().trim();
-                    return !(mUid === currentUserId.toString() && mVal === reactionType);
-                  });
-                } else {
-                  if (userMarkTypes.length >= 2) {
-                    alert("You can only leave up to 2 different reactions per message.");
-                    return;
-                  }
-
-                  marks.push({
-                    uid: currentUserId,
-                    type: reactionType,
-                    reaction: reactionType,
-                    mark: reactionType
-                  });
-                }
-
-                transaction.update(msgRef, { marks: marks });
-              });
-            } catch (err) {
-              console.error("Error toggling message reaction:", err);
-            }
-          }
-        }
+        // toggleReaction is hoisted to the top of renderTopicDetail
 
         const discRef = db.collection("discussions").doc(topicId);
 
@@ -4034,7 +4271,8 @@ function initTopicDetailViews() {
         let pendingRender = false;
 
         async function updateVotingUI() {
-          if (!currentIssueData || !currentDiscData) return;
+          const fallbackIssueRaw = currentIssueData || currentDiscData;
+          if (!fallbackIssueRaw) return;
           if (isRendering) {
             pendingRender = true;
             return;
@@ -4042,7 +4280,7 @@ function initTopicDetailViews() {
           isRendering = true;
 
           try {
-            const issue = currentIssueData;
+            const issue = fallbackIssueRaw;
             const disc = currentDiscData;
             
             // Use real-time synced discussions data
@@ -4253,7 +4491,7 @@ function initTopicDetailViews() {
               status: issue.status || "Voting",
               statusText: `This issue is in status: ${issue.status || 'Voting'}.`,
               counter: `Submitter: ${window.userCache[issue.submitter_id] || issue.submitter_id}`,
-              deadline: issue.ends || "Active",
+              deadline: formatDeadlineDisplay(issue.ends || "Active"),
               relevance: userRelevance,
               isrScore: userIsr,
               relevanceWeights: relevanceWeights,
@@ -4375,12 +4613,12 @@ function initTopicDetailViews() {
         });
 
         const issueUnsubscribe = db.collection("issues").doc(topicId).onSnapshot(doc => {
-          if (!doc.exists) {
-            modalBody.innerHTML = '<div style="padding:20px; color:var(--urgent);">Voting issue not found.</div>';
-            return;
+          if (doc.exists) {
+            currentIssueData = doc.data();
+            ensureTopicLocation(currentIssueData, topicId);
+          } else {
+            currentIssueData = null;
           }
-          currentIssueData = doc.data();
-          ensureTopicLocation(currentIssueData, topicId);
           updateVotingUI();
         }, err => {
           console.error("Listen to issue details failed:", err);
@@ -4410,6 +4648,64 @@ function initTopicDetailViews() {
       }
 
     } else if (kind === 'tasks') {
+      if (staticTasksMockData[topicId]) {
+        try {
+          const issue = staticTasksMockData[topicId];
+          const currentUserId = safeGetStorage('userId') || "1";
+          
+          const relevanceWeights = formatRelevanceWeights(issue);
+          const isrWeights = formatIsrWeights(issue);
+          
+          const topicData = {
+            name: issue.title,
+            description: issue.description,
+            status: issue.status || "In progress",
+            counter: `Submitter: ${issue.submitter_id}`,
+            deadline: formatDeadlineDisplay(issue.ends || "Active"),
+            relevance: (issue.relevance_scores[currentUserId] !== undefined) ? (issue.relevance_scores[currentUserId] * 100).toFixed(0) + "%" : "N/A",
+            isrScore: (issue.isr_scores[currentUserId] !== undefined) ? issue.isr_scores[currentUserId].toFixed(2) : "N/A",
+            relevanceWeights: relevanceWeights,
+            isrWeights: isrWeights,
+            participants: issue.participants || [],
+            expertiseDepth: "None",
+            geoposition: "47.5583, 7.6065<br>μ: 100m, σ: 50m",
+            tasks: issue.tasks || [],
+            comments: [],
+            options: issue.options || [],
+            winning_option_index: issue.winning_option_index !== undefined ? issue.winning_option_index : null,
+            messages: []
+          };
+          
+          modalBody.innerHTML = renderTasksTopic(topicData);
+          bindDetailViewButtons(titleText, issue);
+          bindChatMetaButtons(issue);
+          bindTaskModalInteractions(topicId, issue);
+          
+          // Bind collapsible discussion drawer toggles
+          const discussionToggleBtn = modalBody.querySelector('.tasks-discussion-toggle-btn');
+          const discussionContainer = modalBody.querySelector('.tasks-discussion-container');
+          if (discussionToggleBtn && discussionContainer) {
+            discussionToggleBtn.onclick = function() {
+              discussionContainer.style.display = discussionContainer.style.display === 'none' ? 'block' : 'none';
+              discussionToggleBtn.textContent = discussionContainer.style.display === 'block' ? 'Hide Discussion' : 'Discussion';
+            };
+          }
+          
+          const otherOptionsToggleBtn = modalBody.querySelector('.tasks-other-options-toggle-btn');
+          const otherOptionsContainer = modalBody.querySelector('.tasks-other-options-container');
+          if (otherOptionsToggleBtn && otherOptionsContainer) {
+            otherOptionsToggleBtn.onclick = function() {
+              otherOptionsContainer.style.display = otherOptionsContainer.style.display === 'none' ? 'block' : 'none';
+              otherOptionsToggleBtn.textContent = otherOptionsContainer.style.display === 'block' ? 'Hide other options' : 'Other options';
+            };
+          }
+          
+          return;
+        } catch (e) {
+          console.error("Render static mock tasks detail failed:", e);
+        }
+      }
+
       try {
         let currentMessagesRaw = null;
         let currentIssueRaw = null;
@@ -4418,7 +4714,8 @@ function initTopicDetailViews() {
         let pendingRender = false;
 
         async function updateTasksUI() {
-          if (!currentIssueRaw) return;
+          const fallbackIssueRaw = currentIssueRaw || currentDiscRaw;
+          if (!fallbackIssueRaw) return;
           if (isRendering) {
             pendingRender = true;
             return;
@@ -4426,7 +4723,7 @@ function initTopicDetailViews() {
           isRendering = true;
 
           try {
-            const issue = currentIssueRaw;
+            const issue = fallbackIssueRaw;
             const discData = currentDiscRaw;
             const messages = currentMessagesRaw || [];
 
@@ -4439,18 +4736,23 @@ function initTopicDetailViews() {
               relevanceScores = discData.relevance_scores || {};
             }
 
-            const comments = issue.comments || [];
-            const commentUids = comments.map(c => (c.uid || '').toString()).filter(uid => uid && uid !== 'system');
-            const uniqueUids = rawParticipants.map(uid => uid.toString()).filter(uid => uid && uid !== 'system');
+            const safeParticipants = Array.isArray(rawParticipants) ? rawParticipants : (rawParticipants ? [rawParticipants] : []);
+            const safeComments = Array.isArray(issue.comments) ? issue.comments : (issue.comments ? [issue.comments] : []);
+            
+            const commentUids = safeComments.map(c => (c.uid || '').toString()).filter(uid => uid && uid !== 'system');
+            const uniqueUids = safeParticipants.map(uid => uid.toString()).filter(uid => uid && uid !== 'system');
             const msgUids = messages.map(m => (m.uid || '').toString()).filter(uid => uid && uid !== 'system');
             const subtaskUids = [];
-            (issue.tasks || []).forEach(t => {
-              (t.subtasks || []).forEach(st => {
-                if (st.in_charge_uid) subtaskUids.push(st.in_charge_uid.toString());
-                (st.comments || []).forEach(sc => {
-                  if (sc.uid) subtaskUids.push(sc.uid.toString());
+            const safeTasksArray = Array.isArray(issue.tasks) ? issue.tasks : (issue.tasks ? [issue.tasks] : []);
+            safeTasksArray.forEach(t => {
+              if (t && typeof t === 'object' && t.subtasks) {
+                (t.subtasks || []).forEach(st => {
+                  if (st.in_charge_uid) subtaskUids.push(st.in_charge_uid.toString());
+                  (st.comments || []).forEach(sc => {
+                    if (sc.uid) subtaskUids.push(sc.uid.toString());
+                  });
                 });
-              });
+              }
             });
             const combinedUids = Array.from(new Set(uniqueUids.concat(commentUids).concat(msgUids).concat(subtaskUids)));
 
@@ -4472,7 +4774,8 @@ function initTopicDetailViews() {
                 authorName = displayName + ' ID:' + uid;
               }
 
-              const parsedReactions = (msg.marks || []).map(m => {
+              const safeMarks = Array.isArray(msg.marks) ? msg.marks : (msg.marks ? [msg.marks] : []);
+              const parsedReactions = safeMarks.map(m => {
                 const rUid = m.uid || '';
                 const type = resolveReactionValue(m);
                 const emoji = reactionEmojis[type] || '?';
@@ -4546,7 +4849,7 @@ function initTopicDetailViews() {
               description: issue.description,
               status: issue.status || "In progress",
               counter: `Submitter: ${issue.submitter_id}`,
-              deadline: issue.ends || "Active",
+              deadline: formatDeadlineDisplay(issue.ends || "Active"),
               relevance: userRelevance,
               isrScore: userIsr,
               relevanceWeights: relevanceWeights,
@@ -4554,9 +4857,9 @@ function initTopicDetailViews() {
               participants: combinedUids,
               expertiseDepth: expertiseDepth,
               geoposition: geopositionVal,
-              tasks: issue.tasks || [],
-              comments: comments,
-              options: issue.options || [],
+              tasks: Array.isArray(issue.tasks) ? issue.tasks : (issue.tasks ? [issue.tasks] : []),
+              comments: safeComments,
+              options: Array.isArray(issue.options) ? issue.options : (issue.options ? [issue.options] : []),
               winning_option_index: issue.winning_option_index !== undefined ? issue.winning_option_index : null,
               messages: resolvedMessages
             };
@@ -4593,6 +4896,7 @@ function initTopicDetailViews() {
 
           } catch (e) {
             console.error("Render tasks detail UI failed:", e);
+            modalBody.innerHTML = `<div style="padding:20px; color:var(--urgent);">Inner error loading tasks UI: ${e.message}</div>`;
           } finally {
             isRendering = false;
             if (pendingRender) {
@@ -4611,12 +4915,12 @@ function initTopicDetailViews() {
 
         // Sync issues onSnapshot
         const issueUnsubscribe = db.collection("issues").doc(topicId).onSnapshot(doc => {
-          if (!doc.exists) {
-            modalBody.innerHTML = '<div style="padding:20px; color:var(--urgent);">Task issue not found.</div>';
-            return;
+          if (doc.exists) {
+            currentIssueRaw = doc.data();
+            ensureTopicLocation(currentIssueRaw, topicId);
+          } else {
+            currentIssueRaw = null;
           }
-          currentIssueRaw = doc.data();
-          ensureTopicLocation(currentIssueRaw, topicId);
           updateTasksUI();
         });
 
@@ -6822,7 +7126,8 @@ function initTopicDetailViews() {
     if (!currentUserId) return;
     
     const db = firebase.firestore();
-    const docRef = db.collection("issues").doc(topicId);
+    const isMock = topicId.startsWith('task-');
+    const docRef = isMock ? null : db.collection("issues").doc(topicId);
 
     // 1. Task status checkbox change
     modalBody.querySelectorAll('.task-status-checkbox').forEach(chk => {
@@ -6836,6 +7141,21 @@ function initTopicDetailViews() {
         if ((task.in_charge_uid || '').toString() !== currentUserId.toString()) {
           alert("Only the responsible person (" + (task.in_charge_name || 'assigned leader') + ") can change the status of this task.");
           this.checked = !this.checked; // Reset checkbox state
+          return;
+        }
+
+        if (isMock) {
+          task.status = task.status === 'done' ? 'pending' : 'done';
+          if (task.status === 'done') {
+            task.results = "Mock task execution completed.";
+          } else {
+            delete task.results;
+          }
+          console.log("Mock task status updated in memory.");
+          if (typeof window.triggerTasksListRender === 'function') {
+            window.triggerTasksListRender();
+          }
+          renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
           return;
         }
 
@@ -6914,6 +7234,16 @@ function initTopicDetailViews() {
           return;
         }
 
+        if (isMock) {
+          task.status = 'canceled';
+          console.log("Mock task canceled.");
+          if (typeof window.triggerTasksListRender === 'function') {
+            window.triggerTasksListRender();
+          }
+          renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
+          return;
+        }
+
         try {
           await db.runTransaction(async (transaction) => {
             const doc = await transaction.get(docRef);
@@ -6943,6 +7273,16 @@ function initTopicDetailViews() {
         // Check if logged-in user is the responsible person
         if ((task.in_charge_uid || '').toString() !== currentUserId.toString()) {
           alert("Only the responsible person can restore this task.");
+          return;
+        }
+
+        if (isMock) {
+          task.status = 'pending';
+          console.log("Mock task restored.");
+          if (typeof window.triggerTasksListRender === 'function') {
+            window.triggerTasksListRender();
+          }
+          renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
           return;
         }
 
@@ -6986,6 +7326,13 @@ function initTopicDetailViews() {
           return;
         }
 
+        if (isMock) {
+          subtask.status = subtask.status === 'done' ? 'pending' : 'done';
+          console.log("Mock subtask status updated in memory.");
+          renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
+          return;
+        }
+
         try {
           await db.runTransaction(async (transaction) => {
             const doc = await transaction.get(docRef);
@@ -7017,6 +7364,13 @@ function initTopicDetailViews() {
 
         // Check if logged-in user is the responsible person
         if ((task.in_charge_uid || '').toString() !== currentUserId.toString()) {
+          return;
+        }
+
+        if (isMock) {
+          task.subtasks.splice(subtaskIdx, 1);
+          console.log("Mock subtask removed in memory.");
+          renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
           return;
         }
 
@@ -7077,6 +7431,17 @@ function initTopicDetailViews() {
           deadline: deadline
         };
 
+        if (isMock) {
+          if (!task.subtasks) task.subtasks = [];
+          task.subtasks.push(newSubtask);
+          inputEl.value = '';
+          const breakdownForm = modalBody.querySelector(`#task-breakdown-form-${taskIdx}`);
+          if (breakdownForm) breakdownForm.style.display = 'none';
+          console.log("Mock subtask added successfully.");
+          renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
+          return;
+        }
+
         try {
           await db.runTransaction(async (transaction) => {
             const doc = await transaction.get(docRef);
@@ -7128,6 +7493,20 @@ function initTopicDetailViews() {
            text: text,
            timestamp: formatDateWithSetting(new Date()) // e.g. "06.06.2026"
         };
+
+        if (isMock) {
+          const tasks = issue.tasks || [];
+          if (tasks[taskIdx]) {
+            if (!tasks[taskIdx].comments) tasks[taskIdx].comments = [];
+            tasks[taskIdx].comments.push(newComment);
+            inputEl.value = '';
+            const commentForm = modalBody.querySelector(`#task-comment-form-${taskIdx}`);
+            if (commentForm) commentForm.style.display = 'none';
+            console.log("Mock task comment added in memory.");
+            renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
+          }
+          return;
+        }
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -7201,6 +7580,22 @@ function initTopicDetailViews() {
              parent_id: parentId
           };
 
+          if (isMock) {
+            const tasks = issue.tasks || [];
+            if (tasks[taskIdx]) {
+              const subtasks = tasks[taskIdx].subtasks || [];
+              if (subtasks[subtaskIdx]) {
+                if (!subtasks[subtaskIdx].comments) subtasks[subtaskIdx].comments = [];
+                subtasks[subtaskIdx].comments.push(newReply);
+                inputEl.value = '';
+                replyForm.style.display = 'none';
+                console.log("Mock subtask reply added successfully.");
+                renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
+              }
+            }
+            return;
+          }
+
           try {
             await db.runTransaction(async (transaction) => {
               const doc = await transaction.get(docRef);
@@ -7232,6 +7627,19 @@ function initTopicDetailViews() {
              timestamp: formatDateWithSetting(new Date()),
              parent_id: parentId
           };
+
+          if (isMock) {
+            const tasks = issue.tasks || [];
+            if (tasks[taskIdx]) {
+              if (!tasks[taskIdx].comments) tasks[taskIdx].comments = [];
+              tasks[taskIdx].comments.push(newReply);
+              inputEl.value = '';
+              replyForm.style.display = 'none';
+              console.log("Mock task reply added successfully.");
+              renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
+            }
+            return;
+          }
 
           try {
             await db.runTransaction(async (transaction) => {
@@ -7288,6 +7696,17 @@ function initTopicDetailViews() {
         const textarea = container.querySelector('.task-results-input');
         if (!textarea) return;
         const resultsText = textarea.value.trim();
+
+        if (isMock) {
+          const tasks = issue.tasks || [];
+          if (tasks[taskIdx]) {
+            tasks[taskIdx].results = resultsText;
+            console.log("Mock task results saved in memory.");
+            alert("Task results saved successfully.");
+            renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
+          }
+          return;
+        }
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -7364,6 +7783,21 @@ function initTopicDetailViews() {
           timestamp: formatDateWithSetting(new Date())
         };
 
+        if (isMock) {
+          const tasks = issue.tasks || [];
+          if (tasks[taskIdx]) {
+            const subtasks = tasks[taskIdx].subtasks || [];
+            if (subtasks[subtaskIdx]) {
+              if (!subtasks[subtaskIdx].comments) subtasks[subtaskIdx].comments = [];
+              subtasks[subtaskIdx].comments.push(newComment);
+              inputEl.value = '';
+              console.log("Mock subtask comment added in memory.");
+              renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
+            }
+          }
+          return;
+        }
+
         try {
           await db.runTransaction(async (transaction) => {
             const doc = await transaction.get(docRef);
@@ -7426,6 +7860,17 @@ function initTopicDetailViews() {
         if (!textarea) return;
         const resultsText = textarea.value.trim();
 
+        if (isMock) {
+          const tasks = issue.tasks || [];
+          if (tasks[taskIdx] && tasks[taskIdx].subtasks && tasks[taskIdx].subtasks[subtaskIdx]) {
+            tasks[taskIdx].subtasks[subtaskIdx].results = resultsText;
+            console.log("Mock subtask results saved in memory.");
+            alert("Subtask results saved successfully.");
+            renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
+          }
+          return;
+        }
+
         try {
           await db.runTransaction(async (transaction) => {
             const doc = await transaction.get(docRef);
@@ -7449,6 +7894,115 @@ function initTopicDetailViews() {
     });
 
     async function toggleTaskOrCommentReaction(msgId, reactionType) {
+      if (isMock) {
+        if (msgId.startsWith('task_')) {
+          const taskIdx = parseInt(msgId.substring(5), 10);
+          const tasks = issue.tasks || [];
+          if (tasks[taskIdx]) {
+            let marks = tasks[taskIdx].marks || [];
+            const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+            const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+            const existingIndex = userMarkTypes.indexOf(reactionType);
+
+            if (existingIndex >= 0) {
+              marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+            } else {
+              if (userMarkTypes.length >= 2) {
+                alert("You can only leave up to 2 different reactions per task.");
+                return;
+              }
+              marks.push({
+                uid: currentUserId,
+                type: reactionType,
+                reaction: reactionType
+              });
+            }
+            tasks[taskIdx].marks = marks;
+            console.log("Mock task reaction updated in memory.");
+            renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
+          }
+        } else if (msgId.startsWith('taskcomment_')) {
+          if (msgId.startsWith('taskcomment_subtaskcomment_')) {
+            const parts = msgId.split('_');
+            const taskIdx = parseInt(parts[2], 10);
+            const subtaskIdx = parseInt(parts[3], 10);
+            const commentId = parts.slice(4).join('_');
+
+            const tasks = issue.tasks || [];
+            if (tasks[taskIdx]) {
+              const subtasks = tasks[taskIdx].subtasks || [];
+              if (subtasks[subtaskIdx]) {
+                let comments = subtasks[subtaskIdx].comments || [];
+                comments = comments.map(c => {
+                  if (c.id === commentId) {
+                    let marks = c.marks || [];
+                    const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+                    const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+                    const existingIndex = userMarkTypes.indexOf(reactionType);
+
+                    if (existingIndex >= 0) {
+                      marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+                    } else {
+                      if (userMarkTypes.length >= 2) {
+                        alert("You can only leave up to 2 different reactions per comment.");
+                        return c;
+                      }
+                      marks.push({
+                        uid: currentUserId,
+                        type: reactionType,
+                        reaction: reactionType
+                      });
+                    }
+                    return { ...c, marks: marks };
+                  }
+                  return c;
+                });
+                subtasks[subtaskIdx].comments = comments;
+                console.log("Mock subtask comment reaction updated in memory.");
+                renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
+              }
+            }
+          } else {
+            const parts = msgId.split('_');
+            const taskIdx = parseInt(parts[1], 10);
+            const commentId = parts.slice(2).join('_');
+
+            const tasks = issue.tasks || [];
+            if (tasks[taskIdx]) {
+              let comments = tasks[taskIdx].comments || [];
+              comments = comments.map(c => {
+                if (c.id === commentId) {
+                  let marks = c.marks || [];
+                  const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
+                  const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
+                  const existingIndex = userMarkTypes.indexOf(reactionType);
+
+                  if (existingIndex >= 0) {
+                    marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
+                  } else {
+                    if (userMarkTypes.length >= 2) {
+                      alert("You can only leave up to 2 different reactions per comment.");
+                      return c;
+                    }
+                    marks.push({
+                      uid: currentUserId,
+                      type: reactionType,
+                      reaction: reactionType
+                    });
+                  }
+                  return { ...c, marks: marks };
+                }
+                return c;
+              });
+              tasks[taskIdx].comments = comments;
+              console.log("Mock task comment reaction updated in memory.");
+              renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
+            }
+          }
+        }
+        return;
+      }
+
       if (msgId.startsWith('task_')) {
         const taskIdx = parseInt(msgId.substring(5), 10);
         try {
@@ -7892,7 +8446,7 @@ function bindTopicListInteractions() {
         var kind = this.getAttribute('data-topic-type');
         var topicId = this.getAttribute('data-topic-id');
         
-        if (kind === 'chat' || kind === 'voting') {
+        if (kind === 'chat' || kind === 'voting' || kind === 'tasks') {
           if (typeof window.markDiscussionAsRead === 'function') {
             window.markDiscussionAsRead(topicId);
           }
@@ -8062,12 +8616,8 @@ function initRealTimeDashboardSync(db, storedUid) {
         <span class="summary-separator">·</span>
         <button class="summary-link" data-section="chat">Discussions: ${discussionsCount}</button>
       `;
-      summaryStrip.querySelectorAll('.summary-link').forEach(el => {
-        el.addEventListener('click', function(e) {
-          e.preventDefault();
-          openSectionModal(this.getAttribute('data-section'));
-        });
-      });
+      // Handled via document-level event delegation
+
     }
   };
 
@@ -8107,6 +8657,7 @@ function initRealTimeDashboardSync(db, storedUid) {
   let cachedVotingDocs = [];
   let votingSortMode = 'new';
   let cachedTasksDocs = [];
+  let tasksSortMode = 'new';
 
   function formatDateToString(date) {
     const y = date.getFullYear();
@@ -8202,23 +8753,10 @@ function initRealTimeDashboardSync(db, storedUid) {
   }
 
   function getTopicCategoryChip(title) {
-    const t = (title || '').toLowerCase();
-    if (t.includes('elevator') || t.includes('parking') || t.includes('ladder') || t.includes('flower') || t.includes('fence') || t.includes('door') || t.includes('housing') || t.includes('osbb') || t.includes('charger') || t.includes('ev') || t.includes('room') || t.includes('lobby') || t.includes('chess') || t.includes('club')) {
-      return '<span class="community-tag">Building</span>';
-    }
-    if (t.includes('dance') || t.includes('choreography') || t.includes('spring') || t.includes('festival') || t.includes('celebration') || t.includes('party') || t.includes('showcase') || t.includes('studio') || t.includes('rent') || t.includes('art') || t.includes('music') || t.includes('social') || t.includes('gathering')) {
-      return '<span class="community-tag community-tag-culture">Culture</span>';
-    }
-    if (t.includes('school') || t.includes('trip') || t.includes('education') || t.includes('child') || t.includes('kid') || t.includes('program') || t.includes('learning') || t.includes('class') || t.includes('course') || t.includes('camp') || t.includes('after-school')) {
-      return '<span class="community-tag">Education</span>';
-    }
-    if (t.includes('api') || t.includes('blocker') || t.includes('sprint') || t.includes('ci/cd') || t.includes('github') || t.includes('code') || t.includes('tech') || t.includes('server') || t.includes('migration') || t.includes('web') || t.includes('developer') || t.includes('software') || t.includes('database') || t.includes('app')) {
-      return '<span class="community-tag community-tag-dev">Dev</span>';
-    }
-    if (t.includes('transport') || t.includes('bus') || t.includes('route') || t.includes('district') || t.includes('budget') || t.includes('renovation') || t.includes('park') || t.includes('bike') || t.includes('avenue') || t.includes('city') || t.includes('street') || t.includes('public') || t.includes('road') || t.includes('lane') || t.includes('authority') || t.includes('tax')) {
-      return '<span class="community-tag community-tag-city">City</span>';
-    }
-    return '<span class="community-tag">Building</span>';
+    // Check if title already starts with an emoji
+    const emojiRegex = /^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u;
+    if (emojiRegex.test(title || '')) return '';
+    return getTopicCategoryEmoji(title) + ' ';
   }
 
   function getTopicCategoryEmoji(title) {
@@ -8338,9 +8876,14 @@ function initRealTimeDashboardSync(db, storedUid) {
   window.markDiscussionAsRead = function(topicId) {
     let doc = cachedChatDocs.find(d => d.id === topicId);
     let isVoting = false;
+    let isTasks = false;
     if (!doc) {
       doc = cachedVotingDocs.find(d => d.id === topicId);
       isVoting = true;
+    }
+    if (!doc) {
+      doc = cachedTasksDocs.find(d => d.id === topicId);
+      isTasks = true;
     }
     if (!doc) return;
     const total = doc.data().message_count || 0;
@@ -8357,6 +8900,17 @@ function initRealTimeDashboardSync(db, storedUid) {
         window.triggerVotingListRender();
       }
     }
+    if (isTasks) {
+      let openedTasksIssues = {};
+      try {
+        openedTasksIssues = JSON.parse(localStorage.getItem('tasks_opened_issues') || '{}');
+      } catch (e) {}
+      openedTasksIssues[topicId] = true;
+      localStorage.setItem('tasks_opened_issues', JSON.stringify(openedTasksIssues));
+      if (typeof window.triggerTasksListRender === 'function') {
+        window.triggerTasksListRender();
+      }
+    }
   };
 
   window.markDiscussionAsReadWithCount = function(topicId, count) {
@@ -8371,6 +8925,9 @@ function initRealTimeDashboardSync(db, storedUid) {
     }
     if (typeof window.triggerVotingListRender === 'function') {
       window.triggerVotingListRender();
+    }
+    if (typeof window.triggerTasksListRender === 'function') {
+      window.triggerTasksListRender();
     }
   };
 
@@ -8392,15 +8949,17 @@ function initRealTimeDashboardSync(db, storedUid) {
       const total = disc.message_count || 0;
       const read = readCounts[tid] !== undefined ? readCounts[tid] : total;
       const unread = Math.max(0, total - read);
-      totalNewMessages += unread;
+      if (unread > 0) {
+        totalNewMessages++;
+      }
       
       const rel = (disc.relevance_scores && disc.relevance_scores[storedUid] !== undefined) ? disc.relevance_scores[storedUid] : 0;
-      if (rel > 0.60) {
+      if (rel >= 0.60) {
         totalImportant++;
       }
       
       const days = getDaysUntil(disc.ends);
-      if (days <= 6) {
+      if (days <= 7) {
         totalUrgent++;
       }
     });
@@ -8492,9 +9051,9 @@ function initRealTimeDashboardSync(db, storedUid) {
 
     // Update filter tags inside DOM
     const tagsHtml = `
-      <button class="${chatSortMode === 'new' ? 'active' : ''}" data-chat-sort="new">new: ${totalNewMessages}</button>
-      <button class="${chatSortMode === 'important' ? 'active' : ''}" data-chat-sort="important">important: ${totalImportant}</button>
-      <button class="${chatSortMode === 'urgent' ? 'active' : ''}" data-chat-sort="urgent">urgent: ${totalUrgent}</button>
+      <button class="${chatSortMode === 'new' ? 'active' : ''}" data-chat-sort="new">new ${totalNewMessages}</button>
+      <button class="${chatSortMode === 'important' ? 'active' : ''}" data-chat-sort="important">important ${totalImportant}</button>
+      <button class="${chatSortMode === 'urgent' ? 'active' : ''}" data-chat-sort="urgent">urgent ${totalUrgent}</button>
     `;
     
     const sourceTags = document.querySelector('#section-chat .search-filter-tags');
@@ -8505,16 +9064,11 @@ function initRealTimeDashboardSync(db, storedUid) {
     // Update Dashboard chat card previews
     const dashChatCard = document.querySelector('.dash-card[data-section="chat"]');
     if (dashChatCard) {
-      let badgesHtml = '';
-      if (totalNewMessages > 0) {
-        badgesHtml += `<span class="dash-badge">new: ${totalNewMessages}</span>`;
-      }
-      if (totalImportant > 0) {
-        badgesHtml += `<span class="dash-badge">important: ${totalImportant}</span>`;
-      }
-      if (totalUrgent > 0) {
-        badgesHtml += `<span class="dash-badge">urgent: ${totalUrgent}</span>`;
-      }
+      let badgesHtml = `
+        <span class="dash-badge ${totalNewMessages > 0 ? '' : 'dash-badge-empty'}">new ${totalNewMessages}</span>
+        <span class="dash-badge ${totalImportant > 0 ? '' : 'dash-badge-empty'}">important ${totalImportant}</span>
+        <span class="dash-badge ${totalUrgent > 0 ? 'dash-badge-urgent' : 'dash-badge-empty'}">urgent ${totalUrgent}</span>
+      `;
 
       dashChatCard.innerHTML = `
         <div class="dash-card-topline">
@@ -8530,22 +9084,6 @@ function initRealTimeDashboardSync(db, storedUid) {
         const disc = doc.data();
         const topicId = doc.id;
         
-        const total = disc.message_count || 0;
-        const read = readCounts[topicId] !== undefined ? readCounts[topicId] : total;
-        const unreadCount = Math.max(0, total - read);
-        const isUnread = unreadCount > 0;
-        
-        const relVal = (disc.relevance_scores && disc.relevance_scores[storedUid] !== undefined) ? disc.relevance_scores[storedUid] : 0;
-        const isImportant = relVal > 0.60;
-        const days = getDaysUntil(disc.ends);
-        const isUrgent = days <= 6;
-
-        let emojiPrefix = '';
-        if (isUnread) emojiPrefix += '🟢';
-        if (isImportant) emojiPrefix += '⭐';
-        if (isUrgent) emojiPrefix += '⚡';
-        const prefix = emojiPrefix ? emojiPrefix + ' ' : '';
-
         const preview = document.createElement('div');
         preview.className = 'dash-card-preview';
         preview.style.cursor = 'pointer';
@@ -8553,7 +9091,7 @@ function initRealTimeDashboardSync(db, storedUid) {
           preview.style.textDecoration = 'line-through';
           preview.style.opacity = '0.65';
         }
-        preview.addEventListener('click', () => renderTopicDetail('chat', topicId, document.getElementById('section-chat').innerHTML, 'Chat'));
+
         
         const dateStr = disc.last_message_timestamp ? formatDateWithSetting(disc.last_message_timestamp) : '';
         let textStr = disc.last_message_text || '';
@@ -8567,7 +9105,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         preview.innerHTML = `
           <div class="topic-line">
             ${getTopicCategoryChip(disc.topic)}
-            <span class="topic-name">${prefix}${disc.topic}</span>
+            <span class="topic-name">${disc.topic}</span>
           </div>
           <div class="topic-preview" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
             <b>${senderName}:</b> ${escapeHtml(textStr)}
@@ -8580,7 +9118,22 @@ function initRealTimeDashboardSync(db, storedUid) {
       footer.className = 'dash-card-footer-link';
       footer.textContent = `${Math.max(0, cachedChatDocs.length - 3)} more discussions →`;
       footer.style.cursor = 'pointer';
-      footer.addEventListener('click', () => openSectionModal('chat'));
+      footer.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openSectionModal('chat');
+      });
+      dashChatCard.appendChild(footer);
+
+      // Direct click handler on the card element itself.
+      // Preview children call stopPropagation, so this only fires
+      // for clicks on the title, badges, or card background.
+      if (!dashChatCard.__sectionClickBound) {
+        dashChatCard.__sectionClickBound = true;
+        dashChatCard.addEventListener('click', function() {
+          openSectionModal('chat');
+        });
+      }
     }
   };
 
@@ -8607,12 +9160,13 @@ function initRealTimeDashboardSync(db, storedUid) {
         }
         
         const rel = (issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? issue.relevance_scores[storedUid] : 0;
-        if (rel > 0.60) {
+        const hasVoted = issue.votes && issue.votes[storedUid] !== undefined;
+        if (rel >= 0.60 && !hasVoted) {
           totalImportant++;
         }
         
         const days = getDaysUntil(issue.ends);
-        if (days <= 3) {
+        if (days <= 7 && !hasVoted) {
           totalUrgent++;
         }
       });
@@ -8640,6 +9194,8 @@ function initRealTimeDashboardSync(db, storedUid) {
         const previewColor = isUnread ? 'color: var(--text); font-weight: 500;' : 'color: var(--text-muted);';
         
         ensureTopicLocation(issue, topicId);
+        const hasVoted = issue.votes && issue.votes[storedUid] !== undefined;
+        const votedCheckmark = hasVoted ? '✅ ' : '';
         const prefix = getTopicEmojiPrefix(issue, issue.status, storedUid, isUnread);
         const inactiveStyle = issue.status === 'inactive' ? 'text-decoration: line-through; opacity: 0.65;' : '';
 
@@ -8647,7 +9203,7 @@ function initRealTimeDashboardSync(db, storedUid) {
           <button class="topic-item" data-topic-type="voting" data-topic-id="${topicId}" style="${inactiveStyle}">
             <div class="topic-header">
               <div class="topic-name-wrap">
-                <span class="topic-name">${prefix}${issue.title}</span>
+                <span class="topic-name">${votedCheckmark}${prefix}${issue.title}</span>
               </div>
               <span class="topic-meta">${formatDeadline(issue.ends)} &nbsp;·&nbsp; Relevance: <b>${relevanceVal}</b> &nbsp;·&nbsp; ISR: <b>${isrVal}</b></span>
             </div>
@@ -8664,9 +9220,9 @@ function initRealTimeDashboardSync(db, storedUid) {
 
       // Update filter tags inside DOM for voting
       const tagsHtml = `
-        <button class="${votingSortMode === 'new' ? 'active' : ''}" data-voting-sort="new">new: ${totalNewMessages}</button>
-        <button class="${votingSortMode === 'important' ? 'active' : ''}" data-voting-sort="important">important: ${totalImportant}</button>
-        <button class="${votingSortMode === 'urgent' ? 'active' : ''}" data-voting-sort="urgent">urgent: ${totalUrgent}</button>
+        <button class="${votingSortMode === 'new' ? 'active' : ''}" data-voting-sort="new">new ${totalNewMessages}</button>
+        <button class="${votingSortMode === 'important' ? 'active' : ''}" data-voting-sort="important">important ${totalImportant}</button>
+        <button class="${votingSortMode === 'urgent' ? 'active' : ''}" data-voting-sort="urgent">urgent ${totalUrgent}</button>
       `;
       
       const sourceTags = document.querySelector('#section-voting .search-filter-tags');
@@ -8678,15 +9234,104 @@ function initRealTimeDashboardSync(db, storedUid) {
     window.triggerVotingListRender = renderVotingList;
 
     const renderTasksList = () => {
-      let taskHtml = '';
+      let openedTasksIssues = {};
+      try {
+        openedTasksIssues = JSON.parse(localStorage.getItem('tasks_opened_issues') || '{}');
+      } catch (e) {}
+
+      let readCounts = {};
+      try {
+        readCounts = JSON.parse(localStorage.getItem('chat_read_counts') || '{}');
+      } catch (e) {}
+
+      // Calculate tag counts
+      let tasksNewCount = 0;
+      let tasksImportantCount = 0;
+      let tasksUrgentCount = 0;
+
       cachedTasksDocs.forEach(doc => {
+        const issue = doc.data();
+        const topicId = doc.id;
+        const tasks = issue.tasks || [];
+
+        // new: never opened or has unread messages
+        const isUnread = !openedTasksIssues[topicId];
+        const discDoc = cachedChatDocs.find(d => d.id === topicId);
+        const total = discDoc ? (discDoc.data().message_count || 0) : 0;
+        const read = readCounts[topicId] !== undefined ? readCounts[topicId] : total;
+        const unreadCount = Math.max(0, total - read);
+        if (isUnread || unreadCount > 0) {
+          tasksNewCount++;
+        }
+
+        // important: undone tasks where current user is responsible
+        const hasUndoneTaskUserResponsible = tasks.some(t => {
+          const tStatus = t.status || 'pending';
+          const isUndone = tStatus !== 'done' && tStatus !== 'canceled' && tStatus !== 'cancelled';
+          const isUserResp = (t.in_charge_uid || '').toString() === storedUid.toString();
+          if (isUndone && isUserResp) return true;
+          const subtasks = t.subtasks || [];
+          return subtasks.some(st => {
+            const stStatus = st.status || 'pending';
+            const stUndone = stStatus !== 'done' && stStatus !== 'canceled' && stStatus !== 'cancelled';
+            const stUserResp = (st.in_charge_uid || t.in_charge_uid || '').toString() === storedUid.toString();
+            return stUndone && stUserResp;
+          });
+        });
+        if (hasUndoneTaskUserResponsible) {
+          tasksImportantCount++;
+        }
+
+        // urgent: count tasks where user is responsible with deadline in a week or less (days <= 7)
+        tasks.forEach(t => {
+          const tStatus = t.status || 'pending';
+          const isUndone = tStatus !== 'done' && tStatus !== 'canceled' && tStatus !== 'cancelled';
+          const isUserResp = (t.in_charge_uid || '').toString() === storedUid.toString();
+          const days = t.deadline ? getDaysUntil(t.deadline) : 999;
+          if (isUndone && isUserResp && days <= 7) {
+            tasksUrgentCount++;
+          }
+          const subtasks = t.subtasks || [];
+          subtasks.forEach(st => {
+            const stStatus = st.status || 'pending';
+            const stUndone = stStatus !== 'done' && stStatus !== 'canceled' && stStatus !== 'cancelled';
+            const stUserResp = (st.in_charge_uid || t.in_charge_uid || '').toString() === storedUid.toString();
+            const stDays = st.deadline ? getDaysUntil(st.deadline) : 999;
+            if (stUndone && stUserResp && stDays <= 7) {
+              tasksUrgentCount++;
+            }
+          });
+        });
+      });
+
+      // Sort cachedTasksDocs by tasksSortMode
+      const sortedTasks = cachedTasksDocs.slice().sort((a, b) => {
+        const issueA = a.data();
+        const issueB = b.data();
+        
+        if (tasksSortMode === 'new') {
+          const timeA = new Date(issueA.last_message_timestamp || issueA.created_at || 0).getTime();
+          const timeB = new Date(issueB.last_message_timestamp || issueB.created_at || 0).getTime();
+          return timeB - timeA;
+        } else if (tasksSortMode === 'important') {
+          const relA = (issueA.relevance_scores && issueA.relevance_scores[storedUid] !== undefined) ? issueA.relevance_scores[storedUid] : 0;
+          const relB = (issueB.relevance_scores && issueB.relevance_scores[storedUid] !== undefined) ? issueB.relevance_scores[storedUid] : 0;
+          return relB - relA;
+        } else if (tasksSortMode === 'urgent') {
+          const daysA = getDaysUntil(issueA.ends);
+          const daysB = getDaysUntil(issueB.ends);
+          return daysA - daysB;
+        }
+        return 0;
+      });
+
+      let taskHtml = '';
+      sortedTasks.forEach(doc => {
         const issue = doc.data();
         const topicId = doc.id;
         ensureTopicLocation(issue, topicId);
         
         const tasks = issue.tasks || [];
-        const currentUserId = safeGetStorage('userId');
-        
         const urgentTask = getMostUrgentTask(tasks);
         
         const prefix = getTopicEmojiPrefix(issue, issue.status, storedUid, false);
@@ -8719,6 +9364,18 @@ function initRealTimeDashboardSync(db, storedUid) {
         `;
       });
       updateTopicListContainer('tasks', taskHtml);
+
+      // Update filter tags inside DOM for tasks
+      const tagsHtml = `
+        <button class="${tasksSortMode === 'new' ? 'active' : ''}" data-tasks-sort="new">new ${tasksNewCount}</button>
+        <button class="${tasksSortMode === 'important' ? 'active' : ''}" data-tasks-sort="important">important ${tasksImportantCount}</button>
+        <button class="${tasksSortMode === 'urgent' ? 'active' : ''}" data-tasks-sort="urgent">urgent ${tasksUrgentCount}</button>
+      `;
+      
+      const sourceTags = document.querySelector('#section-tasks .search-filter-tags');
+      const modalTags = document.querySelector('#section-modal-overlay .search-filter-tags');
+      if (sourceTags) sourceTags.innerHTML = tagsHtml;
+      if (modalTags && currentSectionId === 'tasks') modalTags.innerHTML = tagsHtml;
     };
 
     window.triggerTasksListRender = renderTasksList;
@@ -8738,6 +9395,15 @@ function initRealTimeDashboardSync(db, storedUid) {
         e.preventDefault();
         votingSortMode = target.getAttribute('data-voting-sort');
         renderVotingList();
+      }
+    });
+
+    document.addEventListener('click', function(e) {
+      const target = e.target.closest('[data-tasks-sort]');
+      if (target) {
+        e.preventDefault();
+        tasksSortMode = target.getAttribute('data-tasks-sort');
+        renderTasksList();
       }
     });
 
@@ -8822,11 +9488,13 @@ function initRealTimeDashboardSync(db, storedUid) {
       }
     });
 
+    const mergedTaskDocs = taskDocs;
+
     cachedVotingDocs = votingDocs;
     activeIssuesCount = votingDocs.length;
     updateSummaryStrip();
     
-    cachedTasksDocs = taskDocs;
+    cachedTasksDocs = mergedTaskDocs;
     activeIssuesCount = votingDocs.length;
     updateSummaryStrip();
     
@@ -8857,30 +9525,25 @@ function initRealTimeDashboardSync(db, storedUid) {
         }
 
         const relVal = (issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? issue.relevance_scores[storedUid] : 0;
-        const isImportant = relVal > 0.60;
+        const isImportant = relVal >= 0.60;
 
         if (isImportant && !hasVoted) {
           dashboardImportantNotVotedCount++;
         }
 
         const days = getDaysUntil(issue.ends);
-        const isUrgent = days <= 3;
+        const isUrgent = days <= 7;
 
         if (isUrgent && !hasVoted) {
           dashboardUrgentNotVotedCount++;
         }
       });
 
-      let badgesHtml = '';
-      if (dashboardNewCount > 0) {
-        badgesHtml += `<span class="dash-badge">new: ${dashboardNewCount}</span>`;
-      }
-      if (dashboardImportantNotVotedCount > 0) {
-        badgesHtml += `<span class="dash-badge">important: ${dashboardImportantNotVotedCount}</span>`;
-      }
-      if (dashboardUrgentNotVotedCount > 0) {
-        badgesHtml += `<span class="dash-badge dash-badge-urgent">urgent: ${dashboardUrgentNotVotedCount}</span>`;
-      }
+      let badgesHtml = `
+        <span class="dash-badge ${dashboardNewCount > 0 ? '' : 'dash-badge-empty'}">new ${dashboardNewCount}</span>
+        <span class="dash-badge ${dashboardImportantNotVotedCount > 0 ? '' : 'dash-badge-empty'}">important ${dashboardImportantNotVotedCount}</span>
+        <span class="dash-badge ${dashboardUrgentNotVotedCount > 0 ? 'dash-badge-urgent' : 'dash-badge-empty'}">urgent ${dashboardUrgentNotVotedCount}</span>
+      `;
 
       dashVotingCard.innerHTML = `
         <div class="dash-card-topline">
@@ -8898,9 +9561,6 @@ function initRealTimeDashboardSync(db, storedUid) {
         const topicId = doc.id;
         ensureTopicLocation(issue, topicId);
         
-        const isUnread = !openedVotingIssues[topicId];
-        const prefix = getTopicEmojiPrefix(issue, issue.status, storedUid, isUnread);
-
         const preview = document.createElement('div');
         preview.className = 'dash-card-preview';
         preview.style.cursor = 'pointer';
@@ -8908,38 +9568,122 @@ function initRealTimeDashboardSync(db, storedUid) {
           preview.style.textDecoration = 'line-through';
           preview.style.opacity = '0.65';
         }
-        preview.addEventListener('click', () => renderTopicDetail('voting', topicId, document.getElementById('section-voting').innerHTML, 'Voting'));
+
+        const hasVoted = issue.votes && issue.votes[storedUid] !== undefined;
+        const votedCheckmark = hasVoted ? '✅ ' : '';
         preview.innerHTML = `
           <div class="topic-line">
-            ${getTopicCategoryChip(issue.title)}
-            <span class="topic-name">${prefix}${issue.title}</span>
+            <span class="topic-name">${votedCheckmark}${issue.title}</span>
           </div>
           <div class="topic-preview">Status: <b>${issue.status || 'Voting'}</b> · Submitter: <b>${issue.submitter_id}</b></div>
         `;
         dashVotingCard.appendChild(preview);
         count++;
       });
+      // Direct click handler on the card element itself.
+      if (!dashVotingCard.__sectionClickBound) {
+        dashVotingCard.__sectionClickBound = true;
+        dashVotingCard.addEventListener('click', function() {
+          openSectionModal('voting');
+        });
+      }
     }
 
     const dashTasksCard = document.querySelector('.dash-card[data-section="tasks"]');
     if (dashTasksCard) {
+      let openedTasksIssues = {};
+      try {
+        openedTasksIssues = JSON.parse(localStorage.getItem('tasks_opened_issues') || '{}');
+      } catch (e) {}
+
+      let readCounts = {};
+      try {
+        readCounts = JSON.parse(localStorage.getItem('chat_read_counts') || '{}');
+      } catch (e) {}
+
+      let tasksNewCount = 0;
+      let tasksImportantCount = 0;
+      let tasksUrgentCount = 0;
+
+      cachedTasksDocs.forEach(doc => {
+        const issue = doc.data();
+        const topicId = doc.id;
+        const tasks = issue.tasks || [];
+
+        // new: never opened or unread messages
+        const isUnread = !openedTasksIssues[topicId];
+        const discDoc = cachedChatDocs.find(d => d.id === topicId);
+        const total = discDoc ? (discDoc.data().message_count || 0) : 0;
+        const read = readCounts[topicId] !== undefined ? readCounts[topicId] : total;
+        const unreadCount = Math.max(0, total - read);
+        if (isUnread || unreadCount > 0) {
+          tasksNewCount++;
+        }
+
+        // important: undone tasks where current user is responsible
+        const hasUndoneTaskUserResponsible = tasks.some(t => {
+          const tStatus = t.status || 'pending';
+          const isUndone = tStatus !== 'done' && tStatus !== 'canceled' && tStatus !== 'cancelled';
+          const isUserResp = (t.in_charge_uid || '').toString() === storedUid.toString();
+          if (isUndone && isUserResp) return true;
+          const subtasks = t.subtasks || [];
+          return subtasks.some(st => {
+            const stStatus = st.status || 'pending';
+            const stUndone = stStatus !== 'done' && stStatus !== 'canceled' && stStatus !== 'cancelled';
+            const stUserResp = (st.in_charge_uid || t.in_charge_uid || '').toString() === storedUid.toString();
+            return stUndone && stUserResp;
+          });
+        });
+        if (hasUndoneTaskUserResponsible) {
+          tasksImportantCount++;
+        }
+
+        // urgent: count tasks where user is responsible with deadline in a week or less (days <= 7)
+        tasks.forEach(t => {
+          const tStatus = t.status || 'pending';
+          const isUndone = tStatus !== 'done' && tStatus !== 'canceled' && tStatus !== 'cancelled';
+          const isUserResp = (t.in_charge_uid || '').toString() === storedUid.toString();
+          const days = t.deadline ? getDaysUntil(t.deadline) : 999;
+          if (isUndone && isUserResp && days <= 7) {
+            tasksUrgentCount++;
+          }
+          const subtasks = t.subtasks || [];
+          subtasks.forEach(st => {
+            const stStatus = st.status || 'pending';
+            const stUndone = stStatus !== 'done' && stStatus !== 'canceled' && stStatus !== 'cancelled';
+            const stUserResp = (st.in_charge_uid || t.in_charge_uid || '').toString() === storedUid.toString();
+            const stDays = st.deadline ? getDaysUntil(st.deadline) : 999;
+            if (stUndone && stUserResp && stDays <= 7) {
+              tasksUrgentCount++;
+            }
+          });
+        });
+      });
+
+      let tasksBadgesHtml = `
+        <span class="dash-badge ${tasksNewCount > 0 ? '' : 'dash-badge-empty'}">new ${tasksNewCount}</span>
+        <span class="dash-badge ${tasksImportantCount > 0 ? '' : 'dash-badge-empty'}">important ${tasksImportantCount}</span>
+        <span class="dash-badge ${tasksUrgentCount > 0 ? 'dash-badge-urgent' : 'dash-badge-empty'}">urgent ${tasksUrgentCount}</span>
+      `;
+
       dashTasksCard.innerHTML = `
         <div class="dash-card-topline">
           <div class="dash-card-title">To Do</div>
         </div>
+        <div class="dash-card-badges">
+          ${tasksBadgesHtml}
+        </div>
       `;
+
       let count = 0;
-      taskDocs.forEach(doc => {
+      cachedTasksDocs.forEach(doc => {
         if (count >= 3) return;
         const issue = doc.data();
         const topicId = doc.id;
         ensureTopicLocation(issue, topicId);
         
         const tasks = issue.tasks || [];
-        const currentUserId = safeGetStorage('userId');
-        
         const urgentTask = getMostUrgentTask(tasks);
-        const prefix = getTopicEmojiPrefix(issue, issue.status, storedUid, false);
         
         const secondRowHtml = urgentTask
           ? `Next: ${urgentTask.step} (Deadline: ${formatTaskDeadline(urgentTask.deadline)})`
@@ -8952,11 +9696,11 @@ function initRealTimeDashboardSync(db, storedUid) {
           preview.style.textDecoration = 'line-through';
           preview.style.opacity = '0.65';
         }
-        preview.addEventListener('click', () => renderTopicDetail('tasks', topicId, document.getElementById('section-tasks').innerHTML, 'To Do'));
+
         preview.innerHTML = `
           <div class="topic-line">
             ${getTopicCategoryChip(issue.title)}
-            <span class="topic-name">${prefix}${issue.title}</span>
+            <span class="topic-name">${issue.title}</span>
           </div>
           <div class="topic-preview" style="font-size: 0.85rem; color: var(--text-soft); padding-top: 2px;">
             ${secondRowHtml}
@@ -8965,6 +9709,13 @@ function initRealTimeDashboardSync(db, storedUid) {
         dashTasksCard.appendChild(preview);
         count++;
       });
+      // Direct click handler on the card element itself.
+      if (!dashTasksCard.__sectionClickBound) {
+        dashTasksCard.__sectionClickBound = true;
+        dashTasksCard.addEventListener('click', function() {
+          openSectionModal('tasks');
+        });
+      }
     }
   }, err => console.error("Sync issues/tasks failed:", err));
 }
@@ -9231,33 +9982,8 @@ function initMainPage() {
     });
   }
 
-  document.querySelectorAll('[data-section]').forEach(function (el) {
-    el.addEventListener('click', function (e) {
-      e.preventDefault();
-      openSectionModal(this.getAttribute('data-section'));
-    });
-  });
 
-  if (overlay) {
-    let mousedownOnOverlay = false;
-    overlay.addEventListener('mousedown', function (e) {
-      mousedownOnOverlay = (e.target === overlay);
-    });
-    overlay.addEventListener('click', function (e) {
-      if (e.target === overlay && mousedownOnOverlay) closeSectionModal();
-    });
-  }
 
-  if (modalCloseBtn) {
-    modalCloseBtn.addEventListener('click', closeSectionModal);
-  }
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-      closeSectionModal();
-      menu.classList.remove('menu-open');
-    }
-  });
 
   initValuesSection();
   initValuesVectorModal();

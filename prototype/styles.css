@@ -1470,7 +1470,7 @@ a:hover {
 .topic-detail-meta-item {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 12px;
   padding: 8px 16px;
   position: relative; /* Add this so absolute-positioned tooltip popup works correctly */
   text-align: center; /* Align text by center */
@@ -2520,6 +2520,8 @@ body.tooltips-disabled .global-tooltip-popup.visible {
   gap: 16px;
   padding: 16px;
 }
+
+
 
 .action-card {
   background: var(--surface-1);
