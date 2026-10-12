@@ -8,7 +8,7 @@ SHA-256 is computed over the file bytes. MANIFEST.md itself is not listed.
 | File | Bytes | Rows | Unit | SHA-256 | Provenance |
 |---|---:|---:|---|---|---|
 | `EMBEDDINGS.md` | 5,147 | 39 | lines | `65a9370d7d8a54d2b00dd33725b0da2f75b2dcc200c755c499c87859e87c12bc` | this session |
-| `IMPLEMENTATION_FACTS.md` | 22,511 | 207 | lines | `2f6c9992008cd6968a26f81b2ea056f7227c903fec5e24c2434682cba012fe45` | this session |
+| `IMPLEMENTATION_FACTS.md` | 22,927 | 207 | lines | `33f78644216d08a0f96bdbaa9c21a37d731ba5b5103c6611278af9db781e91ef` | this session; corrected 2026-10-12 (commit 60a9c1c, lines 87 and 127) |
 | `PLAN.md` | 6,077 | 80 | lines | `ff1f273b06809c1e0441efb4de7a901da433c2e152b0e3348d9e0ddb2986aca1` | earlier session (not regenerated) |
 | `SCHEMA.md` | 551,364 | 21,791 | lines | `849f08ecf650a266a2382b96adecfd46185ea8dd847b517baec890d9d44d49e2` | earlier session (not regenerated) |
 | `actions_000.jsonl` | 3,535,833 | 1,188 | JSONL records | `1ba658f7ac4d99bb39976f44dae79db1074fd238536d32afc8a0ff9f18d5f9b9` | this session; live Firestore |
