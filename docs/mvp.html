@@ -88,7 +88,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 <h3>What You See on the Dashboard</h3>
                 <ul>
-                    <li><strong>Your Status Card:</strong> Your photo, name, general ISR score, membership duration, and this month's activity (votes, discussions, tasks).</li>
+                    <li><strong>Your Status Card:</strong> Your photo, name, general ISR score (visible only to you), membership duration, and this month's activity (votes, discussions, tasks).</li>
                     <li><strong>Action Alerts:</strong> Three priority sections showing urgent votings (sorted by deadline), new discussions you're relevant to, and tasks in progress with their completion status.</li>
                     <li><strong>Community Activity Feed:</strong> A timeline of recent events (votes concluded, tasks completed, discussions started, new members joined) so you stay aware of what's happening.</li>
                 </ul>
@@ -110,7 +110,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </tr>
                     <tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px;"><strong>Status Card</strong></td>
-                        <td style="padding: 10px;">Shows your name, avatar, role, general ISR score, percentile rank, and this month's stats. Click to expand and see full profile.</td>
+                        <td style="padding: 10px;">Shows your name, avatar, role, your gISR relative to the average (visible only to you) and this month's stats. Click to expand and see full profile.</td>
                     </tr>
                     <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px;"><strong>Urgent Votings Alert</strong></td>
@@ -184,7 +184,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </tr>
                     <tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px;"><strong>Profile Card</strong></td>
-                        <td style="padding: 10px;">Photo, name, general ISR score, role badge</td>
+                        <td style="padding: 10px;">Photo, name, role badge</td>
                     </tr>
                     <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px;"><strong>Skills Section</strong></td>
@@ -358,7 +358,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 <h3>The Voting Process</h3>
                 <ol>
-                    <li><strong>Topic creator posts options</strong> with deliberated descriptions (cost, timeline, pros/cons)</li>
+                    <li><strong>Topic creator posts options</strong> with deliberated descriptions (cost, funding source, timeline, pros/cons)</li>
                     <li><strong>You vote</strong> - your click carries your calculated weight (ISR-score)</li>
                     <li><strong>System tallies weighted votes</strong> - highest weight option wins</li>
                     <li><strong>Status changes to "closed"</strong> and implementation begins</li>
@@ -384,7 +384,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </tr>
                     <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px;"><strong>Vote Options Display</strong></td>
-                        <td style="padding: 10px;">Each option as a card: name, description, cost, timeline, creator, attachment preview</td>
+                        <td style="padding: 10px;">Each option as a card: name, description, cost, funding source, timeline, creator, attachment preview</td>
                     </tr>
                     <tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px;"><strong>Vote Button</strong></td>
@@ -670,7 +670,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <p style="margin-top: 15px;"><strong>Votings</strong></p>
                     <div style="margin-left: 20px;">
 ├── title & context description<br/>
-├── options (with budgets, timelines)<br/>
+├── options (with budgets, funding sources, timelines)<br/>
 ├── isr_snapshot (members weights)<br/>
 ├── votes (member_id → option, with weight applied)<br/>
 ├── results (winner, margin, feedback)<br/>
@@ -725,7 +725,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 <h3>Privacy & Security (<a href="/wiki/adaptable_authorization.html">Adaptable Authorization (AAuth)</a>)</h3>
                 <ul>
-                    <li><strong>Multi-Layer Data Access:</strong> What data a members can see about other members depends on their gISR (general ISR) and Person-to-Person graph connections. </li>
+                    <li><strong>Multi-Layer Data Access:</strong> What data a members can see about other members depends on their relation to that member, their purpose and a minimum reliability condition (gISR); the member can restrict automatic access and decides on direct requests. </li>
                     <li><strong>Access Logging:</strong> Every data request logged and auditable</li>
                     <li><strong>Data Misuse Detection:</strong> AI flags suspicious access patterns (excessive requests = ISR penalty)</li>
                     <li><strong>Encryption:</strong> All data encrypted in transit (TLS) and at rest</li>
