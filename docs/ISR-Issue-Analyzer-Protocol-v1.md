@@ -22,7 +22,7 @@ The Issue Analyzer LLM receives **only**:
 - `issue_title`: short human-readable title
 - `issue_description`: free-text description, including context, motivation, possible solutions
 - `location_hint`: optional text and/or coordinates (if known)
-- `submitter_metadata`: optional info (microcommunity id, city name, language, tags)
+- `submitter_metadata`: optional info (ad-hoc public / microcommunity id, city name, language, tags)
 
 **Important:**
 - The Analyzer **must not rely on a pre-provided category**. It must **infer the category**

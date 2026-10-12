@@ -209,10 +209,10 @@ Issue Submitted ✓
    ↓
 System calculates relevance for all users
    ↓
-System identifies "Microcommunity" 
+System identifies "Ad-hoc Public" (Public of Appearance)
    (people significantly affected by this issue)
    ↓
-System sends notifications to microcommunity
+System sends notifications to the ad-hoc public
    ↓
 Users can review and vote
    ↓
@@ -279,7 +279,7 @@ User adjusts: D=20%, G=70%, S=5%, X=5%
 [Submit Issue] ✓
 
 🔔 RESULT:
-- Microcommunity formed: 42 affected residents
+- Ad-hoc public formed: 42 affected residents
 - Average relevance: 0.73
 - All notified within 10 minutes
 ```
@@ -309,7 +309,7 @@ User confirms: ✓ Yes, semantic interest (love dancing) is main factor
 [Submit Issue] ✓
 
 🔔 RESULT:
-- Microcommunity formed: 187 interested people
+- Ad-hoc public formed: 187 interested people
 - Average relevance: 0.58
 - Notifications sent; 24 people confirm interest
 ```
@@ -339,7 +339,7 @@ User confirms: ✓ Geographic proximity is main factor
 [Submit Issue] ✓
 
 🔔 RESULT:
-- Microcommunity formed: 156 residents
+- Ad-hoc public formed: 156 residents
 - Average relevance: 0.64
 - Some suggest petitioning city together
 ```
@@ -350,7 +350,7 @@ User confirms: ✓ Geographic proximity is main factor
 
 ### Q: Can I change issue details after submission?
 
-**A**: No, issue details (location, category, weights) are locked after submission to ensure consistent microcommunity. You can add comments explaining updates.
+**A**: No, issue details (location, category, weights) are locked after submission to ensure a consistent ad-hoc public. You can add comments explaining updates.
 
 ---
 
@@ -360,13 +360,13 @@ User confirms: ✓ Geographic proximity is main factor
 
 ---
 
-### Q: How is microcommunity determined?
+### Q: How is the ad-hoc public determined?
 
-**A**: System calculates Relevance (0.0-1.0) for every user, invites those with Relevance > 0.15. Users can decline if they don't feel affected.
+**A**: System calculates Relevance (0.0-1.0) for every user, invites those with Relevance > 0.15 to form the ad-hoc public. Users can decline if they don't feel affected.
 
 ---
 
-### Q: What if I'm not in the microcommunity?
+### Q: What if I'm not in the ad-hoc public?
 
 **A**: You didn't have high enough Relevance score for this issue. But if you are interested, you can still be added with a special request, take part in discussion and even vote according to your ISR score.
 
@@ -374,13 +374,13 @@ User confirms: ✓ Geographic proximity is main factor
 
 ### Q: Can I submit duplicate issues?
 
-**A**: System checks for similar active issues to prevent flooding community list and distructing members attention. If one exists, you can join/support it instead of creating new issue. If user insists and starts a similar topic, but more then 50% of members decline the membership, the microcommunity dismisses automatically and topicstarter's action decrease its future Contribution impact.
+**A**: System checks for similar active issues to prevent flooding the public issue list and distracting members' attention. If one exists, you can join/support it instead of creating a new issue. If a user insists and starts a similar topic, but more than 50% of members decline the membership, the ad-hoc public dismisses automatically and the topicstarter's action decreases their future Contribution impact.
 
 ---
 
 ### Q: How is issue status decided?
 
-**A**: Microcommunity votes using ISR weights. Outcome depends on vote aggregation rules (separate from Relevance).
+**A**: The ad-hoc public votes using ISR weights. Outcome depends on vote aggregation rules (separate from Relevance).
 
 ---
 
@@ -394,12 +394,12 @@ User confirms: ✓ Geographic proximity is main factor
 ### Why We Suggest (Not Require) Weights
 - Most users don't need to adjust
 - Expert submitters can fine-tune
-- Transparent algorithm—users see exactly what drives microcommunity
+- Transparent algorithm—users see exactly what drives the ad-hoc public
 
 ### Why Weights Are Locked After Submission
-- Ensures consistent microcommunity throughout issue lifecycle
+- Ensures consistent ad-hoc public throughout issue lifecycle
 - Prevents submitter gaming the system
-- Fair to all voters in microcommunity
+- Fair to all voters in the public
 
 ### Why Relevance Is Absolute (Not Normalized)
 - Adding one more affected person doesn't dilute others' voices
@@ -413,6 +413,6 @@ User confirms: ✓ Geographic proximity is main factor
 1. **Submit your first issue** following this guide
 2. **Review automatic categorization & weights**
 3. **Adjust if you know better** (optional)
-4. **Submit and see microcommunity form**
-5. **Vote when issues appear in your microcommunities**
+4. **Submit and see your ad-hoc public form**
+5. **Vote when issues appear in your ad-hoc publics**
 

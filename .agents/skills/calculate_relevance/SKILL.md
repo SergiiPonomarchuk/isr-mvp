@@ -24,7 +24,7 @@ Relevance_i = w_D·D_i + w_G·G_i + w_S·S_i + w_X·X_i
 - **G (Geospatial)**
 - **S (Semantic)**
 - **X (Social)**
-- **Threshold**: The default Relevance Threshold hardcoded in the engine is `0.15`. Users with `Relevance >= Threshold` are automatically added to the issue microcommunity.
+- **Threshold**: The default Relevance Threshold hardcoded in the engine is `0.15`. Users with `Relevance >= Threshold` are automatically added to the issue's ad-hoc public.
 
 ## 3. Expertise
 Expertise measures domain knowledge and capability.

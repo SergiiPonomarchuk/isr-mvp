@@ -118,7 +118,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </tr>
                     <tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px;"><strong>New Discussions Alert</strong></td>
-                        <td style="padding: 10px;">Shows discussions created recently that match your profile/interests. Displays unread message count and microcommunity size.</td>
+                        <td style="padding: 10px;">Shows discussions created recently that match your profile/interests. Displays unread message count and ad-hoc public size.</td>
                     </tr>
                     <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px;"><strong>Tasks in Progress</strong></td>
@@ -216,10 +216,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <h2 id="values">► 3. Define Your Values: What Matters to You</h2>
             </div>
             <div id="content-values" class="content" style="display: none;">
-                <p><strong>Microcommunity values are the foundation of ISR calculations.</strong> They define what behavior the community rewards and what it penalizes (as an addition to normal general law). The vectorized individual values ​​of all users make up the <strong>Matrix of Values</strong> - a specialized vector database. Each microcommunity formed around rised issue aggregates its own <strong>Vector of Values</strong> - from the values ​​of all members of the microcommunity, taken from the <strong>Matrix of Values</strong>.</p>
+                <p><strong>Ad-hoc public values (Public of Appearance) are the foundation of ISR calculations.</strong> They define what behavior the community rewards and what it penalizes (as an addition to normal general law). The vectorized individual values ​​of all users make up the <strong>Matrix of Values</strong> - a specialized vector database. Each ad-hoc public formed around a raised issue aggregates its own <strong>Vector of Values</strong> - from the values ​​of all members of the public, taken from the <strong>Matrix of Values</strong>.</p>
 
                 <h3>The Vector of Values </h3>
-                <p>Each microcommunity aggregates a <strong>Vector of Values</strong> – a collective agreement on what's important out from all microcommunity members' values regarding personal Relevance. <strong>Vector of Values</strong> is a pure mathematical representation which is used in Contribution calculations.</p>
+                <p>Each ad-hoc public aggregates a <strong>Vector of Values</strong> – a collective agreement on what's important out from all members' values regarding personal Relevance. <strong>Vector of Values</strong> is a pure mathematical representation which is used in Contribution calculations.</p>
 
                 <div style="background: #ecf0f1; padding: 20px; margin: 20px 0; border-radius: 5px;">
                     <strong>Basic ways to fill out values are:</strong>
@@ -260,8 +260,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <ul>
                     <li><em>"What do we mean by 'technical competence'?"</em> – AI clarifies the concept</li>
                     <li><em>"Give me examples of this value in action"</em> – AI provides concrete scenarios</li>
-                    <li><em>"How does this compare to other microcommunity members?"</em> – AI shows benchmarks</li>
-                    <li><em>"Explain my current microcommunity Vector of Values in a narrative view"</em> – AI makes a story about your current microcommunity values with nearest political examples</li>
+                    <li><em>"How does this compare to other members of the public?"</em> – AI shows benchmarks</li>
+                    <li><em>"Explain my current ad-hoc public Vector of Values in a narrative view"</em> – AI makes a story about your current public values with nearest political examples</li>
                 </ul>
 
                 <h3>🎯 UX Success Tips</h3>
@@ -277,15 +277,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- Chat Section -->
         <div class="paragraph">
             <div class="paragraph_top" onclick="toggleContent('content-chat')">
-                <h2 id="chat">► 4. Start or Join Discussions: Microcommunities Around Issues</h2>
+                <h2 id="chat">► 4. Start or Join Discussions: Ad-Hoc Publics Around Issues</h2>
             </div>
             <div id="content-chat" class="content" style="display: none;">
-                <p><strong>The Chat section is where collective problem-solving starts.</strong> When an issue arises, the AI identifies the most relevant members (a "microcommunity") and notifies them.</p>
+                <p><strong>The Chat section is where collective problem-solving starts.</strong> When an issue arises, the AI identifies the most relevant members (an "ad-hoc public" / Public of Appearance) and notifies them.</p>
 
                 <h3>How Discussions Work</h3>
                 <ol>
                     <li><strong>Someone creates a topic:</strong> "Roof needs repairs – what should we do?" specifying exact place, size of the problem, time to the problem should be solved and other context data</li>
-                    <li><strong>AI identifies microcommunity:</strong> Finds members skilled in construction, interested in maintenance, affected by the issue</li>
+                    <li><strong>AI identifies the ad-hoc public:</strong> Finds members skilled in construction, interested in maintenance, affected by the issue</li>
                     <li><strong>Relevant members are notified:</strong> Get badge with ISR relevance score for this topic</li>
                     <li><strong>Discussion unfolds:</strong> Members share expertise, ask questions, propose solutions</li>
                     <li><strong>Evidence uploaded:</strong> Photos, quotes, technical documents attached to messages</li>
@@ -299,11 +299,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </tr>
                     <tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px;"><strong>Discussion List Feed</strong></td>
-                        <td style="padding: 10px;">Shows active topics sorted by relevance + recency. Badges show: NEW, URGENT, IMPORTANT</td>
+                        <td style="padding: 10px;">Shows active topics sorted by recency or relevance. Filter tags show: NEW, IMPORTANT, URGENT. Each topic item displays category icon, status indicator, topic title, deadline, user-specific Relevance (percentage, e.g. 85%), user-specific ISR-score (e.g. 1.28), and latest message snippet with sender name and ID.</td>
                     </tr>
                     <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
-                        <td style="padding: 10px;"><strong>Topic Header</strong></td>
-                        <td style="padding: 10px;">Title, creator, date, microcommunity member count, thread preview</td>
+                        <td style="padding: 10px;"><strong>Topic Header & Metadata</strong></td>
+                        <td style="padding: 10px;">Title with category emoji, status/urgency symbol, star badge for high relevance (&ge; 60%), deadline/ongoing status, member's user-specific Relevance score (%) and ISR-score</td>
                     </tr>
                     <tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px;"><strong>Message Thread View</strong></td>
@@ -323,7 +323,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </tr>
                 </table>
 
-                <h3>Microcommunity Formation (How AI Selects Relevant Members)</h3>
+                <h3>Ad-Hoc Public Formation (How AI Selects Relevant Members)</h3>
                 <p>When a topic is created, the system calculates relevance according to the Relevance Implementation guide:</p>
                 <ul>
                     <li><strong>Profile match:</strong> Keywords in topic match skills in profile (e.g., "middle age" matches a 40 years old person)</li>
@@ -332,14 +332,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <li><strong>Social connections:</strong> Taking into account relatives, friends etc.</li>
                 </ul>
 
-                <p style="margin-top: 15px; background: #ffe8e8; padding: 15px; border-radius: 4px;"><strong>⚠️ Important:</strong> You can ALWAYS find and join any discussion, even if you're not in the AI-selected microcommunity. The system recommends but doesn't restrict participation.</p>
+                <p style="margin-top: 15px; background: #ffe8e8; padding: 15px; border-radius: 4px;"><strong>⚠️ Important:</strong> You can ALWAYS find and join any discussion, even if you're not in the AI-selected ad-hoc public. The system recommends but doesn't restrict participation.</p>
 
                 <p>The system analyze the issue text and context and propose weights for ISR-score components (Relevance, Expertise and Contribution) calculation. The topic starter can approve them or adjust.</p>
-                <p>Also, when a topic is created, after calculating Relevance and determining the members of the new microcommunity, the system calculates the ISR-score of all members from their Relevance, Expertise and Contribution according to the documentation.</p>
+                <p>Also, when a topic is created, after calculating Relevance and determining the members of the new ad-hoc public, the system calculates the ISR-score of all members from their Relevance, Expertise and Contribution according to the documentation.</p>
 
                 <h3>🎯 UX Success Tips</h3>
                 <ul>
-                    <li><strong>Read before posting:</strong> Check if your point has already been made or discussed. Remember, any issue publishing starts microcommunity gathering and ISR calculation which is costly and spend society resoures. So false, dubbling, dumb issues could be assessed negatively and decrease your future ISR.</li>
+                    <li><strong>Read before posting:</strong> Check if your point has already been made or discussed. Remember, any issue publishing starts ad-hoc public gathering and ISR calculation which is costly and spend society resoures. So false, dubbling, dumb issues could be assessed negatively and decrease your future ISR.</li>
                     <li><strong>Use evidence:</strong> Attach photos, quotes, or documents to support your position</li>
                     <li><strong>Stay on topic:</strong> Emoji reactions showing irrelevance or disrespect will be tracked in your ISR</li>
                     <li><strong>Ask questions respectfully:</strong> Challenge ideas, not people</li>
@@ -526,7 +526,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <ul>
                         <li>System AI identifies you as relevant to "Electrical System Upgrade" discussion starting</li>
                         <li>You receive notification: "Energy efficiency topic matches your expertise"</li>
-                        <li>Join microcommunity discussion, share insights on LED upgrades</li>
+                        <li>Join ad-hoc public discussion, share insights on LED upgrades</li>
                     </ul>
                 </div>
 
@@ -614,7 +614,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px;"><strong>AI/ML</strong></td>
                         <td style="padding: 10px;">Google AI Studio (Gemini API)</td>
-                        <td style="padding: 10px;">ISR calculation, microcommunity formation, content moderation</td>
+                        <td style="padding: 10px;">ISR calculation, ad-hoc public formation, content moderation</td>
                     </tr>
                     <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px;"><strong>Cloud Functions</strong></td>
@@ -696,22 +696,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <li><strong>ISR components weights evaluation:</strong> AI evaluates relevance component weights (w_D, w_G, w_S, w_X) and issue aggregation weights (w_Relevance, w_Expertise, w_Contribution) using instructions from <a href="ISR-AI-Weight-Evaluation-Instructions.md">ISR-AI-Weight-Evaluation-Instructions.md</a>, anchored by 100 benchmark examples in <a href="ISR-Relevance-Weight-Examples-100.md">ISR-Relevance-Weight-Examples-100.md</a> and <a href="ISR-Issue-Aggregation-Weight-Examples-100.md">ISR-Issue-Aggregation-Weight-Examples-100.md</a>.</li>
                     <li><strong>Data Fetch:</strong> Get users profile, values, issue context, historical performance</li>
                     <li><strong>Calculate Relevance (R):</strong></li>
-                    <li><strong>Microcommunity Formation:</strong>
+                    <li><strong>Ad-Hoc Public Formation:</strong>
                         <ul>
-                            <li>Filter: users with R > threshold gather Microcommunity</li>
+                            <li>Filter: users with R > threshold gather the Ad-hoc Public</li>
                         </ul>
                     </li>
                     <li><strong>Calculate Expertise (E):</strong></li>
                     <li><strong>Vector of Values evaluation:</strong>
                         <ul>
-                            <li>Gathering of Microcommunity members values from Matrix of Values</li>
-                            <li>Vector of Values: define from the vector representations of the microcommunity members values, taking into account Relevance (R)</li>
+                            <li>Gathering of ad-hoc public members' values from Matrix of Values</li>
+                            <li>Vector of Values: define from the vector representations of the members' values, taking into account Relevance (R)</li>
                         </ul>
                     </li>
                     <li><strong>Calculate Contribution (C):</strong></li>
-                    <li><strong>Normalization:</strong> Individual ISR components (R, E, C) are normalized to a microcommunity average of 1.0</li>
+                    <li><strong>Normalization:</strong> Individual ISR components (R, E, C) are normalized to an ad-hoc public average of 1.0</li>
                     <li><strong>Apply Formula:</strong> Row ISR = wR×R + wE×E + wC×C</li>
-                    <li><strong>Store & Notify:</strong> Save ISR for later use, notify user with microcommunity invitation and their personal weight on the issue</li>
+                    <li><strong>Store & Notify:</strong> Save ISR for later use, notify user with ad-hoc public invitation and their personal weight on the issue</li>
                 </ol>
 
                 <h3>Performance Optimizations</h3>

@@ -514,9 +514,9 @@ $$\text{Relevance}_i = w_D \cdot D_i + w_G \cdot G_i + w_S \cdot S_i + w_X \cdot
 - **0.1-0.3**: Low relevance (peripherally affected)
 - **0.0-0.1**: Minimal relevance (affected but very indirectly)
 
-### 6.3 Microcommunity Formation & Scaling Pruning
+### 6.3 Ad-Hoc Public Formation & Scaling Pruning
 
-To form the **Microcommunity** (all users with Relevance > 0.15 threshold), we perform in-memory evaluation with mathematical pruning inside Firebase Cloud Functions to scale efficiently without scanning the entire vector database:
+To form the **Ad-hoc Public** (the *Public of Appearance* — all users with Relevance > 0.15 threshold), we perform in-memory evaluation with mathematical pruning inside Firebase Cloud Functions to scale efficiently without scanning the entire vector database:
 
 ```javascript
 // 1. First Pass: Local calculation using demographics, distance, and social graph
@@ -538,7 +538,7 @@ const vectorDocs = await db.getAll(...chunkRefs);
 // 5. Compute actual relevance score with in-memory Cosine Similarity
 const relevanceScore = w_D * dScore + w_G * gScore + w_S * sScore + w_X * xScore;
 
-// 6. Gather into Microcommunity if final score > 0.15
+// 6. Gather into the Ad-hoc Public if final score > 0.15
 if (relevanceScore > 0.15) {
   microcommunityMembers.push({
     user_id: user.uid,
@@ -584,9 +584,9 @@ Each document represents a submitted issue.
 }
 ```
 
-### 7.2 microcommunities Collection
+### 7.2 microcommunities Collection (Ad-hoc Public Records)
 
-Tracks microcommunity general statistics.
+Tracks ad-hoc public general statistics.
 - **Document ID**: Auto-generated unique string.
 - **Fields**:
 ```json
@@ -602,9 +602,9 @@ Tracks microcommunity general statistics.
 }
 ```
 
-### 7.3 microcommunity_members Collection
+### 7.3 microcommunity_members Collection (Ad-hoc Public Members)
 
-Tracks relevance component scores for members.
+Tracks relevance component scores for members of the public.
 - **Document ID**: `${microcommunity_id}_${user_id}`
 - **Fields**:
 ```json
@@ -717,7 +717,7 @@ Recalculate Relevance for all users in Firestore:
   - Phase 4: Fetch actual profile_vectors from user_vectors for top 300
   - Phase 5: In-memory Cosine Similarity & combine with weights
     ↓
-Form Microcommunity (relevance_score > 0.15) and save members to Firestore
+Form Ad-hoc Public (relevance_score > 0.15) and save members to Firestore
     ↓
 Notify members and launch discussion/voting phases
     ↓
