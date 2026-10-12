@@ -84,7 +84,7 @@ The only implementation that wrote stored values is `scratch/backfill_expertise.
 | Statement | Status | Evidence |
 |---|---|---|
 | **Contribution is not implemented in any score.** `contribution_score` is hard-coded to 0.0 and `normalized_contribution` to 1.0 for every member ("Neutral baseline as requested"). | VERIFIED (data: 3,049 × 0.0 and 3,049 × 1.0) | `scratch/backfill_expertise.py:247, 259, 262` |
-| There is no accumulation, decay, negative handling or gISR in code. `gISR` and `AAuth` appear nowhere in code or docs. | VERIFIED (grep) | n/a |
+| There is no accumulation, decay, negative handling or gISR in code. `gISR` and `AAuth` appear nowhere in code. Among the docs, only `docs/mvp.html` mentions them (gISR at l.113, 572, 728; AAuth at l.726), as design. (Corrected 2026-10-12; the earlier text said "nowhere in code or docs".) | VERIFIED (grep, re-checked 2026-10-12) | `docs/mvp.html:113, 572, 726-728` |
 | The `actions` data is **synthetic and random**: type_weight ~U(0.5, 2), time_hours ~U(0.1, 5), complexity ~U(0.8, 1.5), result_factor ~U(0, 1), marks are random ±1 from random users, sentiment = 0.5·Σmarks, vector_data is uniform-random integers, text is the template `"User performed {name} on {issue}."`, and dates are random from 2025-01-01 to 2026-06-01. | VERIFIED (data matches every range; 100% template text) | `scratch/generate_actions.py:9-83` |
 | `actions` holds **1,080 flat docs + 108 per-user docs (`{uid, records[10]}`)**. The nested 1,080 records have different `action_id`s from the flat ones, so they come from two separate random generations (2,160 synthetic records in 1,188 docs). | VERIFIED (data) | `scratch/generate_actions.py:180-183` writes the per-user form; the writer of the flat form is not in the repo (UNSURE) |
 | The client displays "Force" = type_weight × time_hours × complexity × result_factor and Sentiment, **display only**. | VERIFIED | `prototype/js/main.js:10480-10496, 10537-10561` |
@@ -124,7 +124,7 @@ The only implementation that wrote stored values is `scratch/backfill_expertise.
 
 | Statement | Status | Evidence |
 |---|---|---|
-| **No AAuth layers, thresholds, or request-and-consent path are implemented.** No code or doc mentions AAuth. | VERIFIED (grep over code + docs) | n/a |
+| **No AAuth layers, thresholds, or request-and-consent path are implemented.** No code mentions AAuth. Only `docs/mvp.html` describes it, as design ("Adaptable Authorization (AAuth)", l.726-728). (Corrected 2026-10-12; the earlier text said "no code or doc".) | VERIFIED (grep over code + docs, re-checked 2026-10-12) | `docs/mvp.html:726-728` |
 | Authentication is "login by display name" (Firestore query `displayName == input`, no credential check). The uid is kept in localStorage and defaults to `"1"` when absent. "Register" creates a user doc with `uid = Date.now()`. | VERIFIED | `prototype/js/main.js:964-986, 989-1010, 2205, 3528` |
 | Firestore rules allow **read and write of every document by anyone** until 2026-12-31. | VERIFIED | `firestore.rules:4-6` |
 | An unauthenticated REST write was tested and succeeded (`users/test_user_rest`). | VERIFIED (data + script) | `scratch/test_unauth_write.py` |
