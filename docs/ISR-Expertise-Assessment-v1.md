@@ -41,6 +41,8 @@ Where:
 - **$E_{i,q,experience}$** = User i experience expertise regarding issue q
 - **$E_{i,q,resources}$** = User i resource expertise regarding issue q
 
+The three components are added **without weights**. The context of the issue acts through the similarity of each record to the issue ($\vec{V}_q$) and through the domain parameters (CBC adjustment factor, recency decay).
+
 ---
 
 ### 2.2 Education Expertise
@@ -159,7 +161,7 @@ Where:
 - **1.0**: Moderate rarity (specialized equipment, professional networks)
 - **1.5**: High rarity (rare expertise connections, unique facilities, specialized tech)
 
-**Resources Include**: tools, equipment, technology, transportation, space/venue, social connections, capital.
+**Resources Include**: tools, equipment, technology, transportation, space/venue, social connections. **Money is not a resource in this score**: if an issue needs funding, each option states its cost and funding source, so wealth does not enter through weight.
 
 **Example (parking structure proposal issue)**:
 ```
@@ -405,7 +407,7 @@ Each document in the `user_expertise_profiles` collection stores pre-computed 76
 
 ### 4.5 microcommunity_expertise_scores Collection
 
-Each document in this collection tracks the calculated expertise components for a member in a specific ad-hoc public.
+Each document in this collection tracks the calculated expertise components for a member in a specific microcommunity.
 
 - **Document ID**: `${microcommunity_id}_${user_id}`
 - **Schema**:
@@ -487,14 +489,14 @@ async function vectorizeUserExpertiseProfile(userId) {
     vectors_computed_at: admin.firestore.FieldValue.serverTimestamp()
   });
   
-  // 5. Trigger recalculation for active ad-hoc publics
+  // 5. Trigger recalculation for active microcommunities
   await recalculateExpertiseForUserAllActiveIssues(userId);
 }
 ```
 
 ### 5.2 On-Demand: Expertise Calculation for Issue
 
-**When the ad-hoc public is formed for issue:**
+**When microcommunity formed for issue:**
 
 ```javascript
 function cosineSimilarity(a, b) {
@@ -726,7 +728,7 @@ Sarah (Engineer):             13.31  ← Practitioner (3-10)
 Lisa (Office Manager):         0.38  ← Novice (<1)
 
 Total expertise: 47.70
-→ Strong expertise in the ad-hoc public; no external expert needed
+→ Strong expertise in microcommunity; no external expert needed
 ```
 
 ---
@@ -1047,7 +1049,7 @@ async function onProfileUpdate(userId) {
   // 1. Update expertise vectors
   await vectorizeUserExpertiseProfile(userId);
   
-  // 2. Find all active (non-voted) ad-hoc publics where user is member
+  // 2. Find all active (non-voted) microcommunities where user is member
   const membersSnap = await db.collection("microcommunity_members")
     .where("user_id", "==", userId)
     .get();
@@ -1075,7 +1077,7 @@ Once voting phase ends:
 async function freezeExpertiseScores(microcommunityId) {
   const batch = db.batch();
   
-  // 1. Freeze expertise scores on the ad-hoc public
+  // 1. Freeze expertise scores on the microcommunity
   const mcRef = db.collection("microcommunities").doc(microcommunityId);
   batch.update(mcRef, {
     expertise_frozen_at: admin.firestore.FieldValue.serverTimestamp()
@@ -1126,7 +1128,7 @@ async function freezeExpertiseScores(microcommunityId) {
 - [ ] Implement resource rarity lookup
 
 ### Week 3: Integration & Testing
-- [ ] Integrate expertise calculation with ad-hoc public formation
+- [ ] Integrate expertise calculation with microcommunity formation
 - [ ] Test expertise freezing at voting completion
 - [ ] Test profile update → recalculation pipeline
 - [ ] Test with example profiles (door lock, salsa, parking, fund allocation)

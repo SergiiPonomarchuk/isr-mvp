@@ -11,6 +11,13 @@ It is designed to work with **one companion document**:
 All data storage and queries are described in **Firebase / Firestore style** (NoSQL collections
 and documents), not SQL.
 
+**Revision note (round 62).** Added Step 4A (context check at submission) and Step 4B (re-analysis after a change of
+text, options, type or context adopted by the public). Parameters are derived from the issue type and context through
+the table of typical issues; nobody, neither the topic starter nor the public, types a number. The Analyzer is a
+rule-based assistant: it proposes, checks the context against the written rules and may refuse a type or context that is
+not consistent with them, citing the rule or example it applied. After publication the issue belongs to its ad-hoc
+public, which can change the text, options, type and context until voting opens.
+
 ---
 
 ## 0. Inputs and Outputs
@@ -22,11 +29,20 @@ The Issue Analyzer LLM receives **only**:
 - `issue_title`: short human-readable title
 - `issue_description`: free-text description, including context, motivation, possible solutions
 - `location_hint`: optional text and/or coordinates (if known)
-- `submitter_metadata`: optional info (ad-hoc public / microcommunity id, city name, language, tags)
+- `submitter_metadata`: optional info (microcommunity id, city name, language, tags)
 
 **Important:**
 - The Analyzer **must not rely on a pre-provided category**. It must **infer the category**
   from the issue title + description using the taxonomy in Section 1.2.
+
+For the context check (Step 4A) the Analyzer also receives:
+
+- `context`: the facts the topic starter states about who is affected, where, and which local rules or owners matter
+- `sources`: links or documents attached to the context (optional)
+- `clarifications`: later answers of the topic starter to the assistant's questions
+
+For a re-analysis after a change adopted by the public (Step 4B) it receives `current_type`, `parameters_version`, `change`
+(kind: text, options, type or context; the old and the new content) and the updated issue text and context.
 
 ### 0.2 Issue Analyzer Outputs (high-level)
 
@@ -34,8 +50,10 @@ The Analyzer returns a single JSON object with these groups:
 
 1. **Issue classification** (category, scope, affected actors)
 2. **Relevance parameterization** — `w_D, w_G, w_S, w_X`, demographic rules, geographic μ/σ
-3. **Expertise parameterization** — `w_Education, w_Experience, w_Resources`, domain parameters, resource list
+3. **Expertise parameterization** — domain parameters, resource list
 4. **ISR-score aggregation parameterization** — `w_Relevance, w_Expertise, w_Contribution`
+5. **Context check** (Step 4A) — the proposed type and the other types consistent with the rules, the scope and competence result (decision or proposal, addressee), the cautions to show to every member, and the rules applied
+6. **Change record** (Step 4B) — the consistency result for a change proposed by a member, and, if the public adopts it, the type and parameters derived again with their version and notes
 
 All numeric weights must be in [0.0, 1.0] and each weight group must sum to 1.0.
 
@@ -69,6 +87,7 @@ The Analyzer must infer:
 - `technicality_level`: `low` | `medium` | `high`
 - `safety_sensitivity`: `low` | `medium` | `high`
 - `digital_or_physical`: `physical` | `hybrid` | `digital_only`
+- `legal_coverage`
 - `expertise_domain`: short descriptor used by Expertise functions
   (e.g. `locksmith.security`, `urban_planning.zoning_and_permits`,
   `software.open_source_product_direction`)
@@ -273,7 +292,7 @@ closest to the **locus of action** (e.g. `building.maintenance.water` over
 | `community.governance.religious_visibility` | religious symbols in public space, secularism debate |
 | `community.governance.local_forum` | community forum organization, assembly scheduling |
 | `community.governance.petition` | community petitions to authorities |
-| `community.governance.conflict_resolution` | community mediation, dispute resolution |
+| `community.governance.conflict_resolution` | community mediation, dispute resolution; dispute about a recorded action (Action protocol, Section 7.5) |
 | `community.work.gig_local` | gig economy working conditions, platform worker rights |
 | `community.work.remote_policy` | remote work infrastructure and policy |
 | `community.work.offline_schedule` | shift scheduling, working hours policy |
@@ -439,30 +458,7 @@ G(d) ≈ 0.0                                    if d > μ + 3σ  (hard cutoff)
 
 ## 3. Step 3 – Expertise Parameterization
 
-### 3.1 Component weights (w_Education, w_Experience, w_Resources)
-
-Each in [0.0, 1.0], sum = 1.0.
-
-#### 3.1.1 Pattern anchors (from `ISR-Issue-Analyzer-100-Examples.md`)
-
-| Issue type | w_Education | w_Experience | w_Resources |
-| :--- | :---: | :---: | :---: |
-| Hands-on trades (locksmith, plumber, electrician) | 0.15–0.25 | 0.50–0.60 | 0.20–0.30 |
-| Technical/policy (software, zoning, medicine) | 0.30–0.45 | 0.35–0.45 | 0.15–0.25 |
-| Social/volunteer (food bank, mutual aid, events) | 0.10–0.20 | 0.40–0.50 | 0.30–0.40 |
-
-#### 3.1.2 Output structure
-
-```json
-"expertise_weights": {
-  "w_education":  <float>,
-  "w_experience": <float>,
-  "w_resources":  <float>
-},
-"expertise_weights_reasoning": "short explanation"
-```
-
-### 3.2 Domain direction & depth
+### 3.1 Domain direction & depth
 
 These configure how expertise formulas behave for this issue.
 
@@ -474,7 +470,7 @@ These configure how expertise formulas behave for this issue.
 | `age_penalty_threshold` (years or null) | null = no age penalty; ~60 = very contemporary field |
 | `CBC_adjustment_factor` [0.7–1.3] | <1.0 = narrow credentials; >1.0 = broader broadcast |
 
-#### 3.2.1 Output structure
+#### 3.1.1 Output structure
 
 ```json
 "expertise_domain_parameters": {
@@ -487,13 +483,13 @@ These configure how expertise formulas behave for this issue.
 }
 ```
 
-### 3.3 Resource types list
+### 3.2 Resource types list
 
 Include 2–4 entries covering the issue's concrete resource needs:
 
 | Resource type | Examples |
 | :--- | :--- |
-| `money_budget` | grants, municipal funds, donations |
+| `money_budget` | grants, municipal funds, donations (a need of the issue, stated in the options' funding plans; not scored as Expertise) |
 | `physical_equipment` | tools, machinery, devices |
 | `facilities_space` | rooms, offices, warehouses, event venues |
 | `transportation` | vehicles, logistics |
@@ -502,7 +498,7 @@ Include 2–4 entries covering the issue's concrete resource needs:
 | `social_networks` | influential contacts, media, community leaders |
 | `digital_infrastructure` | servers, CI pipelines, apps, moderation tools |
 
-#### 3.3.1 Output structure
+#### 3.2.1 Output structure
 
 ```json
 "resources_needed": [
@@ -529,6 +525,10 @@ final ISR vote weight. Each in [0.0, 1.0], sum = 1.0.
 | Technical/safety/policy (zoning, infrastructure safety, software) | 0.40–0.55 | 0.25–0.40 | 0.15–0.25 |
 | Governance/coordination (platform rules, budgeting, mutual aid) | 0.45–0.60 | 0.15–0.30 | 0.20–0.35 |
 
+**No weight is ever zero, and none alone carries the vote** (paper condition L1): the derived weights stay inside the range of the pattern anchor of the chosen type, so the record keeps a typical weight of about 0.15 to 0.35 and is never the sole basis of influence.
+
+**Dispute about a recorded action.** Category `community.governance.conflict_resolution` with a disputed action: use the governance and coordination row. The context must name the disputed action; relevance ties (X) weigh the actor and the people the action affected. The options always include "no change"; no option may delete the action (Action protocol, Sections 7.3 and 7.5).
+
 ### 4.2 Output structure
 
 ```json
@@ -539,6 +539,110 @@ final ISR vote weight. Each in [0.0, 1.0], sum = 1.0.
 },
 "aggregation_reasoning": "short explanation referencing decision type"
 ```
+
+---
+
+## 4A. Step 4A – Context check at submission
+
+**Purpose.** The table of typical issues (`ISR-Issue-Analyzer-100-Examples.md` is its first version; the table can contain
+as many issue types as needed) and the written protocol rules define which issue types exist and which parameters belong
+to each. Rules and the table are protocol-level decisions in which all users take part. The Analyzer applies them: it
+proposes an issue type, derives the parameters from the table for that type and the context, checks that the context is
+complete and consistent with the rules (scope and competence), and tells the topic starter what is missing. **Nobody types
+a number.** The assistant is a rule-based gatekeeper. It does not judge the merits of the issue. It may refuse a type or
+context that is not consistent with the rules, and it must say which rule or example it applied.
+
+**Typical range.** For each parameter the typical range is taken from the k nearest examples of the chosen type (Section 7;
+start with k = 5). Derived values always stay inside this range. The k and the library version are published and
+versioned like the rest of this protocol; the initial value of k is a placeholder to be calibrated.
+
+**Procedure.**
+
+1. Find the nearest typical issue types (Section 7). Propose a type, and list the other types that are consistent with the rules.
+2. Derive the parameters from the table for the type and the context (Steps 1 to 4). They stay inside the typical range of the type.
+3. Scope and competence check. Does the context show that a local rule gives the decision to an authority, an owner or another
+   body (a public street, a school, a utility, a private courtyard)? Such facts are tied to the location and to the local law and
+   are part of the **context**. If the context does not say, the assistant asks, advises the topic starter to check public
+   information (a short search is enough) and reminds him to attach a source. The assistant does not use its own legal
+   knowledge as a rule: it uses what the context states and the protocol rules (for example: stake is not ownership, residents
+   of a street are not its exclusive owners).
+4. If a local rule reserves the decision for an authority, the outcome kind is `proposal` and the addressee is that authority.
+   The type is changed to the matching proposal type, and the parameters widen as the table says (for example a distance of
+   2000 m and criteria that include people who work in the area and owners and staff of organisations and businesses, each
+   counted as a person with the same formula, not as a representative).
+5. If the topic starter disagrees with the result, he clarifies the context or picks another type from those the assistant lists
+   as consistent. He cannot edit a number. A significant deviation from the listed types needs a significant reformulation of the
+   text and the context; the assistant returns a request that only renames the type. The assistant keeps asking until the context
+   is consistent or the topic starter withdraws; a limit on the number of rounds is an implementation choice.
+6. Cautions do not block publication. If the context states a local rule or an ownership without a source, or the assistant
+   thinks that valuable context is missing, every member sees a caution on the issue page. Members who know the circumstances
+   may judge it unimportant.
+7. Result: `pass` (publish with the type, the derived parameters and the notes), `needs_clarification`, or `not_consistent`
+   (no consistent type was found; the topic starter must reformulate the issue).
+
+**Limits on the assistant.** It must not set a number outside the table, must not judge the merits of the issue, and must not
+decide who is a member. It may only propose, ask, caution, or refuse a type or context that is not consistent with the rules,
+citing the rule or example. Every run is logged.
+
+**Dispute about a recorded action.** If the issue disputes a recorded action and the context does not name it (`disputed_action_id`), the result is `needs_clarification`. The assistant does not judge whether the action was misread; that is the question the public decides.
+
+**Output (added to the combined schema in Section 5.1).**
+
+```json
+"context_check": {
+  "type": {
+    "proposed": "street.traffic_limitation",
+    "consistent_alternatives": ["street.traffic_limitation.proposal_to_authority"],
+    "library_version": "1.0",
+    "nearest_examples": ["ex-017", "ex-044", "ex-063"],
+    "k": 5
+  },
+  "scope": {
+    "outcome_kind": "proposal",
+    "addressee": "city transport department",
+    "basis": "Local rule stated in the context",
+    "source_attached": true
+  },
+  "cautions": [
+    { "code": "missing_source", "text": "No source is attached for the claim that the street is owned by the housing association." }
+  ],
+  "rules_applied": ["R-scope-01", "ex-017"],
+  "result": "pass"
+}
+```
+
+**Context notes.** Each caution and each reformulation is stored with the issue as a context note and shown wherever the
+parameters are shown.
+
+**Logging.** Every run is logged with its inputs, outputs, model identifier, prompt version, library version and any seed or
+temperature setting, as for all Analyzer runs.
+
+---
+
+## 4B. Step 4B – Re-analysis after a change adopted by the public
+
+**What members can propose.** Until voting opens, any member can propose a change of (a) the text, (b) the options, (c) the issue
+type, among the types the assistant lists as consistent with the rules, or (d) the context. A member cannot propose a number, a
+radius, a weight or a scope setting. A scope setting changes only by reformulating the issue, that is, by changing the text or the
+context.
+
+**Consistency check.** A proposed change of type or context first goes to the assistant, which applies the same check as in
+Step 4A (steps 3 to 7) to the new type or context. If the change is not consistent with the rules, the proposal is returned to the
+proposer with the rule or example applied and what to clarify, and it cannot be put to a vote. The proposer may clarify and
+propose again. A change that only renames the type without reformulating the context is returned.
+
+**Vote.** A proposal that passed the check is voted on by the public: the current ISR weights and a simple majority. Open
+proposals lapse when voting opens, and everything is frozen until the vote closes.
+
+**What the assistant does after an adopted change.**
+
+1. It derives the type and the parameters again from the table for the new context (Steps 1 to 4A).
+2. It attaches change notes: what changed, who proposed it, and the vote.
+3. It validates the schema: each weight in [0, 1], each weight group summing to 1.
+4. The system then recomputes relevance and updates the list of members (`ISR-Relevance-Implementation.md`, Part 10).
+
+**Output.** `parameters_version` (previous + 1), the new type and parameters, the changed fields with old and new values, the
+change notes and the rules applied.
 
 ---
 
@@ -581,13 +685,6 @@ The Issue Analyzer produces a single JSON object. All fields must be present:
     "familyStatus":     "any",
     "features":         []
   },
-
-  "expertise_weights": {
-    "w_education":  0.20,
-    "w_experience": 0.55,
-    "w_resources":  0.25
-  },
-  "expertise_weights_reasoning": "...",
 
   "expertise_domain_parameters": {
     "expertise_domain":        "locksmith.security",
@@ -645,6 +742,19 @@ The Issue Analyzer produces a single JSON object. All fields must be present:
 }
 ```
 
+### 5.1 Additional fields (versions, context check, changes)
+
+Three top-level fields are added to the combined output:
+
+```json
+"parameters_version": 1,
+"context_check": { "...": "see Step 4A" },
+"change_record": null
+```
+
+`change_record` is `null` at submission and is filled only by Step 4B:
+`{ "change_id": "...", "kind": "context", "from": "...", "to": "...", "rules_applied": ["..."], "notes": ["..."] }`.
+
 ---
 
 ## 6. Firestore / NoSQL Implementation Notes
@@ -655,6 +765,9 @@ The Issue Analyzer produces a single JSON object. All fields must be present:
 - `users/{userId}`: `roles`, `building_id`, `user_location`, `education_records`, `experience_records`, `resources`
 - `microcommunity_relevance_scores/{issueId_userId}`: D, G, S, X, and combined Relevance
 - `microcommunity_expertise_scores/{issueId_userId}`: Education, Experience, Resources, and total Expertise
+- `issues/{issueId}` also stores `issue_type`, `outcome_kind` (decision or proposal), `addressee`, `parameters_version`, `parameters_frozen` (set when voting opens), `voting_opened_at` and `context_notes` (array of notes)
+- `issues/{issueId}/changes/{changeId}`: one document per proposed change of text, options, type or context (see `ISR-Relevance-Implementation.md`, Part 7.6)
+- `analyzer_runs/{runId}`: one log document per call (Steps 1 to 4B): inputs, outputs, model identifier, prompt version, library version, time
 
 ### 6.2 Relevance computation worker (Cloud Function sketch)
 
@@ -696,6 +809,9 @@ For every new issue, the Analyzer must:
    - More or less safety-critical or rights-critical
    - Resource intensity, including **money** as a key resource
 
+4. The nearest examples found here also define the **type** and its **typical range**, used by the context check (Step 4A). Derived values
+   never leave the range. The library version used is recorded in every run.
+
 The 100-examples file is the **only external companion document** needed.
 This protocol document is self-contained for all schema, taxonomy, and rule definitions.
 
@@ -709,11 +825,16 @@ For each new issue, the Analyzer must:
 2. Decide **Relevance weights** `w_D, w_G, w_S, w_X` with reasoning
 3. Generate **Demographic rules** (simplified flat schema + optional tiered schema)
 4. Select **Geo parameters** μ and σ with reasoning
-5. Decide **Expertise weights** `w_Education, w_Experience, w_Resources` with reasoning
-6. Configure **Expertise domain parameters** (domain, importance, decay, age threshold, CBC)
-7. Produce **Resource needs list** (2–4 entries, include `money_budget` where applicable)
-8. Decide **Aggregation weights** `w_Relevance, w_Expertise, w_Contribution` with reasoning
-9. Output everything in a single structured JSON
+5. Configure **Expertise domain parameters** (domain, importance, decay, age threshold, CBC)
+6. Produce **Resource needs list** (2–4 entries; `money_budget` may appear as a need of the issue but is not scored as Expertise)
+7. Decide **Aggregation weights** `w_Relevance, w_Expertise, w_Contribution` with reasoning
+8. Output everything in a single structured JSON
+9. At submission, propose the type, derive the parameters, check scope and competence in the context, and produce the cautions (Step 4A)
+10. For a change proposed by a member, check consistency with the rules; after a change adopted by the public, derive the type and parameters again and produce the change record (Step 4B)
+
+The Analyzer does **not**: accept a number typed by anyone, decide membership, judge the merits of an issue, or decide whether a change is good.
+It may refuse a type or context that is not consistent with the written rules, citing the rule or example. Adoption of a change
+belongs to the issue's ad-hoc public.
 
 This protocol and `ISR-Issue-Analyzer-100-Examples.md` together define the complete and
 auditable process for initializing ISR parameters for each new issue.
