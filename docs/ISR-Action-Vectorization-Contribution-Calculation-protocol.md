@@ -24,6 +24,8 @@
 | **Force** | N/A – only direction (values intensities and conflict/context preferences) | Non‑negative scalar showing the action’s magnitude for the community: based on action type, time spent, complexity for the actor, and success of results |
 | **Sentiment** | N/A - it is assumed that all microcommunities share the same sentiment values | Normalized sentiment marks array `[good, funny, flood, rude, foolish]`, each value [0.0–1.0] = (number of marks in category) ÷ (number of microcommunity members) |
 
+**Saying versus doing.** How a person votes is not scored (a vote has Force zero). Messages and proposed options are scored as actions, with a smaller Force than tasks (Section 5: Vote Message 0.4, Task Message 0.3, Chat Message 0.1). A person's declared values are not judged. An action is scored by what it *does* to the values of the public, not by whether its author's opinion matches the majority's. A respectful, well-argued dissent advances values such as honest expression, cooperation and respect, and can score positive even when its position differs from the majority's. An action that works against a value (harms, deceives, excludes, obstructs) scores negative against the publics that hold that value.
+
 ---
 
 ### 1.2 Why Conflict Resolution & Contextual Shifts Are DESCRIPTORS OF THE ACTION SITUATION
@@ -159,6 +161,7 @@ Given equal Time, Complexity, and Result, some channels of activity are more str
 | **Vote Message** | Message posted in a voting context (arguments, explanations). | 0.4 |
 | **Task Message** | Message in a task context (coordination, reporting, clarification). | 0.3 |
 | **Chat Message** | General chat message not bound to a specific task or vote. | 0.1 |
+| **Correction entry** | Added by the decision of a dispute issue about an earlier action (Section 7.5). It carries no Force of its own: it revises the Result of that action and may attach a note. The earlier action stays in the ledger. | none |
 
 Pure votes (ballot selections) are stored but have Force = 0 for Contribution: in ISR there are no “good” or “bad” decision outcomes at the individual vote level; only the quality of expressed arguments and concrete actions affect Contribution.
 
@@ -241,13 +244,13 @@ Sentiment coefficients:
 
 Sentiment scalar:
 
-$$S = \sum_{marks} (mark \times coefficient_{mark})$$
+$$M = \sum_{marks} (mark \times coefficient_{mark})$$
 
 Sentiment can be positive or negative and, by design, is as powerful as value alignment in Contribution.
 
 For later Contribution Score calculation of an action, cosine similarity of the Action and the microcommunity’s Vector of Values multiplied by the Action Force adds to the Sentiment multiplied by the Action Force:
 
-$$Contribution = \cos(\vec{Action}, \vec{Values}) \times Force + \sum_{marks} (mark \times coefficient_{mark}) \times Force$$
+$$c = \cos(\vec{Action}, \vec{Values}) \times Force + M \times Force$$
 
 So sentiment shows the action’s psychological impact on the microcommunity; it can be both positive and negative.
 
@@ -408,25 +411,41 @@ To compare an action with a microcommunity’s Vector of Values:
 
 $$A = \cos(\vec{Action}, \vec{Values}_{mv}) \in [-1, 1].$$
 
-### 4.2 Sentiment Scalar
+### 4.2 Marks Scalar (M)
+
+*(The stored field is still named `sentiment_scalar`; the symbol is M.)*
 
 As in 1.5:
 
-$$S = \sum_{marks} (mark \times coefficient_{mark}).$$
+$$M = \sum_{marks} (mark \times coefficient_{mark}).$$
 
 ### 4.3 Action Contribution to a Microcommunity
 
 For a given action and microcommunity:
 
-$$Contribution = \cos(\vec{Action}, \vec{Values}) \times Force + \sum_{marks} (mark \times coefficient_{mark}) \times Force.$$
+$$c = \cos(\vec{Action}, \vec{Values}) \times Force + M \times Force.$$
 
 Equivalently:
 
-$$Contribution = (A + S) \times Force.$$
+$$c = (A + M) \times Force.$$
 
 A member’s total Contribution to that microcommunity is the sum of Contributions of all their actions.
 
 Contribution is absolute and can be negative, positive, or near zero; it is not re‑normalized when new members or new actions are added.
+
+### 4.4 Alignment across publics
+
+**The record is a ledger in front of the whole community.** An ad-hoc public exists for one issue, so a record cannot belong to one public. The record is the person's credit and debit in front of the whole community, earned through many publics, each of which can value an action in its own way. It is read on demand for each public with that public's Vector of Values (Section 8.1); for the rules and for access it is read with the Vector of Values of all registered users (gISR). The same ledger can therefore give a different Contribution in a different reading.
+
+**What changes and what does not.**
+
+- Vectors of Values are non-negative (Section 1.1): a public's vector can emphasise or neglect a value but never oppose it.
+- An action's alignment is negative only if the action lowers values that the public holds more strongly than the values it raises. A change of sign between two publics requires that they emphasise different values and that the action lowers one set while raising the other.
+- Sentiment marks belong to the action: they are the valuation of the public that saw it. They are not re-scored, and they travel with the action in every reading of the ledger.
+- A strongly negative total Contribution comes from actions that work against values or from strongly negative marks. It does not come from membership as such.
+- Force is non-negative. A poor result lowers the size of the contribution (it makes the Force small); it does not change its sign.
+
+**Measurement note.** How much a person's Contribution changes between publics, and how often an action's alignment changes sign, depend on how the publics' vectors differ in practice. Deployments should report the distribution of pairwise similarities between publics' vectors and the share of actions whose alignment changes sign between publics.
 
 ---
 
@@ -439,7 +458,7 @@ Contribution is absolute and can be negative, positive, or near zero; it is not 
 
 2. **Issue-centric vs user-centric data**  
    - **Issue/microcommunity part** stores the *raw action record and its social life* inside the issue: description, attachments, status, results narrative, marks, and timestamps.
-   - **User part** stores the *vectorized representation* of the action for the actor: domains, items, CR/CS, Force, sentiment scalar, and derived metrics used frequently in Contribution computations.
+   - **User part** stores the *vectorized representation* of the action for the actor: domains, items, CR/CS, Force, marks scalar, and derived metrics used frequently in Contribution computations.
 
 3. **Contribution locality**  
    - Contribution is always defined **relative to a microcommunity** (via its Vector of Values), but for implementation it is stored as an **absolute scalar** in the *current microcommunity members table* and only normalized later when computing final ISR scores.
@@ -681,6 +700,10 @@ For each ACTION, you must:
 4. Optionally, score item-level values when required by the batch strategy.
 5. Estimate Time, Complexity, Result, and compute Force = Type × Time × Complexity × Result.
 
+Score what the action does, not what opinion it contains. Do not treat the content of a stated position as an action
+for or against a value. Respectful and well-argued disagreement scores as honest expression and cooperation. Reserve
+negative scores for actions that harm, deceive, exclude, obstruct or disrespect.
+
 Follow the mutual-null-skip philosophy: do NOT infer opposition from absence of signal.
 Follow the ISR Action Vectorization and Action Contribution protocols strictly.
 Return only JSON in the specified schema.
@@ -777,21 +800,36 @@ Post-processing:
 ### 7.2 Extremely Polarized Sentiment
 
 - Some actions may get highly polarized marks (e.g., many “good” and many “foolish”):
-  - The sentiment scalar will reflect the net effect of all marks.
+  - The marks scalar will reflect the net effect of all marks.
   - If both positive and negative marks are large, log an **alert** (e.g., `"polarized_sentiment"`) in `user_action_vectors.alerts` (if you choose to add it) for further sociological analysis.
 
-### 7.3 Deleted or Edited Actions
+### 7.3 Edited, Retracted and Corrected Actions
 
-- **Edited actions**:
-  - Keep the same `action_id`.
-  - Update `issue_actions.action_text`, adjust marks and results as needed.
-  - Re-run vectorization for that action and overwrite its row in `user_action_vectors`.
-  - Recompute affected `absolute_contribution` for that member in `issue_members`.
+The record is only added to, never rewritten. A word said cannot be unsaid; it can be answered by other words, and the mistake is remembered (paper section 4.3).
 
-- **Deleted actions**:
-  - Mark `issue_actions.is_deleted = TRUE`.
-  - Option A (hard removal): delete corresponding row from `user_action_vectors` and subtract the old Contribution from `absolute_contribution`.
-  - Option B (soft removal): keep vector but set a **zeroed Contribution** flag in downstream ISR calculations (implementation choice). Base protocol recommends Option A for simplicity.
+- **Edited actions**: the original text, vector, marks and Contribution stay in the ledger. An edit creates a new action linked to the original (`version_of = action_id`); it is vectorised and scored like any new action, with its own Force. The original is shown with a note "edited" and a link to the new version. A short grace period for plain typos is an implementation and interface choice, not part of the framework. A testing build may allow direct editing of records for convenience; the framework does not.
+- **Retracted actions**: when the author deletes an action it is not removed. It is shown as "retracted by the author", its text stays visible to the public of its issue, and its Contribution stays until a Correction entry (Section 7.5) changes it. `issue_actions.is_deleted` becomes `is_retracted`.
+- **Hard removal** happens only where the law requires it (for example the erasure of personal data). It is logged with the legal basis, and the Contribution of the member is recomputed from the remaining ledger. The former Options A and B of this section are withdrawn.
+
+### 7.4 Marks, Honest Conduct and Gaming
+
+- Marks are the public's own valuation of an action. They let the public correct what the automatic alignment cannot see (for example, a formally correct remark that humiliates someone, or a failed task that lifted the mood or found an unrelated fault), and so they can change the sign of a contribution: c = (A + S) × Force.
+- The protocol relies on honest conduct as a norm. Marks can also be misused (friendly marks on a harmful action, hostile marks on a dissent, inflated hours). This is treated as gaming and handled by detection, not by limiting the power of the marks.
+- Existing protections: extreme Complexity and Result values raise an alert and must be explained by the actor or approved by other members (Sections 4.2 and 4.4); highly polarized marks are logged as an alert (7.2).
+- Repeated dispute issues (Section 7.5) about the same action, or raised repeatedly by the same member, are logged and analysed as possible gaming.
+- Open specification task: analysis of suspicious patterns (collusive marking, coordinated hostile marking, hour inflation) and the algorithms that protect against gaming.
+
+### 7.5 Dispute About a Recorded Action (Correction Entries)
+
+A member who thinks an action was misread (by the automatic alignment, by the marks, or in the estimate of its Result) raises an ordinary issue about it.
+
+- **Issue type.** `community.governance.conflict_resolution`, with the disputed `action_id` in the context (Analyzer protocol, Step 4A). Any member may raise it.
+- **Public.** The people connected to the action: the actor, the people the action affected, and the people who took part in the issue where it was made (relevance with ties, X). The usual rules apply: automatic joining on request and the same weight formula.
+- **Options.** Always "no change". The public may also propose: a revised Result for the action; a note that explains the action and is attached to it; a re-vectorisation of the action text, if the automatic reading is judged wrong. No option may delete the action.
+- **Effect.** A chosen option creates a **Correction entry** linked to the action. Contribution is recomputed with the revised Result by the standard formula (Section 8.3). The action, its marks and its earlier Contribution stay visible in the history. The effect is incremental; nothing is replaced.
+- **Marks.** How the marks of the dispute public combine with the marks of the original public is an open specification task.
+- **Limits.** The cost of others' time and attention, and their marks on the dispute issue, is the first limit on use. Repeated dispute issues about the same action, or raised repeatedly by the same member, are logged and analysed as possible gaming (Section 7.4).
+- **Storage (to implement).** `issue_actions`: add `version_of` (nullable) and `is_retracted`; new collection `action_corrections` (`correction_id`, `action_id`, `dispute_issue_id`, `revised_result`, `note`, `created_at`).
 
 ---
 
@@ -855,11 +893,11 @@ For each historical action `a` and a target microcommunity with Vector of Values
 
    $$A_a = cos(\vec{Action_a}, \vec{VoV_{new}}) \in [-1, 1]$$
 
-4. Use stored sentiment scalar $S_a$.
+4. Use stored marks scalar $M_a$.
 
 5. Compute per-action Contribution of `a` to this new microcommunity:
 
-$$Contribution_{a, new} = (A_a + S_a) \times Force_a.$$
+$$c_{a, new} = (A_a + M_a) \times Force_a.$$
 
 ---
 
@@ -871,13 +909,13 @@ For each member `u` in the new microcommunity:
 
    - Fetch all actions `a` where `actor_uid = u` and `user_action_vectors.issue_id` is a closed issue (optionally filtered by time or topical similarity).
 
-2. **Compute per-action contributions** $Contribution_{a,new}$ as in 8.3.
+2. **Compute per-action contributions** $c_{a,new}$ as in 8.3.
 
 3. **Aggregate absolute contribution**:
 
    Baseline aggregation:
 
-$$Contribution_{u, new} = \sum_{a \in Actions(u)} Contribution_{a, new}$$
+$$C_{u, new} = \sum_{a \in Actions(u)} c_{a, new}$$
 
 4. **Store in microcommunity members table**
 
@@ -891,3 +929,11 @@ $$Contribution_{u, new} = \sum_{a \in Actions(u)} Contribution_{a, new}$$
 - **Relevance Engine** (D, G, S, X) decides **who** belongs to the microcommunity and how relevant they are.
 - **Contribution Engine** (this part) estimates **how strongly and in what direction** each member has acted in the past relative to this microcommunity’s values.
 - The ISR core later **normalizes** `absolute_contribution` and combines it with other components (e.g., relevance, expertise) to derive final weights or ISR-scores for decision-making; that normalization and combination sit outside this protocol.
+
+### 8.6 The general score (gISR)
+
+The general score is a member's weight in a vote that affects all users equally. Relevance and Expertise are the same for everyone ($\hat R = \hat E = 1$) and the three component weights are equal ($w_R = w_E = w_C = 1/3$), so
+
+$$g_{raw} = \max\bigl(0,\; (1 - w_C) + w_C \hat C\bigr) \approx 0.67 + 0.33\,\hat C, \qquad \hat C = \frac{C}{\overline{|C|} + u},$$
+
+where $C$ is the member's Contribution read through the Vector of Values of all registered users taken equally and $\overline{|C|}$ is the mean absolute Contribution over all registered users. After all users are calculated the scores are divided by their mean over all users, $gISR = g_{raw} / \overline{g_{raw}}$, so that the average is 1. The score reaches zero only when Contribution is negative and at least twice the typical size. It has two uses only: the weight in votes on questions that affect all users equally (the rules), and a minimum reliability condition in the access scheme with tiers. It is not shown to other members or given to third parties.

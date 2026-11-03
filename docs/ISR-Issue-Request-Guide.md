@@ -25,6 +25,9 @@ Write a description that answers these questions:
    
 💡 CONTEXT: Any relevant background?
    Example: "Similar issue 6 months ago, building manager not responding"
+   
+⚖️ RULES: Who decides under local rules, and who owns it?
+   Example: "Traffic on public streets is decided by the city transport department (link)"
 ```
 
 ### Good vs. Bad Examples
@@ -83,7 +86,7 @@ The system will suggest from these categories:
 
 ---
 
-## Step 3: System Suggests: Impact Radius (Sigma)
+## Step 3: System Derives: Impact Radius (Sigma)
 
 ### What is Sigma?
 
@@ -91,41 +94,45 @@ The system will suggest from these categories:
 
 The system calculates: **"How far from the problem does it still matter?"**
 
-### System Suggestion Algorithm
+### How the System Derives It
 
 ```
 Your Description:
 "Water leak in apartment building at 457 Main St"
 
-System Suggests:
+System derives:
 📍 Impact Radius: 50 meters
    (affects residents of building + adjacent properties)
+   Based on the typical issue type "building.maintenance.water"
 
-💭 This seems right? [Yes] [No, let me adjust]
+💭 Does this look right? [Yes] [No, let me clarify the context]
 ```
 
-### When to Accept vs. Override
+You do not type a radius. If the result looks wrong, **clarify the context**: say who is affected and where, and the system derives the radius again. The derived value always stays inside the typical range of the issue type.
 
-**Accept suggestion if**: Impact radius feels accurate for your issue
+### When the Radius Looks Wrong: Clarify the Context
 
-**Override if**: You know better where it actually affects people
-
-| Issue Type | Suggested σ | When to Override |
+| Issue Type | Derived σ | If it looks wrong, add to the context |
 |-----------|----------|-----------------|
-| **Lock issue (personal)** | 10-20m | "Actually affects whole block" → increase |
-| **Building maintenance** | 30-80m | "Just my unit" → decrease |
-| **Street noise** | 100-300m | "It's much louder than normal" → increase |
-| **Park event** | 500-2000m | "People only come from nearby" → decrease |
+| **Lock issue (personal)** | 10-20m | "It affects the whole block" → larger radius |
+| **Building maintenance** | 30-80m | "Only my unit is affected" → smaller radius |
+| **Street noise** | 100-300m | "It is much louder than normal" → larger radius |
+| **Park event** | 500-2000m | "People only come from nearby" → smaller radius |
 
-**Example Override**:
+**Example**:
 ```
-System suggests: 500m for "dance event"
-You adjust to: 2000m because "it's very popular, draws from whole neighborhood"
+System derives: 500m for "dance event"
+You add to the context: "It is very popular and draws people from the whole neighborhood"
+System derives again: 2000m (the context supports the top of the range for this type)
 ```
+
+### Local Rules and Ownership
+
+If your issue touches something that local rules give to an authority or to an owner (a public street, a school, a utility), say so in the context and name the rule or the source if you can. A short check of public information is enough, and the assistant will remind you. The assistant may tell you that the decision belongs to an authority. Then your issue becomes a **proposal to that authority**, and the public widens to everyone affected: residents, people who work in the area, owners and staff of organisations and businesses. If you attach no source, members see a caution that useful context may be missing. The caution does not block your issue.
 
 ---
 
-## Step 4: System Suggests: Relevance Weights
+## Step 4: System Derives: Relevance Weights
 
 ### What Are Weights?
 
@@ -142,13 +149,13 @@ S = Semantic (interest in the topic)
 X = Social (knowing people affected by issue)
 ```
 
-### System Suggestion
+### System Derivation
 
 ```
 Your Issue:
 "Dance lesson event at community center, 3pm Saturday"
 
-System Suggests Weights:
+System derives Weights:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🎯 Demographic (D):    10%  [███░░░░░░] (age 5-18 most relevant)
 📍 Geographic (G):     30%  [██████░░░░] (within walking distance)
@@ -156,33 +163,21 @@ System Suggests Weights:
 👥 Social (X):         10%  [███░░░░░░] (know attendees)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Is this right? [Yes] [Adjust weights]
+Does this look right? [Yes] [No, let me clarify the context]
 ```
 
-### When to Adjust Weights
+### When the Weights Look Wrong: Clarify the Context
 
-**Keep suggested weights if** they match your intuition about the issue.
+You do not type weights. Say in the context what makes one factor more important, and the system derives the weights again:
 
-**Adjust if** you think a different factor is more important:
+| Scenario | Add to the context | Effect |
+|----------|--------------------|--------|
+| "Dance event for seniors only" | "For people over 65 only" | D rises |
+| "Noise complaint from loud construction" | "Noise from a building site next to the houses" | G dominates |
+| "Professional conference on AI" | "Open to people who work with AI" | S rises |
+| "Emergency in my family" | "It affects my relatives and close friends" | X rises |
 
-| Scenario | Adjust To | Reasoning |
-|----------|-----------|-----------|
-| "Dance event for seniors only" | ↑ D to 40% | Demographic match matters more |
-| "Noise complaint from loud construction" | ↑ G to 70% | Geographic proximity dominates |
-| "Professional conference on AI" | ↑ S to 70% | Semantic interest critical |
-| "Emergency in my family" | ↑ X to 60% | Social connections matter most |
-
-**Interactive Adjustment**:
-```
-Suggested weights feel wrong? Adjust them:
-
-D (Demographic):  [Current: 10%] [Slider: ▬▬█▬▬ 30%]
-G (Geographic):   [Current: 30%] [Slider: ▬█▬▬▬ 20%]
-S (Semantic):     [Current: 50%] [Slider: █████░ 60%]
-X (Social):       [Current: 10%] [Slider: ▬▬░▬▬ 0%]
-
-[Check: Total = 100%] ✓ Valid weights!
-```
+The derived values always stay inside the typical range of the issue type. The table has as many issue types as needed, and new types are added by protocol-level decisions, so an unusual case is not forced into an ill-fitting type. If no listed type fits, the assistant tells you; reformulate the issue or choose the nearest type it lists. The system checks internally that the weights sum to 100%; you never see an error about this.
 
 ---
 
@@ -196,8 +191,8 @@ Before submitting, system asks:
 ✅ Description is clear and specific?
 ✅ Location is correctly marked on map?
 ✅ Category matches your issue?
-✅ Impact radius (sigma) feels right?
-✅ Weights reflect importance of each factor?
+✅ Context says who is affected, where, and which local rules or owners matter (with a source, if you have one)?
+✅ Derived radius and weights look right (if not, clarify the context)?
 
 [All good!] → [Submit Issue]
 ```
@@ -209,12 +204,14 @@ Issue Submitted ✓
    ↓
 System calculates relevance for all users
    ↓
-System identifies "Microcommunity" 
+System identifies "Ad-hoc Public" (Public of Appearance)
    (people significantly affected by this issue)
    ↓
-System sends notifications to microcommunity
+System sends notifications to the ad-hoc public
    ↓
-Users can review and vote
+Users can discuss (until voting opens, any member can propose a change of the text, options, issue type or context; the assistant checks that it is consistent with the rules; if the public supports it by the current weights and a simple majority, the system derives the parameters again and the member list is updated; nobody edits a number by hand; members who fall below the threshold stay with a lower weight)
+   ↓
+Voting opens (text, options, type and context are frozen until the vote closes)
    ↓
 Voting results aggregated using ISR weights
 ```
@@ -231,9 +228,9 @@ The system checks your submission:
 |-------|---------|-------------------|
 | **Description > 20 characters** | Avoid spam | "Description too short, add more detail" |
 | **Valid location** | Geospatial accuracy | "Please pin the exact location on the map" |
-| **Weights sum to 100%** | Mathematical validity | "Weights must add up to 100%" |
-| **Reasonable sigma** | Sanity check | "Impact radius too large (max 20km)" |
-| **Category selected** | Classification required | "Please select or confirm issue category" |
+| **Derived weights sum to 100%** | Internal consistency | (internal check, never shown to you) |
+| **Reasonable sigma** | Sanity check | "Your context points to an area larger than 20 km; please narrow the issue or split it" |
+| **Issue type matched** | Classification required | "Please confirm one of the issue types the assistant lists, or add detail to the context" |
 
 ### Issues During Validation
 
@@ -244,8 +241,8 @@ The system checks your submission:
 ❌ Error: "Location is outside service area"
 ✏️ Solution: Move location marker to correct building/street
 
-❌ Error: "Please adjust weights to sum to 100%"
-✏️ Solution: Current total is 95%, increase D by 5%
+❌ Message: "No listed issue type fits your description"
+✏️ Solution: Add detail about WHO is affected and WHERE, or choose one of the types the assistant lists
 ```
 
 ---
@@ -267,19 +264,20 @@ System suggests: building.maintenance.water
 User confirms: ✓ Yes, that's right
 
 📍 STEP 3: Impact Radius
-System suggests: 50m (building + immediate neighbors)
+System derives: 50m (building + immediate neighbors)
 User confirms: ✓ Yes, mainly affects residents of this building
 
 ⚖️ STEP 4: Weights
-System suggests: D=30%, G=60%, S=5%, X=5%
-User adjusts: D=20%, G=70%, S=5%, X=5%
+System derives: D=30%, G=60%, S=5%, X=5%
+User adds to the context: "Only people living in or storing things in this building are affected"
+System derives again: D=20%, G=70%, S=5%, X=5%
    (Reasoning: Geographic proximity is dominant factor)
 
 ✅ STEP 5: Review & Submit
 [Submit Issue] ✓
 
 🔔 RESULT:
-- Microcommunity formed: 42 affected residents
+- Ad-hoc public formed: 42 affected residents
 - Average relevance: 0.73
 - All notified within 10 minutes
 ```
@@ -309,7 +307,7 @@ User confirms: ✓ Yes, semantic interest (love dancing) is main factor
 [Submit Issue] ✓
 
 🔔 RESULT:
-- Microcommunity formed: 187 interested people
+- Ad-hoc public formed: 187 interested people
 - Average relevance: 0.58
 - Notifications sent; 24 people confirm interest
 ```
@@ -339,7 +337,7 @@ User confirms: ✓ Geographic proximity is main factor
 [Submit Issue] ✓
 
 🔔 RESULT:
-- Microcommunity formed: 156 residents
+- Ad-hoc public formed: 156 residents
 - Average relevance: 0.64
 - Some suggest petitioning city together
 ```
@@ -350,37 +348,37 @@ User confirms: ✓ Geographic proximity is main factor
 
 ### Q: Can I change issue details after submission?
 
-**A**: No, issue details (location, category, weights) are locked after submission to ensure consistent microcommunity. You can add comments explaining updates.
+**A**: The issue belongs to its ad-hoc public, not to you. After publication any member, you included, can propose a change of the text, the options, the issue type or the context. The assistant checks that the change is consistent with the rules. If the public supports it (current ISR weights, simple majority), the system derives the parameters again, recomputes relevance and updates the list of members. Radius and weights are never edited by hand: they follow from the type and the context. Every change is logged and visible to everyone. Once voting opens, everything is frozen until the vote closes, so changes are possible during discussion only. Anyone can ask to join an issue's public; the request is accepted automatically and logged.
 
 ---
 
-### Q: What if I submit wrong sigma/weights?
+### Q: What if the derived radius or weights look wrong?
 
-**A**: The system works with what you submitted. If community feedback shows weights were wrong, note this for future issues. ISR learns over time.
-
----
-
-### Q: How is microcommunity determined?
-
-**A**: System calculates Relevance (0.0-1.0) for every user, invites those with Relevance > 0.15. Users can decline if they don't feel affected.
+**A**: Clarify the context before you submit; the system derives them again. After publication any member can propose a change of context or type, and the public decides. If feedback shows that the issue type was wrong, that is a reason to improve the table at protocol level, which all users take part in. ISR learns over time.
 
 ---
 
-### Q: What if I'm not in the microcommunity?
+### Q: How is the ad-hoc public determined?
 
-**A**: You didn't have high enough Relevance score for this issue. But if you are interested, you can still be added with a special request, take part in discussion and even vote according to your ISR score.
+**A**: System calculates Relevance (0.0-1.0) for every user, invites those with Relevance > 0.15 to form the ad-hoc public. Users can decline if they don't feel affected.
+
+---
+
+### Q: What if I'm not in the ad-hoc public?
+
+**A**: You didn't have high enough Relevance score for this issue. But if you are interested, you can still join by request: it is accepted automatically, logged and not filtered. You then take part in discussion and can vote according to your ISR score.
 
 ---
 
 ### Q: Can I submit duplicate issues?
 
-**A**: System checks for similar active issues to prevent flooding community list and distructing members attention. If one exists, you can join/support it instead of creating new issue. If user insists and starts a similar topic, but more then 50% of members decline the membership, the microcommunity dismisses automatically and topicstarter's action decrease its future Contribution impact.
+**A**: System checks for similar active issues to prevent flooding the public issue list and distracting members' attention. If one exists, you can join/support it instead of creating a new issue. If a user insists and starts a similar topic, but more than 50% of members decline the membership, the ad-hoc public dismisses automatically and the topicstarter's action decreases their future Contribution impact.
 
 ---
 
 ### Q: How is issue status decided?
 
-**A**: Microcommunity votes using ISR weights. Outcome depends on vote aggregation rules (separate from Relevance).
+**A**: The ad-hoc public votes using ISR weights. Outcome depends on vote aggregation rules (separate from Relevance).
 
 ---
 
@@ -391,15 +389,15 @@ User confirms: ✓ Geographic proximity is main factor
 - Ensures users think through their issue
 - Enables accurate automatic categorization
 
-### Why We Suggest (Not Require) Weights
-- Most users don't need to adjust
-- Expert submitters can fine-tune
-- Transparent algorithm—users see exactly what drives microcommunity
+### Why the System Derives the Parameters
+- Uniform: the same rules apply to every issue
+- Auditable: every run is logged with the type, the rules applied and the model version
+- Harder to game: nobody can shrink or widen a public by typing a number
+- Flexible: the table has as many issue types as needed, and new types are added by protocol-level decisions
+- Transparent algorithm: users see exactly what drives the ad-hoc public
 
-### Why Weights Are Locked After Submission
-- Ensures consistent microcommunity throughout issue lifecycle
-- Prevents submitter gaming the system
-- Fair to all voters in microcommunity
+### Who Can Change the Context After Submission
+Only the public can: the issue belongs to its public, not to its submitter. This prevents submitter gaming: a change needs the public's support and is logged with its reason. It keeps the public in step with the real issue: the context and the formulation can change during deliberation. Nobody edits numbers: the parameters follow from the type and context. It is fair to all voters: once voting opens, nothing changes until the vote closes.
 
 ### Why Relevance Is Absolute (Not Normalized)
 - Adding one more affected person doesn't dilute others' voices
@@ -412,7 +410,7 @@ User confirms: ✓ Geographic proximity is main factor
 
 1. **Submit your first issue** following this guide
 2. **Review automatic categorization & weights**
-3. **Adjust if you know better** (optional)
-4. **Submit and see microcommunity form**
-5. **Vote when issues appear in your microcommunities**
+3. **Clarify the context if the derived settings look wrong** (optional)
+4. **Submit and see your ad-hoc public form**
+5. **Vote when issues appear in your ad-hoc publics**
 

@@ -250,7 +250,7 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
 
       // Calculate max possible score (assuming S_score = 1.0)
       const maxScore = w_D * dScore + w_G * gScore + w_S * 1.0 + w_X * xScore;
-      if (maxScore <= 0.15 && !isCreator) return; // Cannot make it to the microcommunity
+      if (maxScore <= 0.15 && !isCreator) return; // Cannot make it to the ad-hoc public
 
       filteredCandidates.push({
         user: user,
@@ -332,7 +332,7 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       }
     });
 
-    // Sort by relevance score descending and limit to top 100 to optimize microcommunity size
+    // Sort by relevance score descending and limit to top 100 to optimize ad-hoc public size
     candidates.sort((a, b) => b.relevance_score - a.relevance_score);
     let microcommunityMembers = [];
     const creatorMember = candidates.find(c => c.isCreator);
@@ -406,11 +406,11 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
     };
     await issueRef.set(issueDoc);
 
-    // Create Microcommunity Record
+    // Create Ad-hoc Public Record (stored in microcommunities collection for schema compatibility)
     const mcRef = db.collection("microcommunities").doc();
     const mcId = mcRef.id;
 
-    // Fetch values_taxonomy for members to calculate aggregated microcommunity values taxonomy
+    // Fetch values_taxonomy for members to calculate aggregated ad-hoc public values taxonomy
     let mcTaxonomy = null;
     const memberUids = microcommunityMembers.map(m => String(m.user_id));
     if (memberUids.length > 0) {
@@ -544,7 +544,7 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
     };
     await mcRef.set(mcDoc);
 
-    // Upload microcommunity members
+    // Upload ad-hoc public members
     const batch = db.batch();
     microcommunityMembers.forEach((member) => {
       const memberRef = db.collection("microcommunity_members").doc(`${mcId}_${member.user_id}`);
@@ -651,7 +651,7 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
     });
   } catch (error) {
     console.error("Error creating issue:", error);
-    res.status(500).json({ error: "Failed to create issue and form microcommunity." });
+    res.status(500).json({ error: "Failed to create issue and form ad-hoc public." });
   }
 });
 
@@ -938,7 +938,7 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
       expertise_domain_parameters: data.expertise_domain_parameters || null,
       // ── Resources ───────────────────────────────────────────────────────
       resources_needed: data.resources_needed || [],
-      // ── Microcommunity ──────────────────────────────────────────────────
+      // ── Ad-hoc Public ──────────────────────────────────────────────────
       members_count: candidates.length,
       members: top25
     });

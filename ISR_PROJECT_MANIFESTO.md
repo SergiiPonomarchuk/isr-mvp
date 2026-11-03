@@ -26,9 +26,9 @@
 
 **ISR** stands for **Index of Social Responsibility**.
 
-ISR is a civic governance platform for **microcommunities** — small groups of people who share a common context (a building, neighborhood, workplace, online collective, etc.) and want to make collective decisions transparently and fairly.
+ISR is a civic governance platform for **ad-hoc publics** (formally the **Public of Appearance** in philosophical and civic theory) — small groups of people who share a common context (a building, neighborhood, workplace, online collective, etc.) and want to make collective decisions transparently and fairly.
 
-The current deliverable is an **MVP prototype** (`/prototype/index.html` + `/prototype/js/main.js` + `/prototype/styles.css`) backed by Firebase Firestore. It allows microcommunity members to:
+The current deliverable is an **MVP prototype** (`/prototype/index.html` + `/prototype/js/main.js` + `/prototype/styles.css`) backed by Firebase Firestore. It allows ad-hoc public members to:
 
 - View and discuss civic **issues** (discussions → "Chat" section).
 - **Vote** on proposed resolutions to issues.
@@ -44,19 +44,19 @@ The prototype uses a **single-page application** model. All navigation is via se
 
 These definitions are fixed. Do not use synonyms, do not invent new terms, do not revert to generic web-app terminology.
 
-### 2.1 Microcommunity
+### 2.1 Ad-Hoc Public / Public of Appearance
 
-> A **microcommunity** is the primary social unit of ISR. It is a small, self-identified group of people who share a common civic context and jointly govern issues within that context.
+> An **ad-hoc public** (formally the **Public of Appearance** in philosophy and science contexts, or simply **the public** in ongoing explanations) is the primary social unit of ISR. It is a small, self-identified group of people who share a common civic context and jointly govern issues within that context.
 
 - **Not** a "team", "group", "organization", "workspace", or "community" in a generic sense.
-- A microcommunity can be: residents of a building, members of a street council, an online collective, a workplace sub-group, etc.
-- A microcommunity has its own **Vector of Values** — a shared statement of what it values.
-- A single user can belong to multiple microcommunities simultaneously.
-- When an **issue** is resolved and the process is complete, the microcommunity that formed around it is **disbanded** (dissolved), not archived. Microcommunities are ephemeral, issue-driven structures.
+- An ad-hoc public can be: residents of a building, members of a street council, an online collective, a workplace sub-group, etc.
+- An ad-hoc public has its own **Vector of Values** — a shared statement of what it values.
+- A single user can belong to multiple ad-hoc publics simultaneously.
+- When an **issue** is resolved and the process is complete, the ad-hoc public that formed around it is **disbanded** (dissolved), not archived. Ad-hoc publics are ephemeral, issue-driven structures.
 
 ### 2.2 Issue
 
-> An **issue** is a specific civic problem or decision that a microcommunity needs to address together.
+> An **issue** is a specific civic problem or decision that an ad-hoc public needs to address together.
 
 - Issues have a lifecycle: `active` → voting → resolution → `inactive` (closed).
 - Issues are stored in the Firestore `discussions` (Chat), `voting`, and `tasks` collections depending on their current phase.
@@ -65,7 +65,7 @@ These definitions are fixed. Do not use synonyms, do not invent new terms, do no
 
 ### 2.3 ISR Score
 
-> The **ISR score** is a composite numeric indicator of a member's social responsibility within their microcommunity. It is not a reputation score or a rating — it is a measure of alignment between one's contributions and the community's stated values.
+> The **ISR score** is a composite numeric indicator of a member's social responsibility within their ad-hoc public. It is not a reputation score or a rating — it is a measure of alignment between one's contributions and the public's stated values.
 
 - ISR Score = `w_Relevance · Relevance + w_Expertise · Expertise + w_Contribution · Contribution`
 - Weights (`w_Relevance`, `w_Expertise`, `w_Contribution`) are set per-issue by the AI Issue Analyzer.
@@ -93,12 +93,12 @@ These definitions are fixed. Do not use synonyms, do not invent new terms, do no
 > **Contribution** is a score measuring the quality and value-alignment of actions a member has taken toward resolving an issue.
 
 - Each action (task completion, message, decision) is vectorized into an **Action Vector**.
-- The Action Vector is compared against the microcommunity's **Vector of Values**.
+- The Action Vector is compared against the ad-hoc public's **Vector of Values**.
 - Contribution = `Action Force × cosine_similarity(Action Vector, Vector of Values)` (simplified).
 
 ### 2.7 Vector of Values (VoV)
 
-> The **Vector of Values** is the microcommunity's structured representation of its shared ideals. It is a 145-dimensional vector scored 0–100 per dimension.
+> The **Vector of Values** is the ad-hoc public's structured representation of its shared ideals. It is a 145-dimensional vector scored 0–100 per dimension.
 
 - Dimensions map to Shalom Schwartz's value taxonomy, organized into 10 domains.
 - VoV scores are **always non-negative** (0–100). You cannot "value −80 justice".
@@ -201,7 +201,7 @@ When a member votes on an issue, their vote is weighted by their **ISR_Score** f
 ### 4.4 Relevance Threshold
 
 - Default Relevance Threshold hardcoded in the Relevance Engine is 0.15.
-- Users with `Relevance >= Threshold` are automatically added to the issue microcommunity.
+- Users with `Relevance >= Threshold` are automatically added to the issue's ad-hoc public.
 - This default threshold is hardcoded in the Relevance Engine; it **can** be changed during issue creation.
 ---
 
@@ -406,11 +406,11 @@ Always access via `safeGetStorage(key)` and `localStorage.setItem(key, value)`.
 
 | Incorrect (forbidden) | Correct (use this) |
 |-----------------------|-------------------|
-| Group, Team, Organization | Microcommunity |
+| Group, Team, Organization, Microcommunity (legacy) | Ad-hoc Public / Public of Appearance / the public |
 | Ticket, Bug, Request | Issue |
 | Reputation score, Karma | ISR Score |
 | Interest score | Semantic relevance (S dimension) |
-| Community (as ISR unit) | Microcommunity |
+| Community (as ISR unit) | Ad-hoc Public |
 | Tasks (UI label) | To Do |
 | Feedback (as values system) | Values |
 

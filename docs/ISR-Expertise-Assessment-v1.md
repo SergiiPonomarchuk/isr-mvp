@@ -41,6 +41,8 @@ Where:
 - **$E_{i,q,experience}$** = User i experience expertise regarding issue q
 - **$E_{i,q,resources}$** = User i resource expertise regarding issue q
 
+The three components are added **without weights**. The context of the issue acts through the similarity of each record to the issue ($\vec{V}_q$) and through the domain parameters (CBC adjustment factor, recency decay).
+
 ---
 
 ### 2.2 Education Expertise
@@ -159,7 +161,7 @@ Where:
 - **1.0**: Moderate rarity (specialized equipment, professional networks)
 - **1.5**: High rarity (rare expertise connections, unique facilities, specialized tech)
 
-**Resources Include**: tools, equipment, technology, transportation, space/venue, social connections, capital.
+**Resources Include**: tools, equipment, technology, transportation, space/venue, social connections. **Money is not a resource in this score**: if an issue needs funding, each option states its cost and funding source, so wealth does not enter through weight.
 
 **Example (parking structure proposal issue)**:
 ```

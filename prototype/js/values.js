@@ -64,7 +64,7 @@ function mapTaxonomyToUserValues(taxonomy) {
 }
 
 /**
- * calculateMicrocommunityValuesDynamic - Aggregates the values taxonomy for all microcommunity members.
+ * calculateMicrocommunityValuesDynamic - Aggregates the values taxonomy for all members of the ad-hoc public.
  */
 async function calculateMicrocommunityValuesDynamic(memberUids, mcId) {
   if (typeof firebase === 'undefined') return null;

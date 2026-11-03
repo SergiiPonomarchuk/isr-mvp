@@ -25,7 +25,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.30$, $w_G=0.50$, $w_S=0.05$, $w_X=0.15$
 - **Geographic Radius**: $\mu=40.0$, $\sigma=30.0$
 - **Demographic Filters**: `lives_in_building = true, age >= 14`
-- **Expertise Weights**: $w_{Edu}=0.20$, $w_{Exp}=0.55$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.70$, $w_{Exp}=0.10$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -78,12 +77,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 30.0,
     "geo_reasoning": "The problem is centered on the building entrance; residents and people immediately around the doorway are most affected, so \u03bc is set slightly outside the entrance, with \u03c3 making relevance drop quickly beyond the building and its immediate frontage."
   },
-  "expertise_weights": {
-    "w_education": 0.2,
-    "w_experience": 0.55,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Fixing a shared entrance lock depends mostly on hands-on locksmith practice and availability of the right tools; formal education matters, but less than experience and resources.",
   "expertise_domain_parameters": {
     "expertise_domain": "locksmith.security",
     "contemporary_importance": 0.2,
@@ -128,7 +121,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.25$, $w_G=0.60$, $w_S=0.05$, $w_X=0.10$
 - **Geographic Radius**: $\mu=40.0$, $\sigma=35.0$
 - **Demographic Filters**: `lives_in_building = true, floor >= 2`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.45$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.15$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -180,12 +172,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 35.0,
     "geo_reasoning": "The impact is effectively limited to the building envelope, so \u03bc is near the building centroid and \u03c3 covers the building footprint plus a small buffer, making relevance fall steeply outside."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.45,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Elevator repair and maintenance require both engineering knowledge and field experience, plus access to specialized tools and parts; experience is slightly dominant, with substantial roles for education and resources.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.elevator_engineering",
     "contemporary_importance": 0.5,
@@ -230,7 +216,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.25$, $w_G=0.60$, $w_S=0.05$, $w_X=0.10$
 - **Geographic Radius**: $\mu=50.0$, $\sigma=40.0$
 - **Demographic Filters**: `lives_in_building = true, stays_nights = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.45$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.70$, $w_{Exp}=0.15$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -282,12 +267,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 40.0,
     "geo_reasoning": "All units in the building are affected; \u03bc is placed near the building center with \u03c3 large enough to cover the whole building and a narrow perimeter, so nearby neighbors get some but lower geographic relevance."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.45,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Heating systems combine engineering principles with practical diagnostics and access to equipment; experience slightly dominates, but formal training and resources are also important.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.heating_engineering",
     "contemporary_importance": 0.4,
@@ -332,7 +311,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.20$, $w_G=0.65$, $w_S=0.05$, $w_X=0.10$
 - **Geographic Radius**: $\mu=40.0$, $\sigma=30.0$
 - **Demographic Filters**: `lives_in_building = true, has_storage_unit = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.50$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.20$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -384,12 +362,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 30.0,
     "geo_reasoning": "The leak affects storage and structure mainly for this building; \u03bc and \u03c3 are tuned to strongly favor residents of the building and quickly discount those even a short distance away."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.5,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Plumbing leaks are primarily about practical experience plus access to materials and tools; formal education in construction or plumbing helps but is secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.plumbing",
     "contemporary_importance": 0.3,
@@ -434,7 +406,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.45$, $w_S=0.10$, $w_X=0.10$
 - **Geographic Radius**: $\mu=50.0$, $\sigma=40.0$
 - **Demographic Filters**: `lives_in_building = true, chronic_respiratory = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.20$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -488,12 +459,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 40.0,
     "geo_reasoning": "Mold primarily harms people regularly inside the building; \u03bc is at the building center and \u03c3 slightly larger to include attached wings or entrances, with geography decaying for adjacent buildings."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Addressing mold involves understanding health risks and building physics as well as practical remediation; education has a higher role here, but hands-on experience and resources are still critical.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.health.mold_remediation",
     "contemporary_importance": 0.5,
@@ -533,7 +498,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.20$, $w_G=0.70$, $w_S=0.05$, $w_X=0.05$
 - **Geographic Radius**: $\mu=35.0$, $\sigma=25.0$
 - **Demographic Filters**: `lives_in_building = true, regularly_uses_stairs = true`
-- **Expertise Weights**: $w_{Edu}=0.20$, $w_{Exp}=0.50$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.75$, $w_{Exp}=0.05$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -585,12 +549,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 25.0,
     "geo_reasoning": "This is a very localized impact; setting a small \u03bc and \u03c3 ensures that only people who actually pass through the stairwell\u2014a region roughly overlapping the building\u2014get high geographic relevance."
   },
-  "expertise_weights": {
-    "w_education": 0.2,
-    "w_experience": 0.5,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Fixing lighting is mostly about basic electrical skill and having the right tools and replacement parts; detailed formal education is less critical than experience and access to resources.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.electrical_basic",
     "contemporary_importance": 0.4,
@@ -630,7 +588,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.20$, $w_G=0.60$, $w_S=0.10$, $w_X=0.10$
 - **Geographic Radius**: $\mu=60.0$, $\sigma=50.0$
 - **Demographic Filters**: `lives_in_building = true, uses_shared_bins = true`
-- **Expertise Weights**: $w_{Edu}=0.15$, $w_{Exp}=0.45$, $w_{Res}=0.40$
 - **Aggregation Weights**: $w_{Rel}=0.70$, $w_{Exp}=0.10$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -682,12 +639,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 50.0,
     "geo_reasoning": "Smell and visual impact extend slightly beyond the building footprint; \u03bc is slightly larger than building radius and \u03c3 lets relevance stay moderate for immediate neighbors while decaying for the wider area."
   },
-  "expertise_weights": {
-    "w_education": 0.15,
-    "w_experience": 0.45,
-    "w_resources": 0.4
-  },
-  "expertise_weights_reasoning": "Waste management at building level is more about coordinating services, routines and physical capacity than about specialized education; logistics experience and available resources (storage space, contracts) dominate.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.waste_logistics",
     "contemporary_importance": 0.3,
@@ -732,7 +683,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.45$, $w_S=0.15$, $w_X=0.05$
 - **Geographic Radius**: $\mu=70.0$, $\sigma=60.0$
 - **Demographic Filters**: `lives_in_building = true, has_car = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.35$, $w_{Res}=0.40$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.15$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -785,12 +735,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 60.0,
     "geo_reasoning": "The parking lot serves building residents and possibly adjacent buildings; \u03bc and \u03c3 are set to cover the lot and nearby buildings, with relevance decreasing for people farther down the street."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.35,
-    "w_resources": 0.4
-  },
-  "expertise_weights_reasoning": "Parking allocation requires some understanding of fairness and basic policy, but is mainly a coordination problem where experience and parking-related resources (spaces, contracts, enforcement) matter.",
   "expertise_domain_parameters": {
     "expertise_domain": "housing.policy.parking_management",
     "contemporary_importance": 0.4,
@@ -830,7 +774,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.20$, $w_G=0.70$, $w_S=0.05$, $w_X=0.05$
 - **Geographic Radius**: $\mu=30.0$, $\sigma=20.0$
 - **Demographic Filters**: `lives_in_building = true, stays_nights = true`
-- **Expertise Weights**: $w_{Edu}=0.20$, $w_{Exp}=0.45$, $w_{Res}=0.35$
 - **Aggregation Weights**: $w_{Rel}=0.75$, $w_{Exp}=0.05$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -882,12 +825,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 20.0,
     "geo_reasoning": "The disturbance is extremely local\u2014mostly units in the same building, especially adjacent floors\u2014so \u03bc and \u03c3 are small to strongly privilege immediate neighbors."
   },
-  "expertise_weights": {
-    "w_education": 0.2,
-    "w_experience": 0.45,
-    "w_resources": 0.35
-  },
-  "expertise_weights_reasoning": "Noise disputes hinge on conflict mediation experience and access to remedies (legal advice, insulation, building policies) more than on formal education.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.conflict.noise_mediation",
     "contemporary_importance": 0.3,
@@ -927,7 +864,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.25$, $w_G=0.60$, $w_S=0.05$, $w_X=0.10$
 - **Geographic Radius**: $\mu=40.0$, $\sigma=30.0$
 - **Demographic Filters**: `lives_in_building = true, works_from_home = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.45$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.15$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -979,12 +915,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 30.0,
     "geo_reasoning": "Noise from renovation primarily affects the same building and adjacent units; \u03bc and \u03c3 reflect a building-scale impact with rapid decay beyond."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.45,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Renovation scheduling is mostly practical: coordinating contractors and neighbors, plus some awareness of building rules and law; experience is primary, with support from education and resource access.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.renovation_coordination",
     "contemporary_importance": 0.35,
@@ -1029,7 +959,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.60$, $w_G=0.25$, $w_S=0.10$, $w_X=0.05$
 - **Geographic Radius**: $\mu=500.0$, $\sigma=800.0$
 - **Demographic Filters**: `tenant_status = true, lease_in_building = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.35$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.25$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -1081,12 +1010,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 800.0,
     "geo_reasoning": "Policy applies to all tenants of a landlord or within a jurisdiction, not just one building; \u03bc is at the typical center of the landlord\u2019s housing stock or district, with large \u03c3 so that all units across the area get similar geographic relevance."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.35,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "This is legal and policy-heavy; education in law, housing policy or finance is important, but lived experience with tenancy issues and relevant resources (legal support) also matter.",
   "expertise_domain_parameters": {
     "expertise_domain": "housing.policy.tenancy_law",
     "contemporary_importance": 0.7,
@@ -1126,7 +1049,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.40$, $w_G=0.40$, $w_S=0.15$, $w_X=0.05$
 - **Geographic Radius**: $\mu=50.0$, $\sigma=40.0$
 - **Demographic Filters**: `tenant_or_owner = true, has_pet = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.40$, $w_{Res}=0.35$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.15$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -1182,12 +1104,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 40.0,
     "geo_reasoning": "Rules apply to a single building or small complex; \u03bc and \u03c3 cover the complex footprint so residents there have high geographic relevance, with neighbors in nearby buildings only weakly affected."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.4,
-    "w_resources": 0.35
-  },
-  "expertise_weights_reasoning": "Experience managing shared living spaces and pets (including allergies, noise, safety) is key; some legal/policy education helps, and resources like enforcement mechanisms or pet facilities matter.",
   "expertise_domain_parameters": {
     "expertise_domain": "housing.policy.pet_management",
     "contemporary_importance": 0.4,
@@ -1227,7 +1143,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.45$, $w_S=0.10$, $w_X=0.10$
 - **Geographic Radius**: $\mu=40.0$, $\sigma=30.0$
 - **Demographic Filters**: `lives_in_building = true, age >= 14, uses_rooftop = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.25$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -1284,12 +1199,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 30.0,
     "geo_reasoning": "Only people using or living in the building are substantially affected; a small \u03bc and \u03c3 keep high geographic relevance within the building volume and immediate surroundings."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Safety rules require understanding building codes and risk (education) plus experience managing access and incidents; resources like safety equipment are supportive.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.safety.access_control",
     "contemporary_importance": 0.5,
@@ -1334,7 +1243,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.40$, $w_S=0.15$, $w_X=0.10$
 - **Geographic Radius**: $\mu=35.0$, $\sigma=25.0$
 - **Demographic Filters**: `lives_in_building = true, uses_laundry = true`
-- **Expertise Weights**: $w_{Edu}=0.20$, $w_{Exp}=0.45$, $w_{Res}=0.35$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.10$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -1386,12 +1294,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 25.0,
     "geo_reasoning": "The effect is confined to users of one shared facility; \u03bc and \u03c3 define a tight area around the building so that only residents and very close neighbors get notable geographic relevance."
   },
-  "expertise_weights": {
-    "w_education": 0.2,
-    "w_experience": 0.45,
-    "w_resources": 0.35
-  },
-  "expertise_weights_reasoning": "This is mainly a coordination and etiquette issue; experience managing shared facilities and available resources (machines, payment systems) matter more than formal education.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.shared_facilities",
     "contemporary_importance": 0.3,
@@ -1436,7 +1338,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.40$, $w_G=0.35$, $w_S=0.15$, $w_X=0.10$
 - **Geographic Radius**: $\mu=60.0$, $\sigma=50.0$
 - **Demographic Filters**: `tenant_or_owner = true, wants_storage = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.20$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -1492,12 +1393,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 50.0,
     "geo_reasoning": "Lockers are usually in basements or nearby facilities serving several buildings; \u03bc and \u03c3 are large enough to cover the immediate complex but not the wider neighborhood."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Allocation and pricing involve basic economic/policy understanding, practical management of limited capacity, and the physical storage resources; experience is slightly primary but all three dimensions matter.",
   "expertise_domain_parameters": {
     "expertise_domain": "housing.policy.resource_allocation",
     "contemporary_importance": 0.4,
@@ -1542,7 +1437,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.30$, $w_G=0.45$, $w_S=0.15$, $w_X=0.10$
 - **Geographic Radius**: $\mu=40.0$, $\sigma=30.0$
 - **Demographic Filters**: `tenant_or_owner = true, planning_move_within_6m = true`
-- **Expertise Weights**: $w_{Edu}=0.20$, $w_{Exp}=0.45$, $w_{Res}=0.35$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.15$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -1597,12 +1491,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 30.0,
     "geo_reasoning": "The rules matter only to residents and movers using the specific building; geographic relevance is tightly focused on the building footprint."
   },
-  "expertise_weights": {
-    "w_education": 0.2,
-    "w_experience": 0.45,
-    "w_resources": 0.35
-  },
-  "expertise_weights_reasoning": "Moving logistics are dominated by coordination experience and access to time slots, equipment and staff; formal education is less critical.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.move_coordination",
     "contemporary_importance": 0.3,
@@ -1647,7 +1535,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.45$, $w_S=0.10$, $w_X=0.10$
 - **Geographic Radius**: $\mu=50.0$, $\sigma=40.0$
 - **Demographic Filters**: `lives_in_building = true, has_frequent_visitors = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.20$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -1700,12 +1587,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 40.0,
     "geo_reasoning": "While the decisions are building-specific, they can slightly affect neighboring entrances; \u03bc and \u03c3 give high relevance to the building and limited spillover along the immediate frontage."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Security and privacy principles (education), practical experience in managing guest flows, and resources like intercom systems jointly matter; none can be ignored.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.security.access_policies",
     "contemporary_importance": 0.6,
@@ -1745,7 +1626,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.40$, $w_G=0.40$, $w_S=0.10$, $w_X=0.10$
 - **Geographic Radius**: $\mu=50.0$, $\sigma=40.0$
 - **Demographic Filters**: `lives_in_building = true, has_balcony = true, children_age <= 10`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.40$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.30$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -1804,12 +1684,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 40.0,
     "geo_reasoning": "Risk and aesthetic impact are mostly within and directly around one building; \u03bc and \u03c3 concentrate relevance on residents and close neighbors who see or use the balconies."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.4,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Structural safety and regulations give formal education a bigger role, but builder/engineering experience is equally important; resources like scaffolding and safety gear matter but less.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.safety.structural",
     "contemporary_importance": 0.6,
@@ -1859,7 +1733,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.45$, $w_S=0.10$, $w_X=0.10$
 - **Geographic Radius**: $\mu=60.0$, $\sigma=50.0$
 - **Demographic Filters**: `lives_in_building = true, non_smoker = true, chronic_respiratory = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.35$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.20$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -1918,12 +1791,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 50.0,
     "geo_reasoning": "Smoke and odour can spread slightly beyond entrances and windows; \u03bc and \u03c3 are tuned to keep high relevance for the building and mild relevance for the nearest surrounding buildings."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.35,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Health science and legal/policy education matter, but lived experience in shared environments and access to enforcement/mitigation resources are equally important.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.health.smoke_policy",
     "contemporary_importance": 0.7,
@@ -1963,7 +1830,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.40$, $w_G=0.40$, $w_S=0.10$, $w_X=0.10$
 - **Geographic Radius**: $\mu=50.0$, $\sigma=40.0$
 - **Demographic Filters**: `lives_in_building = true, mobility_limitation = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.40$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.30$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -2017,12 +1883,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 40.0,
     "geo_reasoning": "The plan applies to occupants of one building; \u03bc and \u03c3 encompass the building and immediate assembly area, with relevance dropping quickly outside this safety perimeter."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.4,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Safety planning combines formal knowledge (fire codes, risk management) and practical exercise experience; resources like signage and equipment matter but are not the main driver of expertise.",
   "expertise_domain_parameters": {
     "expertise_domain": "building.safety.emergency_planning",
     "contemporary_importance": 0.7,
@@ -2069,7 +1929,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.20$, $w_G=0.70$, $w_S=0.05$, $w_X=0.05$
 - **Geographic Radius**: $\mu=150.0$, $\sigma=120.0$
 - **Demographic Filters**: `lives_or_works_within_radius = true, uses_car_or_bike = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.45$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.70$, $w_{Exp}=0.10$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -2125,12 +1984,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 120.0,
     "geo_reasoning": "The pothole affects vehicles on a short street segment; \u03bc aligns with the segment center and \u03c3 covers nearby residents and typical turning radii, with relevance fading beyond a few hundred meters."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.45,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Road repair is mostly about practical construction experience and equipment; civil engineering education helps but is slightly less central than field experience and resources.",
   "expertise_domain_parameters": {
     "expertise_domain": "infrastructure.maintenance.roadworks",
     "contemporary_importance": 0.4,
@@ -2170,7 +2023,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.20$, $w_G=0.70$, $w_S=0.05$, $w_X=0.05$
 - **Geographic Radius**: $\mu=200.0$, $\sigma=150.0$
 - **Demographic Filters**: `lives_or_works_within_radius = true, walker_or_driver = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.35$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.25$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -2225,12 +2077,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 150.0,
     "geo_reasoning": "People who regularly pass this intersection\u2014nearby residents and commuters\u2014are most affected; \u03bc and \u03c3 are set to cover a few blocks around the junction."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.35,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Traffic engineering and safety research (education) are important; practical planning and operations experience also matter, along with access to relevant traffic data and control systems.",
   "expertise_domain_parameters": {
     "expertise_domain": "transportation.engineering.signal_timing",
     "contemporary_importance": 0.7,
@@ -2275,7 +2121,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.20$, $w_G=0.50$, $w_S=0.25$, $w_X=0.05$
 - **Geographic Radius**: $\mu=400.0$, $\sigma=350.0$
 - **Demographic Filters**: `lives_or_works_within_radius = true, frequent_cyclist = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.20$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -2329,12 +2174,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 350.0,
     "geo_reasoning": "The lane serves a corridor rather than a single point; \u03bc approximates a mid-point in the affected stretch, and \u03c3 is wide enough to keep relevance high for people within a few blocks along the route."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Urban planning/transport education and on-the-ground cycling/road design experience are both key; resources like design tools and implementation budgets are supportive.",
   "expertise_domain_parameters": {
     "expertise_domain": "urban_planning.cycling_infrastructure",
     "contemporary_importance": 0.6,
@@ -2374,7 +2213,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.30$, $w_G=0.40$, $w_S=0.25$, $w_X=0.05$
 - **Geographic Radius**: $\mu=800.0$, $\sigma=700.0$
 - **Demographic Filters**: `transit_user = true, lives_or_works_near_route = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.20$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -2428,12 +2266,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 700.0,
     "geo_reasoning": "A route change affects riders along a long path; \u03bc is set near the route\u2019s central area with a large \u03c3 so that neighborhoods within roughly 1\u20132 km maintain significant geographic relevance."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Public transport planning needs education in transport and social equity plus experience with routing and demand; resources like ridership data and vehicles are secondary in expertise assessment.",
   "expertise_domain_parameters": {
     "expertise_domain": "transportation.planning.transit",
     "contemporary_importance": 0.7,
@@ -2473,7 +2305,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.25$, $w_G=0.70$, $w_S=0.05$, $w_X=0.00$
 - **Geographic Radius**: $\mu=120.0$, $\sigma=100.0$
 - **Demographic Filters**: `lives_or_works_within_radius = true, walker = true, mobility_limitation = true`
-- **Expertise Weights**: $w_{Edu}=0.15$, $w_{Exp}=0.45$, $w_{Res}=0.40$
 - **Aggregation Weights**: $w_{Rel}=0.75$, $w_{Exp}=0.05$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -2532,12 +2363,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 100.0,
     "geo_reasoning": "Pedestrians using specific blocks are most affected; \u03bc and \u03c3 cover a cluster of adjacent blocks with relevance decaying for those farther away."
   },
-  "expertise_weights": {
-    "w_education": 0.15,
-    "w_experience": 0.45,
-    "w_resources": 0.4
-  },
-  "expertise_weights_reasoning": "Winter maintenance is highly practical and resource-dependent (equipment, salt, staff), with minimal requirement for formal education.",
   "expertise_domain_parameters": {
     "expertise_domain": "infrastructure.maintenance.winter_ops",
     "contemporary_importance": 0.3,
@@ -2582,7 +2407,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.20$, $w_G=0.70$, $w_S=0.05$, $w_X=0.05$
 - **Geographic Radius**: $\mu=150.0$, $\sigma=120.0$
 - **Demographic Filters**: `lives_or_works_within_radius = true, walks_after_dark = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.45$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.70$, $w_{Exp}=0.10$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -2634,12 +2458,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 120.0,
     "geo_reasoning": "The outage creates safety issues along a defined street section; \u03bc is on that segment and \u03c3 covers nearby homes and walking routes, fading beyond a few hundred meters."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.45,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Electrical maintenance experience and access to tools/lift trucks dominate; engineering education helps but is secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "infrastructure.maintenance.electrical_public",
     "contemporary_importance": 0.4,
@@ -2679,7 +2497,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.10$, $w_G=0.85$, $w_S=0.05$, $w_X=0.00$
 - **Geographic Radius**: $\mu=200.0$, $\sigma=180.0$
 - **Demographic Filters**: `lives_or_works_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.75$, $w_{Exp}=0.05$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -2726,12 +2543,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 180.0,
     "geo_reasoning": "Noise extends over several blocks; \u03bc and \u03c3 are set so that residents and workers within roughly 200\u2013400 m get high geographic relevance and those beyond experience only mild impact."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Knowledge of regulations and noise mitigation (education) plus construction scheduling experience and access to quieter equipment or barriers all matter roughly comparably.",
   "expertise_domain_parameters": {
     "expertise_domain": "infrastructure.construction.noise_management",
     "contemporary_importance": 0.6,
@@ -2771,7 +2582,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.20$, $w_G=0.60$, $w_S=0.15$, $w_X=0.05$
 - **Geographic Radius**: $\mu=150.0$, $\sigma=130.0$
 - **Demographic Filters**: `lives_or_works_within_radius = true, uses_area_for_walks = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.40$, $w_{Res}=0.35$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.15$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -2823,12 +2633,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 130.0,
     "geo_reasoning": "Visual and environmental nuisance is concentrated around the dumping site; \u03bc and \u03c3 span the immediate surroundings and approach side streets."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.4,
-    "w_resources": 0.35
-  },
-  "expertise_weights_reasoning": "Environmental policy knowledge is useful, but experience organizing cleanups/enforcement and access to cleanup resources/trucks are more central.",
   "expertise_domain_parameters": {
     "expertise_domain": "environment.cleanliness.illegal_dumping",
     "contemporary_importance": 0.5,
@@ -2873,7 +2677,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.30$, $w_G=0.60$, $w_S=0.05$, $w_X=0.05$
 - **Geographic Radius**: $\mu=600.0$, $\sigma=500.0$
 - **Demographic Filters**: `utility_customer_in_zone = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.45$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.70$, $w_{Exp}=0.20$, $w_{Con}=0.10$
 
 #### Combined JSON Block
@@ -2920,12 +2723,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 500.0,
     "geo_reasoning": "The disruption typically follows infrastructure zones covering several blocks; \u03bc and \u03c3 approximate the center and spread of the affected network segment."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.45,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Engineering and network-operations education plus extensive field experience are key for diagnosing water issues; physical resources (equipment) matter but are less central in deciding.",
   "expertise_domain_parameters": {
     "expertise_domain": "utilities.water_network.operations",
     "contemporary_importance": 0.6,
@@ -2970,7 +2767,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.20$, $w_G=0.70$, $w_S=0.05$, $w_X=0.05$
 - **Geographic Radius**: $\mu=800.0$, $\sigma=600.0$
 - **Demographic Filters**: `lives_or_works_in_zone = true, critical_devices = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.45$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.25$, $w_{Con}=0.10$
 
 #### Combined JSON Block
@@ -3022,12 +2818,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 600.0,
     "geo_reasoning": "Outages usually cluster by feeder or substation; \u03bc and \u03c3 cover a neighborhood\u2011scale radius so that all households on the problematic circuit get high geographic relevance."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.45,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Grid reliability requires strong electrical engineering and operations experience; specialized equipment/resources are necessary but less decisive in weighting expertise.",
   "expertise_domain_parameters": {
     "expertise_domain": "utilities.electric_grid.reliability",
     "contemporary_importance": 0.7,
@@ -3067,7 +2857,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.20$, $w_G=0.60$, $w_S=0.15$, $w_X=0.05$
 - **Geographic Radius**: $\mu=1000.0$, $\sigma=800.0$
 - **Demographic Filters**: `isp_customer_in_zone = true, remote_worker_or_student = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.45$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.20$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -3122,12 +2911,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 800.0,
     "geo_reasoning": "ISP segments often map to large blocks or districts; \u03bc and \u03c3 are tuned to keep relevance high across the outage zone and moderate for adjacent areas."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.45,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Network engineering education and ops experience dominate; resources like monitoring systems and hardware access are secondary in weighting.",
   "expertise_domain_parameters": {
     "expertise_domain": "utilities.networking.isp_operations",
     "contemporary_importance": 0.8,
@@ -3167,7 +2950,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.50$, $w_S=0.10$, $w_X=0.05$
 - **Geographic Radius**: $\mu=250.0$, $\sigma=200.0$
 - **Demographic Filters**: `lives_within_radius = true, has_children_age <= 12 = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.45$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.70$, $w_{Exp}=0.15$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -3221,12 +3003,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 200.0,
     "geo_reasoning": "Families living within a short walk of the playground are most affected; \u03bc is set at the square and \u03c3 covers the surrounding few blocks."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.45,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Child safety guidelines and design standards (education) plus maintenance experience both matter; resources like maintenance staff and parts are supportive.",
   "expertise_domain_parameters": {
     "expertise_domain": "infrastructure.public.playground_safety",
     "contemporary_importance": 0.5,
@@ -3266,7 +3042,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.25$, $w_G=0.55$, $w_S=0.15$, $w_X=0.05$
 - **Geographic Radius**: $\mu=400.0$, $\sigma=350.0$
 - **Demographic Filters**: `lives_within_radius = true, driver_or_parent_on_street = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.35$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.25$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -3322,12 +3097,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 350.0,
     "geo_reasoning": "The impact is felt along a corridor; \u03bc and \u03c3 cover a length of street and neighboring blocks where residents and frequent drivers experience the change."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.35,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Traffic safety and planning education is important; experience implementing calming measures also matters; resources like enforcement and design funds are secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "transportation.safety.traffic_calming",
     "contemporary_importance": 0.7,
@@ -3367,7 +3136,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.30$, $w_G=0.50$, $w_S=0.15$, $w_X=0.05$
 - **Geographic Radius**: $\mu=400.0$, $\sigma=350.0$
 - **Demographic Filters**: `business_owner_or_resident_on_street = true, has_car = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.20$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -3425,12 +3193,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 350.0,
     "geo_reasoning": "Residents and businesses directly fronting or near the regulated street are most affected; \u03bc and \u03c3 capture the dense cluster of impacted frontages."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Urban policy and economic education plus experience managing parking systems both matter; resources like enforcement capacity are supportive.",
   "expertise_domain_parameters": {
     "expertise_domain": "urban_planning.parking_policy",
     "contemporary_importance": 0.6,
@@ -3470,7 +3232,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.25$, $w_G=0.50$, $w_S=0.20$, $w_X=0.05$
 - **Geographic Radius**: $\mu=300.0$, $\sigma=250.0$
 - **Demographic Filters**: `lives_or_works_within_radius = true, uses_area_regularly = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.20$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -3522,12 +3283,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 250.0,
     "geo_reasoning": "People spending time within a short walking radius use the facility; \u03bc is at the toilet location and \u03c3 covers typical pedestrian catchment."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Sanitation/health education, operational experience, and access to space and funding are all important and fairly balanced.",
   "expertise_domain_parameters": {
     "expertise_domain": "public_health.sanitation.facilities",
     "contemporary_importance": 0.6,
@@ -3567,7 +3322,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.25$, $w_G=0.60$, $w_S=0.10$, $w_X=0.05$
 - **Geographic Radius**: $\mu=300.0$, $\sigma=250.0$
 - **Demographic Filters**: `lives_or_works_within_radius = true, crosses_location_often = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.25$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -3619,12 +3373,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 250.0,
     "geo_reasoning": "Risk concentrates on and near this structure; \u03bc and \u03c3 define a zone where pedestrians and drivers regularly use it, roughly a few blocks around."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Safety/security engineering education and field experience both matter; resources like cameras and lighting gear are supporting.",
   "expertise_domain_parameters": {
     "expertise_domain": "infrastructure.safety.personal_security",
     "contemporary_importance": 0.7,
@@ -3669,7 +3417,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.25$, $w_G=0.45$, $w_S=0.25$, $w_X=0.05$
 - **Geographic Radius**: $\mu=300.0$, $\sigma=250.0$
 - **Demographic Filters**: `frequent_train_user = true, cyclist = true, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.20$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -3728,12 +3475,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 250.0,
     "geo_reasoning": "Cyclists within a walking or biking catchment of the station are most affected; \u03bc is at the station and \u03c3 covers surrounding neighborhoods where people start or end trips."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Planning knowledge and practical experience with station design both matter; resources like space, funding and racks are relevant for implementation.",
   "expertise_domain_parameters": {
     "expertise_domain": "urban_planning.cycling_parking",
     "contemporary_importance": 0.6,
@@ -3773,7 +3514,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.25$, $w_G=0.50$, $w_S=0.20$, $w_X=0.05$
 - **Geographic Radius**: $\mu=1500.0$, $\sigma=1200.0$
 - **Demographic Filters**: `lives_or_works_in_center = true, driver_or_shop_owner = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.35$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.25$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -3829,12 +3569,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 1200.0,
     "geo_reasoning": "The event affects the broader city center; \u03bc is set near the downtown core and \u03c3 allows relevance to be high across the inner city and moderate for more distant neighborhoods."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.35,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Policy and urban planning education, event/logistics experience, and access to enforcement and communication resources are all significant and need a balanced weighting.",
   "expertise_domain_parameters": {
     "expertise_domain": "urban_planning.mobility_events",
     "contemporary_importance": 0.65,
@@ -3874,7 +3608,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.25$, $w_G=0.45$, $w_S=0.25$, $w_X=0.05$
 - **Geographic Radius**: $\mu=800.0$, $\sigma=600.0$
 - **Demographic Filters**: `lives_or_works_in_zone = true, frequent_pedestrian = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.35$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.25$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -3926,12 +3659,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 600.0,
     "geo_reasoning": "People living or working within walking distance of the zone are most involved; \u03bc and \u03c3 cover the central area and nearby neighborhoods."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.35,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Design and planning education is critical; practical experience implementing zones is important; resources like funding and design tools play a secondary role.",
   "expertise_domain_parameters": {
     "expertise_domain": "urban_planning.public_space_design",
     "contemporary_importance": 0.7,
@@ -3971,7 +3698,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.50$, $w_S=0.10$, $w_X=0.05$
 - **Geographic Radius**: $\mu=600.0$, $\sigma=500.0$
 - **Demographic Filters**: `household_in_collection_area = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.45$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.15$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -4018,12 +3744,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 500.0,
     "geo_reasoning": "Schedule changes affect a waste collection district (several blocks); \u03bc and \u03c3 encompass that district, with relevance decaying for people outside the route."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.45,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Operational experience and availability of trucks/staff dominate; some education in logistics or public administration helps but is secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "public_services.waste_collection",
     "contemporary_importance": 0.4,
@@ -4070,7 +3790,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.50$, $w_G=0.40$, $w_S=0.05$, $w_X=0.05$
 - **Geographic Radius**: $\mu=800.0$, $\sigma=700.0$
 - **Demographic Filters**: `registered_patient = true, lives_within_service_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.35$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.25$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -4122,12 +3841,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 700.0,
     "geo_reasoning": "Primary care clinics draw patients from a neighborhood catchment; \u03bc and \u03c3 define a radius where most registered patients live, around 0.5\u20131.5 km."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.35,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Medical/public health education and clinic management experience both matter; resources like staffing and facilities are important but secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "healthcare.management.primary_care",
     "contemporary_importance": 0.8,
@@ -4172,7 +3885,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.50$, $w_G=0.35$, $w_S=0.10$, $w_X=0.05$
 - **Geographic Radius**: $\mu=1500.0$, $\sigma=1500.0$
 - **Demographic Filters**: `at_risk_group = true, lives_in_campaign_area = true`
-- **Expertise Weights**: $w_{Edu}=0.45$, $w_{Exp}=0.35$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.30$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -4224,12 +3936,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 1500.0,
     "geo_reasoning": "Campaigns often target an entire district or city; \u03bc and \u03c3 are set to maintain fairly uniform relevance across the administrative area."
   },
-  "expertise_weights": {
-    "w_education": 0.45,
-    "w_experience": 0.35,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Strong medical and epidemiological education is crucial; experience running campaigns is also important; resources (vaccines, sites) matter more for implementation than for defining expertise.",
   "expertise_domain_parameters": {
     "expertise_domain": "public_health.prevention_campaigns",
     "contemporary_importance": 0.9,
@@ -4274,7 +3980,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.70$, $w_G=0.25$, $w_S=0.03$, $w_X=0.02$
 - **Geographic Radius**: $\mu=600.0$, $\sigma=500.0$
 - **Demographic Filters**: `has_children_age_0_6 = true, lives_within_service_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.70$, $w_{Exp}=0.15$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -4329,12 +4034,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 500.0,
     "geo_reasoning": "Families within a short commuting radius of a kindergarten or childcare center are most affected; \u03bc and \u03c3 span that local catchment."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Early childhood education/administration education and practical management experience are both important; resources like staff and facilities are also significant but slightly secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "social_services.childcare_management",
     "contemporary_importance": 0.7,
@@ -4374,7 +4073,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.70$, $w_G=0.25$, $w_S=0.03$, $w_X=0.02$
 - **Geographic Radius**: $\mu=600.0$, $\sigma=500.0$
 - **Demographic Filters**: `age >= 65, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.70$, $w_{Exp}=0.15$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -4429,12 +4127,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 500.0,
     "geo_reasoning": "Elderly residents and caregivers typically use nearby facilities; \u03bc and \u03c3 reflect a neighborhood\u2011scale catchment, keeping relevance high within ~0.5\u20131 km."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Geriatric care and social work education plus hands-on elder care management experience are key; resources like staff and facilities are supportive.",
   "expertise_domain_parameters": {
     "expertise_domain": "social_services.elderly_care",
     "contemporary_importance": 0.7,
@@ -4474,7 +4166,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.65$, $w_G=0.25$, $w_S=0.05$, $w_X=0.05$
 - **Geographic Radius**: $\mu=400.0$, $\sigma=350.0$
 - **Demographic Filters**: `has_prescription = true, pharmacy_customer_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.35$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.70$, $w_{Exp}=0.20$, $w_{Con}=0.10$
 
 #### Combined JSON Block
@@ -4526,12 +4217,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 350.0,
     "geo_reasoning": "Patients usually choose pharmacies close to home or clinic; \u03bc is at the pharmacy and \u03c3 extends to surrounding blocks where regular customers live."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.35,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Pharmacology and supply chain education plus pharmacy operations experience are central; resources (supplier relationships, inventory) are secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "healthcare.pharmacy.operations",
     "contemporary_importance": 0.8,
@@ -4571,7 +4256,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.55$, $w_G=0.30$, $w_S=0.10$, $w_X=0.05$
 - **Geographic Radius**: $\mu=800.0$, $\sigma=700.0$
 - **Demographic Filters**: `mental_health_need = true, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.35$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.20$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -4625,12 +4309,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 700.0,
     "geo_reasoning": "The center serves a neighborhood or district; \u03bc and \u03c3 give high relevance within this zone, decaying for distant residents less likely to attend in person."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.35,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Clinical psychology/social work education and practical management of mental health services both matter; resources like staff and safe space are supportive.",
   "expertise_domain_parameters": {
     "expertise_domain": "mental_health.community_services",
     "contemporary_importance": 0.8,
@@ -4675,7 +4353,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.60$, $w_G=0.30$, $w_S=0.05$, $w_X=0.05$
 - **Geographic Radius**: $\mu=300.0$, $\sigma=250.0$
 - **Demographic Filters**: `mobility_limitation = true, uses_location = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.40$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.25$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -4729,12 +4406,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 250.0,
     "geo_reasoning": "Improvements target a specific site; \u03bc and \u03c3 focus on people who regularly pass through or use that location, usually within a few blocks."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.4,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Accessibility regulations and design education plus practical implementation experience are both very important; resources like equipment come after that.",
   "expertise_domain_parameters": {
     "expertise_domain": "accessibility.design_and_compliance",
     "contemporary_importance": 0.8,
@@ -4774,7 +4445,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.40$, $w_G=0.45$, $w_S=0.10$, $w_X=0.05$
 - **Geographic Radius**: $\mu=800.0$, $\sigma=700.0$
 - **Demographic Filters**: `low_income_or_benefit_recipient = true, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.40$, $w_{Res}=0.35$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.15$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -4831,12 +4501,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 700.0,
     "geo_reasoning": "Beneficiaries and volunteers tend to be from the surrounding neighborhoods; \u03bc and \u03c3 reflect a district\u2011scale catchment around the food bank."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.4,
-    "w_resources": 0.35
-  },
-  "expertise_weights_reasoning": "Social work/nonprofit education is helpful, but organizing operations and having food/logistics resources are more central in practice.",
   "expertise_domain_parameters": {
     "expertise_domain": "social_services.food_security",
     "contemporary_importance": 0.6,
@@ -4876,7 +4540,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.60$, $w_G=0.30$, $w_S=0.05$, $w_X=0.05$
 - **Geographic Radius**: $\mu=1500.0$, $\sigma=1500.0$
 - **Demographic Filters**: `homeless_or_precarious_housing = true, within_city_limits = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.30$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -4933,12 +4596,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 1500.0,
     "geo_reasoning": "Shelters often serve people from across a city or large area; \u03bc and \u03c3 are large enough to keep relevance high throughout the urban area."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Policy, law, and social work education is important; field experience in shelter management is equally key; resources like beds and funding are secondary in expertise weighting.",
   "expertise_domain_parameters": {
     "expertise_domain": "social_services.homelessness_policy",
     "contemporary_importance": 0.8,
@@ -4978,7 +4635,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.40$, $w_G=0.40$, $w_S=0.10$, $w_X=0.10$
 - **Geographic Radius**: $\mu=600.0$, $\sigma=500.0$
 - **Demographic Filters**: `lives_within_radius = true, elderly_or_single_parent = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.40$, $w_{Res}=0.35$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.15$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -5035,12 +4691,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 500.0,
     "geo_reasoning": "The network is designed for mutual aid within a defined neighborhood; \u03bc and \u03c3 align with that area so relevance declines outside."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.4,
-    "w_resources": 0.35
-  },
-  "expertise_weights_reasoning": "Community organizing experience and availability of resources (volunteers, supplies) dominate; formal education in emergency management helps but is secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "community.resilience.mutual_aid",
     "contemporary_importance": 0.6,
@@ -5085,7 +4735,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.15$, $w_G=0.15$, $w_S=0.00$, $w_X=0.70$
 - **Geographic Radius**: $\mu=10000.0$, $\sigma=8000.0$
 - **Demographic Filters**: `social_relation_type IN ('spouse','partner','parent','child','sibling','close_friend')`
-- **Expertise Weights**: $w_{Edu}=0.20$, $w_{Exp}=0.40$, $w_{Res}=0.40$
 - **Aggregation Weights**: $w_{Rel}=0.75$, $w_{Exp}=0.05$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -5141,12 +4790,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 8000.0,
     "geo_reasoning": "The emergency may involve relatives living elsewhere; geography matters less than social ties, so \u03bc and \u03c3 are large, effectively giving near\u2011flat G within the city or region."
   },
-  "expertise_weights": {
-    "w_education": 0.2,
-    "w_experience": 0.4,
-    "w_resources": 0.4
-  },
-  "expertise_weights_reasoning": "For personal family emergencies, relevant experience (e.g., caregiving) and access to resources (time, money, contacts) matter much more than formal education.",
   "expertise_domain_parameters": {
     "expertise_domain": "social_support.family_crisis",
     "contemporary_importance": 0.3,
@@ -5186,7 +4829,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.35$, $w_S=0.15$, $w_X=0.15$
 - **Geographic Radius**: $\mu=600.0$, $\sigma=500.0$
 - **Demographic Filters**: `lives_within_radius = true, low_income_or_caregiver = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.40$, $w_{Res}=0.35$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.15$, $w_{Con}=0.30$
 
 #### Combined JSON Block
@@ -5243,12 +4885,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 500.0,
     "geo_reasoning": "Mutual aid groups are typically bounded by a neighborhood; \u03bc and \u03c3 follow that geography so members in the area get higher G than outsiders."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.4,
-    "w_resources": 0.35
-  },
-  "expertise_weights_reasoning": "Community organizing experience and available support resources are central; education in social work or community development is helpful but not dominant.",
   "expertise_domain_parameters": {
     "expertise_domain": "community.organizing.mutual_aid",
     "contemporary_importance": 0.5,
@@ -5288,7 +4924,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.55$, $w_G=0.30$, $w_S=0.10$, $w_X=0.05$
 - **Geographic Radius**: $\mu=800.0$, $\sigma=700.0$
 - **Demographic Filters**: `substance_use_disorder = true, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.20$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -5342,12 +4977,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 700.0,
     "geo_reasoning": "Participants are usually from nearby neighborhoods; \u03bc and \u03c3 capture the typical walking/public\u2011transport catchment."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Clinical education and lived experience with addiction both matter; resources like meeting spaces and facilitators are also important.",
   "expertise_domain_parameters": {
     "expertise_domain": "mental_health.addiction_support",
     "contemporary_importance": 0.7,
@@ -5392,7 +5021,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.60$, $w_G=0.30$, $w_S=0.05$, $w_X=0.05$
 - **Geographic Radius**: $\mu=2000.0$, $\sigma=2000.0$
 - **Demographic Filters**: `age >= 65, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.25$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -5446,12 +5074,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 2000.0,
     "geo_reasoning": "Heatwaves affect a wide region or entire city; \u03bc and \u03c3 are large so that almost all residents in the climatic area have similar geographic relevance."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Public health and emergency management education plus practical experience with heatwave response are central; resources like cooling centers and outreach capacity support implementation.",
   "expertise_domain_parameters": {
     "expertise_domain": "public_health.emergency_heatwave",
     "contemporary_importance": 0.8,
@@ -5496,7 +5118,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.30$, $w_G=0.50$, $w_S=0.15$, $w_X=0.05$
 - **Geographic Radius**: $\mu=3000.0$, $\sigma=2500.0$
 - **Demographic Filters**: `lives_or_works_in_district = true, public_facing_job = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.40$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.30$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -5548,12 +5169,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 2500.0,
     "geo_reasoning": "Restrictions usually apply to full municipalities or districts; \u03bc and \u03c3 maintain high G for all people inside the jurisdiction and drop for those outside."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.4,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Infectious disease and public health education and experience are both crucial; resources like PPE and enforcement mechanisms are important but not the main factor in weighting expertise.",
   "expertise_domain_parameters": {
     "expertise_domain": "public_health.infectious_disease_policy",
     "contemporary_importance": 0.9,
@@ -5598,7 +5213,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.30$, $w_G=0.20$, $w_S=0.10$, $w_X=0.40$
 - **Geographic Radius**: $\mu=400.0$, $\sigma=350.0$
 - **Demographic Filters**: `student_at_school = true, parent_or_guardian_of_student = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.25$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -5654,12 +5268,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 350.0,
     "geo_reasoning": "Students and parents connected to the specific school are key; geographically, this corresponds to families living in the school\u2019s catchment area, roughly a few hundred meters to 1 km."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Safety and psychology education plus experience managing school incidents matter; resources like crisis teams and communications channels support implementation.",
   "expertise_domain_parameters": {
     "expertise_domain": "education.safety_crisis_management",
     "contemporary_importance": 0.8,
@@ -5704,7 +5312,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.50$, $w_G=0.10$, $w_S=0.20$, $w_X=0.20$
 - **Geographic Radius**: $\mu=400.0$, $\sigma=350.0$
 - **Demographic Filters**: `student_in_grades_affected = true, parent_or_teacher_of_student = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.20$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -5760,12 +5367,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 350.0,
     "geo_reasoning": "The impact is determined by school enrollment more than distance, but most students live nearby; \u03bc and \u03c3 approximate the local catchment while demographic rules do the main filtering."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Educational theory and pedagogy education plus practical teaching/administrative experience are central; resources like scheduling tools are secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "education.pedagogy_and_timetabling",
     "contemporary_importance": 0.7,
@@ -5805,7 +5406,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.40$, $w_G=0.20$, $w_S=0.25$, $w_X=0.15$
 - **Geographic Radius**: $\mu=400.0$, $\sigma=350.0$
 - **Demographic Filters**: `student_or_teacher_at_school = true, parent_of_student = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.40$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.50$, $w_{Exp}=0.35$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -5862,12 +5462,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 350.0,
     "geo_reasoning": "Affects all students at the school; geography loosely follows the catchment zone, so \u03bc and \u03c3 stay in the few\u2011hundred\u2011meter range."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.4,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Assessment and education policy education plus teaching/administrative experience are both crucial; resources have limited impact on expertise estimation.",
   "expertise_domain_parameters": {
     "expertise_domain": "education.assessment_policy",
     "contemporary_importance": 0.7,
@@ -5907,7 +5501,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.50$, $w_G=0.15$, $w_S=0.20$, $w_X=0.15$
 - **Geographic Radius**: $\mu=400.0$, $\sigma=350.0$
 - **Demographic Filters**: `student_at_school = true, parent_of_student = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.35$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.25$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -5960,12 +5553,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 350.0,
     "geo_reasoning": "Only families whose children attend the school are substantially affected; \u03bc and \u03c3 represent the local area where most of them live."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.35,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Nutrition and food service education and practical cafeteria management experience both matter; resources (kitchen equipment, suppliers) are also significant.",
   "expertise_domain_parameters": {
     "expertise_domain": "nutrition.school_food_services",
     "contemporary_importance": 0.7,
@@ -6005,7 +5592,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.50$, $w_G=0.30$, $w_S=0.10$, $w_X=0.10$
 - **Geographic Radius**: $\mu=1200.0$, $\sigma=1000.0$
 - **Demographic Filters**: `uses_school_bus = true, lives_within_bus_catchment = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.20$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -6058,12 +5644,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 1000.0,
     "geo_reasoning": "Routes cover large areas; \u03bc and \u03c3 are tuned to keep G high along bus corridors and within typical commuting distances to the school."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Transport planning education and experience managing school transport are key; resources (buses, drivers) are part of implementation.",
   "expertise_domain_parameters": {
     "expertise_domain": "transportation.school_bus_planning",
     "contemporary_importance": 0.6,
@@ -6105,7 +5685,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.55$, $w_G=0.25$, $w_S=0.10$, $w_X=0.10$
 - **Geographic Radius**: $\mu=600.0$, $\sigma=500.0$
 - **Demographic Filters**: `student_age BETWEEN 6 AND 14, parent_guardian = true, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.15$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -6170,12 +5749,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 500.0,
     "geo_reasoning": "After\u2011school programs mainly serve students who can remain near the school; \u03bc and \u03c3 span the local neighborhood around the school."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Education/social work education, experience organizing programs, and available space/staff resources are all significant and fairly balanced.",
   "expertise_domain_parameters": {
     "expertise_domain": "education.extracurricular_programs",
     "contemporary_importance": 0.6,
@@ -6215,7 +5788,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.40$, $w_G=0.05$, $w_S=0.35$, $w_X=0.20$
 - **Geographic Radius**: $\mu=400.0$, $\sigma=350.0$
 - **Demographic Filters**: `student/parent/teacher_in_school = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.35$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.25$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -6268,12 +5840,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 350.0,
     "geo_reasoning": "Although communication is digital, affected families cluster geographically around the school; \u03bc and \u03c3 approximate this catchment while X and D handle the main filtering."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.35,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Education/communication theory and IT/UX experience both matter; resources like platform licenses and support teams are also important.",
   "expertise_domain_parameters": {
     "expertise_domain": "education.digital_communication_platforms",
     "contemporary_importance": 0.8,
@@ -6318,7 +5884,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.40$, $w_S=0.20$, $w_X=0.05$
 - **Geographic Radius**: $\mu=600.0$, $\sigma=500.0$
 - **Demographic Filters**: `age BETWEEN 12 AND 18, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.40$, $w_{Res}=0.35$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.10$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -6375,12 +5940,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 500.0,
     "geo_reasoning": "Youth attend clubs near their homes; \u03bc and \u03c3 define a neighborhood\u2011scale catchment around the club location."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.4,
-    "w_resources": 0.35
-  },
-  "expertise_weights_reasoning": "Youth work education is useful, but practical experience with youth and having spaces, equipment and volunteers are central.",
   "expertise_domain_parameters": {
     "expertise_domain": "youth_work.community_clubs",
     "contemporary_importance": 0.5,
@@ -6420,7 +5979,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.55$, $w_G=0.20$, $w_S=0.15$, $w_X=0.10$
 - **Geographic Radius**: $\mu=500.0$, $\sigma=450.0$
 - **Demographic Filters**: `student_or_parent = true, low_income_or_high_achievement = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.40$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.30$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -6481,12 +6039,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 450.0,
     "geo_reasoning": "Scholarships primarily concern enrolled students, who usually live in the surrounding area; \u03bc and \u03c3 capture this zone while demographics identify who actually qualifies."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.4,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Education policy and equity research (education) plus experience managing scholarships are key; resources for funding matter but less in expertise weighting.",
   "expertise_domain_parameters": {
     "expertise_domain": "education.equity_scholarships",
     "contemporary_importance": 0.7,
@@ -6526,7 +6078,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.60$, $w_G=0.10$, $w_S=0.20$, $w_X=0.10$
 - **Geographic Radius**: $\mu=1500.0$, $\sigma=1500.0$
 - **Demographic Filters**: `enrolled_student_in_program = true`
-- **Expertise Weights**: $w_{Edu}=0.45$, $w_{Exp}=0.40$, $w_{Res}=0.15$
 - **Aggregation Weights**: $w_{Rel}=0.50$, $w_{Exp}=0.40$, $w_{Con}=0.10$
 
 #### Combined JSON Block
@@ -6574,12 +6125,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 1500.0,
     "geo_reasoning": "Students and staff may live across the city; \u03bc and \u03c3 are large enough to give nearly flat G within the wider metropolitan region."
   },
-  "expertise_weights": {
-    "w_education": 0.45,
-    "w_experience": 0.4,
-    "w_resources": 0.15
-  },
-  "expertise_weights_reasoning": "Academic discipline knowledge and curriculum design education, along with teaching experience, are central; resources (labs, staff) are secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "higher_education.curriculum_design",
     "contemporary_importance": 0.7,
@@ -6624,7 +6169,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.65$, $w_G=0.05$, $w_S=0.20$, $w_X=0.10$
 - **Geographic Radius**: $\mu=1500.0$, $\sigma=1500.0$
 - **Demographic Filters**: `enrolled_in_course = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.25$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -6672,12 +6216,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 1500.0,
     "geo_reasoning": "Similar to curriculum changes, geography plays little discriminatory role; \u03bc and \u03c3 make most city\u2011level students equally relevant geographically."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Assessment theory and institutional experience structuring exams both matter; resources like rooms, proctors and software are also relevant.",
   "expertise_domain_parameters": {
     "expertise_domain": "higher_education.assessment_admin",
     "contemporary_importance": 0.6,
@@ -6717,7 +6255,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.55$, $w_G=0.30$, $w_S=0.10$, $w_X=0.05$
 - **Geographic Radius**: $\mu=1500.0$, $\sigma=1300.0$
 - **Demographic Filters**: `enrolled_or_waitlisted_trainee = true, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.40$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.30$, $w_{Con}=0.10$
 
 #### Combined JSON Block
@@ -6772,12 +6309,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 1300.0,
     "geo_reasoning": "The center attracts learners from a broad catchment; \u03bc and \u03c3 cover large parts of the city where potential students live."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.4,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Education and labor market knowledge plus experience running vocational programs are key; resources like facilities and equipment matter but less in expertise weighting.",
   "expertise_domain_parameters": {
     "expertise_domain": "vocational_education.center_management",
     "contemporary_importance": 0.7,
@@ -6817,7 +6348,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.60$, $w_G=0.20$, $w_S=0.15$, $w_X=0.05$
 - **Geographic Radius**: $\mu=2000.0$, $\sigma=2000.0$
 - **Demographic Filters**: `age BETWEEN 16 AND 30, student_or_recent_grad = true, local_employer = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.30$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -6882,12 +6412,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 2000.0,
     "geo_reasoning": "Internships link multiple employers and institutions across the city; \u03bc and \u03c3 are large so that geography does not overly restrict eligible participants within the metropolitan area."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Education in career development and law plus experience placing interns are central; access to employer networks/resources is also relevant.",
   "expertise_domain_parameters": {
     "expertise_domain": "education.career_services_internships",
     "contemporary_importance": 0.7,
@@ -6927,7 +6451,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.45$, $w_G=0.30$, $w_S=0.15$, $w_X=0.10$
 - **Geographic Radius**: $\mu=800.0$, $\sigma=700.0$
 - **Demographic Filters**: `youth_player = true, parent_of_player = true, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.25$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -6984,12 +6507,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 700.0,
     "geo_reasoning": "Teams and families are drawn from a cluster of neighborhoods around shared sports facilities; \u03bc and \u03c3 match that multi\u2011neighborhood catchment."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Sports medicine/child safety education and coaching/league management experience both matter; resources (fields, equipment) are supportive.",
   "expertise_domain_parameters": {
     "expertise_domain": "youth_sports.safety_and_management",
     "contemporary_importance": 0.7,
@@ -7034,7 +6551,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.30$, $w_G=0.40$, $w_S=0.25$, $w_X=0.05$
 - **Geographic Radius**: $\mu=600.0$, $\sigma=500.0$
 - **Demographic Filters**: `age <= 18, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.20$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -7088,12 +6604,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 500.0,
     "geo_reasoning": "The library serves nearby families; \u03bc and \u03c3 define a radius of a few blocks to around 1 km where most users live."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Library science and youth programming education plus experience running youth events both matter; resources like spaces, books and staff are also significant.",
   "expertise_domain_parameters": {
     "expertise_domain": "library_services.youth_programming",
     "contemporary_importance": 0.6,
@@ -7138,7 +6648,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.15$, $w_G=0.45$, $w_S=0.30$, $w_X=0.10$
 - **Geographic Radius**: $\mu=800.0$, $\sigma=700.0$
 - **Demographic Filters**: `lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.40$, $w_{Res}=0.35$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.15$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -7185,12 +6694,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 700.0,
     "geo_reasoning": "Attendance is mainly from within the neighborhood; \u03bc and \u03c3 span that area and nearby blocks."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.4,
-    "w_resources": 0.35
-  },
-  "expertise_weights_reasoning": "Event management experience and access to logistical resources (space, equipment, funding) are central; formal education helps but is less crucial.",
   "expertise_domain_parameters": {
     "expertise_domain": "events.community_festival_management",
     "contemporary_importance": 0.5,
@@ -7235,7 +6738,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.15$, $w_G=0.35$, $w_S=0.40$, $w_X=0.10$
 - **Geographic Radius**: $\mu=1000.0$, $\sigma=900.0$
 - **Demographic Filters**: `age BETWEEN 16 AND 60, physically_able = true, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.40$, $w_{Res}=0.35$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.15$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -7297,12 +6799,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 900.0,
     "geo_reasoning": "Players and spectators are recruited from multiple neighborhoods around the venues; \u03bc and \u03c3 reflect a broader but still sub\u2011city catchment."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.4,
-    "w_resources": 0.35
-  },
-  "expertise_weights_reasoning": "Running a league is mainly about organizational experience and resources (fields, equipment, refs); sports education is helpful but secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "sports_management.amateur_leagues",
     "contemporary_importance": 0.5,
@@ -7347,7 +6843,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.35$, $w_S=0.20$, $w_X=0.10$
 - **Geographic Radius**: $\mu=600.0$, $\sigma=500.0$
 - **Demographic Filters**: `has_children_age_5_12 = true, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.15$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -7401,12 +6896,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 500.0,
     "geo_reasoning": "Families usually travel short distances for such workshops; \u03bc and \u03c3 define a local neighborhood area."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Arts/education education and experience working with children both matter; resources like space and materials are supportive.",
   "expertise_domain_parameters": {
     "expertise_domain": "arts_education.children_workshops",
     "contemporary_importance": 0.6,
@@ -7451,7 +6940,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.20$, $w_G=0.50$, $w_S=0.20$, $w_X=0.10$
 - **Geographic Radius**: $\mu=600.0$, $\sigma=500.0$
 - **Demographic Filters**: `lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.40$, $w_{Res}=0.35$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.20$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -7498,12 +6986,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 500.0,
     "geo_reasoning": "The watch group covers a specific territory; \u03bc and \u03c3 align geography so that residents in this area get high G and others rapidly less."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.4,
-    "w_resources": 0.35
-  },
-  "expertise_weights_reasoning": "Community organizing and safety experience plus resources (communication channels, vests, etc.) are central; formal education is helpful but secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "community.safety.neighborhood_watch",
     "contemporary_importance": 0.5,
@@ -7553,7 +7035,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.10$, $w_G=0.40$, $w_S=0.40$, $w_X=0.10$
 - **Geographic Radius**: $\mu=400.0$, $\sigma=350.0$
 - **Demographic Filters**: `lives_or_works_within_radius = true, art_interest = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.35$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.50$, $w_{Exp}=0.35$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -7605,12 +7086,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 350.0,
     "geo_reasoning": "Visual impact and use are strongest for people living, working or passing near the site; \u03bc and \u03c3 center on the piece and extend to adjacent blocks."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.35,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Artistic and urban design education is important; experience delivering public art and resources (wall space, funding) are also relevant.",
   "expertise_domain_parameters": {
     "expertise_domain": "arts.public_art_urban_design",
     "contemporary_importance": 0.6,
@@ -7650,7 +7125,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.15$, $w_G=0.45$, $w_S=0.30$, $w_X=0.10$
 - **Geographic Radius**: $\mu=800.0$, $\sigma=700.0$
 - **Demographic Filters**: `lives_within_radius = true, vendor_or_customer = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.40$, $w_{Res}=0.35$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.20$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -7705,12 +7179,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 700.0,
     "geo_reasoning": "Customers and vendors tend to come from nearby neighborhoods; \u03bc and \u03c3 capture the area within easy walking distance."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.4,
-    "w_resources": 0.35
-  },
-  "expertise_weights_reasoning": "Market organization experience and resources (stalls, permits, suppliers) dominate; education in business or urban planning helps but is secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "commerce.local_markets_management",
     "contemporary_importance": 0.5,
@@ -7755,7 +7223,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.55$, $w_G=0.30$, $w_S=0.10$, $w_X=0.05$
 - **Geographic Radius**: $\mu=1000.0$, $\sigma=900.0$
 - **Demographic Filters**: `religious_affiliation_matches_place = true, regular_attendee = true, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.65$, $w_{Exp}=0.20$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -7812,12 +7279,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 900.0,
     "geo_reasoning": "Congregants may travel across town but typically cluster around the place of worship; \u03bc and \u03c3 are set to give high G within the city section where most attenders live."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Religious leadership/administration education, experience running services, and resources (space, volunteers) all contribute; experience is slightly primary.",
   "expertise_domain_parameters": {
     "expertise_domain": "religion.community_service_management",
     "contemporary_importance": 0.5,
@@ -7857,7 +7318,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.30$, $w_G=0.55$, $w_S=0.10$, $w_X=0.05$
 - **Geographic Radius**: $\mu=3000.0$, $\sigma=2500.0$
 - **Demographic Filters**: `lives_or_works_within_radius = true, religious_or_noise_sensitive = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.35$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.25$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -7912,12 +7372,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 2500.0,
     "geo_reasoning": "Regulations affect all residents of a district; \u03bc and \u03c3 approximate that jurisdiction, giving relatively uniform G inside and lower G outside."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.35,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Law, human rights and urban planning education are important; experience mediating sensitive identity conflicts also matters; resources (legal and mediation services) are supportive.",
   "expertise_domain_parameters": {
     "expertise_domain": "law_and_policy.religious_freedom_local",
     "contemporary_importance": 0.8,
@@ -7957,7 +7411,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.45$, $w_S=0.10$, $w_X=0.10$
 - **Geographic Radius**: $\mu=800.0$, $\sigma=700.0$
 - **Demographic Filters**: `beneficiary_or_volunteer = true, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.25$, $w_{Exp}=0.40$, $w_{Res}=0.35$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.15$, $w_{Con}=0.30$
 
 #### Combined JSON Block
@@ -8013,12 +7466,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 700.0,
     "geo_reasoning": "Beneficiaries and volunteers are mostly local; \u03bc and \u03c3 cover the immediate neighborhood and adjacent blocks."
   },
-  "expertise_weights": {
-    "w_education": 0.25,
-    "w_experience": 0.4,
-    "w_resources": 0.35
-  },
-  "expertise_weights_reasoning": "Nonprofit organizing experience and access to food/logistics resources are central; formal education in social work or nonprofit management helps but is secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "charity.local_food_drives",
     "contemporary_importance": 0.5,
@@ -8063,7 +7510,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.55$, $w_G=0.05$, $w_S=0.25$, $w_X=0.15$
 - **Geographic Radius**: $\mu=50000.0$, $\sigma=40000.0$
 - **Demographic Filters**: `donor_or_recurring_supporter = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.35$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.50$, $w_{Exp}=0.30$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -8113,12 +7559,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 40000.0,
     "geo_reasoning": "This is largely geography\u2011independent; \u03bc and \u03c3 are very large so that G is almost flat for everyone in the platform\u2019s overall region (e.g. country or world), leaving D, S and X to differentiate relevance."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.35,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Fundraising/marketing and legal/financial education plus experience managing online campaigns are important; resources (platform, donor base) also matter strongly.",
   "expertise_domain_parameters": {
     "expertise_domain": "charity.online_fundraising_management",
     "contemporary_importance": 0.8,
@@ -8165,7 +7605,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.45$, $w_G=0.20$, $w_S=0.25$, $w_X=0.10$
 - **Geographic Radius**: $\mu=1500.0$, $\sigma=1300.0$
 - **Demographic Filters**: `active_or_applicant_volunteer = true, lives_within_service_area = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.50$, $w_{Exp}=0.25$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -8221,12 +7660,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 1300.0,
     "geo_reasoning": "Volunteers usually operate within a city or region; \u03bc and \u03c3 maintain fairly high G across the typical service area."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "HR/nonprofit management education and experience running volunteer programs both matter; resources (staff time, tools) are also significant.",
   "expertise_domain_parameters": {
     "expertise_domain": "nonprofit.management.volunteer_programs",
     "contemporary_importance": 0.6,
@@ -8271,7 +7704,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.20$, $w_G=0.40$, $w_S=0.30$, $w_X=0.10$
 - **Geographic Radius**: $\mu=800.0$, $\sigma=700.0$
 - **Demographic Filters**: `age >= 14, lives_within_radius = true, arts_interest = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.15$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -8328,12 +7760,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 700.0,
     "geo_reasoning": "Participants generally come from local neighborhoods; \u03bc and \u03c3 define the radius from which people regularly attend rehearsals."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Music/arts education and experience leading groups both matter; resources (space, instruments) are important as well.",
   "expertise_domain_parameters": {
     "expertise_domain": "arts.community_choir_management",
     "contemporary_importance": 0.5,
@@ -8373,7 +7799,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.45$, $w_G=0.30$, $w_S=0.20$, $w_X=0.05$
 - **Geographic Radius**: $\mu=1500.0$, $\sigma=1300.0$
 - **Demographic Filters**: `lgbtq_identity = true, lives_within_radius = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.20$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -8425,12 +7850,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 1300.0,
     "geo_reasoning": "Members can travel from across several neighborhoods; \u03bc and \u03c3 give high G within that broader catchment."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Education in mental health/inclusion and lived experience organizing support groups both matter; resources (safe space, facilitators) are also important.",
   "expertise_domain_parameters": {
     "expertise_domain": "social_inclusion.lgbtq_support_practice",
     "contemporary_importance": 0.7,
@@ -8475,7 +7894,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.25$, $w_G=0.45$, $w_S=0.25$, $w_X=0.05$
 - **Geographic Radius**: $\mu=2000.0$, $\sigma=1800.0$
 - **Demographic Filters**: `lives_within_radius = true, heritage_interest = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.35$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.30$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -8527,12 +7945,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 1800.0,
     "geo_reasoning": "The heritage site or area matters to residents of the surrounding district; \u03bc and \u03c3 keep relevance high across this district and moderate beyond."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.35,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "History/heritage and legal education is important; experience running preservation projects matters; resources (funding, expertise access) are supportive.",
   "expertise_domain_parameters": {
     "expertise_domain": "heritage.preservation_policy_and_practice",
     "contemporary_importance": 0.6,
@@ -8572,7 +7984,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.30$, $w_G=0.40$, $w_S=0.20$, $w_X=0.10$
 - **Geographic Radius**: $\mu=4000.0$, $\sigma=3500.0$
 - **Demographic Filters**: `city_resident = true, cultural_worker_or_vendor = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.50$, $w_{Exp}=0.25$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -8627,12 +8038,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 3500.0,
     "geo_reasoning": "The festival involves participants from across the city; \u03bc and \u03c3 are set near the city center with wide spread so that almost all residents have similar geographic relevance."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Cultural policy/management education and experience running large festivals are key; resources (sponsorships, venues) are also important but secondary in expertise weighting.",
   "expertise_domain_parameters": {
     "expertise_domain": "culture.city_festival_governance",
     "contemporary_importance": 0.6,
@@ -8677,7 +8082,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.55$, $w_G=0.20$, $w_S=0.15$, $w_X=0.10$
 - **Geographic Radius**: $\mu=500.0$, $\sigma=450.0$
 - **Demographic Filters**: `employee_at_site = true, job_type = 'shift_based'`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.60$, $w_{Exp}=0.20$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -8729,12 +8133,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 450.0,
     "geo_reasoning": "Workers are those who commute to a specific workplace; \u03bc and \u03c3 around that location reflect a typical commuting neighborhood while demographics and employer relation do the main filtering."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "HR/operations education and direct management/labor experience both matter; resources (staffing capacity, tools) are also significant.",
   "expertise_domain_parameters": {
     "expertise_domain": "hr_and_operations.shift_scheduling",
     "contemporary_importance": 0.7,
@@ -8774,7 +8172,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.65$, $w_G=0.05$, $w_S=0.15$, $w_X=0.15$
 - **Geographic Radius**: $\mu=5000.0$, $\sigma=4000.0$
 - **Demographic Filters**: `company_employee = true, role_can_be_remote = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.35$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.25$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -8826,12 +8223,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 4000.0,
     "geo_reasoning": "Employees may live dispersed across a region; \u03bc and \u03c3 are large so that geography does not dominate, and D/S handle most of relevance."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.35,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Organizational psychology/management education and experience managing hybrid teams both matter; resources (digital tools, office space) are also important.",
   "expertise_domain_parameters": {
     "expertise_domain": "organizational_design.remote_work_policy",
     "contemporary_importance": 0.9,
@@ -8871,7 +8262,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.55$, $w_G=0.25$, $w_S=0.15$, $w_X=0.05$
 - **Geographic Radius**: $\mu=5000.0$, $\sigma=4000.0$
 - **Demographic Filters**: `registered_gig_worker = true, works_in_city = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.35$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.55$, $w_{Exp}=0.30$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -8924,12 +8314,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 4000.0,
     "geo_reasoning": "Active gig workers are spread across the city; \u03bc and \u03c3 approximate the platform\u2019s operational area so that G is broadly similar across it."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.35,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Labor economics and law education plus experience as gig workers or platform managers both matter; resources (data, legal support) are supportive.",
   "expertise_domain_parameters": {
     "expertise_domain": "labor_policy.gig_economy",
     "contemporary_importance": 0.9,
@@ -8969,7 +8353,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.55$, $w_G=0.05$, $w_S=0.30$, $w_X=0.10$
 - **Geographic Radius**: $\mu=100000.0$, $\sigma=80000.0$
 - **Demographic Filters**: `contributor_or_maintainer = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.45$, $w_{Exp}=0.35$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -9019,12 +8402,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 80000.0,
     "geo_reasoning": "Contributors are globally distributed; G should be nearly flat across very large distances, so \u03bc and \u03c3 are extremely large and geography essentially drops out."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Software engineering/OSS governance education and contribution experience are central; resources (CI infrastructure, maintainer time) matter but are secondary in expertise weighting.",
   "expertise_domain_parameters": {
     "expertise_domain": "software.open_source_governance",
     "contemporary_importance": 0.9,
@@ -9069,7 +8446,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.40$, $w_G=0.05$, $w_S=0.45$, $w_X=0.10$
 - **Geographic Radius**: $\mu=100000.0$, $\sigma=80000.0$
 - **Demographic Filters**: `heavy_user_or_contributor = true`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.40$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.45$, $w_{Exp}=0.35$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -9119,12 +8495,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 80000.0,
     "geo_reasoning": "Same as contribution rules: relevance is independent of location, so G is effectively uniform globally."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.4,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Deep technical education and active contribution experience are primary; resources (maintainer time, infrastructure) are supportive.",
   "expertise_domain_parameters": {
     "expertise_domain": "software.open_source_product_direction",
     "contemporary_importance": 0.9,
@@ -9169,7 +8539,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.05$, $w_S=0.40$, $w_X=0.20$
 - **Geographic Radius**: $\mu=50000.0$, $\sigma=40000.0$
 - **Demographic Filters**: `registered_user = true, role IN ('admin','moderator','active_member')`
-- **Expertise Weights**: $w_{Edu}=0.35$, $w_{Exp}=0.35$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.45$, $w_{Exp}=0.30$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -9225,12 +8594,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 40000.0,
     "geo_reasoning": "Users can be widely distributed; \u03bc and \u03c3 large ensure geography plays only a small role compared to D, S and X."
   },
-  "expertise_weights": {
-    "w_education": 0.35,
-    "w_experience": 0.35,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Governance/ethics/legal education and experience in moderating/operating digital communities both matter; resources (moderation tools, staff) are also important.",
   "expertise_domain_parameters": {
     "expertise_domain": "platform_governance.online_communities",
     "contemporary_importance": 0.9,
@@ -9270,7 +8633,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.25$, $w_S=0.25$, $w_X=0.15$
 - **Geographic Radius**: $\mu=3000.0$, $\sigma=2500.0$
 - **Demographic Filters**: `member_of_group = true, lives_in_locality = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.50$, $w_{Exp}=0.25$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -9322,12 +8684,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 2500.0,
     "geo_reasoning": "Even though the forum is online, it is restricted to a locality; \u03bc and \u03c3 mirror the physical neighborhood or city section that the group targets."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "Conflict resolution/communication education helps, but practical moderation experience and resources (tools, guidelines) are central.",
   "expertise_domain_parameters": {
     "expertise_domain": "online_community.moderation_practice",
     "contemporary_importance": 0.8,
@@ -9367,7 +8723,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.30$, $w_G=0.05$, $w_S=0.45$, $w_X=0.20$
 - **Geographic Radius**: $\mu=50000.0$, $\sigma=40000.0$
 - **Demographic Filters**: `member_of_political_forum = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.35$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.45$, $w_{Exp}=0.30$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -9414,12 +8769,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 40000.0,
     "geo_reasoning": "Participation can be national or global; geography is nearly irrelevant, so \u03bc and \u03c3 are very large."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.35,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Political theory/free speech law education and practical moderation/organizing experience both matter; resources (platform reach, tools) are supportive.",
   "expertise_domain_parameters": {
     "expertise_domain": "political_discourse.online_forum_governance",
     "contemporary_importance": 0.9,
@@ -9459,7 +8808,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.40$, $w_G=0.30$, $w_S=0.20$, $w_X=0.10$
 - **Geographic Radius**: $\mu=800.0$, $\sigma=700.0$
 - **Demographic Filters**: `lives_in_neighborhood = true, registered_or_invited = true`
-- **Expertise Weights**: $w_{Edu}=0.30$, $w_{Exp}=0.40$, $w_{Res}=0.30$
 - **Aggregation Weights**: $w_{Rel}=0.50$, $w_{Exp}=0.25$, $w_{Con}=0.25$
 
 #### Combined JSON Block
@@ -9514,12 +8862,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 700.0,
     "geo_reasoning": "Access is tied to living in or near a particular neighborhood; \u03bc and \u03c3 align with that area so that G is high inside the defined neighborhood and drops outside."
   },
-  "expertise_weights": {
-    "w_education": 0.3,
-    "w_experience": 0.4,
-    "w_resources": 0.3
-  },
-  "expertise_weights_reasoning": "UX/privacy/product education, experience running neighborhood apps, and resources (support, outreach tools) all matter, with experience slightly primary.",
   "expertise_domain_parameters": {
     "expertise_domain": "civic_tech.neighborhood_app_design",
     "contemporary_importance": 0.8,
@@ -9564,7 +8906,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.60$, $w_G=0.25$, $w_S=0.10$, $w_X=0.05$
 - **Geographic Radius**: $\mu=4000.0$, $\sigma=3500.0$
 - **Demographic Filters**: `eligible_voter_in_district = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.40$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.50$, $w_{Exp}=0.35$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -9611,12 +8952,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 3500.0,
     "geo_reasoning": "Procedures affect voters across a municipality; \u03bc and \u03c3 approximate the city scale, making G similar within its boundaries."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.4,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Electoral law and public administration education plus experience administering elections are critical; resources (staff, locations) matter but are secondary in expertise weighting.",
   "expertise_domain_parameters": {
     "expertise_domain": "elections.administration.local",
     "contemporary_importance": 0.8,
@@ -9656,7 +8991,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.40$, $w_S=0.20$, $w_X=0.05$
 - **Geographic Radius**: $\mu=4000.0$, $\sigma=3500.0$
 - **Demographic Filters**: `lives_or_operates_business_in_area = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.35$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.50$, $w_{Exp}=0.30$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -9706,12 +9040,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 3500.0,
     "geo_reasoning": "Nightlife regulation affects residents and businesses across the affected zones; \u03bc and \u03c3 are tuned to the relevant district or city center area."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.35,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Legal, planning and social science education and experience working on local policy are central; resources (data, enforcement capacity) are supportive.",
   "expertise_domain_parameters": {
     "expertise_domain": "public_policy.local_nightlife_regulation",
     "contemporary_importance": 0.7,
@@ -9751,7 +9079,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.35$, $w_S=0.20$, $w_X=0.10$
 - **Geographic Radius**: $\mu=5000.0$, $\sigma=4500.0$
 - **Demographic Filters**: `city_resident_or_taxpayer = true`
-- **Expertise Weights**: $w_{Edu}=0.45$, $w_{Exp}=0.35$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.45$, $w_{Exp}=0.35$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -9801,12 +9128,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 4500.0,
     "geo_reasoning": "The budget affects all city residents; \u03bc and \u03c3 cover the city area so that G is approximately uniform for everyone living there."
   },
-  "expertise_weights": {
-    "w_education": 0.45,
-    "w_experience": 0.35,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Public finance and budgeting education is highly important; experience working with budgets also matters; resources (access to data) are helpful but less central.",
   "expertise_domain_parameters": {
     "expertise_domain": "public_finance.municipal_budgeting",
     "contemporary_importance": 0.8,
@@ -9846,7 +9167,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.30$, $w_G=0.50$, $w_S=0.15$, $w_X=0.05$
 - **Geographic Radius**: $\mu=1500.0$, $\sigma=1300.0$
 - **Demographic Filters**: `property_owner_or_tenant_near_site = true, business_owner_near = true`
-- **Expertise Weights**: $w_{Edu}=0.45$, $w_{Exp}=0.35$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.50$, $w_{Exp}=0.35$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -9901,12 +9221,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 1300.0,
     "geo_reasoning": "Zoning decisions are most salient to people living and working near the site; \u03bc is at the development location and \u03c3 covers several surrounding neighborhoods."
   },
-  "expertise_weights": {
-    "w_education": 0.45,
-    "w_experience": 0.35,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Urban planning and law education and experience with zoning processes are central; resources (analytical tools, legal support) are secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "urban_planning.zoning_and_permits",
     "contemporary_importance": 0.8,
@@ -9951,7 +9265,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.30$, $w_G=0.10$, $w_S=0.45$, $w_X=0.15$
 - **Geographic Radius**: $\mu=50000.0$, $\sigma=40000.0$
 - **Demographic Filters**: `registered_user_of_app = true`
-- **Expertise Weights**: $w_{Edu}=0.45$, $w_{Exp}=0.35$, $w_{Res}=0.20$
 - **Aggregation Weights**: $w_{Rel}=0.45$, $w_{Exp}=0.40$, $w_{Con}=0.15$
 
 #### Combined JSON Block
@@ -9998,12 +9311,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 40000.0,
     "geo_reasoning": "Users may be spread over a country or globally; geography is largely irrelevant, so \u03bc and \u03c3 are huge and G is nearly flat."
   },
-  "expertise_weights": {
-    "w_education": 0.45,
-    "w_experience": 0.35,
-    "w_resources": 0.2
-  },
-  "expertise_weights_reasoning": "Privacy/security/legal education and practical experience in data protection are central; resources (security tooling, legal teams) are secondary.",
   "expertise_domain_parameters": {
     "expertise_domain": "data_privacy.app_governance",
     "contemporary_importance": 0.95,
@@ -10048,7 +9355,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
 - **Relevance Weights**: $w_D=0.35$, $w_G=0.30$, $w_S=0.25$, $w_X=0.10$
 - **Geographic Radius**: $\mu=5000.0$, $\sigma=4000.0$
 - **Demographic Filters**: `lives_in_locality = true, uses_online_banking_or_ecommerce = true`
-- **Expertise Weights**: $w_{Edu}=0.40$, $w_{Exp}=0.35$, $w_{Res}=0.25$
 - **Aggregation Weights**: $w_{Rel}=0.50$, $w_{Exp}=0.30$, $w_{Con}=0.20$
 
 #### Combined JSON Block
@@ -10103,12 +9409,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "sigma_distance_meters": 4000.0,
     "geo_reasoning": "The warning system targets a local or regional community; \u03bc and \u03c3 match that regional scale so G is high across the intended population area."
   },
-  "expertise_weights": {
-    "w_education": 0.4,
-    "w_experience": 0.35,
-    "w_resources": 0.25
-  },
-  "expertise_weights_reasoning": "Cybersecurity/fraud prevention education and field experience are key; resources (monitoring tools, partnerships with banks/police) are also meaningful.",
   "expertise_domain_parameters": {
     "expertise_domain": "cybersecurity.consumer_fraud_prevention",
     "contemporary_importance": 0.95,

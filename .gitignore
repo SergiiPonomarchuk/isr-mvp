@@ -24,3 +24,11 @@ scratch/
 .env
 .env.*
 .secrets/
+
+# Large data exports (kept out of git)
+claude_export/*.jsonl
+claude_export/*.npy
+claude_export/*_ids.json
+
+# Mapping of synthetic profiles to real prototypes (sensitive)
+private/

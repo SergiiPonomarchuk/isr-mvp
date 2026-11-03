@@ -4,6 +4,7 @@ import glob
 import argparse
 from google.cloud import firestore
 from google.cloud.firestore_v1.vector import Vector
+import relevance_evaluator
 
 def load_json_file(file_path):
     print(f"Loading {file_path}...")
@@ -243,6 +244,36 @@ def seed_database(project_id, credentials_path=None):
                 last_sender_name = raw_profiles[last_uid_str].get("displayName", f"User {last_uid_str}")
             elif last_uid_str != "system":
                 last_sender_name = f"User {last_uid_str}"
+
+            # Calculate relevance_scores and isr_scores for participants, creator, and user 1
+            rel_scores = {}
+            isr_scores = {}
+            target_seed_uids = set(str(p) for p in participants if str(p) != "system")
+            if str(creator_uid) != "system":
+                target_seed_uids.add(str(creator_uid))
+            target_seed_uids.add("1")
+
+            creator_relations = raw_profiles.get(str(creator_uid), {}).get("social relations", [])
+            for u in target_seed_uids:
+                if u in raw_profiles:
+                    try:
+                        u_profile = dict(raw_profiles[u])
+                        u_profile["socialRelations"] = u_profile.get("social relations", [])
+                        rel = relevance_evaluator.calculate_relevance(u_profile, {"topic": topic}, creator_relations)
+                    except Exception:
+                        rel = 0.50
+                    if u == str(creator_uid):
+                        rel = max(rel, 0.85)
+                    else:
+                        rel = max(rel, 0.20)
+                    rel = round(rel, 3)
+                    rel_scores[u] = rel
+                    isr_scores[u] = round(rel * 1.5, 2)
+                    participants.add(u)
+                    try:
+                        participants.add(int(u))
+                    except ValueError:
+                        pass
                 
             disc_doc = {
                 "discussion_id": int(disc_id),
@@ -251,6 +282,8 @@ def seed_database(project_id, credentials_path=None):
                 "created_at": created_at,
                 "message_count": len(messages),
                 "participants": list(participants),
+                "relevance_scores": rel_scores,
+                "isr_scores": isr_scores,
                 "last_message_text": last_msg.get("text", ""),
                 "last_message_sender_uid": str(last_uid),
                 "last_message_sender_name": last_sender_name,

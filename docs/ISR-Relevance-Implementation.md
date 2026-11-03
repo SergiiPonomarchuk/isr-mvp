@@ -13,6 +13,8 @@ The ISR Relevance Engine calculates which users are meaningfully affected by eac
 
 **Final Score [0.0-1.0]**: $\text{Relevance}_i = w_D \cdot D_i + w_G \cdot G_i + w_S \cdot S_i + w_X \cdot X_i$
 
+The microcommunity (the ad-hoc public) is formed from the issue's parameters, and the parameters follow from the issue type and the context. Nobody types a number. After publication the public can change the text, the options, the issue type and the context until voting opens (Part 10), and the parameters are derived again. Relevance is absolute, so adding a member does not change anyone else's relevance score.
+
 ---
 
 ## Relevance Processing Pipeline (At Scale)
@@ -106,13 +108,13 @@ e^{-\frac{(d - \mu)^2}{2\sigma^2}} & \text{if } d > \mu
 \end{cases}$$
 
 Where:
-- **d** = Distance (meters) from issue location to user's primary anchor (home or work) calculated using Haversine formula
+- **d** = Distance (meters) from the issue location to the nearest of the user's declared places (types `home` and `work`), calculated using the Haversine formula. A person who works at the issue location (an owner or staff of a business or organisation) has stake through the workplace anchor and is counted as a person with the same formula; there are no representatives
 - **μ** = Primary impact zone radius (meters) - where decay begins
 - **σ** = Decay steepness parameter (meters)
 
 **Parameters** (set per issue):
-- **μ (mu)**: System-suggested based on issue description, user-adjustable
-- **σ (sigma)**: System-suggested based on issue type, user-adjustable
+- **μ (mu)**: Derived from the issue type and context, inside the typical range of the type
+- **σ (sigma)**: Derived from the issue type and context, inside the typical range of the type
 
 **Interpretation**:
 - d ≤ μ: Fully affected (G = 1.0)
@@ -138,11 +140,11 @@ Where:
 **Processing**: In-memory cosine similarity between user interest vector and issue vector
 
 **Function**:
-$$S_i = \max(0, \text{cosine\_similarity}(u_i, q))$$
+$$S_i = \max(0, \cos(u_i, V_q))$$
 
 Where:
 - **u_i** = User i's interest vector (768-dim, Google AI Studio text-embedding-004)
-- **q** = Issue description vector (768-dim)
+- **V_q** = Vector representation of issue q (768-dim)
 - **Clamp to 0**: Disinterest doesn't subtract (soft scaling)
 
 **Range**: 0.0 (opposite interests) to 1.0 (identical interests)
@@ -159,16 +161,20 @@ Where:
 
 **Question**: "Are people I care about directly affected by this issue?"
 
-**Processing**: Step-function based on connection type and optional tie strength
+**Processing**: For each candidate user i, take i's own social relations (depth-1, no traversal) and how directly each relative j is affected, $R^0_j$ (the Relevance of j from D, G and S alone). The tie weight $t_{ij}$ is a step function of the connection type and an optional tie strength.
 
 **Function**:
-$$X_i = \begin{cases}
+$$t_{ij} = \begin{cases}
 \text{tie} & \text{if } \text{tie attribute exists (not null)} \\
 0.3 & \text{if } \text{connection\_type} \in \{\text{spouse, partner}\} \\
 0.2 & \text{if } \text{connection\_type} \in \{\text{parent, child, sibling}\} \\
 0.1 & \text{if } \text{connection\_type} \in \{\text{grandparent, grandchild, close friend}\} \\
 0.0 & \text{otherwise (excluded)}
 \end{cases}$$
+
+$$R^0_j = \frac{w_D D_j + w_G G_j + w_S S_j}{w_D + w_G + w_S}, \qquad X_i = \max_j \; t_{ij} \cdot R^0_j$$
+
+The maximum (not the sum) keeps a large family from inflating Relevance. $R^0_j$ does not use X, so there is no circularity. A user with no relation to an affected person has $X_i = 0$.
 
 **Data Structure** (from user profile):
 ```json
@@ -191,12 +197,14 @@ $$X_i = \begin{cases}
 ```
 
 **Processing Rules**:
-1. Look at issue submitter's social relations only (depth-1, no traversal)
-2. For each relation:
-   - If `tie` field exists and not null → use `tie` value
-   - Else if `type` matches predefined categories → use category score
-   - Else → exclude entirely (X_score = 0.0)
-3. If relative needs additional data (age, location), fetch from relative's profile
+1. Compute D, G and S, and from them $R^0$, for the candidate users
+2. For each user, read the user's own social relations (depth-1, no traversal)
+3. For each relation to a relative j:
+   - If `tie` field exists and not null → $t_{ij}$ = `tie` value
+   - Else if `type` matches predefined categories → $t_{ij}$ = category score
+   - Else → exclude entirely
+4. $X_i = \max_j \; t_{ij} \cdot R^0_j$ ($X_i = 0$ when no relative has $R^0_j > 0$)
+5. If a relative needs additional data (age, location), fetch from the relative's profile
 
 **Included Connection Types**:
 - **0.3**: spouse, partner, wife, husband
@@ -204,11 +212,12 @@ $$X_i = \begin{cases}
 - **0.1**: grandparent, grandfather, grandmother, grandchild, grandson, granddaughter, close friend
 - **0.0 (excluded)**: all others (e.g., niece, cousin, aunt, uncle, colleague, acquaintance)
 
-**Example (Broken lock at issue submitter's home)**:
-- Issue submitter: user ID 100
-- Affected: Their father (type=parent, tie=null) → X = 0.2
-- Affected: Their close friend (type=close friend, tie=0.6) → X = 0.6
-- Not affected: Their cousin (type=cousin, not in list) → X = 0.0
+**Example (Broken lock at the entrance of a building)**:
+- Directly affected: the residents B (user 2785, the father of user 100) and C (user 1515, a close friend of user 100), with $R^0$ = 0.9 and 0.8
+- User 100 lives in another city (D, G and S near 0) and has the relations of the data structure above
+- Father (type=parent, tie=null): 0.2 × 0.9 = 0.18
+- Close friend (type=close friend, tie=0.6): 0.6 × 0.8 = 0.48
+- $X_{100}$ = max(0.18, 0.48) = 0.48; a user with no relation to an affected person has X = 0.0
 
 ---
 
@@ -235,6 +244,8 @@ $$X_i = \begin{cases}
 | Open-source roadmap | platform.policy.oss | 0.35 | 0.05 | 0.45 | 0.15 | 0.40 | 0.35 | 0.25 | Semantic interest and technical expertise are co-primary; geography is minor. |
 
 **AI decides final weights during issue analysis based on issue context and matching benchmarks.**
+
+The Analyzer derives the parameters from a published table of typical issues, for the issue type and context. Nobody types a number: if the result looks wrong, the topic starter clarifies the context or picks another type that the assistant lists as consistent with the rules (Analyzer protocol, Step 4A). After publication the issue belongs to the public (Part 10).
 
 ---
 
@@ -328,7 +339,7 @@ e^{-\frac{(d - \mu)^2}{2\sigma^2}} & \text{if } d > \mu
 
 ### 3.2 Parameter Assignment
 
-**System-Suggested Based on Issue Description**:
+**Derived from the Issue Type and Context**:
 
 | Issue Type Pattern | Suggested μ (meters) | Suggested σ (meters) |
 |---|---|---|
@@ -340,7 +351,7 @@ e^{-\frac{(d - \mu)^2}{2\sigma^2}} & \text{if } d > \mu
 | District / Social Club Event (e.g. Chess club) | 500-2000 | 200-4000 |
 | City-wide (transit, budget) | 2000-10000 | 500-2000 |
 
-**User can override both μ and σ before issue submission.**
+**Nobody types μ or σ.** If the derived values look wrong, the topic starter clarifies the context (for example, "it is very popular and draws people from the whole neighbourhood") and the assistant derives them again, always inside the typical range of the type. The table can contain as many types as needed; new types are added by protocol-level decisions.
 
 ### 3.3 JavaScript Implementation (Haversine & Gaussian Decay)
 
@@ -362,10 +373,13 @@ function haversineDistance(coords1, coords2) {
 }
 
 function evaluateGeographics(user, issueLocation, muVal, sigmaVal) {
-  const homeAnchor = (user.geography || []).find((g) => g.type === "home");
-  if (!homeAnchor || !homeAnchor.geo) return 0.0;
+  const anchors = (user.geography || []).filter(
+    (g) => (g.type === "home" || g.type === "work") && g.geo
+  );
+  if (anchors.length === 0) return 0.0;
 
-  const distance = haversineDistance(issueLocation, homeAnchor.geo);
+  // nearest declared place (home or work)
+  const distance = Math.min(...anchors.map((g) => haversineDistance(issueLocation, g.geo)));
   const maxDistance = muVal + 3 * sigmaVal;
   if (distance > maxDistance) return 0.0; // Excluded by distance threshold
 
@@ -381,7 +395,7 @@ function evaluateGeographics(user, issueLocation, muVal, sigmaVal) {
 ### 4.1 Cosine Similarity
 
 **Formula**:
-$$S_i = \max(0, \text{cosine\_similarity}(u_i, q))$$
+$$S_i = \max(0, \cos(u_i, V_q))$$
 
 ### 4.2 Vector Sources
 
@@ -441,21 +455,22 @@ if (w_S > 0) {
 
 ### 5.2 Processing Rules
 
-1. **Identify issue submitter**: The person who submitted the issue
-2. **Access their social relations**: From user profile (`socialRelations` field)
-3. **For each relation**:
-   - If `tie` attribute exists and not null → use that
-   - Else if `type` in mapping → use mapped value
+1. **Compute D, G and S, and $R^0$**, for the candidate users
+2. **Read the user's own social relations** from the user profile (`socialRelations` field)
+3. **For each relation** to a relative j:
+   - If `tie` attribute exists and not null → $t_{ij}$ = that
+   - Else if `type` in mapping → $t_{ij}$ = mapped value
    - Else → exclude (0.0)
-4. **If relative profile data needed** (e.g., age for eligibility):
+4. **X = max over relatives of $t_{ij} \cdot R^0_j$**; no relation to an affected person gives X = 0.0
+5. **If relative profile data needed** (e.g., age for eligibility):
    - Fetch from relative's user profile record
    - Apply filter conditions if necessary
 
 ### 5.3 Example: Building Maintenance Issue
 
-**Issue submitter**: User ID 100 (apartment building resident)
+**Issue**: broken lock at the entrance of an apartment building. Directly affected residents: user 2785 ($R^0$ = 0.9) and user 3685 ($R^0$ = 0.9), who live in the building; user 1515 ($R^0$ = 0.8) also lives there.
 
-**Their social relations**:
+**User 100** lives in another city (D, G and S near 0). **Their social relations**:
 ```json
 {
   "socialRelations": [
@@ -468,27 +483,31 @@ if (w_S > 0) {
 }
 ```
 
-**Results**:
-- Father (type=parent, tie=null) → X = 0.2 ✓ included
-- Husband (type=spouse, tie=null) → X = 0.3 ✓ included
-- Daughter (type=child, tie=0.8) → X = 0.8 ✓ included (override)
-- Friend (type=friend, tie=0.6) → X = 0.6 ✓ included (override)
-- Niece (type=niece, tie=null) → X = 0.0 ✗ excluded (not in type map)
+**Results** ($t_{ij} \cdot R^0_j$):
+- Father (type=parent, tie=null): 0.2 × 0.9 = 0.18
+- Husband (type=spouse, tie=null): 0.3 × 0.9 = 0.27
+- Daughter (type=child, tie=0.8; she lives elsewhere, $R^0$ = 0.05): 0.8 × 0.05 = 0.04
+- Friend (type=friend, tie=0.6): 0.6 × 0.8 = 0.48
+- Niece (type=niece, tie=null): excluded (not in type map)
+- $X_{100}$ = max = 0.48
 
 ### 5.4 JavaScript Implementation
 
 ```javascript
+// R0 = Map of the direct relevance (D, G, S only) of the candidate users, computed first
 let xScore = 0.0;
-const relation = submitterRelations.find((r) => r.relative === user.uid);
-if (relation) {
-  if (relation.tie !== undefined && relation.tie !== null) {
-    xScore = parseFloat(relation.tie) || 0.0;
+for (const r of user.socialRelations || []) {
+  let tie = 0.0;
+  if (r.tie !== undefined && r.tie !== null) {
+    tie = parseFloat(r.tie) || 0.0;
   } else {
-    const type = relation.type ? relation.type.toLowerCase() : "";
-    if (["spouse", "partner", "wife", "husband"].includes(type)) xScore = 0.3;
-    else if (["parent", "father", "mother", "child", "son", "daughter", "sibling", "sister", "brother"].includes(type)) xScore = 0.2;
-    else if (["grandparent", "grandfather", "grandmother", "grandchild", "grandson", "granddaughter", "close friend"].includes(type)) xScore = 0.1;
+    const type = r.type ? r.type.toLowerCase() : "";
+    if (["spouse", "partner", "wife", "husband"].includes(type)) tie = 0.3;
+    else if (["parent", "father", "mother", "child", "son", "daughter", "sibling", "sister", "brother"].includes(type)) tie = 0.2;
+    else if (["grandparent", "grandfather", "grandmother", "grandchild", "grandson", "granddaughter", "close friend"].includes(type)) tie = 0.1;
   }
+  const r0 = R0.get(r.relative) || 0.0;      // a relative outside the candidate pool counts as 0
+  xScore = Math.max(xScore, tie * r0);
 }
 ```
 
@@ -519,9 +538,10 @@ $$\text{Relevance}_i = w_D \cdot D_i + w_G \cdot G_i + w_S \cdot S_i + w_X \cdot
 To form the **Microcommunity** (all users with Relevance > 0.15 threshold), we perform in-memory evaluation with mathematical pruning inside Firebase Cloud Functions to scale efficiently without scanning the entire vector database:
 
 ```javascript
-// 1. First Pass: Local calculation using demographics, distance, and social graph
-// We assume the maximum possible semantic similarity (S = 1.0)
-const maxScore = w_D * dScore + w_G * gScore + w_S * 1.0 + w_X * xScore;
+// 1. First Pass: Local calculation using demographics and distance
+// We assume the maximum possible semantic similarity (S = 1.0) and the maximum possible social score:
+// xBound = the largest tie weight among the user's relations (R0 of a relative is at most 1)
+const maxScore = w_D * dScore + w_G * gScore + w_S * 1.0 + w_X * xBound;
 
 // Prune immediately if the user cannot mathematically exceed the threshold
 if (maxScore <= 0.15) return; 
@@ -535,7 +555,8 @@ const candidatesToFetch = filteredCandidates.slice(0, 300);
 // 4. Batch-fetch 768-dimensional interest vectors from `user_vectors` for the top 300
 const vectorDocs = await db.getAll(...chunkRefs);
 
-// 5. Compute actual relevance score with in-memory Cosine Similarity
+// 5. Compute R0 (D, G, S only) for the candidates, then the exact social score
+// xScore = max over relatives of tie * R0 (Part 5.4), and the actual relevance score with in-memory Cosine Similarity
 const relevanceScore = w_D * dScore + w_G * gScore + w_S * sScore + w_X * xScore;
 
 // 6. Gather into Microcommunity if final score > 0.15
@@ -546,6 +567,8 @@ if (relevanceScore > 0.15) {
   });
 }
 ```
+
+The same procedure (Phases 1 to 5) is run again after a change of text, options, type or context adopted by the public, with the parameters derived again (Part 10.4). A recomputation can add members and change scores; it never removes a member.
 
 ---
 
@@ -580,9 +603,22 @@ Each document represents a submitted issue.
   "submitter_id": "String (UID)",
   "status": "String (e.g. open)",
   "created_at": "Timestamp",
-  "expertise_depth": "String (e.g. None)"
+  "expertise_depth": "String (e.g. None)",
+  "issue_type": "street.traffic_limitation.proposal_to_authority",
+  "outcome_kind": "proposal", // "decision" | "proposal"
+  "addressee": "city transport department", // null for a decision
+  "parameters_version": 1,
+  "parameters_frozen": false,
+  "voting_opened_at": null,
+  "context_notes": [
+    "No source is attached for the claim that the street is owned by the housing association.",
+    "Type changed from street.traffic_limitation to ...proposal_to_authority because the context states that the city decides on traffic on public streets."
+  ],
+  "analyzer_run_id": "run-uuid-string"
 }
 ```
+
+The parameters are not typed by anyone. They are derived from the issue type and context. They change only when the public adopts a change of text, options, type or context (Part 10), and not at all once voting has opened (`parameters_frozen` = true).
 
 ### 7.2 microcommunities Collection
 
@@ -598,7 +634,10 @@ Tracks microcommunity general statistics.
   "member_accepted": 0,
   "issue_scope": 0, // Scope in local ISR points
   "created_at": "Timestamp",
-  "status": "String (active/closed)"
+  "status": "String (active/closed)",
+  "parameters_version_at_formation": 1,
+  "parameters_version_current": 1,
+  "last_recomputed_at": "Timestamp"
 }
 ```
 
@@ -618,9 +657,15 @@ Tracks relevance component scores for members.
   "X_score": 0.20,
   "relevance_score": 0.95,
   "calculated_at": "Timestamp",
-  "accepted_rejected": null // boolean or null
+  "accepted_rejected": null, // boolean or null
+  "joined_via": "relevance", // "relevance" | "request"
+  "joined_at": "Timestamp",
+  "below_threshold": false, // true if relevance_score <= threshold after a recomputation
+  "parameters_version": 1 // version used to compute the stored scores
 }
 ```
+
+A member is never removed by a recomputation. `below_threshold` only records that the person is a member whose relevance is now low: their weight follows their relevance and they keep information, speech and proposal.
 
 ### 7.4 user_packs Collection (Partitioned Metadata Storage)
 
@@ -637,7 +682,7 @@ Stores user profile metadata chunked into documents of up to 250 users to optimi
       "gender": "Male",
       "post": [{"job": "Locksmith", "place": "Basel"}],
       "socialRelations": [{"relative": 37, "type": "friend", "tie": 0.5}],
-      "geography": [{"type": "home", "geo": [47.5943, 7.6205]}]
+      "geography": [{"type": "home", "geo": [47.5943, 7.6205]}, {"type": "work", "geo": [47.5602, 7.5886]}]
     },
     ...
   ]
@@ -655,6 +700,51 @@ Stores 768-dimensional interest vector arrays separately to prevent payload bloa
   "profile_vector": [0.012, -0.054, ..., 0.038] // 768-dimension array (Google AI Studio)
 }
 ```
+
+### 7.6 issue_changes Collection
+
+One document per change proposed by a member of the ad-hoc public (text, options, issue type or context). Numbers, radii, weights and scope settings cannot be proposed.
+- **Document ID**: Auto-generated unique string.
+- **Fields**:
+```json
+{
+  "change_id": "ch-uuid-string",
+  "issue_id": "issue-uuid-string",
+  "proposed_by": "String (UID of a member)",
+  "proposed_at": "Timestamp",
+  "kind": "context", // text | options | type | context
+  "text": "Why the change is proposed",
+  "from": "Previous text, options, type id or context",
+  "to": "New text, options, type id or context",
+  "consistency": { "result": "pass", "rules_applied": ["R-scope-01"], "cautions": [], "analyzer_run_id": "run-uuid-string" },
+  "status": "open", // open | adopted | rejected | lapsed | returned (returned = not consistent with the rules)
+  "vote_snapshot_id": "String", // weights snapshot taken when the vote on the change opened
+  "vote_summary": { "weighted_for": 0.0, "weighted_against": 0.0, "participants": 0 },
+  "adopted_at": null,
+  "parameters_version_before": 1,
+  "parameters_version_after": null,
+  "members_added": null,
+  "members_lowered": null
+}
+```
+
+### 7.7 join_requests Collection
+
+One document per request to join an issue's ad-hoc public.
+- **Document ID**: `${issue_id}_${user_id}`
+- **Fields**:
+```json
+{
+  "issue_id": "issue-uuid-string",
+  "user_id": "String (UID)",
+  "requested_at": "Timestamp",
+  "accepted_at": "Timestamp", // set at once; acceptance is automatic
+  "computed_relevance": 0.04, // at the time of the request, for analysis only
+  "parameters_version": 1
+}
+```
+
+Every request is logged and can be analysed (for example, to see where the computed boundary and the requests differ). No filtering is applied.
 
 ---
 
@@ -694,34 +784,117 @@ const vector = embedResult.embedding.values; // 768-dimensional array
 ## Part 9: Issue Submission Workflow
 
 ```
-User submits issue (title + description + location)
+User submits issue (title + description + location + context)
     ↓
 System vectorizes description (Google AI Studio text-embedding-004, 768-dim)
     ↓
-AI analyzes issue weights (Google AI Studio) using instructions from
-ISR-AI-Weight-Evaluation-Instructions.md (referencing Examples-100 files):
-  - Extracts category
-  - Suggests demographic JSON criteria
-  - Suggests μ and σ
-  - Suggests w_D, w_G, w_S, w_X (Relevance weights)
-  - Suggests w_Relevance, w_Expertise, w_Contribution (Aggregation weights)
+Assistant (Analyzer) works from the table of typical issues and the written rules
+(instructions in ISR-AI-Weight-Evaluation-Instructions.md, examples in the Examples-100 files, which are the first version of the table):
+  - Finds the nearest typical issue types and proposes one; lists the other types that are consistent with the rules
+  - Derives from the table, for the type and context: category, demographic criteria, μ and σ,
+    w_D, w_G, w_S, w_X, w_Relevance, w_Expertise, w_Contribution, legal-coverage flag
+  - Checks scope and competence in the context (who decides under local rules, who owns it);
+    advises the topic starter to check public information and to attach a source
+  - If local rules reserve the decision for an authority: outcome kind = proposal, addressee = that authority,
+    the type changes to the proposal type and the public widens as the table says
     ↓
-User reviews & adjusts parameters (optional)
+Nobody types a number. If the result looks wrong, the topic starter clarifies the context
+or picks another type from those the assistant lists as consistent; the assistant derives again
     ↓
-System locks parameters and writes issue to Firestore collection
+Context check passes (Analyzer protocol, Step 4A). Cautions (for example, a missing source) do not block:
+every member sees them on the issue page
+    ↓
+System writes the issue to Firestore (parameters_version = 1)
     ↓
 Recalculate Relevance for all users in Firestore:
   - Phase 1: Local NoSQL Demographic evaluation from user_packs
-  - Phase 2: Local Haversine distance & Gaussian G_score calculation
+  - Phase 2: Local Haversine distance (nearest of home and work) & Gaussian G_score calculation
   - Phase 3: Prune candidates if maxScore <= 0.15
   - Phase 4: Fetch actual profile_vectors from user_vectors for top 300
   - Phase 5: In-memory Cosine Similarity & combine with weights
     ↓
 Form Microcommunity (relevance_score > 0.15) and save members to Firestore
     ↓
-Notify members and launch discussion/voting phases
+Notify members and launch the discussion phase
+    ↓                                   ┌─ Any user can ask to join: accepted automatically,
+Discussion (text, options, type and     ┤  logged, no filtering; the new member then has the
+context can be changed)                 └─ same rights as the others (Part 10.6)
+    ↓
+Any member can propose a change of text, options, issue type or context
+  → the assistant checks that it is consistent with the rules (returned if not)
+  → the public votes (current ISR weights, simple majority)
+  → adopted: parameters derived again (Analyzer protocol, Step 4B), recomputation (Part 10.4), members updated
     ↓
 (Optional) Users can decline participation during discussion phase
     ↓
-Voting phase begins
+Voting phase begins: text, options, type and context are frozen (parameters_frozen = true)
+    ↓
+Voting closes; results are aggregated with the weights snapshot taken at opening
+(for a proposal to an authority, the result is the content of the proposal; the authority's reaction is outside ISR)
 ```
+
+---
+
+## Part 10: Changes of Context, Joining and Recomputation
+
+### 10.1 What can be changed
+
+The text, the options, the issue type (among the types the assistant lists as consistent with the rules) and the context. Radius, weights, demographic criteria and scope and competence settings cannot be changed by hand or by vote: they follow from the type and context, and a scope setting changes only by reformulating the text or the context. A significant deviation from the listed types needs a significant reformulation. Nothing can be changed after voting opens, until it closes.
+
+### 10.2 Who proposes and who decides
+
+Any member can propose a change, at any time during discussion, with a short text that gives the reason. A proposed change of type or context first goes to the assistant for a consistency check (Analyzer protocol, Step 4B); if it is not consistent with the rules it is returned (`status` = `returned`) and cannot be voted on. A change that passed the check is decided by the public by the issue's own rule: the current ISR weights and a simple majority. A person outside the public cannot propose; they can join at once (10.6) and then propose. The topic starter has no special standing after publication: the issue belongs to its public.
+
+### 10.3 Freeze
+
+When voting opens, `parameters_frozen` becomes true. Change proposals that are still open lapse (`status` = `lapsed`) and can be raised again after the vote if the issue continues. Text, options, type and context cannot change until the vote has closed.
+
+### 10.4 Recomputation after an adopted change
+
+```javascript
+async function onChangeAdopted(issueId, changeId) {
+  const issue = await loadIssue(issueId);
+  if (issue.parameters_frozen) throw new Error("frozen");
+  const run = await analyzer.reanalyse(issue, change);      // Analyzer protocol, Step 4B: derives type and parameters from the table
+  const newParams = run.derived_parameters;                  // never typed by anyone
+  const version = issue.parameters_version + 1;
+  await db.runTransaction(tx => {                            // one atomic change
+    tx.update(issueRef, { ...newParams, issue_type: run.type, outcome_kind: run.outcome_kind,
+                          addressee: run.addressee, parameters_version: version, context_notes: run.notes });
+  });
+  const results = await computeRelevance(issueId, newParams); // Phases 1 to 5 of Part 6.3
+  let added = 0, lowered = 0;
+  for (const u of results) {
+    const m = await getMember(issueId, u.user_id);
+    if (!m && u.relevance_score > threshold) { await addMember(issueId, u, "relevance", version); added++; }
+    else if (m) {
+      if (u.relevance_score < m.relevance_score) lowered++;
+      await updateMember(issueId, u, { below_threshold: u.relevance_score <= threshold, parameters_version: version });
+    }
+  }                                                          // members are never removed
+  await recordChange(changeId, { status: "adopted", parameters_version_after: version, members_added: added, members_lowered: lowered });
+  await notify(issueId, { newMembers: true, changeSummary: true });
+}
+```
+
+X is recomputed from the new $R^0$ of the relatives, so a change of place or topic can add or lower members through ties as well.
+
+### 10.5 Weights are fixed when a vote opens
+
+Relevance is absolute, so a recomputation does not change another member's relevance score. The final weights, however, are normalised to the public mean (and Contribution to its mean plus the reference unit), which depends on who is in the public. They are therefore computed from the members and parameters at the moment a vote opens and stored as a snapshot (`vote_snapshot_id`). Each vote on a change and the issue's own vote have their own snapshot.
+
+### 10.6 Joining on request
+
+Any user can ask to join an issue's public. The request is accepted automatically, without filtering, and is logged (`join_requests`). Before joining, a person sees a limited view of the issue: the title, the category, the fact that a public exists, the number of members and the date the issue was registered. The full description, the discussion and the options are for members only. After joining the person has the rights of every member (read, speak, propose, vote) and a weight that follows their relevance; a member whose relevance is low has a low weight.
+
+### 10.7 Proposals to an authority
+
+When local rules reserve a decision for an authority, the issue is a proposal (`outcome_kind` = `proposal`). The public widens to everyone affected by the matter: residents, people who work in the area, owners and staff of organisations and businesses, each as a person with the same formula. There are no representatives. Financial facts, such as taxes paid by a business, give no weight; an owner or a member of staff can state them as an argument and propose an option with the deliberation tools. The result of the vote is the content of the proposal. The authority's reaction is outside ISR.
+
+### 10.8 Audit
+
+Every change, vote, recomputation and join request is logged with its version. Reports that can reveal gaming: the share of issues where changes alter the member list; the direction of those changes (enlarging or shrinking the public); changes returned by the assistant, by rule; the ratio of join requests to computed members.
+
+### 10.9 Open points
+
+A quorum for votes on changes; a limit on the number of open proposals per member (against spam); a limit on the number of clarification rounds with the assistant; verification of workplace and role claims.

@@ -2175,11 +2175,11 @@ function initTopicDetailViews() {
           valClass += ' geo-meta-value';
         }
 
-        if (item.label === 'Microcommunity') {
+        if (item.label === 'Microcommunity' || item.label === 'Ad-hoc Public') {
           return '<div class="topic-detail-meta-item-wrapper" style="position:relative;">' +
-            '<button type="button" class="topic-detail-meta-item microcommunity-btn" data-meta="Microcommunity" data-uids="' + (item.uids || '') + '">' +
+            '<button type="button" class="topic-detail-meta-item microcommunity-btn" data-meta="Ad-hoc Public" data-uids="' + (item.uids || '') + '">' +
             firstRowHtml +
-            '<span class="topic-detail-meta-label">Micro&shy;community</span>' +
+            '<span class="topic-detail-meta-label">Ad-hoc Public</span>' +
             '<span class="topic-detail-meta-value">' + item.value + '</span>' +
             '</button>' +
             '</div>';
@@ -2219,7 +2219,7 @@ function initTopicDetailViews() {
         '<p class="topic-detail-description">' + topic.description + '</p>' +
 
         renderMetaRow([
-          { label: 'Microcommunity', value: (topic.participants || []).length + ' members', uids: (topic.participants || []).join(',') },
+          { label: 'Ad-hoc Public', value: (topic.participants || []).length + ' members', uids: (topic.participants || []).join(',') },
           { label: 'Deadline', value: topic.deadline },
           { label: '📍', value: topic.geoposition || "N/A" },
           { label: 'Relevance', value: topic.relevance, firstRow: topic.relevanceWeights },
@@ -2535,7 +2535,7 @@ function initTopicDetailViews() {
         descriptionReactionsHtml +
  
         renderMetaRow([
-          { label: 'Microcommunity', value: (topic.participants || []).length + ' members', uids: (topic.participants || []).join(',') },
+          { label: 'Ad-hoc Public', value: (topic.participants || []).length + ' members', uids: (topic.participants || []).join(',') },
           { label: 'Deadline', value: topic.deadline },
           { label: '📍', value: topic.geoposition || "N/A" },
           { label: 'Relevance', value: topic.relevance, firstRow: topic.relevanceWeights },
@@ -2600,8 +2600,8 @@ function initTopicDetailViews() {
 
         '<div class="topic-detail-meta" style="position: relative; margin-bottom: 14px;">' +
           '<div class="topic-detail-meta-item-wrapper" style="position:relative;">' +
-            '<button type="button" class="topic-detail-meta-item" data-meta="Microcommunity" id="create-meta-microcommunity" disabled>' +
-              '<span class="topic-detail-meta-label">Micro&shy;community</span>' +
+            '<button type="button" class="topic-detail-meta-item" data-meta="Ad-hoc Public" id="create-meta-microcommunity" disabled>' +
+              '<span class="topic-detail-meta-label">Ad-hoc Public</span>' +
               '<span class="topic-detail-meta-value" id="create-val-microcommunity">0 members</span>' +
             '</button>' +
           '</div>' +
@@ -2640,7 +2640,7 @@ function initTopicDetailViews() {
         '</div>' +
 
         '<div class="topic-detail-block" id="create-results-members-block" style="display: none; margin-top: 16px;">' +
-          '<div class="topic-detail-block-title">Suggested Microcommunity Members (Relevance > 0.15)</div>' +
+          '<div class="topic-detail-block-title">Suggested Ad-hoc Public Members (Relevance > 0.15)</div>' +
           '<div id="create-mc-values-diagram" style="display: none; padding: 0 4px;"></div>' +
           '<div class="create-members-list" id="create-members-list" style="display: flex; flex-direction: column; gap: 4px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); max-height: 200px; overflow-y: auto; text-align: left; font-size: 0.88rem; color: var(--text-muted);"></div>' +
         '</div>' +
@@ -2900,7 +2900,7 @@ function initTopicDetailViews() {
         '<p class="topic-detail-description">' + topic.description + '</p>' +
 
         renderMetaRow([
-          { label: 'Microcommunity', value: (topic.participants || []).length + ' members', uids: (topic.participants || []).join(',') },
+          { label: 'Ad-hoc Public', value: (topic.participants || []).length + ' members', uids: (topic.participants || []).join(',') },
           { label: 'Deadline', value: topic.deadline },
           { label: '📍', value: topic.geoposition || "N/A" },
           { label: 'Relevance', value: topic.relevance, firstRow: topic.relevanceWeights },
@@ -3949,7 +3949,7 @@ function initTopicDetailViews() {
       </div>
       
       <div style="font-size:0.8rem; color:var(--text-muted); line-height:1.4; background:var(--surface-soft); padding:10px; border-radius:6px; border:1px solid var(--border);">
-        💡 <b>Rule:</b> Action triggers automatically when support exceeds <b>10%</b> of the microcommunity's total ISR-score (${totalIsrSum.toFixed(2)} ISR).
+        💡 <b>Rule:</b> Action triggers automatically when support exceeds <b>10%</b> of the ad-hoc public's total ISR-score (${totalIsrSum.toFixed(2)} ISR).
       </div>
       
       <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:8px;">
@@ -5214,7 +5214,7 @@ function initTopicDetailViews() {
             chartWrapper.style.marginBottom = '8px';
             chartWrapper.style.borderBottom = '1px solid var(--border)';
             chartWrapper.style.cursor = 'pointer';
-            chartWrapper.title = 'Click to view full Microcommunity Values Taxonomy';
+            chartWrapper.title = 'Click to view full Ad-hoc Public Values Taxonomy';
 
             microcommunityPreviewValues.domains.forEach(function(domain) {
               const group = document.createElement('div');
@@ -5236,7 +5236,7 @@ function initTopicDetailViews() {
               console.log("chartWrapper (Create Topic Popup) clicked! microcommunityPreviewValues:", microcommunityPreviewValues);
               if (typeof window.openValuesVectorModal === 'function') {
                 try {
-                  window.openValuesVectorModal(microcommunityPreviewValues, "Vector of Values (Microcommunity)");
+                  window.openValuesVectorModal(microcommunityPreviewValues, "Vector of Values (Ad-hoc Public)");
                 } catch (err) {
                   console.error("Error calling openValuesVectorModal:", err);
                 }
@@ -6454,7 +6454,7 @@ function initTopicDetailViews() {
             child: []
           });
 
-          alert(`Issue created successfully! formed microcommunity with ${calculatedMembers.length} members.`);
+          alert(`Issue created successfully! Formed ad-hoc public with ${calculatedMembers.length} members.`);
           restoreTopicListView();
 
         } catch(err) {
@@ -6740,7 +6740,7 @@ function initTopicDetailViews() {
           loadingPopup.style.padding = '12px';
           loadingPopup.style.textAlign = 'center';
           loadingPopup.style.color = 'var(--text-muted)';
-          loadingPopup.textContent = 'Loading microcommunity...';
+          loadingPopup.textContent = 'Loading ad-hoc public...';
           itemEl.appendChild(loadingPopup);
 
           const db = typeof firebase !== 'undefined' ? firebase.firestore() : null;
@@ -6887,7 +6887,7 @@ function initTopicDetailViews() {
           chartWrapper.style.marginBottom = '8px';
           chartWrapper.style.borderBottom = '1px solid var(--border)';
           chartWrapper.style.cursor = 'pointer';
-          chartWrapper.title = 'Click to view full Microcommunity Values Taxonomy';
+          chartWrapper.title = 'Click to view full Ad-hoc Public Values Taxonomy';
 
           mcValues.domains.forEach(function(domain) {
             const group = document.createElement('div');
@@ -6909,7 +6909,7 @@ function initTopicDetailViews() {
             console.log("chartWrapper (Issue Detail Popup) clicked! mcValues:", mcValues);
             if (typeof window.openValuesVectorModal === 'function') {
               try {
-                window.openValuesVectorModal(mcValues, "Vector of Values (Microcommunity)");
+                window.openValuesVectorModal(mcValues, "Vector of Values (Ad-hoc Public)");
               } catch (err) {
                 console.error("Error calling openValuesVectorModal:", err);
               }
@@ -8784,7 +8784,10 @@ function initRealTimeDashboardSync(db, storedUid) {
     const category = getTopicCategoryEmoji(title);
     
     const relScores = topic.relevance_scores || {};
-    const relVal = relScores[storedUid] !== undefined ? relScores[storedUid] : 0;
+    const effectiveUid = (storedUid && String(storedUid).trim()) ? String(storedUid).trim() : (safeGetStorage('userId') || "1");
+    const relVal = relScores[effectiveUid] !== undefined
+      ? relScores[effectiveUid]
+      : (relScores[parseInt(effectiveUid)] !== undefined ? relScores[parseInt(effectiveUid)] : 0);
     const starSymbol = relVal > 0.60 ? '⭐ ' : '';
     
     let statusSymbol = '';
@@ -8851,6 +8854,7 @@ function initRealTimeDashboardSync(db, storedUid) {
   }
 
   function sortDiscussions(docs, sortMode, uidStr) {
+    const effectiveUid = (uidStr && String(uidStr).trim()) ? String(uidStr).trim() : (safeGetStorage('userId') || "1");
     return docs.slice().sort((a, b) => {
       const discA = a.data();
       const discB = b.data();
@@ -8860,8 +8864,14 @@ function initRealTimeDashboardSync(db, storedUid) {
         const timeB = new Date(discB.last_message_timestamp || discB.created_at || 0).getTime();
         return timeB - timeA; // Descending (newest first)
       } else if (sortMode === 'important') {
-        const relA = (discA.relevance_scores && discA.relevance_scores[uidStr] !== undefined) ? discA.relevance_scores[uidStr] : 0;
-        const relB = (discB.relevance_scores && discB.relevance_scores[uidStr] !== undefined) ? discB.relevance_scores[uidStr] : 0;
+        const getRel = (d, u) => {
+          if (!d.relevance_scores) return 0;
+          if (d.relevance_scores[u] !== undefined) return d.relevance_scores[u];
+          if (d.relevance_scores[parseInt(u)] !== undefined) return d.relevance_scores[parseInt(u)];
+          return 0;
+        };
+        const relA = getRel(discA, effectiveUid);
+        const relB = getRel(discB, effectiveUid);
         return relB - relA; // Descending (highest relevance first)
       } else if (sortMode === 'urgent') {
         const daysA = getDaysUntil(discA.ends);
@@ -8937,6 +8947,8 @@ function initRealTimeDashboardSync(db, storedUid) {
       readCounts = JSON.parse(localStorage.getItem('chat_read_counts') || '{}');
     } catch (e) {}
 
+    const effectiveUid = (storedUid && String(storedUid).trim()) ? String(storedUid).trim() : (safeGetStorage('userId') || "1");
+
     // Calculate tag counts
     let totalNewMessages = 0;
     let totalImportant = 0;
@@ -8953,7 +8965,14 @@ function initRealTimeDashboardSync(db, storedUid) {
         totalNewMessages++;
       }
       
-      const rel = (disc.relevance_scores && disc.relevance_scores[storedUid] !== undefined) ? disc.relevance_scores[storedUid] : 0;
+      let rel = 0;
+      if (disc.relevance_scores) {
+        if (disc.relevance_scores[effectiveUid] !== undefined) {
+          rel = disc.relevance_scores[effectiveUid];
+        } else if (disc.relevance_scores[parseInt(effectiveUid)] !== undefined) {
+          rel = disc.relevance_scores[parseInt(effectiveUid)];
+        }
+      }
       if (rel >= 0.60) {
         totalImportant++;
       }
@@ -8964,7 +8983,7 @@ function initRealTimeDashboardSync(db, storedUid) {
       }
     });
 
-    const sortedDocs = sortDiscussions(cachedChatDocs, chatSortMode, storedUid);
+    const sortedDocs = sortDiscussions(cachedChatDocs, chatSortMode, effectiveUid);
     
     let listHtml = '';
     sortedDocs.forEach(doc => {
@@ -8976,12 +8995,45 @@ function initRealTimeDashboardSync(db, storedUid) {
       const unreadCount = Math.max(0, total - read);
       const isUnread = unreadCount > 0;
       
-      const relevanceVal = (disc.relevance_scores && disc.relevance_scores[storedUid] !== undefined)
-        ? (disc.relevance_scores[storedUid] * 100).toFixed(0) + "%"
+      let relNum = null;
+      if (disc.relevance_scores) {
+        if (disc.relevance_scores[effectiveUid] !== undefined) {
+          relNum = disc.relevance_scores[effectiveUid];
+        } else if (disc.relevance_scores[parseInt(effectiveUid)] !== undefined) {
+          relNum = disc.relevance_scores[parseInt(effectiveUid)];
+        }
+      }
+      
+      let isrNum = null;
+      if (disc.isr_scores) {
+        if (disc.isr_scores[effectiveUid] !== undefined) {
+          isrNum = disc.isr_scores[effectiveUid];
+        } else if (disc.isr_scores[parseInt(effectiveUid)] !== undefined) {
+          isrNum = disc.isr_scores[parseInt(effectiveUid)];
+        }
+      }
+
+      if (isrNum === null && relNum !== null) {
+        isrNum = relNum * 1.5;
+      }
+
+      // Sensible fallback for participants or creators if omitted
+      if (relNum === null) {
+        if (String(disc.creator_uid) === String(effectiveUid)) {
+          relNum = 0.85;
+          isrNum = 1.28;
+        } else if (disc.participants && (disc.participants.includes(effectiveUid) || disc.participants.includes(parseInt(effectiveUid)))) {
+          relNum = 0.50;
+          isrNum = 0.75;
+        }
+      }
+
+      const relevanceVal = relNum !== null
+        ? (relNum * 100).toFixed(0) + "%"
         : "N/A";
-      const isrVal = (disc.isr_scores && disc.isr_scores[storedUid] !== undefined)
-        ? disc.isr_scores[storedUid].toFixed(2)
-        : ((disc.relevance_scores && disc.relevance_scores[storedUid] !== undefined) ? (disc.relevance_scores[storedUid] * 1.5).toFixed(2) : "N/A");
+      const isrVal = isrNum !== null
+        ? parseFloat(isrNum).toFixed(2)
+        : "N/A";
         
       let dateStr = disc.last_message_timestamp ? formatDateWithSetting(disc.last_message_timestamp) : '';
       let nameIdStr = `${disc.last_message_sender_name || 'System'} (ID: ${disc.last_message_sender_uid || 'system'})`;
@@ -9760,13 +9812,14 @@ function initMainPage() {
   }
 
   // Load profile dynamically from Firestore
-  if (typeof firebase !== 'undefined' && !isGuest) {
+  if (typeof firebase !== 'undefined') {
     const db = firebase.firestore();
     
     // Start real-time synchronization of dashboard and tab content
-    initRealTimeDashboardSync(db, storedUid);
+    initRealTimeDashboardSync(db, storedUid || "1");
 
-    db.collection("users").doc(storedUid).get().then(doc => {
+    if (!isGuest) {
+      db.collection("users").doc(storedUid).get().then(doc => {
       if (!doc.exists) return;
       const user = doc.data();
 
@@ -9937,6 +9990,7 @@ function initMainPage() {
         window.loggedInUserValues = window.currentUserValues;
       }
     }).catch(err => console.error("Firestore user profile load failed:", err));
+    }
   }
 
   menuButton.addEventListener('click', function (e) {
@@ -10159,7 +10213,7 @@ function startQuickTour() {
   const steps = [
     {
       title: "Welcome to ISR!",
-      text: "This Index of Social Responsibility prototype helps groups align decisions with shared microcommunity values. Let's take a quick 1-minute tour of how it works!",
+      text: "This Index of Social Responsibility prototype helps groups align decisions with shared ad-hoc public values. Let's take a quick 1-minute tour of how it works!",
       target: null
     },
     {
@@ -10169,7 +10223,7 @@ function startQuickTour() {
     },
     {
       title: "Governance Readiness",
-      text: "This card tracks your profile completeness and helps you express your worldview through the microcommunity values vector.",
+      text: "This card tracks your profile completeness and helps you express your worldview through the ad-hoc public values vector.",
       target: ".governance-readiness-card"
     },
     {
