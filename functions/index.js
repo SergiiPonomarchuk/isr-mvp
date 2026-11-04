@@ -1,27 +1,13 @@
 const { onRequest } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
 const { FieldValue, GeoPoint } = require("firebase-admin/firestore");
+const { nearestAnchor, gScore: geoScore, withinCutoff } = require("./geo");
+const { evaluateDemographics } = require("./demographics");
 const aiHelper = require("./ai-helper");
 const { readTextInputs, paramsFromAi, makeDraft, paramsForCreate } = require("./params");
 
 admin.initializeApp();
 const db = admin.firestore();
-
-// Helper: Haversine distance in meters
-function haversineDistance(coords1, coords2) {
-  const R = 6371e3; // Earth radius in meters
-  const lat1 = (coords1[0] * Math.PI) / 180;
-  const lat2 = (coords2[0] * Math.PI) / 180;
-  const deltaLat = ((coords2[0] - coords1[0]) * Math.PI) / 180;
-  const deltaLon = ((coords2[1] - coords1[1]) * Math.PI) / 180;
-
-  const a =
-    Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-    Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-  return R * c;
-}
 
 // Helper: Cosine similarity
 function cosineSimilarity(vecA, vecB) {
@@ -36,61 +22,6 @@ function cosineSimilarity(vecA, vecB) {
   }
   if (normA === 0 || normB === 0) return 0;
   return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
-}
-
-// Helper: Evaluate demographic filters on user document
-function evaluateDemographics(user, criteria) {
-  if (!criteria) return 1.0;
-
-  // 1. Age check
-  if (user.birthDate) {
-    // Parse birthDate e.g., "1971-01-05"
-    const birthYear = parseInt(user.birthDate.split("-")[0]);
-    if (!isNaN(birthYear)) {
-      const age = new Date().getFullYear() - birthYear;
-      if (criteria.minAge !== undefined && age < criteria.minAge) return 0.0;
-      if (criteria.maxAge !== undefined && age > criteria.maxAge) return 0.0;
-    }
-  }
-
-  // 2. Employment check
-  if (criteria.employmentStatus && criteria.employmentStatus !== "any") {
-    const isEmployed = Array.isArray(user.post) && user.post.length > 0;
-    if (criteria.employmentStatus === "employed" && !isEmployed) return 0.0;
-    if (criteria.employmentStatus === "unemployed" && isEmployed) return 0.0;
-  }
-
-  // 3. Family status check
-  if (criteria.familyStatus && criteria.familyStatus !== "any") {
-    const relations = user.socialRelations || [];
-    const hasChildren = relations.some((r) =>
-      ["child", "son", "daughter"].includes(r.type ? r.type.toLowerCase() : "")
-    );
-    const hasGrandchildren = relations.some((r) =>
-      ["grandchild", "grandson", "granddaughter"].includes(r.type ? r.type.toLowerCase() : "")
-    );
-
-    if (criteria.familyStatus === "parent" && !hasChildren) return 0.0;
-    if (criteria.familyStatus === "grandparent" && !hasGrandchildren) return 0.0;
-  }
-
-  // 4. Features check
-  if (Array.isArray(criteria.features) && criteria.features.length > 0) {
-    const userFeaturesStr = (user.features || []).join(" ").toLowerCase();
-    const hasMatchingFeature = criteria.features.some((f) => {
-      const term = f.toLowerCase().trim();
-      if (!term) return false;
-      if (userFeaturesStr.includes(term)) return true;
-      if ((term.includes("pet") || term.includes("animal")) &&
-          (userFeaturesStr.includes("dog") || userFeaturesStr.includes("cat") || userFeaturesStr.includes("pet") || userFeaturesStr.includes("animal"))) {
-        return true;
-      }
-      return false;
-    });
-    if (!hasMatchingFeature) return 0.0;
-  }
-
-  return 1.0;
 }
 
 // HTTPS Endpoint: Analyze Issue using Gemini 1.5 Flash
@@ -176,7 +107,7 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       });
     } else {
       const usersSnapshot = await db.collection("users")
-        .select("uid", "displayName", "birthDate", "gender", "post", "socialRelations", "geography")
+        .select("uid", "displayName", "birthDate", "gender", "post", "socialRelations", "geography", "skills", "features")
         .get();
       usersSnapshot.forEach((doc) => {
         allUsers.push(doc.data());
@@ -195,24 +126,21 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
     uniqueUsers.forEach((user) => {
       const isCreator = (user.uid === parseInt(submitterId));
 
-      // Stage 1: Demographic Score (D)
-      const dScore = evaluateDemographics(user, demographics);
-      if (dScore === 0.0 && w_D > 0 && !isCreator) return; // Excluded immediately by demographics!
+      // Stage 1: Demographic Score (D). A place or property-kind match is a cause to include (A3).
+      const dRes = evaluateDemographics(user, demographics);
+      const dScore = dRes.score;
+      if (dScore === 0.0 && w_D > 0 && !isCreator) return; // Excluded by demographics
 
-      // Stage 2: Geographic Distance Filter
-      const homeAnchor = (user.geography || []).find((g) => g.type === "home");
-      let distance = 0;
+      // Stage 2: Geographic Score (G) from the nearest of home, work and property (A3)
+      const near = nearestAnchor(user.geography, location);
       let gScore = 1.0;
-      if (homeAnchor && homeAnchor.geo) {
-        distance = haversineDistance(location, homeAnchor.geo);
-        const maxDistance = muVal + 3 * sigmaVal;
-        if (distance > maxDistance && w_G > 0 && !isCreator) return; // Excluded by distance!
-
-        if (distance > muVal) {
-          gScore = Math.exp(-Math.pow(distance - muVal, 2) / (2 * Math.pow(sigmaVal, 2)));
-        }
+      let gAnchorType = null;
+      if (near) {
+        gAnchorType = near.type;
+        if (!withinCutoff(near.distance, muVal, sigmaVal) && w_G > 0 && !isCreator && !dRes.bypassDistance) return; // Excluded by distance
+        gScore = geoScore(near.distance, muVal, sigmaVal);
       } else {
-        if (!isCreator) return;
+        if (!isCreator && !dRes.bypassDistance) return;
         gScore = 0.0;
       }
 
@@ -237,7 +165,9 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       filteredCandidates.push({
         user: user,
         dScore: dScore,
+        dMatch: dRes.match,
         gScore: gScore,
+        gAnchorType: gAnchorType,
         xScore: xScore,
         maxScore: maxScore,
         isCreator: isCreator
@@ -290,6 +220,8 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       const user = c.user;
       const dScore = c.dScore;
       const gScore = c.gScore;
+      const dMatch = c.dMatch;
+      const gAnchorType = c.gAnchorType;
       const xScore = c.xScore;
       const isCreator = c.isCreator;
 
@@ -305,7 +237,9 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
           user_id: user.uid,
           displayName: user.displayName + (isCreator ? " (Creator)" : ""),
           D_score: dScore,
+          D_match: dMatch,
           G_score: gScore,
+          G_anchor_type: gAnchorType,
           S_score: sScore,
           X_score: xScore,
           relevance_score: relevanceScore,
@@ -529,7 +463,9 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
         user_id: member.user_id,
         displayName: member.displayName,
         D_score: member.D_score,
+        D_match: member.D_match || null,
         G_score: member.G_score,
+        G_anchor_type: member.G_anchor_type || null,
         S_score: member.S_score,
         X_score: member.X_score,
         relevance_score: member.relevance_score,
@@ -680,7 +616,7 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
       });
     } else {
       const usersSnapshot = await db.collection("users")
-        .select("uid", "displayName", "birthDate", "gender", "post", "socialRelations", "geography")
+        .select("uid", "displayName", "birthDate", "gender", "post", "socialRelations", "geography", "skills", "features")
         .get();
       usersSnapshot.forEach((doc) => {
         allUsers.push(doc.data());
@@ -699,22 +635,21 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
     uniqueUsers.forEach((user) => {
       const isCreator = (user.uid === parseInt(submitterId));
 
-      const dScore = evaluateDemographics(user, data.demographics);
-      if (dScore === 0.0 && w_D > 0 && !isCreator) return;
+      // Stage 1: Demographic Score (D). A place or property-kind match is a cause to include (A3).
+      const dRes = evaluateDemographics(user, data.demographics);
+      const dScore = dRes.score;
+      if (dScore === 0.0 && w_D > 0 && !isCreator) return; // Excluded by demographics
 
-      const homeAnchor = (user.geography || []).find((g) => g.type === "home");
-      let distance = 0;
+      // Stage 2: Geographic Score (G) from the nearest of home, work and property (A3)
+      const near = nearestAnchor(user.geography, location);
       let gScore = 1.0;
-      if (homeAnchor && homeAnchor.geo) {
-        distance = haversineDistance(location, homeAnchor.geo);
-        const maxDistance = muVal + 3 * sigmaVal;
-        if (distance > maxDistance && w_G > 0 && !isCreator) return;
-
-        if (distance > muVal) {
-          gScore = Math.exp(-Math.pow(distance - muVal, 2) / (2 * Math.pow(sigmaVal, 2)));
-        }
+      let gAnchorType = null;
+      if (near) {
+        gAnchorType = near.type;
+        if (!withinCutoff(near.distance, muVal, sigmaVal) && w_G > 0 && !isCreator && !dRes.bypassDistance) return; // Excluded by distance
+        gScore = geoScore(near.distance, muVal, sigmaVal);
       } else {
-        if (!isCreator) return;
+        if (!isCreator && !dRes.bypassDistance) return;
         gScore = 0.0;
       }
 
@@ -738,7 +673,9 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
       filteredCandidates.push({
         user: user,
         dScore: dScore,
+        dMatch: dRes.match,
         gScore: gScore,
+        gAnchorType: gAnchorType,
         xScore: xScore,
         maxScore: maxScore,
         isCreator: isCreator
@@ -790,6 +727,8 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
       const user = c.user;
       const dScore = c.dScore;
       const gScore = c.gScore;
+      const dMatch = c.dMatch;
+      const gAnchorType = c.gAnchorType;
       const xScore = c.xScore;
       const isCreator = c.isCreator;
 
@@ -805,7 +744,9 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
           uid: String(user.uid),
           name: user.displayName + (isCreator ? " (Creator)" : ""),
           D: dScore,
+          D_match: dMatch,
           G: gScore,
+          G_anchor_type: gAnchorType,
           S: sScore,
           X: xScore,
           score: relevanceScore,

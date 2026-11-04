@@ -13,6 +13,8 @@
  * Pure functions only, so they can be unit tested without Firebase.
  */
 
+const { sanitizeDemographicRules } = require("./demographics");
+
 const MAX_CLARIFICATION = 2000;
 
 // Fields removed by A2: Expertise has no weights and no resources part.
@@ -81,8 +83,8 @@ function paramsFromAi(ai) {
     },
     aggregation_reasoning: a.aggregation_reasoning || "",
     isr_explanations: a.isr_explanations || null,
-    demographics: a.demographics || a.demographic_rules || { employmentStatus: "any", familyStatus: "any", features: [] },
-    demographic_rules: a.demographic_rules || a.demographics || null,
+    demographics: sanitizeDemographicRules(a.demographics || a.demographic_rules || { employmentStatus: "any", familyStatus: "any" }),
+    demographic_rules: sanitizeDemographicRules(a.demographic_rules || a.demographics || {}),
     expertise_depth: a.expertise_depth || "None",
     expertise_domain: a.expertise_domain || (edp && edp.expertise_domain) || "General Maintenance",
     expertise_domain_parameters: edp,

@@ -1,0 +1,871 @@
+{
+ "now_year": 2026,
+ "g_cases": [
+  {
+   "name": "home only, inside mu",
+   "geography": [
+    {
+     "type": "home",
+     "geo": [
+      47.550449660802954,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "home",
+    "distance": 50.0,
+    "g": 1.0,
+    "within_cutoff": true
+   }
+  },
+  {
+   "name": "work nearer than home",
+   "geography": [
+    {
+     "type": "home",
+     "geo": [
+      47.567986432118374,
+      7.6
+     ]
+    },
+    {
+     "type": "work",
+     "place": "Argo Industry",
+     "geo": [
+      47.5510791859271,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "work",
+    "distance": 120.0,
+    "g": 0.923116346,
+    "within_cutoff": true
+   }
+  },
+  {
+   "name": "property nearest",
+   "geography": [
+    {
+     "type": "home",
+     "geo": [
+      47.558093894453265,
+      7.6
+     ]
+    },
+    {
+     "type": "work",
+     "geo": [
+      47.553597286423674,
+      7.6
+     ]
+    },
+    {
+     "type": "property",
+     "kind": "garage",
+     "geo": [
+      47.55161877889065,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "property",
+    "distance": 180.0,
+    "g": 0.2780373,
+    "within_cutoff": true
+   }
+  },
+  {
+   "name": "unknown type and missing geo ignored",
+   "geography": [
+    {
+     "type": "vacation",
+     "geo": [
+      47.55008993216059,
+      7.6
+     ]
+    },
+    {
+     "type": "work",
+     "place": "X"
+    },
+    {
+     "type": "home",
+     "geo": [
+      47.55233823617539,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "home",
+    "distance": 260.0,
+    "g": 0.005976023,
+    "within_cutoff": false
+   }
+  },
+  {
+   "name": "no anchors",
+   "geography": [],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": null
+  },
+  {
+   "name": "beyond cutoff",
+   "geography": [
+    {
+     "type": "home",
+     "geo": [
+      47.553597286423674,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "home",
+    "distance": 400.0,
+    "g": 1.5e-08,
+    "within_cutoff": false
+   }
+  },
+  {
+   "name": "sample 0 m",
+   "geography": [
+    {
+     "type": "home",
+     "geo": [
+      47.55,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "home",
+    "distance": 0.0,
+    "g": 1.0,
+    "within_cutoff": true
+   }
+  },
+  {
+   "name": "sample 50 m",
+   "geography": [
+    {
+     "type": "home",
+     "geo": [
+      47.550449660802954,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "home",
+    "distance": 50.0,
+    "g": 1.0,
+    "within_cutoff": true
+   }
+  },
+  {
+   "name": "sample 100 m",
+   "geography": [
+    {
+     "type": "home",
+     "geo": [
+      47.55089932160592,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "home",
+    "distance": 100.0,
+    "g": 1.0,
+    "within_cutoff": true
+   }
+  },
+  {
+   "name": "sample 101 m",
+   "geography": [
+    {
+     "type": "home",
+     "geo": [
+      47.550908314821974,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "home",
+    "distance": 101.0,
+    "g": 0.99980002,
+    "within_cutoff": true
+   }
+  },
+  {
+   "name": "sample 130 m",
+   "geography": [
+    {
+     "type": "home",
+     "geo": [
+      47.55116911808769,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "home",
+    "distance": 130.0,
+    "g": 0.835270211,
+    "within_cutoff": true
+   }
+  },
+  {
+   "name": "sample 150 m",
+   "geography": [
+    {
+     "type": "home",
+     "geo": [
+      47.551348982408875,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "home",
+    "distance": 150.0,
+    "g": 0.60653066,
+    "within_cutoff": true
+   }
+  },
+  {
+   "name": "sample 200 m",
+   "geography": [
+    {
+     "type": "home",
+     "geo": [
+      47.55179864321183,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "home",
+    "distance": 200.0,
+    "g": 0.135335283,
+    "within_cutoff": true
+   }
+  },
+  {
+   "name": "sample 250 m",
+   "geography": [
+    {
+     "type": "home",
+     "geo": [
+      47.552248304014796,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "home",
+    "distance": 250.0,
+    "g": 0.011108997,
+    "within_cutoff": false
+   }
+  },
+  {
+   "name": "sample 300 m",
+   "geography": [
+    {
+     "type": "home",
+     "geo": [
+      47.55269796481775,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "home",
+    "distance": 300.0,
+    "g": 0.000335463,
+    "within_cutoff": false
+   }
+  },
+  {
+   "name": "sample 500 m",
+   "geography": [
+    {
+     "type": "home",
+     "geo": [
+      47.55449660802959,
+      7.6
+     ]
+    }
+   ],
+   "location": [
+    47.55,
+    7.6
+   ],
+   "mu": 100.0,
+   "sigma": 50.0,
+   "expected": {
+    "type": "home",
+    "distance": 500.0,
+    "g": 0.0,
+    "within_cutoff": false
+   }
+  }
+ ],
+ "d_cases": [
+  {
+   "name": "no criteria",
+   "user": {
+    "birthDate": "1980-05-01",
+    "post": [
+     {
+      "job": "Engineer"
+     }
+    ],
+    "socialRelations": [],
+    "features": [],
+    "skills": []
+   },
+   "criteria": null,
+   "expected": {
+    "score": 1.0,
+    "match": null,
+    "bypass": false
+   }
+  },
+  {
+   "name": "work place match",
+   "user": {
+    "birthDate": "1980-05-01",
+    "post": [
+     {
+      "job": "Engineer"
+     }
+    ],
+    "socialRelations": [],
+    "features": [],
+    "skills": [],
+    "geography": [
+     {
+      "type": "home",
+      "geo": [
+       47.63093894453268,
+       7.6
+      ]
+     },
+     {
+      "type": "work",
+      "place": "Argo Industry",
+      "geo": [
+       47.6219457284735,
+       7.6
+      ]
+     }
+    ]
+   },
+   "criteria": {
+    "places": [
+     "argo industry"
+    ]
+   },
+   "expected": {
+    "score": 1.0,
+    "match": "place",
+    "bypass": true
+   }
+  },
+  {
+   "name": "place match skips features",
+   "user": {
+    "birthDate": "1980-05-01",
+    "post": [
+     {
+      "job": "Engineer"
+     }
+    ],
+    "socialRelations": [],
+    "features": [],
+    "skills": [],
+    "geography": [
+     {
+      "type": "home",
+      "geo": [
+       47.63093894453268,
+       7.6
+      ]
+     },
+     {
+      "type": "work",
+      "place": "Argo Industry",
+      "geo": [
+       47.6219457284735,
+       7.6
+      ]
+     }
+    ]
+   },
+   "criteria": {
+    "places": [
+     "Argo"
+    ],
+    "features": [
+     "car"
+    ]
+   },
+   "expected": {
+    "score": 1.0,
+    "match": "place",
+    "bypass": true
+   }
+  },
+  {
+   "name": "property kind match",
+   "user": {
+    "birthDate": "1980-05-01",
+    "post": [
+     {
+      "job": "Engineer"
+     }
+    ],
+    "socialRelations": [],
+    "features": [],
+    "skills": [],
+    "geography": [
+     {
+      "type": "property",
+      "kind": "garage",
+      "geo": [
+       47.59496608029593,
+       7.6
+      ]
+     }
+    ]
+   },
+   "criteria": {
+    "property_kinds": [
+     "garage"
+    ]
+   },
+   "expected": {
+    "score": 1.0,
+    "match": "property_kind",
+    "bypass": true
+   }
+  },
+  {
+   "name": "property name match",
+   "user": {
+    "birthDate": "1980-05-01",
+    "post": [
+     {
+      "job": "Engineer"
+     }
+    ],
+    "socialRelations": [],
+    "features": [],
+    "skills": [],
+    "geography": [
+     {
+      "type": "property",
+      "kind": "commercial",
+      "place": "Rheinpark Garage",
+      "geo": [
+       47.59496608029593,
+       7.6
+      ]
+     }
+    ]
+   },
+   "criteria": {
+    "places": [
+     "Rheinpark Garage"
+    ]
+   },
+   "expected": {
+    "score": 1.0,
+    "match": "place",
+    "bypass": true
+   }
+  },
+  {
+   "name": "home place does not count",
+   "user": {
+    "birthDate": "1980-05-01",
+    "post": [
+     {
+      "job": "Engineer"
+     }
+    ],
+    "socialRelations": [],
+    "features": [],
+    "skills": [],
+    "geography": [
+     {
+      "type": "home",
+      "place": "Argo Industry",
+      "geo": [
+       47.55008993216059,
+       7.6
+      ]
+     }
+    ]
+   },
+   "criteria": {
+    "places": [
+     "Argo Industry"
+    ]
+   },
+   "expected": {
+    "score": 1.0,
+    "match": null,
+    "bypass": false
+   }
+  },
+  {
+   "name": "short names do not match",
+   "user": {
+    "birthDate": "1980-05-01",
+    "post": [
+     {
+      "job": "Engineer"
+     }
+    ],
+    "socialRelations": [],
+    "features": [],
+    "skills": [],
+    "geography": [
+     {
+      "type": "work",
+      "place": "AB Corp",
+      "geo": [
+       47.55008993216059,
+       7.6
+      ]
+     }
+    ]
+   },
+   "criteria": {
+    "places": [
+     "AB"
+    ]
+   },
+   "expected": {
+    "score": 1.0,
+    "match": null,
+    "bypass": false
+   }
+  },
+  {
+   "name": "age check still applies",
+   "user": {
+    "birthDate": "1950-01-01",
+    "post": [
+     {
+      "job": "Engineer"
+     }
+    ],
+    "socialRelations": [],
+    "features": [],
+    "skills": [],
+    "geography": [
+     {
+      "type": "home",
+      "geo": [
+       47.63093894453268,
+       7.6
+      ]
+     },
+     {
+      "type": "work",
+      "place": "Argo Industry",
+      "geo": [
+       47.6219457284735,
+       7.6
+      ]
+     }
+    ]
+   },
+   "criteria": {
+    "places": [
+     "Argo Industry"
+    ],
+    "maxAge": 60
+   },
+   "expected": {
+    "score": 0.0,
+    "match": null,
+    "bypass": false
+   }
+  },
+  {
+   "name": "employment check still applies",
+   "user": {
+    "birthDate": "1980-05-01",
+    "post": [],
+    "socialRelations": [],
+    "features": [],
+    "skills": [],
+    "geography": [
+     {
+      "type": "home",
+      "geo": [
+       47.63093894453268,
+       7.6
+      ]
+     },
+     {
+      "type": "work",
+      "place": "Argo Industry",
+      "geo": [
+       47.6219457284735,
+       7.6
+      ]
+     }
+    ]
+   },
+   "criteria": {
+    "places": [
+     "Argo Industry"
+    ],
+    "employmentStatus": "employed"
+   },
+   "expected": {
+    "score": 0.0,
+    "match": null,
+    "bypass": false
+   }
+  },
+  {
+   "name": "feature from interests",
+   "user": {
+    "birthDate": "1980-05-01",
+    "post": [
+     {
+      "job": "Engineer"
+     }
+    ],
+    "socialRelations": [],
+    "features": [],
+    "skills": [
+     {
+      "id": "1",
+      "type": "activity",
+      "name": "Dog walking",
+      "time": "1"
+     }
+    ]
+   },
+   "criteria": {
+    "features": [
+     "pets"
+    ]
+   },
+   "expected": {
+    "score": 1.0,
+    "match": "feature",
+    "bypass": false
+   }
+  },
+  {
+   "name": "feature from features",
+   "user": {
+    "birthDate": "1980-05-01",
+    "post": [
+     {
+      "job": "Engineer"
+     }
+    ],
+    "socialRelations": [],
+    "features": [
+     "car"
+    ],
+    "skills": []
+   },
+   "criteria": {
+    "features": [
+     "car"
+    ]
+   },
+   "expected": {
+    "score": 1.0,
+    "match": "feature",
+    "bypass": false
+   }
+  },
+  {
+   "name": "feature missing",
+   "user": {
+    "birthDate": "1980-05-01",
+    "post": [
+     {
+      "job": "Engineer"
+     }
+    ],
+    "socialRelations": [],
+    "features": [],
+    "skills": []
+   },
+   "criteria": {
+    "features": [
+     "car"
+    ]
+   },
+   "expected": {
+    "score": 0.0,
+    "match": null,
+    "bypass": false
+   }
+  },
+  {
+   "name": "education skills are not interests",
+   "user": {
+    "birthDate": "1980-05-01",
+    "post": [
+     {
+      "job": "Engineer"
+     }
+    ],
+    "socialRelations": [],
+    "features": [],
+    "skills": [
+     {
+      "id": "2",
+      "type": "education",
+      "name": "Car mechanics"
+     }
+    ]
+   },
+   "criteria": {
+    "features": [
+     "car"
+    ]
+   },
+   "expected": {
+    "score": 0.0,
+    "match": null,
+    "bypass": false
+   }
+  },
+  {
+   "name": "parent check",
+   "user": {
+    "birthDate": "1980-05-01",
+    "post": [
+     {
+      "job": "Engineer"
+     }
+    ],
+    "socialRelations": [
+     {
+      "type": "son"
+     }
+    ],
+    "features": [],
+    "skills": []
+   },
+   "criteria": {
+    "familyStatus": "parent"
+   },
+   "expected": {
+    "score": 1.0,
+    "match": null,
+    "bypass": false
+   }
+  }
+ ]
+}

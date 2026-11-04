@@ -133,7 +133,12 @@ D. DEMOGRAPHIC RULES (simplified backend schema)
   "maxAge": <number or null>,
   "employmentStatus": "any" | "employed" | "unemployed" | "student" | "retired",
   "familyStatus": "any" | "parent" | "grandparent",
-  "features": [ array of keyword strings like "car", "pets", "animals", "bike", "child" ]
+  "features": [ array of keyword strings like "car", "pets", "animals", "bike", "child" ],
+    // matched against the person's features and interests (hobbies); D only, never G
+  "places": [ names of companies, organisations or properties the issue is about, e.g. "Argo Industry"; [] if none ],
+    // a person who works at or owns a listed place is included through D even if they live far away
+  "property_kinds": [ any of "flat", "house", "land", "garage", "commercial", "other"; [] if none ]
+    // kinds of real estate whose owners are affected (matched against registered property locations)
 },
 
 ────────────────────────────────────────────────────────────────
@@ -408,6 +413,7 @@ Return ONLY the JSON object. No explanation text outside the JSON.
 
 // Fields removed by task A2 (PD-8): Expertise has no weights and no resources part.
 const { OBSOLETE_PARAM_FIELDS } = require("./params");
+const { sanitizeDemographicRules } = require("./demographics");
 
 // =============================================================================
 // NORMALIZATION
@@ -472,6 +478,9 @@ function normalizeIssueParams(data) {
     data.demographic_rules = { employmentStatus: "any", familyStatus: "any", features: [] };
   }
   if (!data.demographics) data.demographics = data.demographic_rules;
+  // A3: places and property kinds (causes to include through D); clean lists only
+  data.demographic_rules = sanitizeDemographicRules(data.demographic_rules);
+  data.demographics = sanitizeDemographicRules(data.demographics);
 
   // ── Obsolete fields (A2, PD-8): never passed on, even if the model returns them
   for (const k of OBSOLETE_PARAM_FIELDS) delete data[k];
@@ -835,6 +844,9 @@ function getLocalFallbackParams(description, title) {
     aggregation_reasoning = "Community service depends heavily on reliable contributors; contribution weight is high.";
     expertise_reasoning = "Physical resources and volunteer coordination experience dominate over formal credentials.";
   }
+
+  // A3: the fallback derives no places or property kinds
+  demo = sanitizeDemographicRules(demo);
 
   // Build the unified return object
   const result = {
