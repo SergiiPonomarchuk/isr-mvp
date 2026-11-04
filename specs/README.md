@@ -91,6 +91,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [S0-restructure-specs](tasks/S0-restructure-specs.md) | open (step 3, batch 1 done) | all; README |
 | [A1-canonical-isr](tasks/A1-canonical-isr.md) | open (DRAFT; R2, R9 amended by A2) | 03, 04, 05, 06 |
 | [A2-expertise-cleanup](tasks/A2-expertise-cleanup.md) | implemented on branch `a2-expertise-cleanup`; live migration pending (author) | 02, 04, 07, 10, 11 |
+| [A3-options-and-g-anchors](tasks/A3-options-and-g-anchors.md) | open (DRAFT) | 02, 03, 06, 10 |
 
 S0 artefacts: [S0-inventory-report](tasks/S0-inventory-report.md), [S0-structure-proposal](tasks/S0-structure-proposal.md), [S0-decisions-to-import](tasks/S0-decisions-to-import.md).
 
