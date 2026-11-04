@@ -1,5 +1,6 @@
 const { onRequest } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
+const { FieldValue, GeoPoint } = require("firebase-admin/firestore");
 const aiHelper = require("./ai-helper");
 const { readTextInputs, paramsFromAi, makeDraft, paramsForCreate } = require("./params");
 
@@ -338,9 +339,9 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       issue_id: issueId,
       title,
       description,
-      starts: admin.firestore.FieldValue.serverTimestamp(),
+      starts: FieldValue.serverTimestamp(),
       category: (classification && classification.issue_category) || category || "building.maintenance.general",
-      location: new admin.firestore.GeoPoint(location[0], location[1]),
+      location: new GeoPoint(location[0], location[1]),
       mu_distance_meters: muVal,
       sigma_decay_meters: sigmaVal,
       // Relevance weights (flat, for query compatibility)
@@ -357,7 +358,7 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       aggregation_reasoning: aggregation_reasoning || "",
       submitter_id: String(submitterId),
       status: "open",
-      created_at: admin.firestore.FieldValue.serverTimestamp(),
+      created_at: FieldValue.serverTimestamp(),
       // Expertise
       expertise_depth:  expertise_depth  || "None",
       expertise_domain: expertise_domain  || (expertise_domain_parameters && expertise_domain_parameters.expertise_domain) || "General Maintenance",
@@ -513,7 +514,7 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       member_count: microcommunityMembers.length,
       member_accepted: 0,
       issue_scope: 0,
-      created_at: admin.firestore.FieldValue.serverTimestamp(),
+      created_at: FieldValue.serverTimestamp(),
       status: "active",
       values_taxonomy: mcTaxonomy
     };
@@ -532,7 +533,7 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
         S_score: member.S_score,
         X_score: member.X_score,
         relevance_score: member.relevance_score,
-        calculated_at: admin.firestore.FieldValue.serverTimestamp(),
+        calculated_at: FieldValue.serverTimestamp(),
         accepted_rejected: null
       });
     });
@@ -568,7 +569,7 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       creator_uid: String(submitterId),
       created_at: new Date().toISOString(),
       message_count: 1,
-      location: new admin.firestore.GeoPoint(location[0], location[1]),
+      location: new GeoPoint(location[0], location[1]),
       affection_distance: parseFloat((muVal / 1000).toFixed(3)),
       expertise_depth:  expertise_depth  || "None",
       expertise_domain: expertise_domain  || (expertise_domain_parameters && expertise_domain_parameters.expertise_domain) || "General Maintenance",
@@ -612,6 +613,9 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       marks: [],
       child: []
     });
+
+    // A draft is single-use: one Check, one issue.
+    await db.collection("issue_drafts").doc(String(req.body.draftId)).delete();
 
     res.json({
       success: true,
