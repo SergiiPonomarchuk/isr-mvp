@@ -70,12 +70,13 @@ Created by task S0 (`tasks/S0-restructure-specs.md`). Every component file state
 | Id | Title | Affects |
 |---|---|---|
 | [PD-1](decisions/PD-1-scope-inclusion-soft-d.md) | Scope, inclusion floor, soft D (paper D-001) | 00, 03, 07 |
-| [PD-2](decisions/PD-2-resources-and-money.md) | Resources and money (paper D-002) | 04, 06 |
+| [PD-2](decisions/PD-2-resources-and-money.md) | Resources and money (paper D-002); superseded by PD-8 | 04, 06 |
 | [PD-3](decisions/PD-3-additive-formula.md) | Additive formula, mean normalisation (paper D-006) | 06 |
 | [PD-4](decisions/PD-4-analyzer-governed-artifact.md) | Analyzer as a governed artifact (paper D-004) | 07 |
 | [PD-5](decisions/PD-5-gisr-and-access.md) | gISR and access (paper D-007) | 05, 09, 10 |
 | [PD-6](decisions/PD-6-mvp-status-and-paper.md) | MVP status and the paper (paper D-011, D-012) | all |
 | [PD-7](decisions/PD-7-terminology.md) | Terminology (paper D-008) | 14 |
+| [PD-8](decisions/PD-8-resources-option-level.md) | Resources and money option-level; E = education + experience with age floor | 02, 04, 06, 07, 10 |
 | [S0-D1](decisions/S0-D1-manifesto-is-vision.md) | The manifesto is vision only | 00, README |
 | [S0-D2](decisions/S0-D2-mvp-html-overview.md) | `docs/mvp.html` is a non-normative overview | 00, 09, 10 |
 | [S0-D3](decisions/S0-D3-if-gisr-aauth-correction.md) | Correction of IF l.87 and l.127 | 09 |
@@ -88,7 +89,8 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | Task | Status | Changes components |
 |---|---|---|
 | [S0-restructure-specs](tasks/S0-restructure-specs.md) | open (step 3, batch 1 done) | all; README |
-| [A1-canonical-isr](tasks/A1-canonical-isr.md) | open (DRAFT) | 03, 04, 05, 06 |
+| [A1-canonical-isr](tasks/A1-canonical-isr.md) | open (DRAFT; R2 to be amended by A2) | 03, 04, 05, 06 |
+| [A2-expertise-cleanup](tasks/A2-expertise-cleanup.md) | open (DRAFT) | 02, 04, 07, 10, 11 |
 
 S0 artefacts: [S0-inventory-report](tasks/S0-inventory-report.md), [S0-structure-proposal](tasks/S0-structure-proposal.md), [S0-decisions-to-import](tasks/S0-decisions-to-import.md).
 
