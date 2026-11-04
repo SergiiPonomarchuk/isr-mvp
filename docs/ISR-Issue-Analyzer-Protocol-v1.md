@@ -29,7 +29,7 @@ The Issue Analyzer LLM receives **only**:
 - `issue_title`: short human-readable title
 - `issue_description`: free-text description, including context, motivation, possible solutions
 - `location_hint`: optional text and/or coordinates (if known)
-- `submitter_metadata`: optional info (microcommunity id, city name, language, tags)
+- `submitter_metadata`: optional info (ad-hoc public / microcommunity id, city name, language, tags)
 
 **Important:**
 - The Analyzer **must not rely on a pre-provided category**. It must **infer the category**
@@ -50,7 +50,7 @@ The Analyzer returns a single JSON object with these groups:
 
 1. **Issue classification** (category, scope, affected actors)
 2. **Relevance parameterization** — `w_D, w_G, w_S, w_X`, demographic rules, geographic μ/σ
-3. **Expertise parameterization** — domain parameters, resource list
+3. **Expertise parameterization** — domain parameters; and the resource needs for the options' implementation plans (not part of Expertise)
 4. **ISR-score aggregation parameterization** — `w_Relevance, w_Expertise, w_Contribution`
 5. **Context check** (Step 4A) — the proposed type and the other types consistent with the rules, the scope and competence result (decision or proposal, addressee), the cautions to show to every member, and the rules applied
 6. **Change record** (Step 4B) — the consistency result for a change proposed by a member, and, if the public adopts it, the type and parameters derived again with their version and notes
@@ -465,9 +465,7 @@ These configure how expertise formulas behave for this issue.
 | Parameter | Description |
 | :--- | :--- |
 | `expertise_domain` | short descriptor string |
-| `contemporary_importance` ∈ [0, 1] | 0.2–0.4 = stable trade; 0.5–0.7 = moderate change; 0.7–0.9 = fast-changing |
 | `recency_decay_rate` (per year) | 0.01–0.03 = slow; 0.05–0.08 = cutting-edge |
-| `age_penalty_threshold` (years or null) | null = no age penalty; ~60 = very contemporary field |
 | `CBC_adjustment_factor` [0.7–1.3] | <1.0 = narrow credentials; >1.0 = broader broadcast |
 
 #### 3.1.1 Output structure
@@ -475,21 +473,19 @@ These configure how expertise formulas behave for this issue.
 ```json
 "expertise_domain_parameters": {
   "expertise_domain":        "locksmith.security",
-  "contemporary_importance": 0.2,
   "recency_decay_rate":      0.02,
-  "age_penalty_threshold":   null,
   "CBC_adjustment_factor":   0.9,
   "domain_reasoning":        "short explanation"
 }
 ```
 
-### 3.2 Resource types list
+### 3.2 Resource needs for implementation plans (not part of Expertise)
 
-Include 2–4 entries covering the issue's concrete resource needs:
+These entries prepare the resources part of the implementation plan of each option: first the money (cost and funding source), then the resources needed for realization. They give no weight and do not enter Expertise. Include 2–4 entries covering the issue's concrete resource needs:
 
 | Resource type | Examples |
 | :--- | :--- |
-| `money_budget` | grants, municipal funds, donations (a need of the issue, stated in the options' funding plans; not scored as Expertise) |
+| `money_budget` | grants, municipal funds, donations (comes first in the plan: cost and funding source) |
 | `physical_equipment` | tools, machinery, devices |
 | `facilities_space` | rooms, offices, warehouses, event venues |
 | `transportation` | vehicles, logistics |
@@ -688,9 +684,7 @@ The Issue Analyzer produces a single JSON object. All fields must be present:
 
   "expertise_domain_parameters": {
     "expertise_domain":        "locksmith.security",
-    "contemporary_importance": 0.2,
     "recency_decay_rate":      0.02,
-    "age_penalty_threshold":   null,
     "CBC_adjustment_factor":   0.9,
     "domain_reasoning":        "..."
   },
@@ -762,9 +756,9 @@ Three top-level fields are added to the combined output:
 ### 6.1 Collections and documents
 
 - `issues/{issueId}`: stores all Analyzer output fields flat plus the nested objects
-- `users/{userId}`: `roles`, `building_id`, `user_location`, `education_records`, `experience_records`, `resources`
+- `users/{userId}`: `roles`, `building_id`, `user_location`, `education_records`, `experience_records` (registered property is kept with the user's places and is used by Relevance only)
 - `microcommunity_relevance_scores/{issueId_userId}`: D, G, S, X, and combined Relevance
-- `microcommunity_expertise_scores/{issueId_userId}`: Education, Experience, Resources, and total Expertise
+- `microcommunity_expertise_scores/{issueId_userId}`: Education, Experience, and total Expertise
 - `issues/{issueId}` also stores `issue_type`, `outcome_kind` (decision or proposal), `addressee`, `parameters_version`, `parameters_frozen` (set when voting opens), `voting_opened_at` and `context_notes` (array of notes)
 - `issues/{issueId}/changes/{changeId}`: one document per proposed change of text, options, type or context (see `ISR-Relevance-Implementation.md`, Part 7.6)
 - `analyzer_runs/{runId}`: one log document per call (Steps 1 to 4B): inputs, outputs, model identifier, prompt version, library version, time
@@ -789,7 +783,7 @@ const ISR = aggregation_weights.w_relevance    * R_normalized
           + aggregation_weights.w_contribution * C_normalized;
 ```
 
-Where each component is normalized to [0, 1] before aggregation.
+Where R and E are divided by their mean over the members of the ad-hoc public, and C by the public's mean absolute Contribution plus one reference unit (Contribution protocol, Section 8.5).
 
 ---
 
@@ -807,7 +801,7 @@ For every new issue, the Analyzer must:
    - Slightly more local or more global scope
    - More or less technically complex
    - More or less safety-critical or rights-critical
-   - Resource intensity, including **money** as a key resource
+   - Resource and money needs of the issue (they shape the options, not anyone's weight)
 
 4. The nearest examples found here also define the **type** and its **typical range**, used by the context check (Step 4A). Derived values
    never leave the range. The library version used is recorded in every run.
@@ -825,8 +819,8 @@ For each new issue, the Analyzer must:
 2. Decide **Relevance weights** `w_D, w_G, w_S, w_X` with reasoning
 3. Generate **Demographic rules** (simplified flat schema + optional tiered schema)
 4. Select **Geo parameters** μ and σ with reasoning
-5. Configure **Expertise domain parameters** (domain, importance, decay, age threshold, CBC)
-6. Produce **Resource needs list** (2–4 entries; `money_budget` may appear as a need of the issue but is not scored as Expertise)
+5. Configure **Expertise domain parameters** (domain, importance, decay, CBC)
+6. Produce **Resource needs list** for the options' implementation plans (2–4 entries, money first; not scored as Expertise)
 7. Decide **Aggregation weights** `w_Relevance, w_Expertise, w_Contribution` with reasoning
 8. Output everything in a single structured JSON
 9. At submission, propose the type, derive the parameters, check scope and competence in the context, and produce the cautions (Step 4A)

@@ -81,7 +81,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "locksmith.security",
     "contemporary_importance": 0.2,
     "recency_decay_rate": 0.02,
-    "age_penalty_threshold": null,
     "CBC_adjustment_factor": 0.9,
     "domain_reasoning": "Evolving domain locksmith.security with contemporary importance 0.2 and decay rate 0.02."
   },
@@ -176,7 +175,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.maintenance.elevator_engineering",
     "contemporary_importance": 0.5,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain building.maintenance.elevator_engineering with contemporary importance 0.5 and decay rate 0.03."
   },
@@ -271,7 +269,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.maintenance.heating_engineering",
     "contemporary_importance": 0.4,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain building.maintenance.heating_engineering with contemporary importance 0.4 and decay rate 0.03."
   },
@@ -366,7 +363,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.maintenance.plumbing",
     "contemporary_importance": 0.3,
     "recency_decay_rate": 0.02,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 0.95,
     "domain_reasoning": "Evolving domain building.maintenance.plumbing with contemporary importance 0.3 and decay rate 0.02."
   },
@@ -463,7 +459,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.health.mold_remediation",
     "contemporary_importance": 0.5,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain building.health.mold_remediation with contemporary importance 0.5 and decay rate 0.03."
   },
@@ -553,7 +548,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.maintenance.electrical_basic",
     "contemporary_importance": 0.4,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 0.95,
     "domain_reasoning": "Evolving domain building.maintenance.electrical_basic with contemporary importance 0.4 and decay rate 0.03."
   },
@@ -643,7 +637,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.maintenance.waste_logistics",
     "contemporary_importance": 0.3,
     "recency_decay_rate": 0.02,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 0.9,
     "domain_reasoning": "Evolving domain building.maintenance.waste_logistics with contemporary importance 0.3 and decay rate 0.02."
   },
@@ -739,7 +732,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "housing.policy.parking_management",
     "contemporary_importance": 0.4,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain housing.policy.parking_management with contemporary importance 0.4 and decay rate 0.03."
   },
@@ -829,7 +821,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.conflict.noise_mediation",
     "contemporary_importance": 0.3,
     "recency_decay_rate": 0.02,
-    "age_penalty_threshold": 75,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain building.conflict.noise_mediation with contemporary importance 0.3 and decay rate 0.02."
   },
@@ -919,7 +910,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.maintenance.renovation_coordination",
     "contemporary_importance": 0.35,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain building.maintenance.renovation_coordination with contemporary importance 0.35 and decay rate 0.03."
   },
@@ -1014,7 +1004,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "housing.policy.tenancy_law",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain housing.policy.tenancy_law with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -1108,7 +1097,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "housing.policy.pet_management",
     "contemporary_importance": 0.4,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain housing.policy.pet_management with contemporary importance 0.4 and decay rate 0.03."
   },
@@ -1203,7 +1191,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.safety.access_control",
     "contemporary_importance": 0.5,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain building.safety.access_control with contemporary importance 0.5 and decay rate 0.03."
   },
@@ -1298,7 +1285,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.maintenance.shared_facilities",
     "contemporary_importance": 0.3,
     "recency_decay_rate": 0.02,
-    "age_penalty_threshold": 75,
     "CBC_adjustment_factor": 0.95,
     "domain_reasoning": "Evolving domain building.maintenance.shared_facilities with contemporary importance 0.3 and decay rate 0.02."
   },
@@ -1397,7 +1383,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "housing.policy.resource_allocation",
     "contemporary_importance": 0.4,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain housing.policy.resource_allocation with contemporary importance 0.4 and decay rate 0.03."
   },
@@ -1495,7 +1480,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.maintenance.move_coordination",
     "contemporary_importance": 0.3,
     "recency_decay_rate": 0.02,
-    "age_penalty_threshold": 75,
     "CBC_adjustment_factor": 0.95,
     "domain_reasoning": "Evolving domain building.maintenance.move_coordination with contemporary importance 0.3 and decay rate 0.02."
   },
@@ -1591,7 +1575,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.security.access_policies",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain building.security.access_policies with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -1688,7 +1671,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.safety.structural",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain building.safety.structural with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -1795,7 +1777,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.health.smoke_policy",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain building.health.smoke_policy with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -1887,7 +1868,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "building.safety.emergency_planning",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain building.safety.emergency_planning with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -1988,7 +1968,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "infrastructure.maintenance.roadworks",
     "contemporary_importance": 0.4,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain infrastructure.maintenance.roadworks with contemporary importance 0.4 and decay rate 0.03."
   },
@@ -2081,7 +2060,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "transportation.engineering.signal_timing",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain transportation.engineering.signal_timing with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -2178,7 +2156,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "urban_planning.cycling_infrastructure",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain urban_planning.cycling_infrastructure with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -2270,7 +2247,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "transportation.planning.transit",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain transportation.planning.transit with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -2367,7 +2343,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "infrastructure.maintenance.winter_ops",
     "contemporary_importance": 0.3,
     "recency_decay_rate": 0.02,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 0.9,
     "domain_reasoning": "Evolving domain infrastructure.maintenance.winter_ops with contemporary importance 0.3 and decay rate 0.02."
   },
@@ -2462,7 +2437,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "infrastructure.maintenance.electrical_public",
     "contemporary_importance": 0.4,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 0.95,
     "domain_reasoning": "Evolving domain infrastructure.maintenance.electrical_public with contemporary importance 0.4 and decay rate 0.03."
   },
@@ -2547,7 +2521,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "infrastructure.construction.noise_management",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain infrastructure.construction.noise_management with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -2637,7 +2610,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "environment.cleanliness.illegal_dumping",
     "contemporary_importance": 0.5,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain environment.cleanliness.illegal_dumping with contemporary importance 0.5 and decay rate 0.03."
   },
@@ -2727,7 +2699,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "utilities.water_network.operations",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain utilities.water_network.operations with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -2822,7 +2793,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "utilities.electric_grid.reliability",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain utilities.electric_grid.reliability with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -2915,7 +2885,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "utilities.networking.isp_operations",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain utilities.networking.isp_operations with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -3007,7 +2976,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "infrastructure.public.playground_safety",
     "contemporary_importance": 0.5,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain infrastructure.public.playground_safety with contemporary importance 0.5 and decay rate 0.03."
   },
@@ -3101,7 +3069,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "transportation.safety.traffic_calming",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain transportation.safety.traffic_calming with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -3197,7 +3164,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "urban_planning.parking_policy",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain urban_planning.parking_policy with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -3287,7 +3253,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "public_health.sanitation.facilities",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain public_health.sanitation.facilities with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -3377,7 +3342,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "infrastructure.safety.personal_security",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain infrastructure.safety.personal_security with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -3479,7 +3443,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "urban_planning.cycling_parking",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain urban_planning.cycling_parking with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -3573,7 +3536,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "urban_planning.mobility_events",
     "contemporary_importance": 0.65,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain urban_planning.mobility_events with contemporary importance 0.65 and decay rate 0.04."
   },
@@ -3663,7 +3625,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "urban_planning.public_space_design",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain urban_planning.public_space_design with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -3748,7 +3709,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "public_services.waste_collection",
     "contemporary_importance": 0.4,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain public_services.waste_collection with contemporary importance 0.4 and decay rate 0.03."
   },
@@ -3845,7 +3805,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "healthcare.management.primary_care",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain healthcare.management.primary_care with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -3940,7 +3899,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "public_health.prevention_campaigns",
     "contemporary_importance": 0.9,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.15,
     "domain_reasoning": "Evolving domain public_health.prevention_campaigns with contemporary importance 0.9 and decay rate 0.05."
   },
@@ -4038,7 +3996,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "social_services.childcare_management",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain social_services.childcare_management with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -4131,7 +4088,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "social_services.elderly_care",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain social_services.elderly_care with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -4221,7 +4177,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "healthcare.pharmacy.operations",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain healthcare.pharmacy.operations with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -4313,7 +4268,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "mental_health.community_services",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain mental_health.community_services with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -4410,7 +4364,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "accessibility.design_and_compliance",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain accessibility.design_and_compliance with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -4505,7 +4458,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "social_services.food_security",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain social_services.food_security with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -4600,7 +4552,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "social_services.homelessness_policy",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain social_services.homelessness_policy with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -4695,7 +4646,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "community.resilience.mutual_aid",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain community.resilience.mutual_aid with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -4794,7 +4744,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "social_support.family_crisis",
     "contemporary_importance": 0.3,
     "recency_decay_rate": 0.02,
-    "age_penalty_threshold": null,
     "CBC_adjustment_factor": 0.9,
     "domain_reasoning": "Evolving domain social_support.family_crisis with contemporary importance 0.3 and decay rate 0.02."
   },
@@ -4889,7 +4838,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "community.organizing.mutual_aid",
     "contemporary_importance": 0.5,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain community.organizing.mutual_aid with contemporary importance 0.5 and decay rate 0.03."
   },
@@ -4981,7 +4929,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "mental_health.addiction_support",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain mental_health.addiction_support with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -5078,7 +5025,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "public_health.emergency_heatwave",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain public_health.emergency_heatwave with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -5173,7 +5119,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "public_health.infectious_disease_policy",
     "contemporary_importance": 0.9,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.15,
     "domain_reasoning": "Evolving domain public_health.infectious_disease_policy with contemporary importance 0.9 and decay rate 0.05."
   },
@@ -5272,7 +5217,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "education.safety_crisis_management",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain education.safety_crisis_management with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -5371,7 +5315,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "education.pedagogy_and_timetabling",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain education.pedagogy_and_timetabling with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -5466,7 +5409,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "education.assessment_policy",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain education.assessment_policy with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -5557,7 +5499,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "nutrition.school_food_services",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain nutrition.school_food_services with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -5648,7 +5589,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "transportation.school_bus_planning",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain transportation.school_bus_planning with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -5753,7 +5693,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "education.extracurricular_programs",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain education.extracurricular_programs with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -5844,7 +5783,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "education.digital_communication_platforms",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain education.digital_communication_platforms with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -5944,7 +5882,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "youth_work.community_clubs",
     "contemporary_importance": 0.5,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain youth_work.community_clubs with contemporary importance 0.5 and decay rate 0.03."
   },
@@ -6043,7 +5980,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "education.equity_scholarships",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain education.equity_scholarships with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -6129,7 +6065,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "higher_education.curriculum_design",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain higher_education.curriculum_design with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -6220,7 +6155,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "higher_education.assessment_admin",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain higher_education.assessment_admin with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -6313,7 +6247,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "vocational_education.center_management",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain vocational_education.center_management with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -6416,7 +6349,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "education.career_services_internships",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain education.career_services_internships with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -6511,7 +6443,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "youth_sports.safety_and_management",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain youth_sports.safety_and_management with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -6608,7 +6539,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "library_services.youth_programming",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain library_services.youth_programming with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -6698,7 +6628,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "events.community_festival_management",
     "contemporary_importance": 0.5,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain events.community_festival_management with contemporary importance 0.5 and decay rate 0.03."
   },
@@ -6803,7 +6732,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "sports_management.amateur_leagues",
     "contemporary_importance": 0.5,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain sports_management.amateur_leagues with contemporary importance 0.5 and decay rate 0.03."
   },
@@ -6900,7 +6828,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "arts_education.children_workshops",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain arts_education.children_workshops with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -6990,7 +6917,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "community.safety.neighborhood_watch",
     "contemporary_importance": 0.5,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain community.safety.neighborhood_watch with contemporary importance 0.5 and decay rate 0.03."
   },
@@ -7090,7 +7016,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "arts.public_art_urban_design",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain arts.public_art_urban_design with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -7183,7 +7108,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "commerce.local_markets_management",
     "contemporary_importance": 0.5,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain commerce.local_markets_management with contemporary importance 0.5 and decay rate 0.03."
   },
@@ -7283,7 +7207,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "religion.community_service_management",
     "contemporary_importance": 0.5,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain religion.community_service_management with contemporary importance 0.5 and decay rate 0.03."
   },
@@ -7376,7 +7299,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "law_and_policy.religious_freedom_local",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain law_and_policy.religious_freedom_local with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -7470,7 +7392,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "charity.local_food_drives",
     "contemporary_importance": 0.5,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain charity.local_food_drives with contemporary importance 0.5 and decay rate 0.03."
   },
@@ -7563,7 +7484,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "charity.online_fundraising_management",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain charity.online_fundraising_management with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -7664,7 +7584,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "nonprofit.management.volunteer_programs",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain nonprofit.management.volunteer_programs with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -7764,7 +7683,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "arts.community_choir_management",
     "contemporary_importance": 0.5,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain arts.community_choir_management with contemporary importance 0.5 and decay rate 0.03."
   },
@@ -7854,7 +7772,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "social_inclusion.lgbtq_support_practice",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain social_inclusion.lgbtq_support_practice with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -7949,7 +7866,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "heritage.preservation_policy_and_practice",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.03,
-    "age_penalty_threshold": 70,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain heritage.preservation_policy_and_practice with contemporary importance 0.6 and decay rate 0.03."
   },
@@ -8042,7 +7958,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "culture.city_festival_governance",
     "contemporary_importance": 0.6,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain culture.city_festival_governance with contemporary importance 0.6 and decay rate 0.04."
   },
@@ -8137,7 +8052,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "hr_and_operations.shift_scheduling",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain hr_and_operations.shift_scheduling with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -8227,7 +8141,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "organizational_design.remote_work_policy",
     "contemporary_importance": 0.9,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain organizational_design.remote_work_policy with contemporary importance 0.9 and decay rate 0.05."
   },
@@ -8318,7 +8231,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "labor_policy.gig_economy",
     "contemporary_importance": 0.9,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain labor_policy.gig_economy with contemporary importance 0.9 and decay rate 0.05."
   },
@@ -8406,7 +8318,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "software.open_source_governance",
     "contemporary_importance": 0.9,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain software.open_source_governance with contemporary importance 0.9 and decay rate 0.05."
   },
@@ -8499,7 +8410,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "software.open_source_product_direction",
     "contemporary_importance": 0.9,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain software.open_source_product_direction with contemporary importance 0.9 and decay rate 0.05."
   },
@@ -8598,7 +8508,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "platform_governance.online_communities",
     "contemporary_importance": 0.9,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain platform_governance.online_communities with contemporary importance 0.9 and decay rate 0.05."
   },
@@ -8688,7 +8597,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "online_community.moderation_practice",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain online_community.moderation_practice with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -8773,7 +8681,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "political_discourse.online_forum_governance",
     "contemporary_importance": 0.9,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain political_discourse.online_forum_governance with contemporary importance 0.9 and decay rate 0.05."
   },
@@ -8866,7 +8773,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "civic_tech.neighborhood_app_design",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain civic_tech.neighborhood_app_design with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -8956,7 +8862,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "elections.administration.local",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain elections.administration.local with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -9044,7 +8949,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "public_policy.local_nightlife_regulation",
     "contemporary_importance": 0.7,
     "recency_decay_rate": 0.04,
-    "age_penalty_threshold": 65,
     "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain public_policy.local_nightlife_regulation with contemporary importance 0.7 and decay rate 0.04."
   },
@@ -9132,7 +9036,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "public_finance.municipal_budgeting",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain public_finance.municipal_budgeting with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -9225,7 +9128,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "urban_planning.zoning_and_permits",
     "contemporary_importance": 0.8,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain urban_planning.zoning_and_permits with contemporary importance 0.8 and decay rate 0.05."
   },
@@ -9315,7 +9217,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "data_privacy.app_governance",
     "contemporary_importance": 0.95,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.15,
     "domain_reasoning": "Evolving domain data_privacy.app_governance with contemporary importance 0.95 and decay rate 0.05."
   },
@@ -9413,7 +9314,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
     "expertise_domain": "cybersecurity.consumer_fraud_prevention",
     "contemporary_importance": 0.95,
     "recency_decay_rate": 0.05,
-    "age_penalty_threshold": 60,
     "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain cybersecurity.consumer_fraud_prevention with contemporary importance 0.95 and decay rate 0.05."
   },

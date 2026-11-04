@@ -13,7 +13,7 @@ The ISR Relevance Engine calculates which users are meaningfully affected by eac
 
 **Final Score [0.0-1.0]**: $\text{Relevance}_i = w_D \cdot D_i + w_G \cdot G_i + w_S \cdot S_i + w_X \cdot X_i$
 
-The microcommunity (the ad-hoc public) is formed from the issue's parameters, and the parameters follow from the issue type and the context. Nobody types a number. After publication the public can change the text, the options, the issue type and the context until voting opens (Part 10), and the parameters are derived again. Relevance is absolute, so adding a member does not change anyone else's relevance score.
+The ad-hoc public is formed from the issue's parameters, and the parameters follow from the issue type and the context. Nobody types a number. After publication the public can change the text, the options, the issue type and the context until voting opens (Part 10), and the parameters are derived again. Relevance is absolute, so adding a member does not change anyone else's relevance score.
 
 ---
 
@@ -108,7 +108,7 @@ e^{-\frac{(d - \mu)^2}{2\sigma^2}} & \text{if } d > \mu
 \end{cases}$$
 
 Where:
-- **d** = Distance (meters) from the issue location to the nearest of the user's declared places (types `home` and `work`), calculated using the Haversine formula. A person who works at the issue location (an owner or staff of a business or organisation) has stake through the workplace anchor and is counted as a person with the same formula; there are no representatives
+- **d** = Distance (meters) from the issue location to the nearest of the user's declared places (types `home`, `work` and `property`: a property registered in the system), calculated using the Haversine formula. A person who works at the issue location (an owner or staff of a business or organisation) has stake through the workplace anchor, and so does the owner of a property registered at the issue location; each is counted as a person with the same formula; there are no representatives
 - **μ** = Primary impact zone radius (meters) - where decay begins
 - **σ** = Decay steepness parameter (meters)
 
@@ -374,11 +374,11 @@ function haversineDistance(coords1, coords2) {
 
 function evaluateGeographics(user, issueLocation, muVal, sigmaVal) {
   const anchors = (user.geography || []).filter(
-    (g) => (g.type === "home" || g.type === "work") && g.geo
+    (g) => (g.type === "home" || g.type === "work" || g.type === "property") && g.geo
   );
   if (anchors.length === 0) return 0.0;
 
-  // nearest declared place (home or work)
+  // nearest declared place (home, work or registered property)
   const distance = Math.min(...anchors.map((g) => haversineDistance(issueLocation, g.geo)));
   const maxDistance = muVal + 3 * sigmaVal;
   if (distance > maxDistance) return 0.0; // Excluded by distance threshold
@@ -533,9 +533,9 @@ $$\text{Relevance}_i = w_D \cdot D_i + w_G \cdot G_i + w_S \cdot S_i + w_X \cdot
 - **0.1-0.3**: Low relevance (peripherally affected)
 - **0.0-0.1**: Minimal relevance (affected but very indirectly)
 
-### 6.3 Microcommunity Formation & Scaling Pruning
+### 6.3 Ad-hoc Public Formation & Scaling Pruning
 
-To form the **Microcommunity** (all users with Relevance > 0.15 threshold), we perform in-memory evaluation with mathematical pruning inside Firebase Cloud Functions to scale efficiently without scanning the entire vector database:
+To form the **ad-hoc public** (all users with Relevance > 0.15 threshold), we perform in-memory evaluation with mathematical pruning inside Firebase Cloud Functions to scale efficiently without scanning the entire vector database:
 
 ```javascript
 // 1. First Pass: Local calculation using demographics and distance
@@ -559,7 +559,7 @@ const vectorDocs = await db.getAll(...chunkRefs);
 // xScore = max over relatives of tie * R0 (Part 5.4), and the actual relevance score with in-memory Cosine Similarity
 const relevanceScore = w_D * dScore + w_G * gScore + w_S * sScore + w_X * xScore;
 
-// 6. Gather into Microcommunity if final score > 0.15
+// 6. Gather into the ad-hoc public if final score > 0.15
 if (relevanceScore > 0.15) {
   microcommunityMembers.push({
     user_id: user.uid,
@@ -620,9 +620,9 @@ Each document represents a submitted issue.
 
 The parameters are not typed by anyone. They are derived from the issue type and context. They change only when the public adopts a change of text, options, type or context (Part 10), and not at all once voting has opened (`parameters_frozen` = true).
 
-### 7.2 microcommunities Collection
+### 7.2 microcommunities Collection (Ad-hoc Public Records)
 
-Tracks microcommunity general statistics.
+Tracks ad-hoc public general statistics.
 - **Document ID**: Auto-generated unique string.
 - **Fields**:
 ```json
@@ -641,7 +641,7 @@ Tracks microcommunity general statistics.
 }
 ```
 
-### 7.3 microcommunity_members Collection
+### 7.3 microcommunity_members Collection (Ad-hoc Public Members)
 
 Tracks relevance component scores for members.
 - **Document ID**: `${microcommunity_id}_${user_id}`
@@ -808,12 +808,12 @@ System writes the issue to Firestore (parameters_version = 1)
     ↓
 Recalculate Relevance for all users in Firestore:
   - Phase 1: Local NoSQL Demographic evaluation from user_packs
-  - Phase 2: Local Haversine distance (nearest of home and work) & Gaussian G_score calculation
+  - Phase 2: Local Haversine distance (nearest of home, work and registered property) & Gaussian G_score calculation
   - Phase 3: Prune candidates if maxScore <= 0.15
   - Phase 4: Fetch actual profile_vectors from user_vectors for top 300
   - Phase 5: In-memory Cosine Similarity & combine with weights
     ↓
-Form Microcommunity (relevance_score > 0.15) and save members to Firestore
+Form the ad-hoc public (relevance_score > 0.15) and save members to Firestore
     ↓
 Notify members and launch the discussion phase
     ↓                                   ┌─ Any user can ask to join: accepted automatically,
@@ -881,7 +881,7 @@ X is recomputed from the new $R^0$ of the relatives, so a change of place or top
 
 ### 10.5 Weights are fixed when a vote opens
 
-Relevance is absolute, so a recomputation does not change another member's relevance score. The final weights, however, are normalised to the public mean (and Contribution to its mean plus the reference unit), which depends on who is in the public. They are therefore computed from the members and parameters at the moment a vote opens and stored as a snapshot (`vote_snapshot_id`). Each vote on a change and the issue's own vote have their own snapshot.
+Relevance is absolute, so a recomputation does not change another member's relevance score. The final weights, however, are normalised to the public mean (and Contribution by the public's mean absolute Contribution plus one reference unit), which depends on who is in the public. They are therefore computed from the members and parameters at the moment a vote opens and stored as a snapshot (`vote_snapshot_id`). Each vote on a change and the issue's own vote have their own snapshot.
 
 ### 10.6 Joining on request
 
