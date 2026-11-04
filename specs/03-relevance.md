@@ -72,11 +72,11 @@ Path C duplicates the relevance logic in the browser and is used only when the C
 | Id | Intended | As built |
 |---|---|---|
 | C-10 | D is a soft score, never a gate (PD-1, *decided*) | Path A: binary hard gate. Path B: never 0. |
-| C-11 | No hard exclusion (PD-1); the docs offer "student"/"retired" and `features` rules | `features` excludes everyone; "student"/"retired" give D = 1 |
+| C-11 | No hard exclusion (PD-1); the docs offer "student"/"retired" and `features` rules | `features` excludes everyone (`users.features` is empty); "student"/"retired" give D = 1. A3: `features` also matched against interests (`activity` names); `places` / `property_kinds` are a cause to include |
 | C-08 | All affected members take part; w_R does not affect inclusion (PD-1, *partly decided*) | Top-100 cap, creator always added; seeded members = discussion participants |
 | C-06 | "≥ 0.15" (manifesto l.204, mvp-current-spec l.32, skill l.27) vs "> 0.15" (Relevance doc l.519, l.542; Request Guide l.365; `mvp.html` l.701) | `> 0.15` (`functions/index.js:321`) |
 | C-07 | "Can be changed at issue creation" (manifesto l.205) vs "do not expose the threshold" (manifesto l.385; project-map l.40) | Not changeable (literal 0.15) |
-| C-12 | User anchor "home or work" (Relevance doc l.109) vs home only (same doc, l.365-366) | Home only; no anchor means excluded (A) or G = 0 (B) |
+| C-12 | Decided by the docs (2026-11-04, l.111, l.374-388): the nearest of home, work and registered property | Home only at `0620f27`. A3 (branch, not merged): nearest of home, work and property in A and B; stored G of existing members not recomputed (see A3 CHANGES) |
 | C-13 | The formula has no cutoff (Relevance doc l.103-106), but the pipeline and code samples cut off at μ + 3σ (l.27, l.369-370; Analyzer l.414). PD-1 may forbid hard exclusion (open question 1). | A: cutoff; B: no cutoff, σ = 0.5·μ |
 | C-14 | Relevance doc §3.2 and Analyzer §2.3.1 give different μ/σ tables (e.g. district σ 200–500 m vs 1200–2500 m) | Defaults μ = 100 m, σ = 50 m, which appear in neither table; 29 issues carry them (IF l.202) |
 | C-15 | The Request Guide calls σ the "impact radius" (l.88), with values matching the Relevance doc's μ ranges | The client derives σ = fade / 3 |
@@ -113,4 +113,5 @@ Path C duplicates the relevance logic in the browser and is used only when the C
 
 ## Change history
 - S0 (2026-10-12): created.
+- A3 (2026-11-05, branch `a3-options-and-g-anchors`, not merged): `functions/geo.js` (nearest of home, work and property; G formula and μ + 3σ cutoff unchanged) and `functions/demographics.js` (D with `places` and `property_kinds` from the Analyzer's `demographic_rules`; a match sets D = 1 and skips the distance cutoff and the `features` check; age, employment and family checks still apply; `features` also matched against interests). Members get `G_anchor_type` and `D_match`. Python port in `relevance_evaluator.py` (path B keeps its category heuristics; a place match gives D = 1). Shared fixture `tests/fixtures/a3_d_g_cases.json`. Impact: `tasks/A3-impact-report.md`.
 - A1 (open): R1 (canonical `relevance()` with an optional clamp, never gating on D) and R8 (wire-up in `functions/index.js` and `relevance_evaluator.py`).

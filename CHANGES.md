@@ -1,5 +1,45 @@
 # CHANGES
 
+## A3: option fields, G anchors, places in D (2026-11-05)
+
+Branch `a3-options-and-g-anchors` (from `a2-expertise-cleanup`). Spec: `specs/tasks/A3-options-and-g-anchors.md`. Decisions: PD-8; author answers of 2026-11-05.
+
+### What changed
+
+**Options** (`prototype/js/options.js` new, `main.js`, `index.html`).
+- The "Propose Decision Option" form asks for Cost (stored in the as-built field `budget`), Funding source and Resources needed (a list of plain text), money first. These fields are option content: no score reads them, and numbers in them are fine.
+- The form shows the issue's analysed needs (`resources_needed`, money first) read-only as guidance.
+- Option cards, the option window and the voting view show cost, funding source and resources; older options show "not stated". The new texts are HTML-escaped.
+
+**G** (`functions/geo.js` new). d is the distance to the nearest of home, work and property; the G formula and the μ + 3σ cutoff are unchanged. Used by `checkIssue`, `createIssue`, the map preview, the unused browser copy `relevance.js` and `relevance_evaluator.py` (path B keeps its own μ/σ rule). A user with any anchor is considered; one with none is excluded unless they are the creator or have a place match. Members get `G_anchor_type`.
+
+**D** (`functions/demographics.js` new).
+- The Analyzer's `demographic_rules` gets `places` (companies, organisations or properties the issue is about) and `property_kinds` (`flat`, `house`, `land`, `garage`, `commercial`, `other`). Derived like every parameter; cleaned on the server.
+- A match on a `work` place name or a `property` entry (name or kind) is a cause to include: D = 1, and the distance cutoff and the `features` check do not drop the person. The age, employment and family checks still apply. Members get `D_match`.
+- `features` is also matched against interests (names of `activity` skills). D stays pass/fail (soft D is PD-1, separate).
+- Path B (`relevance_evaluator.py`) keeps its category heuristics; a place match gives D = 1.
+- `users` are read with `skills` and `features` so interests can be matched.
+
+### Tests
+
+- `python -m unittest discover -s tests`: 24 OK (shared D/G fixture; path B unchanged when home is nearest, also against a copy of the pre-A3 file).
+- `cd functions && npm test`: 16 OK (shared fixture; G formula against the as-built code; option validation, escaping, "not stated", needs ordering).
+- Emulator: a Check at the Argo Industry site gave G from `work` for all 25 previewed members. A proposed option with cost, funding source and two resources was stored and shown on the card and in the option window. The voting view was not checked in the browser (the pane was hidden); it uses the same tested display helper. For that test, `issues/179` in the emulator was overwritten with test data (emulator only).
+
+### Not done: recomputing existing publics (R16)
+
+Blocked, author decision pending. The stored G of current members cannot be reproduced from the stored data (`specs/tasks/A3-impact-report.md`):
+- 112 of 192 publics have no stored location, μ or σ at all (seeded discussions carry none; only the 80 `issues` docs do).
+- In the 80 others, the stored G matches neither as-built rule for most members (162 / 166 of 1,323 match the server / path B rule with the home anchor).
+- Only 151 of those 1,323 members have a work anchor nearer than home, and G would rise for 6 of them.
+- 10,115 non-member places (counted per public, in 78 publics) would pass the distance stage only through a work anchor; they are not added (no S).
+
+`scripts/migrate_a3.py` was therefore not written.
+
+### Not changed
+- No places or property kinds exist in the data yet, and there is no profile flow to register property. Without a Gemini key the fallback derives empty `places`, so the place rule is exercised by the tests only.
+- D for `features` stays pass/fail; `users.features` is empty for everyone.
+
 ## A2: Expertise clean-up, read-only parameters, data migration (2026-11-04)
 
 Branch `a2-expertise-cleanup` (from `docs/specs-restructure`). Spec: `specs/tasks/A2-expertise-cleanup.md`. Decision: PD-8 (supersedes PD-2).

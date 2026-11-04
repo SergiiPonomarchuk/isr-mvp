@@ -91,7 +91,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [S0-restructure-specs](tasks/S0-restructure-specs.md) | open (step 3, batch 1 done) | all; README |
 | [A1-canonical-isr](tasks/A1-canonical-isr.md) | open (DRAFT; R2, R9 amended by A2) | 03, 04, 05, 06 |
 | [A2-expertise-cleanup](tasks/A2-expertise-cleanup.md) | implemented on branch `a2-expertise-cleanup`; live migration pending (author) | 02, 04, 07, 10, 11 |
-| [A3-options-and-g-anchors](tasks/A3-options-and-g-anchors.md) | open (DRAFT) | 02, 03, 06, 10 |
+| [A3-options-and-g-anchors](tasks/A3-options-and-g-anchors.md) | implemented on branch except R16 (recompute existing publics: blocked) | 02, 03, 06, 10 |
 
 S0 artefacts: [S0-inventory-report](tasks/S0-inventory-report.md), [S0-structure-proposal](tasks/S0-structure-proposal.md), [S0-decisions-to-import](tasks/S0-decisions-to-import.md).
 
@@ -117,8 +117,8 @@ The ids come from `tasks/S0-inventory-report.md` §3, where each contradiction i
 | C-08 | Top-100 cap, creator always added, seeded membership | 03 | partly decided (PD-1: all affected members take part) |
 | C-09 | Joining by special request | 03 | open |
 | C-10 | D tiers vs binary gate vs heuristic | 03 | decided (PD-1: D is soft, never a gate) |
-| C-11 | Unimplemented employment values; `features` excludes everyone | 03 | partly decided (PD-1: no hard exclusion) |
-| C-12 | G anchor home vs home-or-work | 03 | open |
+| C-11 | Unimplemented employment values; `features` excludes everyone | 03 | partly decided (PD-1: no hard exclusion); A3 adds interests and places to D |
+| C-12 | G anchor home vs home-or-work | 03 | decided (docs 2026-11-04: nearest of home, work and property); implemented by A3 for new publics |
 | C-13 | G cutoff at μ + 3σ | 03 | open |
 | C-14 | μ/σ tables differ | 03 | open |
 | C-15 | Meaning of σ ("impact radius") | 03 | open |

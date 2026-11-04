@@ -58,7 +58,7 @@ Code use (grep of `collection("…")` in `functions/index.js` and `prototype/js/
 - **C-28** (collection part): the Expertise doc's record structures and collections do not exist. Expertise reads `users.skills[]` instead (education and work-experience records; `activity` records no longer count after A2, PD-8).
 - **C-32** (collection part): the Contribution doc's `issue_actions` / `user_action_vectors` / `absolute_contribution` correspond to the real `actions` and `contribution_score` (IF l.86, l.89).
 - The Analyzer's `users` fields (`roles`, `building_id`, `user_location`, `education_records`, `experience_records`, `resources`) do not exist (SCHEMA l.41-55).
-- Options carry no funding source or needed resources (PD-8); task A3. See [06](06-aggregation-and-voting.md).
+- Options carry no funding source or needed resources (PD-8) at `0620f27`; A3 adds them (branch, not merged). See [06](06-aggregation-and-voting.md).
 
 ## Interfaces
 - [03 relevance](03-relevance.md) reads `user_packs`, `user_vectors` and the issue parameters, and writes `microcommunity_members` (D/G/S/X, `relevance_score`) and the cached maps.
@@ -78,4 +78,5 @@ None. There is no schema validation, no test suite, and no Firestore rules that 
 
 ## Change history
 - S0 (2026-10-12): created.
+- A3 (2026-11-05, branch `a3-options-and-g-anchors`, not merged): `discussions.options_v2[]` gets `funding_source` (string) and `resources_needed` (strings); cost stays in `budget`. `microcommunity_members` get `G_anchor_type` (`home`/`work`/`property`) and `D_match` (`place`/`property_kind`/`feature`/null) for new publics. `users.geography[]` may hold `type: "property"` entries with `kind` (`flat`, `house`, `land`, `garage`, `commercial`, `other`) and optional `place`; none exist in the data. The Analyzer's `demographic_rules` gets `places` and `property_kinds`.
 - A2 (2026-11-04, branch `a2-expertise-cleanup`, not merged): new server-only collection `issue_drafts` (parameters derived by `checkIssue`; read and deleted by `createIssue`; `functions/params.js`). Removed fields: `microcommunity_members.resources_expertise`; `issues`/`discussions` `w_education`, `w_experience`, `w_resources`, `reasoning_education`, `reasoning_experience`, `reasoning_resources`. `birthDate` required by `seed_db.py`. Data changed on the emulator only (`scripts/migrate_a2.py`, report `tasks/A2-migration-report.md`); the live data still has the old fields until the author runs the migration.

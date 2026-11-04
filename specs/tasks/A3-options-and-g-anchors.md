@@ -1,6 +1,6 @@
 # SPEC A3: Option fields (cost, funding source, resources), G anchors (home, work, property), places in D
 
-Status: DRAFT (waiting for author approval)
+Status: IMPLEMENTED on branch except R16 (blocked, see status log)
 Branch: a3-options-and-g-anchors (from a2-expertise-cleanup; never main)
 Decisions: PD-8 (resources and money are option-level; property counts only through Relevance). Docs as committed by the author on 2026-11-04.
 Follows: A2. Next: A1 (canonical ISR module).
@@ -103,4 +103,9 @@ None. Decided 2026-11-05 (author): (1) numbers in option text are content, not p
 
 ## 7. Status log
 
-Plan approved: ___  Implementation: ___  Tests: ___  Impact report: ___  CHANGES.md: ___  Deviations: ___
+- Plan approved: 2026-11-05 (author).
+- Implementation: R1-R15 done on branch `a3-options-and-g-anchors`. R16 (recompute existing publics) blocked: stored G is not reproducible from stored data; author decision pending (CHANGES.md).
+- Tests: Python 24 OK; Node 16 OK; emulator AC5 partly (voting view not checked in the browser).
+- Impact report: `A3-impact-report.md`.
+- CHANGES.md: written.
+- Deviations: path B keeps its category heuristics for D (only the place rule added); R16 not done.
