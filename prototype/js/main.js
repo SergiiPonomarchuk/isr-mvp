@@ -2264,7 +2264,7 @@ function initTopicDetailViews() {
               
               var metaDetails = '';
               if (option.author_name && option.author_name !== 'System') {
-                metaDetails = '<div style="font-size: 0.8rem; color: var(--text-muted); margin-left: 24px; margin-top: 2px;">Proposed by ' + option.author_name + ' &middot; <b>Budget: ' + option.budget + '</b></div>';
+                metaDetails = '<div style="font-size: 0.8rem; color: var(--text-muted); margin-left: 24px; margin-top: 2px;">Proposed by ' + option.author_name + ' &middot; ' + ISROptions.optionDetailsHtml(option) + '</div>';
               }
 
               return '<label class="topic-option-row ' + (inactive ? 'topic-option-disabled' : '') + '" style="display: flex; flex-direction: column; align-items: stretch; gap: 4px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s;">' +
@@ -2520,7 +2520,7 @@ function initTopicDetailViews() {
         '<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">' +
           '<div>' +
             '<div style="font-weight: 700; font-size: 0.98rem; color: var(--text);">' + opt.title + '</div>' +
-            '<div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">Proposed by ' + opt.author_name + ' &middot; <b>Budget: ' + opt.budget + '</b></div>' +
+            '<div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">Proposed by ' + opt.author_name + ' &middot; ' + ISROptions.optionDetailsHtml(opt) + '</div>' +
           '</div>' +
           '<div class="option-reactions-container" style="display: flex; gap: 6px; align-items: center;" onclick="event.stopPropagation();">' +
             existingReactionsHtml +
@@ -2847,7 +2847,7 @@ function initTopicDetailViews() {
                      '<div class="topic-detail-block-title">Winning Option</div>' +
                      '<div class="winning-option-card" style="padding: 12px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; background: var(--surface-muted);">' +
                        '<div style="font-weight: 700; font-size: 0.98rem; color: var(--text);">' + (winningOption.label || winningOption.title || 'Option') + '</div>' +
-                       '<div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Proposed by <b>' + winningOption.author_name + '</b> &middot; Budget: <b>' + winningOption.budget + '</b></div>' +
+                       '<div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Proposed by <b>' + winningOption.author_name + '</b> &middot; ' + ISROptions.optionDetailsHtml(winningOption) + '</div>' +
                      '</div>' +
                    '</div>';
     }
@@ -2878,7 +2878,7 @@ function initTopicDetailViews() {
       
       var metaDetails = '';
       if (option.author_name && option.author_name !== 'System') {
-        metaDetails = '<div style="font-size: 0.8rem; color: var(--text-muted); margin-left: 24px; margin-top: 2px;">Proposed by ' + option.author_name + ' &middot; <b>Budget: ' + option.budget + '</b></div>';
+        metaDetails = '<div style="font-size: 0.8rem; color: var(--text-muted); margin-left: 24px; margin-top: 2px;">Proposed by ' + option.author_name + ' &middot; ' + ISROptions.optionDetailsHtml(option) + '</div>';
       }
 
       return '<div class="topic-option-row" style="display: flex; flex-direction: column; align-items: stretch; gap: 4px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; cursor: default; background: var(--surface);">' +
@@ -3700,6 +3700,8 @@ function initTopicDetailViews() {
                 author_uid: opt.author_uid || "",
                 author_name: opt.author_name || "System",
                 budget: opt.budget || "N/A",
+                funding_source: opt.funding_source || "",
+                resources_needed: opt.resources_needed || [],
                 description: opt.description || []
               }));
             } else {
@@ -4452,6 +4454,8 @@ function initTopicDetailViews() {
                 score: 0,
                 author_name: opt.author_name || "System",
                 budget: opt.budget || "N/A",
+                funding_source: opt.funding_source || "",
+                resources_needed: opt.resources_needed || [],
                 description: opt.description || []
               }));
             } else if (issue.options && issue.options.length > 0) {
@@ -4460,6 +4464,8 @@ function initTopicDetailViews() {
                 score: 0,
                 author_name: opt.author_name || "System",
                 budget: opt.budget || "N/A",
+                funding_source: opt.funding_source || "",
+                resources_needed: opt.resources_needed || [],
                 description: opt.description || []
               }));
             } else {
@@ -5112,13 +5118,14 @@ function initTopicDetailViews() {
           snap.forEach(doc => {
             const user = doc.data();
             if (user.uid.toString() === currentUserId.toString()) return;
-            const homeAnchor = (user.geography || []).find(g => g.type === "home");
-            if (homeAnchor && homeAnchor.geo) {
-              const dist = localHaversine(newTopicGeo, homeAnchor.geo);
+            // A3: nearest of home, work and property
+            (user.geography || []).forEach(g => {
+              if (!g || !["home", "work", "property"].includes(g.type) || !Array.isArray(g.geo)) return;
+              const dist = localHaversine(newTopicGeo, g.geo);
               if (dist < minDistance) {
                 minDistance = dist;
               }
-            }
+            });
           });
         } catch (err) {
           console.warn("Could not query user database for nearest distance:", err);
@@ -7714,7 +7721,7 @@ function initTopicDetailViews() {
         proposalModalBody.innerHTML = `
           <div style="margin-bottom: 16px;">
             <div style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
-              Proposed by <b>${opt.author_name}</b> &middot; Budget: <b>${opt.budget}</b>
+              Proposed by <b>${opt.author_name}</b> &middot; ${ISROptions.optionDetailsHtml(opt)}
             </div>
             <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; color: var(--text);">Implementation Steps:</h4>
             <ol style="padding-left: 20px; color: var(--text);">
@@ -7753,8 +7760,26 @@ function initTopicDetailViews() {
             <input type="text" id="proposal-title-input" placeholder="e.g. Install Smart Keypad Locks" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); font-size: 0.9rem;">
           </div>
           <div class="proposal-form-group">
-            <label for="proposal-budget-input">Budget</label>
-            <input type="text" id="proposal-budget-input" placeholder="e.g. $1,200" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); font-size: 0.9rem;">
+            <label style="display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; color: var(--text);">What the issue needs (from the analysis; guidance only)</label>
+            <div style="font-size: 0.8rem; color: var(--text-muted); background: var(--surface-soft); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;">
+              ${ISROptions.issueNeedsHtml(disc.resources_needed)}
+            </div>
+          </div>
+          <div class="proposal-form-group">
+            <label for="proposal-budget-input">Cost</label>
+            <input type="text" id="proposal-budget-input" maxlength="100" placeholder="e.g. €1,200, or no cost" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); font-size: 0.9rem;">
+          </div>
+          <div class="proposal-form-group">
+            <label for="proposal-funding-input">Funding source</label>
+            <input type="text" id="proposal-funding-input" maxlength="300" placeholder="e.g. building maintenance fund, municipal grant, donations, no money needed" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); font-size: 0.9rem;">
+          </div>
+          <div class="proposal-form-group">
+            <label for="proposal-resource-input">Resources needed</label>
+            <div id="added-resources-container" style="margin-bottom: 6px;"></div>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="proposal-resource-input" maxlength="300" placeholder="e.g. 2 ladders, a meeting hall for 50 people" style="flex: 1; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); font-size: 0.85rem;">
+              <button type="button" id="add-resource-btn" style="padding: 6px 12px; font-size: 0.85rem; font-weight: 600; border-radius: 6px; background: var(--surface-muted); border: 1px solid var(--border); color: var(--text); cursor: pointer;">Add</button>
+            </div>
           </div>
           
           <div class="proposal-steps-builder">
@@ -7782,6 +7807,36 @@ function initTopicDetailViews() {
         `;
 
         let tempSteps = [];
+        let tempResources = [];
+        const addedResourcesContainer = document.getElementById('added-resources-container');
+        const resourceInput = document.getElementById('proposal-resource-input');
+        function renderTempResources() {
+          addedResourcesContainer.innerHTML = tempResources.length === 0
+            ? '<div style="font-size: 0.8rem; color: var(--text-muted); font-style: italic; padding: 4px;">No resources added.</div>'
+            : tempResources.map((r, idx) => `
+              <div class="added-step-row" data-index="${idx}">
+                <span style="font-weight: 500; color: var(--text);">${idx + 1}. ${ISROptions.escapeHtml(r)}</span>
+                <button type="button" class="added-resource-delete" data-index="${idx}">Remove</button>
+              </div>`).join('');
+          addedResourcesContainer.querySelectorAll('.added-resource-delete').forEach(delBtn => {
+            delBtn.onclick = function() {
+              tempResources.splice(parseInt(this.getAttribute('data-index')), 1);
+              renderTempResources();
+            };
+          });
+        }
+        renderTempResources();
+        document.getElementById('add-resource-btn').onclick = function() {
+          const value = resourceInput.value.trim();
+          if (!value) return;
+          if (tempResources.length >= ISROptions.LIMITS.resources) {
+            alert('At most ' + ISROptions.LIMITS.resources + ' resources.');
+            return;
+          }
+          tempResources.push(value);
+          resourceInput.value = '';
+          renderTempResources();
+        };
         const addedStepsContainer = document.getElementById('added-steps-container');
         const stepDescInput = document.getElementById('step-desc-input');
         const stepLeaderSelect = document.getElementById('step-leader-select');
@@ -7840,15 +7895,15 @@ function initTopicDetailViews() {
 
         // Bind Submit button
         proposalSubmitBtn.onclick = async function() {
-          const title = document.getElementById('proposal-title-input').value.trim();
-          const budget = document.getElementById('proposal-budget-input').value.trim();
-
-          if (!title) {
-            alert("Please specify a proposal title.");
-            return;
-          }
-          if (!budget) {
-            alert("Please specify a budget.");
+          // A3: cost, funding source and resources are option content; nothing is scored.
+          const checked = ISROptions.validateOption({
+            title: document.getElementById('proposal-title-input').value,
+            cost: document.getElementById('proposal-budget-input').value,
+            funding_source: document.getElementById('proposal-funding-input').value,
+            resources: tempResources.concat([resourceInput.value])
+          });
+          if (!checked.ok) {
+            alert(checked.errors.join('\n'));
             return;
           }
           if (tempSteps.length === 0) {
@@ -7864,8 +7919,10 @@ function initTopicDetailViews() {
 
           const newOption = {
             id: 'opt_' + Date.now(),
-            title: title,
-            budget: budget,
+            title: checked.option.title,
+            budget: checked.option.budget,
+            funding_source: checked.option.funding_source,
+            resources_needed: checked.option.resources_needed,
             author_uid: currentUserId,
             author_name: authorName,
             description: tempSteps,

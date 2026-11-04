@@ -140,9 +140,10 @@ async function runLocalRelevanceCheck(title, description, location, submitterId,
 
     let distance = 0;
     let gScore = 1.0;
-    const homeAnchor = (user.geography || []).find((g) => g.type === "home");
-    if (homeAnchor && homeAnchor.geo) {
-      distance = localHaversine(location, homeAnchor.geo);
+    // A3: nearest of home, work and property (this browser copy is not called; kept in step)
+    const anchors = (user.geography || []).filter((g) => g && ["home", "work", "property"].includes(g.type) && g.geo);
+    if (anchors.length > 0) {
+      distance = Math.min(...anchors.map((g) => localHaversine(location, g.geo)));
       const maxDistance = suggestedParams.mu + 3 * suggestedParams.sigma;
       if (distance > maxDistance && suggestedParams.weights.w_G > 0 && !isCreator) return;
 
