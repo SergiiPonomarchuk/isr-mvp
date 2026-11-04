@@ -1,4 +1,4 @@
-# SPEC A3: Option fields (cost, funding source, resources) and G anchors (home, work, property)
+# SPEC A3: Option fields (cost, funding source, resources), G anchors (home, work, property), places in D
 
 Status: DRAFT (waiting for author approval)
 Branch: a3-options-and-g-anchors (from a2-expertise-cleanup; never main)
@@ -38,8 +38,9 @@ Options carry cost, funding source and needed resources, and G measures distance
 ## 3. Non-goals
 
 - No change to μ, σ, the 3σ cutoff, the threshold, the top-100 / top-25 caps or the G formula itself (C-06, C-08, C-13, C-14, C-15).
-- No recomputation of stored relevance or membership of existing publics (see open question 2).
-- No property registration flow or ownership check (see open question 3).
+- No new members for existing publics (R17 only reports them).
+- No property registration flow in the profile and no ownership check (later task); property entries are read when present.
+- D stays pass/fail (PD-1 soft D is a separate task).
 - No option timeline field, no vote tally change, no votes or tasks logic (A1 and later).
 - No change to Expertise, the Analyzer or the parameter drafts (A2).
 - No deploy, no Firestore rules change, no write to the live project. No edits under `docs/`.
@@ -50,11 +51,11 @@ Options carry cost, funding source and needed resources, and G measures distance
 - R1 The option form gets three content fields, in this order (money first, Analyzer l.484):
   - **Cost** (required, free text such as "€1,200" or "no cost"). Stored as `budget` (as-built name, so that old options still display); shown as "Cost".
   - **Funding source** (required, free text: who pays, e.g. "building maintenance fund", "municipal grant", "donations", "no money needed"). New field `funding_source`.
-  - **Resources needed** (zero or more rows; each row is a free-text description and an optional "provided by" text). New field `resources_needed: [{description, provided_by}]`.
+  - **Resources needed** (zero or more rows of free text, e.g. "2 ladders", "a meeting hall for 50 people"). New field `resources_needed: [string]`. Who does what is already named per implementation step (`in_charge`).
 - R2 The form shows, read-only, the issue's `resources_needed` from the analysis (type, importance, explanation; money first) as guidance. Nothing is pre-filled into the option and nothing is scored.
 - R3 These are option content, not ISR parameters: they give nobody weight and are never read by any score.
 - R4 Display: option cards, the option window and the voting view show cost, funding source and resources. Options without the new fields show "not stated" (old data is not migrated).
-- R5 A pure function `validateOption(input)` (new `prototype/js/options.js`) checks required fields, trims text and caps lengths (title 200, cost 100, funding source 300, each resource 300, at most 20 resources). The form uses it.
+- R5 A pure function `validateOption(input)` (new `prototype/js/options.js`) checks required fields, trims text, drops empty resource rows and caps lengths (title 200, cost 100, funding source 300, each resource 300, at most 20 resources). The form uses it.
 
 ### G anchors
 - R6 New `functions/geo.js` with pure functions: `haversineDistance`, `relevanceAnchors(geography)` (entries of type `home`, `work` or `property` with a valid `geo`), `nearestAnchorDistance(geography, location)` (null when none) and `gScore(distance, mu, sigma)`, the as-built formula.
@@ -62,8 +63,28 @@ Options carry cost, funding source and needed resources, and G measures distance
 - R8 `relevance_evaluator.py` uses the nearest of home, work and property (its own μ and σ rule stays as built). `prototype/js/relevance.js` and the map preview in `main.js` use the nearest anchor too.
 - R9 Members get `G_anchor_type` (`home`, `work` or `property`) next to `G_score`, so that the record shows which place gave the stake. No address or coordinates are copied.
 
+### Property and places in D (author, 2026-11-05)
+Property is recorded in two ways, and D can use both:
+
+| Where | Example | G | D |
+|---|---|---|---|
+| Location object in `users.geography` with `type: "property"`, a `kind` (`flat`, `house`, `land`, `garage`, `commercial`, `other`) and optional `place` (a name) | a flat in another district, a garage | anchor (R6-R8) | matched by `places` and `property_kinds` |
+| Interests and features (movable things, hobbies): `users.features[]` and the names of `activity` skills | car, boat, bike, pets | no | matched by `features` |
+
+Work locations count the same way: the `place` of a `work` entry is the company or organisation name.
+
+- R11 The Analyzer's `demographic_rules` gets two optional lists: `places` (names of companies, organisations or properties the issue is about, e.g. "Argo Industry") and `property_kinds` (e.g. `garage`). Prompt, normaliser, fallback (empty lists) and `paramsFromAi` carry them; they are derived like every other parameter (nobody types them).
+- R12 A **place match is a cause to include** a person: if a `work` or `property` entry of the user matches `places` (case-insensitive, whole name contained in either direction) or a `property` entry's `kind` is in `property_kinds`, then D = 1.0 and the user is **not excluded by the distance cutoff** (μ + 3σ) or by the `features` check. Example: for an issue about Argo Industry's parking, an employee of Argo Industry who lives far away is still considered; whether they join depends on the relevance threshold as for everyone. The age, employment and family checks still apply.
+- R13 `features` is matched against `users.features` and also against the names of the user's `activity` skills (interests). It stays a pass/fail check as built (D as a soft score is PD-1, a separate task).
+- R14 Members get `D_match` (`place`, `property_kind`, `feature` or absent) next to `D_score`, so the record shows the cause of inclusion. No names or addresses are copied.
+- R15 The same D logic in `createIssue`, `checkIssue` and `relevance_evaluator.py` (one pure JS function in `functions/geo.js` or a new `functions/demographics.js`; a Python port with a shared test fixture).
+
+### Existing publics (author, 2026-11-05: recompute)
+- R16 New `scripts/migrate_a3.py` (dry run by default, emulator only unless `--project … --i-know-this-is-live`): for every current member of the 192 publics recompute G from the nearest anchor (stored μ, σ, issue location), relevance with the public's relevance weights and the stored D, S, X, then `normalized_relevance` and `isr_score` (A2 aggregation; ISR weights recovered as in A2). Membership is unchanged; D is unchanged (no seeded rule has `places`). Relevance weights: the issue's stored `w_demographic … w_social` where they reproduce the stored relevance (7 publics), otherwise recovered from the stored D, G, S, X and relevance (185 publics; the fit must reproduce every stored value within 0.002 and give non-negative weights summing to 1, or the public is reported and left unchanged).
+- R17 The report also counts non-members who would now pass the distance stage (nearest anchor within μ + 3σ but home beyond it). They are not added: their S cannot be computed (no issue vectors).
+
 ### Specs
-- R10 Update `03-relevance.md` (C-12 decided by the docs: home, work and property), `02-data-model.md` (new option fields, `G_anchor_type`), the README contradiction map, and the PD-2 row of `02` gaps ("options carry no funding source").
+- R10 Update `03-relevance.md` (C-12 decided by the docs: home, work and property; places in D), `02-data-model.md` (option fields, `G_anchor_type`, `D_match`, the `property` geography entry with `kind`), the README contradiction map (C-11, C-12), and the `02` gap "options carry no funding source".
 
 ## 5. Acceptance criteria
 
@@ -71,15 +92,14 @@ Options carry cost, funding source and needed resources, and G measures distance
 - AC2 Unit tests for R5: missing title, cost or funding source refused; trimming; caps; empty resource rows dropped.
 - AC3 Python test for R8: `evaluate_geographics` picks the nearest anchor and returns the same value as before for a user whose nearest anchor is home.
 - AC4 Impact report on claude_export (no writes): for the 192 publics, how many current members have a work anchor nearer than home, and how many non-members would pass the G stage of the 3σ cutoff under the new rule. It uses stored μ, σ and issue locations. S for non-members cannot be computed (no issue vectors), so membership itself is not predicted.
+- AC4b Unit tests for R12-R13 (JS and Python on one fixture): place match on a work place name; property kind match; a far-away place match is not cut by distance; features matched from interests; age check still applies to a place match.
+- AC4c `migrate_a3.py` on the emulator: dry run report, `--apply`, second run changes nothing; members whose nearest anchor is home keep the same G and relevance (within 0.001).
 - AC5 Emulator, browser: a member proposes an option with cost, funding source and two resources; the card, the option window and the voting view show them; an old option still displays. A Check for a location near many work anchors gives G from the work anchor (`G_anchor_type` = `work`).
 - AC6 No file under `docs/` changed; no deploy; no write outside the emulator.
 
 ## 6. Open questions
 
-1. **Cost as free text.** "Nobody types a number" is about ISR parameters; I read the cost of an option as content that members write and discuss, so it stays free text typed by the proposer. Confirm?
-2. **Existing publics.** The new G rule applies to issues created from now on. Stored relevance and membership of the 192 existing publics stay as they are (recomputing them needs S, and the issue vectors are not stored). AC4 reports what would change. Accept, or should the stored G and relevance of current members be recomputed (membership unchanged)?
-3. **Property anchors.** No user has a `property` anchor, and the profile has no way to register one. A3 makes the code count them when present. Is a registration flow (with a check that the property exists) a later task, or part of A3?
-4. **"Provided by"** in a resource row is free text (a name, an organisation, "to be found"). It is not linked to user accounts and gives no weight. Enough for now?
+None. Decided 2026-11-05 (author): (1) numbers in option text are content, not parameters; cost is free text; (2) recompute existing members (R16); (3) property as location (G and D) or interest (D only), with a kind; a place name (e.g. the employer) is a cause to include (R11-R14); (4) no "provided by".
 
 ## 7. Status log
 
