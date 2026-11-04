@@ -18,8 +18,13 @@ What it does per ad-hoc public (members grouped by microcommunity_id):
     the stored member values (one of the three as-built triples, IF l.100).
   - resources_expertise deleted from members; expertise-weight and related fields
     deleted from issues and discussions.
-  - discussions.isr_scores is NOT changed: it is the vote-tally number (IF l.101),
+  - discussions.isr_scores is NOT recomputed: it is the vote-tally number (IF l.101),
     which is task A1.
+  - A member born after the issue's registration cannot be a member (author
+    decision, 2026-11-04): the member doc is deleted, the user id is removed from
+    the discussion's relevance_scores and isr_scores maps, member_count and
+    member_accepted of the public are reduced, and the public is recomputed
+    without them. Chat messages and participants are not touched.
 Prints no personal fields; user ids only.
 """
 from __future__ import annotations
@@ -65,7 +70,8 @@ def load_export():
 def load_firestore(db):
     members = [dict(d.to_dict(), _doc_id=d.id) for d in db.collection("microcommunity_members").stream()]
     discussions = {d.id: d.to_dict() for d in db.collection("discussions").select(
-        ["created_at", "w_relevance", "w_expertise", "w_contribution", *ex.OBSOLETE_ISSUE_FIELDS]).stream()}
+        ["created_at", "w_relevance", "w_expertise", "w_contribution", "relevance_scores", "isr_scores",
+         *ex.OBSOLETE_ISSUE_FIELDS]).stream()}
     issues = {d.id: d.to_dict() for d in db.collection("issues").stream()}
     births = {}
     for d in db.collection("users").select(["uid", "birthDate"]).stream():
@@ -86,6 +92,7 @@ def plan(members, discussions, issues, births):
     skipped = {}                   # public id -> reason
     missing_birth = set()
     missing_reg = []
+    unborn = []                    # (public id, user id, member doc id)
     weights_used = collections.Counter()
     deltas = []
     old_new = []
@@ -100,19 +107,25 @@ def plan(members, discussions, issues, births):
             continue
         reg = disc["created_at"]
         ages = {}
+        kept = []
         for m in ms:
             uid = m["user_id"]
             try:
                 ages[uid] = ex.age_in_years(births.get(uid), reg)
-            except ValueError:
-                missing_birth.add(uid)
-        if any(m["user_id"] not in ages for m in ms):
+                kept.append(m)
+            except ValueError as e:
+                if "before birthDate" in str(e):
+                    unborn.append((pub, uid, m["_doc_id"]))
+                else:
+                    missing_birth.add(uid)
+        if len(kept) + sum(1 for u in unborn if u[0] == pub) != len(ms):
             continue
+        ms = kept
         if all(k in disc for k in ("w_relevance", "w_expertise", "w_contribution")):
             w = (float(disc["w_relevance"]), float(disc["w_expertise"]), float(disc["w_contribution"]))
             src = "discussion"
         else:
-            w = ex.fit_isr_weights(ms)
+            w = ex.fit_isr_weights(by_public[pub])
             src = "recovered"
         weights_used[(src, w)] += 1
         for m, new in zip(ms, ex.recompute_public(ms, w, ages)):
@@ -135,6 +148,8 @@ def plan(members, discussions, issues, births):
         "missing_birth": sorted(missing_birth, key=str), "missing_reg": missing_reg,
         "weights_used": weights_used, "deltas": deltas, "old_new": old_new,
         "issue_deletes": issue_deletes, "disc_deletes": disc_deletes,
+        "unborn": unborn,
+        "disc_maps": {pub: d for pub, d in discussions.items()},
     }
 
 
@@ -167,6 +182,7 @@ def report(p, source, applied):
         f"| ISR changed by > 0.001 | {changed} |",
         f"| Issue docs with deleted fields | {len(p['issue_deletes'])} |",
         f"| Discussion docs with deleted fields | {len(p['disc_deletes'])} |",
+        f"| Members removed (born after the issue's registration) | {len(p['unborn'])} |",
         f"| Publics skipped | {len(p['skipped'])} |",
         f"| Members without a valid birthDate | {len(p['missing_birth'])} |",
         f"| Publics without a registration date | {len(p['missing_reg'])} |",
@@ -179,6 +195,9 @@ def report(p, source, applied):
     lines += ["", "## ISR weights used", "", "| Source | (w_R, w_E, w_C) | Publics |", "|---|---|---|"]
     for (src, w), n in sorted(p["weights_used"].items(), key=lambda x: -x[1]):
         lines.append(f"| {src} | {w} | {n} |")
+    if p["unborn"]:
+        lines += ["", "## Members removed: born after the issue's registration", "",
+                  "| Public | User id |", "|---|---|"] + [f"| {pub} | {uid} |" for pub, uid, _ in p["unborn"]]
     if p["skipped"]:
         lines += ["", "## Skipped publics", ""] + [f"- `{k}`: {v}" for k, v in p["skipped"].items()]
     if p["issue_deletes"] or p["disc_deletes"]:
@@ -205,6 +224,16 @@ def apply(db, p):
             batch.commit()
             batch = db.batch()
 
+    for pub, uid, doc_id in p["unborn"]:
+        db.collection("microcommunity_members").document(doc_id).delete()
+        mc = db.collection("microcommunities").document(pub)
+        if mc.get().exists:
+            put(mc, {"member_count": firestore.Increment(-1), "member_accepted": firestore.Increment(-1)})
+        disc = p["disc_maps"].get(pub, {})
+        maps = {f"{name}.`{uid}`": None for name in ("relevance_scores", "isr_scores")
+                if str(uid) in (disc.get(name) or {})}
+        if maps:
+            put(db.collection("discussions").document(pub), maps)
     for doc_id, upd in p["member_updates"].items():
         put(db.collection("microcommunity_members").document(doc_id), upd)
     for doc_id, fields in p["issue_deletes"].items():

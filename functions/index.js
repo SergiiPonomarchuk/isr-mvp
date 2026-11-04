@@ -1,6 +1,7 @@
 const { onRequest } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
 const aiHelper = require("./ai-helper");
+const { readTextInputs, paramsFromAi, makeDraft, paramsForCreate } = require("./params");
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -110,61 +111,41 @@ exports.analyzeIssue = onRequest({ cors: true }, async (req, res) => {
 // HTTPS Endpoint: Create Issue & Compute Relevance Pipeline
 exports.createIssue = onRequest({ cors: true }, async (req, res) => {
   try {
-    const {
-      title, description, location, submitterId,
-      category, mu, sigma, weights, demographics,
-      expertise_depth, expertise_domain,
-      // Expertise sub-weights (flat or nested)
-      w_education, w_experience, w_resources,
-      expertise_weights: expertise_weights_obj,
-      // Aggregation weights (flat or nested)
-      w_relevance, w_expertise, w_contribution,
-      aggregation_weights: aggregation_weights_obj,
-      // Reasoning strings
-      relevance_reasoning, aggregation_reasoning,
-      reasoning_D, reasoning_G, reasoning_S, reasoning_X,
-      reasoning_R, reasoning_E, reasoning_C,
-      reasoning_education, reasoning_experience, reasoning_resources,
-      // New protocol fields
-      classification,
-      expertise_domain_parameters,
-      resources_needed,
-      geographic_parameters
-    } = req.body;
+    const { title, description, location, submitterId } = req.body;
 
     if (!title || !description || !location || !submitterId) {
       return res.status(400).json({ error: "Missing required fields: title, description, location, submitterId." });
     }
 
+    // A2: every number comes from the draft that checkIssue derived on the server.
+    // Numbers and weight objects in the request body are never read.
+    let P;
+    try {
+      const draftSnap = req.body.draftId
+        ? await db.collection("issue_drafts").doc(String(req.body.draftId)).get()
+        : null;
+      P = paramsForCreate(req.body, draftSnap && draftSnap.exists ? draftSnap.data() : null);
+    } catch (err) {
+      return res.status(err.status || 400).json({ error: err.message });
+    }
+    const {
+      category, demographics, expertise_depth, expertise_domain,
+      relevance_reasoning, aggregation_reasoning, classification,
+      expertise_domain_parameters, resources_needed
+    } = P;
+    const { reasoning_D, reasoning_G, reasoning_S, reasoning_X } = P.relevance_explanations || {};
+    const { reasoning_R, reasoning_E, reasoning_C } = P.isr_explanations || {};
+
     // Step 1: Vectorize issue description
     const issueVector = await aiHelper.vectorizeText(description);
 
-    // Parse relevance weights — prefer flat w_D/w_G/w_S/w_X, fall back to weights object
-    const w_D = weights ? parseFloat(weights.w_D) || 0 : 0.1;
-    const w_G = weights ? parseFloat(weights.w_G) || 0 : 0.4;
-    const w_S = weights ? parseFloat(weights.w_S) || 0 : 0.4;
-    const w_X = weights ? parseFloat(weights.w_X) || 0 : 0.1;
-
-    const muVal  = (geographic_parameters && geographic_parameters.mu_distance_meters !== undefined)
-      ? parseFloat(geographic_parameters.mu_distance_meters)
-      : (parseFloat(mu) || 100);
-    const sigmaVal = (geographic_parameters && geographic_parameters.sigma_distance_meters !== undefined)
-      ? parseFloat(geographic_parameters.sigma_distance_meters)
-      : (parseFloat(sigma) || 50);
-
-    // Resolve aggregation weights: prefer nested object, then flat fields, then defaults
-    const resolvedAggWeights = aggregation_weights_obj || {
-      w_relevance:    w_relevance    !== undefined ? parseFloat(w_relevance)    : 0.5,
-      w_expertise:    w_expertise    !== undefined ? parseFloat(w_expertise)    : 0.2,
-      w_contribution: w_contribution !== undefined ? parseFloat(w_contribution) : 0.3
-    };
-
-    // Resolve expertise weights: prefer nested object, then flat fields, then defaults
-    const resolvedExpWeights = expertise_weights_obj || {
-      w_education:  w_education  !== undefined ? parseFloat(w_education)  : 0.3,
-      w_experience: w_experience !== undefined ? parseFloat(w_experience) : 0.4,
-      w_resources:  w_resources  !== undefined ? parseFloat(w_resources)  : 0.3
-    };
+    const w_D = P.weights.w_D;
+    const w_G = P.weights.w_G;
+    const w_S = P.weights.w_S;
+    const w_X = P.weights.w_X;
+    const muVal = P.mu;
+    const sigmaVal = P.sigma;
+    const resolvedAggWeights = P.aggregation_weights;
 
     // Load submitter profile to get social relations
     let submitterRelations = [];
@@ -380,9 +361,6 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       // Expertise
       expertise_depth:  expertise_depth  || "None",
       expertise_domain: expertise_domain  || (expertise_domain_parameters && expertise_domain_parameters.expertise_domain) || "General Maintenance",
-      w_education:  resolvedExpWeights.w_education,
-      w_experience: resolvedExpWeights.w_experience,
-      w_resources:  resolvedExpWeights.w_resources,
       // Demographics
       demographics: demographics || null,
       // Per-component reasoning strings
@@ -393,9 +371,6 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       reasoning_R:         reasoning_R         || "",
       reasoning_E:         reasoning_E         || "",
       reasoning_C:         reasoning_C         || "",
-      reasoning_education:  reasoning_education  || "",
-      reasoning_experience: reasoning_experience || "",
-      reasoning_resources:  reasoning_resources  || "",
       // ── New ISR protocol fields ────────────────────────────────────────────
       // Full classification object (scope_type, affected_roles, etc.)
       classification: classification || null,
@@ -597,9 +572,6 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       affection_distance: parseFloat((muVal / 1000).toFixed(3)),
       expertise_depth:  expertise_depth  || "None",
       expertise_domain: expertise_domain  || (expertise_domain_parameters && expertise_domain_parameters.expertise_domain) || "General Maintenance",
-      w_education:  resolvedExpWeights.w_education,
-      w_experience: resolvedExpWeights.w_experience,
-      w_resources:  resolvedExpWeights.w_resources,
       relevance_scores: relevanceScores,
       participants: participantUids,
       last_message_text: description,
@@ -623,9 +595,6 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       reasoning_R:         reasoning_R         || "",
       reasoning_E:         reasoning_E         || "",
       reasoning_C:         reasoning_C         || "",
-      reasoning_education:  reasoning_education  || "",
-      reasoning_experience: reasoning_experience || "",
-      reasoning_resources:  reasoning_resources  || "",
       // New protocol fields
       classification:             classification             || null,
       expertise_domain_parameters: expertise_domain_parameters || null,
@@ -664,65 +633,11 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
       return res.status(400).json({ error: "Missing required fields: title, description, location, submitterId." });
     }
 
-    // 1. Analyze issue category, weights, demographics, and expertise depth suggestions via Gemini
-    let data;
-    if (req.body.recalculate) {
-      data = {
-        category: req.body.category || "building.maintenance.general",
-        mu: req.body.mu !== undefined ? parseFloat(req.body.mu) : 100,
-        sigma: req.body.sigma !== undefined ? parseFloat(req.body.sigma) : 50,
-        weights: req.body.weights || { w_D: 0.1, w_G: 0.4, w_S: 0.4, w_X: 0.1 },
-        relevance_weights: req.body.relevance_weights || { w_demographic: 0.1, w_geographic: 0.4, w_semantic: 0.4, w_social: 0.1 },
-        relevance_reasoning: req.body.relevance_reasoning || "Adjusted weights recalculated.",
-        relevance_explanations: req.body.relevance_explanations || {
-          reasoning_D: req.body.reasoning_D || "Adjusted demographic weight.",
-          reasoning_G: req.body.reasoning_G || "Adjusted geographic weight.",
-          reasoning_S: req.body.reasoning_S || "Adjusted semantic weight.",
-          reasoning_X: req.body.reasoning_X || "Adjusted social weight."
-        },
-        aggregation_weights: req.body.aggregation_weights || { w_relevance: 0.4, w_expertise: 0.3, w_contribution: 0.3 },
-        aggregation_reasoning: req.body.aggregation_reasoning || "Adjusted aggregation weights.",
-        isr_explanations: req.body.isr_explanations || {
-          reasoning_R: req.body.reasoning_R || "Adjusted relevance weight.",
-          reasoning_E: req.body.reasoning_E || "Adjusted expertise weight.",
-          reasoning_C: req.body.reasoning_C || "Adjusted contribution weight."
-        },
-        demographics: req.body.demographics || { employmentStatus: "any", familyStatus: "any", features: [] },
-        expertise_depth: req.body.expertise_depth || "None",
-        expertise_domain: req.body.expertise_domain || "General Maintenance",
-        expertise_weights: req.body.expertise_weights || { w_education: 0.3, w_experience: 0.4, w_resources: 0.3 },
-        expertise_explanations: req.body.expertise_explanations || {
-          reasoning_education: req.body.reasoning_education || "Adjusted education weight.",
-          reasoning_experience: req.body.reasoning_experience || "Adjusted experience weight.",
-          reasoning_resources: req.body.reasoning_resources || "Adjusted resources weight."
-        }
-      };
-
-      if (data.relevance_weights && !data.weights) {
-        data.weights = {
-          w_D: data.relevance_weights.w_demographic !== undefined ? data.relevance_weights.w_demographic : 0.2,
-          w_G: data.relevance_weights.w_geographic !== undefined ? data.relevance_weights.w_geographic : 0.4,
-          w_S: data.relevance_weights.w_semantic !== undefined ? data.relevance_weights.w_semantic : 0.3,
-          w_X: data.relevance_weights.w_social !== undefined ? data.relevance_weights.w_social : 0.1
-        };
-      } else if (data.weights && !data.relevance_weights) {
-        data.relevance_weights = {
-          w_demographic: data.weights.w_D !== undefined ? data.weights.w_D : 0.2,
-          w_geographic: data.weights.w_G !== undefined ? data.weights.w_G : 0.4,
-          w_semantic: data.weights.w_S !== undefined ? data.weights.w_S : 0.3,
-          w_social: data.weights.w_X !== undefined ? data.weights.w_X : 0.1
-        };
-      }
-    } else {
-      data = await aiHelper.checkIssueParams(description, title);
-    }
-
-    if (req.body.mu !== undefined && req.body.mu !== null) {
-      data.mu = parseFloat(req.body.mu);
-    }
-    if (req.body.sigma !== undefined && req.body.sigma !== null) {
-      data.sigma = parseFloat(req.body.sigma);
-    }
+    // 1. Derive every parameter on the server (A2: nobody types a number).
+    //    "Derive again" sends only a clarification text; numbers in the body are ignored.
+    const inputs = readTextInputs(req.body);
+    const ai = await aiHelper.checkIssueParams(description, title, inputs.clarification);
+    const data = paramsFromAi(ai);
 
     // 2. Generate issue embedding
     const issueVector = await aiHelper.vectorizeText(description);
@@ -909,8 +824,14 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
       top25 = candidates.slice(0, 25);
     }
 
+    // Store the derived parameters; createIssue reads its numbers from this draft.
+    const draftRef = db.collection("issue_drafts").doc();
+    await draftRef.set(makeDraft(inputs, data, new Date().toISOString()));
+
     res.json({
       success: true,
+      draftId: draftRef.id,
+      clarification: inputs.clarification,
       // ── Classification ──────────────────────────────────────────────────
       category: data.category,
       classification: data.classification || null,
@@ -933,8 +854,6 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
       // ── Expertise ───────────────────────────────────────────────────────
       expertise_depth: data.expertise_depth,
       expertise_domain: data.expertise_domain || "General Maintenance",
-      expertise_weights: data.expertise_weights || { w_education: 0.3, w_experience: 0.4, w_resources: 0.3 },
-      expertise_explanations: data.expertise_explanations || null,
       expertise_domain_parameters: data.expertise_domain_parameters || null,
       // ── Resources ───────────────────────────────────────────────────────
       resources_needed: data.resources_needed || [],
