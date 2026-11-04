@@ -5,6 +5,20 @@ if (typeof firebase !== 'undefined') {
   if (config && !firebase.apps.length) {
     firebase.initializeApp(config);
   }
+  // Opt-in for local testing (A2): open http://localhost:5000/?emulator=1 to use the
+  // Firestore emulator (port 8080) instead of the live project. Remembered per tab.
+  try {
+    const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    if (isLocal && new URLSearchParams(window.location.search).get('emulator') === '1') {
+      sessionStorage.setItem('useFirestoreEmulator', '1');
+    }
+    if (isLocal && sessionStorage.getItem('useFirestoreEmulator') === '1' && firebase.apps.length) {
+      firebase.firestore().useEmulator('127.0.0.1', 8080);
+      console.info('Using the Firestore emulator at 127.0.0.1:8080');
+    }
+  } catch (e) {
+    console.warn('Firestore emulator switch failed:', e);
+  }
 }
 
 const sectionTitles = {

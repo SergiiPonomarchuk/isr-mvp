@@ -157,12 +157,13 @@ def plan(members, discussions, issues, births):
 
 def report(p, source, applied):
     d = p["deltas"]
-    changed = sum(1 for x in d if abs(x) > 0.001)
+    # Stored values have 3 decimals; a difference of one rounding step (0.001) is not a change.
+    changed = sum(1 for x in d if round(abs(x), 3) > 0.001)
     res_deleted = sum(1 for u in p["member_updates"].values() if "resources_expertise" in u)
     res_nonzero = sum(1 for m, _ in p["old_new"] if (m.get("resources_expertise") or 0) > 0)
     floor_raised = sum(1 for m, n in p["old_new"] if n["education_expertise"] > round(m["education_expertise"], 3) + 0.0005)
-    e_down = sum(1 for m, n in p["old_new"] if n["expertise_score"] < m["expertise_score"] - 0.001)
-    e_up = sum(1 for m, n in p["old_new"] if n["expertise_score"] > m["expertise_score"] + 0.001)
+    e_down = sum(1 for m, n in p["old_new"] if round(m["expertise_score"] - n["expertise_score"], 3) > 0.001)
+    e_up = sum(1 for m, n in p["old_new"] if round(n["expertise_score"] - m["expertise_score"], 3) > 0.001)
     lines = [
         "# A2 migration report",
         "",
