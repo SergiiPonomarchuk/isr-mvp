@@ -89,8 +89,8 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | Task | Status | Changes components |
 |---|---|---|
 | [S0-restructure-specs](tasks/S0-restructure-specs.md) | open (step 3, batch 1 done) | all; README |
-| [A1-canonical-isr](tasks/A1-canonical-isr.md) | open (DRAFT; R2 to be amended by A2) | 03, 04, 05, 06 |
-| [A2-expertise-cleanup](tasks/A2-expertise-cleanup.md) | open (DRAFT) | 02, 04, 07, 10, 11 |
+| [A1-canonical-isr](tasks/A1-canonical-isr.md) | open (DRAFT; R2, R9 amended by A2) | 03, 04, 05, 06 |
+| [A2-expertise-cleanup](tasks/A2-expertise-cleanup.md) | implemented on branch `a2-expertise-cleanup`; live migration pending (author) | 02, 04, 07, 10, 11 |
 
 S0 artefacts: [S0-inventory-report](tasks/S0-inventory-report.md), [S0-structure-proposal](tasks/S0-structure-proposal.md), [S0-decisions-to-import](tasks/S0-decisions-to-import.md).
 
@@ -124,16 +124,16 @@ The ids come from `tasks/S0-inventory-report.md` §3, where each contradiction i
 | C-16 | Issue vector stored or not; random fallback | 03 / 12 | open |
 | C-17 | Profile-vector input template | 12 | open |
 | C-18 | Default relevance weights | 03 | open |
-| C-19 | Who may edit weights | 07 | open (PD-4: open point) |
+| C-19 | Who may edit weights | 07 | decided (PD-8: nobody types a number; the starter only clarifies the context) |
 | C-20 | Weight sums not validated | 07 | open |
-| C-21 | 40/30/30 fallback vs "default" | 06 | open |
+| C-21 | 40/30/30 fallback vs "default" | 06 | decided (author, docs 2026-11-04: no fallback; `needs_clarification` / `not_consistent`). As built, 190 of 192 seeded publics still use 0.4/0.3/0.3 (A2 CHANGES) |
 | C-22 | Weighted vs unweighted expertise | 04 | open |
-| C-23 | Expertise baseline 1.0 vs 0 | 04 | open (A1 open question 2) |
+| C-23 | Expertise baseline 1.0 vs 0 | 04 | decided (PD-8: education floor min(age, 30)/30, no baseline term); implemented by A2 |
 | C-24 | CBC table | 04 | open |
 | C-25 | CBC adjustment factor | 04 | open |
 | C-26 | Cosine clamp in education | 04 | open |
-| C-27 | Decay, age penalty, contemporary importance | 04 | open |
-| C-28 | Expertise data sources and collections | 04 / 02 | partly decided (PD-2: only pledged and checked resources; money excluded) |
+| C-27 | Decay, age penalty, contemporary importance | 04 | partly decided (PD-8: no age penalty, no contemporary importance; recency decay kept, not applied as built) |
+| C-28 | Expertise data sources and collections | 04 / 02 | decided (PD-8: education and experience only; resources and money are option-level) |
 | C-29 | Expertise unbounded vs normalised to [0,1] | 04 | decided (PD-3: divided by the public mean) |
 | C-30 | Contribution formula with or without sentiment | 05 | open |
 | C-31 | When Contribution is computed | 05 | open |

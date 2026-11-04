@@ -1,6 +1,6 @@
 # SPEC A2: Expertise clean-up, read-only parameters, data migration
 
-Status: DRAFT (waiting for author approval)
+Status: IMPLEMENTED on branch (live migration pending, author)
 Branch: a2-expertise-cleanup (from docs/specs-restructure; never main)
 Decisions: PD-8 (new, this task), PD-3, PD-6. Follows the docs as committed by the author on 2026-11-04 (docs fix list rounds 1–4, `specs/tasks/A2-docs-fix-list.md`).
 Next task: A3 (option fields: cost, funding source, resources; G anchors home, work and property). Then A1 (canonical ISR module).
@@ -84,4 +84,10 @@ None. Decided 2026-11-04 (author): (1) the age is computed at the issue's regist
 
 ## 7. Status log
 
-Plan approved: ___  Implementation: ___  Tests: ___  Migration dry run (claude_export): ___  Dry run (fresh export, author): ___  CHANGES.md: ___  Deviations: ___
+- Plan approved: 2026-11-04 (author). Follow-up decisions 2026-11-04: remove members born after the issue's registration; draft-based `createIssue` (`issue_drafts`); `npm test` in `functions/`.
+- Implementation: done on branch `a2-expertise-cleanup` (commits 89d48ab … see `git log`).
+- Tests: `python -m unittest discover -s tests` 16 OK; `cd functions && npm test` 7 OK; emulator end-to-end (AC6) passed.
+- Migration dry run (claude_export): done, `A2-migration-report.md`. Emulator `--apply`: done; AC4 checks pass; second run changes nothing.
+- Dry run (fresh export) and live run: pending, author's step.
+- CHANGES.md: written (repo root).
+- Deviations: see CHANGES.md, "Deviations from the spec" (stored parts instead of vectors; ISR weights recovered from stored values; `discussions.isr_scores` not recomputed; FieldValue import fix; `?emulator=1` switch).
