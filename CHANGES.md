@@ -32,7 +32,7 @@ Blocked, author decision pending. The stored G of current members cannot be repr
 - 112 of 192 publics have no stored location, μ or σ at all (seeded discussions carry none; only the 80 `issues` docs do).
 - In the 80 others, the stored G matches neither as-built rule for most members (162 / 166 of 1,323 match the server / path B rule with the home anchor).
 - Only 151 of those 1,323 members have a work anchor nearer than home, and G would rise for 6 of them.
-- 10,115 non-member places (counted per public, in 78 publics) would pass the distance stage only through a work anchor; they are not added (no S).
+- 10,115 non-members (counted once per public, in 78 publics) would pass the distance stage only through a work anchor; they are not added (no S).
 
 `scripts/migrate_a3.py` was therefore not written.
 
