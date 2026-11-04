@@ -4977,6 +4977,8 @@ function initTopicDetailViews() {
     newTopicGeo = [47.553832, 7.606599]; // default Basel center
     window.newTopicGeo = newTopicGeo;
     let suggestedParams = null;
+    // A2: the topic starter can only clarify the context; the server derives again.
+    let pendingClarification = "";
     let calculatedMembers = [];
     let microcommunityPreviewValues = null;
     const currentUserId = safeGetStorage('userId') || "1";
@@ -5281,19 +5283,7 @@ function initTopicDetailViews() {
             w_semantic: suggestedParams.weights.w_S,
             w_social: suggestedParams.weights.w_X
           },
-          (newWeights) => {
-            suggestedParams.weights.w_D = newWeights.w_D;
-            suggestedParams.weights.w_G = newWeights.w_G;
-            suggestedParams.weights.w_S = newWeights.w_S;
-            suggestedParams.weights.w_X = newWeights.w_X;
-
-            tinyRelevance.innerHTML = formatRelevanceWeights({
-              w_demographic: suggestedParams.weights.w_D,
-              w_geographic: suggestedParams.weights.w_G,
-              w_semantic: suggestedParams.weights.w_S,
-              w_social: suggestedParams.weights.w_X
-            });
-          },
+          (c) => rederiveWithClarification(c.clarification),
           false
         );
       });
@@ -5312,17 +5302,7 @@ function initTopicDetailViews() {
 
         openIsrModal(
           suggestedParams,
-          (newWeights) => {
-            suggestedParams.w_relevance = newWeights.w_relevance;
-            suggestedParams.w_expertise = newWeights.w_expertise;
-            suggestedParams.w_contribution = newWeights.w_contribution;
-
-            tinyIsr.innerHTML = formatIsrWeights({
-              w_relevance: suggestedParams.w_relevance,
-              w_expertise: suggestedParams.w_expertise,
-              w_contribution: suggestedParams.w_contribution
-            });
-          },
+          (c) => rederiveWithClarification(c.clarification),
           false
         );
       });
@@ -5341,16 +5321,16 @@ function initTopicDetailViews() {
 
         openExpertiseModal(
           suggestedParams,
-          (newParams) => {
-            suggestedParams.expertise_domain = newParams.expertise_domain;
-            suggestedParams.expertise_depth = newParams.expertise_depth;
-            suggestedParams.expertise_weights = newParams.expertise_weights;
-
-            valExpertise.textContent = (newParams.expertise_domain ? newParams.expertise_domain + ', ' : '') + newParams.expertise_depth;
-          },
+          (c) => rederiveWithClarification(c.clarification),
           false
         );
       });
+    }
+
+    // "Derive again": send the clarification to the server with the same text inputs.
+    function rederiveWithClarification(text) {
+      pendingClarification = (text || "").trim();
+      if (checkBtn) checkBtn.click();
     }
 
     window.mapInstance = null;
@@ -5364,29 +5344,7 @@ function initTopicDetailViews() {
     if (geoConfirmBtn) {
       geoConfirmBtn.onclick = (e) => {
         e.stopPropagation();
-        const distInput = document.getElementById('geo-affect-distance');
-        const fadeInput = document.getElementById('geo-affect-fade');
-        if (distInput && fadeInput) {
-          const muVal = parseFloat(distInput.value) || 100;
-          const fadeVal = parseFloat(fadeInput.value) || 150;
-          if (!suggestedParams) {
-            suggestedParams = {
-              category: "building.maintenance.general",
-              weights: { w_D: 0.2, w_G: 0.4, w_S: 0.3, w_X: 0.1 },
-              w_relevance: 0.4,
-              w_expertise: 0.3,
-              w_contribution: 0.3,
-              relevance_reasoning: "",
-              aggregation_reasoning: "",
-              demographics: { employmentStatus: "any", familyStatus: "any" },
-              expertise_depth: "None",
-              expertise_domain: "General Maintenance",
-              expertise_weights: { w_education: 0.3, w_experience: 0.4, w_resources: 0.3 }
-            };
-          }
-          suggestedParams.mu = muVal;
-          suggestedParams.sigma = fadeVal / 3;
-        }
+        // A2: μ and σ are derived by the server (Check); the map only shows them.
         geoValEl.textContent = `${newTopicGeo[0].toFixed(2)}, ${newTopicGeo[1].toFixed(2)}`;
         geoOverlay.setAttribute('hidden', 'true');
         geoOverlay.style.display = 'none';
@@ -5785,46 +5743,14 @@ function initTopicDetailViews() {
           let data = null;
           // Attempt server-side check calculation
           try {
+            // A2: text only. Numbers are derived on the server and never sent.
             const payload = {
               title: title,
               description: description,
               location: newTopicGeo,
-              submitterId: currentUserId
+              submitterId: currentUserId,
+              clarification: pendingClarification
             };
-
-            if (suggestedParams) {
-              payload.recalculate = true;
-              
-              const distInput = document.getElementById('geo-affect-distance');
-              const fadeInput = document.getElementById('geo-affect-fade');
-              const muVal = parseFloat(distInput ? distInput.value : suggestedParams.mu) || suggestedParams.mu;
-              const fadeVal = parseFloat(fadeInput ? fadeInput.value : (suggestedParams.sigma * 3)) || (suggestedParams.sigma * 3);
-
-              payload.category = suggestedParams.category;
-              payload.mu = muVal;
-              payload.sigma = fadeVal / 3;
-              payload.weights = suggestedParams.weights;
-              payload.relevance_weights = {
-                w_demographic: suggestedParams.weights.w_D,
-                w_geographic: suggestedParams.weights.w_G,
-                w_semantic: suggestedParams.weights.w_S,
-                w_social: suggestedParams.weights.w_X
-              };
-              payload.relevance_reasoning = suggestedParams.relevance_reasoning;
-              payload.relevance_explanations = suggestedParams.relevance_explanations;
-              payload.aggregation_weights = {
-                w_relevance: suggestedParams.w_relevance,
-                w_expertise: suggestedParams.w_expertise,
-                w_contribution: suggestedParams.w_contribution
-              };
-              payload.aggregation_reasoning = suggestedParams.aggregation_reasoning;
-              payload.isr_explanations = suggestedParams.isr_explanations;
-              payload.demographics = suggestedParams.demographics;
-              payload.expertise_depth = suggestedParams.expertise_depth;
-              payload.expertise_domain = suggestedParams.expertise_domain;
-              payload.expertise_weights = suggestedParams.expertise_weights;
-              payload.expertise_explanations = suggestedParams.expertise_explanations;
-            }
 
             const res = await fetch(`${functionsBaseUrl}/checkIssue`, {
               method: 'POST',
@@ -5838,345 +5764,44 @@ function initTopicDetailViews() {
               throw new Error(errData.error || "Server calculation error");
             }
           } catch (err) {
-            console.warn("Server check failed, falling back to local calculation simulation:", err);
+            console.warn("Server check failed:", err);
           }
 
           if (data && data.success) {
             suggestedParams = {
+              draftId: data.draftId,
+              clarification: data.clarification || "",
               category: data.category,
+              classification: data.classification || null,
               mu: data.mu,
               sigma: data.sigma,
+              geographic_parameters: data.geographic_parameters || null,
               weights: data.weights,
-              w_relevance: data.aggregation_weights ? data.aggregation_weights.w_relevance : 0.4,
-              w_expertise: data.aggregation_weights ? data.aggregation_weights.w_expertise : 0.3,
-              w_contribution: data.aggregation_weights ? data.aggregation_weights.w_contribution : 0.3,
+              w_relevance: data.aggregation_weights.w_relevance,
+              w_expertise: data.aggregation_weights.w_expertise,
+              w_contribution: data.aggregation_weights.w_contribution,
               relevance_reasoning: data.relevance_reasoning || "",
               aggregation_reasoning: data.aggregation_reasoning || "",
               relevance_explanations: data.relevance_explanations || null,
               isr_explanations: data.isr_explanations || null,
-              expertise_explanations: data.expertise_explanations || null,
               demographics: data.demographics,
               expertise_depth: data.expertise_depth,
               expertise_domain: data.expertise_domain || data.category,
-              expertise_weights: data.expertise_weights || { w_education: 0.3, w_experience: 0.4, w_resources: 0.3 },
-              expertise_weights_reasoning: data.expertise_weights_reasoning || data.expertise_reasoning || "",
-              min_experience_years: data.min_experience_years !== undefined ? data.min_experience_years : 2,
+              expertise_domain_parameters: data.expertise_domain_parameters || null,
               resources_needed: data.resources_needed || []
             };
             calculatedMembers = data.members;
+            pendingClarification = "";
+            const distShow = document.getElementById('geo-affect-distance');
+            const fadeShow = document.getElementById('geo-affect-fade');
+            if (distShow && fadeShow) {
+              distShow.value = suggestedParams.mu;
+              fadeShow.value = Math.round(suggestedParams.sigma * 3);
+            }
           } else {
-            // ==========================================
-            // LOCAL FALLBACK CALCULATION
-            // ==========================================
-            // (If server-side fails or times out)
-            const lowerDesc = description.toLowerCase() + " " + title.toLowerCase();
-            let cat = "building.maintenance.general";
-            let w = { w_D: 0.2, w_G: 0.6, w_S: 0.1, w_X: 0.1 };
-            let mu = 100;
-            let sigma = 50;
-            let exp = "None";
-            let demo = { employmentStatus: "any", familyStatus: "any" };
-            let relevance_reasoning = "General civic topic relevance weights.";
-            let aggregation_weights = { w_relevance: 0.4, w_expertise: 0.3, w_contribution: 0.3 };
-            let aggregation_reasoning = "General civic topic aggregation weights.";
-            let relevance_explanations = null;
-            let isr_explanations = null;
-            let expertise_explanations = null;
-            let expDomain = "General Maintenance";
-            let expWeights = { w_education: 0.3, w_experience: 0.4, w_resources: 0.3 };
-
-            if (suggestedParams) {
-              cat = suggestedParams.category;
-              w = suggestedParams.weights;
-              mu = suggestedParams.mu;
-              sigma = suggestedParams.sigma;
-              demo = suggestedParams.demographics;
-              exp = suggestedParams.expertise_depth;
-              aggregation_weights = {
-                w_relevance: suggestedParams.w_relevance,
-                w_expertise: suggestedParams.w_expertise,
-                w_contribution: suggestedParams.w_contribution
-              };
-              relevance_reasoning = suggestedParams.relevance_reasoning;
-              aggregation_reasoning = suggestedParams.aggregation_reasoning;
-              relevance_explanations = suggestedParams.relevance_explanations;
-              isr_explanations = suggestedParams.isr_explanations;
-              expertise_explanations = suggestedParams.expertise_explanations;
-              expDomain = suggestedParams.expertise_domain;
-              expWeights = suggestedParams.expertise_weights;
-            } else {
-              if (lowerDesc.includes("lock") || lowerDesc.includes("key") || lowerDesc.includes("entrance")) {
-                cat = "building.security.locks";
-                w = { w_D: 0.1, w_G: 0.7, w_S: 0.1, w_X: 0.1 };
-                mu = 30; sigma = 40;
-                relevance_reasoning = "Building entrance locks directly affect residents' access. Proximity (G) is the main factor.";
-                aggregation_weights = { w_relevance: 0.7, w_expertise: 0.1, w_contribution: 0.2 };
-                aggregation_reasoning = "Physical access is an experiential issue, so direct relevance dominates, with secondary weight on past contribution.";
-                relevance_explanations = {
-                  reasoning_D: "Applies generally to all residents with building access rights.",
-                  reasoning_G: "Building entrance lock issue directly affects residents in the immediate vicinity.",
-                  reasoning_S: "Personal interest is secondary since lock access is a utility.",
-                  reasoning_X: "Social relations play a minor role for entrance-wide security."
-                };
-                isr_explanations = {
-                  reasoning_R: "Lived relevance dominates as direct access is a primary daily necessity.",
-                  reasoning_E: "Lock replacement is low complexity, requiring basic maintenance skills.",
-                  reasoning_C: "Requires high accountability and follow-through due to security concerns."
-                };
-                expertise_explanations = {
-                  reasoning_education: "Formal locksmith certification is valuable for key programming.",
-                  reasoning_experience: "Hands-on experience fixing hardware is primary.",
-                  reasoning_resources: "Requires ownership of locksmith tools."
-                };
-                expDomain = "Locksmithing";
-                expWeights = { w_education: 0.4, w_experience: 0.4, w_resources: 0.2 };
-              } else if (lowerDesc.includes("heating") || lowerDesc.includes("radiator")) {
-                cat = "building.maintenance.heating";
-                w = { w_D: 0.1, w_G: 0.8, w_S: 0.05, w_X: 0.05 };
-                mu = 50; sigma = 45;
-                relevance_reasoning = "Heating issues affect residents in the immediate vicinity. Geographic proximity is highly primary.";
-                aggregation_weights = { w_relevance: 0.7, w_expertise: 0.1, w_contribution: 0.2 };
-                aggregation_reasoning = "Experiential temperature control issue where lived relevance dominates the decision.";
-                relevance_explanations = {
-                  reasoning_D: "Applies to residents inside the affected heating circuit.",
-                  reasoning_G: "Geographic distance from the leak or radiator is the main determinant.",
-                  reasoning_S: "Semantic interest is low as thermal comfort is a basic need.",
-                  reasoning_X: "Social proximity to creator does not change heating impact."
-                };
-                isr_explanations = {
-                  reasoning_R: "Voters experiencing the cold should have the highest voice.",
-                  reasoning_E: "HVAC maintenance requires specialized engineering competence.",
-                  reasoning_C: "Ensures quick resolution and constructive coordination."
-                };
-                expertise_explanations = {
-                  reasoning_education: "HVAC certification or physics degree is highly credentialed.",
-                  reasoning_experience: "Practical radiator valve replacement experience is primary.",
-                  reasoning_resources: "Requires access to thermal cameras and venting keys."
-                };
-                expDomain = "HVAC";
-                expWeights = { w_education: 0.3, w_experience: 0.5, w_resources: 0.2 };
-              } else if (lowerDesc.includes("leak") || lowerDesc.includes("water") || lowerDesc.includes("plumbing")) {
-                cat = "building.maintenance.water";
-                w = { w_D: 0.1, w_G: 0.8, w_S: 0.05, w_X: 0.05 };
-                mu = 40; sigma = 35;
-                relevance_reasoning = "Plumbing issues affect residents in the immediate vicinity. Geographic proximity is primary.";
-                aggregation_weights = { w_relevance: 0.7, w_expertise: 0.1, w_contribution: 0.2 };
-                aggregation_reasoning = "Experiential plumbing issue where lived relevance dominates the decision.";
-                relevance_explanations = {
-                  reasoning_D: "Applies to residents connected to the shared water riser.",
-                  reasoning_G: "Proximity to the leak determines water damage risk.",
-                  reasoning_S: "Plumbing is a utility issue with low semantic variations.",
-                  reasoning_X: "Social proximity does not impact physical water leak."
-                };
-                isr_explanations = {
-                  reasoning_R: "Immediate physical impact dominates, giving local residents highest voice.",
-                  reasoning_E: "Plumbing repairs require vocational plumbing certifications.",
-                  reasoning_C: "Requires high follow-through to avoid severe water damage."
-                };
-                expertise_explanations = {
-                  reasoning_education: "Certifications in plumbing design or construction engineering.",
-                  reasoning_experience: "Lived work history soldering pipes and sealing leaks.",
-                  reasoning_resources: "Access to pipe cutters, threaders, and replacement seals."
-                };
-                expDomain = "Plumbing";
-                expWeights = { w_education: 0.3, w_experience: 0.4, w_resources: 0.3 };
-              } else if (lowerDesc.includes("dance") || lowerDesc.includes("event") || lowerDesc.includes("concert") || lowerDesc.includes("chess")) {
-                cat = "social.event.cultural";
-                w = { w_D: 0.1, w_G: 0.2, w_S: 0.6, w_X: 0.1 };
-                mu = 1000; sigma = 4000;
-                exp = "Vocational Training";
-                relevance_reasoning = "Chess or social events interest people semantically. Social connections and proximity are secondary.";
-                aggregation_weights = { w_relevance: 0.5, w_expertise: 0.2, w_contribution: 0.3 };
-                aggregation_reasoning = "Event organization balances interest/relevance with event coordination experience (contribution).";
-                relevance_explanations = {
-                  reasoning_D: "Applies generally to active club members and community builders.",
-                  reasoning_G: "Soft geographic fade as attendees are willing to travel.",
-                  reasoning_S: "Highly semantic; depends on user's affinity for gatherings.",
-                  reasoning_X: "Social networks help spread invitations and drive attendance."
-                };
-                isr_explanations = {
-                  reasoning_R: "Voters with strong interest shape the club activities.",
-                  reasoning_E: "Requires event coordination or social club leadership.",
-                  reasoning_C: "High weight on contribution since volunteers organize and execute."
-                };
-                expertise_explanations = {
-                  reasoning_education: "Degrees in hospitality or community management are helpful.",
-                  reasoning_experience: "Lived history organizing matches, booking venues, or hosting.",
-                  reasoning_resources: "Access to chess boards, tournament clocks, or club venues."
-                };
-                expDomain = "Event Coordination";
-                expWeights = { w_education: 0.2, w_experience: 0.5, w_resources: 0.3 };
-              } else if (lowerDesc.includes("park") || lowerDesc.includes("renovation") || lowerDesc.includes("tree")) {
-                cat = "environment.green_space";
-                w = { w_D: 0.3, w_G: 0.5, w_S: 0.1, w_X: 0.1 };
-                mu = 300; sigma = 200;
-                relevance_reasoning = "Green spaces are highly local (G) and demographic status affects playground/garden usage.";
-                aggregation_weights = { w_relevance: 0.6, w_expertise: 0.2, w_contribution: 0.2 };
-                aggregation_reasoning = "Neighborhood green space is primary for local residents, with secondary weight for environmental/botanical expertise.";
-                relevance_explanations = {
-                  reasoning_D: "Demographics determine park usage (e.g., parents, seniors).",
-                  reasoning_G: "Proximity to the park determines how often residents use it.",
-                  reasoning_S: "Semantic interest in ecology plays a secondary role.",
-                  reasoning_X: "Social networks connect families using the park."
-                };
-                isr_explanations = {
-                  reasoning_R: "Local residents shape the green space to match their usage.",
-                  reasoning_E: "Horticultural and landscaping skills ensure botanic health.",
-                  reasoning_C: "Contribution to community cleanups or plantings is valued."
-                };
-                expertise_explanations = {
-                  reasoning_education: "Agronomy, botany, or landscape architecture degrees.",
-                  reasoning_experience: "Professional gardening, tree planting, or park maintenance.",
-                  reasoning_resources: "Access to lawnmowers, shovels, seedlings, and compost."
-                };
-                expDomain = "Horticulture";
-                expWeights = { w_education: 0.3, w_experience: 0.4, w_resources: 0.3 };
-              } else if (lowerDesc.includes("website") || lowerDesc.includes("shelter") || lowerDesc.includes("4 paws")) {
-                cat = "social.event.cultural";
-                w = { w_D: 0.1, w_G: 0.4, w_S: 0.4, w_X: 0.1 };
-                mu = 2000; sigma = 5000;
-                exp = "Bachelor";
-                demo = { employmentStatus: "any", familyStatus: "any", minAge: 12, maxAge: 80, features: ["animals", "pets"] };
-                relevance_reasoning = "Web design is less restricted by geography but local support for the animal shelter is preferred.";
-                aggregation_weights = { w_relevance: 0.4, w_expertise: 0.4, w_contribution: 0.2 };
-                aggregation_reasoning = "Technical skills in website creation require technical expertise weight, with relevance for shelter support.";
-                relevance_explanations = {
-                  reasoning_D: "Volunteers between 12 and 80 years old, with interest in animal welfare/pets.",
-                  reasoning_G: "Remote collaboration allowed, so distance has a soft fade up to 15km.",
-                  reasoning_S: "High interest in web development, design, and animal welfare.",
-                  reasoning_X: "Direct connections to the shelter organizer help coordination."
-                };
-                isr_explanations = {
-                  reasoning_R: "Binds local interests and animal lovers to support the shelter website.",
-                  reasoning_E: "Web development and hosting expertise are highly important for technical implementation.",
-                  reasoning_C: "Ensures reliable follow-through on building the site."
-                };
-                expertise_explanations = {
-                  reasoning_education: "Formal training in computer science or design is helpful but not strictly required.",
-                  reasoning_experience: "Practical experience building websites and portfolio is highly valued.",
-                  reasoning_resources: "Access to web hosting servers or design tools is secondary."
-                };
-                expDomain = "Web Design";
-                expWeights = { w_education: 0.3, w_experience: 0.5, w_resources: 0.2 };
-              }
-            }
-
-            suggestedParams = {
-              category: cat,
-              weights: w,
-              w_relevance: aggregation_weights.w_relevance,
-              w_expertise: aggregation_weights.w_expertise,
-              w_contribution: aggregation_weights.w_contribution,
-              relevance_reasoning: relevance_reasoning,
-              aggregation_reasoning: aggregation_reasoning,
-              relevance_explanations: relevance_explanations,
-              isr_explanations: isr_explanations,
-              expertise_explanations: expertise_explanations,
-              mu: mu,
-              sigma: sigma,
-              demographics: demo,
-              expertise_depth: exp,
-              expertise_domain: expDomain,
-              expertise_weights: expWeights,
-              expertise_weights_reasoning: "Practical domain expertise reasoning.",
-              min_experience_years: 2,
-              resources_needed: []
-            };
-
-            // Perform relevance score pipeline client-side
-            const usersSnapshot = await db.collection("users").get();
-            const relevanceResults = [];
-
-            let submitterRelations = [];
-            const creatorSnap = await db.collection("users").doc(currentUserId.toString()).get();
-            if (creatorSnap.exists) {
-              submitterRelations = creatorSnap.data().socialRelations || [];
-            }
-
-            usersSnapshot.forEach(doc => {
-              const user = doc.data();
-              const uidStr = user.uid.toString();
-              const isCreator = (uidStr === currentUserId.toString());
-
-              const dScore = localEvaluateDemographics(user, suggestedParams.demographics);
-              if (dScore === 0.0 && suggestedParams.weights.w_D > 0 && !isCreator) return;
-
-              let distance = 0;
-              let gScore = 1.0;
-              const homeAnchor = (user.geography || []).find(g => g.type === "home");
-              if (homeAnchor && homeAnchor.geo) {
-                distance = localHaversine(newTopicGeo, homeAnchor.geo);
-                const maxDistance = suggestedParams.mu + 3 * suggestedParams.sigma;
-                if (distance > maxDistance && suggestedParams.weights.w_G > 0 && !isCreator) return;
-
-                if (distance > suggestedParams.mu) {
-                  gScore = Math.exp(-Math.pow(distance - suggestedParams.mu, 2) / (2 * Math.pow(suggestedParams.sigma, 2)));
-                }
-              } else {
-                if (!isCreator) return;
-                gScore = 0.0;
-              }
-
-              // Semantic Text Overlap Fallback
-              const userInterests = [
-                ...(user.skills || []).map(s => s.specialization || s.comment || ''),
-                ...(user.post || []).map(p => p.job || ''),
-                user.values_description || ''
-              ].join(' ').toLowerCase();
-              
-              const issueWords = (description + ' ' + title).toLowerCase().split(/\W+/).filter(w => w.length > 3);
-              let matchCount = 0;
-              issueWords.forEach(w => {
-                if (userInterests.includes(w)) matchCount++;
-              });
-              const sScore = Math.min(1.0, Math.max(0.05, matchCount / (issueWords.length || 1) + 0.1));
-
-              // Social relation
-              let xScore = 0.0;
-              const relation = submitterRelations.find(r => r.relative.toString() === uidStr);
-              if (relation) {
-                if (relation.tie !== undefined && relation.tie !== null) {
-                  xScore = parseFloat(relation.tie) || 0.0;
-                } else {
-                  const type = (relation.type || '').toLowerCase();
-                  if (["spouse", "partner", "wife", "husband"].includes(type)) xScore = 0.3;
-                  else if (["parent", "father", "mother", "child", "son", "daughter", "sibling", "sister", "brother"].includes(type)) xScore = 0.2;
-                  else if (["grandparent", "grandfather", "grandmother", "grandchild", "grandson", "granddaughter", "close friend"].includes(type)) xScore = 0.1;
-                }
-              }
-
-              const relevanceScore = suggestedParams.weights.w_D * dScore +
-                                     suggestedParams.weights.w_G * gScore +
-                                     suggestedParams.weights.w_S * sScore +
-                                     suggestedParams.weights.w_X * xScore;
-
-              if (relevanceScore > 0.15 || isCreator) {
-                relevanceResults.push({
-                  uid: uidStr,
-                  name: (user.displayName || `User ${user.uid}`) + (isCreator ? " (Creator)" : ""),
-                  score: relevanceScore,
-                  D: dScore, G: gScore, S: sScore, X: xScore,
-                  isCreator: isCreator
-                });
-              }
-            });
-
-            relevanceResults.sort((a, b) => b.score - a.score);
-            let top25 = [];
-            const creatorMember = relevanceResults.find(c => c.isCreator);
-            if (creatorMember) {
-              const top25Candidates = relevanceResults.slice(0, 25);
-              const containsCreator = top25Candidates.some(c => c.isCreator);
-              if (containsCreator) {
-                top25 = top25Candidates;
-              } else {
-                top25 = relevanceResults.slice(0, 24);
-                top25.push(creatorMember);
-              }
-            } else {
-              top25 = relevanceResults.slice(0, 25);
-            }
-            calculatedMembers = top25;
+            // A2: no parameters are derived in the browser. Without the server
+            // nothing can be checked or published.
+            throw new Error("The server could not derive the issue parameters. Nothing was changed; please try again.");
           }
 
           // Calculate aggregated values preview
@@ -6269,192 +5894,26 @@ function initTopicDetailViews() {
         submitBtn.textContent = "Creating issue...";
 
         try {
-          const creatorSnap = await db.collection("users").doc(currentUserId.toString()).get();
-          const creatorName = creatorSnap.exists ? (creatorSnap.data().displayName || "Creator") : "Creator";
-
-          // Generate mock vector
-          let mockVector = new Array(768).fill(0).map(() => Math.random() * 2 - 1);
-          const mag = Math.sqrt(mockVector.reduce((sum, val) => sum + val * val, 0));
-          mockVector = mockVector.map(val => val / mag);
-
-          const issueRef = db.collection("issues").doc();
-          const issueId = issueRef.id;
-
-          const reasoning_D = suggestedParams.relevance_explanations ? (suggestedParams.relevance_explanations.reasoning_D || "") : (suggestedParams.reasoning_D || "");
-          const reasoning_G = suggestedParams.relevance_explanations ? (suggestedParams.relevance_explanations.reasoning_G || "") : (suggestedParams.reasoning_G || "");
-          const reasoning_S = suggestedParams.relevance_explanations ? (suggestedParams.relevance_explanations.reasoning_S || "") : (suggestedParams.reasoning_S || "");
-          const reasoning_X = suggestedParams.relevance_explanations ? (suggestedParams.relevance_explanations.reasoning_X || "") : (suggestedParams.reasoning_X || "");
-
-          const reasoning_R = suggestedParams.isr_explanations ? (suggestedParams.isr_explanations.reasoning_R || "") : (suggestedParams.reasoning_R || "");
-          const reasoning_E = suggestedParams.isr_explanations ? (suggestedParams.isr_explanations.reasoning_E || "") : (suggestedParams.reasoning_E || "");
-          const reasoning_C = suggestedParams.isr_explanations ? (suggestedParams.isr_explanations.reasoning_C || "") : (suggestedParams.reasoning_C || "");
-
-          const reasoning_education = suggestedParams.expertise_explanations ? (suggestedParams.expertise_explanations.reasoning_education || "") : (suggestedParams.reasoning_education || "");
-          const reasoning_experience = suggestedParams.expertise_explanations ? (suggestedParams.expertise_explanations.reasoning_experience || "") : (suggestedParams.reasoning_experience || "");
-          const reasoning_resources = suggestedParams.expertise_explanations ? (suggestedParams.expertise_explanations.reasoning_resources || "") : (suggestedParams.reasoning_resources || "");
-
-          const issueDoc = {
-            issue_id: issueId,
-            title: title,
-            description: description,
-            starts: firebase.firestore.FieldValue.serverTimestamp(),
-            category: suggestedParams.category || "building.maintenance.general",
-            location: new firebase.firestore.GeoPoint(newTopicGeo[0], newTopicGeo[1]),
-            mu_distance_meters: suggestedParams.mu || 100,
-            sigma_decay_meters: suggestedParams.sigma || 50,
-            w_demographic: suggestedParams.weights.w_D || 0.2,
-            w_geographic: suggestedParams.weights.w_G || 0.4,
-            w_semantic: suggestedParams.weights.w_S || 0.3,
-            w_social: suggestedParams.weights.w_X || 0.1,
-            w_relevance: suggestedParams.w_relevance !== undefined ? suggestedParams.w_relevance : 0.4,
-            w_expertise: suggestedParams.w_expertise !== undefined ? suggestedParams.w_expertise : 0.3,
-            w_contribution: suggestedParams.w_contribution !== undefined ? suggestedParams.w_contribution : 0.3,
-            relevance_reasoning: suggestedParams.relevance_reasoning || "",
-            aggregation_reasoning: suggestedParams.aggregation_reasoning || "",
-            submitter_id: currentUserId.toString(),
-            status: "open",
-            created_at: firebase.firestore.FieldValue.serverTimestamp(),
-            expertise_depth: suggestedParams.expertise_depth || "None",
-            expertise_domain: suggestedParams.expertise_domain || "General Maintenance",
-            w_education: (suggestedParams.expertise_weights && suggestedParams.expertise_weights.w_education !== undefined) ? suggestedParams.expertise_weights.w_education : 0.3,
-            w_experience: (suggestedParams.expertise_weights && suggestedParams.expertise_weights.w_experience !== undefined) ? suggestedParams.expertise_weights.w_experience : 0.4,
-            w_resources: (suggestedParams.expertise_weights && suggestedParams.expertise_weights.w_resources !== undefined) ? suggestedParams.expertise_weights.w_resources : 0.3,
-            reasoning_D,
-            reasoning_G,
-            reasoning_S,
-            reasoning_X,
-            reasoning_R,
-            reasoning_E,
-            reasoning_C,
-            reasoning_education,
-            reasoning_experience,
-            reasoning_resources,
-            demographics: suggestedParams.demographics || null,
-            min_experience_years: suggestedParams.min_experience_years !== undefined ? suggestedParams.min_experience_years : 2,
-            expertise_weights_reasoning: suggestedParams.expertise_weights_reasoning || suggestedParams.expertise_reasoning || "",
-            resources_needed: suggestedParams.resources_needed || []
-          };
-          await issueRef.set(issueDoc);
-
-          const mcRef = db.collection("microcommunities").doc(issueId);
-          const mcId = mcRef.id;
-
-          const mcDoc = {
-            microcommunity_id: mcId,
-            issue_id: issueId,
-            threshold_relevance: 0.15,
-            member_count: calculatedMembers.length,
-            member_accepted: 0,
-            issue_scope: 0,
-            created_at: firebase.firestore.FieldValue.serverTimestamp(),
-            status: "active",
-            w_demographic: suggestedParams.weights.w_D || 0.2,
-            w_geographic: suggestedParams.weights.w_G || 0.4,
-            w_semantic: suggestedParams.weights.w_S || 0.3,
-            w_social: suggestedParams.weights.w_X || 0.1,
-            w_relevance: suggestedParams.w_relevance !== undefined ? suggestedParams.w_relevance : 0.4,
-            w_expertise: suggestedParams.w_expertise !== undefined ? suggestedParams.w_expertise : 0.3,
-            w_contribution: suggestedParams.w_contribution !== undefined ? suggestedParams.w_contribution : 0.3,
-            relevance_reasoning: suggestedParams.relevance_reasoning || "",
-            aggregation_reasoning: suggestedParams.aggregation_reasoning || "",
-            expertise_depth: suggestedParams.expertise_depth || "None",
-            expertise_domain: suggestedParams.expertise_domain || "General Maintenance",
-            w_education: (suggestedParams.expertise_weights && suggestedParams.expertise_weights.w_education !== undefined) ? suggestedParams.expertise_weights.w_education : 0.3,
-            w_experience: (suggestedParams.expertise_weights && suggestedParams.expertise_weights.w_experience !== undefined) ? suggestedParams.expertise_weights.w_experience : 0.4,
-            w_resources: (suggestedParams.expertise_weights && suggestedParams.expertise_weights.w_resources !== undefined) ? suggestedParams.expertise_weights.w_resources : 0.3,
-            reasoning_D,
-            reasoning_G,
-            reasoning_S,
-            reasoning_X,
-            reasoning_R,
-            reasoning_E,
-            reasoning_C,
-            reasoning_education,
-            reasoning_experience,
-            reasoning_resources,
-            demographics: suggestedParams.demographics || null
-          };
-          await mcRef.set(mcDoc);
-
-          const batch = db.batch();
-          calculatedMembers.forEach(member => {
-            const mRef = db.collection("microcommunity_members").doc(`${mcId}_${member.uid}`);
-            batch.set(mRef, {
-              microcommunity_id: mcId,
-              user_id: parseInt(member.uid),
-              displayName: member.name,
-              D_score: member.D,
-              G_score: member.G,
-              S_score: member.S,
-              X_score: member.X,
-              relevance_score: member.score,
-              calculated_at: firebase.firestore.FieldValue.serverTimestamp(),
-              accepted_rejected: null
-            });
+          // A2: the server creates the issue from the draft it derived at Check.
+          // Only text inputs are sent; every number comes from the draft.
+          const res = await fetch(`${functionsBaseUrl}/createIssue`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              draftId: suggestedParams.draftId,
+              title: title,
+              description: description,
+              location: newTopicGeo,
+              submitterId: currentUserId,
+              deadline: newTopicDeadline || "Ongoing"
+            })
           });
-          await batch.commit();
+          const out = await res.json().catch(() => ({}));
+          if (!res.ok || !out.success) {
+            throw new Error(out.error || "The server could not create the issue.");
+          }
 
-          const discRef = db.collection("discussions").doc(issueId);
-          const relevanceScores = {};
-          calculatedMembers.forEach(member => {
-            relevanceScores[member.uid.toString()] = parseFloat(member.score.toFixed(3));
-          });
-
-          const newDeadlineFormatted = newTopicDeadline || "Ongoing";
-
-          await discRef.set({
-            discussion_id: issueId,
-            topic: title,
-            creator_uid: currentUserId.toString(),
-            created_at: new Date().toISOString(),
-            message_count: 1,
-            location: new firebase.firestore.GeoPoint(newTopicGeo[0], newTopicGeo[1]),
-            affection_distance: parseFloat(((suggestedParams.mu || 100) / 1000).toFixed(3)),
-            expertise_depth: suggestedParams.expertise_depth || "None",
-            expertise_domain: suggestedParams.expertise_domain || "General Maintenance",
-            w_education: (suggestedParams.expertise_weights && suggestedParams.expertise_weights.w_education !== undefined) ? suggestedParams.expertise_weights.w_education : 0.3,
-            w_experience: (suggestedParams.expertise_weights && suggestedParams.expertise_weights.w_experience !== undefined) ? suggestedParams.expertise_weights.w_experience : 0.4,
-            w_resources: (suggestedParams.expertise_weights && suggestedParams.expertise_weights.w_resources !== undefined) ? suggestedParams.expertise_weights.w_resources : 0.3,
-            relevance_scores: relevanceScores,
-            participants: calculatedMembers.map(m => m.uid.toString()),
-            last_message_text: description,
-            last_message_sender_uid: currentUserId.toString(),
-            last_message_sender_name: creatorName,
-            last_message_timestamp: new Date().toISOString(),
-            deadline_votes: {},
-            ends: newDeadlineFormatted,
-            w_demographic: suggestedParams.weights.w_D || 0.2,
-            w_geographic: suggestedParams.weights.w_G || 0.4,
-            w_semantic: suggestedParams.weights.w_S || 0.3,
-            w_social: suggestedParams.weights.w_X || 0.1,
-            w_relevance: suggestedParams.w_relevance !== undefined ? suggestedParams.w_relevance : 0.4,
-            w_expertise: suggestedParams.w_expertise !== undefined ? suggestedParams.w_expertise : 0.3,
-            w_contribution: suggestedParams.w_contribution !== undefined ? suggestedParams.w_contribution : 0.3,
-            relevance_reasoning: suggestedParams.relevance_reasoning || "",
-            aggregation_reasoning: suggestedParams.aggregation_reasoning || "",
-            reasoning_D,
-            reasoning_G,
-            reasoning_S,
-            reasoning_X,
-            reasoning_R,
-            reasoning_E,
-            reasoning_C,
-            reasoning_education,
-            reasoning_experience,
-            reasoning_resources,
-            demographics: suggestedParams.demographics || null
-          });
-
-          await discRef.collection("messages").doc("msg_init").set({
-            id: "msg_init",
-            uid: currentUserId.toString(),
-            text: description,
-            timestamp: new Date().toISOString(),
-            marks: [],
-            child: []
-          });
-
-          alert(`Issue created successfully! Formed ad-hoc public with ${calculatedMembers.length} members.`);
+          alert(`Issue created successfully! Formed ad-hoc public with ${out.members_count} members.`);
           restoreTopicListView();
 
         } catch(err) {

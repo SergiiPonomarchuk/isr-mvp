@@ -578,6 +578,8 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       last_message_sender_uid: String(submitterId),
       last_message_sender_name: submitterDisplayName,
       last_message_timestamp: new Date().toISOString(),
+      deadline_votes: {},
+      ends: (typeof req.body.deadline === "string" && req.body.deadline.trim()) ? req.body.deadline.trim().slice(0, 64) : "Ongoing",
       w_demographic: w_D,
       w_geographic:  w_G,
       w_semantic:    w_S,

@@ -117,11 +117,7 @@ async function runLocalRelevanceCheck(title, description, location, submitterId,
     sigma: sigma,
     demographics: demo,
     expertise_depth: exp,
-    expertise_domain: cat === "social.event.cultural" ? "Event Coordination" : "General Maintenance",
-    expertise_weights:
-      cat === "social.event.cultural"
-        ? { w_education: 0.2, w_experience: 0.5, w_resources: 0.3 }
-        : { w_education: 0.3, w_experience: 0.4, w_resources: 0.3 }
+    expertise_domain: cat === "social.event.cultural" ? "Event Coordination" : "General Maintenance"
   };
 
   // Perform relevance score pipeline client-side
