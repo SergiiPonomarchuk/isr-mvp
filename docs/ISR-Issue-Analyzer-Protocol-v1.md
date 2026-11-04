@@ -634,7 +634,7 @@ proposals lapse when voting opens, and everything is frozen until the vote close
 
 1. It derives the type and the parameters again from the table for the new context (Steps 1 to 4A).
 2. It attaches change notes: what changed, who proposed it, and the vote.
-3. It validates the schema: each weight in [0, 1], each weight group summing to 1.
+3. It validates the schema: each aggregation weight in (0, 1) and each relevance weight in [0, 1], each weight group summing to 1.
 4. The system then recomputes relevance and updates the list of members (`ISR-Relevance-Implementation.md`, Part 10).
 
 **Output.** `parameters_version` (previous + 1), the new type and parameters, the changed fields with old and new values, the

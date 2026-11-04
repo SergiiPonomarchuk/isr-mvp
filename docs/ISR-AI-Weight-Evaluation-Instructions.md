@@ -316,17 +316,16 @@ The precise serialization can vary (JSON, structured text, etc.), but **all four
 
 ---
 
-## 6. Style, Constraints, and Default Fallback Rules for AI Explanations
+## 6. Style and Constraints for AI Explanations
 
 - Explanations must be **concise** (2–4 sentences per reasoning field).
 - They must refer to **concrete aspects** of the issue: who is affected, where, and how.
 - They must **not** mention internal prompts or training files by name (no references like “as in example 34” in user-facing text).
 - They must be stable and auditable: given the same description, the AI should produce very similar weights and reasoning each time.
 
-### 6.1 The Fallback Weights Rule (40% / 30% / 30%)
-- The system defines a baseline default aggregation weight profile of **40% Relevance / 30% Expertise / 30% Contribution**.
-- **CRITICAL RULE**: The default $40\% / 30\% / 30\%$ weight distribution is **strictly a fallback baseline**. It must **ONLY** be used when the issue description is extremely ambiguous, vague, or when the AI evaluation pipeline cannot precisely define specific aggregation weights.
-- For all issues with precise, structured context, the AI pipeline **must** suggest customized, precise weights derived from the issue category, impact scope, and matching example anchors (such as the $50\% / 20\% / 30\%$ aggregation profile suggested for community recreational events like a Chess club).
+### 6.1 Vague or ambiguous issues
+- There is no fallback weight profile. If the description and the context are too vague to choose an issue type, the result is `needs_clarification` (Analyzer protocol, Step 4A): the assistant asks the topic starter to clarify the context. If no consistent type is found, the result is `not_consistent`.
+- For every published issue the weights are derived from the chosen type and the context, and stay inside the typical range of that type.
 
 When in doubt, within the typical range of the type:
 - Default to **higher Relevance** in local, lived-experience issues.

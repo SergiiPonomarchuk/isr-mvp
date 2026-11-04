@@ -928,12 +928,12 @@ $$C_{u, new} = \sum_{a \in Actions(u)} c_{a, new}$$
 
 - **Relevance Engine** (D, G, S, X) decides **who** belongs to the ad-hoc public and how relevant they are.
 - **Contribution Engine** (this part) estimates **how strongly and in what direction** each member has acted in the past relative to this ad-hoc public’s values.
-- The ISR core later normalizes absolute_contribution and combines it with Relevance and Expertise: $\hat C_u = C_u / (\overline{|C|} + u)$, where $\overline{|C|}$ is the mean absolute Contribution over the members of the ad-hoc public and $u$ is one reference unit of Contribution. Relevance and Expertise are divided by their mean over the same members. gISR (8.6) uses the same rule over all registered users.
+- The ISR core later normalizes absolute_contribution and combines it with Relevance and Expertise: $\hat C_i = C_i / (\overline{|C|} + 1)$, where $\overline{|C|}$ is the mean absolute Contribution over the members of the ad-hoc public and 1 is one reference unit of Contribution. Relevance and Expertise are divided by their mean over the same members. gISR (8.6) uses the same rule over all registered users.
 
 ### 8.6 The general score (gISR)
 
 The general score is a member's weight in a vote that affects all users equally. Relevance and Expertise are the same for everyone ($\hat R = \hat E = 1$) and the three component weights are equal ($w_R = w_E = w_C = 1/3$), so
 
-$$g_{raw} = \max\bigl(0,\; (1 - w_C) + w_C \hat C\bigr) \approx 0.67 + 0.33\,\hat C, \qquad \hat C = \frac{C}{\overline{|C|} + u},$$
+$$g_{raw} = \max\bigl(0,\; (1 - w_C) + w_C \hat C\bigr) \approx 0.67 + 0.33\,\hat C, \qquad \hat C = \frac{C}{\overline{|C|} + 1},$$
 
 where $C$ is the member's Contribution read through the Vector of Values of all registered users taken equally and $\overline{|C|}$ is the mean absolute Contribution over all registered users. After all users are calculated the scores are divided by their mean over all users, $gISR = g_{raw} / \overline{g_{raw}}$, so that the average is 1. The score reaches zero only when Contribution is negative and at least twice the typical size. It has two uses only: the weight in votes on questions that affect all users equally (the rules), and a minimum reliability condition in the access scheme with tiers. It is not shown to other members or given to third parties.

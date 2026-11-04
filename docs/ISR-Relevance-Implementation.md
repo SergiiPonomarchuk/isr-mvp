@@ -223,7 +223,7 @@ The maximum (not the sum) keeps a large family from inflating Relevance. $R^0_j$
 
 ### 1.3 Issue Analysis & Weight Assignment
 
-**During issue submission**, Google AI Studio analyzes the issue description to suggest weights. The evaluation is conducted according to the guidelines in [ISR-AI-Weight-Evaluation-Instructions.md](ISR-AI-Weight-Evaluation-Instructions.md), using the 100-issue benchmarks in [ISR-Relevance-Weight-Examples-100.md](ISR-Relevance-Weight-Examples-100.md) and [ISR-Issue-Aggregation-Weight-Examples-100.md](ISR-Issue-Aggregation-Weight-Examples-100.md) to set weights for the issue type:
+**During issue submission**, Google AI Studio analyzes the issue description to suggest weights. The evaluation is conducted according to the guidelines in [ISR-AI-Weight-Evaluation-Instructions.md](ISR-AI-Weight-Evaluation-Instructions.md), using the 100-issue benchmarks in [ISR-Issue-Analyzer-100-Examples.md](ISR-Issue-Analyzer-100-Examples.md) to set weights for the issue type:
 
 1. **Taxonomy Category**: Extracted from description (e.g. `building.security.locks`)
 2. **Demographic Conditions**: Structured JSON-based filtering criteria (e.g., familyStatus, employmentStatus)
@@ -231,9 +231,8 @@ The maximum (not the sum) keeps a large family from inflating Relevance. $R^0_j$
 4. **Weights**: Suggests both relevance component weights `(w_D, w_G, w_S, w_X)` and issue aggregation weights `(w_Relevance, w_Expertise, w_Contribution)` that sum to 1.0.
 
 > [!IMPORTANT]
-> **The Fallback Weights Rule (40% / 30% / 30%)**:
-> The standard baseline default of **40% Relevance / 30% Expertise / 30% Contribution** is **strictly a fallback baseline**. It must **ONLY** be used when the issue description is too vague, ambiguous, or lacks sufficient context to calculate precise weights.
-> Under the standard pipeline, if the issue description is clear, the system **must** output custom, precise aggregation weights (e.g., $50\% / 20\% / 30\%$ for community social clubs like the Chess club) mapped from matching benchmarks in `ISR-Issue-Aggregation-Weight-Examples-100.md`.
+> **No fallback weights.** If the description and the context are too vague to choose an issue type, the result is `needs_clarification` (Analyzer protocol, Step 4A); if no consistent type is found, it is `not_consistent`.
+> For every published issue the weights are derived from the chosen type and the context, and stay inside the typical range of that type.
 
 **Weight Assignment Examples** (For reference, detailed in benchmark files):
 

@@ -114,3 +114,31 @@ $$\hat C_u = \frac{C_u}{\overline{|C|} + u}$$
 **Matching row [decide], ISR-Relevance-Implementation.md, l.234–236:** replace the "Fallback Weights Rule (40% / 30% / 30%)" note (it also cites the missing `ISR-Issue-Aggregation-Weight-Examples-100.md`) with the same two bullets as 6-A.
 
 Why [decide]: the 40/30/30 fallback (contradiction C-21) lets a vague issue be published with weights that come from no type, while Step 4A requires the assistant to ask for clarification. If you keep the fallback, at least change the cited file to `ISR-Issue-Analyzer-100-Examples.md` in both places.
+
+---
+
+# Round 3 (checked against commit e60f342)
+
+Rounds 1–2 are applied in `e60f342`, except the rows below. Author decisions, 2026-11-04: the 40/30/30 fallback is replaced in both places; the reference unit is 1. The "Baseline (1.0)" text is kept: it describes the age floor of the new education formula (Expertise §2.2), not a term added to E.
+
+Generated file: `specs/tasks/A2-generated/ISR-Issue-Analyzer-100-Examples.md` (100 `contemporary_importance` lines deleted, 100 `domain_reasoning` strings shortened; all 100 JSON blocks parse). Copy it over `docs/ISR-Issue-Analyzer-100-Examples.md`.
+
+| Doc | Line | Find | Replace with |
+|---|---|---|---|
+| AI-Weights | 319 | `## 6. Style, Constraints, and Default Fallback Rules for AI Explanations` | `## 6. Style and Constraints for AI Explanations` |
+| AI-Weights | 326–329 | §6.1 heading `### 6.1 The Fallback Weights Rule (40% / 30% / 30%)` and its 3 bullets | text 6-A (round 2) |
+| Relevance | 233–236 | `> [!IMPORTANT]` and the 3 quoted lines of "The Fallback Weights Rule" | `> [!IMPORTANT]` + the two bullets of 6-A, each prefixed `> ` |
+| Relevance | 226 | `using the 100-issue benchmarks in [ISR-Relevance-Weight-Examples-100.md](…) and [ISR-Issue-Aggregation-Weight-Examples-100.md](…)` | `using the 100 example issues in [ISR-Issue-Analyzer-100-Examples.md](ISR-Issue-Analyzer-100-Examples.md), under [ISR-Issue-Analyzer-Protocol-v1.md](ISR-Issue-Analyzer-Protocol-v1.md)` |
+| Contribution | 931 | `$\hat C_u = C_u / (\overline{|C|} + u)$, where $\overline{|C|}$ is the mean absolute Contribution over the members of the ad-hoc public and $u$ is one reference unit of Contribution.` | `$\hat C_i = C_i / (\overline{|C|} + 1)$, where $\overline{|C|}$ is the mean absolute Contribution over the members of the ad-hoc public and 1 is one reference unit of Contribution.` (u was also the member index) |
+| Analyzer | 637 | `each weight in [0, 1], each weight group summing to 1.` | `each aggregation weight in (0, 1) and each relevance weight in [0, 1], each weight group summing to 1.` |
+| Expertise | 98 vs 64 | `P_education = 7 years (PhD time)` and `E_education = 0.548 × 7 = 3.84` | `P_education = 10 years (PhD time)` and `E_education = 0.548 × 10 = 5.48` (the table says 10) |
+| Expertise | 16–19 | depends on the education-floor decision (age, cognitive/physical limitations) | see the chat discussion |
+
+## Round 3, status after the author's update (working tree, 2026-11-04)
+
+Applied: 100-Examples copy, AI-Weights l.319, Relevance l.226, Analyzer l.637.
+Still to apply: AI-Weights l.326–329, Relevance l.233–236, Contribution l.931, Expertise l.87–88 (PhD example), and the education age floor (author decision: age/30 only under 30, never below 1 for older people), Expertise l.15–27 and l.49. Exact before/after blocks were given in chat.
+
+## Round 4 (working tree after A–E, 2026-11-04)
+
+A–E are applied. Remaining: the gISR formula still uses `u` (Contribution l.937), and the Expertise worked examples and reference code do not apply the new age floor (Expertise l.93, l.436–439, l.569–588, l.785–846). Exact rows were given in chat. Open: E floor for a member with no `birthDate` (the field is optional in `users`, claude_export/SCHEMA.md:41).

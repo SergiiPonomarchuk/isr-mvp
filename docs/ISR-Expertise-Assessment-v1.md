@@ -12,16 +12,12 @@ Expertise measures **ability to influence the outcome** of an issue through doma
 
 **Baseline (1.0)**: Common knowledge of a statistically normal 30-year-old person **without any special education or practical experience** in the issue domain. This represents generic adult competence across life domains.
 
-**Below baseline (0.0-1.0)**: People without special education/experience whose expertise is **lower than normal** due to:
-- Age factors (young people lack context; older people may lack contemporary knowledge in fast-evolving domains)
-- Incomplete education (high school dropout)
-- Cognitive/physical limitations
-- Over-specialized interests misaligned with issue domain
+**Below baseline (0.0-1.0)**: Only people under 30 without related education can score below 1.0 (the floor is age/30). Expertise is never reduced for older age or for any other personal trait.
 
 **Above baseline (1.0+)**: People with **education or practical experience** in the issue domain. Unbounded because high-level specialists significantly exceed baseline competence.
 
 **Interpretation**:
-- **0.5**: Half the baseline competence (young learner, older person in tech)
+- **0.5**: Half the baseline competence (a 15-year-old without related education)
 - **1.0**: Baseline (generic adult non-specialist)
 - **1.5**: 50% above baseline (beginner practitioner)
 - **3.0**: Three times baseline (strong practitioner specialist with credentials)
@@ -46,7 +42,7 @@ The two components are added **without weights**. The context of the issue acts 
 
 ### 2.2 Education Expertise
 
-$$E_{i,q,\text{education}} = max( age / 30 , \sum_{\text{education}} \cos(\vec{v}_{i,\text{education}}, \vec{V}_q) ^ {\text{CBC}} \times P_{i,\text{education}})$$
+$$E_{i,q,\text{education}} = \max\left( \frac{\min(age_i, 30)}{30},\ \sum_{\text{education}} \cos(\vec{v}_{i,\text{education}}, \vec{V}_q) ^ {\text{CBC}} \times P_{i,\text{education}}\right)$$
 
 Where:
 - **$v_{i,education}$** = Vectorized education records (semantic embedding)
@@ -55,7 +51,7 @@ Where:
 - **$P_{i,education}$** = Education Power scalar (education time in years)
 - **Cosine similarity with CBC exponent** = Semantic relevance of credential to issue, adjusted by broadcast capability [0.0-1.0]
 - **Power scalar** = Education time in years [0.5+]
-
+- **$\min(age_i, 30)/30$** = Common-knowledge floor: 1.0 from age 30 on, age/30 below 30. It never exceeds 1.0 and never falls with age.
 
 **Credential Broadcast Coefficient Table**:
 
@@ -84,8 +80,8 @@ Where:
 cos_similarity = 0.3 (distant domain)
 CBC = 0.5 (PhD amplifies)
 CBC_adjusted = cos(0.3)^0.5 = 0.548
-P_education = 7 years (PhD time)
-E_education = 0.548 × 7 = 3.84
+P_education = 10 years (PhD time)
+E_education = 0.548 × 10 = 5.48
 ```
 
 **Vocational Locksmith addressing street parking issue**:
@@ -94,7 +90,8 @@ cos_similarity = 0.2 (very distant domain)
 CBC = 2.0 (Vocational suppresses)
 CBC_adjusted = cos(0.2)^2.0 = 0.04
 P_education = 2 years (vocational training)
-E_education = 0.04 × 2 = 0.08
+Σ education = 0.04 × 2 = 0.08
+E_education = max(1.0, 0.08) = 1.0 (member aged 30+: the floor applies)
 ```
 
 **Master's in Construction addressing urban planning issue**:
@@ -441,6 +438,12 @@ async function calculateExpertiseForIssue(issueId, microcommunityId) {
       const timeYears = edu.years_of_study || 0.5;
       educationExpertise += cosAdjusted * timeYears;
     }
+
+    // Common-knowledge floor (Section 2.2): min(age, 30) / 30
+    const userDoc = await db.collection("users").doc(String(userId)).get();
+    const age = ageInYears(userDoc.data()?.birthDate);   // birthDate is "YYYY-MM-DD"
+    const ageFloor = Math.min(age, 30) / 30;
+    educationExpertise = Math.max(ageFloor, educationExpertise);
     
     // COMPONENT 2: EXPERIENCE EXPERTISE
     let experienceExpertise = 0.0;
@@ -570,7 +573,8 @@ Education:
 - cos_similarity = 0.05 (completely unrelated)
 - cos_adjusted = (0.05)^1.0 = 0.05
 - cos_adjusted_cbc = (0.05)^0.9 = 0.054
-- E_education = 0.054 × 4 = **0.216**
+- Σ education = 0.054 × 4 = 0.216; age 32, floor 1.0
+- E_education = max(1.0, 0.216) = **1.0**
 
 Experience:
 - Office Manager (8 years, 2017-2025)
@@ -578,7 +582,7 @@ Experience:
 - years = 8
 - E_experience = 0.02 × 8 = **0.16**
 
-**Total Expertise: 0.216 + 0.16 = 0.376**
+**Total Expertise: 1.0 + 0.16 = 1.16**
 
 ---
 
@@ -586,9 +590,9 @@ Experience:
 ```
 John (Master Locksmith):      31.22  ← Expert (>10)
 Sarah (Engineer):             13.26  ← Expert (>10)
-Lisa (Office Manager):         0.38  ← Novice (<1)
+Lisa (Office Manager):         1.16  ← Informed (1-3)
 
-Total expertise: 44.86
+Total expertise: 45.64
 → Strong expertise in the ad-hoc public; no external expert needed
 ```
 
@@ -788,7 +792,7 @@ CBC adjustment: 1.2 (increase broadcasting for governance)
 
 Education:
 - None formal (self-taught)
-- E_education = 0.0
+- E_education = max(1.0, 0.0) = 1.0 (aged 30+, floor)
 
 Experience:
 - Emergency Response Coordinator (2.5 years, active)
@@ -796,7 +800,7 @@ Experience:
 - years = 2.5
 - E_experience = 0.9 × 2.5 = **2.25**
 
-**Total: 0.0 + 2.25 = 2.25**
+**Total: 1.0 + 2.25 = 3.25**
 
 ---
 
@@ -828,7 +832,9 @@ Education:
 - cos_similarity = 0.7
 - cos_adjusted = (0.7)^3.0 = 0.343
 - cos_adjusted_cbc = (0.343)^1.2 = 0.321
-- E_education = 0.321 × 0.5 = **0.161**
+- Σ education = 0.321 × 0.5 = 0.161
+- age/30 = 24 / 30 = 0.8
+- E_education = max(0.8, 0.161) = **0.8** (age 24)
 
 Experience:
 - Volunteer Coordinator (0.5 years, active)
@@ -836,17 +842,17 @@ Experience:
 - years = 0.5
 - E_experience = 0.75 × 0.5 = **0.375**
 
-**Total: 0.161 + 0.375 = 0.536**
+**Total: 0.8 + 0.375 = 1.175**
 
 ---
 
 **Summary**:
 ```
 Operations Manager:  3.74  ← Practitioner (3-10)
-Co-founder:          2.25  ← Informed (1-3)
-Volunteer Coord:     0.54  ← Novice (<1)
+Co-founder:          3.25  ← Practitioner (3-10)
+Volunteer Coord:     1.18  ← Informed (1-3)
 
-Total expertise: 6.53
+Total expertise: 8.17
 → Low expertise for governance decision; RECOMMEND EXTERNAL EXPERT
    Suggest: Finance expert, Emergency management specialist, Nonprofit board member
 ```
