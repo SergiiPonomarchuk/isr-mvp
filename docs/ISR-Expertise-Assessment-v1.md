@@ -51,7 +51,7 @@ Where:
 - **$P_{i,education}$** = Education Power scalar (education time in years)
 - **Cosine similarity with CBC exponent** = Semantic relevance of credential to issue, adjusted by broadcast capability [0.0-1.0]
 - **Power scalar** = Education time in years [0.5+]
-- **$\min(age_i, 30)/30$** = Common-knowledge floor: 1.0 from age 30 on, age/30 below 30. It never exceeds 1.0 and never falls with age.
+- **$\min(age_i, 30)/30$** = Common-knowledge floor: 1.0 from age 30 on, age/30 below 30. It never exceeds 1.0 and never falls with age. The age is taken at the moment the issue is registered and is not stored.
 
 **Credential Broadcast Coefficient Table**:
 
@@ -441,7 +441,7 @@ async function calculateExpertiseForIssue(issueId, microcommunityId) {
 
     // Common-knowledge floor (Section 2.2): min(age, 30) / 30
     const userDoc = await db.collection("users").doc(String(userId)).get();
-    const age = ageInYears(userDoc.data()?.birthDate);   // birthDate is "YYYY-MM-DD"
+    const age = ageInYears(userDoc.data()?.birthDate, issueData.created_at);   // age at issue registration
     const ageFloor = Math.min(age, 30) / 30;
     educationExpertise = Math.max(ageFloor, educationExpertise);
     
