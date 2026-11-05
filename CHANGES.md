@@ -22,19 +22,27 @@ Branch `a3-options-and-g-anchors` (from `a2-expertise-cleanup`). Spec: `specs/ta
 
 ### Tests
 
-- `python -m unittest discover -s tests`: 24 OK (shared D/G fixture; path B unchanged when home is nearest, also against a copy of the pre-A3 file).
+- `python -m unittest discover -s tests`: 31 OK, 1 skipped unless the pre-A3 file is supplied (shared D/G fixture; path B unchanged when home is nearest, also against a copy of the pre-A3 file; weight recovery, identifiability, recomputation).
 - `cd functions && npm test`: 16 OK (shared fixture; G formula against the as-built code; option validation, escaping, "not stated", needs ordering).
 - Emulator: a Check at the Argo Industry site gave G from `work` for all 25 previewed members. A proposed option with cost, funding source and two resources was stored and shown on the card and in the option window. The voting view was not checked in the browser (the pane was hidden); it uses the same tested display helper. For that test, `issues/179` in the emulator was overwritten with test data (emulator only).
 
-### Not done: recomputing existing publics (R16)
+### Existing publics: recomputed where possible (R16a, author decision 2026-11-05)
 
-Blocked, author decision pending. The stored G of current members cannot be reproduced from the stored data (`specs/tasks/A3-impact-report.md`):
-- 112 of 192 publics have no stored location, μ or σ at all (seeded discussions carry none; only the 80 `issues` docs do).
-- In the 80 others, the stored G matches neither as-built rule for most members (162 / 166 of 1,323 match the server / path B rule with the home anchor).
-- Only 151 of those 1,323 members have a work anchor nearer than home, and G would rise for 6 of them.
-- 10,115 non-members (counted once per public, in 78 publics) would pass the distance stage only through a work anchor; they are not added (no S).
+The stored G of current members cannot be reproduced from the stored data (`specs/tasks/A3-impact-report.md`). It was computed from discussion locations and `affection_distance` values written by seed scripts that are no longer stored. The author chose to recompute the publics whose issue has a stored location, μ and σ with the server formula, accepting that G changes for most of their members, not only through the new anchors.
 
-`scripts/migrate_a3.py` was therefore not written.
+`scripts/migrate_a3.py` (dry run by default; emulator only unless `--project … --i-know-this-is-live`; run after `migrate_a2.py`). Report: `specs/tasks/A3-migration-report.md`.
+- Recomputed: 74 publics, 1,229 members (export; 1,225 on the emulator after A2). Unchanged: the 112 publics without a stored location, and 6 publics whose G weight cannot be recovered from the stored values (109, 140, 142, 150, 162, 48).
+- Relevance weights: from the issue for 8 publics, recovered (non-negative, sum 1, reproducing the stored relevance within 0.002, G weight unique) for 66.
+- Nearest anchor: home 1,083, work 146, property 0.
+- G changed for 1,125 members: 981 with home nearest (replacing the non-reproducible stored G) and 144 through a work anchor.
+- Relevance changed for 1,124 members: median −0.160, 5% −0.700, 95% +0.700, mean |change| 0.404. Nobody falls to 0.15 or below. Membership is unchanged.
+- ISR changed for all 1,179 members with ISR: median −0.125, mean |change| 0.284.
+- Not changed: the cached `relevance_scores` / `isr_scores` maps on discussions and issues (tally numbers, A1); D, S and X.
+- Emulator: applied after A2; a second run finds all 74 publics up to date and changes nothing.
+
+### Author's steps (not done by the agent)
+1. After the A2 live migration: `python scripts/migrate_a3.py --source firestore --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live` (dry run), then the same with `--apply`.
+2. Deploy the functions and the prototype (no Firestore rules change).
 
 ### Not changed
 - No places or property kinds exist in the data yet, and there is no profile flow to register property. Without a Gemini key the fallback derives empty `places`, so the place rule is exercised by the tests only.

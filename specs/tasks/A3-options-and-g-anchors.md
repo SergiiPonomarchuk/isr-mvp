@@ -1,6 +1,6 @@
 # SPEC A3: Option fields (cost, funding source, resources), G anchors (home, work, property), places in D
 
-Status: IMPLEMENTED on branch except R16 (blocked, see status log)
+Status: IMPLEMENTED on branch (live migration pending, author)
 Branch: a3-options-and-g-anchors (from a2-expertise-cleanup; never main)
 Decisions: PD-8 (resources and money are option-level; property counts only through Relevance). Docs as committed by the author on 2026-11-04.
 Follows: A2. Next: A1 (canonical ISR module).
@@ -105,8 +105,8 @@ None. Decided 2026-11-05 (author): (1) numbers in option text are content, not p
 ## 7. Status log
 
 - Plan approved: 2026-11-05 (author).
-- Implementation: R1-R15 done on branch `a3-options-and-g-anchors`. R16 was blocked (stored G not reproducible); author decision 2026-11-05: recompute the 80 publics with a stored location (R16a).
-- Tests: Python 24 OK; Node 16 OK; emulator AC5 partly (voting view not checked in the browser).
+- Implementation: R1-R15 and R16a done on branch `a3-options-and-g-anchors`. R16 was blocked (stored G not reproducible); author decision 2026-11-05: recompute the publics with a stored location (R16a): 74 recomputed, 6 left unchanged (G weight not identifiable).
+- Tests: Python 31 OK (1 optional skip); Node 16 OK; emulator AC4c done (applied, idempotent); AC5 partly (voting view not checked in the browser).
 - Impact report: `A3-impact-report.md`.
 - CHANGES.md: written.
-- Deviations: path B keeps its category heuristics for D (only the place rule added); R16 not done.
+- Deviations: path B keeps its category heuristics for D (only the place rule added); R16 replaced by R16a (author); a public whose stored G already matches the rule is not refitted (idempotence).
