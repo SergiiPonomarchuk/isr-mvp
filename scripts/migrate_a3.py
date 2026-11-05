@@ -85,6 +85,19 @@ def fit_relevance_weights(X, y, issue_weights=None):
     return tuple(float(v) for v in w), "recovered"
 
 
+def up_to_date(members, users, location, mu, sigma):
+    """True when every member already has the rule's G (3 decimals) and G_anchor_type.
+    Such a public is not refitted, so a second run changes nothing."""
+    for m in members:
+        near = rev.nearest_anchor(users[m["user_id"]].get("geography"), location)
+        g = round(rev.g_score(near[0], mu, sigma), 3) if near else 0.0
+        if "G_anchor_type" not in m or m["G_anchor_type"] != (near[1] if near else None):
+            return False
+        if abs(float(m.get("G_score", 0.0)) - g) > 0.0005:
+            return False
+    return True
+
+
 def normalize_by_mean(values):
     """As built (A2 / backfill): x / mean, 0 if mean <= 0."""
     mean = sum(values) / len(values) if values else 0.0
@@ -160,7 +173,7 @@ def plan(members, issues, mcs, users):
     by_public = collections.defaultdict(list)
     for m in members:
         by_public[str(m["microcommunity_id"])].append(m)
-    updates, skipped, no_location = {}, {}, 0
+    updates, skipped, no_location, up_to_date_publics = {}, {}, 0, 0
     sources = collections.Counter()
     weights_seen = collections.Counter()
     rows = []
@@ -171,6 +184,9 @@ def plan(members, issues, mcs, users):
         sigma = issue.get("sigma_decay_meters") if issue else None
         if loc is None or mu is None or not sigma:
             no_location += 1
+            continue
+        if all(m["user_id"] in users for m in ms) and up_to_date(ms, users, loc, float(mu), float(sigma)):
+            up_to_date_publics += 1
             continue
         X = [[float(m.get(c, 0.0)) for c in COMPONENTS] for m in ms]
         y = [float(m.get("relevance_score", 0.0)) for m in ms]
@@ -196,7 +212,7 @@ def plan(members, issues, mcs, users):
         for m, new in zip(ms, recompute_public(ms, users, loc, float(mu), float(sigma), rel_w, isr_w)):
             updates[m["_doc_id"]] = new
             rows.append((pub, m, new, has_isr))
-    return {"publics": len(by_public), "no_location": no_location, "updates": updates,
+    return {"publics": len(by_public), "no_location": no_location, "up_to_date": up_to_date_publics, "updates": updates,
             "skipped": skipped, "sources": sources, "weights": weights_seen, "rows": rows}
 
 
@@ -229,6 +245,7 @@ def report(p, source, applied):
         "|---|---|",
         f"| Ad-hoc publics | {p['publics']} |",
         f"| Publics without a stored location, μ or σ (unchanged) | {p['no_location']} |",
+        f"| Publics already up to date (G and anchor type match the rule; not refitted) | {p['up_to_date']} |",
         f"| Publics recomputed | {sum(p['sources'].values())} |",
         f"| of which relevance weights from the issue / recovered | {p['sources']['issue']} / {p['sources']['recovered']} |",
         f"| Publics skipped | {len(p['skipped'])} |",
