@@ -10,7 +10,7 @@ the .npy files) so that S can be computed by checkIssue.
 
 Usage (PowerShell):
     $env:FIRESTORE_EMULATOR_HOST = "127.0.0.1:8080"
-    python scripts/seed_emulator.py --project project-a3d59130-5adf-4677-9e2 --vectors
+    python scripts/seed_emulator.py --project project-a3d59130-5adf-4677-9e2 --vectors --names-from db/profiles.json
 """
 from __future__ import annotations
 
@@ -66,6 +66,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--project", default="demo-isr")
     ap.add_argument("--vectors", action="store_true", help="also load user_vectors.profile_vector")
+    ap.add_argument("--names-from", default=None,
+                    help="restore the synthetic name fields from this profiles file (e.g. db/profiles.json); see restore_names.py")
     a = ap.parse_args(argv)
 
     if not os.environ.get("FIRESTORE_EMULATOR_HOST"):
@@ -124,6 +126,11 @@ def main(argv=None):
 
     w.flush()
     print("Loaded into the emulator:", ", ".join(f"{k} {v}" for k, v in counts.items()))
+    if a.names_from:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import restore_names
+        restored = restore_names.restore(db, restore_names.load_names(a.names_from))
+        print("Names restored:", ", ".join(f"{k} {v}" for k, v in sorted(restored.items())))
     return 0
 
 
