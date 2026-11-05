@@ -81,6 +81,7 @@ Work locations count the same way: the `place` of a `work` entry is the company 
 
 ### Existing publics (author, 2026-11-05: recompute)
 - R16 New `scripts/migrate_a3.py` (dry run by default, emulator only unless `--project … --i-know-this-is-live`): for every current member of the 192 publics recompute G from the nearest anchor (stored μ, σ, issue location), relevance with the public's relevance weights and the stored D, S, X, then `normalized_relevance` and `isr_score` (A2 aggregation; ISR weights recovered as in A2). Membership is unchanged; D is unchanged (no seeded rule has `places`). Relevance weights: the issue's stored `w_demographic … w_social` where they reproduce the stored relevance (7 publics), otherwise recovered from the stored D, G, S, X and relevance (185 publics; the fit must reproduce every stored value within 0.002 and give non-negative weights summing to 1, or the public is reported and left unchanged).
+- R16a (author, 2026-11-05, after the impact report): recompute **only the publics whose issue has a stored location, μ and σ** (80 issues). The stored G is not reproducible from the stored data, so the recomputation replaces G for most members of these publics, not only through the new anchors; this is accepted. The other 112 publics stay as they are. Rule: the server formula (μ = `mu_distance_meters`, σ = `sigma_decay_meters`, nearest anchor, no cutoff because membership is unchanged; a member without any anchor gets G = 0). Relevance weights per public: the issue's `w_demographic … w_social` if they reproduce the stored relevance, otherwise the unique weights (non-negative, sum 1) that reproduce it within 0.002; a public whose G weight cannot be pinned down is reported and left unchanged. ISR weights as in A2. `discussions`/`issues` `relevance_scores` and `isr_scores` maps are not changed (cached, floored tally numbers; A1).
 - R17 The report also counts non-members who would now pass the distance stage (nearest anchor within μ + 3σ but home beyond it). They are not added: their S cannot be computed (no issue vectors).
 
 ### Specs
@@ -104,7 +105,7 @@ None. Decided 2026-11-05 (author): (1) numbers in option text are content, not p
 ## 7. Status log
 
 - Plan approved: 2026-11-05 (author).
-- Implementation: R1-R15 done on branch `a3-options-and-g-anchors`. R16 (recompute existing publics) blocked: stored G is not reproducible from stored data; author decision pending (CHANGES.md).
+- Implementation: R1-R15 done on branch `a3-options-and-g-anchors`. R16 was blocked (stored G not reproducible); author decision 2026-11-05: recompute the 80 publics with a stored location (R16a).
 - Tests: Python 24 OK; Node 16 OK; emulator AC5 partly (voting view not checked in the browser).
 - Impact report: `A3-impact-report.md`.
 - CHANGES.md: written.
