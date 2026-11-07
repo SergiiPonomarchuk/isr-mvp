@@ -1,8 +1,12 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if request.time < timestamp.date(2026, 12, 31);
+    // R0 (2026-11-07): open prototype access until 2027-06-30, except the
+    // server-only issue_drafts (written and read by Cloud Functions only).
+    // To be replaced by real access rules in roadmap stage 5.
+    match /{collection}/{document=**} {
+      allow read, write: if request.time < timestamp.date(2027, 6, 30)
+                         && collection != 'issue_drafts';
     }
   }
 }
