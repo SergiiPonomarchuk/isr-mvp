@@ -1,6 +1,6 @@
 # SPEC R0: Keep the live MVP alive and consolidate A2/A3 (roadmap stage 0)
 
-Status: DRAFT (waiting for author approval)
+Status: APPROVED 2026-11-07 (author)
 Branch: r0-keep-alive (from a3-options-and-g-anchors; never main)
 Roadmap: [ROADMAP-demo.md](../ROADMAP-demo.md), stage 0. Hard date: the change must be **live by 2026-12-30**.
 
@@ -25,7 +25,7 @@ The live site runs the A2/A3 code on migrated data, keeps working after 2026-12-
 - No access model yet: the rules stay open for the rest of the data (authentication and write restrictions are roadmap stage 5).
 - No AI model change (stage 1), no ISR or tally change (stage 2), no data clean-up (stage 3).
 - No `firebase-functions` or SDK upgrade, unless the deploy fails without it (then stop and ask).
-- The agent does not deploy, does not touch the live project and does not push or merge without the author's word. Those are the author's steps in §6.
+- The agent does not deploy, does not write to the live project and does not merge. Read-only live access (the backup, migration dry runs) only when the author asks for it (author, 2026-11-07). Deploy and `--apply` runs are the author's steps in §6.
 - No edits under `docs/`.
 
 ## 4. Requirements
@@ -35,16 +35,16 @@ The live site runs the A2/A3 code on migrated data, keeps working after 2026-12-
   rules_version = '2';
   service cloud.firestore {
     match /databases/{database}/documents {
-      // R0: open prototype access until <EXPIRY>, except the server-only issue_drafts.
+      // R0: open prototype access until 2027-06-30, except the server-only issue_drafts.
       // Replaced by real access rules in roadmap stage 5.
       match /{collection}/{document=**} {
-        allow read, write: if request.time < timestamp.date(<EXPIRY>)
+        allow read, write: if request.time < timestamp.date(2027, 6, 30)
                            && collection != 'issue_drafts';
       }
     }
   }
   ```
-  `<EXPIRY>` is the author's choice (open question 1). The Admin SDK (Cloud Functions, scripts) is not affected by rules.
+  The expiry date 2027-06-30 is the author's choice (§7). The Admin SDK (Cloud Functions, scripts) is not affected by rules.
 - **R2 Rules test.** `scripts/check_rules_emulator.py`: unauthenticated REST calls against the Firestore emulator (rules apply to them; the Admin SDK bypasses them). Checks: read and write in `users`, `discussions`, `discussions/{id}/messages`, `issues`, `microcommunity_members` are allowed; read, create, update and list in `issue_drafts` are denied. Refuses to run without `FIRESTORE_EMULATOR_HOST`.
 - **R3 CI.** `.github/workflows/tests.yml` on push and pull request: Python 3.11 with `numpy` → `python -m unittest discover -s tests`; Node 22 → `npm ci` and `npm test` in `functions/`. No secrets, no deploy step, no network calls in tests (the tests already force the AI fallback).
 - **R4 Backup.** `scripts/backup_firestore.py`: read-only, full JSON backup of every top-level collection and every subcollection (paged, resumable per collection) into a folder the author names. Refuses a folder inside the repository (the backup holds the synthetic `email` and `password` fields). Prints counts only. Tested against the emulator: counts equal the seeded counts.
@@ -60,7 +60,7 @@ The live site runs the A2/A3 code on migrated data, keeps working after 2026-12-
 - AC3 The CI workflow passes on the pull request.
 - AC4 `backup_firestore.py` on the emulator: every collection and the `messages` subcollection backed up, counts equal the seed; refuses a path inside the repo.
 - AC5 The §6 sequence runs end to end on the emulator with the expected counts (A2: 3,045 members recomputed, 4 removed; A3: 74 publics, 1,225 members) and both second runs change nothing.
-- AC6 No deploy, no live read or write, no push or merge by the agent; no file under `docs/` changed.
+- AC6 No deploy, no live write, no merge by the agent (live reads only on the author's request); no file under `docs/` changed.
 
 ## 6. Author's runbook (live; after approval of the pull request)
 
@@ -77,11 +77,11 @@ Target: done by **2026-12-15**, leaving two weeks before the rules expire.
 
 **Rollback**: rules, functions and hosting can be redeployed from the previous commit; data can be restored from the step 2 backup with a restore script (to be written only if needed).
 
-## 7. Open questions (author)
+## 7. Decisions (author, 2026-11-07)
 
-1. **Rules expiry date** (`<EXPIRY>`). Proposal: **2027-06-30**, which covers roadmap stages 1-5 (D2 is planned well before); stage 5 replaces these rules. A shorter date forces an earlier review; a longer one risks another silent outage.
-2. **Pull request**: should the agent open it (after you approve this spec), or will you?
-3. **Backup**: the JSON script (R4) is enough for a synthetic dataset. Do you also want a managed export to a Cloud Storage bucket (`gcloud firestore export`, needs a bucket and billing)?
+1. Rules expiry: **2027-06-30**.
+2. The agent opens the pull request.
+3. Backup: the JSON script only (no managed export). The agent runs it against live when the author asks (read-only), into a folder outside the repository; first run requested on 2026-11-07. A second backup is taken right before the live migrations.
 
 ## 8. Status log
 
