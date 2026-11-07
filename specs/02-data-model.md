@@ -8,7 +8,7 @@ Lists the Firestore collections and fields, who writes them, and the invariants 
 ## Intended design
 The docs do not agree on one collection set (see Gaps).
 - **Relevance engine:** `docs/ISR-Relevance-Implementation.md` Part 7 (l.552-657): `issues`, `microcommunities`, `microcommunity_members`, `user_packs`, `user_vectors`.
-- **Expertise:** `docs/ISR-Expertise-Assessment-v1.md` Part 4 (l.251-428): `user_expertise_profiles` and `microcommunity_expertise_scores`; education, experience and resource records. **Overridden in part by [PD-2](decisions/PD-2-resources-and-money.md):** only pledged and checked resources count, and money is excluded.
+- **Expertise:** `docs/ISR-Expertise-Assessment-v1.md` Part 4 (l.251-428): `user_expertise_profiles` and `microcommunity_expertise_scores`; education and experience records. **[PD-8](decisions/PD-8-resources-option-level.md)** (supersedes PD-2): no resource records in Expertise; resources and money belong to the options; `users.birthDate` is required (it sets the Expertise age floor).
 - **Contribution:** `docs/ISR-Action-Vectorization-Contribution-Calculation-protocol.md` Part V (l.433-559): `issue_actions`, `user_action_vectors`, and `absolute_contribution` in `microcommunity_members`.
 - **Analyzer:** `docs/ISR-Issue-Analyzer-Protocol-v1.md` §5 (l.545-646, output schema stored on `issues`) and §6.1 (l.652-657): `microcommunity_relevance_scores` and `microcommunity_expertise_scores`; `users` fields `roles`, `building_id`, `user_location`, `education_records`, `experience_records`, `resources`.
 - **Vision only** (superseded, S0-D1): the manifesto's six-collection matrix (l.144-153) and its snake_case rule (l.155-159).
@@ -55,10 +55,10 @@ Code use (grep of `collection("…")` in `functions/index.js` and `prototype/js/
 ## Gaps
 - **C-44** Collections: the manifesto, `project-map.md` and the `query_isr_firestore` skill name six collections, of which three are empty, while the code uses five unlisted ones. The design docs name a further five collections that do not exist: `user_expertise_profiles`, `microcommunity_expertise_scores`, `microcommunity_relevance_scores`, `issue_actions`, `user_action_vectors`.
 - **C-45** Naming: the snake_case rule (vision and agent files) is broken by the data and by the design docs themselves (Analyzer l.364-368 `minAge`, `employmentStatus`; Relevance doc l.614, l.633-640 `displayName`, `birthDate`, `socialRelations`).
-- **C-28** (collection part): the Expertise doc's record structures and collections do not exist. Expertise reads `users.skills[]` instead. [PD-2](decisions/PD-2-resources-and-money.md) changes the intended resource records to pledged and checked resources; nothing for pledges exists.
+- **C-28** (collection part): the Expertise doc's record structures and collections do not exist. Expertise reads `users.skills[]` instead (education and work-experience records; `activity` records no longer count after A2, PD-8).
 - **C-32** (collection part): the Contribution doc's `issue_actions` / `user_action_vectors` / `absolute_contribution` correspond to the real `actions` and `contribution_score` (IF l.86, l.89).
 - The Analyzer's `users` fields (`roles`, `building_id`, `user_location`, `education_records`, `experience_records`, `resources`) do not exist (SCHEMA l.41-55).
-- Options carry no funding source (PD-2); see [06](06-aggregation-and-voting.md).
+- Options carry no funding source or needed resources (PD-8) at `0620f27`; A3 adds them (branch, not merged). See [06](06-aggregation-and-voting.md).
 
 ## Interfaces
 - [03 relevance](03-relevance.md) reads `user_packs`, `user_vectors` and the issue parameters, and writes `microcommunity_members` (D/G/S/X, `relevance_score`) and the cached maps.
@@ -78,3 +78,6 @@ None. There is no schema validation, no test suite, and no Firestore rules that 
 
 ## Change history
 - S0 (2026-10-12): created.
+- A3 (2026-11-05, branch `a3-options-and-g-anchors`, not merged): `discussions.options_v2[]` gets `funding_source` (string) and `resources_needed` (strings); cost stays in `budget`. `microcommunity_members` get `G_anchor_type` (`home`/`work`/`property`) and `D_match` (`place`/`property_kind`/`feature`/null) for new publics. `users.geography[]` may hold `type: "property"` entries with `kind` (`flat`, `house`, `land`, `garage`, `commercial`, `other`) and optional `place`; none exist in the data. The Analyzer's `demographic_rules` gets `places` and `property_kinds`.
+- R0 (2026-11-07, branch `r0-keep-alive`, not merged): `firestore.rules` keep client access open until 2027-06-30 for every collection except `issue_drafts`, which only the Cloud Functions (Admin SDK) can read and write.
+- A2 (2026-11-04, branch `a2-expertise-cleanup`, not merged): new server-only collection `issue_drafts` (parameters derived by `checkIssue`; read and deleted by `createIssue`; `functions/params.js`). Removed fields: `microcommunity_members.resources_expertise`; `issues`/`discussions` `w_education`, `w_experience`, `w_resources`, `reasoning_education`, `reasoning_experience`, `reasoning_resources`. `birthDate` required by `seed_db.py`. Data changed on the emulator only (`scripts/migrate_a2.py`, report `tasks/A2-migration-report.md`); the live data still has the old fields until the author runs the migration.

@@ -70,12 +70,13 @@ Created by task S0 (`tasks/S0-restructure-specs.md`). Every component file state
 | Id | Title | Affects |
 |---|---|---|
 | [PD-1](decisions/PD-1-scope-inclusion-soft-d.md) | Scope, inclusion floor, soft D (paper D-001) | 00, 03, 07 |
-| [PD-2](decisions/PD-2-resources-and-money.md) | Resources and money (paper D-002) | 04, 06 |
+| [PD-2](decisions/PD-2-resources-and-money.md) | Resources and money (paper D-002); superseded by PD-8 | 04, 06 |
 | [PD-3](decisions/PD-3-additive-formula.md) | Additive formula, mean normalisation (paper D-006) | 06 |
 | [PD-4](decisions/PD-4-analyzer-governed-artifact.md) | Analyzer as a governed artifact (paper D-004) | 07 |
 | [PD-5](decisions/PD-5-gisr-and-access.md) | gISR and access (paper D-007) | 05, 09, 10 |
 | [PD-6](decisions/PD-6-mvp-status-and-paper.md) | MVP status and the paper (paper D-011, D-012) | all |
 | [PD-7](decisions/PD-7-terminology.md) | Terminology (paper D-008) | 14 |
+| [PD-8](decisions/PD-8-resources-option-level.md) | Resources and money option-level; E = education + experience with age floor | 02, 04, 06, 07, 10 |
 | [S0-D1](decisions/S0-D1-manifesto-is-vision.md) | The manifesto is vision only | 00, README |
 | [S0-D2](decisions/S0-D2-mvp-html-overview.md) | `docs/mvp.html` is a non-normative overview | 00, 09, 10 |
 | [S0-D3](decisions/S0-D3-if-gisr-aauth-correction.md) | Correction of IF l.87 and l.127 | 09 |
@@ -88,7 +89,12 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | Task | Status | Changes components |
 |---|---|---|
 | [S0-restructure-specs](tasks/S0-restructure-specs.md) | open (step 3, batch 1 done) | all; README |
-| [A1-canonical-isr](tasks/A1-canonical-isr.md) | open (DRAFT) | 03, 04, 05, 06 |
+| [A1-canonical-isr](tasks/A1-canonical-isr.md) | open (DRAFT; R2, R9 amended by A2) | 03, 04, 05, 06 |
+| [A2-expertise-cleanup](tasks/A2-expertise-cleanup.md) | implemented on branch `a2-expertise-cleanup`; live migration pending (author) | 02, 04, 07, 10, 11 |
+| [A3-options-and-g-anchors](tasks/A3-options-and-g-anchors.md) | implemented on branch `a3-options-and-g-anchors`; live migration pending (author) | 02, 03, 06, 10 |
+| [R0-keep-alive](tasks/R0-keep-alive.md) | implemented on branch `r0-keep-alive` (PR to `main`); live runbook pending (author), by 2026-12-30 | rules, CI, backup, merge of A2/A3 |
+
+Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).
 
 S0 artefacts: [S0-inventory-report](tasks/S0-inventory-report.md), [S0-structure-proposal](tasks/S0-structure-proposal.md), [S0-decisions-to-import](tasks/S0-decisions-to-import.md).
 
@@ -114,24 +120,24 @@ The ids come from `tasks/S0-inventory-report.md` §3, where each contradiction i
 | C-08 | Top-100 cap, creator always added, seeded membership | 03 | partly decided (PD-1: all affected members take part) |
 | C-09 | Joining by special request | 03 | open |
 | C-10 | D tiers vs binary gate vs heuristic | 03 | decided (PD-1: D is soft, never a gate) |
-| C-11 | Unimplemented employment values; `features` excludes everyone | 03 | partly decided (PD-1: no hard exclusion) |
-| C-12 | G anchor home vs home-or-work | 03 | open |
+| C-11 | Unimplemented employment values; `features` excludes everyone | 03 | partly decided (PD-1: no hard exclusion); A3 adds interests and places to D |
+| C-12 | G anchor home vs home-or-work | 03 | decided (docs 2026-11-04: nearest of home, work and property); implemented by A3 for new publics |
 | C-13 | G cutoff at μ + 3σ | 03 | open |
 | C-14 | μ/σ tables differ | 03 | open |
 | C-15 | Meaning of σ ("impact radius") | 03 | open |
 | C-16 | Issue vector stored or not; random fallback | 03 / 12 | open |
 | C-17 | Profile-vector input template | 12 | open |
 | C-18 | Default relevance weights | 03 | open |
-| C-19 | Who may edit weights | 07 | open (PD-4: open point) |
+| C-19 | Who may edit weights | 07 | decided (PD-8: nobody types a number; the starter only clarifies the context) |
 | C-20 | Weight sums not validated | 07 | open |
-| C-21 | 40/30/30 fallback vs "default" | 06 | open |
+| C-21 | 40/30/30 fallback vs "default" | 06 | decided (author, docs 2026-11-04: no fallback; `needs_clarification` / `not_consistent`). As built, 190 of 192 seeded publics still use 0.4/0.3/0.3 (A2 CHANGES) |
 | C-22 | Weighted vs unweighted expertise | 04 | open |
-| C-23 | Expertise baseline 1.0 vs 0 | 04 | open (A1 open question 2) |
+| C-23 | Expertise baseline 1.0 vs 0 | 04 | decided (PD-8: education floor min(age, 30)/30, no baseline term); implemented by A2 |
 | C-24 | CBC table | 04 | open |
 | C-25 | CBC adjustment factor | 04 | open |
 | C-26 | Cosine clamp in education | 04 | open |
-| C-27 | Decay, age penalty, contemporary importance | 04 | open |
-| C-28 | Expertise data sources and collections | 04 / 02 | partly decided (PD-2: only pledged and checked resources; money excluded) |
+| C-27 | Decay, age penalty, contemporary importance | 04 | partly decided (PD-8: no age penalty, no contemporary importance; recency decay kept, not applied as built) |
+| C-28 | Expertise data sources and collections | 04 / 02 | decided (PD-8: education and experience only; resources and money are option-level) |
 | C-29 | Expertise unbounded vs normalised to [0,1] | 04 | decided (PD-3: divided by the public mean) |
 | C-30 | Contribution formula with or without sentiment | 05 | open |
 | C-31 | When Contribution is computed | 05 | open |
@@ -149,4 +155,4 @@ The ids come from `tasks/S0-inventory-report.md` §3, where each contradiction i
 | C-43 | IF header describes an uncommitted tree | 11 | resolved (PD-6: audited state is `0620f27`) |
 | C-44 | Six-collection matrix vs real collections | 02 / 14 | open |
 | C-45 | snake_case rule vs camelCase fields | 02 / 14 | open |
-| C-46 | AAuth, logging, encryption described but absent | 09 | partly decided (PD-5 defines gISR and AAuth) |
+| C-46 | AAuth, logging, encryption described but absent | 09 | partly decided (PD-5 defines gISR and AAuth). R0: rules stay open until 2027-06-30 except `issue_drafts` (server only); real access rules are roadmap stage 5 |

@@ -1,6 +1,6 @@
 # PD-2 Resources and money
 
-Paper id: D-002. Status: accepted (author). Recorded: 2026-10-12, from `specs/tasks/S0-decisions-to-import.md`.
+Paper id: D-002. Status: SUPERSEDED by [PD-8](PD-8-resources-option-level.md) on 2026-11-04 (resources are option-level; no pledge). Was: accepted (author). Recorded: 2026-10-12, from `specs/tasks/S0-decisions-to-import.md`.
 Type: intended design.
 
 ## Decision

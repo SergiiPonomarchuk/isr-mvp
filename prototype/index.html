@@ -618,12 +618,12 @@ We should be proud of who we are and what we believe. Authenticity means living 
                 </div>
                 <div style="display: flex; gap: 12px;">
                     <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
-                        <label for="geo-affect-distance" style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">Affect Distance (μ) (m)</label>
-                        <input type="number" id="geo-affect-distance" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-soft); color: var(--text); font-size: 0.9rem;" placeholder="e.g. 1000">
+                        <label for="geo-affect-distance" style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">Affect Distance (μ) (m), derived</label>
+                        <input type="number" id="geo-affect-distance" readonly tabindex="-1" title="Derived by the AI assistant at Check; nobody types a number" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-soft); color: var(--text); font-size: 0.9rem;" placeholder="e.g. 1000">
                     </div>
                     <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
-                        <label for="geo-affect-fade" style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">Affect Fade (3σ) (m)</label>
-                        <input type="number" id="geo-affect-fade" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-soft); color: var(--text); font-size: 0.9rem;" placeholder="e.g. 12000">
+                        <label for="geo-affect-fade" style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">Affect Fade (3σ) (m), derived</label>
+                        <input type="number" id="geo-affect-fade" readonly tabindex="-1" title="Derived by the AI assistant at Check; nobody types a number" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-soft); color: var(--text); font-size: 0.9rem;" placeholder="e.g. 12000">
                     </div>
                 </div>
             </div>
@@ -664,6 +664,7 @@ We should be proud of who we are and what we believe. Authenticity means living 
     <script src="js/relevance.js"></script>
     <script src="js/values.js"></script>
     <script src="js/modals.js"></script>
+    <script src="js/options.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

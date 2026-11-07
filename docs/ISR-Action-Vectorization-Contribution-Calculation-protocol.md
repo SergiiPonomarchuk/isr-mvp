@@ -2,7 +2,7 @@
 
 **Designed for**: ISR Project – Community Values to Action Alignment Assessment
 
-**Purpose**: Convert community actions description (tasks, messages, decisions) into structured vectors that can be compared with a microcommunity’s Vector of Values, and then transformed into Contribution scores combining value alignment, psychological impact, and action magnitude.
+**Purpose**: Convert community actions description (tasks, messages, decisions) into structured vectors that can be compared with an ad-hoc public’s Vector of Values, and then transformed into Contribution scores combining value alignment, psychological impact, and action magnitude.
 
 ---
 
@@ -12,7 +12,7 @@
 
 | Aspect | Vector of Values | Action Vector |
 |--------|------------------|---------------|
-| **What it represents** | STATED IDEALS: what the microcommunity says it values | OBSERVED BEHAVIOR: what a person actually does in a concrete situation |
+| **What it represents** | STATED IDEALS: what the ad-hoc public says it values | OBSERVED BEHAVIOR: what a person actually does in a concrete situation |
 | **Domains (items) scoring** | [0–100] – no negative values (cannot “value −80 justice”) | [−100..100] – action can be directed strongly for or against a value |
 | **Source of truth** | Self‑reported narratives, surveys, and assisted onboarding | Externally observable contributions (tasks, messages, decisions, logged events) |
 | **Null meaning** | “We have no opinion about this domain (item)” | “This action does not address this domain (item)” |
@@ -20,9 +20,9 @@
 | **Modification frequency** | Stable across weeks/months; refined slowly | Changes per action (every task, message, decision can have its own vector) |
 | **Conflict Resolution Weights (CR)** | Preferences: how the community prefers to resolve value conflicts in general when both sides are valued | Trade‑offs: in this action context, which values were in conflict and which side actually won, with what imbalance |
 | **Contextual Shifts (CS)** | Assessment correction map: how domains become more/less important in pure work/family/private/crisis contexts | Completeness of context application: for this action, how strongly each context (work, family, private, crisis) applies (0–100) |
-| **Calculation time** | When a microcommunity is formed or its values are updated | After an issue is closed and the microcommunity around it is dismissed. Later, Action Force and Result can be corrected by new outcome records and ratings. |
+| **Calculation time** | When an ad-hoc public is formed or its values are updated | After an issue is closed and the ad-hoc public around it is dismissed. Later, Action Force and Result can be corrected by new outcome records and ratings. |
 | **Force** | N/A – only direction (values intensities and conflict/context preferences) | Non‑negative scalar showing the action’s magnitude for the community: based on action type, time spent, complexity for the actor, and success of results |
-| **Sentiment** | N/A - it is assumed that all microcommunities share the same sentiment values | Normalized sentiment marks array `[good, funny, flood, rude, foolish]`, each value [0.0–1.0] = (number of marks in category) ÷ (number of microcommunity members) |
+| **Sentiment** | N/A - it is assumed that all ad-hoc publics share the same sentiment values | Normalized sentiment marks array `[good, funny, flood, rude, foolish]`, each value [0.0–1.0] = (number of marks in category) ÷ (number of ad-hoc public members) |
 
 **Saying versus doing.** How a person votes is not scored (a vote has Force zero). Messages and proposed options are scored as actions, with a smaller Force than tasks (Section 5: Vote Message 0.4, Task Message 0.3, Chat Message 0.1). A person's declared values are not judged. An action is scored by what it *does* to the values of the public, not by whether its author's opinion matches the majority's. A respectful, well-argued dissent advances values such as honest expression, cooperation and respect, and can score positive even when its position differs from the majority's. An action that works against a value (harms, deceives, excludes, obstructs) scores negative against the publics that hold that value.
 
@@ -30,7 +30,7 @@
 
 ### 1.2 Why Conflict Resolution & Contextual Shifts Are DESCRIPTORS OF THE ACTION SITUATION
 
-**Key insight**: CR and CS in an Action Vector do not describe stable personal traits; they describe how this particular action navigated a concrete situation. Every action must be interpreted in its situational context: the issue that started it, previous messages, community state, and other concurrent actions. Different microcommunity Vectors of Values then act as different filters applied to the same action context.
+**Key insight**: CR and CS in an Action Vector do not describe stable personal traits; they describe how this particular action navigated a concrete situation. Every action must be interpreted in its situational context: the issue that started it, previous messages, community state, and other concurrent actions. Different ad-hoc publics’ Vectors of Values then act as different filters applied to the same action context.
 
 #### 1.2.1 Conflict Resolution Weights in Action Context
 
@@ -42,7 +42,7 @@
 Example:
 
 - **VoV CR.1** (Individual Freedom [65] vs Collective Harmony [75]) = 80.  
-  Interpretation: both are valued, but when there is a clear conflict, this microcommunity tends to prefer Collective Harmony.
+  Interpretation: both are valued, but when there is a clear conflict, this ad-hoc public tends to prefer Collective Harmony.
 
 - **Action CR.1** in a concrete situation:
   - If no substantial freedom‑vs‑harmony tension occurred → CR.1 = null.
@@ -59,7 +59,7 @@ Simplified example (two domains and a conflict described by CR.1 between them):
   Individual Freedom = 30, Collective Harmony = 80, Action CR.1 = 80.  
   CR.1 = 80 implies that in this situation, Collective Harmony could be increased significantly at relatively small cost to Individual Freedom.
 
-Consider three microcommunities:
+Consider three ad-hoc publics:
 
 1. **VoV₁**: Individual Freedom = 65, Collective Harmony = 75, CR.1 = 55  
    → mild preference for Collective Harmony.
@@ -90,7 +90,7 @@ Domain and item scores encode the outcome of the conflict (which values were rai
 #### 1.2.2 Contextual Shifts in Action Context
 
 - **Values Vector CS** represents:  
-  “In pure work / family / private / crisis contexts, how does the importance of each domain shift for our microcommunity?”
+  “In pure work / family / private / crisis contexts, how does the importance of each domain shift for our ad-hoc public?”
 - **Action Vector CS** represents:  
   “In this action, which contexts were active, and how purely can each context be applied?”
 
@@ -192,7 +192,7 @@ Interpretation:
 - If the actor has more experience, Complexity < 1 (routine action).
 - The denominator is never below $Experience_{\text{min}}$, so Complexity remains finite even for low‑experience actors.
 
-Extreme Complexity values raise an alert and must be explained by the actor or approved by other microcommunity members.
+Extreme Complexity values raise an alert and must be explained by the actor or approved by other ad-hoc public members.
 
 #### 1.4.4 Action Result
 
@@ -201,7 +201,7 @@ Result measures the success of the action relative to its intended outcome.
 - Initial Result is estimated by AI from:
   - Comparison of planned vs. actual descriptions in the task and related discussion.
   - Available outcome metrics or logs.
-- After issue closure, microcommunity members can rate the action’s result; ratings are aggregated into Result, weighted by individual ISR scores for that issue.
+- After issue closure, ad-hoc public members can rate the action’s result; ratings are aggregated into Result, weighted by individual ISR scores for that issue.
 - Over time, if new evidence appears (e.g., long‑term outcome was better or worse), Result can be corrected.
 - Result is unbounded above; extremely high or low values raise an alert and must be explained by the actor or approved by other members.
 
@@ -209,11 +209,11 @@ Result measures the success of the action relative to its intended outcome.
 
 ### 1.5 Sentiment Analysis
 
-Sentiment captures the perceived psychological and communicative impact of an action within the microcommunity, independent of its structural value alignment.
+Sentiment captures the perceived psychological and communicative impact of an action within the ad-hoc public, independent of its structural value alignment.
 
 Mechanism:
 
-- Microcommunity members can mark an action with any combination of:
+- Ad-hoc public members can mark an action with any combination of:
   - `good`, `funny`, `flood`, `rude`, `foolish`.
 - Members may apply more than one tag to the same action if appropriate.
 - Over time, members can change or remove their marks as their view of the action evolves.
@@ -223,7 +223,7 @@ $$marks = [good,\ funny,\ flood,\ rude,\ foolish]$$
 
 where each entry is:
 
-$$mark = \frac{\text{number of marks in this category}}{\text{number of microcommunity members}}$$
+$$mark = \frac{\text{number of marks in this category}}{\text{number of ad-hoc public members}}$$
 
 Sentiment coefficients:
 
@@ -248,11 +248,11 @@ $$M = \sum_{marks} (mark \times coefficient_{mark})$$
 
 Sentiment can be positive or negative and, by design, is as powerful as value alignment in Contribution.
 
-For later Contribution Score calculation of an action, cosine similarity of the Action and the microcommunity’s Vector of Values multiplied by the Action Force adds to the Sentiment multiplied by the Action Force:
+For later Contribution Score calculation of an action, cosine similarity of the Action and the ad-hoc public’s Vector of Values multiplied by the Action Force adds to the Sentiment multiplied by the Action Force:
 
 $$c = \cos(\vec{Action}, \vec{Values}) \times Force + M \times Force$$
 
-So sentiment shows the action’s psychological impact on the microcommunity; it can be both positive and negative.
+So sentiment shows the action’s psychological impact on the ad-hoc public; it can be both positive and negative.
 
 ---
 
@@ -402,7 +402,7 @@ Output:
 
 ### 4.1 Cosine Alignment $\cos(\vec{Action}, \vec{Values})$
 
-To compare an action with a microcommunity’s Vector of Values:
+To compare an action with an ad-hoc public’s Vector of Values:
 
 1. Start from `action_content.domains` and `VoV.core_values.domains`.
 2. Apply conflict resolution (CR) and contextual shifts (CS) as in 1.2.
@@ -419,9 +419,9 @@ As in 1.5:
 
 $$M = \sum_{marks} (mark \times coefficient_{mark}).$$
 
-### 4.3 Action Contribution to a Microcommunity
+### 4.3 Action Contribution to an Ad-Hoc Public
 
-For a given action and microcommunity:
+For a given action and ad-hoc public:
 
 $$c = \cos(\vec{Action}, \vec{Values}) \times Force + M \times Force.$$
 
@@ -429,7 +429,7 @@ Equivalently:
 
 $$c = (A + M) \times Force.$$
 
-A member’s total Contribution to that microcommunity is the sum of Contributions of all their actions.
+A member’s total Contribution to that ad-hoc public is the sum of Contributions of all their actions.
 
 Contribution is absolute and can be negative, positive, or near zero; it is not re‑normalized when new members or new actions are added.
 
@@ -453,15 +453,15 @@ Contribution is absolute and can be negative, positive, or near zero; it is not 
 
 ### 5.1 Principles of Separation
 
-1. **Single-microcommunity scope**  
-   Each action belongs to exactly **one issue** and its corresponding **microcommunity**. An action may even *start* an issue by being its first entry, but it is never shared across multiple microcommunities.
+1. **Single-issue / ad-hoc public scope**  
+   Each action belongs to exactly **one issue** and its corresponding **ad-hoc public**. An action may even *start* an issue by being its first entry, but it is never shared across multiple ad-hoc publics.
 
 2. **Issue-centric vs user-centric data**  
-   - **Issue/microcommunity part** stores the *raw action record and its social life* inside the issue: description, attachments, status, results narrative, marks, and timestamps.
+   - **Issue / ad-hoc public part** stores the *raw action record and its social life* inside the issue: description, attachments, status, results narrative, marks, and timestamps.
    - **User part** stores the *vectorized representation* of the action for the actor: domains, items, CR/CS, Force, marks scalar, and derived metrics used frequently in Contribution computations.
 
 3. **Contribution locality**  
-   - Contribution is always defined **relative to a microcommunity** (via its Vector of Values), but for implementation it is stored as an **absolute scalar** in the *current microcommunity members table* and only normalized later when computing final ISR scores.
+   - Contribution is always defined **relative to an ad-hoc public** (via its Vector of Values), but for implementation it is stored as an **absolute scalar** in the *current ad-hoc public members table (`microcommunity_members`)* and only normalized later when computing final ISR scores.
 
 4. **Overwrite semantics**  
    - When Action Force, Result, or vectorization changes, the action’s vector in the user part is **hard-overwritten**; historical audit/versioning can be added later but is not required in the base protocol.
@@ -575,7 +575,7 @@ Contribution is defined per **member × issue** and is stored as an absolute sca
   absolute_contribution = Σ_over_member_actions_in_issue Contribution(action, issue)
   ```
 
-- Normalization to a 0–1 range or any other scale for final ISR-score calculation happens in the **ISR core**, not in this protocol.
+- Normalization for the final ISR-score (by the mean absolute Contribution plus one reference unit, Section 8.5) happens in the **ISR core**, not in this protocol.
 
 ---
 
@@ -601,7 +601,7 @@ For a closed issue `issue_id`:
 
 **Input data** (from DB and services):
 
-- Issue metadata: title, description, tags, microcommunity size, time span.
+- Issue metadata: title, description, tags, ad-hoc public size, time span.
 - Key system events: creation time, closure reason.
 - Aggregated data: most frequent domains from prior runs (if any), main conflicts, and outcomes.
 - Sample of representative actions (e.g., first N actions, last N actions, some mid-issue actions).
@@ -643,7 +643,7 @@ ISSUE METADATA:
 - Title: {{issue_title}}
 - Description: {{issue_description}}
 - Tags: {{issue_tags}}
-- Microcommunity size: {{member_count}}
+- Ad-hoc public size: {{member_count}}
 - Time span: {{start_ts}} to {{end_ts}}
 
 SAMPLE ACTIONS (truncated as needed):
@@ -813,7 +813,7 @@ The record is only added to, never rewritten. A word said cannot be unsaid; it c
 
 ### 7.4 Marks, Honest Conduct and Gaming
 
-- Marks are the public's own valuation of an action. They let the public correct what the automatic alignment cannot see (for example, a formally correct remark that humiliates someone, or a failed task that lifted the mood or found an unrelated fault), and so they can change the sign of a contribution: c = (A + S) × Force.
+- Marks are the public's own valuation of an action. They let the public correct what the automatic alignment cannot see (for example, a formally correct remark that humiliates someone, or a failed task that lifted the mood or found an unrelated fault), and so they can change the sign of a contribution: c = (A + M) × Force.
 - The protocol relies on honest conduct as a norm. Marks can also be misused (friendly marks on a harmful action, hostile marks on a dissent, inflated hours). This is treated as gaming and handled by detection, not by limiting the power of the marks.
 - Existing protections: extreme Complexity and Result values raise an alert and must be explained by the actor or approved by other members (Sections 4.2 and 4.4); highly polarized marks are logged as an alert (7.2).
 - Repeated dispute issues (Section 7.5) about the same action, or raised repeatedly by the same member, are logged and analysed as possible gaming.
@@ -833,31 +833,31 @@ A member who thinks an action was misread (by the automatic alignment, by the ma
 
 ---
 
-## PART VIII: CONTRIBUTION CALCULATION (ON-DEMAND, PER NEW MICROCOMMUNITY)
+## PART VIII: CONTRIBUTION CALCULATION (ON-DEMAND, PER NEW AD-HOC PUBLIC)
 
 ### 8.1 Role of the Contribution Engine
 
 The Contribution Engine is a **separate layer** that operates **only on already vectorized past actions**. It does not trigger or depend on live issue workflows.
 
 - **Action vectorization** happens when an issue is closed and its actions are processed into Action Vectors, stored in `user_action_vectors`.
-- **Contribution calculation** happens **later**, when a new microcommunity is formed for a new issue and needs to estimate each member’s contribution track record using their vectorized past actions.
+- **Contribution calculation** happens **later**, when a new ad-hoc public is formed for a new issue and needs to estimate each member’s contribution track record using their vectorized past actions.
 
 Key principle:
 
-> Contribution is **not** recalculated automatically when actions are vectorized. It is computed **on demand** for a specific microcommunity, using that microcommunity’s Vector of Values and the members’ existing action vectors.
+> Contribution is **not** recalculated automatically when actions are vectorized. It is computed **on demand** for a specific ad-hoc public, using that ad-hoc public’s Vector of Values and the members’ existing action vectors.
 
 ---
 
 ### 8.2 Inputs to Contribution Calculation
 
-When a new microcommunity is formed for issue `issue_id_new` (per ISR Relevance Engine):
+When a new ad-hoc public is formed for issue `issue_id_new` (per ISR Relevance Engine):
 
-1. **Microcommunity definition**
+1. **Ad-hoc public definition**
    - `microcommunity_id` (1:1 with `issue_id_new`).
-   - Member list: `(member_uid, relevancescore, …)` from Relevance Engine (`microcommunitymembers` table).
+   - Member list: `(member_uid, relevancescore, …)` from Relevance Engine (`microcommunity_members` table).
 
-2. **Microcommunity Vector of Values**
-   - `VoV_new`: the microcommunity’s Vector of Values (domains, CR, CS) derived from member values onboarding / aggregation, as defined in the Values and Values-Vectorization protocols.
+2. **Ad-hoc public Vector of Values**
+   - `VoV_new`: the ad-hoc public’s Vector of Values (domains, CR, CS) derived from member values onboarding / aggregation, as defined in the Values and Values-Vectorization protocols.
 
 3. **Historical Action Vectors** 
 For each member `u` All `user_action_vectors` rows where `actor_uid = u`.
@@ -870,7 +870,7 @@ For each member `u` All `user_action_vectors` rows where `actor_uid = u`.
 
 ### 8.3 Per-action Contribution Recap
 
-For each historical action `a` and a target microcommunity with Vector of Values ($\vec{VoV_{new}}$):
+For each historical action `a` and a target ad-hoc public with Vector of Values ($\vec{VoV_{new}}$):
 
 1. From `user_action_vectors`:
 
@@ -884,7 +884,7 @@ For each historical action `a` and a target microcommunity with Vector of Values
    - Apply CR and CS logic from Part 1.2:
      - Domain and item scores encode the outcome (which values were raised or lowered).
      - Action CR encodes which conflict was present and how unequal the stakes were.
-     - Together with VoV CR and CS, derive the **comparison-ready** vectors for this microcommunity.
+     - Together with VoV CR and CS, derive the **comparison-ready** vectors for this ad-hoc public.
 
 3. Compute cosine alignment $A_a$:
 
@@ -895,7 +895,7 @@ For each historical action `a` and a target microcommunity with Vector of Values
 
 4. Use stored marks scalar $M_a$.
 
-5. Compute per-action Contribution of `a` to this new microcommunity:
+5. Compute per-action Contribution of `a` to this new ad-hoc public:
 
 $$c_{a, new} = (A_a + M_a) \times Force_a.$$
 
@@ -903,7 +903,7 @@ $$c_{a, new} = (A_a + M_a) \times Force_a.$$
 
 ### 8.4 Aggregating Contribution per Member
 
-For each member `u` in the new microcommunity:
+For each member `u` in the new ad-hoc public:
 
 1. **Select historical actions**:
 
@@ -917,7 +917,7 @@ For each member `u` in the new microcommunity:
 
 $$C_{u, new} = \sum_{a \in Actions(u)} c_{a, new}$$
 
-4. **Store in microcommunity members table**
+4. **Store in members table**
 
    - In the `microcommunity_members` table
    - This value remains stable as an **absolute, non-normalized scalar**.
@@ -926,14 +926,14 @@ $$C_{u, new} = \sum_{a \in Actions(u)} c_{a, new}$$
 
 ### 8.5 Integration with ISR Core
 
-- **Relevance Engine** (D, G, S, X) decides **who** belongs to the microcommunity and how relevant they are.
-- **Contribution Engine** (this part) estimates **how strongly and in what direction** each member has acted in the past relative to this microcommunity’s values.
-- The ISR core later **normalizes** `absolute_contribution` and combines it with other components (e.g., relevance, expertise) to derive final weights or ISR-scores for decision-making; that normalization and combination sit outside this protocol.
+- **Relevance Engine** (D, G, S, X) decides **who** belongs to the ad-hoc public and how relevant they are.
+- **Contribution Engine** (this part) estimates **how strongly and in what direction** each member has acted in the past relative to this ad-hoc public’s values.
+- The ISR core later normalizes absolute_contribution and combines it with Relevance and Expertise: $\hat C_i = C_i / (\overline{|C|} + 1)$, where $\overline{|C|}$ is the mean absolute Contribution over the members of the ad-hoc public and 1 is one reference unit of Contribution. Relevance and Expertise are divided by their mean over the same members. gISR (8.6) uses the same rule over all registered users.
 
 ### 8.6 The general score (gISR)
 
 The general score is a member's weight in a vote that affects all users equally. Relevance and Expertise are the same for everyone ($\hat R = \hat E = 1$) and the three component weights are equal ($w_R = w_E = w_C = 1/3$), so
 
-$$g_{raw} = \max\bigl(0,\; (1 - w_C) + w_C \hat C\bigr) \approx 0.67 + 0.33\,\hat C, \qquad \hat C = \frac{C}{\overline{|C|} + u},$$
+$$g_{raw} = \max\bigl(0,\; (1 - w_C) + w_C \hat C\bigr) \approx 0.67 + 0.33\,\hat C, \qquad \hat C = \frac{C}{\overline{|C|} + 1},$$
 
 where $C$ is the member's Contribution read through the Vector of Values of all registered users taken equally and $\overline{|C|}$ is the mean absolute Contribution over all registered users. After all users are calculated the scores are divided by their mean over all users, $gISR = g_{raw} / \overline{g_{raw}}$, so that the average is 1. The score reaches zero only when Contribution is negative and at least twice the typical size. It has two uses only: the weight in votes on questions that affect all users equally (the rules), and a minimum reliability condition in the access scheme with tiers. It is not shown to other members or given to third parties.

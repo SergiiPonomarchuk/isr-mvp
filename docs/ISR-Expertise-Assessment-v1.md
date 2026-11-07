@@ -2,7 +2,7 @@
 
 ## Overview
 
-Expertise measures **ability to influence the outcome** of an issue through domain knowledge, proven experience, and access to resources. Unlike Relevance (which is issue-specific and normalized [0.0-1.0]), Expertise is **absolute and unbounded [0.0+]**, reflecting that some specialists' opinions are significantly more valuable than baseline competence.
+Expertise measures **ability to influence the outcome** of an issue through domain knowledge and proven experience. Unlike Relevance (which is issue-specific and normalized [0.0-1.0]), Expertise is **absolute and unbounded [0.0+]**, reflecting that some specialists' opinions are significantly more valuable than baseline competence.
 
 ---
 
@@ -12,16 +12,12 @@ Expertise measures **ability to influence the outcome** of an issue through doma
 
 **Baseline (1.0)**: Common knowledge of a statistically normal 30-year-old person **without any special education or practical experience** in the issue domain. This represents generic adult competence across life domains.
 
-**Below baseline (0.0-1.0)**: People without special education/experience whose expertise is **lower than normal** due to:
-- Age factors (young people lack context; older people may lack contemporary knowledge in fast-evolving domains)
-- Incomplete education (high school dropout)
-- Cognitive/physical limitations
-- Over-specialized interests misaligned with issue domain
+**Below baseline (0.0-1.0)**: Only people under 30 without related education can score below 1.0 (the floor is age/30). Expertise is never reduced for older age or for any other personal trait.
 
 **Above baseline (1.0+)**: People with **education or practical experience** in the issue domain. Unbounded because high-level specialists significantly exceed baseline competence.
 
 **Interpretation**:
-- **0.5**: Half the baseline competence (young learner, older person in tech)
+- **0.5**: Half the baseline competence (a 15-year-old without related education)
 - **1.0**: Baseline (generic adult non-specialist)
 - **1.5**: 50% above baseline (beginner practitioner)
 - **3.0**: Three times baseline (strong practitioner specialist with credentials)
@@ -33,21 +29,20 @@ Expertise measures **ability to influence the outcome** of an issue through doma
 
 ### 2.1 Core Formula
 
-$$E_{i,q} = E_{i,q,\text{education}} + E_{i,q,\text{experience}} + E_{i,q,\text{resources}}$$
+$$E_{i,q} = E_{i,q,\text{education}} + E_{i,q,\text{experience}}$$
 
 Where:
 - **$E_{i,q}$** = Total Expertise of user i regarding issue q
 - **$E_{i,q,education}$** = User i education expertise regarding issue q
 - **$E_{i,q,experience}$** = User i experience expertise regarding issue q
-- **$E_{i,q,resources}$** = User i resource expertise regarding issue q
 
-The three components are added **without weights**. The context of the issue acts through the similarity of each record to the issue ($\vec{V}_q$) and through the domain parameters (CBC adjustment factor, recency decay).
+The two components are added **without weights**. The context of the issue acts through the similarity of each record to the issue ($\vec{V}_q$) and through the domain parameters (CBC adjustment factor, recency decay).
 
 ---
 
 ### 2.2 Education Expertise
 
-$$E_{i,q,\text{education}} = \sum_{\text{education}} \cos(\vec{v}_{i,\text{education}}, \vec{V}_q) ^ {\text{CBC}} \times P_{i,\text{education}}$$
+$$E_{i,q,\text{education}} = \max\left( \frac{\min(age_i, 30)}{30},\ \sum_{\text{education}} \cos(\vec{v}_{i,\text{education}}, \vec{V}_q) ^ {\text{CBC}} \times P_{i,\text{education}}\right)$$
 
 Where:
 - **$v_{i,education}$** = Vectorized education records (semantic embedding)
@@ -56,7 +51,7 @@ Where:
 - **$P_{i,education}$** = Education Power scalar (education time in years)
 - **Cosine similarity with CBC exponent** = Semantic relevance of credential to issue, adjusted by broadcast capability [0.0-1.0]
 - **Power scalar** = Education time in years [0.5+]
-
+- **$\min(age_i, 30)/30$** = Common-knowledge floor: 1.0 from age 30 on, age/30 below 30. It never exceeds 1.0 and never falls with age. The age is taken at the moment the issue is registered and is not stored.
 
 **Credential Broadcast Coefficient Table**:
 
@@ -85,8 +80,8 @@ Where:
 cos_similarity = 0.3 (distant domain)
 CBC = 0.5 (PhD amplifies)
 CBC_adjusted = cos(0.3)^0.5 = 0.548
-P_education = 7 years (PhD time)
-E_education = 0.548 × 7 = 3.84
+P_education = 10 years (PhD time)
+E_education = 0.548 × 10 = 5.48
 ```
 
 **Vocational Locksmith addressing street parking issue**:
@@ -95,7 +90,8 @@ cos_similarity = 0.2 (very distant domain)
 CBC = 2.0 (Vocational suppresses)
 CBC_adjusted = cos(0.2)^2.0 = 0.04
 P_education = 2 years (vocational training)
-E_education = 0.04 × 2 = 0.08
+Σ education = 0.04 × 2 = 0.08
+E_education = max(1.0, 0.08) = 1.0 (member aged 30+: the floor applies)
 ```
 
 **Master's in Construction addressing urban planning issue**:
@@ -145,45 +141,9 @@ E_experience = 0.70 × 16 = 11.2
 
 ---
 
-### 2.4 Resource Expertise
+### 2.4 Resources are not part of Expertise
 
-$$E_{i,q,\text{resources}} = \sum_{\text{resources}} \cos(\vec{v}_{i,\text{resources}}, \vec{V}_q) \times P_{i,\text{resources}}$$
-
-Where:
-- **v_{i,resources}** = Vectorized resource records (semantic embedding)
-- **V_q** = Issue q vector representation
-- **P_{i,resources}** = Resource Power scalar (rarity multiplier)
-- **Cosine similarity** = Semantic resource relevance to issue [0.0-1.0]
-- **Power scalar** = Rarity multiplier [0.5-1.5]
-
-**Rarity Multiplier Scale**:
-- **0.5**: Common in area (car ownership, office space, basic tools)
-- **1.0**: Moderate rarity (specialized equipment, professional networks)
-- **1.5**: High rarity (rare expertise connections, unique facilities, specialized tech)
-
-**Resources Include**: tools, equipment, technology, transportation, space/venue, social connections. **Money is not a resource in this score**: if an issue needs funding, each option states its cost and funding source, so wealth does not enter through weight.
-
-**Example (parking structure proposal issue)**:
-```
-Resources:
-- Car ownership: 
-  cos_relevance = 0.9, rarity = 0.5 (common)
-  E_resource = 0.9 × 0.5 = 0.45
-
-- Construction equipment: 
-  cos_relevance = 0.8, rarity = 1.0 (moderate)
-  E_resource = 0.8 × 1.0 = 0.8
-
-- Large property/land: 
-  cos_relevance = 1.0, rarity = 1.5 (high)
-  E_resource = 1.0 × 1.5 = 1.5
-
-- Contractor network: 
-  cos_relevance = 0.8, rarity = 1.0 (moderate)
-  E_resource = 0.8 × 1.0 = 0.8
-
-Total Resource Expertise = 0.45 + 0.8 + 1.5 + 0.8 = 3.55
-```
+Pledged resources (tools, equipment, technology, transportation, space or venue, contacts, time) no longer add to Expertise. They belong to the **implementation plan of an option**, after the money: each option states its cost and funding source first, then the resources needed for realization and who provides them. Resources serve the realization of a decision, not decision-making weight. Any property registered in the system can influence decision-making only through Relevance (the situation and place channels, see the Relevance specification). Money is not counted in any weight.
 
 ---
 
@@ -195,23 +155,13 @@ When an issue is submitted, **LLM determines** contextual parameters:
 
 1. **Domain Category**: Extracted from issue description (locksmith.security, urban_planning.infrastructure, social.event.cultural, etc.)
 
-2. **Contemporary Knowledge Importance** [0.0-1.0]:
-   - 0.0 = Timeless domain (philosophy, history, fundamental engineering principles)
-   - 0.5 = Mixed (some techniques evolve, core principles stable)
-   - 1.0 = Highly contemporary (software, medicine, regulatory compliance)
-
-3. **Recency Decay Rate** [per year of inactivity]:
+2. **Recency Decay Rate** [per year of inactivity]:
    - 0.01 = Slow decay (locksmith, carpentry, philosophy)
    - 0.03 = Moderate decay (construction, business management)
    - 0.05 = Fast decay (software engineering, medical practice)
    - 0.08 = Extremely fast decay (cutting-edge AI, quantum computing)
 
-4. **Age Penalty Threshold** [years, for contemporary domains only]:
-   - 55-60 = Traditional professions (law, engineering, medicine)
-   - 65-70 = Established fields (management, education)
-   - 75+ = Emerging fields (software, biotech)
-
-5. **CBC Adjustment Factor** [multiplier for Credential Broadcast Coefficient]:
+3. **CBC Adjustment Factor** [multiplier for Credential Broadcast Coefficient]:
    - 1.0 = Use base CBC values (default)
    - 0.8 = Reduce CBC power (make domain more focused, less broadcasting)
    - 1.2 = Increase CBC power (make domain more broad, more broadcasting)
@@ -221,9 +171,7 @@ When an issue is submitted, **LLM determines** contextual parameters:
 **Issue: "Fix broken apartment lock"**
 ```
 Domain: locksmith.security
-Contemporary importance: 0.2 (techniques very stable)
 Recency decay: 0.02/year (skills decay slowly)
-Age penalty: none (not contemporary domain)
 CBC adjustment: 0.9 (reduce broadcasting slightly)
 → Master Locksmith dominates; Engineer has lower relevance
 ```
@@ -231,9 +179,7 @@ CBC adjustment: 0.9 (reduce broadcasting slightly)
 **Issue: "Organize salsa evenings in district"**
 ```
 Domain: social.event.cultural
-Contemporary importance: 0.4 (some modern tech/platforms)
 Recency decay: 0.03/year
-Age penalty: modest for > 70 (some platform updates)
 CBC adjustment: 1.1 (increase broadcasting for org skills)
 → Dancer + Event organizer + Business person all relevant
 ```
@@ -241,9 +187,7 @@ CBC adjustment: 1.1 (increase broadcasting for org skills)
 **Issue: "Propose parking structure + budget allocation"**
 ```
 Domain: urban_planning.infrastructure.governance
-Contemporary importance: 0.7 (design & regulations dynamic)
 Recency decay: 0.04/year
-Age penalty: moderate for > 65
 CBC adjustment: 1.0 (neutral, balanced)
 → Urban planner, Accountant, Builder, MBA all weighted similarly
 ```
@@ -254,7 +198,7 @@ CBC adjustment: 1.0 (neutral, balanced)
 
 ### 4.1 user_expertise_profiles Collection
 
-Each document in the `user_expertise_profiles` collection stores pre-computed 768-dimensional embeddings for a user's credentials, experience, and resources.
+Each document in the `user_expertise_profiles` collection stores pre-computed 768-dimensional embeddings for a user's credentials and experience.
 
 - **Document ID**: User UID (String)
 - **Schema**:
@@ -291,19 +235,6 @@ Each document in the `user_expertise_profiles` collection stores pre-computed 76
     }
   ],
   "experience_vectors": [
-    [0.012, -0.054, ..., 0.038]  // Array of 768-dim vectors (Google AI Studio)
-  ],
-  "resources": [
-    {
-      "id": 1,
-      "type": "equipment",
-      "name": "Locksmith Tool Kit",
-      "description": "Professional locksmith tools",
-      "rarity": "high",
-      "verified": true
-    }
-  ],
-  "resource_vectors": [
     [0.012, -0.054, ..., 0.038]  // Array of 768-dim vectors (Google AI Studio)
   ],
   "profile_updated_at": "Timestamp",
@@ -372,42 +303,13 @@ Each document in the `user_expertise_profiles` collection stores pre-computed 76
 }
 ```
 
-### 4.4 Resources Structure
+### 4.4 Resources (removed)
 
-```json
-{
-  "resources": [
-    {
-      "id": 1,
-      "type": "equipment",
-      "name": "Locksmith Tool Kit",
-      "description": "Professional locksmith tools including picks, tension wrenches, and specialty equipment",
-      "rarity": "high",
-      "verified": true
-    },
-    {
-      "id": 2,
-      "type": "transportation",
-      "name": "Commercial Vehicle",
-      "description": "Van suitable for transporting equipment and clients",
-      "rarity": "medium",
-      "verified": true
-    },
-    {
-      "id": 3,
-      "type": "social_network",
-      "name": "Contractor Network",
-      "description": "Professional relationships with 20+ contractors and building managers in metro area",
-      "rarity": "medium",
-      "verified": false
-    }
-  ]
-}
-```
+Resources are no longer stored in the expertise profile (see 2.4).
 
 ### 4.5 microcommunity_expertise_scores Collection
 
-Each document in this collection tracks the calculated expertise components for a member in a specific microcommunity.
+Each document in this collection tracks the calculated expertise components for a member in a specific ad-hoc public.
 
 - **Document ID**: `${microcommunity_id}_${user_id}`
 - **Schema**:
@@ -419,9 +321,7 @@ Each document in this collection tracks the calculated expertise components for 
   "education_component_count": 1,
   "experience_expertise": 29.4,
   "experience_component_count": 1,
-  "resources_expertise": 2.785,
-  "resources_component_count": 3,
-  "expertise_score": 34.01,
+  "expertise_score": 31.22,
   "calculated_at": "Timestamp",
   "expertise_frozen_at": null // Timestamp when frozen, or null
 }
@@ -469,34 +369,24 @@ async function vectorizeUserExpertiseProfile(userId) {
     experienceVectors.push(vector);
   }
   
-  // 3. Vectorize resources
-  const resourceVectors = [];
-  for (const res of (userData.resources || [])) {
-    const text = `${res.type}: ${res.name}. ${res.description}`;
-    const vector = await embedText(text);
-    resourceVectors.push(vector);
-  }
-  
-  // 4. Store in database
+  // 3. Store in database
   await db.collection("user_expertise_profiles").doc(userId).set({
     uid: userId,
     education_records: userData.education_records || [],
     education_vectors: educationVectors,
     experience_records: userData.experience_records || [],
     experience_vectors: experienceVectors,
-    resources: userData.resources || [],
-    resource_vectors: resourceVectors,
     vectors_computed_at: admin.firestore.FieldValue.serverTimestamp()
   });
   
-  // 5. Trigger recalculation for active microcommunities
+  // 4. Trigger recalculation for active ad-hoc publics
   await recalculateExpertiseForUserAllActiveIssues(userId);
 }
 ```
 
 ### 5.2 On-Demand: Expertise Calculation for Issue
 
-**When microcommunity formed for issue:**
+**When an ad-hoc public is formed for an issue:**
 
 ```javascript
 function cosineSimilarity(a, b) {
@@ -548,6 +438,12 @@ async function calculateExpertiseForIssue(issueId, microcommunityId) {
       const timeYears = edu.years_of_study || 0.5;
       educationExpertise += cosAdjusted * timeYears;
     }
+
+    // Common-knowledge floor (Section 2.2): min(age, 30) / 30
+    const userDoc = await db.collection("users").doc(String(userId)).get();
+    const age = ageInYears(userDoc.data()?.birthDate, issueData.created_at);   // age at issue registration
+    const ageFloor = Math.min(age, 30) / 30;
+    educationExpertise = Math.max(ageFloor, educationExpertise);
     
     // COMPONENT 2: EXPERIENCE EXPERTISE
     let experienceExpertise = 0.0;
@@ -568,21 +464,8 @@ async function calculateExpertiseForIssue(issueId, microcommunityId) {
       experienceExpertise += Math.max(0, cosSim) * yearsActive;
     }
     
-    // COMPONENT 3: RESOURCE EXPERTISE
-    let resourcesExpertise = 0.0;
-    const resRecords = profile.resources || [];
-    const resVectors = profile.resource_vectors || [];
-    const rarityMap = { low: 0.5, medium: 1.0, high: 1.5 };
-    for (let i = 0; i < resRecords.length; i++) {
-      const res = resRecords[i];
-      const resVector = resVectors[i];
-      const cosSim = cosineSimilarity(resVector, issueVector);
-      const rarity = rarityMap[res.rarity] || 1.0;
-      resourcesExpertise += Math.max(0, cosSim) * rarity;
-    }
-    
     // TOTAL EXPERTISE SCORE
-    const totalExpertise = educationExpertise + experienceExpertise + resourcesExpertise;
+    const totalExpertise = educationExpertise + experienceExpertise;
     
     await db.collection("microcommunity_expertise_scores").doc(`${microcommunityId}_${userId}`).set({
       microcommunity_id: microcommunityId,
@@ -591,8 +474,6 @@ async function calculateExpertiseForIssue(issueId, microcommunityId) {
       education_component_count: eduRecords.length,
       experience_expertise: experienceExpertise,
       experience_component_count: expRecords.length,
-      resources_expertise: resourcesExpertise,
-      resources_component_count: resRecords.length,
       expertise_score: totalExpertise,
       calculated_at: admin.firestore.FieldValue.serverTimestamp()
     });
@@ -621,7 +502,6 @@ async function queryExpertiseScores(microcommunityId) {
       user_id: data.user_id,
       education: Number(data.education_expertise.toFixed(2)),
       experience: Number(data.experience_expertise.toFixed(2)),
-      resources: Number(data.resources_expertise.toFixed(2)),
       total_expertise: Number(data.expertise_score.toFixed(2)),
       expertise_rank: idx + 1,
       expertise_level: level
@@ -641,13 +521,11 @@ async function queryExpertiseScores(microcommunityId) {
 **Domain Context (LLM determined)**:
 ```
 Domain: locksmith.security
-Contemporary importance: 0.2 (skills very stable)
 Recency decay: 0.02/year (skills decay slowly)
-Age penalty: none (not contemporary domain)
 CBC adjustment: 0.9 (reduce broadcasting)
 ```
 
-**Member 1: John (Master Locksmith, age 52)**
+**Member 1: John (Master Locksmith)**
 
 Education:
 - Vocational Locksmith Diploma (2 years, 1995)
@@ -663,17 +541,11 @@ Experience:
 - years = 30 (current, no decay)
 - E_experience = 0.98 × 30 = **29.4**
 
-Resources:
-- Locksmith toolkit: cos = 0.99, rarity = 1.5 → 0.99 × 1.5 = 1.485
-- Van: cos = 0.7, rarity = 1.0 → 0.7 × 1.0 = 0.7
-- Contractor network: cos = 0.6, rarity = 1.0 → 0.6 × 1.0 = 0.6
-- E_resources = **2.785**
-
-**Total Expertise: 1.824 + 29.4 + 2.785 = 34.01**
+**Total Expertise: 1.824 + 29.4 = 31.224**
 
 ---
 
-**Member 2: Sarah (Engineer, age 55)**
+**Member 2: Sarah (Engineer)**
 
 Education:
 - Bachelor's in Civil Engineering (4 years, 1992)
@@ -689,15 +561,11 @@ Experience:
 - years = 33 (current)
 - E_experience = 0.35 × 33 = **11.55**
 
-Resources:
-- Engineering software: cos = 0.1, rarity = 0.5 → 0.1 × 0.5 = 0.05
-- E_resources = **0.05**
-
-**Total Expertise: 1.708 + 11.55 + 0.05 = 13.31**
+**Total Expertise: 1.708 + 11.55 = 13.258**
 
 ---
 
-**Member 3: Lisa (Office Manager, age 30)**
+**Member 3: Lisa (Office Manager)**
 
 Education:
 - Bachelor's in Business (4 years, 2016)
@@ -705,7 +573,8 @@ Education:
 - cos_similarity = 0.05 (completely unrelated)
 - cos_adjusted = (0.05)^1.0 = 0.05
 - cos_adjusted_cbc = (0.05)^0.9 = 0.054
-- E_education = 0.054 × 4 = **0.216**
+- Σ education = 0.054 × 4 = 0.216; age 32, floor 1.0
+- E_education = max(1.0, 0.216) = **1.0**
 
 Experience:
 - Office Manager (8 years, 2017-2025)
@@ -713,22 +582,18 @@ Experience:
 - years = 8
 - E_experience = 0.02 × 8 = **0.16**
 
-Resources:
-- None relevant
-- E_resources = **0.0**
-
-**Total Expertise: 0.216 + 0.16 + 0.0 = 0.376**
+**Total Expertise: 1.0 + 0.16 = 1.16**
 
 ---
 
 **Summary**:
 ```
-John (Master Locksmith):      34.01  ← Expert (>10)
-Sarah (Engineer):             13.31  ← Practitioner (3-10)
-Lisa (Office Manager):         0.38  ← Novice (<1)
+John (Master Locksmith):      31.22  ← Expert (>10)
+Sarah (Engineer):             13.26  ← Expert (>10)
+Lisa (Office Manager):         1.16  ← Informed (1-3)
 
-Total expertise: 47.70
-→ Strong expertise in microcommunity; no external expert needed
+Total expertise: 45.64
+→ Strong expertise in the ad-hoc public; no external expert needed
 ```
 
 ---
@@ -740,12 +605,11 @@ Total expertise: 47.70
 **Domain Context**:
 ```
 Domain: social.event.cultural
-Contemporary importance: 0.4 (some modern platforms)
 Recency decay: 0.03/year
 CBC adjustment: 1.1 (increase broadcasting for org skills)
 ```
 
-**Member 1: Maria (Salsa Dancer & Choreographer, age 28)**
+**Member 1: Maria (Salsa Dancer & Choreographer)**
 
 Education:
 - Dance School Certificate (4 years, 2016)
@@ -774,17 +638,11 @@ Experience:
 - years = 6
 - E_experience_2 = 0.92 × 6 = **5.52**
 
-Resources:
-- Studio space/contacts: cos = 0.85, rarity = 1.5 → 1.275
-- Dance equipment: cos = 0.7, rarity = 1.0 → 0.7
-- Social media: cos = 0.6, rarity = 0.5 → 0.3
-- E_resources = **2.275**
-
-**Total Expertise: 3.78 + 0.916 + 7.84 + 5.52 + 2.275 = 20.33**
+**Total Expertise: 3.78 + 0.916 + 7.84 + 5.52 = 18.056**
 
 ---
 
-**Member 2: David (Real Estate Broker, age 45)**
+**Member 2: David (Real Estate Broker)**
 
 Education:
 - Bachelor's in Business (4 years, 2001)
@@ -800,16 +658,11 @@ Experience:
 - years = 20
 - E_experience = 0.75 × 20 = **15.0**
 
-Resources:
-- Real estate network: cos = 0.85, rarity = 1.0 → 0.85
-- Venue access: cos = 0.9, rarity = 1.5 → 1.35
-- E_resources = **2.2**
-
-**Total Expertise: 2.372 + 15.0 + 2.2 = 19.57**
+**Total Expertise: 2.372 + 15.0 = 17.372**
 
 ---
 
-**Member 3: Alex (Event Planner, age 35)**
+**Member 3: Alex (Event Planner)**
 
 Education:
 - Diploma in Event Management (2 years, 2010)
@@ -825,22 +678,17 @@ Experience:
 - years = 15
 - E_experience = 0.88 × 15 = **13.2**
 
-Resources:
-- Vendor network: cos = 0.7, rarity = 1.0 → 0.7
-- Event tech: cos = 0.6, rarity = 0.5 → 0.3
-- E_resources = **1.0**
-
-**Total Expertise: 1.688 + 13.2 + 1.0 = 15.89**
+**Total Expertise: 1.688 + 13.2 = 14.888**
 
 ---
 
 **Summary**:
 ```
-Maria (Salsa Dancer):        20.33  ← Expert (>10)
-David (Real Estate Broker):  19.57  ← Expert (>10)
-Alex (Event Planner):        15.89  ← Practitioner (3-10)
+Maria (Salsa Dancer):        18.06  ← Expert (>10)
+David (Real Estate Broker):  17.37  ← Expert (>10)
+Alex (Event Planner):        14.89  ← Expert (>10)
 
-Total expertise: 55.79
+Total expertise: 50.32
 → Strong diverse expertise; no external expert needed
 ```
 
@@ -853,7 +701,6 @@ Total expertise: 55.79
 **Domain Context**:
 ```
 Domain: urban_planning.infrastructure.governance
-Contemporary importance: 0.7
 Recency decay: 0.04/year
 CBC adjustment: 1.0 (neutral)
 ```
@@ -874,12 +721,7 @@ Experience:
 - years = 12
 - E_experience = 0.9 × 12 = **10.8**
 
-Resources:
-- GIS software: cos = 0.7, rarity = 1.0 → 0.7
-- Stakeholder network: cos = 0.8, rarity = 1.0 → 0.8
-- E_resources = **1.5**
-
-**Total: 1.906 + 10.8 + 1.5 = 14.206**
+**Total: 1.906 + 10.8 = 12.706**
 
 ---
 
@@ -899,11 +741,7 @@ Experience:
 - years = 15
 - E_experience = 0.85 × 15 = **12.75**
 
-Resources:
-- Financial analysis tools: cos = 0.6, rarity = 1.0 → 0.6
-- E_resources = **0.6**
-
-**Total: 2.8 + 12.75 + 0.6 = 16.15**
+**Total: 2.8 + 12.75 = 15.55**
 
 ---
 
@@ -923,22 +761,17 @@ Experience:
 - years = 20
 - E_experience = 0.85 × 20 = **17.0**
 
-Resources:
-- Construction equipment: cos = 0.9, rarity = 1.0 → 0.9
-- Contractor network: cos = 0.8, rarity = 1.0 → 0.8
-- E_resources = **1.7**
-
-**Total: 1.28 + 17.0 + 1.7 = 20.0**
+**Total: 1.28 + 17.0 = 18.28**
 
 ---
 
 **Summary**:
 ```
-Builder:           20.0   ← Expert (>10)
-Accountant:        16.15  ← Expert (>10)
-Urban Planner:     14.21  ← Practitioner (3-10)
+Builder:           18.28   ← Expert (>10)
+Accountant:        15.55  ← Expert (>10)
+Urban Planner:     12.71  ← Expert (>10)
 
-Total expertise: 50.36
+Total expertise: 46.54
 → Balanced expertise; no external expert needed
 ```
 
@@ -951,7 +784,6 @@ Total expertise: 50.36
 **Domain Context**:
 ```
 Domain: governance.nonprofit.emergency_response
-Contemporary importance: 0.5
 Recency decay: 0.03/year
 CBC adjustment: 1.2 (increase broadcasting for governance)
 ```
@@ -960,7 +792,7 @@ CBC adjustment: 1.2 (increase broadcasting for governance)
 
 Education:
 - None formal (self-taught)
-- E_education = 0.0
+- E_education = max(1.0, 0.0) = 1.0 (aged 30+, floor)
 
 Experience:
 - Emergency Response Coordinator (2.5 years, active)
@@ -968,12 +800,7 @@ Experience:
 - years = 2.5
 - E_experience = 0.9 × 2.5 = **2.25**
 
-Resources:
-- Donor relationships: cos = 0.8, rarity = 1.5 → 1.2
-- Supply chain: cos = 0.7, rarity = 1.0 → 0.7
-- E_resources = **1.9**
-
-**Total: 0.0 + 2.25 + 1.9 = 4.15**
+**Total: 1.0 + 2.25 = 3.25**
 
 ---
 
@@ -993,11 +820,7 @@ Experience:
 - years = 1.5
 - E_experience = 0.8 × 1.5 = **1.2**
 
-Resources:
-- Spreadsheet/database tools: cos = 0.5, rarity = 0.5 → 0.25
-- E_resources = **0.25**
-
-**Total: 2.54 + 1.2 + 0.25 = 3.99**
+**Total: 2.54 + 1.2 = 3.74**
 
 ---
 
@@ -1009,7 +832,9 @@ Education:
 - cos_similarity = 0.7
 - cos_adjusted = (0.7)^3.0 = 0.343
 - cos_adjusted_cbc = (0.343)^1.2 = 0.321
-- E_education = 0.321 × 0.5 = **0.161**
+- Σ education = 0.321 × 0.5 = 0.161
+- age/30 = 24 / 30 = 0.8
+- E_education = max(0.8, 0.161) = **0.8** (age 24)
 
 Experience:
 - Volunteer Coordinator (0.5 years, active)
@@ -1017,21 +842,17 @@ Experience:
 - years = 0.5
 - E_experience = 0.75 × 0.5 = **0.375**
 
-Resources:
-- Social network/recruiting: cos = 0.6, rarity = 1.0 → 0.6
-- E_resources = **0.6**
-
-**Total: 0.161 + 0.375 + 0.6 = 1.136**
+**Total: 0.8 + 0.375 = 1.175**
 
 ---
 
 **Summary**:
 ```
-Co-founder:          4.15  ← Informed (1-3)
-Operations Manager:  3.99  ← Informed (1-3)
-Volunteer Coord:     1.14  ← Novice (<1)
+Operations Manager:  3.74  ← Practitioner (3-10)
+Co-founder:          3.25  ← Practitioner (3-10)
+Volunteer Coord:     1.18  ← Informed (1-3)
 
-Total expertise: 9.28
+Total expertise: 8.17
 → Low expertise for governance decision; RECOMMEND EXTERNAL EXPERT
    Suggest: Finance expert, Emergency management specialist, Nonprofit board member
 ```
@@ -1049,7 +870,7 @@ async function onProfileUpdate(userId) {
   // 1. Update expertise vectors
   await vectorizeUserExpertiseProfile(userId);
   
-  // 2. Find all active (non-voted) microcommunities where user is member
+  // 2. Find all active (non-voted) ad-hoc publics where user is member
   const membersSnap = await db.collection("microcommunity_members")
     .where("user_id", "==", userId)
     .get();
@@ -1077,7 +898,7 @@ Once voting phase ends:
 async function freezeExpertiseScores(microcommunityId) {
   const batch = db.batch();
   
-  // 1. Freeze expertise scores on the microcommunity
+  // 1. Freeze expertise scores on the ad-hoc public
   const mcRef = db.collection("microcommunities").doc(microcommunityId);
   batch.update(mcRef, {
     expertise_frozen_at: admin.firestore.FieldValue.serverTimestamp()
@@ -1125,10 +946,9 @@ async function freezeExpertiseScores(microcommunityId) {
 - [ ] Implement CBC adjustment factor application
 - [ ] Implement recency decay for experience
 - [ ] Implement additive component summation
-- [ ] Implement resource rarity lookup
 
 ### Week 3: Integration & Testing
-- [ ] Integrate expertise calculation with microcommunity formation
+- [ ] Integrate expertise calculation with ad-hoc public formation
 - [ ] Test expertise freezing at voting completion
 - [ ] Test profile update → recalculation pipeline
 - [ ] Test with example profiles (door lock, salsa, parking, fund allocation)

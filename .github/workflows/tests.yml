@@ -1,0 +1,40 @@
+# R0 (roadmap stage 0): run the unit tests on every push and pull request.
+# No secrets, no deploy, no network calls in the tests (the AI calls fall back to keyword rules).
+name: tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install test dependencies
+        run: pip install numpy
+      - name: Python unit tests
+        run: python -m unittest discover -s tests -v
+
+  node:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: functions
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Node unit tests
+        run: npm test

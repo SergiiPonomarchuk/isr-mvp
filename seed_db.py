@@ -1,4 +1,6 @@
 import os
+import re
+import datetime
 import json
 import glob
 import argparse
@@ -10,6 +12,17 @@ def load_json_file(file_path):
     print(f"Loading {file_path}...")
     with open(file_path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+def valid_birth_date(value):
+    """True for a real calendar date written as YYYY-MM-DD."""
+    if not isinstance(value, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value.strip()):
+        return False
+    try:
+        datetime.date.fromisoformat(value.strip())
+    except ValueError:
+        return False
+    return True
+
 
 def seed_database(project_id, credentials_path=None):
     # Initialize Firestore client
@@ -108,6 +121,13 @@ def seed_database(project_id, credentials_path=None):
     total_written = 0
     packed_users = []
 
+    # A2 (PD-8): birthDate is required (YYYY-MM-DD); it sets the Expertise age floor.
+    invalid_birth = [uid for uid, profile in raw_profiles.items()
+                     if uid in values_data and not valid_birth_date(profile.get("birthDate"))]
+    if invalid_birth:
+        raise SystemExit(f"Refusing to seed: {len(invalid_birth)} profiles without a valid birthDate (YYYY-MM-DD): "
+                         + ", ".join(map(str, invalid_birth)))
+
     for uid, profile in raw_profiles.items():
         if uid not in values_data:
             continue
@@ -123,7 +143,7 @@ def seed_database(project_id, credentials_path=None):
             "lastName": profile.get("lastName", ""),
             "gender": profile.get("gender", ""),
             "nationality": profile.get("nationality", ""),
-            "birthDate": profile.get("birthDate", ""),
+            "birthDate": profile["birthDate"],
             "post": profile.get("post", []),
             "skills": profile.get("skills", []),
             "geography": profile.get("geography", []),
@@ -143,7 +163,7 @@ def seed_database(project_id, credentials_path=None):
         meta = {
             "uid": int(uid),
             "displayName": display_name,
-            "birthDate": profile.get("birthDate", ""),
+            "birthDate": profile["birthDate"],
             "gender": profile.get("gender", ""),
             "post": profile.get("post", []),
             "skills": profile.get("skills", []),

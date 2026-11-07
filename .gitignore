@@ -32,3 +32,6 @@ claude_export/*_ids.json
 
 # Mapping of synthetic profiles to real prototypes (sensitive)
 private/
+
+# Local emulator snapshot (synthetic data, A2/A3 migrations applied)
+.emulator-data/

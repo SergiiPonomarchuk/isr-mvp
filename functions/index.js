@@ -1,25 +1,13 @@
 const { onRequest } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
+const { FieldValue, GeoPoint } = require("firebase-admin/firestore");
+const { nearestAnchor, gScore: geoScore, withinCutoff } = require("./geo");
+const { evaluateDemographics } = require("./demographics");
 const aiHelper = require("./ai-helper");
+const { readTextInputs, paramsFromAi, makeDraft, paramsForCreate } = require("./params");
 
 admin.initializeApp();
 const db = admin.firestore();
-
-// Helper: Haversine distance in meters
-function haversineDistance(coords1, coords2) {
-  const R = 6371e3; // Earth radius in meters
-  const lat1 = (coords1[0] * Math.PI) / 180;
-  const lat2 = (coords2[0] * Math.PI) / 180;
-  const deltaLat = ((coords2[0] - coords1[0]) * Math.PI) / 180;
-  const deltaLon = ((coords2[1] - coords1[1]) * Math.PI) / 180;
-
-  const a =
-    Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-    Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-  return R * c;
-}
 
 // Helper: Cosine similarity
 function cosineSimilarity(vecA, vecB) {
@@ -34,61 +22,6 @@ function cosineSimilarity(vecA, vecB) {
   }
   if (normA === 0 || normB === 0) return 0;
   return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
-}
-
-// Helper: Evaluate demographic filters on user document
-function evaluateDemographics(user, criteria) {
-  if (!criteria) return 1.0;
-
-  // 1. Age check
-  if (user.birthDate) {
-    // Parse birthDate e.g., "1971-01-05"
-    const birthYear = parseInt(user.birthDate.split("-")[0]);
-    if (!isNaN(birthYear)) {
-      const age = new Date().getFullYear() - birthYear;
-      if (criteria.minAge !== undefined && age < criteria.minAge) return 0.0;
-      if (criteria.maxAge !== undefined && age > criteria.maxAge) return 0.0;
-    }
-  }
-
-  // 2. Employment check
-  if (criteria.employmentStatus && criteria.employmentStatus !== "any") {
-    const isEmployed = Array.isArray(user.post) && user.post.length > 0;
-    if (criteria.employmentStatus === "employed" && !isEmployed) return 0.0;
-    if (criteria.employmentStatus === "unemployed" && isEmployed) return 0.0;
-  }
-
-  // 3. Family status check
-  if (criteria.familyStatus && criteria.familyStatus !== "any") {
-    const relations = user.socialRelations || [];
-    const hasChildren = relations.some((r) =>
-      ["child", "son", "daughter"].includes(r.type ? r.type.toLowerCase() : "")
-    );
-    const hasGrandchildren = relations.some((r) =>
-      ["grandchild", "grandson", "granddaughter"].includes(r.type ? r.type.toLowerCase() : "")
-    );
-
-    if (criteria.familyStatus === "parent" && !hasChildren) return 0.0;
-    if (criteria.familyStatus === "grandparent" && !hasGrandchildren) return 0.0;
-  }
-
-  // 4. Features check
-  if (Array.isArray(criteria.features) && criteria.features.length > 0) {
-    const userFeaturesStr = (user.features || []).join(" ").toLowerCase();
-    const hasMatchingFeature = criteria.features.some((f) => {
-      const term = f.toLowerCase().trim();
-      if (!term) return false;
-      if (userFeaturesStr.includes(term)) return true;
-      if ((term.includes("pet") || term.includes("animal")) &&
-          (userFeaturesStr.includes("dog") || userFeaturesStr.includes("cat") || userFeaturesStr.includes("pet") || userFeaturesStr.includes("animal"))) {
-        return true;
-      }
-      return false;
-    });
-    if (!hasMatchingFeature) return 0.0;
-  }
-
-  return 1.0;
 }
 
 // HTTPS Endpoint: Analyze Issue using Gemini 1.5 Flash
@@ -110,61 +43,41 @@ exports.analyzeIssue = onRequest({ cors: true }, async (req, res) => {
 // HTTPS Endpoint: Create Issue & Compute Relevance Pipeline
 exports.createIssue = onRequest({ cors: true }, async (req, res) => {
   try {
-    const {
-      title, description, location, submitterId,
-      category, mu, sigma, weights, demographics,
-      expertise_depth, expertise_domain,
-      // Expertise sub-weights (flat or nested)
-      w_education, w_experience, w_resources,
-      expertise_weights: expertise_weights_obj,
-      // Aggregation weights (flat or nested)
-      w_relevance, w_expertise, w_contribution,
-      aggregation_weights: aggregation_weights_obj,
-      // Reasoning strings
-      relevance_reasoning, aggregation_reasoning,
-      reasoning_D, reasoning_G, reasoning_S, reasoning_X,
-      reasoning_R, reasoning_E, reasoning_C,
-      reasoning_education, reasoning_experience, reasoning_resources,
-      // New protocol fields
-      classification,
-      expertise_domain_parameters,
-      resources_needed,
-      geographic_parameters
-    } = req.body;
+    const { title, description, location, submitterId } = req.body;
 
     if (!title || !description || !location || !submitterId) {
       return res.status(400).json({ error: "Missing required fields: title, description, location, submitterId." });
     }
 
+    // A2: every number comes from the draft that checkIssue derived on the server.
+    // Numbers and weight objects in the request body are never read.
+    let P;
+    try {
+      const draftSnap = req.body.draftId
+        ? await db.collection("issue_drafts").doc(String(req.body.draftId)).get()
+        : null;
+      P = paramsForCreate(req.body, draftSnap && draftSnap.exists ? draftSnap.data() : null);
+    } catch (err) {
+      return res.status(err.status || 400).json({ error: err.message });
+    }
+    const {
+      category, demographics, expertise_depth, expertise_domain,
+      relevance_reasoning, aggregation_reasoning, classification,
+      expertise_domain_parameters, resources_needed
+    } = P;
+    const { reasoning_D, reasoning_G, reasoning_S, reasoning_X } = P.relevance_explanations || {};
+    const { reasoning_R, reasoning_E, reasoning_C } = P.isr_explanations || {};
+
     // Step 1: Vectorize issue description
     const issueVector = await aiHelper.vectorizeText(description);
 
-    // Parse relevance weights — prefer flat w_D/w_G/w_S/w_X, fall back to weights object
-    const w_D = weights ? parseFloat(weights.w_D) || 0 : 0.1;
-    const w_G = weights ? parseFloat(weights.w_G) || 0 : 0.4;
-    const w_S = weights ? parseFloat(weights.w_S) || 0 : 0.4;
-    const w_X = weights ? parseFloat(weights.w_X) || 0 : 0.1;
-
-    const muVal  = (geographic_parameters && geographic_parameters.mu_distance_meters !== undefined)
-      ? parseFloat(geographic_parameters.mu_distance_meters)
-      : (parseFloat(mu) || 100);
-    const sigmaVal = (geographic_parameters && geographic_parameters.sigma_distance_meters !== undefined)
-      ? parseFloat(geographic_parameters.sigma_distance_meters)
-      : (parseFloat(sigma) || 50);
-
-    // Resolve aggregation weights: prefer nested object, then flat fields, then defaults
-    const resolvedAggWeights = aggregation_weights_obj || {
-      w_relevance:    w_relevance    !== undefined ? parseFloat(w_relevance)    : 0.5,
-      w_expertise:    w_expertise    !== undefined ? parseFloat(w_expertise)    : 0.2,
-      w_contribution: w_contribution !== undefined ? parseFloat(w_contribution) : 0.3
-    };
-
-    // Resolve expertise weights: prefer nested object, then flat fields, then defaults
-    const resolvedExpWeights = expertise_weights_obj || {
-      w_education:  w_education  !== undefined ? parseFloat(w_education)  : 0.3,
-      w_experience: w_experience !== undefined ? parseFloat(w_experience) : 0.4,
-      w_resources:  w_resources  !== undefined ? parseFloat(w_resources)  : 0.3
-    };
+    const w_D = P.weights.w_D;
+    const w_G = P.weights.w_G;
+    const w_S = P.weights.w_S;
+    const w_X = P.weights.w_X;
+    const muVal = P.mu;
+    const sigmaVal = P.sigma;
+    const resolvedAggWeights = P.aggregation_weights;
 
     // Load submitter profile to get social relations
     let submitterRelations = [];
@@ -194,7 +107,7 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       });
     } else {
       const usersSnapshot = await db.collection("users")
-        .select("uid", "displayName", "birthDate", "gender", "post", "socialRelations", "geography")
+        .select("uid", "displayName", "birthDate", "gender", "post", "socialRelations", "geography", "skills", "features")
         .get();
       usersSnapshot.forEach((doc) => {
         allUsers.push(doc.data());
@@ -213,24 +126,21 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
     uniqueUsers.forEach((user) => {
       const isCreator = (user.uid === parseInt(submitterId));
 
-      // Stage 1: Demographic Score (D)
-      const dScore = evaluateDemographics(user, demographics);
-      if (dScore === 0.0 && w_D > 0 && !isCreator) return; // Excluded immediately by demographics!
+      // Stage 1: Demographic Score (D). A place or property-kind match is a cause to include (A3).
+      const dRes = evaluateDemographics(user, demographics);
+      const dScore = dRes.score;
+      if (dScore === 0.0 && w_D > 0 && !isCreator) return; // Excluded by demographics
 
-      // Stage 2: Geographic Distance Filter
-      const homeAnchor = (user.geography || []).find((g) => g.type === "home");
-      let distance = 0;
+      // Stage 2: Geographic Score (G) from the nearest of home, work and property (A3)
+      const near = nearestAnchor(user.geography, location);
       let gScore = 1.0;
-      if (homeAnchor && homeAnchor.geo) {
-        distance = haversineDistance(location, homeAnchor.geo);
-        const maxDistance = muVal + 3 * sigmaVal;
-        if (distance > maxDistance && w_G > 0 && !isCreator) return; // Excluded by distance!
-
-        if (distance > muVal) {
-          gScore = Math.exp(-Math.pow(distance - muVal, 2) / (2 * Math.pow(sigmaVal, 2)));
-        }
+      let gAnchorType = null;
+      if (near) {
+        gAnchorType = near.type;
+        if (!withinCutoff(near.distance, muVal, sigmaVal) && w_G > 0 && !isCreator && !dRes.bypassDistance) return; // Excluded by distance
+        gScore = geoScore(near.distance, muVal, sigmaVal);
       } else {
-        if (!isCreator) return;
+        if (!isCreator && !dRes.bypassDistance) return;
         gScore = 0.0;
       }
 
@@ -255,7 +165,9 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       filteredCandidates.push({
         user: user,
         dScore: dScore,
+        dMatch: dRes.match,
         gScore: gScore,
+        gAnchorType: gAnchorType,
         xScore: xScore,
         maxScore: maxScore,
         isCreator: isCreator
@@ -308,6 +220,8 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       const user = c.user;
       const dScore = c.dScore;
       const gScore = c.gScore;
+      const dMatch = c.dMatch;
+      const gAnchorType = c.gAnchorType;
       const xScore = c.xScore;
       const isCreator = c.isCreator;
 
@@ -323,7 +237,9 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
           user_id: user.uid,
           displayName: user.displayName + (isCreator ? " (Creator)" : ""),
           D_score: dScore,
+          D_match: dMatch,
           G_score: gScore,
+          G_anchor_type: gAnchorType,
           S_score: sScore,
           X_score: xScore,
           relevance_score: relevanceScore,
@@ -357,9 +273,9 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       issue_id: issueId,
       title,
       description,
-      starts: admin.firestore.FieldValue.serverTimestamp(),
+      starts: FieldValue.serverTimestamp(),
       category: (classification && classification.issue_category) || category || "building.maintenance.general",
-      location: new admin.firestore.GeoPoint(location[0], location[1]),
+      location: new GeoPoint(location[0], location[1]),
       mu_distance_meters: muVal,
       sigma_decay_meters: sigmaVal,
       // Relevance weights (flat, for query compatibility)
@@ -376,13 +292,10 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       aggregation_reasoning: aggregation_reasoning || "",
       submitter_id: String(submitterId),
       status: "open",
-      created_at: admin.firestore.FieldValue.serverTimestamp(),
+      created_at: FieldValue.serverTimestamp(),
       // Expertise
       expertise_depth:  expertise_depth  || "None",
       expertise_domain: expertise_domain  || (expertise_domain_parameters && expertise_domain_parameters.expertise_domain) || "General Maintenance",
-      w_education:  resolvedExpWeights.w_education,
-      w_experience: resolvedExpWeights.w_experience,
-      w_resources:  resolvedExpWeights.w_resources,
       // Demographics
       demographics: demographics || null,
       // Per-component reasoning strings
@@ -393,9 +306,6 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       reasoning_R:         reasoning_R         || "",
       reasoning_E:         reasoning_E         || "",
       reasoning_C:         reasoning_C         || "",
-      reasoning_education:  reasoning_education  || "",
-      reasoning_experience: reasoning_experience || "",
-      reasoning_resources:  reasoning_resources  || "",
       // ── New ISR protocol fields ────────────────────────────────────────────
       // Full classification object (scope_type, affected_roles, etc.)
       classification: classification || null,
@@ -538,7 +448,7 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       member_count: microcommunityMembers.length,
       member_accepted: 0,
       issue_scope: 0,
-      created_at: admin.firestore.FieldValue.serverTimestamp(),
+      created_at: FieldValue.serverTimestamp(),
       status: "active",
       values_taxonomy: mcTaxonomy
     };
@@ -553,11 +463,13 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
         user_id: member.user_id,
         displayName: member.displayName,
         D_score: member.D_score,
+        D_match: member.D_match || null,
         G_score: member.G_score,
+        G_anchor_type: member.G_anchor_type || null,
         S_score: member.S_score,
         X_score: member.X_score,
         relevance_score: member.relevance_score,
-        calculated_at: admin.firestore.FieldValue.serverTimestamp(),
+        calculated_at: FieldValue.serverTimestamp(),
         accepted_rejected: null
       });
     });
@@ -593,19 +505,18 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       creator_uid: String(submitterId),
       created_at: new Date().toISOString(),
       message_count: 1,
-      location: new admin.firestore.GeoPoint(location[0], location[1]),
+      location: new GeoPoint(location[0], location[1]),
       affection_distance: parseFloat((muVal / 1000).toFixed(3)),
       expertise_depth:  expertise_depth  || "None",
       expertise_domain: expertise_domain  || (expertise_domain_parameters && expertise_domain_parameters.expertise_domain) || "General Maintenance",
-      w_education:  resolvedExpWeights.w_education,
-      w_experience: resolvedExpWeights.w_experience,
-      w_resources:  resolvedExpWeights.w_resources,
       relevance_scores: relevanceScores,
       participants: participantUids,
       last_message_text: description,
       last_message_sender_uid: String(submitterId),
       last_message_sender_name: submitterDisplayName,
       last_message_timestamp: new Date().toISOString(),
+      deadline_votes: {},
+      ends: (typeof req.body.deadline === "string" && req.body.deadline.trim()) ? req.body.deadline.trim().slice(0, 64) : "Ongoing",
       w_demographic: w_D,
       w_geographic:  w_G,
       w_semantic:    w_S,
@@ -623,9 +534,6 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       reasoning_R:         reasoning_R         || "",
       reasoning_E:         reasoning_E         || "",
       reasoning_C:         reasoning_C         || "",
-      reasoning_education:  reasoning_education  || "",
-      reasoning_experience: reasoning_experience || "",
-      reasoning_resources:  reasoning_resources  || "",
       // New protocol fields
       classification:             classification             || null,
       expertise_domain_parameters: expertise_domain_parameters || null,
@@ -641,6 +549,9 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       marks: [],
       child: []
     });
+
+    // A draft is single-use: one Check, one issue.
+    await db.collection("issue_drafts").doc(String(req.body.draftId)).delete();
 
     res.json({
       success: true,
@@ -664,65 +575,11 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
       return res.status(400).json({ error: "Missing required fields: title, description, location, submitterId." });
     }
 
-    // 1. Analyze issue category, weights, demographics, and expertise depth suggestions via Gemini
-    let data;
-    if (req.body.recalculate) {
-      data = {
-        category: req.body.category || "building.maintenance.general",
-        mu: req.body.mu !== undefined ? parseFloat(req.body.mu) : 100,
-        sigma: req.body.sigma !== undefined ? parseFloat(req.body.sigma) : 50,
-        weights: req.body.weights || { w_D: 0.1, w_G: 0.4, w_S: 0.4, w_X: 0.1 },
-        relevance_weights: req.body.relevance_weights || { w_demographic: 0.1, w_geographic: 0.4, w_semantic: 0.4, w_social: 0.1 },
-        relevance_reasoning: req.body.relevance_reasoning || "Adjusted weights recalculated.",
-        relevance_explanations: req.body.relevance_explanations || {
-          reasoning_D: req.body.reasoning_D || "Adjusted demographic weight.",
-          reasoning_G: req.body.reasoning_G || "Adjusted geographic weight.",
-          reasoning_S: req.body.reasoning_S || "Adjusted semantic weight.",
-          reasoning_X: req.body.reasoning_X || "Adjusted social weight."
-        },
-        aggregation_weights: req.body.aggregation_weights || { w_relevance: 0.4, w_expertise: 0.3, w_contribution: 0.3 },
-        aggregation_reasoning: req.body.aggregation_reasoning || "Adjusted aggregation weights.",
-        isr_explanations: req.body.isr_explanations || {
-          reasoning_R: req.body.reasoning_R || "Adjusted relevance weight.",
-          reasoning_E: req.body.reasoning_E || "Adjusted expertise weight.",
-          reasoning_C: req.body.reasoning_C || "Adjusted contribution weight."
-        },
-        demographics: req.body.demographics || { employmentStatus: "any", familyStatus: "any", features: [] },
-        expertise_depth: req.body.expertise_depth || "None",
-        expertise_domain: req.body.expertise_domain || "General Maintenance",
-        expertise_weights: req.body.expertise_weights || { w_education: 0.3, w_experience: 0.4, w_resources: 0.3 },
-        expertise_explanations: req.body.expertise_explanations || {
-          reasoning_education: req.body.reasoning_education || "Adjusted education weight.",
-          reasoning_experience: req.body.reasoning_experience || "Adjusted experience weight.",
-          reasoning_resources: req.body.reasoning_resources || "Adjusted resources weight."
-        }
-      };
-
-      if (data.relevance_weights && !data.weights) {
-        data.weights = {
-          w_D: data.relevance_weights.w_demographic !== undefined ? data.relevance_weights.w_demographic : 0.2,
-          w_G: data.relevance_weights.w_geographic !== undefined ? data.relevance_weights.w_geographic : 0.4,
-          w_S: data.relevance_weights.w_semantic !== undefined ? data.relevance_weights.w_semantic : 0.3,
-          w_X: data.relevance_weights.w_social !== undefined ? data.relevance_weights.w_social : 0.1
-        };
-      } else if (data.weights && !data.relevance_weights) {
-        data.relevance_weights = {
-          w_demographic: data.weights.w_D !== undefined ? data.weights.w_D : 0.2,
-          w_geographic: data.weights.w_G !== undefined ? data.weights.w_G : 0.4,
-          w_semantic: data.weights.w_S !== undefined ? data.weights.w_S : 0.3,
-          w_social: data.weights.w_X !== undefined ? data.weights.w_X : 0.1
-        };
-      }
-    } else {
-      data = await aiHelper.checkIssueParams(description, title);
-    }
-
-    if (req.body.mu !== undefined && req.body.mu !== null) {
-      data.mu = parseFloat(req.body.mu);
-    }
-    if (req.body.sigma !== undefined && req.body.sigma !== null) {
-      data.sigma = parseFloat(req.body.sigma);
-    }
+    // 1. Derive every parameter on the server (A2: nobody types a number).
+    //    "Derive again" sends only a clarification text; numbers in the body are ignored.
+    const inputs = readTextInputs(req.body);
+    const ai = await aiHelper.checkIssueParams(description, title, inputs.clarification);
+    const data = paramsFromAi(ai);
 
     // 2. Generate issue embedding
     const issueVector = await aiHelper.vectorizeText(description);
@@ -759,7 +616,7 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
       });
     } else {
       const usersSnapshot = await db.collection("users")
-        .select("uid", "displayName", "birthDate", "gender", "post", "socialRelations", "geography")
+        .select("uid", "displayName", "birthDate", "gender", "post", "socialRelations", "geography", "skills", "features")
         .get();
       usersSnapshot.forEach((doc) => {
         allUsers.push(doc.data());
@@ -778,22 +635,21 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
     uniqueUsers.forEach((user) => {
       const isCreator = (user.uid === parseInt(submitterId));
 
-      const dScore = evaluateDemographics(user, data.demographics);
-      if (dScore === 0.0 && w_D > 0 && !isCreator) return;
+      // Stage 1: Demographic Score (D). A place or property-kind match is a cause to include (A3).
+      const dRes = evaluateDemographics(user, data.demographics);
+      const dScore = dRes.score;
+      if (dScore === 0.0 && w_D > 0 && !isCreator) return; // Excluded by demographics
 
-      const homeAnchor = (user.geography || []).find((g) => g.type === "home");
-      let distance = 0;
+      // Stage 2: Geographic Score (G) from the nearest of home, work and property (A3)
+      const near = nearestAnchor(user.geography, location);
       let gScore = 1.0;
-      if (homeAnchor && homeAnchor.geo) {
-        distance = haversineDistance(location, homeAnchor.geo);
-        const maxDistance = muVal + 3 * sigmaVal;
-        if (distance > maxDistance && w_G > 0 && !isCreator) return;
-
-        if (distance > muVal) {
-          gScore = Math.exp(-Math.pow(distance - muVal, 2) / (2 * Math.pow(sigmaVal, 2)));
-        }
+      let gAnchorType = null;
+      if (near) {
+        gAnchorType = near.type;
+        if (!withinCutoff(near.distance, muVal, sigmaVal) && w_G > 0 && !isCreator && !dRes.bypassDistance) return; // Excluded by distance
+        gScore = geoScore(near.distance, muVal, sigmaVal);
       } else {
-        if (!isCreator) return;
+        if (!isCreator && !dRes.bypassDistance) return;
         gScore = 0.0;
       }
 
@@ -817,7 +673,9 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
       filteredCandidates.push({
         user: user,
         dScore: dScore,
+        dMatch: dRes.match,
         gScore: gScore,
+        gAnchorType: gAnchorType,
         xScore: xScore,
         maxScore: maxScore,
         isCreator: isCreator
@@ -869,6 +727,8 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
       const user = c.user;
       const dScore = c.dScore;
       const gScore = c.gScore;
+      const dMatch = c.dMatch;
+      const gAnchorType = c.gAnchorType;
       const xScore = c.xScore;
       const isCreator = c.isCreator;
 
@@ -884,7 +744,9 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
           uid: String(user.uid),
           name: user.displayName + (isCreator ? " (Creator)" : ""),
           D: dScore,
+          D_match: dMatch,
           G: gScore,
+          G_anchor_type: gAnchorType,
           S: sScore,
           X: xScore,
           score: relevanceScore,
@@ -909,8 +771,14 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
       top25 = candidates.slice(0, 25);
     }
 
+    // Store the derived parameters; createIssue reads its numbers from this draft.
+    const draftRef = db.collection("issue_drafts").doc();
+    await draftRef.set(makeDraft(inputs, data, new Date().toISOString()));
+
     res.json({
       success: true,
+      draftId: draftRef.id,
+      clarification: inputs.clarification,
       // ── Classification ──────────────────────────────────────────────────
       category: data.category,
       classification: data.classification || null,
@@ -933,8 +801,6 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
       // ── Expertise ───────────────────────────────────────────────────────
       expertise_depth: data.expertise_depth,
       expertise_domain: data.expertise_domain || "General Maintenance",
-      expertise_weights: data.expertise_weights || { w_education: 0.3, w_experience: 0.4, w_resources: 0.3 },
-      expertise_explanations: data.expertise_explanations || null,
       expertise_domain_parameters: data.expertise_domain_parameters || null,
       // ── Resources ───────────────────────────────────────────────────────
       resources_needed: data.resources_needed || [],

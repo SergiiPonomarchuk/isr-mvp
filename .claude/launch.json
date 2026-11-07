@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "emulators",
+      "runtimeExecutable": "firebase",
+      "runtimeArgs": ["emulators:start", "--only", "firestore,functions,hosting", "--project", "project-a3d59130-5adf-4677-9e2"],
+      "port": 5000
+    }
+  ]
+}

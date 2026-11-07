@@ -117,11 +117,7 @@ async function runLocalRelevanceCheck(title, description, location, submitterId,
     sigma: sigma,
     demographics: demo,
     expertise_depth: exp,
-    expertise_domain: cat === "social.event.cultural" ? "Event Coordination" : "General Maintenance",
-    expertise_weights:
-      cat === "social.event.cultural"
-        ? { w_education: 0.2, w_experience: 0.5, w_resources: 0.3 }
-        : { w_education: 0.3, w_experience: 0.4, w_resources: 0.3 }
+    expertise_domain: cat === "social.event.cultural" ? "Event Coordination" : "General Maintenance"
   };
 
   // Perform relevance score pipeline client-side
@@ -144,9 +140,10 @@ async function runLocalRelevanceCheck(title, description, location, submitterId,
 
     let distance = 0;
     let gScore = 1.0;
-    const homeAnchor = (user.geography || []).find((g) => g.type === "home");
-    if (homeAnchor && homeAnchor.geo) {
-      distance = localHaversine(location, homeAnchor.geo);
+    // A3: nearest of home, work and property (this browser copy is not called; kept in step)
+    const anchors = (user.geography || []).filter((g) => g && ["home", "work", "property"].includes(g.type) && g.geo);
+    if (anchors.length > 0) {
+      distance = Math.min(...anchors.map((g) => localHaversine(location, g.geo)));
       const maxDistance = suggestedParams.mu + 3 * suggestedParams.sigma;
       if (distance > maxDistance && suggestedParams.weights.w_G > 0 && !isCreator) return;
 
