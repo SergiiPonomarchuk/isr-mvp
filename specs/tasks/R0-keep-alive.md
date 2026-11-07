@@ -67,8 +67,8 @@ The live site runs the A2/A3 code on migrated data, keeps working after 2026-12-
 Target: done by **2026-12-15**, leaving two weeks before the rules expire.
 
 1. **Merge** the pull request into `main`; update local `main` (`git pull`).
-2. **Backup**: `python scripts/backup_firestore.py --project project-a3d59130-5adf-4677-9e2 --out <folder outside the repo>`. Keep the folder; it is the rollback point.
-3. **Deploy together** (the new UI needs the new `createIssue`, and the rules protect the drafts): `firebase deploy --only "firestore:rules,functions,hosting" --project project-a3d59130-5adf-4677-9e2`.
+2. **Backup** (the agent runs it on request, or you): `python scripts/backup_firestore.py --project project-a3d59130-5adf-4677-9e2 --out A:\ISR\mvp\dbbackup\<date>`. If the network drops, rerun the same command with `--resume`. Check that `manifest.json` exists and its counts look right. Keep the folder; it is the rollback point.
+3. **Deploy together** (the new UI needs the new `createIssue`, and the rules protect the drafts). First validate without changing anything: `firebase deploy --only "firestore:rules,functions,hosting" --project project-a3d59130-5adf-4677-9e2 --dry-run`; then the same command without `--dry-run`. In PowerShell keep the quotes around the comma list.
 4. **Migrate A2**: dry run with `python scripts/migrate_a2.py --source firestore --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live`; compare the report with `tasks/A2-migration-report.md`; if it matches, run the same command with `--apply`.
 5. **Migrate A3**: the same with `scripts/migrate_a3.py` (compare with `tasks/A3-migration-report.md`), then `--apply`.
 6. **Second runs** of both scripts (dry): they must report no changes.
@@ -85,4 +85,12 @@ Target: done by **2026-12-15**, leaving two weeks before the rules expire.
 
 ## 8. Status log
 
-Plan approved: ___  Implementation: ___  Tests: ___  CI: ___  Pull request: ___  Live runbook (author): ___  CHANGES.md: ___  Deviations: ___
+- Plan approved: 2026-11-07 (author).
+- Implementation: R1-R6, R8 done on branch `r0-keep-alive`.
+- Tests: rules check 13/13 on the emulator; Python 31 OK (1 optional skip); Node 16 OK; dress rehearsal (AC5) done.
+- CI: green on GitHub (run 42322112190).
+- Live backup: done 2026-11-07, 24,783 documents (`A:\ISR\mvp\dbbackup6-11-07`).
+- Pull request: pending (browser pane not signed in to GitHub).
+- Live runbook (author): pending, by 2026-12-15.
+- CHANGES.md: written.
+- Deviations: the backup script gained its own retries and `--resume` after the first live run failed (CHANGES).

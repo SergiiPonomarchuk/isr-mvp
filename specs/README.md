@@ -92,7 +92,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [A1-canonical-isr](tasks/A1-canonical-isr.md) | open (DRAFT; R2, R9 amended by A2) | 03, 04, 05, 06 |
 | [A2-expertise-cleanup](tasks/A2-expertise-cleanup.md) | implemented on branch `a2-expertise-cleanup`; live migration pending (author) | 02, 04, 07, 10, 11 |
 | [A3-options-and-g-anchors](tasks/A3-options-and-g-anchors.md) | implemented on branch `a3-options-and-g-anchors`; live migration pending (author) | 02, 03, 06, 10 |
-| [R0-keep-alive](tasks/R0-keep-alive.md) | open (DRAFT); live by 2026-12-30 | rules, CI, backup, merge of A2/A3 |
+| [R0-keep-alive](tasks/R0-keep-alive.md) | implemented on branch `r0-keep-alive` (PR to `main`); live runbook pending (author), by 2026-12-30 | rules, CI, backup, merge of A2/A3 |
 
 Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).
 
@@ -155,4 +155,4 @@ The ids come from `tasks/S0-inventory-report.md` §3, where each contradiction i
 | C-43 | IF header describes an uncommitted tree | 11 | resolved (PD-6: audited state is `0620f27`) |
 | C-44 | Six-collection matrix vs real collections | 02 / 14 | open |
 | C-45 | snake_case rule vs camelCase fields | 02 / 14 | open |
-| C-46 | AAuth, logging, encryption described but absent | 09 | partly decided (PD-5 defines gISR and AAuth) |
+| C-46 | AAuth, logging, encryption described but absent | 09 | partly decided (PD-5 defines gISR and AAuth). R0: rules stay open until 2027-06-30 except `issue_drafts` (server only); real access rules are roadmap stage 5 |

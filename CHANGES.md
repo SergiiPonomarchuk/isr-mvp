@@ -1,5 +1,31 @@
 # CHANGES
 
+## R0: keep the live MVP alive, consolidate A2/A3 (2026-11-07)
+
+Branch `r0-keep-alive` (from `a3-options-and-g-anchors`). Spec: `specs/tasks/R0-keep-alive.md`. Roadmap stage 0 (`specs/ROADMAP-demo.md`).
+
+### What changed
+- `firestore.rules`: client access open until **2027-06-30** (was 2026-12-31) for every collection except `issue_drafts`, which is closed to clients; the Cloud Functions (Admin SDK) still use it. A forged draft could otherwise have brought typed numbers into an issue.
+- `scripts/check_rules_emulator.py`: 13 unauthenticated checks on the emulator (reads and writes allowed in the prototype collections, every `issue_drafts` access denied). All pass.
+- `scripts/backup_firestore.py`: full read-only JSON backup of all collections and subcollections, with typed values (timestamps, GeoPoints, vectors, references), its own retries, `.part` files and `--resume`; refuses folders inside the repository.
+- `.github/workflows/tests.yml`: Python (numpy) and Node 22 unit tests on every push and pull request. Green on GitHub for this branch.
+- Runbook (spec §6) with `firebase deploy --dry-run` before the real deploy.
+
+### Live backup (read-only, on the author's request)
+- `A:\ISR\mvp\dbbackup6-11-07`, finished 2026-11-07 01:32 UTC: actions 1,188; discussions 192 (+1,694 messages); issues 80; microcommunities 192; microcommunity_members 3,099; user_packs 37; user_vectors 9,150; users 9,151; total 24,783 documents (all equal to the 2026-10-12 export).
+- The first attempt stopped on `user_vectors` (a network timeout, then an `AttributeError` inside the Firestore client's own retry path, `query.py:282`). Its incomplete folder was removed; the script now pages 100 documents at a time, retries by itself (up to 7 times, back-off to 60 s) and can resume. The second run needed many retries on `user_vectors` and completed.
+- A second backup is due right before the live migrations.
+
+### Checks
+- Dress rehearsal on the emulator (fresh seed with names): backup 23,558 documents; A2 dry run and apply (3,045 recomputed, 4 memberships removed); A3 dry run and apply (1,225 recomputed); both second runs change nothing, also A2 after A3.
+- Prototype on the emulator under the new rules: discussions load, writes work, `issue_drafts` read is `permission-denied`; Check → Create still works through the functions.
+- Functions load without emulator variables (exports `analyzeIssue`, `createIssue`, `checkIssue`). The `?emulator=1` switch only acts on localhost.
+- Versions: firebase-tools 14.1.0, firebase-functions 6.6.0 (the emulator says outdated; not upgraded in R0), firebase-admin 12.7.0, @google/generative-ai 0.21.0 (old SDK; replaced in roadmap stage 1).
+
+### Not done by the agent
+- Merge, deploy and the live migrations (runbook, spec §6, by 2026-12-15; the rules expire 2026-12-31).
+- The pull request: the browser pane is not signed in to GitHub.
+
 ## A3: option fields, G anchors, places in D (2026-11-05)
 
 Branch `a3-options-and-g-anchors` (from `a2-expertise-cleanup`). Spec: `specs/tasks/A3-options-and-g-anchors.md`. Decisions: PD-8; author answers of 2026-11-05.
