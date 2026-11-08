@@ -4109,21 +4109,17 @@ function initTopicDetailViews() {
 
             if (currentUserId) {
               const uidStr = currentUserId.toString();
-              if (disc.relevance_scores && disc.relevance_scores[uidStr] !== undefined) {
-                const score = disc.relevance_scores[uidStr];
-                userRelevance = (score * 100).toFixed(0) + "%";
-                if (disc.isr_scores && disc.isr_scores[uidStr] !== undefined) {
-                  userIsr = disc.isr_scores[uidStr].toFixed(2);
-                } else {
-                  userIsr = (score * 1.5).toFixed(2);
-                }
-              } else if (cachedMemberData) {
+              // A1: one number. The member document is the source; the maps are a server-written
+              // cache of it. No 1.5 x relevance fallback: without an ISR for this public, "N/A".
+              if (cachedMemberData && cachedMemberData.relevance_score !== undefined) {
                 userRelevance = (cachedMemberData.relevance_score * 100).toFixed(0) + "%";
-                if (cachedMemberData.isr_score !== undefined) {
-                  userIsr = cachedMemberData.isr_score.toFixed(2);
-                } else {
-                  userIsr = (cachedMemberData.relevance_score * 1.5).toFixed(2);
-                }
+              } else if (disc.relevance_scores && disc.relevance_scores[uidStr] !== undefined) {
+                userRelevance = (disc.relevance_scores[uidStr] * 100).toFixed(0) + "%";
+              }
+              if (cachedMemberData && cachedMemberData.isr_score !== undefined) {
+                userIsr = cachedMemberData.isr_score.toFixed(2);
+              } else if (disc.isr_scores && disc.isr_scores[uidStr] !== undefined) {
+                userIsr = Number(disc.isr_scores[uidStr]).toFixed(2);
               }
             }
 
@@ -4389,21 +4385,17 @@ function initTopicDetailViews() {
 
             if (currentUserId) {
               const uidStr = currentUserId.toString();
-              if (relevanceScores[uidStr] !== undefined) {
-                const score = relevanceScores[uidStr];
-                userRelevance = (score * 100).toFixed(0) + "%";
-                if (isrScoresMap[uidStr] !== undefined) {
-                  userIsr = isrScoresMap[uidStr].toFixed(2);
-                } else {
-                  userIsr = (score * 1.5).toFixed(2);
-                }
-              } else if (cachedMemberData) {
+              // A1: one number. The member document is the source; the maps are a server-written
+              // cache of it. No 1.5 x relevance fallback: without an ISR for this public, "N/A".
+              if (cachedMemberData && cachedMemberData.relevance_score !== undefined) {
                 userRelevance = (cachedMemberData.relevance_score * 100).toFixed(0) + "%";
-                if (cachedMemberData.isr_score !== undefined) {
-                  userIsr = cachedMemberData.isr_score.toFixed(2);
-                } else {
-                  userIsr = (cachedMemberData.relevance_score * 1.5).toFixed(2);
-                }
+              } else if (relevanceScores[uidStr] !== undefined) {
+                userRelevance = (relevanceScores[uidStr] * 100).toFixed(0) + "%";
+              }
+              if (cachedMemberData && cachedMemberData.isr_score !== undefined) {
+                userIsr = cachedMemberData.isr_score.toFixed(2);
+              } else if (isrScoresMap[uidStr] !== undefined) {
+                userIsr = Number(isrScoresMap[uidStr]).toFixed(2);
               }
             }
 
@@ -4412,40 +4404,6 @@ function initTopicDetailViews() {
 
             // Map options and calculate scores dynamically based on the votes map
             const userVotesMap = issue.votes || {};
-
-            // Fetch scores dynamically for any voters not in isrScoresMap
-            const votersToFetch = [];
-            for (const uid in userVotesMap) {
-              if (isrScoresMap[uid] === undefined) {
-                votersToFetch.push(uid);
-              }
-            }
-
-            const extraScores = {};
-            if (votersToFetch.length > 0) {
-              let mcId = topicId;
-              try {
-                const memberDocs = await Promise.all(
-                  votersToFetch.map(uid => 
-                    db.collection("microcommunity_members").doc(mcId + '_' + uid).get()
-                  )
-                );
-                memberDocs.forEach((mDoc, idx) => {
-                  const uid = votersToFetch[idx];
-                  if (mDoc.exists) {
-                    const mData = mDoc.data();
-                    extraScores[uid] = mData.isr_score !== undefined ? mData.isr_score : (mData.relevance_score * 1.5);
-                  } else {
-                    const uidStr = uid.toString();
-                    if (relevanceScores[uidStr] !== undefined) {
-                      extraScores[uid] = relevanceScores[uidStr] * 1.5;
-                    }
-                  }
-                });
-              } catch (err) {
-                console.error("Error fetching extra voter scores:", err);
-              }
-            }
 
             // Calculate current option scores based on votes in Firestore
             let baseOptions = [];
@@ -4477,24 +4435,17 @@ function initTopicDetailViews() {
               ];
             }
 
-            // Sum up ISR scores for each option
+            // A1: the live tally uses the shared module (window.ISR, prototype/js/isr.js), the same
+            // code the server uses when the vote closes. Voters without an ISR are not counted.
+            const isrByUid = {};
+            Object.keys(isrScoresMap).forEach(uid => { isrByUid[String(uid)] = isrScoresMap[uid]; });
+            const votesByUid = {};
+            Object.keys(userVotesMap).forEach(uid => { votesByUid[String(uid)] = userVotesMap[uid]; });
+            const liveTally = ISR.tally(votesByUid, isrByUid, baseOptions.length);
             baseOptions.forEach((opt, idx) => {
-              let sum = 0;
-              for (const uid in userVotesMap) {
-                if (Number(userVotesMap[uid]) === idx) {
-                  let score = 0;
-                  if (isrScoresMap[uid] !== undefined) {
-                    score = parseFloat(isrScoresMap[uid]) || 0;
-                  } else if (extraScores[uid] !== undefined) {
-                    score = parseFloat(extraScores[uid]) || 0;
-                  } else if (uid.toString() === currentUserId.toString()) {
-                    score = parseFloat(userIsr) || 0;
-                  }
-                  sum += score;
-                }
-              }
-              opt.score = parseFloat(sum.toFixed(2));
+              opt.score = parseFloat((liveTally.scores[idx] || 0).toFixed(2));
             });
+            const notCounted = liveTally.excluded.filter(x => x.reason === "no ISR").length;
 
             let geopositionVal = "N/A";
             const geoDoc = disc || issue;
@@ -4510,7 +4461,7 @@ function initTopicDetailViews() {
               name: issue.title,
               description: issue.description || (messages.length > 0 ? messages[0].text : ""),
               status: issue.status || "Voting",
-              statusText: `This issue is in status: ${issue.status || 'Voting'}.`,
+              statusText: `This issue is in status: ${issue.status || 'Voting'}.` + (notCounted > 0 ? ` ${notCounted} vote(s) from people without an ISR for this public are not counted.` : ''),
               counter: `Submitter: ${window.userCache[issue.submitter_id] || issue.submitter_id}`,
               deadline: formatDeadlineDisplay(issue.ends || "Active"),
               relevance: userRelevance,
@@ -4842,13 +4793,17 @@ function initTopicDetailViews() {
             const isrScoresMap = discData ? (discData.isr_scores || {}) : (issue.isr_scores || {});
             if (currentUserId) {
               const uidStr = currentUserId.toString();
-              if (relevanceScores[uidStr] !== undefined) {
-                const score = relevanceScores[uidStr];
-                userRelevance = (score * 100).toFixed(0) + "%";
-                userIsr = isrScoresMap[uidStr] !== undefined ? isrScoresMap[uidStr].toFixed(2) : (score * 1.5).toFixed(2);
-              } else if (cachedMemberData) {
+              // A1: one number. The member document is the source; the maps are a server-written
+              // cache of it. No 1.5 x relevance fallback: without an ISR for this public, "N/A".
+              if (cachedMemberData && cachedMemberData.relevance_score !== undefined) {
                 userRelevance = (cachedMemberData.relevance_score * 100).toFixed(0) + "%";
-                userIsr = cachedMemberData.isr_score !== undefined ? cachedMemberData.isr_score.toFixed(2) : (cachedMemberData.relevance_score * 1.5).toFixed(2);
+              } else if (relevanceScores[uidStr] !== undefined) {
+                userRelevance = (relevanceScores[uidStr] * 100).toFixed(0) + "%";
+              }
+              if (cachedMemberData && cachedMemberData.isr_score !== undefined) {
+                userIsr = cachedMemberData.isr_score.toFixed(2);
+              } else if (isrScoresMap[uidStr] !== undefined) {
+                userIsr = Number(isrScoresMap[uidStr]).toFixed(2);
               }
             }
 
@@ -8549,20 +8504,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         }
       }
 
-      if (isrNum === null && relNum !== null) {
-        isrNum = relNum * 1.5;
-      }
-
-      // Sensible fallback for participants or creators if omitted
-      if (relNum === null) {
-        if (String(disc.creator_uid) === String(effectiveUid)) {
-          relNum = 0.85;
-          isrNum = 1.28;
-        } else if (disc.participants && (disc.participants.includes(effectiveUid) || disc.participants.includes(parseInt(effectiveUid)))) {
-          relNum = 0.50;
-          isrNum = 0.75;
-        }
-      }
+      // A1: no invented values (was: ISR = 1.5 x relevance; creator 0.85/1.28, participant 0.50/0.75)
 
       const relevanceVal = relNum !== null
         ? (relNum * 100).toFixed(0) + "%"
@@ -8773,7 +8715,7 @@ function initRealTimeDashboardSync(db, storedUid) {
           : "N/A";
         const isrVal = (issue.isr_scores && issue.isr_scores[storedUid] !== undefined)
           ? issue.isr_scores[storedUid].toFixed(2)
-          : ((issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? (issue.relevance_scores[storedUid] * 1.5).toFixed(2) : "N/A");
+          : "N/A";  // A1: no 1.5 x relevance fallback
           
         const dateStr = issue.last_message_timestamp ? formatDateWithSetting(issue.last_message_timestamp) : '';
         const nameIdStr = `${issue.last_message_sender_name || 'System'} (ID: ${issue.last_message_sender_uid || 'system'})`;
@@ -8929,7 +8871,7 @@ function initRealTimeDashboardSync(db, storedUid) {
           : "N/A";
         const isrVal = (issue.isr_scores && issue.isr_scores[storedUid] !== undefined)
           ? issue.isr_scores[storedUid].toFixed(2)
-          : ((issue.relevance_scores && issue.relevance_scores[storedUid] !== undefined) ? (issue.relevance_scores[storedUid] * 1.5).toFixed(2) : "N/A");
+          : "N/A";  // A1: no 1.5 x relevance fallback
           
         const secondRowHtml = urgentTask
           ? `Next: ${urgentTask.step} (Deadline: ${formatTaskDeadline(urgentTask.deadline)})`
