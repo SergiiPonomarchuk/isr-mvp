@@ -30,7 +30,11 @@ Branch `r0-keep-alive` (from `a3-options-and-g-anchors`). Spec: `specs/tasks/R0-
 - **A2 live**: dry run (agent) identical to the `claude_export/` dry run; applied (author): 3,135 updates; second dry run: no changes. Report `specs/tasks/A2-migration-report-live.md`.
 - **A3 live**: dry run (agent): 73 publics, 1,200 members; the app-written public `7P45rAMiYJILlWsiFeaW` was skipped because its 25 member docs store `user_id` as text while `users` stores numbers (the export had converted them, so the rehearsal did not show it). Applied (author): 1,200 updates; second dry run: 73 up to date, no changes. Report `specs/tasks/A3-migration-report-live.md`.
 - **Follow-up** (branch `r0-followup`): both migrations now normalise member user ids at load (`norm_uid`); 2 new tests. A live dry run with the fix recomputes `7P45…` (25 members, nearest anchor home) with no change to G, relevance or ISR; applying it only adds `G_anchor_type`.
-- **Open**: the A3 apply for `7P45…` after this follow-up is merged; the smoke test (runbook step 8).
+- **A3 for `7P45…`** (author, after #3): 25 updates, nearest anchor home, no change to G, relevance or ISR. Report `specs/tasks/A3-migration-report-live-2.md`.
+- **Hosting was not live**: the first combined deploy uploaded the site but never released it (Firebase releases hosting only when the whole deploy succeeds); the live channel's last release was 2026-05-26 and served "Site Not Found". `firebase deploy --only hosting` released it. Runbook lesson: after a failed combined deploy, deploy hosting separately.
+- **Smoke test**: login by adopting a profile works; **Check failed** with HTTP 500: "Memory limit of 256 MiB exceeded with 268 MiB used" (`checkIssue`). Live `user_vectors` documents hold every skill vector besides the profile vector; the emulator seed had profile vectors only and the emulator has no memory limit.
+- **Fix** (branch `r0-memory-fix`): `checkIssue` and `createIssue` read only `uid` and `profile_vector` (`getAll` with `fieldMask`) and run with 512 MiB. Emulator check: same 123 members and S values. `firebase.json`: hosting ignores `scratch/**` (57 developer scripts had been published; no secrets in them).
+- **Open**: merge, `firebase deploy --only "functions,hosting"`, then the smoke test again.
 
 ## A3: option fields, G anchors, places in D (2026-11-05)
 
