@@ -22,9 +22,15 @@ Branch `r0-keep-alive` (from `a3-options-and-g-anchors`). Spec: `specs/tasks/R0-
 - Functions load without emulator variables (exports `analyzeIssue`, `createIssue`, `checkIssue`). The `?emulator=1` switch only acts on localhost.
 - Versions: firebase-tools 14.1.0, firebase-functions 6.6.0 (the emulator says outdated; not upgraded in R0), firebase-admin 12.7.0, @google/generative-ai 0.21.0 (old SDK; replaced in roadmap stage 1).
 
-### Not done by the agent
-- Merge, deploy and the live migrations (runbook, spec §6, by 2026-12-15; the rules expire 2026-12-31).
-- The pull request: the browser pane is not signed in to GitHub.
+### Live runbook (2026-11-07/08)
+- **Pull request** [SergiiPonomarchuk/isr-mvp#2](https://github.com/SergiiPonomarchuk/isr-mvp/pull/2), CI green, merged by the author (merge commit `f3f3bed`).
+- **Pre-migration backup** (agent, read-only): `A:\ISR\mvp\dbbackup6-11-07-pre-migration`, 24,783 documents, same counts as the first backup.
+- **Deploy** (author): `firebase deploy --dry-run` passed; it also enabled the Cloud Functions, Eventarc and Firebase Extensions APIs (Cloud Functions had been off, so no functions were live before). The real deploy released the rules and hosting, but the three functions failed to build: the build ran as the default Compute Engine account `607980677162-compute@developer.gserviceaccount.com`, which had no roles (the project is in an organization, which no longer grants that account rights automatically).
+- **Fix** (author): granted that account `roles/cloudbuild.builds.builder` (build) and `roles/datastore.user` (the functions run as it and read Firestore); deleted the three functions left in state FAILED; redeployed. `analyzeIssue`, `checkIssue`, `createIssue` created (Node.js 22, 2nd gen, us-central1); an empty POST returns HTTP 400 (public, running). Container image cleanup policy: 1 day.
+- **A2 live**: dry run (agent) identical to the `claude_export/` dry run; applied (author): 3,135 updates; second dry run: no changes. Report `specs/tasks/A2-migration-report-live.md`.
+- **A3 live**: dry run (agent): 73 publics, 1,200 members; the app-written public `7P45rAMiYJILlWsiFeaW` was skipped because its 25 member docs store `user_id` as text while `users` stores numbers (the export had converted them, so the rehearsal did not show it). Applied (author): 1,200 updates; second dry run: 73 up to date, no changes. Report `specs/tasks/A3-migration-report-live.md`.
+- **Follow-up** (branch `r0-followup`): both migrations now normalise member user ids at load (`norm_uid`); 2 new tests. A live dry run with the fix recomputes `7P45…` (25 members, nearest anchor home) with no change to G, relevance or ISR; applying it only adds `G_anchor_type`.
+- **Open**: the A3 apply for `7P45…` after this follow-up is merged; the smoke test (runbook step 8).
 
 ## A3: option fields, G anchors, places in D (2026-11-05)
 

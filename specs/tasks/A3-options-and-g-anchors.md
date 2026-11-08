@@ -108,5 +108,6 @@ None. Decided 2026-11-05 (author): (1) numbers in option text are content, not p
 - Implementation: R1-R15 and R16a done on branch `a3-options-and-g-anchors`. R16 was blocked (stored G not reproducible); author decision 2026-11-05: recompute the publics with a stored location (R16a): 74 recomputed, 6 left unchanged (G weight not identifiable).
 - Tests: Python 31 OK (1 optional skip); Node 16 OK; emulator AC4c done (applied, idempotent); AC5 partly (voting view not checked in the browser).
 - Impact report: `A3-impact-report.md`.
+- Live: A3 applied 2026-11-08 (73 publics, 1,200 members; second run clean, `A3-migration-report-live.md`); `7P45…` (text user ids) recomputed after `r0-followup`.
 - CHANGES.md: written.
 - Deviations: path B keeps its category heuristics for D (only the place rule added); R16 replaced by R16a (author); a public whose stored G already matches the rule is not refitted (idempotence).

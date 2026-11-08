@@ -91,5 +91,36 @@ class Recompute(unittest.TestCase):
         self.assertEqual(set(out[0]), {"G_score", "G_anchor_type", "relevance_score"})
 
 
+
+class TextUserIds(unittest.TestCase):
+    """Live R0 run: app-written member docs hold user ids as text ("123")."""
+
+    def test_norm_uid(self):
+        self.assertEqual(m3.norm_uid("123"), 123)
+        self.assertEqual(m3.norm_uid(" 7 "), 7)
+        self.assertEqual(m3.norm_uid(5), 5)
+        self.assertEqual(m3.norm_uid("abc"), "abc")
+        self.assertIsNone(m3.norm_uid(None))
+
+    def test_public_with_text_ids_is_recomputed(self):
+        users = {1: {"geography": [{"type": "home", "geo": pt(10)}]},
+                 2: {"geography": [{"type": "work", "geo": pt(20)}]}}
+        issues = {"P": {"location": {"latitude": LOC[0], "longitude": LOC[1]},
+                        "mu_distance_meters": 100, "sigma_decay_meters": 50,
+                        "w_demographic": 0.2, "w_geographic": 0.5, "w_semantic": 0.2, "w_social": 0.1}}
+        members = [
+            {"_doc_id": "P_1", "microcommunity_id": "P", "user_id": "1", "D_score": 1.0, "G_score": 1.0,
+             "S_score": 0.5, "X_score": 0.0, "relevance_score": 0.8},
+            {"_doc_id": "P_2", "microcommunity_id": "P", "user_id": "2", "D_score": 1.0, "G_score": 0.0,
+             "S_score": 0.5, "X_score": 0.0, "relevance_score": 0.3},
+        ]
+        for m in members:  # what both loaders do
+            m["user_id"] = m3.norm_uid(m["user_id"])
+        p = m3.plan(members, issues, {}, users)
+        self.assertEqual(p["skipped"], {})
+        self.assertEqual(p["updates"]["P_2"]["G_anchor_type"], "work")
+        self.assertEqual(p["updates"]["P_2"]["G_score"], 1.0)
+
+
 if __name__ == "__main__":
     unittest.main()
