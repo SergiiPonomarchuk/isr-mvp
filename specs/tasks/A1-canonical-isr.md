@@ -1,6 +1,6 @@
 # SPEC A1 (v2, roadmap stage 2): one ISR, computed on the server
 
-Status: DRAFT v2 (waiting for author approval). v1 (2026-10, canonical module only) is superseded by this version; its requirements are kept where still valid and marked "(v1 Rn)".
+Status: APPROVED v2 2026-11-08 (author: all decisions as recommended). v1 (2026-10, canonical module only) is superseded by this version; its requirements are kept where still valid and marked "(v1 Rn)".
 Branch: a1-one-isr (from main at `f832695`; never main)
 Roadmap: [ROADMAP-demo.md](../ROADMAP-demo.md), stage 2. Decisions: PD-3 (additive formula, mean normalisation), PD-8 (E = max(min(age,30)/30, education) + experience). Effort estimate: 6–9 developer-days.
 
@@ -64,15 +64,15 @@ One ISR per member and issue, computed by one module that the server, the browse
 - **AC5** `migrate_a1.py` on the emulator: dry run report, apply, a second run changes nothing.
 - **AC6** CI green; no deploy and no live write by the agent; no file under `docs/` changed.
 
-## 6. Decisions needed from the author
+## 6. Decisions (author, 2026-11-08: as recommended)
 
-1. **Mean ≤ 0 with unequal values.** Keep v1 R3: raise an error. In practice it cannot happen for R (members have R > 0.15) or E (age floor). *Recommended: keep.*
-2. **Contribution placeholder.** Keep Ĉ = 1.0 for everyone, as built (numbers unchanged, labelled "constant"), or apply the PD formula Ĉ = C / (mean|C| + 1) with C = 0, which gives Ĉ = 0 and lowers every ISR by w_C. *Recommended: keep 1.0 until stage 6.*
-3. **Voters without an ISR for the public** (non-members, including the demo user "1" in seeded publics). Excluded from the tally and shown as "no ISR" (v1 R6), or counted with some weight. *Recommended: exclude, with a visible note.*
-4. **Tie or no counted votes.** No winner (`winning_option_index` stays null, a note in the issue) or the lowest option number wins. *Recommended: no winner; the public votes again.*
-5. **Phase moves** (start voting, +1 week, finish, cancel at 10 % of the ISR-weighted phase vote, written by the client). Keep as built and only switch the weights to the member ISR. *Recommended: keep; redesign together with stage 5.*
-6. **Closing on the server**: a Firestore trigger (works whatever client sets `approved`) or an HTTPS function the browser calls. *Recommended: trigger.*
-7. **Order with stage 1.** Server-side E for new issues uses the issue vector, which is random until stage 1, so the cosine parts of E are noise and the age floor dominates. Stage 2 can be built and tested now; its E values become meaningful once stage 1 lands. *Recommended: build stage 2 now, start stage 1 right after (or in parallel in a separate session).*
+1. Mean ≤ 0 with unequal values: error (v1 R3); all-equal values (also all zero) normalise to 1.0.
+2. Contribution placeholder: Ĉ = 1.0 for everyone, `contribution_source: "constant"`, until stage 6.
+3. Voters without an ISR for the public are excluded from the tally and shown as "no ISR".
+4. Tie or no counted votes: no winner (`winning_option_index` null, note in the `tally` record); the public votes again.
+5. Phase moves: rules unchanged (10 %, client transaction); weights switch to the member ISR.
+6. Closing: a Firestore trigger.
+7. Stage 2 is built now; E for new issues becomes meaningful with stage 1.
 
 ## 7. Traceability
 
