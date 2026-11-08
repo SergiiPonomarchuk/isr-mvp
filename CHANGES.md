@@ -1,5 +1,14 @@
 # CHANGES
 
+## U1: fixes from the R0 live smoke test (2026-11-08)
+
+Branch `ui-smoke-fixes`. Spec: `specs/tasks/U1-smoke-test-fixes.md`. Both bugs predate A2/A3/R0.
+
+- **Voting did not update after "Vote"**: the live listeners of the voting view and of a second detail view called `ensureTopicLocation`, defined inside `initRealTimeDashboardSync` and not visible to them, so every change of the issue or discussion threw a `ReferenceError` before the redraw (only new chat messages redrew the view). The function now sits at the top level of `main.js` (no logic change). Emulator: totals and selection update immediately on vote and re-vote.
+- **Duplicate names in the step-owner lists** ("Propose option" and task step assignment): `participants[]` holds each id as text and as a number; the lists are now deduplicated by id.
+- **Recorded for the paper, not changed**: for an issue without a stored location `ensureTopicLocation` invents one near Basel with μ/σ from a hash of the title, for display only (`main.js`, the function's body); this applies to the 112 seeded publics without a location.
+- **Smoke test results (live, 2026-11-08)**: login by adopting a profile works; Check → Create works after the memory fix (100 members); proposing an option with cost, funding source and resources works; voting works but needed this fix to update immediately. Noted for the next UI task: Esc closes the whole new-issue window even while the geotag map is open; the geotag button downloads all profiles in the browser to show the nearest distance.
+
 ## R0: keep the live MVP alive, consolidate A2/A3 (2026-11-07)
 
 Branch `r0-keep-alive` (from `a3-options-and-g-anchors`). Spec: `specs/tasks/R0-keep-alive.md`. Roadmap stage 0 (`specs/ROADMAP-demo.md`).
