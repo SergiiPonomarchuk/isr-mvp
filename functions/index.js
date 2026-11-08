@@ -1,13 +1,17 @@
 const { onRequest } = require("firebase-functions/v2/https");
+const { onDocumentUpdated } = require("firebase-functions/v2/firestore");
 const admin = require("firebase-admin");
 const { FieldValue, GeoPoint } = require("firebase-admin/firestore");
 const { nearestAnchor, gScore: geoScore, withinCutoff } = require("./geo");
 const { evaluateDemographics } = require("./demographics");
+const ISR = require("./isr");
 const aiHelper = require("./ai-helper");
 const { readTextInputs, paramsFromAi, makeDraft, paramsForCreate } = require("./params");
 
 admin.initializeApp();
 const db = admin.firestore();
+
+function round3(x) { return Math.round(Number(x) * 1000) / 1000; }
 
 // Helper: Cosine similarity
 function cosineSimilarity(vecA, vecB) {
@@ -267,6 +271,51 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
       microcommunityMembers = candidates.slice(0, 100);
     }
 
+    // A1 (roadmap stage 2): Expertise and the member ISR on the server, with the shared
+    // module (functions/isr.js), so that every display, phase vote and tally uses one number.
+    const registeredAt = new Date();
+    const memberUserById = new Map(uniqueUsers.map((u) => [String(u.uid), u]));
+    const skillVectorsByUid = {};
+    const vectorRefs = microcommunityMembers.map((m) => db.collection("user_vectors").doc(String(m.user_id)));
+    for (let i = 0; i < vectorRefs.length; i += 100) {
+      const docs = await db.getAll(...vectorRefs.slice(i, i + 100), { fieldMask: ["experience_vectors"] });
+      docs.forEach((d) => { if (d.exists) skillVectorsByUid[d.id] = d.get("experience_vectors") || {}; });
+    }
+    const cbcAdjustment = (expertise_domain_parameters && expertise_domain_parameters.CBC_adjustment_factor) || 1.0;
+    let membersWithoutAge = 0;
+    microcommunityMembers.forEach((m) => {
+      const u = memberUserById.get(String(m.user_id)) || {};
+      const vecs = skillVectorsByUid[String(m.user_id)] || {};
+      const eduSum = ISR.educationSum(u.skills, vecs, issueVector, cbcAdjustment);
+      const expSum = ISR.experienceSum(u.skills, vecs, issueVector);
+      let eduPart = eduSum;
+      try {
+        eduPart = ISR.educationPart(eduSum, ISR.ageInYears(u.birthDate, registeredAt));
+      } catch (e) {
+        membersWithoutAge += 1;  // birthDate is required (A2); without it no age floor is applied
+      }
+      m.education_expertise = round3(eduPart);
+      m.experience_expertise = round3(expSum);
+      m.expertise_score = round3(eduPart + expSum);
+    });
+    if (membersWithoutAge > 0) console.warn(`createIssue: ${membersWithoutAge} members without a valid birthDate (no age floor)`);
+    const breakdown = ISR.isrForPublic(
+      microcommunityMembers.map((m) => ({ uid: String(m.user_id), R: m.relevance_score, E: m.expertise_score })),
+      resolvedAggWeights
+    );
+    const relevanceScoresMap = {};
+    const isrScoresMap = {};
+    microcommunityMembers.forEach((m, i) => {
+      const b = breakdown[i];
+      m.normalized_relevance = round3(b.R_norm);
+      m.normalized_experience = round3(b.E_norm);
+      m.normalized_contribution = round3(b.C_norm);
+      m.contribution_source = b.contribution_source;
+      m.isr_score = round3(b.isr);
+      relevanceScoresMap[String(m.user_id)] = round3(m.relevance_score);
+      isrScoresMap[String(m.user_id)] = m.isr_score;
+    });
+
     // Write Issue to Firestore
     const issueRef = db.collection("issues").doc();
     const issueId = issueRef.id;
@@ -314,7 +363,10 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
       // Expertise domain depth parameters
       expertise_domain_parameters: expertise_domain_parameters || null,
       // Resource requirements list
-      resources_needed: resources_needed || []
+      resources_needed: resources_needed || [],
+      // A1: server-written cache of the member values (no floors, members only)
+      relevance_scores: relevanceScoresMap,
+      isr_scores: isrScoresMap
     };
     await issueRef.set(issueDoc);
 
@@ -471,6 +523,16 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
         S_score: member.S_score,
         X_score: member.X_score,
         relevance_score: member.relevance_score,
+        // A1: the ISR breakdown, computed above with functions/isr.js
+        education_expertise: member.education_expertise,
+        experience_expertise: member.experience_expertise,
+        expertise_score: member.expertise_score,
+        normalized_relevance: member.normalized_relevance,
+        normalized_experience: member.normalized_experience,
+        normalized_contribution: member.normalized_contribution,
+        contribution_source: member.contribution_source,
+        contribution_score: 0.0,
+        isr_score: member.isr_score,
         calculated_at: FieldValue.serverTimestamp(),
         accepted_rejected: null
       });
@@ -483,10 +545,7 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
     // Add to discussions collection so it shows up in real-time chat
     const discRef = db.collection("discussions").doc(issueId); // Use same ID for simplicity
     
-    const relevanceScores = {};
-    microcommunityMembers.forEach((member) => {
-      relevanceScores[String(member.user_id)] = parseFloat(member.relevance_score.toFixed(3));
-    });
+    const relevanceScores = relevanceScoresMap;
 
     // Resolve submitter display name
     let submitterDisplayName = "User " + submitterId;
@@ -512,6 +571,7 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
       expertise_depth:  expertise_depth  || "None",
       expertise_domain: expertise_domain  || (expertise_domain_parameters && expertise_domain_parameters.expertise_domain) || "General Maintenance",
       relevance_scores: relevanceScores,
+      isr_scores: isrScoresMap,
       participants: participantUids,
       last_message_text: description,
       last_message_sender_uid: String(submitterId),
@@ -817,4 +877,66 @@ exports.checkIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, res
     console.error("Error checking issue:", error);
     res.status(500).json({ error: "Failed to perform check calculations." });
   }
+});
+
+
+/**
+ * A1 (roadmap stage 2): close a vote on the server.
+ * When an issue's status changes to "approved", count the votes with the members' ISR
+ * (shared module functions/isr.js), store the option scores, the winner and a tally record,
+ * and turn the winning option's steps into the issue's tasks. Voters without an ISR for this
+ * public are excluded; a tie or no counted votes gives no winner (author decisions 3, 4).
+ * The trigger's own write keeps the status "approved", so it does not run again.
+ */
+// Firestore triggers must run in the database's region (the database is in europe-central2).
+exports.onIssueStatusChange = onDocumentUpdated({ document: "issues/{issueId}", region: "europe-central2", memory: "512MiB" }, async (event) => {
+  const before = event.data.before.data() || {};
+  const after = event.data.after.data() || {};
+  if (after.status !== "approved" || before.status === "approved") return;
+
+  const issueId = event.params.issueId;
+  let mcId = issueId;  // seeded publics use the issue id; app-created ones are linked by issue_id
+  const mcSnap = await db.collection("microcommunities").where("issue_id", "==", issueId).limit(1).get();
+  mcSnap.forEach((d) => { mcId = d.id; });
+
+  const isrByUid = {};
+  const memSnap = await db.collection("microcommunity_members")
+    .where("microcommunity_id", "==", mcId).select("user_id", "isr_score").get();
+  memSnap.forEach((d) => {
+    const x = d.data();
+    if (x.isr_score !== undefined && x.isr_score !== null) isrByUid[String(x.user_id)] = Number(x.isr_score);
+  });
+
+  const options = Array.isArray(after.options) ? after.options : [];
+  const votes = {};
+  Object.keys(after.votes || {}).forEach((uid) => { votes[String(uid)] = after.votes[uid]; });
+  const result = ISR.tally(votes, isrByUid, options.length);
+
+  const update = {
+    options: options.map((o, i) => Object.assign({}, o, { score: round3(result.scores[i] || 0) })),
+    winning_option_index: result.winner,
+    tally: {
+      computed_at: FieldValue.serverTimestamp(),
+      microcommunity_id: mcId,
+      isr_source: "microcommunity_members.isr_score",
+      counted: result.counted.map((c) => ({ uid: c.uid, option: c.option, weight: round3(c.weight) })),
+      excluded: result.excluded,
+      note: result.note
+    }
+  };
+  if (result.winner !== null && !(Array.isArray(after.tasks) && after.tasks.length > 0)) {
+    const steps = Array.isArray(options[result.winner].description) ? options[result.winner].description : [];
+    update.tasks = steps.map((s, i) => ({
+      id: i + 1,
+      step: s.step || "",
+      in_charge_uid: s.in_charge_uid !== undefined ? String(s.in_charge_uid) : "",
+      in_charge_name: s.in_charge_name || "",
+      deadline: s.deadline || null,
+      status: "in_process",
+      results: "",
+      comments: [],
+      subtasks: []
+    }));
+  }
+  await event.data.after.ref.update(update);
 });

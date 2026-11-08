@@ -66,6 +66,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--project", default="demo-isr")
     ap.add_argument("--vectors", action="store_true", help="also load user_vectors.profile_vector")
+    ap.add_argument("--skill-vectors", action="store_true",
+                    help="also load user_vectors.experience_vectors (one vector per skill; needed for E on the server)")
     ap.add_argument("--names-from", default=None,
                     help="restore the synthetic name fields from this profiles file (e.g. db/profiles.json); see restore_names.py")
     a = ap.parse_args(argv)
@@ -123,6 +125,24 @@ def main(argv=None):
                       {"uid": meta["uid"], "profile_vector": Vector([float(x) for x in vec])})
                 n += 1
         counts["user_vectors"] = n
+
+    if a.skill_vectors:
+        import numpy as np
+        from google.cloud.firestore_v1.vector import Vector
+        w.flush()
+        by_doc = {}
+        for npy in sorted(glob.glob(os.path.join(EXPORT, "emb_experience_*.npy"))):
+            ids = json.load(open(npy[:-4] + "_ids.json", encoding="utf-8"))
+            vecs = np.load(npy)
+            for meta, vec in zip(ids, vecs):
+                by_doc.setdefault(str(meta["doc_id"]), {})[str(meta["experience_key"])] = Vector([float(x) for x in vec])
+        for doc_id, vmap in by_doc.items():
+            w.batch.set(db.collection("user_vectors").document(doc_id), {"experience_vectors": vmap}, merge=True)
+            w.n += 1
+            w.total += 1
+            if w.n >= 50:  # skill vectors are large
+                w.flush()
+        counts["skill_vectors"] = sum(len(v) for v in by_doc.values())
 
     w.flush()
     print("Loaded into the emulator:", ", ".join(f"{k} {v}" for k, v in counts.items()))

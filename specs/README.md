@@ -89,7 +89,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | Task | Status | Changes components |
 |---|---|---|
 | [S0-restructure-specs](tasks/S0-restructure-specs.md) | open (step 3, batch 1 done) | all; README |
-| [A1-canonical-isr](tasks/A1-canonical-isr.md) | open (DRAFT; R2, R9 amended by A2) | 03, 04, 05, 06 |
+| [A1-canonical-isr](tasks/A1-canonical-isr.md) | v2 implemented on branch `a1-one-isr` (emulator end to end passed); deploy and live migration pending (author) | 02, 03, 04, 06, 10 |
 | [A2-expertise-cleanup](tasks/A2-expertise-cleanup.md) | implemented on branch `a2-expertise-cleanup`; live migration pending (author) | 02, 04, 07, 10, 11 |
 | [A3-options-and-g-anchors](tasks/A3-options-and-g-anchors.md) | implemented on branch `a3-options-and-g-anchors`; live migration pending (author) | 02, 03, 06, 10 |
 | [R0-keep-alive](tasks/R0-keep-alive.md) | done 2026-11-08: merged (#2-#4), deployed, A2/A3 migrated, smoke test passed | rules, CI, backup, merge of A2/A3 |
@@ -144,8 +144,8 @@ The ids come from `tasks/S0-inventory-report.md` §3, where each contradiction i
 | C-31 | When Contribution is computed | 05 | open |
 | C-32 | Contribution factors and collections | 05 / 02 | open |
 | C-33 | Four normalisation statements | 06 | decided (PD-3: divide by the public mean); zero/negative mean open |
-| C-34 | What weights a vote | 06 | open |
-| C-35 | Vote outcome not computed or persisted | 06 | open |
+| C-34 | What weights a vote | 06 | decided and implemented by A1 v2 (member ISR; branch) |
+| C-35 | Vote outcome not computed or persisted | 06 | decided and implemented by A1 v2 (server trigger stores scores, winner, tally, tasks; branch) |
 | C-36 | 36 vs 38 conflicts | 08 | open |
 | C-37 | VoV dimensionality | 08 | open |
 | C-38 | Meaning of the "private" context | 08 | open |

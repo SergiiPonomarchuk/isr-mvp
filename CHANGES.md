@@ -1,5 +1,29 @@
 # CHANGES
 
+## A1 v2 (roadmap stage 2): one ISR, computed on the server (2026-11-08)
+
+Branch `a1-one-isr`. Spec: `specs/tasks/A1-canonical-isr.md` (v2). Decisions: author 2026-11-08, as recommended.
+
+### What changed
+- **Shared module** `functions/isr.js` (Node and browser): relevance, age at registration, age floor, E from skill vectors, normalisation by the mean (all equal or all zero -> 1.0; mean <= 0 with unequal values -> error), the Contribution placeholder (C-hat = 1.0, `contribution_source: "constant"`), the member ISR, and the vote tally (voters without an ISR excluded; a tie or no counted votes gives no winner). `prototype/js/isr.js` is a byte-identical copy (`npm run sync:isr`, checked by a test). Python port `scripts/isr_core.py`; both are checked on `tests/fixtures/isr_cases.json`.
+- **createIssue** now computes E (education and work-experience skills, CBC table, the Analyzer's CBC adjustment, age at the server's registration time) and the member ISR with the issue's aggregation weights, writes the full breakdown into each member document, and writes `relevance_scores` / `isr_scores` maps on the issue and the discussion equal to the member values (no floors, members only). Without a birthDate no age floor is applied and a warning is logged.
+- **Trigger** `onIssueStatusChange` (2nd gen, region europe-central2, the database's region): when an issue becomes `approved`, it stores `options[].score`, `winning_option_index`, a `tally` record (counted, excluded, note, ISR source) and creates `tasks` from the winning option's steps.
+- **Browser**: every display and the live tally use the member ISR (`window.ISR.tally`); removed the 1.5 x relevance fallbacks and the invented values in the chat list (creator 0.85 / 1.28, participant 0.50 / 0.75); a vote from someone without an ISR for the public is not counted and the issue says so.
+- **Migration** `scripts/migrate_a1.py`: rewrites the maps of every discussion and issue from the member documents and reports how tallies change. Emulator: 272 documents; the demo user "1" leaves 168 maps (not a member of those publics; visibility is unchanged because it comes from participants and membership); second run clean.
+- `scripts/seed_emulator.py --skill-vectors` loads the 20,245 skill vectors into the emulator.
+
+### Checks
+- AC1, AC4, R7 and the migration: see the spec's status log (all passed; AC1 within 0.002 because A2/A3 stored rounded inputs).
+
+### Findings (not changed)
+- The three HTTPS functions run in us-central1, the database in europe-central2: every read crosses the Atlantic, which explains part of the slowness on live. Moving them changes the function URLs in the prototype; a separate task.
+- E for new issues is mostly the age floor until stage 1, because the issue vector is random without a working AI model.
+
+### Author's steps after merging
+1. `firebase deploy --only "functions,hosting" --project project-a3d59130-5adf-4677-9e2` (creates the trigger in europe-central2; the CLI may ask to grant Eventarc roles).
+2. `python scripts/migrate_a1.py --source firestore --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live` (dry run), then with `--apply --report specs/tasks/A1-migration-report-live.md`; then the dry run again (no changes).
+3. Smoke test: list and card show the same ISR; a vote updates the tally; finishing a vote stores the result.
+
 ## U1: fixes from the R0 live smoke test (2026-11-08)
 
 Branch `ui-smoke-fixes`. Spec: `specs/tasks/U1-smoke-test-fixes.md`. Both bugs predate A2/A3/R0.

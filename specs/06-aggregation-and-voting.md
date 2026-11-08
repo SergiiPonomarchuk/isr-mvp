@@ -83,4 +83,4 @@ The vote tally and the chat list use the second one (IF l.101-102).
 
 ## Change history
 - S0 (2026-10-12): created.
-- A1 (open): R3 (`normalize_by_mean`), R4 (constant contribution), R5 (`isr_for_public`), R6 (`tally`), R8 (wire-up), R9 (stored breakdown).
+- A1 v2 (2026-11-08, branch `a1-one-isr`, not merged): one ISR everywhere. Shared module `functions/isr.js` (+ browser copy, Python port); `createIssue` computes E and the member ISR; the cached maps equal the member values (`migrate_a1.py`); the browser shows and tallies the member ISR (no 1.5 x relevance); trigger `onIssueStatusChange` stores scores, `winning_option_index`, `tally` and tasks when an issue is approved. Decisions: voters without an ISR excluded; tie or no votes -> no winner; C-hat = 1.0 placeholder; phase-move rules unchanged.

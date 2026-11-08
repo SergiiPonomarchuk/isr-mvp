@@ -1,0 +1,785 @@
+{
+ "relevance": [
+  {
+   "c": {
+    "D": 1,
+    "G": 0.5,
+    "S": 0.3,
+    "X": 0
+   },
+   "w": {
+    "w_D": 0.2,
+    "w_G": 0.5,
+    "w_S": 0.2,
+    "w_X": 0.1
+   },
+   "clamp": false,
+   "expected": 0.51
+  },
+  {
+   "c": {
+    "D": 1,
+    "G": 1,
+    "S": 1,
+    "X": 1
+   },
+   "w": {
+    "w_D": 0.5,
+    "w_G": 0.5,
+    "w_S": 0.5,
+    "w_X": 0.5
+   },
+   "clamp": true,
+   "expected": 1.0
+  },
+  {
+   "c": {
+    "D": 0.1,
+    "G": 0.9,
+    "S": 0.05,
+    "X": 0.3
+   },
+   "w": {
+    "w_D": 0.3,
+    "w_G": 0.4,
+    "w_S": 0.2,
+    "w_X": 0.1
+   },
+   "clamp": true,
+   "expected": 0.43000000000000005
+  }
+ ],
+ "age": [
+  {
+   "birthDate": "1990-06-15",
+   "on": "2025-06-14",
+   "expected": 34
+  },
+  {
+   "birthDate": "1990-06-15",
+   "on": "2025-06-15",
+   "expected": 35
+  },
+  {
+   "birthDate": "2001-02-28",
+   "on": "2025-06-28T16:45:00",
+   "expected": 24
+  },
+  {
+   "birthDate": "1950-01-01",
+   "on": "2026-11-08",
+   "expected": 76
+  }
+ ],
+ "expertise": [
+  {
+   "edu": 0.216,
+   "exp": 0.16,
+   "age": 32,
+   "expected": 1.16
+  },
+  {
+   "edu": 0.0,
+   "exp": 2.25,
+   "age": 35,
+   "expected": 3.25
+  },
+  {
+   "edu": 0.161,
+   "exp": 0.375,
+   "age": 24,
+   "expected": 1.175
+  },
+  {
+   "edu": 4.696,
+   "exp": 13.36,
+   "age": 33,
+   "expected": 18.055999999999997
+  },
+  {
+   "edu": 0,
+   "exp": 0,
+   "age": 15,
+   "expected": 0.5
+  }
+ ],
+ "sums": [
+  {
+   "skills": [
+    {
+     "id": "1",
+     "type": "education",
+     "educationLevel": "PhD"
+    },
+    {
+     "id": "2",
+     "type": "education",
+     "educationLevel": "Bachelor"
+    },
+    {
+     "id": "3",
+     "type": "work experience",
+     "time": "5"
+    },
+    {
+     "id": "4",
+     "type": "work experience",
+     "time": "2"
+    },
+    {
+     "id": "5",
+     "type": "education",
+     "educationLevel": "Vocational"
+    },
+    {
+     "id": "9",
+     "type": "activity",
+     "name": "Camping"
+    }
+   ],
+   "vectors": {
+    "1": [
+     0.5,
+     0.5,
+     0.0
+    ],
+    "2": [
+     1.0,
+     0.0,
+     0.4
+    ],
+    "3": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "4": [
+     0.9,
+     0.1,
+     0.5
+    ],
+    "5": [
+     -1.0,
+     0.0,
+     0.0
+    ]
+   },
+   "issue": [
+    1.0,
+    0.0,
+    0.5
+   ],
+   "adj": 1.0,
+   "edu": 11.938890320650025,
+   "exp": 1.9887534253687373
+  },
+  {
+   "skills": [
+    {
+     "id": "1",
+     "type": "education",
+     "educationLevel": "PhD"
+    },
+    {
+     "id": "2",
+     "type": "education",
+     "educationLevel": "Bachelor"
+    },
+    {
+     "id": "3",
+     "type": "work experience",
+     "time": "5"
+    },
+    {
+     "id": "4",
+     "type": "work experience",
+     "time": "2"
+    },
+    {
+     "id": "5",
+     "type": "education",
+     "educationLevel": "Vocational"
+    },
+    {
+     "id": "9",
+     "type": "activity",
+     "name": "Camping"
+    }
+   ],
+   "vectors": {
+    "1": [
+     0.5,
+     0.5,
+     0.0
+    ],
+    "2": [
+     1.0,
+     0.0,
+     0.4
+    ],
+    "3": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "4": [
+     0.9,
+     0.1,
+     0.5
+    ],
+    "5": [
+     -1.0,
+     0.0,
+     0.0
+    ]
+   },
+   "issue": [
+    1.0,
+    0.0,
+    0.5
+   ],
+   "adj": 1.2,
+   "edu": 11.58000330144026,
+   "exp": 1.9887534253687373
+  },
+  {
+   "skills": [
+    {
+     "id": "1",
+     "type": "education",
+     "educationLevel": "PhD"
+    },
+    {
+     "id": "2",
+     "type": "education",
+     "educationLevel": "Bachelor"
+    },
+    {
+     "id": "3",
+     "type": "work experience",
+     "time": "5"
+    },
+    {
+     "id": "4",
+     "type": "work experience",
+     "time": "2"
+    },
+    {
+     "id": "5",
+     "type": "education",
+     "educationLevel": "Vocational"
+    },
+    {
+     "id": "9",
+     "type": "activity",
+     "name": "Camping"
+    }
+   ],
+   "vectors": {
+    "1": [
+     0.5,
+     0.5,
+     0.0
+    ],
+    "2": [
+     1.0,
+     0.0,
+     0.4
+    ],
+    "3": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "4": [
+     0.9,
+     0.1,
+     0.5
+    ],
+    "5": [
+     -1.0,
+     0.0,
+     0.0
+    ]
+   },
+   "issue": [
+    1.0,
+    0.0,
+    0.5
+   ],
+   "adj": 0.9,
+   "edu": 12.124547254087346,
+   "exp": 1.9887534253687373
+  }
+ ],
+ "normalize": [
+  {
+   "values": [
+    1,
+    2,
+    3
+   ],
+   "expected": [
+    0.5,
+    1.0,
+    1.5
+   ]
+  },
+  {
+   "values": [
+    2,
+    2,
+    2
+   ],
+   "expected": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "values": [
+    0,
+    0,
+    0
+   ],
+   "expected": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "values": [
+    5
+   ],
+   "expected": [
+    1.0
+   ]
+  },
+  {
+   "values": [
+    -1,
+    3
+   ],
+   "expected": [
+    -1.0,
+    3.0
+   ]
+  },
+  {
+   "values": [
+    0.2,
+    0.85,
+    0.5,
+    0.31
+   ],
+   "expected": [
+    0.43010752688172044,
+    1.8279569892473118,
+    1.075268817204301,
+    0.6666666666666666
+   ]
+  }
+ ],
+ "isr_for_public": [
+  {
+   "members": [
+    {
+     "uid": "1",
+     "R": 0.8,
+     "E": 3.2
+    },
+    {
+     "uid": "2",
+     "R": 0.3,
+     "E": 1.0
+    },
+    {
+     "uid": "3",
+     "R": 0.55,
+     "E": 12.4
+    }
+   ],
+   "weights": {
+    "w_relevance": 0.4,
+    "w_expertise": 0.3,
+    "w_contribution": 0.3
+   },
+   "expected": [
+    {
+     "uid": "1",
+     "R": 0.8,
+     "E": 3.2,
+     "R_norm": 1.4545454545454546,
+     "E_norm": 0.5783132530120482,
+     "C_norm": 1.0,
+     "contribution_source": "constant",
+     "isr": 1.0553121577217963
+    },
+    {
+     "uid": "2",
+     "R": 0.3,
+     "E": 1.0,
+     "R_norm": 0.5454545454545454,
+     "E_norm": 0.18072289156626503,
+     "C_norm": 1.0,
+     "contribution_source": "constant",
+     "isr": 0.5723986856516976
+    },
+    {
+     "uid": "3",
+     "R": 0.55,
+     "E": 12.4,
+     "R_norm": 1.0,
+     "E_norm": 2.2409638554216866,
+     "C_norm": 1.0,
+     "contribution_source": "constant",
+     "isr": 1.372289156626506
+    }
+   ]
+  },
+  {
+   "members": [
+    {
+     "uid": "1",
+     "R": 0.8,
+     "E": 3.2
+    },
+    {
+     "uid": "2",
+     "R": 0.3,
+     "E": 1.0
+    },
+    {
+     "uid": "3",
+     "R": 0.55,
+     "E": 12.4
+    }
+   ],
+   "weights": {
+    "w_relevance": 0.5,
+    "w_expertise": 0.2,
+    "w_contribution": 0.3
+   },
+   "expected": [
+    {
+     "uid": "1",
+     "R": 0.8,
+     "E": 3.2,
+     "R_norm": 1.4545454545454546,
+     "E_norm": 0.5783132530120482,
+     "C_norm": 1.0,
+     "contribution_source": "constant",
+     "isr": 1.142935377875137
+    },
+    {
+     "uid": "2",
+     "R": 0.3,
+     "E": 1.0,
+     "R_norm": 0.5454545454545454,
+     "E_norm": 0.18072289156626503,
+     "C_norm": 1.0,
+     "contribution_source": "constant",
+     "isr": 0.6088718510405258
+    },
+    {
+     "uid": "3",
+     "R": 0.55,
+     "E": 12.4,
+     "R_norm": 1.0,
+     "E_norm": 2.2409638554216866,
+     "C_norm": 1.0,
+     "contribution_source": "constant",
+     "isr": 1.2481927710843375
+    }
+   ]
+  }
+ ],
+ "tally": [
+  {
+   "votes": {
+    "1": 0,
+    "2": 1,
+    "3": 1
+   },
+   "isr": {
+    "1": 1.2,
+    "2": 0.44,
+    "3": 0.9,
+    "4": 0.66
+   },
+   "n": 2,
+   "expected": {
+    "scores": [
+     1.2,
+     1.34
+    ],
+    "counted": [
+     {
+      "uid": "1",
+      "option": 0,
+      "weight": 1.2
+     },
+     {
+      "uid": "2",
+      "option": 1,
+      "weight": 0.44
+     },
+     {
+      "uid": "3",
+      "option": 1,
+      "weight": 0.9
+     }
+    ],
+    "excluded": [],
+    "winner": 1,
+    "note": ""
+   }
+  },
+  {
+   "votes": {
+    "1": 0,
+    "2": 1,
+    "4": 1,
+    "3": 0
+   },
+   "isr": {
+    "1": 1.2,
+    "2": 0.44,
+    "3": 0.9,
+    "4": 0.66
+   },
+   "n": 2,
+   "expected": {
+    "scores": [
+     2.1,
+     1.1
+    ],
+    "counted": [
+     {
+      "uid": "1",
+      "option": 0,
+      "weight": 1.2
+     },
+     {
+      "uid": "2",
+      "option": 1,
+      "weight": 0.44
+     },
+     {
+      "uid": "3",
+      "option": 0,
+      "weight": 0.9
+     },
+     {
+      "uid": "4",
+      "option": 1,
+      "weight": 0.66
+     }
+    ],
+    "excluded": [],
+    "winner": 0,
+    "note": ""
+   }
+  },
+  {
+   "votes": {},
+   "isr": {
+    "1": 1.2,
+    "2": 0.44,
+    "3": 0.9,
+    "4": 0.66
+   },
+   "n": 3,
+   "expected": {
+    "scores": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "counted": [],
+    "excluded": [],
+    "winner": null,
+    "note": "no counted votes"
+   }
+  },
+  {
+   "votes": {
+    "1": 1,
+    "9": 0,
+    "2": 0
+   },
+   "isr": {
+    "1": 1.2,
+    "2": 0.44,
+    "3": 0.9,
+    "4": 0.66
+   },
+   "n": 2,
+   "expected": {
+    "scores": [
+     0.44,
+     1.2
+    ],
+    "counted": [
+     {
+      "uid": "1",
+      "option": 1,
+      "weight": 1.2
+     },
+     {
+      "uid": "2",
+      "option": 0,
+      "weight": 0.44
+     }
+    ],
+    "excluded": [
+     {
+      "uid": "9",
+      "reason": "no ISR"
+     }
+    ],
+    "winner": 1,
+    "note": ""
+   }
+  },
+  {
+   "votes": {
+    "1": 5,
+    "2": "x",
+    "3": 0
+   },
+   "isr": {
+    "1": 1.2,
+    "2": 0.44,
+    "3": 0.9,
+    "4": 0.66
+   },
+   "n": 2,
+   "expected": {
+    "scores": [
+     0.9,
+     0.0
+    ],
+    "counted": [
+     {
+      "uid": "3",
+      "option": 0,
+      "weight": 0.9
+     }
+    ],
+    "excluded": [
+     {
+      "uid": "1",
+      "reason": "invalid option"
+     },
+     {
+      "uid": "2",
+      "reason": "invalid option"
+     }
+    ],
+    "winner": 0,
+    "note": ""
+   }
+  },
+  {
+   "votes": {
+    "1": 0,
+    "2": 0
+   },
+   "isr": {
+    "1": 1.2,
+    "2": 0.44,
+    "3": 0.9,
+    "4": 0.66
+   },
+   "n": 3,
+   "expected": {
+    "scores": [
+     1.64,
+     0.0,
+     0.0
+    ],
+    "counted": [
+     {
+      "uid": "1",
+      "option": 0,
+      "weight": 1.2
+     },
+     {
+      "uid": "2",
+      "option": 0,
+      "weight": 0.44
+     }
+    ],
+    "excluded": [],
+    "winner": 0,
+    "note": ""
+   }
+  },
+  {
+   "votes": {
+    "1": 0,
+    "5": 1
+   },
+   "isr": {
+    "1": 1.2,
+    "2": 0.44,
+    "3": 0.9,
+    "4": 0.66,
+    "5": 1.2
+   },
+   "n": 2,
+   "expected": {
+    "scores": [
+     1.2,
+     1.2
+    ],
+    "counted": [
+     {
+      "uid": "1",
+      "option": 0,
+      "weight": 1.2
+     },
+     {
+      "uid": "5",
+      "option": 1,
+      "weight": 1.2
+     }
+    ],
+    "excluded": [],
+    "winner": null,
+    "note": "tie between options 0, 1"
+   }
+  }
+ ],
+ "age_errors": [
+  {
+   "birthDate": "",
+   "on": "2025-01-01"
+  },
+  {
+   "birthDate": "2026-01-01",
+   "on": "2025-01-01"
+  },
+  {
+   "birthDate": "05/01/1971",
+   "on": "2025-01-01"
+  }
+ ],
+ "normalize_errors": [
+  {
+   "values": [
+    -1,
+    1
+   ]
+  },
+  {
+   "values": [
+    -2,
+    1
+   ]
+  }
+ ]
+}
