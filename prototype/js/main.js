@@ -2897,7 +2897,8 @@ function initTopicDetailViews() {
       otherOptionsHtml = '<div style="color:var(--text-muted); font-style:italic; font-size:0.88rem; padding: 4px;">No other options for this issue.</div>';
     }
 
-    var participantOptions = (topic.participants || []).map(function(uid) {
+    // U1: participants hold each id as text and as a number; list each user once
+    var participantOptions = (topic.participants || []).map(String).filter(function(uid, i, a) { return a.indexOf(uid) === i; }).map(function(uid) {
       var name = window.userCache[uid] || ('User ' + uid);
       return '<option value="' + uid + '">' + name + '</option>';
     }).join('');
@@ -7748,7 +7749,8 @@ function initTopicDetailViews() {
         proposalModalTitle.textContent = "Propose Decision Option";
         
         // Resolve current participants dropdown options
-        const participants = disc.participants || [];
+        // U1: participants hold each id as text and as a number; list each user once
+        const participants = [...new Set((disc.participants || []).map(String))];
         const participantOptions = participants.map(uid => {
           const name = window.userCache[uid] || ('User ' + uid);
           return `<option value="${uid}">${name}</option>`;
@@ -8130,6 +8132,29 @@ async function getRelevantDiscussionIds(db, storedUid) {
   return relevantIds;
 }
 
+// U1: top level, so that every view can call it (the voting and task detail listeners
+// could not see it inside initRealTimeDashboardSync and threw a ReferenceError).
+// When an issue has no stored location it invents one near Basel for display only.
+function ensureTopicLocation(disc, topicId) {
+  if (!disc) return;
+  if (!disc.location) {
+    let hash = 0;
+    const title = disc.topic || disc.title || topicId || "";
+    for (let i = 0; i < title.length; i++) {
+      hash = title.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const offsetLat = ((Math.abs(hash) % 100) - 50) / 10000;
+    const offsetLon = ((Math.abs(hash >> 8) % 100) - 50) / 10000;
+    
+    disc.location = {
+      latitude: 47.5583 + offsetLat,
+      longitude: 7.6065 + offsetLon
+    };
+    disc.mu_distance_meters = 100 + (Math.abs(hash) % 150);
+    disc.sigma_decay_meters = 50 + (Math.abs(hash >> 4) % 100);
+  }
+}
+
 function initRealTimeDashboardSync(db, storedUid) {
   let activeIssuesCount = 0;
   let discussionsCount = 0;
@@ -8349,25 +8374,6 @@ function initRealTimeDashboardSync(db, storedUid) {
     return `${category} ${statusSymbol} ${starSymbol}`;
   }
 
-  function ensureTopicLocation(disc, topicId) {
-    if (!disc) return;
-    if (!disc.location) {
-      let hash = 0;
-      const title = disc.topic || disc.title || topicId || "";
-      for (let i = 0; i < title.length; i++) {
-        hash = title.charCodeAt(i) + ((hash << 5) - hash);
-      }
-      const offsetLat = ((Math.abs(hash) % 100) - 50) / 10000;
-      const offsetLon = ((Math.abs(hash >> 8) % 100) - 50) / 10000;
-      
-      disc.location = {
-        latitude: 47.5583 + offsetLat,
-        longitude: 7.6065 + offsetLon
-      };
-      disc.mu_distance_meters = 100 + (Math.abs(hash) % 150);
-      disc.sigma_decay_meters = 50 + (Math.abs(hash >> 4) % 100);
-    }
-  }
 
   function getDaysUntil(endsStr) {
     if (!endsStr) return Infinity;
