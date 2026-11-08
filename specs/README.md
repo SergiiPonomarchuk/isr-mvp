@@ -89,7 +89,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | Task | Status | Changes components |
 |---|---|---|
 | [S0-restructure-specs](tasks/S0-restructure-specs.md) | open (step 3, batch 1 done) | all; README |
-| [A1-canonical-isr](tasks/A1-canonical-isr.md) | open (DRAFT; R2, R9 amended by A2) | 03, 04, 05, 06 |
+| [A1-canonical-isr](tasks/A1-canonical-isr.md) | DRAFT v2 (roadmap stage 2: one ISR on the server), waiting for approval | 02, 03, 04, 06, 10 |
 | [A2-expertise-cleanup](tasks/A2-expertise-cleanup.md) | implemented on branch `a2-expertise-cleanup`; live migration pending (author) | 02, 04, 07, 10, 11 |
 | [A3-options-and-g-anchors](tasks/A3-options-and-g-anchors.md) | implemented on branch `a3-options-and-g-anchors`; live migration pending (author) | 02, 03, 06, 10 |
 | [R0-keep-alive](tasks/R0-keep-alive.md) | done 2026-11-08: merged (#2-#4), deployed, A2/A3 migrated, smoke test passed | rules, CI, backup, merge of A2/A3 |
