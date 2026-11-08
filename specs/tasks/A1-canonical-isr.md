@@ -80,4 +80,12 @@ Contradictions C-34 (what weights a vote), C-35 (vote outcome not computed or pe
 
 ## 8. Status log
 
-Plan approved: ___  Implementation: ___  Tests: ___  Migration (emulator): ___  CHANGES.md: ___  Deviations: ___
+- Plan approved: 2026-11-08 (author, decisions as recommended).
+- Implementation: R1-R12 on branch `a1-one-isr`.
+- Tests: Node 24 (8 new: shared fixture, edge cases, browser copy identical); Python: shared fixture and hand-checked cases; CI.
+- AC1: 3,045 members on the emulator after A2/A3 reproduced within 0.002 (all differences above 0.001 come from A2/A3 storing inputs rounded to 3 decimals after normalising full-precision values; no formula difference).
+- AC4 (emulator, end to end): Check → Create gave 100 members the full breakdown and maps equal to the member values; the new issue moved to voting through the ISR-weighted phase vote (impossible before); votes updated the live tally immediately (3.04 / 5.99 / 3.02, equal to the Python port), a non-member's vote was excluded with a visible note; the voting list and the topic card show the same ISR (1.01); finishing the vote made the trigger store the scores, the winner and the tally record; an option with steps produced tasks; a tie gave no winner.
+- R7: replay of the new reads peaks at about 200 MiB RSS (limit 512 MiB).
+- Migration (emulator): A1 applied to 272 documents; second run changes nothing.
+- CHANGES.md: written.
+- Deviations: AC1 tolerance 0.002 (rounding of stored inputs); the trigger runs in europe-central2 (the database's region).
