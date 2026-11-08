@@ -90,7 +90,7 @@ Target: done by **2026-12-15**, leaving two weeks before the rules expire.
 - Tests: rules check 13/13 on the emulator; Python 31 OK (1 optional skip); Node 16 OK; dress rehearsal (AC5) done.
 - CI: green on GitHub (run 42322112190).
 - Live backup: done 2026-11-07, 24,783 documents (`A:\ISR\mvp\dbbackup6-11-07`).
-- Pull request: pending (browser pane not signed in to GitHub).
-- Live runbook (author): pending, by 2026-12-15.
+- Pull request: #2, merged 2026-11-08 (merge commit `f3f3bed`).
+- Live runbook (author): steps 1-7 done 2026-11-08 (deploy needed an IAM fix, see CHANGES); A2 and A3 applied; step 8 (smoke test) and the A3 apply for `7P45…` after `r0-followup` pending.
 - CHANGES.md: written.
-- Deviations: the backup script gained its own retries and `--resume` after the first live run failed (CHANGES).
+- Deviations: the backup script gained its own retries and `--resume` after the first live run failed; the build account needed two IAM roles (author); member ids stored as text needed normalisation in the migrations (`r0-followup`). See CHANGES.

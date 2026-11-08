@@ -128,6 +128,15 @@ def recompute_public(members, users, location, mu, sigma, rel_weights, isr_weigh
 
 # ------------------------------------------------------------------ loading
 
+def norm_uid(value):
+    """User ids are numbers in `users` but text ("123") on some app-written member docs
+    (found in the live R0 run); compare them as numbers where possible."""
+    if isinstance(value, str) and value.strip().isdigit():
+        return int(value.strip())
+    return value
+
+
+
 def _jsonl(pattern):
     for path in sorted(glob.glob(os.path.join(EXPORT, pattern))):
         with open(path, encoding="utf-8") as f:
@@ -136,7 +145,7 @@ def _jsonl(pattern):
 
 
 def load_export():
-    members = [dict(m, _doc_id=m["doc_id"]) for m in _jsonl("microcommunity_members_*.jsonl")]
+    members = [dict(m, _doc_id=m["doc_id"], user_id=norm_uid(m.get("user_id"))) for m in _jsonl("microcommunity_members_*.jsonl")]
     issues = {str(d["doc_id"]): d for d in _jsonl("issues_*.jsonl")}
     mcs = {str(d["doc_id"]): d for d in _jsonl("microcommunities_*.jsonl")}
     users = {p["uid"]: {"geography": p.get("geography") or []} for p in _jsonl("profiles_*.jsonl")}
@@ -145,6 +154,8 @@ def load_export():
 
 def load_firestore(db):
     members = [dict(d.to_dict(), _doc_id=d.id) for d in db.collection("microcommunity_members").stream()]
+    for m in members:
+        m["user_id"] = norm_uid(m.get("user_id"))
     issues = {d.id: d.to_dict() for d in db.collection("issues").select(
         ["location", "mu_distance_meters", "sigma_decay_meters", *ISSUE_W]).stream()}
     mcs = {d.id: d.to_dict() for d in db.collection("microcommunities").select(["issue_id"]).stream()}

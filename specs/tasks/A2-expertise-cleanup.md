@@ -88,6 +88,6 @@ None. Decided 2026-11-04 (author): (1) the age is computed at the issue's regist
 - Implementation: done on branch `a2-expertise-cleanup` (commits 89d48ab … see `git log`).
 - Tests: `python -m unittest discover -s tests` 16 OK; `cd functions && npm test` 7 OK; emulator end-to-end (AC6) passed.
 - Migration dry run (claude_export): done, `A2-migration-report.md`. Emulator `--apply`: done; AC4 checks pass; second run changes nothing.
-- Dry run (fresh export) and live run: pending, author's step.
+- Live: dry run identical to the export dry run; applied 2026-11-08 (3,135 updates); second run clean (`A2-migration-report-live.md`).
 - CHANGES.md: written (repo root).
 - Deviations: see CHANGES.md, "Deviations from the spec" (stored parts instead of vectors; ISR weights recovered from stored values; `discussions.isr_scores` not recomputed; FieldValue import fix; `?emulator=1` switch).

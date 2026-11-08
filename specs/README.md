@@ -92,7 +92,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [A1-canonical-isr](tasks/A1-canonical-isr.md) | open (DRAFT; R2, R9 amended by A2) | 03, 04, 05, 06 |
 | [A2-expertise-cleanup](tasks/A2-expertise-cleanup.md) | implemented on branch `a2-expertise-cleanup`; live migration pending (author) | 02, 04, 07, 10, 11 |
 | [A3-options-and-g-anchors](tasks/A3-options-and-g-anchors.md) | implemented on branch `a3-options-and-g-anchors`; live migration pending (author) | 02, 03, 06, 10 |
-| [R0-keep-alive](tasks/R0-keep-alive.md) | implemented on branch `r0-keep-alive` (PR to `main`); live runbook pending (author), by 2026-12-30 | rules, CI, backup, merge of A2/A3 |
+| [R0-keep-alive](tasks/R0-keep-alive.md) | merged (#2), deployed, A2/A3 migrated on live 2026-11-08; smoke test pending | rules, CI, backup, merge of A2/A3 |
 
 Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).
 
