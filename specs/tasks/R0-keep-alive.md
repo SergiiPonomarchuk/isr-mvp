@@ -1,6 +1,6 @@
 # SPEC R0: Keep the live MVP alive and consolidate A2/A3 (roadmap stage 0)
 
-Status: APPROVED 2026-11-07 (author)
+Status: DONE 2026-11-08 (live, smoke test passed)
 Branch: r0-keep-alive (from a3-options-and-g-anchors; never main)
 Roadmap: [ROADMAP-demo.md](../ROADMAP-demo.md), stage 0. Hard date: the change must be **live by 2026-12-30**.
 
@@ -91,6 +91,6 @@ Target: done by **2026-12-15**, leaving two weeks before the rules expire.
 - CI: green on GitHub (run 42322112190).
 - Live backup: done 2026-11-07, 24,783 documents (`A:\ISR\mvp\dbbackup6-11-07`).
 - Pull request: #2, merged 2026-11-08 (merge commit `f3f3bed`).
-- Live runbook (author): steps 1-7 done 2026-11-08 (deploy needed an IAM fix, see CHANGES); A2 and A3 applied; step 8 (smoke test) and the A3 apply for `7P45…` after `r0-followup` pending.
+- Live runbook (author): done 2026-11-08. Deploy needed an IAM fix and a separate hosting deploy; A2 and A3 applied, `7P45…` labelled after #3; smoke test (step 8) passed after #4 (memory) and U1 (#5): login, Check → Create, option with cost/funding/resources, voting.
 - CHANGES.md: written.
 - Deviations: the backup script gained its own retries and `--resume` after the first live run failed; the build account needed two IAM roles (author); member ids stored as text needed normalisation in the migrations (`r0-followup`). See CHANGES.

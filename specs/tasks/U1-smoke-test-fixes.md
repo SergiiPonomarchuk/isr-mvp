@@ -1,6 +1,6 @@
 # SPEC U1: Fixes from the R0 live smoke test
 
-Status: APPROVED 2026-11-08 (author)
+Status: DONE 2026-11-08 (merged #5, deployed, verified on live by the author)
 Branch: ui-smoke-fixes (from main; never main)
 Found in: R0 runbook step 8 (live smoke test, 2026-11-08). Both bugs predate A2/A3/R0.
 
@@ -34,4 +34,4 @@ Also found (not changed here, recorded for the paper): when an issue has no stor
 
 - Implementation: R1, R2 done on branch `ui-smoke-fixes`.
 - Tests: emulator AC1 (vote 5.35/0.00 → 4.08/1.27 → 5.35/0.00 without reopening, selection follows), AC2 (26 entries, 26 unique), no `ensureTopicLocation` error. Note: the browser kept the old `main.js` in its cache even on a hard reload; the test used a separate origin (`127.0.0.1`). After the deploy, users may need Ctrl+F5 or up to an hour for the cache.
-- Pull request: see below. Deploy (author): `firebase deploy --only hosting`.
+- Pull request: #5, merged (`0d51279`). Deploy (author): hosting released 2026-11-08 17:06; the agent checked that the live `main.js` holds both fixes and that `scratch/` is no longer published. Verified on live (author): voting updates immediately; each name once.
