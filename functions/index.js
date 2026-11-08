@@ -41,7 +41,8 @@ exports.analyzeIssue = onRequest({ cors: true }, async (req, res) => {
 });
 
 // HTTPS Endpoint: Create Issue & Compute Relevance Pipeline
-exports.createIssue = onRequest({ cors: true }, async (req, res) => {
+// R0 fix: 256 MiB (the default) was exceeded on live; see CHANGES
+exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, res) => {
   try {
     const { title, description, location, submitterId } = req.body;
 
@@ -191,7 +192,8 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
       const chunkSize = 500;
       for (let i = 0; i < refs.length; i += chunkSize) {
         const chunkRefs = refs.slice(i, i + chunkSize);
-        const vectorDocs = await db.getAll(...chunkRefs);
+        // R0 fix: read only the fields S needs; live user_vectors docs also hold every skill vector
+        const vectorDocs = await db.getAll(...chunkRefs, { fieldMask: ["uid", "profile_vector"] });
         vectorDocs.forEach((docSnap) => {
           if (docSnap.exists) {
             const vData = docSnap.data();
@@ -567,7 +569,8 @@ exports.createIssue = onRequest({ cors: true }, async (req, res) => {
 });
 
 // HTTPS Endpoint: Check/Calculate Relevance Pipeline (Dry-run server-side)
-exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
+// R0 fix: 256 MiB (the default) was exceeded on live; see CHANGES
+exports.checkIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, res) => {
   try {
     const { title, description, location, submitterId } = req.body;
 
@@ -699,7 +702,8 @@ exports.checkIssue = onRequest({ cors: true }, async (req, res) => {
       const chunkSize = 500;
       for (let i = 0; i < refs.length; i += chunkSize) {
         const chunkRefs = refs.slice(i, i + chunkSize);
-        const vectorDocs = await db.getAll(...chunkRefs);
+        // R0 fix: read only the fields S needs; live user_vectors docs also hold every skill vector
+        const vectorDocs = await db.getAll(...chunkRefs, { fieldMask: ["uid", "profile_vector"] });
         vectorDocs.forEach((docSnap) => {
           if (docSnap.exists) {
             const vData = docSnap.data();
