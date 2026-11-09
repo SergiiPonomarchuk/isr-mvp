@@ -7921,6 +7921,7 @@ function ensureTopicLocation(disc, topicId) {
 
 function initRealTimeDashboardSync(db, storedUid) {
   let activeIssuesCount = 0;
+  let todoCount = 0; // U2: the number of the member's ToDo issues
   let discussionsCount = 0;
   
   const updateSummaryStrip = () => {
@@ -7929,9 +7930,7 @@ function initRealTimeDashboardSync(db, storedUid) {
       summaryStrip.innerHTML = `
         <button class="summary-link" data-section="voting">Active votes: ${activeIssuesCount}</button>
         <span class="summary-separator">·</span>
-        <span>Issues: ${activeIssuesCount}</span>
-        <span class="summary-separator">·</span>
-        <button class="summary-link" data-section="tasks">To Do: ${activeIssuesCount}</button>
+        <button class="summary-link" data-section="tasks">To Do: ${todoCount}</button>
         <span class="summary-separator">·</span>
         <button class="summary-link" data-section="chat">Discussions: ${discussionsCount}</button>
       `;
@@ -8667,6 +8666,7 @@ function initRealTimeDashboardSync(db, storedUid) {
   // 1. Discussions Sync (Chat)
   db.collection("discussions").orderBy("created_at", "desc").onSnapshot(async snapshot => {
     const relevantIds = await getRelevantDiscussionIds(db, storedUid);
+    subscribeMemberIssues(relevantIds); // U2: the Voting and ToDo lists read these issues
     
     const filteredDocs = [];
     snapshot.forEach(doc => {
@@ -8721,21 +8721,69 @@ function initRealTimeDashboardSync(db, storedUid) {
   }, err => console.error("Sync discussions failed:", err));
 
   // 2. Issues Sync (Voting & Tasks)
-  db.collection("issues").orderBy("created_at", "desc").limit(30).onSnapshot(async snapshot => {
-    const relevantIds = await getRelevantDiscussionIds(db, storedUid);
+  // U2: only the member's issues are read, by document id, at most 30 ids per query (the limit
+  // of "in"). The ids are the member's topics as the Chat listener computes them on every change
+  // of a discussion, so a topic the member joins or creates is picked up without a reload.
+  // (Before U2: the 30 newest issues of the whole collection, then filtered to the member's.)
+  const MEMBER_ISSUE_CHUNK = 30;
+  const memberIssueDocs = new Map();
+  let memberIssueUnsubs = [];
+  let memberIssueIdsKey = null;
+
+  function subscribeMemberIssues(relevantIds) {
+    const ids = Array.from(relevantIds, String).sort();
+    const key = ids.join('|');
+    if (key === memberIssueIdsKey) return;
+    memberIssueIdsKey = key;
+    memberIssueUnsubs.forEach(unsub => unsub());
+    memberIssueUnsubs = [];
+    const keep = new Set(ids);
+    Array.from(memberIssueDocs.keys()).forEach(id => { if (!keep.has(id)) memberIssueDocs.delete(id); });
+    if (ids.length === 0) {
+      applyMemberIssues();
+      return;
+    }
+    for (let i = 0; i < ids.length; i += MEMBER_ISSUE_CHUNK) {
+      const chunk = ids.slice(i, i + MEMBER_ISSUE_CHUNK);
+      memberIssueUnsubs.push(db.collection("issues")
+        .where(firebase.firestore.FieldPath.documentId(), "in", chunk)
+        .onSnapshot(snapshot => {
+          snapshot.docChanges().forEach(change => {
+            if (change.type === 'removed') memberIssueDocs.delete(change.doc.id);
+            else memberIssueDocs.set(change.doc.id, change.doc);
+          });
+          applyMemberIssues();
+        }, err => console.error("Sync issues/tasks failed:", err)));
+    }
+  }
+
+  // The order of the query before U2 (created_at descending), kept for the dashboard previews and
+  // for ties in the list sorts. Firestore orders by type before value: in descending order text
+  // comes before Timestamps; equal values by document id, descending.
+  const createdAtKey = (v) => {
+    if (typeof v === 'string') return [2, v];
+    if (v && typeof v.toMillis === 'function') return [1, v.toMillis()];
+    return [0, 0]; // no created_at: last (the query before U2 left such issues out)
+  };
+  const compareCreatedDesc = (a, b) => {
+    const ka = createdAtKey(a.data().created_at);
+    const kb = createdAtKey(b.data().created_at);
+    if (ka[0] !== kb[0]) return kb[0] - ka[0];
+    if (ka[1] !== kb[1]) return ka[1] < kb[1] ? 1 : -1;
+    return a.id < b.id ? 1 : (a.id > b.id ? -1 : 0);
+  };
+
+  function applyMemberIssues() {
     const votingDocs = [];
     const taskDocs = [];
     
-    snapshot.forEach(doc => {
+    Array.from(memberIssueDocs.values()).sort(compareCreatedDesc).forEach(doc => {
       const data = doc.data();
-      const topicId = doc.id;
-      if (relevantIds.has(topicId)) {
-        if (data.status === 'in_process' || (data.status === 'inactive' && data.previous_status === 'in_process')) {
-          votingDocs.push(doc);
-        }
-        if (data.status === 'tasks' || data.status === 'approved' || (data.status === 'inactive' && (data.previous_status === 'approved' || data.previous_status === 'tasks'))) {
-          taskDocs.push(doc);
-        }
+      if (data.status === 'in_process' || (data.status === 'inactive' && data.previous_status === 'in_process')) {
+        votingDocs.push(doc);
+      }
+      if (data.status === 'tasks' || data.status === 'approved' || (data.status === 'inactive' && (data.previous_status === 'approved' || data.previous_status === 'tasks'))) {
+        taskDocs.push(doc);
       }
     });
 
@@ -8746,7 +8794,7 @@ function initRealTimeDashboardSync(db, storedUid) {
     updateSummaryStrip();
     
     cachedTasksDocs = mergedTaskDocs;
-    activeIssuesCount = votingDocs.length;
+    todoCount = mergedTaskDocs.length;
     updateSummaryStrip();
     
     // Render the voting issues using the aligned card formats and tags
@@ -8968,7 +9016,7 @@ function initRealTimeDashboardSync(db, storedUid) {
         });
       }
     }
-  }, err => console.error("Sync issues/tasks failed:", err));
+  }
 }
 
 function initMainPage() {

@@ -1,5 +1,27 @@
 # CHANGES
 
+## U2: the Voting and ToDo lists show all of a member's issues (2026-11-09)
+
+Spec: `specs/tasks/U2-voting-todo-list-limit.md` (approved 2026-11-09: decision 1 b, "delete Issues", test yes).
+
+### What changed
+- **Before:** the Voting and ToDo lists only looked at the 30 newest issues of the whole collection. On the emulator, 51 of the 77 voting issues and 1 of the 3 ToDo issues never appeared for anyone; 114 of the 299 members with a voting issue saw none of theirs.
+- **Now:** they read only the member's issues, by document id (at most 30 ids per query). The ids are the member's topics that the Chat list already computes on every change of a discussion, so a topic the member joins or creates appears without a reload. The order of the old query is kept for the dashboard previews and ties. (`prototype/js/main.js`)
+- **Summary strip:** "Issues" removed; "To Do" shows the ToDo count instead of the voting count. (`main.js`, `prototype/index.html`)
+- **Test:** `functions/test/member_issues.test.js` fails if an issues query gets a `.limit(` again.
+
+### Checks
+- **Unit tests:** Node 35 (3 new), Python 48.
+- **Emulator, in the browser** as Cynthia Gray, user 1, Sara Lara and Karen Chavez: every Voting and ToDo count equals a script's count with the same membership rules (user 1: 77 voting, 3 ToDo); issue 16 and ToDo issue 91 now appear; joining and leaving a topic updates the list without a reload; no console errors.
+- **Testing incident:** the first browser run used the live database (the page was opened without `?emulator=1`). It only read; the page's one automatic write (the Chat list's last-message "self-healing") had nothing to heal, which the 2026-11-07 backup and a read-only count on live confirm. Details in the spec's status log.
+
+### Findings (not changed)
+- An issue's `created_at` is a server Timestamp when `createIssue` writes it and ISO text everywhere else; Start Voting and the deadline run overwrite it with the time voting started.
+
+### Author's steps after merging
+1. Deploy hosting: `firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`.
+2. Check on live (Ctrl+F5 or a new incognito window): as Cynthia Gray, issue 16 is in the Voting list; the strip has no "Issues".
+
 ## L1: deadlines and the public's management decisions (2026-11-09)
 
 Branch `l1-deadlines`. Spec: `specs/tasks/L1-deadlines-and-management-decisions.md` (approved 2026-11-09; decision 3 corrected to 1 option).
