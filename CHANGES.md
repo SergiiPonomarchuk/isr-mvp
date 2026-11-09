@@ -1,5 +1,21 @@
 # CHANGES
 
+## U4: the Voting view keeps its own messages (2026-11-09)
+
+Spec: `specs/tasks/U4-voting-view-messages.md` (author: "fix the Voting bug").
+
+### What changed
+- **Fix:** the Voting view now declares its message state (`let currentMessagesRaw = null;`), as the Chat and ToDo views do. (`prototype/js/main.js`)
+- **Before:** the name was an implicit global. Each voting topic's first render failed with "currentMessagesRaw is not defined", and the next voting topic briefly showed the previous topic's messages.
+- **Test:** `functions/test/topic_views.test.js` checks that the three views declare it before use.
+
+### Checks
+- **Unit tests:** Node 40 (1 new; it fails before the fix).
+- **Emulator:** opening voting issues 179 and then 187 logs no error, leaves no global, and shows each issue's own messages.
+
+### Author's steps after merging
+- Deploy hosting with the next deploy (`firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`).
+
 ## U3: sort buttons for an issue's messages; dashboard order (2026-11-09)
 
 Spec: `specs/tasks/U3-message-sorting.md` (approved 2026-11-09 with the author's changes).

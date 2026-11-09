@@ -4200,6 +4200,7 @@ function initTopicDetailViews() {
     } else if (kind === 'voting') {
       try {
         let currentIssueData = null;
+        let currentMessagesRaw = null; // U4: declared per view (was an implicit global shared by all voting topics)
         let isRendering = false;
         let pendingRender = false;
 
