@@ -1,6 +1,6 @@
 # SPEC L1: deadlines and the public's management decisions
 
-Status: DRAFT 2026-11-09, waiting for the author's approval (decisions 1-5 given by the author; 6-13 are recommendations).
+Status: DRAFT 2026-11-09, waiting for the author's approval (decisions 1-5, 8 and 9 given by the author; the others are recommendations).
 Branch: l1-deadlines (from main at `42128f4`; never main)
 Roadmap: follow-up of stage 2 ([ROADMAP-demo.md](../ROADMAP-demo.md)). The D1 cycle has to close by itself: a topic that reaches its deadline must move on. Effort estimate: 3-5 developer-days.
 
@@ -40,7 +40,7 @@ The public's management decisions and the deadlines follow one rule set, held in
 
 ### Shared rules
 - **R1** A new shared UMD module `functions/lifecycle.js` has a byte-identical browser copy `prototype/js/lifecycle.js`. `npm run sync:isr` copies both modules, and a test fails if the copies differ.
-  - **Constants:** `MANAGEMENT_THRESHOLD = 0.30`, `MIN_VOTED_SHARE = 0.30`, `MIN_OPTIONS = 2`, `EXTEND_DAYS = 7`.
+  - **Constants:** `MANAGEMENT_THRESHOLD = 0.30`, `MIN_VOTED_SHARE = 0.30`, `MIN_OPTIONS_START_VOTING = 1` (decision 9), `MIN_OPTIONS_AT_DEADLINE = 2` (decision 3), `EXTEND_DAYS = 7`.
   - **`managementOutcome(phase, status, deadlineVotes, isrByUid)`:** the support per action, the pool, and the action that executes, if any. The order is as built; the threshold is "at least" (decision 6).
   - **`votingOutcome(votes, isrByUid, optionCount)`:** the voted share and the result: `todo`, `tie` or `cancel`. It uses `ISR.tally`.
   - **`deadlineOutcome(phase, topic, isrByUid, today)`:** for a chat, `to_voting` or `cancel`; for a voting issue, `to_todo`, `extend` or `cancel`; null if the topic hasn't expired or the phase has no deadline action.
@@ -50,7 +50,7 @@ The public's management decisions and the deadlines follow one rule set, held in
 - **R2** The window uses `managementOutcome`. Its rule text reads "at least 30 % of the ad-hoc public's total ISR-score".
 - **R3** A press that would execute an action first asks for confirmation, for example: "Your support (18.9 %) is enough to finish voting now. Continue?" If the member declines, nothing is stored. A press below the threshold is stored as a proposal without asking, and the window stays open with the new totals.
 - **R4** The window shows and changes the deadline of the current phase: `issues.ends` in Voting, `discussions.ends` in Chat. Every deadline write (+1 Week, transitions, the deadline run) writes the same date to both documents.
-- **R5** Start Voting needs at least 2 options. With fewer, the button is disabled and says why ("needs at least 2 options; 1 proposed"). The three invented options are removed from all three places (decision 9).
+- **R5** Start Voting needs at least 1 option. With none, the button is disabled and says why ("needs at least 1 option"). A vote on a single option is allowed: the public may agree on one course. The three invented options are removed from all three places (decision 9).
 - **R6** Finish Voting is enabled only when the current tally would pass: voted share at least 30 % and a winner. Otherwise the button says why (decision 10).
 - **R7** A topic canceled at its deadline shows one action, "Reactivate (+1 week)". It executes at 30 %, and reactivation by falling cancel support does not apply to it. Topics canceled through Cancel Issue keep the built rule (decision 11).
 - **R8** The browser uses the real date: the frozen dates are removed from `getDaysUntil` and `isUrgentDate`. The browser no longer moves expired chats: `checkAndTransitionExpiredDiscussion` and its call are removed. An expired topic waiting for the next run is labelled "Deadline passed".
@@ -70,8 +70,7 @@ The public's management decisions and the deadlines follow one rule set, held in
 
 ### Existing data
 - **R11** `scripts/migrate_l1.py`: dry run by default; emulator only, unless run with `--project … --i-know-this-is-live`; the new date comes from `--new-deadline` (default today + 1 month).
-  - **Voting issues past their deadline:** `ends` set to the new date on the issue and the discussion.
-  - **Chats with no deadline or a past one:** `ends` set to the new date (decision 8).
+  - **Prolonging deadlines:** every chat and voting topic whose deadline is missing or earlier than the new date gets the new date, on the issue and the discussion (decision 8). Running the script again with a later `--new-deadline` before that date prolongs them again.
   - **Discussions of seeded voting and ToDo topics:** they get the status the app writes (`Voting`, `approved`), so they leave the Chat list (decision 13).
   - **Not changed:** member documents and votes.
   - **The report** gives the counts per phase and what the deadline run would do on the new date with today's options and votes. For example: "114 chats would be canceled (fewer than 2 options); 76 voting issues would be canceled (below 30 % voted)".
@@ -90,7 +89,7 @@ The public's management decisions and the deadlines follow one rule set, held in
 - **AC3 Emulator, browser.**
   - The window shows 30 % and the phase deadline, and +1 Week extends from it.
   - A press below the threshold is stored and shown; a press that crosses it asks first, and declining stores nothing.
-  - Start Voting is disabled with 1 option, and Finish Voting is disabled with a tie.
+  - Start Voting is disabled with no options and enabled with 1; Finish Voting is disabled with a tie.
   - A deadline-canceled topic offers only Reactivate.
 - **AC4 Emulator, server.** `closeExpiredTopics(db, today)` runs against a prepared state:
   - a chat with 2 options moves to voting, and a chat with 1 option is canceled;
@@ -102,23 +101,21 @@ The public's management decisions and the deadlines follow one rule set, held in
 
 ## 6. Decisions
 
-Given by the author (2026-11-09):
-1. **Thresholds:** management decisions and the minimum voted share are both 30 % of the public's ISR pool.
-2. **Voting at the deadline:** ToDo with a winner and at least 30 % voted; a tie adds one week; otherwise canceled.
-3. **Chat at the deadline:** voting with at least 2 options; canceled with fewer.
-4. **Who closes expired topics:** the server, once a day.
-5. **Confirmation:** a press that would execute an action asks the member first.
+Each decision is marked *author* (given 2026-11-09) or *recommended* (author to confirm).
 
-Recommended (author to confirm):
-
-6. **Boundary:** "at least 30 %" (≥), following the author's wording. The built code uses "exceeds" (>).
-7. **When a topic expires:** a deadline is the last open day. The run happens daily at 00:30 Europe/Zurich, the time zone of the app's default map centre, Basel (`main.js:240`).
-8. **Every chat has a deadline:** new chats get creation + 1 month when the creator sets none, and existing chats get the migration date. **Consequence:** with today's test data, the first run after that date would cancel all 114 chats and all 76 voting issues, unless test users propose options and vote first. The alternative is to keep "Ongoing" chats without expiry.
-9. **Start Voting:** needs at least 2 options; the invented options are removed.
-10. **Finish Voting:** offered only when the current tally would pass. This avoids a ToDo with no winner, which can happen today after a tie.
-11. **Reactivation:** a deadline-canceled topic comes back only by a 30 % "Reactivate (+1 week)" decision. Cancel Issue keeps the built rule: it holds while cancel support stays at or above the threshold.
-12. **Voting deadline after a chat moves to voting:** today + 7 days, as built.
-13. **Seeded discussions:** they get the phase status the app writes, so voting topics stop appearing in Chat.
+1. *Author.* **Thresholds:** management decisions and the minimum voted share are both 30 % of the public's ISR pool.
+2. *Author.* **Voting at the deadline:** ToDo with a winner and at least 30 % voted; a tie adds one week; otherwise canceled.
+3. *Author.* **Chat at the deadline:** voting with at least 2 options; canceled with fewer. (Open: should this follow decision 9 and need only 1 option?)
+4. *Author.* **Who closes expired topics:** the server, once a day.
+5. *Author.* **Confirmation:** a press that would execute an action asks the member first.
+6. *Recommended.* **Boundary:** "at least 30 %" (≥), following the author's wording. The built code uses "exceeds" (>).
+7. *Recommended.* **When a topic expires:** a deadline is the last open day. The run happens daily at 00:30 Europe/Zurich, the time zone of the app's default map centre, Basel (`main.js:240`).
+8. *Author.* **Every chat has a deadline:** new chats get creation + 1 month when the creator sets none; "Ongoing" is no longer possible. Existing chats and voting topics are prolonged by the migration, which can be run again to prolong them further. **Consequence for the test data:** today none of the 114 chats has an option, and none of the 76 voting issues has 30 % voted. If that is still so when the new date passes, the next run cancels them all. Prolonging again or preparing the demo topics avoids it, and a 30 % "Reactivate" brings a canceled topic back (decision 11).
+9. *Author.* **Start Voting:** needs at least 1 option, because the public may agree on one course; the invented options are removed.
+10. *Recommended.* **Finish Voting:** offered only when the current tally would pass. This avoids a ToDo with no winner, which can happen today after a tie.
+11. *Recommended.* **Reactivation:** a deadline-canceled topic comes back only by a 30 % "Reactivate (+1 week)" decision. Cancel Issue keeps the built rule: it holds while cancel support stays at or above the threshold.
+12. *Recommended.* **Voting deadline after a chat moves to voting:** today + 7 days, as built.
+13. *Recommended.* **Seeded discussions:** they get the phase status the app writes, so voting topics stop appearing in Chat.
 
 ## 7. Findings (not changed here)
 
