@@ -73,8 +73,10 @@ test("createIssue refuses a missing, foreign or stale draft", () => {
 });
 
 test("the analyzer prompt carries the clarification", async () => {
-  // Without a Gemini key checkIssueParams uses the local fallback; the prompt builder is internal,
-  // so check the exported fallback path accepts the third argument without error.
+  // A4: the prompt builder is exported; without a key checkIssueParams returns the keyword
+  // rules, labelled as the fallback.
+  assert.ok(ai.buildIssueAnalyzerPrompt("Lock", "Broken lock at the entrance", "north entrance only", []).includes("north entrance only"));
   const r = await ai.checkIssueParams("Broken lock at the entrance", "Lock", "north entrance only");
-  assert.ok(r.category);
+  assert.ok(r.params.category);
+  assert.equal(r.meta.ai_source, "fallback");
 });

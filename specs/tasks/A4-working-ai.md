@@ -1,6 +1,6 @@
 # SPEC A4: Working AI (roadmap stage 1)
 
-Status: DRAFT 2026-11-09, waiting for the author's approval of this spec and of the open points in section 4. The three main decisions are approved (section 3).
+Status: APPROVED 2026-11-10 (the spec and the recommendations of section 4). Phase A implemented on branch `a4-working-ai`; AC2-AC3 wait for the author's free-tier key. Phase B waits for P1.
 Branch: a4-working-ai (from main at `0448705`; never main)
 Roadmap: stage 1 ([ROADMAP-demo.md](../ROADMAP-demo.md)). "Check" uses a real model; S and the expertise cosines become meaningful; every Analyzer call is logged. Effort estimate: 4-6 developer-days (roadmap), in four phases (section 6).
 Replaces: the A1b expertise placeholder (`expertise_source: "no_issue_vector"`) for the 3 publics that have it.
@@ -184,4 +184,29 @@ On the free tier, the content sent is used to improve Google's products. The pai
 
 ## 9. Status log
 
-- Spec written 2026-11-09 (agent), with the author's decisions on models, templates and logs. Waiting for approval of the spec and the open points.
+- Spec written 2026-11-09 (agent), with the author's decisions on models, templates and logs.
+- Approved 2026-11-10 (author: "approved, start Phase A and the P1 check"; "Try to stay in free-tier limits"). Open points 4.1-4.5 as recommended.
+- Phase A (2026-11-10, agent):
+  - SDK `@google/genai` ~2.31.0, replacing `@google/generative-ai`. Version 3.0.0 was 4 days old, so the 2.x line was chosen.
+  - `functions/ai-config.js`: models, temperature 0, seed, versions `p2` / `t1`, task types, k = 5.
+  - `functions/ai-helper.js`:
+    - lazy client, the key from the secret, errors redacted;
+    - `embedTexts` and `embedIssue`, with no random vector;
+    - the k nearest examples;
+    - `runAnalyzer` returning `{params, meta}`, with the keyword fallback labelled.
+  - `functions/analyzer-log.js`.
+  - `functions/index.js`:
+    - the secret `GEMINI_API_KEY` on the three HTTPS functions;
+    - `checkIssue` embeds first and refuses with 503 on failure, then sends the 5 nearest examples to the Analyzer, logs the call, and keeps the vector and the AI source in the draft;
+    - `createIssue` reuses the draft's vector, writes `issue_vectors/{id}` and an `ai` field on the issue;
+    - `analyzeIssue` is logged.
+  - `functions/tools/build_examples.js` and `functions/data/analyzer_examples.json`: the 100 examples, parsed, without the A2 fields; vectors to be added with `--embed`.
+  - `firestore.rules`: `analyzer_logs` is server-only. `.gitignore`: `.secret.local`.
+  - Browser: the Check window shows the AI source line and the server's own error message.
+- Tests:
+  - Node 50: 10 new in `test/ai.test.js`; `params.test.js` was adapted to the new return value.
+  - Python 52.
+- Emulator, without a key (AC4, 2026-11-10):
+  - `checkIssue` answered 503 "AI unavailable: …", and wrote one `analyzer_logs` entry (`ai_source` "none", embedding error "no API key"), with no draft.
+  - The browser showed "Check calculations error: AI unavailable: …", and Create stayed disabled.
+- Waiting: the author's free-tier key in `functions/.secret.local`, for AC2-AC3 and the example vectors (1 embedding request).
