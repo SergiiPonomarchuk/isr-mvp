@@ -209,4 +209,19 @@ On the free tier, the content sent is used to improve Google's products. The pai
 - Emulator, without a key (AC4, 2026-11-10):
   - `checkIssue` answered 503 "AI unavailable: …", and wrote one `analyzer_logs` entry (`ai_source` "none", embedding error "no API key"), with no draft.
   - The browser showed "Check calculations error: AI unavailable: …", and Create stayed disabled.
-- Waiting: the author's free-tier key in `functions/.secret.local`, for AC2-AC3 and the example vectors (1 embedding request).
+- Key (2026-11-10): the author created a free-tier key in a new AI Studio project of the personal account, without billing, and saved it in `functions/.secret.local` (gitignored, never read or printed by the agent).
+  - Free-tier limits shown: `gemini-3.1-flash-lite` 15 RPM, 250K TPM, 500 RPD; `gemini-embedding-001` 100 RPM, 30K TPM, 1K RPD.
+- Examples: `node tools/build_examples.js --embed` embedded the 100 examples in 1 request. Nearest neighbours fit the topics (lock -> leak, elevator, stairwell lighting; school bus -> bus route change). Median cosine between examples: 0.76 (the old profile vectors: 0.91).
+- Emulator with the key (2026-11-10):
+  - AC2: 5 test issues, each checked twice, 8 s apart:
+    - all 10 returned `ai_source` "model";
+    - the parameters were identical in both runs for all 5;
+    - the 5 examples fitted each issue (for example "School bus stop moved" -> examples 60, 24, 56, 58, 57).
+    - Each call left one `analyzer_logs` entry, about 7,960 prompt tokens and 1,070 output tokens. 11 calls used 99,399 tokens: about $0.04 at the paid rate, $0 on the free tier.
+  - AC3: the two drafts of each issue hold bit-identical vectors.
+    - `createIssue` with a draft reused its vector, without a new embedding call.
+    - It wrote `issue_vectors/{id}` (768, `gemini-embedding-001`, `RETRIEVAL_QUERY`, `t1`) and `issue.ai` (`source` "model", the model, the 5 example ids, the log id), and deleted the draft.
+  - Browser: the Check window shows "Parameters derived by gemini-3.1-flash-lite with 5 reference examples."
+  - Requests used today: 13 embedding requests and 12 text requests, within the free tier.
+- Finding: with the model's parameters, the test publics were small (1-3 members). For example, a broken lock gives mu = 40 m, sigma = 30 m, and no synthetic home lies within 100 m of the test point (47.55, 7.61); 123 lie within 1 km, 7,864 within 5 km. A demo must place issues where people live (stage 3).
+- **Deploy only together with phase B.** Until the people are re-embedded, S and E would compare a `gemini-embedding-001` issue vector with person vectors from the old model (`text-embedding-004`, EMBEDDINGS #7). Cosines across two models are meaningless. Phases A-C are therefore one PR and one deploy.
