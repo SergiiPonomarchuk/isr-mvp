@@ -1,5 +1,59 @@
 # CHANGES
 
+## L1: deadlines and the public's management decisions (2026-11-09)
+
+Branch `l1-deadlines`. Spec: `specs/tasks/L1-deadlines-and-management-decisions.md` (approved 2026-11-09; decision 3 corrected to 1 option).
+
+### What changed
+- **Shared rules** `functions/lifecycle.js` (Node and browser; `prototype/js/lifecycle.js` is a byte-identical copy, and `npm run sync:isr` now copies both modules):
+  - management decisions execute at at least 30 % of the public's ISR pool (was more than 10 %);
+  - the voted share at the deadline uses the A1 tally, so voters without an ISR are not counted;
+  - deadline outcomes; dates are calendar days in Europe/Zurich.
+
+  Checked on `tests/fixtures/lifecycle_cases.json` by Node and by the Python port in `scripts/migrate_l1.py`.
+- **Deadline window** (browser):
+  - the 30 % rule; a press that would carry out an action asks first, and declining stores nothing;
+  - Start Voting needs at least 1 option; Finish Voting is offered only when the vote would pass (at least 30 % voted and a winner);
+  - a topic canceled at its deadline offers only "Reactivate (+1 week)" (30 %);
+  - the window shows, and +1 Week extends, the deadline of the current phase (the issue's in Voting), written to both documents;
+  - the three invented options ("Proceed with proposed fix", ...) are gone.
+- **Real date**: the browser's "today" is no longer frozen at 2026-06-01 / 2026-06-05. Lists show "Deadline passed" for topics waiting for the daily run, and the browser no longer moves expired chats itself.
+- **Daily deadline run** `closeExpiredTopics` (2nd gen, 00:30 Europe/Zurich, europe-central2):
+  - a chat moves to voting with at least 1 option (deadline today + 7) and is canceled otherwise;
+  - a voting issue moves to ToDo with at least 30 % voted and a winner (the A1 trigger stores the result), gets 7 more days on a tie, and is canceled otherwise;
+  - canceled = `inactive` with `cancel_reason: "deadline"`; every change appends a `lifecycle` entry to both documents.
+
+  The core is in `functions/deadlines.js`; `functions/tools/close_expired.js` runs it once against the emulator.
+- **createIssue**: every new chat gets a deadline, the creator's date or today + 1 month, on the issue and the discussion. The create form shows the default instead of "Ongoing".
+- **Migration** `scripts/migrate_l1.py`:
+  - prolongs every chat and voting deadline that is missing or earlier than the new date (default today + 1 month);
+  - gives seeded discussions of voting and ToDo topics their phase status (`Voting`, `approved`), so voting topics leave the Chat list;
+  - previews the first deadline run.
+
+### Checks
+- **Unit tests:** Node 32 (8 new), Python 48 (7 new).
+- **Emulator migration:** 269 documents; the second run changed nothing.
+- **Deadline run** on 5 prepared topics: every outcome as specified, and the A1 trigger stored the result of the topic that moved to ToDo. The second run changed nothing.
+- **Browser:** AC3 passed. Details in the spec's status log.
+
+### Findings (not changed)
+- The Voting and ToDo lists only consider the 30 newest issues (`main.js`, `.limit(30)`), so a member's voting issue can be missing from their list (seen on the emulator).
+- With today's test data, the first run after the migration date cancels every chat (none has an option) and every voting issue (none has 30 % voted). Proposing options and voting first avoids that, and so does prolonging again.
+
+### Author's steps after merging (order matters)
+1. **Migration first:**
+
+   ```
+   python scripts/migrate_l1.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live
+   ```
+
+   That is the dry run. Then run it again with `--apply --report specs/tasks/L1-migration-report-live.md`, then the dry run again (no changes). The live voting issues have deadlines in June 2026. If the deadline run is deployed before the migration, its first run (00:30) cancels them all.
+2. **Then deploy:** `firebase deploy --only "functions,hosting" --project project-a3d59130-5adf-4677-9e2`. This creates `closeExpiredTopics`; the CLI may ask to enable Cloud Scheduler.
+3. **Smoke test** in a new incognito window:
+   - the Deadline window shows 30 % and asks before carrying an action out;
+   - the lists show the new deadlines;
+   - the next morning, the function log shows the run (`firebase functions:log --only closeExpiredTopics`).
+
 ## A1 v2 (roadmap stage 2): one ISR, computed on the server (2026-11-08)
 
 Branch `a1-one-isr`. Spec: `specs/tasks/A1-canonical-isr.md` (v2). Decisions: author 2026-11-08, as recommended.

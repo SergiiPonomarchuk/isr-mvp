@@ -1,6 +1,6 @@
 # SPEC L1: deadlines and the public's management decisions
 
-Status: APPROVED 2026-11-09 (author: decisions 1-5, 8, 9 given, decision 3 corrected to 1 option; the recommendations 6, 7, 10-13 approved).
+Status: IMPLEMENTED on branch `l1-deadlines` 2026-11-09 (emulator end to end passed); live migration, deploy and smoke test pending (author). APPROVED 2026-11-09 (author: decisions 1-5, 8, 9 given, decision 3 corrected to 1 option; the recommendations 6, 7, 10-13 approved).
 Branch: l1-deadlines (from main at `42128f4`; never main)
 Roadmap: follow-up of stage 2 ([ROADMAP-demo.md](../ROADMAP-demo.md)). The D1 cycle has to close by itself: a topic that reaches its deadline must move on. Effort estimate: 3-5 developer-days.
 
@@ -131,9 +131,16 @@ Each decision is marked *author* (given 2026-11-09) or *recommended, approved* (
 ## 9. Status log
 
 - Plan approved: 2026-11-09 (author; decision 3 corrected to 1 option).
-- Implementation: ___
-- Tests: ___
-- Emulator end to end: ___
-- Migration (emulator): ___
-- CHANGES.md: ___
-- Deviations: ___
+- Implementation: R1-R12 on branch `l1-deadlines`: `functions/lifecycle.js` (+ `prototype/js/lifecycle.js`), `functions/deadlines.js`, `closeExpiredTopics` and the chat deadline in `functions/index.js`, `functions/tools/close_expired.js`, the Deadline window and dates in `prototype/js/main.js`, `scripts/migrate_l1.py`.
+- Tests: Node 32 (8 new: dates and time zone, phase, voting outcome, management decisions, deadline outcome, the voting issue fields, browser copy identical); Python 48 (7 new: the port on the shared fixture `tests/fixtures/lifecycle_cases.json`, the migration plan, a second run, prolonging again).
+- Emulator end to end (2026-11-09, after the L1 migration):
+  - AC4: five topics got a deadline of 2026-11-08 and `tools/close_expired.js --today 2026-11-09` ran. A chat with 1 option moved to voting (deadline 2026-11-16, issue created with that option); a chat without options was canceled (`cancel_reason: "deadline"`); a voting issue with 46.2 % voted moved to ToDo and the A1 trigger stored its tally and winner; a tie at 37 % got 7 more days (2026-11-15); 11.4 % voted was canceled. Every change left a `lifecycle` entry on both documents; a second run changed nothing.
+  - AC3 (browser, two adopted members): the window shows the 30 % rule and the deadline of the phase; a press at 5.1 % and one at 15.4 % were stored without a question and the window stayed open; a press that would bring +1 Week to 42.5 % asked first, declining stored nothing, accepting moved the voting deadline from 2026-12-09 to 2026-12-16 on both documents; Start Voting was disabled in a chat without options and enabled with 1; Finish Voting was disabled below 30 % voted and on a tie ("the vote is tied"); a chat canceled at its deadline was struck through in the list and offered only Reactivate, which at 6.5 % was stored and at 31.8 % (after the question) brought it back with a deadline of 2026-11-16; the Chat list shows "Ends: 09.12.2026" and "Deadline passed"; the create form defaults to 09.12.2026, and `createIssue` without a deadline wrote 2026-12-09 to the issue and the discussion.
+- Migration (emulator): dry run [L1-migration-report.md](L1-migration-report.md) (113 chats and 77 voting topics prolonged to 2026-12-09, 77 + 1 discussion statuses set); apply: 269 documents; second run: no changes. Its preview: on 2026-12-10 every chat (no options) and every voting issue (none has 30 % voted) would be canceled.
+- CHANGES.md: written.
+- Deviations and clarifications:
+  - A tie at the deadline extends from the later of the deadline and yesterday, so a stale deadline gets today + 6 instead of a date that has already passed.
+  - A chat canceled at its deadline: only the discussion is canceled; an app-created issue document keeps status `open` and gets the `lifecycle` entry (as Cancel Issue in Chat does as built).
+  - R4 "both documents": written when the issue document exists (seeded chats have none).
+  - The confirmation uses the browser's confirm dialog.
+  - Testing: the emulator does not fire schedules, so AC4 used `tools/close_expired.js`; the tie check in the browser needed issue 16 listed temporarily, because the Voting list only considers the 30 newest issues (finding in section 7). Emulator test data was changed for AC3/AC4 (votes, proposals, two ISR values in public 16, one test issue).
