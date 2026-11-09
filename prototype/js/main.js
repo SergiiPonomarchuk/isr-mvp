@@ -228,11 +228,11 @@ function getMostUrgentTask(tasks) {
 }
 
 function isUrgentDate(dateStr) {
+  // L1: the real date (was frozen at 2026-06-05).
   if (!dateStr) return false;
-  const target = new Date(dateStr);
-  const today = new Date("2026-06-05");
-  const diffTime = target - today;
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const ymd = String(dateStr).slice(0, 10);
+  if (!Lifecycle.isDate(ymd)) return false;
+  const diffDays = Lifecycle.daysBetween(Lifecycle.todayIn(Lifecycle.TIME_ZONE), ymd);
   return diffDays >= 0 && diffDays <= 3;
 }
 
@@ -3086,6 +3086,7 @@ function initTopicDetailViews() {
     const db = firebase.firestore();
 
     let currentDiscData = null;
+    let currentPhaseIssue = null; // L1: the issue doc in Voting and ToDo (deadline, votes, options)
     let cachedMemberData = null;
     let activeModalType = null;
     let replyToMsgId = null;
@@ -3516,7 +3517,9 @@ function initTopicDetailViews() {
 
     function formatDeadlineDisplay(endsStr) {
       if (!endsStr || endsStr === "Ongoing" || endsStr === "Active") return endsStr || "Ongoing";
-      return formatDateWithSetting(endsStr);
+      const shown = formatDateWithSetting(endsStr);
+      // L1: an expired topic waits for the server's daily deadline run.
+      return Lifecycle.isExpired(endsStr, Lifecycle.todayIn(Lifecycle.TIME_ZONE)) ? shown + " (deadline passed)" : shown;
     }
 
     function closeOverlayModal() {
@@ -3539,266 +3542,124 @@ function initTopicDetailViews() {
       openIsrModal(disc, null, true);
     }
 
+    // L1: the phase the Deadline window acts on (an inactive topic keeps the phase it was canceled in).
+    function deadlinePhase(disc) {
+      if (disc && disc.status === 'inactive') {
+        if (disc.previous_status === 'in_process') return 'voting';
+        if (disc.previous_status === 'approved' || disc.previous_status === 'tasks') return 'tasks';
+        return 'chat';
+      }
+      return kind;
+    }
+
+    // L1: input of Lifecycle.managementOutcome (prototype/js/lifecycle.js, shared with the server).
+    function deadlineContext(disc, issue, votesMap) {
+      const phase = deadlinePhase(disc);
+      const isrByUid = {};
+      Object.keys(disc.isr_scores || {}).forEach(u => { isrByUid[String(u)] = disc.isr_scores[u]; });
+      let votingResult = null;
+      if (phase === 'voting' && issue) {
+        const votes = {};
+        Object.keys(issue.votes || {}).forEach(u => { votes[String(u)] = issue.votes[u]; });
+        votingResult = Lifecycle.votingOutcome(votes, isrByUid, (issue.options || []).length).result;
+      }
+      return {
+        phase: phase,
+        status: disc.status,
+        cancelReason: disc.cancel_reason,
+        votes: votesMap || {},
+        isrByUid: isrByUid,
+        optionCount: (disc.options_v2 || []).length,
+        votingResult: votingResult
+      };
+    }
+
     async function submitDeadlineVote(voteType) {
   const currentUserId = safeGetStorage('userId') || "1";
   const discRef = db.collection("discussions").doc(topicId);
   const issueRef = db.collection("issues").doc(topicId);
+  const DELETE = firebase.firestore.FieldValue.delete();
+  const today = Lifecycle.todayIn(Lifecycle.TIME_ZONE);
 
   try {
-    await db.runTransaction(async (transaction) => {
+    const after = await db.runTransaction(async (transaction) => {
       const doc = await transaction.get(discRef);
-      if (!doc.exists) return;
-
+      if (!doc.exists) return null;
+      const issueDoc = await transaction.get(issueRef);
       const data = doc.data();
-      const isrScoresMap = data.isr_scores || {};
-      let totalIsrSum = 0;
-      for (const uid in isrScoresMap) {
-        totalIsrSum += parseFloat(isrScoresMap[uid]) || 0;
-      }
+      const issue = issueDoc.exists ? issueDoc.data() : null;
+      const phase = deadlinePhase(data);
 
-      let votesMap = data.deadline_votes || {};
-      const currentVote = votesMap[currentUserId];
-
-      if (currentVote === voteType) {
+      const votesMap = Object.assign({}, data.deadline_votes || {});
+      if (votesMap[currentUserId] === voteType) {
         delete votesMap[currentUserId];
       } else {
         votesMap[currentUserId] = voteType;
       }
 
-      // Recalculate sums
-      let plus1WeekSum = 0;
-      let startVotingSum = 0;
-      let backToChatSum = 0;
-      let finishVotingSum = 0;
-      let cancelIssueSum = 0;
+      // One rule set: at least 30 % of the public's ISR pool; Start Voting needs an option;
+      // Finish Voting needs a passing vote; a deadline-canceled topic only offers Reactivate.
+      const outcome = Lifecycle.managementOutcome(deadlineContext(data, issue, votesMap));
+      const updateFields = { deadline_votes: votesMap };
+      const issueFields = {};
+      let close = false, toList = false;
 
-      for (const uid in votesMap) {
-        const v = votesMap[uid];
-        const userIsrScore = parseFloat(isrScoresMap[uid]) || 0;
-        if (v === 'plus_1_week') {
-          plus1WeekSum += userIsrScore;
-        } else if (v === 'start_voting') {
-          startVotingSum += userIsrScore;
-        } else if (v === 'back_to_chat') {
-          backToChatSum += userIsrScore;
-        } else if (v === 'finish_voting') {
-          finishVotingSum += userIsrScore;
-        } else if (v === 'cancel_issue') {
-          cancelIssueSum += userIsrScore;
+      if (outcome.action === 'reactivate') {
+        const origStatus = data.previous_status || (phase === 'voting' ? 'in_process' : (phase === 'tasks' ? 'approved' : 'discussion'));
+        const newEnds = Lifecycle.addDays(today, Lifecycle.EXTEND_DAYS);
+        Object.assign(updateFields, { status: origStatus, ends: newEnds, deadline_votes: {}, previous_status: DELETE, cancel_reason: DELETE });
+        Object.assign(issueFields, { ends: newEnds, deadline_votes: {} });
+        if (origStatus === 'in_process' || origStatus === 'approved' || origStatus === 'tasks') {
+          Object.assign(issueFields, { status: origStatus, previous_status: DELETE, cancel_reason: DELETE });
         }
+        close = toList = true;
+      } else if (outcome.action === 'cancel_issue') {
+        const prevStatus = phase === 'voting' ? 'in_process' : (phase === 'tasks' ? 'approved' : 'discussion');
+        Object.assign(updateFields, { status: 'inactive', previous_status: prevStatus });
+        if (phase === 'voting' || phase === 'tasks') {
+          Object.assign(issueFields, { status: 'inactive', previous_status: prevStatus, deadline_votes: votesMap });
+        }
+        close = toList = true;
+      } else if (outcome.action === 'plus_1_week') {
+        // R4: +1 week from the deadline of the current phase, written to both documents.
+        const phaseEnds = phase === 'voting' ? ((issue && issue.ends) || data.ends) : data.ends;
+        const newEnds = Lifecycle.extendDeadline(phaseEnds, today);
+        Object.assign(updateFields, { ends: newEnds, deadline_votes: {} });
+        Object.assign(issueFields, { ends: newEnds, deadline_votes: {} });
+        close = true;
+      } else if (outcome.action === 'start_voting') {
+        const newEnds = Lifecycle.addDays(today, Lifecycle.EXTEND_DAYS);
+        Object.assign(updateFields, { status: 'Voting', ends: newEnds, deadline_votes: {} });
+        const issueData = Lifecycle.votingIssueFields(data, newEnds, new Date().toISOString());
+        if (issue) transaction.update(issueRef, issueData); else transaction.set(issueRef, issueData);
+        close = toList = true;
+      } else if (outcome.action === 'back_to_chat') {
+        const newEnds = Lifecycle.addDays(today, Lifecycle.EXTEND_DAYS);
+        Object.assign(updateFields, { status: 'discussion', ends: newEnds, deadline_votes: {} });
+        Object.assign(issueFields, { status: 'discussion', ends: newEnds, deadline_votes: {}, votes: {} });
+        close = toList = true;
+      } else if (outcome.action === 'finish_voting') {
+        // The A1 trigger stores the scores, the winner, the tally and the tasks.
+        Object.assign(updateFields, { status: 'approved', deadline_votes: {} });
+        Object.assign(issueFields, { status: 'approved', deadline_votes: {} });
+        close = toList = true;
+      } else if (phase === 'voting' || phase === 'tasks') {
+        // No action yet: the proposal is stored (the issue keeps a copy, as built).
+        issueFields.deadline_votes = votesMap;
       }
 
-      let updateFields = {
-        deadline_votes: votesMap
-      };
-
-      if (totalIsrSum > 0) {
-        let transitionTriggered = false;
-        const cancelRatio = cancelIssueSum / totalIsrSum;
-
-        if (data.status === 'inactive') {
-          if (cancelRatio <= 0.10) {
-            transitionTriggered = true;
-            // Reactivate issue!
-            const newEndsDate = new Date();
-            newEndsDate.setDate(newEndsDate.getDate() + 7);
-            const newEndsStr = formatDateToString(newEndsDate);
-
-            const origStatus = data.previous_status || (kind === 'voting' ? 'in_process' : (kind === 'tasks' ? 'approved' : 'discussion'));
-            updateFields.status = origStatus;
-            updateFields.ends = newEndsStr;
-            updateFields.previous_status = firebase.firestore.FieldValue.delete();
-            updateFields.deadline_votes = {}; // reset votes on reactivation
-
-            if (origStatus === 'in_process' || origStatus === 'approved' || origStatus === 'tasks') {
-              transaction.update(issueRef, {
-                status: origStatus,
-                ends: newEndsStr,
-                deadline_votes: {},
-                previous_status: firebase.firestore.FieldValue.delete()
-              });
-            }
-
-            setTimeout(() => {
-              closeOverlayModal();
-              restoreTopicListView();
-            }, 100);
-          } else {
-            // Still inactive, just update the vote map
-            if (kind === 'voting' || kind === 'tasks') {
-              transaction.update(issueRef, {
-                deadline_votes: votesMap
-              });
-            }
-          }
-        } else {
-          // Normal active flows...
-          if (cancelRatio > 0.10) {
-            transitionTriggered = true;
-            // Cancel issue (become inactive)
-            updateFields.status = 'inactive';
-            
-            let prevStatus = 'discussion';
-            if (kind === 'voting') prevStatus = 'in_process';
-            else if (kind === 'tasks') prevStatus = 'approved';
-            
-            updateFields.previous_status = prevStatus;
-
-            if (kind === 'voting' || kind === 'tasks') {
-              transaction.update(issueRef, {
-                status: 'inactive',
-                previous_status: prevStatus,
-                deadline_votes: votesMap
-              });
-            }
-
-            setTimeout(() => {
-              closeOverlayModal();
-              restoreTopicListView();
-            }, 100);
-          } else if ((plus1WeekSum / totalIsrSum) > 0.10) {
-            transitionTriggered = true;
-            let currentDeadlineDate = new Date();
-            if (data.ends && data.ends !== "Ongoing") {
-              const parts = data.ends.split('-');
-              if (parts.length === 3) {
-                currentDeadlineDate = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-              }
-            }
-            currentDeadlineDate.setDate(currentDeadlineDate.getDate() + 7);
-            const newEndsStr = formatDateToString(currentDeadlineDate);
-            
-            updateFields.ends = newEndsStr;
-            updateFields.deadline_votes = {}; // reset votes
-
-            // Update issue deadline as well if in voting
-            if (kind === 'voting') {
-              transaction.update(issueRef, {
-                ends: newEndsStr,
-                deadline_votes: {}
-              });
-            }
-
-            setTimeout(() => { closeOverlayModal(); }, 100);
-          } else if ((startVotingSum / totalIsrSum) > 0.10 && kind === 'chat') {
-            transitionTriggered = true;
-            const newEndsDate = new Date();
-            newEndsDate.setDate(newEndsDate.getDate() + 7);
-            const newEndsStr = formatDateToString(newEndsDate);
-
-            updateFields.status = 'Voting';
-            updateFields.ends = newEndsStr;
-            updateFields.deadline_votes = {}; // reset votes
-
-            // Create/update document in issues collection
-            const issueDoc = await transaction.get(issueRef);
-            
-            let issueOptions = [];
-            if (data.options_v2 && data.options_v2.length > 0) {
-              issueOptions = data.options_v2.map(opt => ({
-                label: opt.title,
-                score: 0,
-                author_uid: opt.author_uid || "",
-                author_name: opt.author_name || "System",
-                budget: opt.budget || "N/A",
-                funding_source: opt.funding_source || "",
-                resources_needed: opt.resources_needed || [],
-                description: opt.description || []
-              }));
-            } else {
-              issueOptions = [
-                { label: "Proceed with proposed fix", score: 0, author_name: "System", budget: "N/A", description: [] },
-                { label: "Reject proposal", score: 0, author_name: "System", budget: "N/A", description: [] },
-                { label: "Request more details", score: 0, author_name: "System", budget: "N/A", description: [] }
-              ];
-            }
-
-            const issueData = {
-              title: data.topic || "",
-              description: data.description || "",
-              category: data.category || "General",
-              status: 'in_process', // active for voting
-              ends: newEndsStr,
-              submitter_id: data.creator_uid || "system",
-              created_at: new Date().toISOString(),
-              participants: data.participants || [],
-              options: issueOptions,
-              deadline_votes: {}, // reset votes
-              w_demographic: data.w_demographic !== undefined ? data.w_demographic : 0.2,
-              w_geographic: data.w_geographic !== undefined ? data.w_geographic : 0.6,
-              w_semantic: data.w_semantic !== undefined ? data.w_semantic : 0.1,
-              w_social: data.w_social !== undefined ? data.w_social : 0.1,
-              w_relevance: data.w_relevance !== undefined ? data.w_relevance : 0.4,
-              w_expertise: data.w_expertise !== undefined ? data.w_expertise : 0.3,
-              w_contribution: data.w_contribution !== undefined ? data.w_contribution : 0.3,
-              last_message_sender_name: data.last_message_sender_name || "",
-              last_message_sender_uid: data.last_message_sender_uid || "",
-              last_message_text: data.last_message_text || "",
-              last_message_timestamp: data.last_message_timestamp || "",
-              relevance_scores: data.relevance_scores || {},
-              isr_scores: data.isr_scores || {},
-              message_count: data.message_count || 0
-            };
-
-            if (issueDoc.exists) {
-              transaction.update(issueRef, issueData);
-            } else {
-              transaction.set(issueRef, issueData);
-            }
-
-            setTimeout(() => {
-              closeOverlayModal();
-              restoreTopicListView();
-            }, 100);
-          } else if ((backToChatSum / totalIsrSum) > 0.10 && kind === 'voting') {
-            transitionTriggered = true;
-            // Transition back to Chat
-            const newEndsDate = new Date();
-            newEndsDate.setDate(newEndsDate.getDate() + 7);
-            const newEndsStr = formatDateToString(newEndsDate);
-
-            updateFields.status = 'discussion';
-            updateFields.ends = newEndsStr;
-            updateFields.deadline_votes = {}; // reset votes
-
-            transaction.update(issueRef, {
-              status: 'discussion',
-              ends: newEndsStr,
-              deadline_votes: {},
-              votes: {} // reset votes
-            });
-
-            setTimeout(() => {
-              closeOverlayModal();
-              restoreTopicListView();
-            }, 100);
-          } else if ((finishVotingSum / totalIsrSum) > 0.10 && kind === 'voting') {
-            transitionTriggered = true;
-            // Transition to Approved
-            updateFields.status = 'approved';
-            updateFields.deadline_votes = {}; // reset votes
-
-            transaction.update(issueRef, {
-              status: 'approved',
-              deadline_votes: {}
-            });
-
-            setTimeout(() => {
-              closeOverlayModal();
-              restoreTopicListView();
-            }, 100);
-          }
-        }
-
-        if (!transitionTriggered && data.status !== 'inactive' && (kind === 'voting' || kind === 'tasks')) {
-          transaction.update(issueRef, {
-            deadline_votes: votesMap
-          });
-        }
+      if (issue && outcome.action !== 'start_voting' && Object.keys(issueFields).length > 0) {
+        transaction.update(issueRef, issueFields);
       }
-
       transaction.update(discRef, updateFields);
+      return { close: close, toList: toList };
     });
+    if (after && after.close) {
+      setTimeout(() => {
+        closeOverlayModal();
+        if (after.toList) restoreTopicListView();
+      }, 100);
+    }
   } catch (err) {
     console.error("Transaction failed:", err);
     alert("Transaction failed: " + err.message);
@@ -3816,18 +3677,21 @@ function initTopicDetailViews() {
 
   if (!proposalModalOverlay || !proposalModalCloseBtn || !proposalModalTitle || !proposalModalBody) return;
 
-  let modalKind = kind;
-  if (disc.status === 'inactive') {
-    if (disc.previous_status === 'in_process') {
-      modalKind = 'voting';
-    } else if (disc.previous_status === 'approved' || disc.previous_status === 'tasks') {
-      modalKind = 'tasks';
-    } else {
-      modalKind = 'chat';
-    }
-  }
+  // L1: the rules come from prototype/js/lifecycle.js (the same module the server's deadline run uses).
+  const modalKind = deadlinePhase(disc);
+  const issue = currentPhaseIssue;
+  const currentUserId = safeGetStorage('userId') || "1";
+  const votesMap = disc.deadline_votes || {};
+  const outcome = Lifecycle.managementOutcome(deadlineContext(disc, issue, votesMap));
+  const userVote = votesMap[currentUserId];
+  const deadlineCanceled = disc.status === 'inactive' && disc.cancel_reason === 'deadline';
+  const phaseEnds = modalKind === 'chat' ? disc.ends : ((issue && issue.ends) || disc.ends);
+  const thresholdPct = Math.round(Lifecycle.MANAGEMENT_THRESHOLD * 100);
+  const pctOf = (o, a) => ((o.share[a] || 0) * 100).toFixed(1);
 
-  if (modalKind === 'tasks') {
+  if (deadlineCanceled) {
+    proposalModalTitle.textContent = "Reactivate Issue Voting";
+  } else if (modalKind === 'tasks') {
     proposalModalTitle.textContent = "Cancel Issue Voting";
   } else if (modalKind === 'voting') {
     proposalModalTitle.textContent = "Deadline & Back to Chat Voting";
@@ -3835,140 +3699,58 @@ function initTopicDetailViews() {
     proposalModalTitle.textContent = "Deadline Adjustment & Voting";
   }
 
-  const currentUserId = safeGetStorage('userId') || "1";
-  const isrScoresMap = disc.isr_scores || {};
-  let totalIsrSum = 0;
-  for (const uid in isrScoresMap) {
-    totalIsrSum += parseFloat(isrScoresMap[uid]) || 0;
-  }
-
-  const votesMap = disc.deadline_votes || {};
-  let plus1WeekSum = 0;
-  let startVotingSum = 0;
-  let backToChatSum = 0;
-  let finishVotingSum = 0;
-  let cancelIssueSum = 0;
-
-  for (const uid in votesMap) {
-    const v = votesMap[uid];
-    const userIsrScore = parseFloat(isrScoresMap[uid]) || 0;
-    if (v === 'plus_1_week') {
-      plus1WeekSum += userIsrScore;
-    } else if (v === 'start_voting') {
-      startVotingSum += userIsrScore;
-    } else if (v === 'back_to_chat') {
-      backToChatSum += userIsrScore;
-    } else if (v === 'finish_voting') {
-      finishVotingSum += userIsrScore;
-    } else if (v === 'cancel_issue') {
-      cancelIssueSum += userIsrScore;
-    }
-  }
-
-  const plus1WeekPct = totalIsrSum > 0 ? (plus1WeekSum / totalIsrSum) * 100 : 0;
-  const startVotingPct = totalIsrSum > 0 ? (startVotingSum / totalIsrSum) * 100 : 0;
-  const backToChatPct = totalIsrSum > 0 ? (backToChatSum / totalIsrSum) * 100 : 0;
-  const finishVotingPct = totalIsrSum > 0 ? (finishVotingSum / totalIsrSum) * 100 : 0;
-  const cancelIssuePct = totalIsrSum > 0 ? (cancelIssueSum / totalIsrSum) * 100 : 0;
-  const userVote = votesMap[currentUserId];
-
-  let descriptionText = "Adjust the discussion deadline, initiate the voting stage, or cancel this issue.";
-  let secondRowHtml = "";
-  let showPlus1WeekButton = true;
-
-  if (modalKind === 'voting') {
+  let descriptionText;
+  if (deadlineCanceled) {
+    const log = Array.isArray(disc.lifecycle) ? disc.lifecycle : [];
+    const last = log.length ? log[log.length - 1] : null;
+    descriptionText = `This issue was canceled at its deadline${last && last.reason ? ' (' + escapeHtml(last.reason) + ')' : ''}. ` +
+      `It comes back for one more week when Reactivate is supported by at least ${thresholdPct}% of the public's ISR-score.`;
+  } else if (modalKind === 'voting') {
     descriptionText = "Adjust the voting deadline, transition back to the chat discussion, finish voting, or cancel this issue.";
-    secondRowHtml = `
-        <!-- Back to Chat Button -->
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--surface-soft); border:1px solid var(--border); padding:12px; border-radius:8px;">
-          <button type="button" class="deadline-vote-btn ${userVote === 'back_to_chat' ? 'active' : ''}" data-vote="back_to_chat">
-            ${userVote === 'back_to_chat' ? '✓ ' : ''}Back to Chat
-          </button>
-          <div style="text-align:right; min-width:120px;">
-            <div style="font-size:0.95rem; font-weight:700; color:var(--text);">${backToChatSum.toFixed(2)} ISR</div>
-            <div style="font-size:0.75rem; color:var(--text-muted);">${backToChatPct.toFixed(1)}% of total</div>
-          </div>
-        </div>
-        <!-- Finish Voting Button -->
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--surface-soft); border:1px solid var(--border); padding:12px; border-radius:8px;">
-          <button type="button" class="deadline-vote-btn ${userVote === 'finish_voting' ? 'active' : ''}" data-vote="finish_voting">
-            ${userVote === 'finish_voting' ? '✓ ' : ''}Finish Voting
-          </button>
-          <div style="text-align:right; min-width:120px;">
-            <div style="font-size:0.95rem; font-weight:700; color:var(--text);">${finishVotingSum.toFixed(2)} ISR</div>
-            <div style="font-size:0.75rem; color:var(--text-muted);">${finishVotingPct.toFixed(1)}% of total</div>
-          </div>
-        </div>
-    `;
   } else if (modalKind === 'tasks') {
     descriptionText = "Vote to cancel this issue and mark it as inactive.";
-    showPlus1WeekButton = false;
-    secondRowHtml = "";
   } else {
-    secondRowHtml = `
-        <!-- Start Voting Button -->
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--surface-soft); border:1px solid var(--border); padding:12px; border-radius:8px;">
-          <button type="button" class="deadline-vote-btn ${userVote === 'start_voting' ? 'active' : ''}" data-vote="start_voting">
-            ${userVote === 'start_voting' ? '✓ ' : ''}Start Voting
-          </button>
-          <div style="text-align:right; min-width:120px;">
-            <div style="font-size:0.95rem; font-weight:700; color:var(--text);">${startVotingSum.toFixed(2)} ISR</div>
-            <div style="font-size:0.75rem; color:var(--text-muted);">${startVotingPct.toFixed(1)}% of total</div>
-          </div>
-        </div>
-    `;
+    descriptionText = "Adjust the discussion deadline, initiate the voting stage, or cancel this issue.";
   }
 
-  const cancelIssueButtonHtml = `
-        <!-- Cancel Issue Button -->
+  const rowHtml = (action) => {
+    const blockedReason = outcome.blocked[action];
+    const disabled = !!blockedReason && userVote !== action;
+    const styles = [];
+    if (action === 'cancel_issue') styles.push('color:var(--error, #e53e3e);');
+    if (disabled) styles.push('opacity:0.55; cursor:not-allowed;');
+    return `
         <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--surface-soft); border:1px solid var(--border); padding:12px; border-radius:8px;">
-          <button type="button" class="deadline-vote-btn ${userVote === 'cancel_issue' ? 'active' : ''}" data-vote="cancel_issue" style="color:var(--error, #e53e3e);">
-            ${userVote === 'cancel_issue' ? '✓ ' : ''}Cancel Issue
+          <button type="button" class="deadline-vote-btn ${userVote === action ? 'active' : ''}" data-vote="${action}"${disabled ? ' disabled data-blocked="1"' : ''}${styles.length ? ` style="${styles.join(' ')}"` : ''}>
+            ${userVote === action ? '✓ ' : ''}${Lifecycle.ACTION_LABELS[action]}${blockedReason ? `<br><span style="font-size:0.72rem; font-weight:400;">${escapeHtml(blockedReason)}</span>` : ''}
           </button>
           <div style="text-align:right; min-width:120px;">
-            <div style="font-size:0.95rem; font-weight:700; color:var(--text);">${cancelIssueSum.toFixed(2)} ISR</div>
-            <div style="font-size:0.75rem; color:var(--text-muted);">${cancelIssuePct.toFixed(1)}% of total</div>
+            <div style="font-size:0.95rem; font-weight:700; color:var(--text);">${(outcome.support[action] || 0).toFixed(2)} ISR</div>
+            <div style="font-size:0.75rem; color:var(--text-muted);">${pctOf(outcome, action)}% of total</div>
           </div>
-        </div>
-  `;
-
-  let buttonsListHtml = "";
-  if (showPlus1WeekButton) {
-    buttonsListHtml += `
-        <!-- +1 Week Button -->
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--surface-soft); border:1px solid var(--border); padding:12px; border-radius:8px;">
-          <button type="button" class="deadline-vote-btn ${userVote === 'plus_1_week' ? 'active' : ''}" data-vote="plus_1_week">
-            ${userVote === 'plus_1_week' ? '✓ ' : ''}+1 Week
-          </button>
-          <div style="text-align:right; min-width:120px;">
-            <div style="font-size:0.95rem; font-weight:700; color:var(--text);">${plus1WeekSum.toFixed(2)} ISR</div>
-            <div style="font-size:0.75rem; color:var(--text-muted);">${plus1WeekPct.toFixed(1)}% of total</div>
-          </div>
-        </div>
-    `;
-  }
-  buttonsListHtml += secondRowHtml;
-  buttonsListHtml += cancelIssueButtonHtml;
+        </div>`;
+  };
+  const buttonsListHtml = outcome.buttons.map(rowHtml).join('');
 
   proposalModalBody.innerHTML = `
     <div style="display:flex; flex-direction:column; gap:16px; color:var(--text);">
       <div style="font-size:0.9rem; color:var(--text-muted); border-bottom:1px solid var(--border); padding-bottom:8px; margin-bottom:8px;">
         ${descriptionText}
       </div>
-      
+
       <div style="background:var(--surface-soft); padding:16px; border-radius:8px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
         <span style="font-size:0.9rem; font-weight:600; color:var(--text-muted);">Current Deadline:</span>
-        <span style="font-size:1.1rem; font-weight:700; color:var(--text);">${formatDeadlineDisplay(disc.ends)}</span>
+        <span style="font-size:1.1rem; font-weight:700; color:var(--text);">${formatDeadlineDisplay(phaseEnds)}</span>
       </div>
-      
+
       <div style="display:flex; flex-direction:column; gap:12px;">
         ${buttonsListHtml}
       </div>
-      
+
       <div style="font-size:0.8rem; color:var(--text-muted); line-height:1.4; background:var(--surface-soft); padding:10px; border-radius:6px; border:1px solid var(--border);">
-        💡 <b>Rule:</b> Action triggers automatically when support exceeds <b>10%</b> of the ad-hoc public's total ISR-score (${totalIsrSum.toFixed(2)} ISR).
+        💡 <b>Rule:</b> An action is carried out when its support reaches at least <b>${thresholdPct}%</b> of the ad-hoc public's total ISR-score (${outcome.pool.toFixed(2)} ISR). You are asked before your press carries one out.
       </div>
-      
+
       <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:8px;">
         <button type="button" class="topic-back-btn" id="deadline-modal-close" style="padding:8px 16px; border-radius:8px; cursor:pointer; border:1px solid var(--border); background:var(--surface-muted); color:var(--text);">Close</button>
       </div>
@@ -3991,18 +3773,38 @@ function initTopicDetailViews() {
     }
   };
 
+  // R3: a press that would carry out an action asks first; declining stores nothing.
+  const confirmText = (next, voteType) => {
+    const label = Lifecycle.ACTION_LABELS[next.action];
+    if (next.action === 'reactivate' && !deadlineCanceled) {
+      return `Without your vote, support for "Cancel Issue" falls to ${pctOf(next, 'cancel_issue')}% (below ${thresholdPct}%), ` +
+        `so the issue will be reactivated now with a deadline in ${Lifecycle.EXTEND_DAYS} days. Continue?`;
+    }
+    if (next.action === voteType) {
+      return `With your support, "${label}" reaches ${pctOf(next, next.action)}% of the public's ISR-score ` +
+        `(at least ${thresholdPct}% needed) and will be carried out now. Continue?`;
+    }
+    return `"${label}" has ${pctOf(next, next.action)}% of the public's ISR-score (at least ${thresholdPct}% needed) ` +
+      `and will be carried out now. Continue?`;
+  };
+
   const buttons = proposalModalBody.querySelectorAll('.deadline-vote-btn');
   buttons.forEach(btn => {
     btn.addEventListener('click', async function(e) {
       e.preventDefault();
       const voteType = this.getAttribute('data-vote');
+      const nextVotes = Object.assign({}, votesMap);
+      if (nextVotes[currentUserId] === voteType) delete nextVotes[currentUserId];
+      else nextVotes[currentUserId] = voteType;
+      const next = Lifecycle.managementOutcome(deadlineContext(disc, issue, nextVotes));
+      if (next.action && !window.confirm(confirmText(next, voteType))) return;
       buttons.forEach(b => b.disabled = true);
       try {
         await submitDeadlineVote(voteType);
       } catch (err) {
         console.error("Error casting deadline vote:", err);
       } finally {
-        buttons.forEach(b => b.disabled = false);
+        buttons.forEach(b => b.disabled = b.hasAttribute('data-blocked'));
       }
     });
   });
@@ -4428,11 +4230,7 @@ function initTopicDetailViews() {
                 description: opt.description || []
               }));
             } else {
-              baseOptions = [
-                { label: "Proceed with proposed fix", score: 0, author_name: "System", budget: "N/A", description: [] },
-                { label: "Reject proposal", score: 0, author_name: "System", budget: "N/A", description: [] },
-                { label: "Request more details", score: 0, author_name: "System", budget: "N/A", description: [] }
-              ];
+              baseOptions = []; // L1: no invented options
             }
 
             // A1: the live tally uses the shared module (window.ISR, prototype/js/isr.js), the same
@@ -4591,6 +4389,7 @@ function initTopicDetailViews() {
           } else {
             currentIssueData = null;
           }
+          currentPhaseIssue = currentIssueData;
           updateVotingUI();
         }, err => {
           console.error("Listen to issue details failed:", err);
@@ -4897,6 +4696,7 @@ function initTopicDetailViews() {
           } else {
             currentIssueRaw = null;
           }
+          currentPhaseIssue = currentIssueRaw;
           updateTasksUI();
         });
 
@@ -4949,7 +4749,8 @@ function initTopicDetailViews() {
     const membersBlock = modalBody.querySelector('#create-results-members-block');
     const membersList = modalBody.querySelector('#create-members-list');
 
-    let newTopicDeadline = "";
+    // L1 (decision 8): every chat has a deadline; the default is today + 1 month.
+    let newTopicDeadline = Lifecycle.chatDeadline(null, Lifecycle.todayIn(Lifecycle.TIME_ZONE));
     newTopicGeo = [47.553832, 7.606599]; // default Basel center
     window.newTopicGeo = newTopicGeo;
     let suggestedParams = null;
@@ -4968,6 +4769,7 @@ function initTopicDetailViews() {
     const deadlineBtn = modalBody.querySelector('#create-meta-deadline');
     const deadlineValEl = modalBody.querySelector('#create-val-deadline');
     if (deadlineBtn && deadlineValEl) {
+      deadlineValEl.textContent = newTopicDeadline.split('-').reverse().join('.');
       deadlineBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         
@@ -5013,12 +4815,19 @@ function initTopicDetailViews() {
             alert("Please enter a valid date in dd.mm.yyyy format (e.g. 15.06.2026).");
             return;
           }
+          const todayYmd = Lifecycle.todayIn(Lifecycle.TIME_ZONE);
           if (val) {
+            const ymd = parseInputDate(val);
+            if (!Lifecycle.isDate(ymd) || ymd < todayYmd) {
+              alert("The deadline must be a valid date from today on.");
+              return;
+            }
             deadlineValEl.textContent = val;
-            newTopicDeadline = parseInputDate(val);
+            newTopicDeadline = ymd;
           } else {
-            deadlineValEl.textContent = "Deadline";
-            newTopicDeadline = "";
+            // An empty field gives the default deadline (today + 1 month).
+            newTopicDeadline = Lifecycle.chatDeadline(null, todayYmd);
+            deadlineValEl.textContent = newTopicDeadline.split('-').reverse().join('.');
           }
           popup.remove();
         };
@@ -5882,7 +5691,7 @@ function initTopicDetailViews() {
               description: description,
               location: newTopicGeo,
               submitterId: currentUserId,
-              deadline: newTopicDeadline || "Ongoing"
+              deadline: newTopicDeadline
             })
           });
           const out = await res.json().catch(() => ({}));
@@ -8178,88 +7987,8 @@ function initRealTimeDashboardSync(db, storedUid) {
 
   function formatDeadlineDisplay(endsStr) {
     if (!endsStr || endsStr === "Ongoing") return "Ongoing";
-    return formatDateWithSetting(endsStr);
-  }
-
-  async function checkAndTransitionExpiredDiscussion(topicId, freshData) {
-    const discRef = db.collection("discussions").doc(topicId);
-    try {
-      await db.runTransaction(async (transaction) => {
-        const doc = await transaction.get(discRef);
-        if (!doc.exists) return;
-        const currentData = doc.data();
-        if (currentData.status && currentData.status !== 'discussion') return; // already transitioned
-
-        const newEndsDate = new Date();
-        newEndsDate.setDate(newEndsDate.getDate() + 7);
-        const newEndsStr = formatDateToString(newEndsDate);
-
-        // Create/update document in issues collection
-        const issueRef = db.collection("issues").doc(topicId);
-        const issueDoc = await transaction.get(issueRef);
-        
-        let issueOptions = [];
-        if (currentData.options_v2 && currentData.options_v2.length > 0) {
-          issueOptions = currentData.options_v2.map(opt => ({
-            label: opt.title,
-            score: 0,
-            author_uid: opt.author_uid || "",
-            author_name: opt.author_name || "System",
-            budget: opt.budget || "N/A",
-            description: opt.description || []
-          }));
-        } else {
-          issueOptions = [
-            { label: "Proceed with proposed fix", score: 0, author_name: "System", budget: "N/A", description: [] },
-            { label: "Reject proposal", score: 0, author_name: "System", budget: "N/A", description: [] },
-            { label: "Request more details", score: 0, author_name: "System", budget: "N/A", description: [] }
-          ];
-        }
-
-        const issueData = {
-          title: currentData.topic || "",
-          description: currentData.description || "",
-          category: currentData.category || "General",
-          status: 'in_process', // active for voting
-          ends: newEndsStr,
-          submitter_id: currentData.creator_uid || "system",
-          created_at: currentData.created_at || new Date().toISOString(),
-          participants: currentData.participants || [],
-          options: issueOptions,
-          deadline_votes: {}, // reset votes
-          w_demographic: currentData.w_demographic !== undefined ? currentData.w_demographic : 0.2,
-          w_geographic: currentData.w_geographic !== undefined ? currentData.w_geographic : 0.6,
-          w_semantic: currentData.w_semantic !== undefined ? currentData.w_semantic : 0.1,
-          w_social: currentData.w_social !== undefined ? currentData.w_social : 0.1,
-          w_relevance: currentData.w_relevance !== undefined ? currentData.w_relevance : 0.4,
-          w_expertise: currentData.w_expertise !== undefined ? currentData.w_expertise : 0.3,
-          w_contribution: currentData.w_contribution !== undefined ? currentData.w_contribution : 0.3,
-          last_message_sender_name: currentData.last_message_sender_name || "",
-          last_message_sender_uid: currentData.last_message_sender_uid || "",
-          last_message_text: currentData.last_message_text || "",
-          last_message_timestamp: currentData.last_message_timestamp || "",
-          relevance_scores: currentData.relevance_scores || {},
-          isr_scores: currentData.isr_scores || {},
-          message_count: currentData.message_count || 0
-        };
-
-        if (issueDoc.exists) {
-          transaction.update(issueRef, issueData);
-        } else {
-          transaction.set(issueRef, issueData);
-        }
-
-        // Update discussions document to Voting status (moved here after reads)
-        transaction.update(discRef, {
-          status: 'Voting',
-          ends: newEndsStr,
-          deadline_votes: {} // reset votes
-        });
-      });
-      console.log(`Successfully auto-transitioned discussion ${topicId} to Voting.`);
-    } catch (err) {
-      console.error("Auto-transition transaction failed:", err);
-    }
+    const shown = formatDateWithSetting(endsStr);
+    return Lifecycle.isExpired(endsStr, Lifecycle.todayIn(Lifecycle.TIME_ZONE)) ? shown + " (deadline passed)" : shown;
   }
 
   function getTopicCategoryChip(title) {
@@ -8331,16 +8060,14 @@ function initRealTimeDashboardSync(db, storedUid) {
 
 
   function getDaysUntil(endsStr) {
-    if (!endsStr) return Infinity;
-    const today = new Date("2026-06-01T00:00:00");
-    const deadline = new Date(endsStr + "T00:00:00");
-    if (isNaN(deadline.getTime())) return Infinity;
-    const diffTime = deadline.getTime() - today.getTime();
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    // L1: the real date in Europe/Zurich (was frozen at 2026-06-01). 0 = the deadline is today.
+    if (!endsStr || !Lifecycle.isDate(endsStr)) return Infinity;
+    return Lifecycle.daysBetween(Lifecycle.todayIn(Lifecycle.TIME_ZONE), endsStr);
   }
 
   function formatDeadline(endsStr) {
     if (!endsStr) return 'Ongoing';
+    if (Lifecycle.isExpired(endsStr, Lifecycle.todayIn(Lifecycle.TIME_ZONE))) return 'Deadline passed';
     return `Ends: ${formatDateWithSetting(endsStr)}`;
   }
 
@@ -8946,18 +8673,12 @@ function initRealTimeDashboardSync(db, storedUid) {
       const data = doc.data();
       const topicId = doc.id;
       
-      // Auto-transition check for deadline
-      const isExpired = data.ends && data.ends !== 'Ongoing' && getDaysUntil(data.ends) <= 0;
-      
+      // L1: an expired chat stays listed ("Deadline passed") until the server's daily deadline run moves it.
       if (data.status === 'inactive') {
         if (data.previous_status !== 'discussion') {
           return;
         }
-      } else if (data.status === 'Voting' || isExpired) {
-        if (isExpired && data.status !== 'Voting') {
-          // Trigger transition
-          checkAndTransitionExpiredDiscussion(topicId, data);
-        }
+      } else if (data.status === 'Voting') {
         // closed as discussion (exclude from chat list)
         return;
       }
