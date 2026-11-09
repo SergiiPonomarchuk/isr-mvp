@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node --test test/*.test.js",
-    "sync:isr": "node -e \"require('fs').copyFileSync('isr.js','../prototype/js/isr.js')\"",
+    "sync:isr": "node -e \"for (const f of ['isr.js','lifecycle.js']) require('fs').copyFileSync(f,'../prototype/js/'+f)\"",
     "serve": "firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
