@@ -1,10 +1,13 @@
 const { onRequest } = require("firebase-functions/v2/https");
 const { onDocumentUpdated } = require("firebase-functions/v2/firestore");
+const { onSchedule } = require("firebase-functions/v2/scheduler");
 const admin = require("firebase-admin");
 const { FieldValue, GeoPoint } = require("firebase-admin/firestore");
 const { nearestAnchor, gScore: geoScore, withinCutoff } = require("./geo");
 const { evaluateDemographics } = require("./demographics");
 const ISR = require("./isr");
+const Lifecycle = require("./lifecycle");
+const Deadlines = require("./deadlines");
 const aiHelper = require("./ai-helper");
 const { readTextInputs, paramsFromAi, makeDraft, paramsForCreate } = require("./params");
 
@@ -274,6 +277,9 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
     // A1 (roadmap stage 2): Expertise and the member ISR on the server, with the shared
     // module (functions/isr.js), so that every display, phase vote and tally uses one number.
     const registeredAt = new Date();
+    // L1 (decision 8): every chat has a deadline; the creator's date, or today + 1 month (Europe/Zurich).
+    const chatEnds = Lifecycle.chatDeadline(typeof req.body.deadline === "string" ? req.body.deadline.trim() : null,
+      Lifecycle.todayIn(Lifecycle.TIME_ZONE, registeredAt));
     const memberUserById = new Map(uniqueUsers.map((u) => [String(u.uid), u]));
     const skillVectorsByUid = {};
     const vectorRefs = microcommunityMembers.map((m) => db.collection("user_vectors").doc(String(m.user_id)));
@@ -343,6 +349,7 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
       aggregation_reasoning: aggregation_reasoning || "",
       submitter_id: String(submitterId),
       status: "open",
+      ends: chatEnds,
       created_at: FieldValue.serverTimestamp(),
       // Expertise
       expertise_depth:  expertise_depth  || "None",
@@ -578,7 +585,7 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
       last_message_sender_name: submitterDisplayName,
       last_message_timestamp: new Date().toISOString(),
       deadline_votes: {},
-      ends: (typeof req.body.deadline === "string" && req.body.deadline.trim()) ? req.body.deadline.trim().slice(0, 64) : "Ongoing",
+      ends: chatEnds,
       w_demographic: w_D,
       w_geographic:  w_G,
       w_semantic:    w_S,
@@ -939,4 +946,17 @@ exports.onIssueStatusChange = onDocumentUpdated({ document: "issues/{issueId}", 
     }));
   }
   await event.data.after.ref.update(update);
+});
+
+
+/**
+ * L1: the daily deadline run (decisions 2-4, 7). Every chat and voting topic whose deadline
+ * (the last open day) has passed moves on: chat -> voting (at least 1 option) or canceled;
+ * voting -> ToDo (>= 30 % of the ISR pool voted and a winner), +7 days on a tie, or canceled.
+ * Rules: lifecycle.js; reads and writes: deadlines.js.
+ */
+exports.closeExpiredTopics = onSchedule({ schedule: "30 0 * * *", timeZone: Lifecycle.TIME_ZONE, region: "europe-central2", memory: "512MiB" }, async () => {
+  const today = Lifecycle.todayIn(Lifecycle.TIME_ZONE, new Date());
+  const result = await Deadlines.closeExpiredTopics(db, FieldValue, today);
+  console.log(`closeExpiredTopics ${today}: checked ${result.checked}, changed ${result.changes.length}`, JSON.stringify(result.changes));
 });
