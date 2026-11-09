@@ -161,6 +161,7 @@ Branch `l1-deadlines`. Spec: `specs/tasks/L1-deadlines-and-management-decisions.
 - Merged as PR 9. Migration applied by the author before the deploy: 269 documents; report `specs/tasks/L1-migration-report-live.md`; second dry run clean. Every chat and voting deadline is now 2026-12-09.
 - Deployed by the author: functions and hosting (live files equal main). `closeExpiredTopics` runs daily at 00:30 Europe/Zurich (europe-central2, Cloud Scheduler job enabled).
 - Browser check (read-only): the lists show the new deadlines; the Deadline window shows the 30 % rule; Start Voting and Finish Voting are disabled with their reasons.
+- Press test (author): a press below 30 % was stored without a question; a second press withdrew it.
 - First nightly run (2026-11-10): pending.
 - The live preview for 2026-12-10: 113 chats canceled (no options), 1 chat to voting, 76 voting issues canceled (9 below 30 % voted, 67 without votes).
 
