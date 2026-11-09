@@ -28,7 +28,7 @@ Spec: `specs/tasks/A1b-expertise-placeholder.md` (author: option b).
    python scripts/migrate_a1b.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply --report specs/tasks/A1b-migration-report-live.md
    ```
 
-2. Run it again without `--apply` and without `--report`. This dry run should list 0 publics; it overwrites the emulator report, so restore that file with `git checkout`.
+2. Run it again without `--apply`, with `--report "$env:TEMP1b-check.md"` so the committed reports stay as they are. It should list 0 publics.
 3. No deploy is needed.
 
 ## U4: the Voting view keeps its own messages (2026-11-09)
