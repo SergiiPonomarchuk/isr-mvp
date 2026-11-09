@@ -95,6 +95,10 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [R0-keep-alive](tasks/R0-keep-alive.md) | done 2026-11-08: merged (#2-#4), deployed, A2/A3 migrated, smoke test passed | rules, CI, backup, merge of A2/A3 |
 | [U1-smoke-test-fixes](tasks/U1-smoke-test-fixes.md) | done 2026-11-08 (#5, deployed, verified) | 10 (UI) |
 | [L1-deadlines-and-management-decisions](tasks/L1-deadlines-and-management-decisions.md) | DONE: merged (PR 9), migrated and deployed on live 2026-11-09; nightly run daily at 00:30 (first run checked 2026-11-10) | 02, 06, 10 |
+| [U2-voting-todo-list-limit](tasks/U2-voting-todo-list-limit.md) | DONE: merged (PR 10), deployed and checked on live 2026-11-09 | 10 (UI) |
+| [U3-message-sorting](tasks/U3-message-sorting.md) | DONE: merged (PR 11), deployed and checked on live 2026-11-09 | 10 (UI) |
+| [U4-voting-view-messages](tasks/U4-voting-view-messages.md) | DONE: merged (PR 12), deployed and checked on live 2026-11-09 | 10 (UI) |
+| [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
 
 Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).
 

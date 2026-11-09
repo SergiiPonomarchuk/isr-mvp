@@ -405,7 +405,7 @@ a:hover {
 }
 
 .dashboard-grid-primary {
-  grid-template-columns: 1.2fr 1fr 1fr;
+  grid-template-columns: 1fr 1.2fr 1fr; /* U3: Chat, Voting (the wider card), To Do */
 }
 
 .dash-card {
@@ -1623,6 +1623,25 @@ button.topic-detail-meta-item.inactive {
   font-weight: 700;
   color: var(--text);
   margin-bottom: 4px;
+}
+
+/* U3: the author's name on the left, "ISR R E" on the right of the same line */
+.topic-message-author-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.topic-message-scores {
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.message-sort-tags {
+  margin-bottom: 8px;
 }
 
 .topic-message-text {

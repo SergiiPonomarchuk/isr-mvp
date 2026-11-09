@@ -1,5 +1,122 @@
 # CHANGES
 
+## A1b: an expertise placeholder for publics without E and ISR (2026-11-09)
+
+Spec: `specs/tasks/A1b-expertise-placeholder.md` (author: option b).
+
+### What changed
+- **New script** `scripts/migrate_a1b.py` (data only; dry run by default). It applies to every ad-hoc public where no member has E or ISR: the app-created publics from before A1.
+  - Each member gets `expertise_score` 0.0 with `expertise_source: "no_issue_vector"`.
+  - The ISR is computed with the A1 formula from R, this E (normalised to 1.0 for everyone) and the contribution placeholder. It is written as `createIssue` writes it.
+  - The topic's maps are rewritten from the member values.
+  - Stage 1 replaces the placeholder with real E.
+- **Why a placeholder:** E needs the issue vector, which no topic has, and the embedding model is retired.
+- **Tests:** `tests/test_migrate_a1b.py` (4).
+
+### Checks
+- **Unit tests:** Python 52 (4 new).
+- **Emulator:**
+  - 2 publics, 50 members, 54 documents written (report `specs/tasks/A1b-migration-report.md`); the second run changed nothing.
+  - Every stored ISR equals `functions/isr.js`.
+  - The browser shows the ISR instead of "N/A".
+- **Live dry run (read-only):** 3 publics, 150 members, 6 topic documents; none left alone.
+
+### Author's steps after merging
+1. Apply on live:
+
+   ```
+   python scripts/migrate_a1b.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply --report specs/tasks/A1b-migration-report-live.md
+   ```
+
+2. Run it again without `--apply`, with `--report "$env:TEMP1b-check.md"` so the committed reports stay as they are. It should list 0 publics.
+3. No deploy is needed.
+
+### Live (2026-11-09)
+- Merged as PR 13. Applied by the author: 156 documents (150 members of 3 publics, 6 topic documents); report `specs/tasks/A1b-migration-report-live.md`; the dry run afterwards found nothing to change.
+- Checked (read-only): all 3,195 live members have E and ISR; the placeholder ISRs equal the A1 formula; the maps equal the members.
+
+## U4: the Voting view keeps its own messages (2026-11-09)
+
+Spec: `specs/tasks/U4-voting-view-messages.md` (author: "fix the Voting bug").
+
+### What changed
+- **Fix:** the Voting view now declares its message state (`let currentMessagesRaw = null;`), as the Chat and ToDo views do. (`prototype/js/main.js`)
+- **Before:** the name was an implicit global. Each voting topic's first render failed with "currentMessagesRaw is not defined", and the next voting topic briefly showed the previous topic's messages.
+- **Test:** `functions/test/topic_views.test.js` checks that the three views declare it before use.
+
+### Checks
+- **Unit tests:** Node 40 (1 new; it fails before the fix).
+- **Emulator:** opening voting issues 179 and then 187 logs no error, leaves no global, and shows each issue's own messages.
+
+### Author's steps after merging
+- Deploy hosting with the next deploy (`firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`).
+
+### Live (2026-11-09)
+- Merged as PR 12 and deployed; opening a voting issue on live logs no error.
+
+## U3: sort buttons for an issue's messages; dashboard order (2026-11-09)
+
+Spec: `specs/tasks/U3-message-sorting.md` (approved 2026-11-09 with the author's changes).
+
+### What changed
+- **Message sort buttons:** the message list of the Chat, Voting and ToDo views has the buttons **date, ISR, R, E**.
+  - Date shows newest first; ISR, R and E show the highest first. Pressing the active button again reverses the order (the arrow shows ↓ or ↑).
+  - Messages whose author has no value go last.
+  - The description stays on top.
+  - The choice is kept while the page is open, for every topic. (`prototype/js/main.js`)
+- **Values on each message:** each author's line shows their values in this ad-hoc public on the right, for example `0.93 R 22 E 2.05` (ISR, R in percent, E; "N/A" when missing). They are read from the public's member documents, the A1 source. (`main.js`, `prototype/styles.css`)
+- **Dashboard order:**
+  - The summary strip reads "Discussions · Active votes · To Do".
+  - The cards are ordered Chat, Voting, To Do; Voting keeps the wider column.
+  - The tour text follows the new order. (`main.js`, `prototype/index.html`, `styles.css`)
+- **Test:** `functions/test/message_sort.test.js` runs the sort comparator taken from `main.js` and checks the views, the value format and the order of the strip and the cards.
+
+### Checks
+- **Unit tests:** Node 39 (4 new), Python 48.
+- **Emulator, in the browser:**
+  - In a chat, a voting issue and a ToDo issue (25-27 messages each), every order (date, ISR, R, E, reversed) equals a script's order from the member documents.
+  - The choice survives a new message and carries over to the next topic.
+  - "N/A" shows for authors without values.
+  - The strip and the cards are in the new order.
+
+### Findings (not changed)
+- The Voting view reads `currentMessagesRaw` without declaring it, so its first render fails until the messages arrive, and the next voting topic can briefly show the previous topic's messages (predates U3).
+- The members of the 2 app-created publics of June 2026 (and, on live, of the R0 smoke-test public) have no E or ISR. Computing them is a separate task, waiting for the author's choice (spec, decision 6).
+
+### Author's steps after merging
+1. Deploy hosting: `firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`.
+2. Check on live with Ctrl+F5 or a new incognito window (the browser keeps `styles.css` and `main.js` for up to an hour):
+   - the buttons and the values in one topic;
+   - the order of the strip and the cards.
+
+### Live (2026-11-09)
+- Merged as PR 11 (values without the asterisk) and deployed. Checked on live: the buttons, the values and ISR sorting in voting issue 16; the strip and card order.
+
+## U2: the Voting and ToDo lists show all of a member's issues (2026-11-09)
+
+Spec: `specs/tasks/U2-voting-todo-list-limit.md` (approved 2026-11-09: decision 1 b, "delete Issues", test yes).
+
+### What changed
+- **Before:** the Voting and ToDo lists only looked at the 30 newest issues of the whole collection. On the emulator, 51 of the 77 voting issues and 1 of the 3 ToDo issues never appeared for anyone; 114 of the 299 members with a voting issue saw none of theirs.
+- **Now:** they read only the member's issues, by document id (at most 30 ids per query). The ids are the member's topics that the Chat list already computes on every change of a discussion, so a topic the member joins or creates appears without a reload. The order of the old query is kept for the dashboard previews and ties. (`prototype/js/main.js`)
+- **Summary strip:** "Issues" removed; "To Do" shows the ToDo count instead of the voting count. (`main.js`, `prototype/index.html`)
+- **Test:** `functions/test/member_issues.test.js` fails if an issues query gets a `.limit(` again.
+
+### Checks
+- **Unit tests:** Node 35 (3 new), Python 48.
+- **Emulator, in the browser** as Cynthia Gray, user 1, Sara Lara and Karen Chavez: every Voting and ToDo count equals a script's count with the same membership rules (user 1: 77 voting, 3 ToDo); issue 16 and ToDo issue 91 now appear; joining and leaving a topic updates the list without a reload; no console errors.
+- **Testing incident:** the first browser run used the live database (the page was opened without `?emulator=1`). It only read; the page's one automatic write (the Chat list's last-message "self-healing") had nothing to heal, which the 2026-11-07 backup and a read-only count on live confirm. Details in the spec's status log.
+
+### Findings (not changed)
+- An issue's `created_at` is a server Timestamp when `createIssue` writes it and ISO text everywhere else; Start Voting and the deadline run overwrite it with the time voting started.
+
+### Author's steps after merging
+1. Deploy hosting: `firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`.
+2. Check on live (Ctrl+F5 or a new incognito window): as Cynthia Gray, issue 16 is in the Voting list; the strip has no "Issues".
+
+### Live (2026-11-09)
+- Merged as PR 10 and deployed. Checked on live: Cynthia Gray's Voting list shows issue 16.
+
 ## L1: deadlines and the public's management decisions (2026-11-09)
 
 Branch `l1-deadlines`. Spec: `specs/tasks/L1-deadlines-and-management-decisions.md` (approved 2026-11-09; decision 3 corrected to 1 option).
