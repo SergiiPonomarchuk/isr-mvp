@@ -2299,6 +2299,7 @@ function initTopicDetailViews() {
         
         '<div class="voting-discussion-container" style="display: none; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px;">' +
           '<div class="topic-detail-block-title" style="margin-bottom: 12px; font-weight: 700; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Discussion Thread</div>' +
+          renderMessageSortButtons() +
           '<div class="topic-message-list" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">' +
             messagesListHtml +
           '</div>' +
@@ -2340,12 +2341,125 @@ function initTopicDetailViews() {
     '</div>';
   }
 
+  // U3: sort buttons for an issue's messages (date, ISR, R, E) and the author's values in this
+  // ad-hoc public, read from the public's member documents (the A1 source). The choice is kept
+  // while the page is open, for every topic; pressing the active button again reverses it.
+  var MESSAGE_SORT_KEYS = ['date', 'isr', 'r', 'e'];
+  var MESSAGE_SORT_LABELS = { date: 'date', isr: 'ISR', r: 'R', e: 'E' };
+  var messageSort = { key: 'date', reversed: false };
+  var messageAuthorScores = { topicId: null, mcId: null, byUid: {} };
+
+  // a, b: {idx, s} with idx = position in date order (oldest first) and s = {isr, r, e} or null.
+  // date: newest first; ISR, R, E: highest first; reversed flips that. Messages whose author has
+  // no value come last; equal values are ordered newest first.
+  function compareMessageItems(a, b, key, reversed) {
+    if (key === 'date') return reversed ? a.idx - b.idx : b.idx - a.idx;
+    var va = a.s ? a.s[key] : null;
+    var vb = b.s ? b.s[key] : null;
+    var ha = typeof va === 'number' && isFinite(va);
+    var hb = typeof vb === 'number' && isFinite(vb);
+    if (ha !== hb) return ha ? -1 : 1;
+    if (ha && va !== vb) return reversed ? va - vb : vb - va;
+    return b.idx - a.idx;
+  }
+
+  function messageAuthorScore(uid) {
+    var u = (uid || '').toString();
+    return messageAuthorScores.byUid[u] || null;
+  }
+
+  function sortMessagesForDisplay(messages) {
+    var items = messages.map(function(m, i) { return { msg: m, idx: i, s: messageAuthorScore(m.uid) }; });
+    items.sort(function(a, b) { return compareMessageItems(a, b, messageSort.key, messageSort.reversed); });
+    return items.map(function(x) { return x.msg; });
+  }
+
+  // "*0.95 R 62 E 1.21": ISR, R in percent, E.
+  function renderMessageScores(uid) {
+    if (!uid || uid === 'system') return '';
+    var s = messageAuthorScore(uid);
+    var fmt = function(v, pct) {
+      if (typeof v !== 'number' || !isFinite(v)) return 'N/A';
+      return pct ? (v * 100).toFixed(0) : v.toFixed(2);
+    };
+    return '<span class="topic-message-scores" title="ISR, Relevance (%), Expertise in this ad-hoc public">' +
+      '*' + fmt(s && s.isr) + ' R ' + fmt(s && s.r, true) + ' E ' + fmt(s && s.e) + '</span>';
+  }
+
+  function renderMessageSortButtons() {
+    return '<div class="search-filter-tags message-sort-tags">' + MESSAGE_SORT_KEYS.map(function(k) {
+      var active = messageSort.key === k;
+      var arrow = active ? (messageSort.reversed ? ' \u2191' : ' \u2193') : '';
+      return '<button type="button" class="' + (active ? 'active' : '') + '" data-msg-sort="' + k + '">' + MESSAGE_SORT_LABELS[k] + arrow + '</button>';
+    }).join(' ') + '</div>';
+  }
+
+  // Loads the R, E and ISR of the given authors once per opened topic (reset in renderTopicDetail).
+  async function loadMessageAuthorScores(db, topicId, uids) {
+    if (messageAuthorScores.topicId !== topicId) {
+      messageAuthorScores = { topicId: topicId, mcId: null, byUid: {} };
+    }
+    var cache = messageAuthorScores;
+    var num = function(v) { return typeof v === 'number' && isFinite(v) ? v : null; };
+    try {
+      if (!cache.mcId) {
+        var mcId = topicId;
+        var mcSnap = await db.collection("microcommunities").where("issue_id", "==", topicId).limit(1).get();
+        mcSnap.forEach(function(doc) { mcId = doc.id; });
+        cache.mcId = mcId;
+      }
+      var missing = Array.from(new Set((uids || []).map(function(u) { return (u || '').toString(); })))
+        .filter(function(u) { return u && u !== 'system' && !(u in cache.byUid); });
+      for (var i = 0; i < missing.length; i += 30) {
+        var chunk = missing.slice(i, i + 30);
+        var snap = await db.collection("microcommunity_members")
+          .where(firebase.firestore.FieldPath.documentId(), "in", chunk.map(function(u) { return cache.mcId + '_' + u; }))
+          .get();
+        chunk.forEach(function(u) { cache.byUid[u] = null; });
+        snap.forEach(function(doc) {
+          var d = doc.data();
+          var u = doc.id.slice(String(cache.mcId).length + 1);
+          cache.byUid[u] = { isr: num(d.isr_score), r: num(d.relevance_score), e: num(d.expertise_score) };
+        });
+      }
+    } catch (err) {
+      console.error("Loading the authors' R, E and ISR failed:", err);
+    }
+  }
+
+  // A press re-orders the message cards in place (their handlers stay bound) and updates the buttons.
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('[data-msg-sort]');
+    if (!btn) return;
+    e.preventDefault();
+    var key = btn.getAttribute('data-msg-sort');
+    if (messageSort.key === key) {
+      messageSort.reversed = !messageSort.reversed;
+    } else {
+      messageSort.key = key;
+      messageSort.reversed = false;
+    }
+    var tags = btn.closest('.message-sort-tags');
+    var container = tags ? tags.parentElement : null;
+    if (tags) tags.outerHTML = renderMessageSortButtons();
+    var list = container ? container.querySelector('.topic-message-list') : null;
+    if (!list) return;
+    var cards = Array.from(list.querySelectorAll(':scope > .topic-message-card'));
+    var items = cards.map(function(card) {
+      return { card: card, idx: parseInt(card.getAttribute('data-date-idx'), 10) || 0, s: messageAuthorScore(card.getAttribute('data-author-uid')) };
+    });
+    items.sort(function(a, b) { return compareMessageItems(a, b, messageSort.key, messageSort.reversed); });
+    items.forEach(function(x) { list.appendChild(x.card); });
+  });
+
   function renderDiscussionMessages(messages, currentUserId, firstMessageId) {
     if (!messages || messages.length === 0) {
       return '<div style="color:var(--text-muted); font-style:italic; font-size:0.88rem; padding: 4px;">No messages in this discussion.</div>';
     }
 
-    return messages.map(function(msg, index) {
+    var dateIdx = new Map();
+    messages.forEach(function(m, i) { dateIdx.set(m, i); });
+    return sortMessagesForDisplay(messages).map(function(msg, index) {
       var msgIndex = index + 1;
       var existingReactions = '';
       if (msg.reactions && msg.reactions.length > 0) {
@@ -2400,8 +2514,8 @@ function initTopicDetailViews() {
       var replyBtnHtml = '<button type="button" class="topic-inline-btn reply-btn" data-msg-id="' + msg.id + '" data-author="' + msg.author + '">Reply</button>';
 
       return '' +
-      '<div class="topic-message-card" id="msg-' + msg.id + '" data-msg-id="' + msg.id + '">' +
-        '<div class="topic-message-author">' + msg.author + '</div>' +
+      '<div class="topic-message-card" id="msg-' + msg.id + '" data-msg-id="' + msg.id + '" data-date-idx="' + dateIdx.get(msg) + '" data-author-uid="' + (msg.uid || '') + '">' +
+        '<div class="topic-message-author topic-message-author-row"><span>' + msg.author + '</span>' + renderMessageScores(msg.uid) + '</div>' +
         parentLinkHtml +
         '<div class="topic-message-text">' + msg.text + '</div>' +
         '<div class="topic-message-actions">' +
@@ -2569,6 +2683,7 @@ function initTopicDetailViews() {
  
         '<div class="topic-detail-block">' +
           '<div class="topic-detail-block-title">Messages</div>' +
+          renderMessageSortButtons() +
           '<div class="topic-message-list">' +
             renderDiscussionMessages(otherMessages, currentUserId, firstMsg ? firstMsg.id : null) +
           '</div>' +
@@ -3039,6 +3154,7 @@ function initTopicDetailViews() {
 
         '<div class="tasks-discussion-container" style="display: none; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px;">' +
           '<div class="topic-detail-block-title" style="margin-bottom: 12px; font-weight: 700; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Discussion Thread</div>' +
+          renderMessageSortButtons() +
           '<div class="topic-message-list" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">' +
             messagesListHtml +
           '</div>' +
@@ -3077,6 +3193,7 @@ function initTopicDetailViews() {
     modalBody.setAttribute('data-topic-source-kind', kind);
     modalBody.setAttribute('data-topic-source-title', titleText || '');
     modalBody.setAttribute('data-active-topic-id', topicId);
+    messageAuthorScores = { topicId: null, mcId: null, byUid: {} }; // U3: read again for this topic
     modalBody.__sourceViewHtml = sourceViewHtml || modalBody.innerHTML;
     modalBody.__restoreView = restoreTopicListView;
 
@@ -3945,6 +4062,7 @@ function initTopicDetailViews() {
 
             // Fetch missing user profiles in parallel
             await resolveUserNames(Array.from(uidsToFetch));
+            await loadMessageAuthorScores(db, topicId, rawMessages.map(m => m.uid)); // U3
 
             const messages = [];
             let indexCounter = 0;
@@ -4121,6 +4239,7 @@ function initTopicDetailViews() {
             });
 
             await resolveUserNames(Array.from(uidsToResolve));
+            await loadMessageAuthorScores(db, topicId, messages.map(m => m.uid)); // U3
 
             // Map messages with display names and resolved reactions
             const resolvedMessages = [];
@@ -4531,6 +4650,7 @@ function initTopicDetailViews() {
             if (issue.submitter_id) uidsToResolve.add(issue.submitter_id.toString());
             combinedUids.forEach(uid => uidsToResolve.add(uid.toString()));
             await resolveUserNames(Array.from(uidsToResolve));
+            await loadMessageAuthorScores(db, topicId, messages.map(m => m.uid)); // U3
 
             // Map messages with display names and resolved reactions
             const resolvedMessages = [];
@@ -7928,11 +8048,11 @@ function initRealTimeDashboardSync(db, storedUid) {
     const summaryStrip = document.querySelector('.summary-strip');
     if (summaryStrip) {
       summaryStrip.innerHTML = `
+        <button class="summary-link" data-section="chat">Discussions: ${discussionsCount}</button>
+        <span class="summary-separator">·</span>
         <button class="summary-link" data-section="voting">Active votes: ${activeIssuesCount}</button>
         <span class="summary-separator">·</span>
         <button class="summary-link" data-section="tasks">To Do: ${todoCount}</button>
-        <span class="summary-separator">·</span>
-        <button class="summary-link" data-section="chat">Discussions: ${discussionsCount}</button>
       `;
       // Handled via document-level event delegation
 
@@ -9475,7 +9595,7 @@ function startQuickTour() {
     },
     {
       title: "Interactive Dashboard",
-      text: "The heart of the app: view active <b>Voting</b>, debate issues in the <b>Chat</b>, and track execution steps in the <b>To Do</b> list.",
+      text: "The heart of the app: debate issues in the <b>Chat</b>, view active <b>Voting</b>, and track execution steps in the <b>To Do</b> list.",
       target: ".dashboard-grid-primary"
     },
     {
