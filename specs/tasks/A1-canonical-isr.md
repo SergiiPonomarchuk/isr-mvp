@@ -70,7 +70,7 @@ One ISR per member and issue, computed by one module that the server, the browse
 2. Contribution placeholder: Ĉ = 1.0 for everyone, `contribution_source: "constant"`, until stage 6.
 3. Voters without an ISR for the public are excluded from the tally and shown as "no ISR".
 4. Tie or no counted votes: no winner (`winning_option_index` null, note in the `tally` record); the public votes again.
-5. Phase moves: rules unchanged (10 %, client transaction); weights switch to the member ISR.
+5. Phase moves: rules unchanged (10 %, client transaction); weights switch to the member ISR. (Superseded by L1, 2026-11-09: 30 %, with a confirmation; expired topics are closed by a daily server run.)
 6. Closing: a Firestore trigger.
 7. Stage 2 is built now; E for new issues becomes meaningful with stage 1.
 
