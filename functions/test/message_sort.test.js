@@ -47,7 +47,8 @@ test("the three topic views show the sort buttons and load the authors' values",
   assert.equal((main.match(/await loadMessageAuthorScores\(db, topicId, /g) || []).length, 3);
   assert.match(main, /return sortMessagesForDisplay\(messages\)\.map\(/);
   assert.match(main, /var messageSort = \{ key: 'date', reversed: false \};/);
-  assert.match(main, /'\*' \+ fmt\(s && s\.isr\) \+ ' R ' \+ fmt\(s && s\.r, true\) \+ ' E ' \+ fmt\(s && s\.e\)/);
+  assert.match(main, /\n\s+fmt\(s && s\.isr\) \+ ' R ' \+ fmt\(s && s\.r, true\) \+ ' E ' \+ fmt\(s && s\.e\)/);
+  assert.ok(!main.includes("'*' + fmt("), "no asterisk before the ISR");
 });
 
 test("summary strip and dashboard cards: Chat, Voting, To Do", () => {

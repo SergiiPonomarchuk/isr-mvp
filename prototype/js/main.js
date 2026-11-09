@@ -2374,7 +2374,7 @@ function initTopicDetailViews() {
     return items.map(function(x) { return x.msg; });
   }
 
-  // "*0.95 R 62 E 1.21": ISR, R in percent, E.
+  // "0.95 R 62 E 1.21": ISR, R in percent, E.
   function renderMessageScores(uid) {
     if (!uid || uid === 'system') return '';
     var s = messageAuthorScore(uid);
@@ -2383,7 +2383,7 @@ function initTopicDetailViews() {
       return pct ? (v * 100).toFixed(0) : v.toFixed(2);
     };
     return '<span class="topic-message-scores" title="ISR, Relevance (%), Expertise in this ad-hoc public">' +
-      '*' + fmt(s && s.isr) + ' R ' + fmt(s && s.r, true) + ' E ' + fmt(s && s.e) + '</span>';
+      fmt(s && s.isr) + ' R ' + fmt(s && s.r, true) + ' E ' + fmt(s && s.e) + '</span>';
   }
 
   function renderMessageSortButtons() {

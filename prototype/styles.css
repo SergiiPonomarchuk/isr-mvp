@@ -1625,7 +1625,7 @@ button.topic-detail-meta-item.inactive {
   margin-bottom: 4px;
 }
 
-/* U3: the author's name on the left, "*ISR R E" on the right of the same line */
+/* U3: the author's name on the left, "ISR R E" on the right of the same line */
 .topic-message-author-row {
   display: flex;
   justify-content: space-between;

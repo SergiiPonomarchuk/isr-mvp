@@ -10,7 +10,7 @@ Spec: `specs/tasks/U3-message-sorting.md` (approved 2026-11-09 with the author's
   - Messages whose author has no value go last.
   - The description stays on top.
   - The choice is kept while the page is open, for every topic. (`prototype/js/main.js`)
-- **Values on each message:** each author's line shows their values in this ad-hoc public on the right, for example `*0.93 R 22 E 2.05` (ISR, R in percent, E; "N/A" when missing). They are read from the public's member documents, the A1 source. (`main.js`, `prototype/styles.css`)
+- **Values on each message:** each author's line shows their values in this ad-hoc public on the right, for example `0.93 R 22 E 2.05` (ISR, R in percent, E; "N/A" when missing). They are read from the public's member documents, the A1 source. (`main.js`, `prototype/styles.css`)
 - **Dashboard order:**
   - The summary strip reads "Discussions · Active votes · To Do".
   - The cards are ordered Chat, Voting, To Do; Voting keeps the wider column.

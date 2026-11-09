@@ -32,7 +32,7 @@ Roadmap: UI for the D1 guided demo ([ROADMAP-demo.md](../ROADMAP-demo.md)): show
 - R3 The values come from the public's member documents (the A1 source). The authors' documents are read by id once per opened topic and kept while the view is open; the maps on the discussion are not used.
 - R4 The first message (the description) stays at the top, outside the sort. Replies are sorted like any other message and keep their "In reply to" link.
 - R5 The choice is kept while the page is open, for every topic and view (as the list buttons). Re-renders (a new message, a reaction) keep it. A press re-orders the message cards in place.
-- R6 Each message shows its author's three values on the same line as the name, on the right: `*0.93 R 22 E 2.05`. The first is the ISR (2 decimals), R is a percentage without the % sign, E has 2 decimals. A missing value shows "N/A". There is no value for system messages.
+- R6 Each message shows its author's three values on the same line as the name, on the right: `0.93 R 22 E 2.05`. The first is the ISR (2 decimals), R is a percentage without the % sign, E has 2 decimals. A missing value shows "N/A". There is no value for system messages.
 - R7 The summary strip reads **Discussions · Active votes · To Do** (also the static placeholder in `index.html`).
 - R8 The dashboard cards are ordered **Chat, Voting, To Do**. Voting keeps the wider column (`1fr 1.2fr 1fr`), and the tour text names them in the new order.
 - R9 Node test `functions/test/message_sort.test.js`. It runs the comparator taken from `main.js` on a fixed case set, and checks the buttons and value loading in the three views, the value format, and the order of the strip, the cards and the placeholder.
@@ -40,7 +40,7 @@ Roadmap: UI for the D1 guided demo ([ROADMAP-demo.md](../ROADMAP-demo.md)): show
 ## 3. Decisions (author, 2026-11-09)
 
 1. **Which views:** all three (recommendation; no change asked).
-2. **Values next to the author:** all three every time, on the same line, on the right, as `*0.00 R 00 E 0.00`: ISR first, R in percent, no captions. The asterisk is shown as written. (The recommendation had been to show only the chosen button's value.)
+2. **Values next to the author:** all three every time, on the same line, on the right, as `0.00 R 00 E 0.00`: ISR first, R in percent, no captions. (The author first wrote an asterisk before the ISR, then dropped it, 2026-11-09.) (The recommendation had been to show only the chosen button's value.)
 3. **How long the choice is kept:** while the page is open, the same for every topic (recommendation; no change asked).
 4. **Reverse order on a second press:** yes (author; the recommendation had been no).
 5. **Date order:** newest first (author; the draft had oldest first).
@@ -92,7 +92,8 @@ Roadmap: UI for the D1 guided demo ([ROADMAP-demo.md](../ROADMAP-demo.md)): show
   - AC4:
     - Two test messages in `qTkvs4PP90KIiOt0o6kF` showed "*N/A R 81 E N/A" and "*N/A R 21 E N/A" (removed afterwards).
     - The strip read "Discussions: 117 · Active votes: 77 · To Do: 3", and the cards were in the order Chat, Voting, To Do.
-  - Layout: the name is on the left and the values on the right (screenshot). The first run used a cached `styles.css`; reloading it fixed the layout.
+  - Layout: the name is on the left and the values on the right (screenshot).
+  - Follow-up (author, 2026-11-09): no asterisk before the ISR. The values quoted above were recorded with it. The first run used a cached `styles.css`; reloading it fixed the layout.
 - Findings (not changed here):
   - The Voting view reads `currentMessagesRaw` without declaring it (the Chat and ToDo views declare their own). The first assignment creates a global, so:
     - the view's first render fails with "ReferenceError: currentMessagesRaw is not defined" until the messages listener has run;
