@@ -1,5 +1,36 @@
 # CHANGES
 
+## A1b: an expertise placeholder for publics without E and ISR (2026-11-09)
+
+Spec: `specs/tasks/A1b-expertise-placeholder.md` (author: option b).
+
+### What changed
+- **New script** `scripts/migrate_a1b.py` (data only; dry run by default). It applies to every ad-hoc public where no member has E or ISR: the app-created publics from before A1.
+  - Each member gets `expertise_score` 0.0 with `expertise_source: "no_issue_vector"`.
+  - The ISR is computed with the A1 formula from R, this E (normalised to 1.0 for everyone) and the contribution placeholder. It is written as `createIssue` writes it.
+  - The topic's maps are rewritten from the member values.
+  - Stage 1 replaces the placeholder with real E.
+- **Why a placeholder:** E needs the issue vector, which no topic has, and the embedding model is retired.
+- **Tests:** `tests/test_migrate_a1b.py` (4).
+
+### Checks
+- **Unit tests:** Python 52 (4 new).
+- **Emulator:**
+  - 2 publics, 50 members, 54 documents written (report `specs/tasks/A1b-migration-report.md`); the second run changed nothing.
+  - Every stored ISR equals `functions/isr.js`.
+  - The browser shows the ISR instead of "N/A".
+- **Live dry run (read-only):** 3 publics, 150 members, 6 topic documents; none left alone.
+
+### Author's steps after merging
+1. Apply on live:
+
+   ```
+   python scripts/migrate_a1b.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply --report specs/tasks/A1b-migration-report-live.md
+   ```
+
+2. Run it again without `--apply`, with `--report "$env:TEMP1b-check.md"` so the committed reports stay as they are. It should list 0 publics.
+3. No deploy is needed.
+
 ## U4: the Voting view keeps its own messages (2026-11-09)
 
 Spec: `specs/tasks/U4-voting-view-messages.md` (author: "fix the Voting bug").
