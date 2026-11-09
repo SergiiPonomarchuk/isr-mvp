@@ -1,5 +1,40 @@
 # CHANGES
 
+## U3: sort buttons for an issue's messages; dashboard order (2026-11-09)
+
+Spec: `specs/tasks/U3-message-sorting.md` (approved 2026-11-09 with the author's changes).
+
+### What changed
+- **Message sort buttons:** the message list of the Chat, Voting and ToDo views has the buttons **date, ISR, R, E**.
+  - Date shows newest first; ISR, R and E show the highest first. Pressing the active button again reverses the order (the arrow shows ↓ or ↑).
+  - Messages whose author has no value go last.
+  - The description stays on top.
+  - The choice is kept while the page is open, for every topic. (`prototype/js/main.js`)
+- **Values on each message:** each author's line shows their values in this ad-hoc public on the right, for example `0.93 R 22 E 2.05` (ISR, R in percent, E; "N/A" when missing). They are read from the public's member documents, the A1 source. (`main.js`, `prototype/styles.css`)
+- **Dashboard order:**
+  - The summary strip reads "Discussions · Active votes · To Do".
+  - The cards are ordered Chat, Voting, To Do; Voting keeps the wider column.
+  - The tour text follows the new order. (`main.js`, `prototype/index.html`, `styles.css`)
+- **Test:** `functions/test/message_sort.test.js` runs the sort comparator taken from `main.js` and checks the views, the value format and the order of the strip and the cards.
+
+### Checks
+- **Unit tests:** Node 39 (4 new), Python 48.
+- **Emulator, in the browser:**
+  - In a chat, a voting issue and a ToDo issue (25-27 messages each), every order (date, ISR, R, E, reversed) equals a script's order from the member documents.
+  - The choice survives a new message and carries over to the next topic.
+  - "N/A" shows for authors without values.
+  - The strip and the cards are in the new order.
+
+### Findings (not changed)
+- The Voting view reads `currentMessagesRaw` without declaring it, so its first render fails until the messages arrive, and the next voting topic can briefly show the previous topic's messages (predates U3).
+- The members of the 2 app-created publics of June 2026 (and, on live, of the R0 smoke-test public) have no E or ISR. Computing them is a separate task, waiting for the author's choice (spec, decision 6).
+
+### Author's steps after merging
+1. Deploy hosting: `firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`.
+2. Check on live with Ctrl+F5 or a new incognito window (the browser keeps `styles.css` and `main.js` for up to an hour):
+   - the buttons and the values in one topic;
+   - the order of the strip and the cards.
+
 ## U2: the Voting and ToDo lists show all of a member's issues (2026-11-09)
 
 Spec: `specs/tasks/U2-voting-todo-list-limit.md` (approved 2026-11-09: decision 1 b, "delete Issues", test yes).
