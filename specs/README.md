@@ -96,7 +96,8 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U1-smoke-test-fixes](tasks/U1-smoke-test-fixes.md) | done 2026-11-08 (#5, deployed, verified) | 10 (UI) |
 | [L1-deadlines-and-management-decisions](tasks/L1-deadlines-and-management-decisions.md) | implemented on branch `l1-deadlines` (emulator end to end passed); live migration, deploy and smoke test pending (author) | 02, 06, 10 |
 | [U2-voting-todo-list-limit](tasks/U2-voting-todo-list-limit.md) | merged (PR 10); hosting deploy and live check pending (author) | 10 (UI) |
-| [U3-message-sorting](tasks/U3-message-sorting.md) | implemented on branch `u3-message-sort` (emulator checks passed); hosting deploy and live check pending (author) | 10 (UI) |
+| [U3-message-sorting](tasks/U3-message-sorting.md) | merged (PR 11); hosting deploy and live check pending (author) | 10 (UI) |
+| [U4-voting-view-messages](tasks/U4-voting-view-messages.md) | implemented on branch `u4-voting-messages-fix` (emulator check passed); hosting deploy pending (author) | 10 (UI) |
 
 Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).
 
