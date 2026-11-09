@@ -40,6 +40,13 @@ Branch `l1-deadlines`. Spec: `specs/tasks/L1-deadlines-and-management-decisions.
 - The Voting and ToDo lists only consider the 30 newest issues (`main.js`, `.limit(30)`), so a member's voting issue can be missing from their list (seen on the emulator).
 - With today's test data, the first run after the migration date cancels every chat (none has an option) and every voting issue (none has 30 % voted). Proposing options and voting first avoids that, and so does prolonging again.
 
+### Live (2026-11-09)
+- Merged as PR 9. Migration applied by the author before the deploy: 269 documents; report `specs/tasks/L1-migration-report-live.md`; second dry run clean. Every chat and voting deadline is now 2026-12-09.
+- Deployed by the author: functions and hosting (live files equal main). `closeExpiredTopics` runs daily at 00:30 Europe/Zurich (europe-central2, Cloud Scheduler job enabled).
+- Browser check (read-only): the lists show the new deadlines; the Deadline window shows the 30 % rule; Start Voting and Finish Voting are disabled with their reasons.
+- First nightly run (2026-11-10): pending.
+- The live preview for 2026-12-10: 113 chats canceled (no options), 1 chat to voting, 76 voting issues canceled (9 below 30 % voted, 67 without votes).
+
 ### Author's steps after merging (order matters)
 1. **Migration first:**
 

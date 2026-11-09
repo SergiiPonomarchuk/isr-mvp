@@ -94,7 +94,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [A3-options-and-g-anchors](tasks/A3-options-and-g-anchors.md) | implemented on branch `a3-options-and-g-anchors`; live migration pending (author) | 02, 03, 06, 10 |
 | [R0-keep-alive](tasks/R0-keep-alive.md) | done 2026-11-08: merged (#2-#4), deployed, A2/A3 migrated, smoke test passed | rules, CI, backup, merge of A2/A3 |
 | [U1-smoke-test-fixes](tasks/U1-smoke-test-fixes.md) | done 2026-11-08 (#5, deployed, verified) | 10 (UI) |
-| [L1-deadlines-and-management-decisions](tasks/L1-deadlines-and-management-decisions.md) | implemented on branch `l1-deadlines` (emulator end to end passed); live migration, deploy and smoke test pending (author) | 02, 06, 10 |
+| [L1-deadlines-and-management-decisions](tasks/L1-deadlines-and-management-decisions.md) | DONE: merged (PR 9), migrated and deployed on live 2026-11-09; nightly run daily at 00:30 (first run checked 2026-11-10) | 02, 06, 10 |
 
 Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).
 

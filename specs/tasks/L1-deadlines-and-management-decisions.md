@@ -1,6 +1,6 @@
 # SPEC L1: deadlines and the public's management decisions
 
-Status: IMPLEMENTED on branch `l1-deadlines` 2026-11-09 (emulator end to end passed); live migration, deploy and smoke test pending (author). APPROVED 2026-11-09 (author: decisions 1-5, 8, 9 given, decision 3 corrected to 1 option; the recommendations 6, 7, 10-13 approved).
+Status: DONE on live 2026-11-09: merged (PR 9), migrated and deployed; the first nightly run is checked on 2026-11-10. APPROVED 2026-11-09 (author: decisions 1-5, 8, 9 given, decision 3 corrected to 1 option; the recommendations 6, 7, 10-13 approved).
 Branch: l1-deadlines (from main at `42128f4`; never main)
 Roadmap: follow-up of stage 2 ([ROADMAP-demo.md](../ROADMAP-demo.md)). The D1 cycle has to close by itself: a topic that reaches its deadline must move on. Effort estimate: 3-5 developer-days.
 
@@ -144,3 +144,11 @@ Each decision is marked *author* (given 2026-11-09) or *recommended, approved* (
   - R4 "both documents": written when the issue document exists (seeded chats have none).
   - The confirmation uses the browser's confirm dialog.
   - Testing: the emulator does not fire schedules, so AC4 used `tools/close_expired.js`; the tie check in the browser needed issue 16 listed temporarily, because the Voting list only considers the 30 newest issues (finding in section 7). Emulator test data was changed for AC3/AC4 (votes, proposals, two ISR values in public 16, one test issue).
+- Live (2026-11-09):
+  - Merged as PR 9 (`14fe1a8`).
+  - Migration applied by the author before the deploy: 269 documents (191 discussions, 78 issues); report [L1-migration-report-live.md](L1-migration-report-live.md); the second dry run found no changes. Every chat and voting deadline is now 2026-12-09.
+  - Deploy by the author: functions and hosting. Checked read-only: the live `index.html`, `js/main.js`, `js/lifecycle.js` and `js/isr.js` equal main (SHA-256); `closeExpiredTopics` is a scheduled 2nd-gen function in europe-central2; its Cloud Scheduler job `firebase-schedule-closeExpiredTopics-europe-central2` is ENABLED, "30 0 * * *", Europe/Zurich.
+  - Browser, read-only (an adopted member, no button pressed): the Chat and Voting lists show "Ends: 09.12.2026"; a chat's Deadline window shows the 30 % rule with the pool in ISR, the deadline 09.12.2026 and Start Voting disabled ("needs at least 1 option"); a voting issue's window shows the deadline 09.12.2026 and Finish Voting disabled ("needs at least 30 % of the public's ISR-score voted").
+  - Press test (author): pending.
+  - First nightly run (2026-11-10, 00:30 Europe/Zurich): pending. Expected: no changes, since every deadline is 2026-12-09.
+  - Reminder: the run on 2026-12-10 cancels every chat without an option and every voting issue below 30 % voted (the report's preview: 189 of 190 topics), unless options are proposed and votes cast first or the migration is run again with a later `--new-deadline`.
