@@ -1,6 +1,6 @@
 # SPEC A1 (v2, roadmap stage 2): one ISR, computed on the server
 
-Status: APPROVED v2 2026-11-08 (author: all decisions as recommended). v1 (2026-10, canonical module only) is superseded by this version; its requirements are kept where still valid and marked "(v1 Rn)".
+Status: DONE, live 2026-11-09 (merged as PR 7; deployed, migrated and smoke-tested on live). APPROVED v2 2026-11-08 (author: all decisions as recommended). v1 (2026-10, canonical module only) is superseded by this version; its requirements are kept where still valid and marked "(v1 Rn)".
 Branch: a1-one-isr (from main at `f832695`; never main)
 Roadmap: [ROADMAP-demo.md](../ROADMAP-demo.md), stage 2. Decisions: PD-3 (additive formula, mean normalisation), PD-8 (E = max(min(age,30)/30, education) + experience). Effort estimate: 6–9 developer-days.
 
@@ -89,3 +89,9 @@ Contradictions C-34 (what weights a vote), C-35 (vote outcome not computed or pe
 - Migration (emulator): A1 applied to 272 documents; second run changes nothing.
 - CHANGES.md: written.
 - Deviations: AC1 tolerance 0.002 (rounding of stored inputs); the trigger runs in europe-central2 (the database's region).
+- Merged: PR 7 (2026-11-08, merge commit `42128f4`).
+- Live deploy (author): the first deploy (2026-11-08, from the branch) updated the three HTTPS functions; creating the trigger failed with "Permission denied while using the Eventarc Service Agent" (first 2nd-gen event trigger in the project; the service agent's roles were present but still propagating). The retry from main after the merge created `onIssueStatusChange` (europe-central2, 512 MiB) and released hosting; the live `index.html`, `js/main.js` and `js/isr.js` equal main byte for byte. Container images in europe-central2 are deleted after 1 day (cleanup policy set during the deploy).
+- Live migration (2026-11-09): dry run by the agent (read-only); apply by the author, report [A1-migration-report-live.md](A1-migration-report-live.md): 273 documents (192 discussions, 81 issues); the demo user "1" left 168 maps; 15 issues with votes, the leading option changes in none, 6 votes no longer counted (voters without an ISR for that public). Second dry run: no changes. The trigger ran once per updated issue and did nothing (no status change), no errors.
+- Live differs from the emulator run only by the R0/U1 smoke tests of 2026-11-08: one app-created issue (`nN4sPhX49dxLqmbuKada`, made by the pre-A1 `createIssue`, so its 100 members have relevance but no ISR; with the two earlier app-created publics, 3 publics now wait for stage 1) and two smoke-test votes (issues 30, 40).
+- Live smoke test (2026-11-09, author; issue 57, 13 members, ISR pool 13.00): user 538 (ISR 2.457) voted for the second option; the vote was stored. "Finish Voting" by the same user (18.9 % of the pool, above the 10 % rule) moved the issue to `approved`; the trigger stored `options[].score` 1.488 / 2.457, `winning_option_index` 1 and the `tally` record (2 counted, 0 excluded); `tasks` is empty because the seeded options have no steps (task creation was checked on the emulator, AC4).
+- Findings for a follow-up spec (not changed here): in small publics one member can pass the 10 % phase-move threshold alone; voting issues with a past deadline stay in voting (76 of 77 on live), and chats have no deadline (189 of 193).

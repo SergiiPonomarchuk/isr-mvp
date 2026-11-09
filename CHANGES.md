@@ -24,6 +24,12 @@ Branch `a1-one-isr`. Spec: `specs/tasks/A1-canonical-isr.md` (v2). Decisions: au
 2. `python scripts/migrate_a1.py --source firestore --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live` (dry run), then with `--apply --report specs/tasks/A1-migration-report-live.md`; then the dry run again (no changes).
 3. Smoke test: list and card show the same ISR; a vote updates the tally; finishing a vote stores the result.
 
+### Live (2026-11-09)
+- Merged as PR 7. Deployed: the three HTTPS functions, the trigger `onIssueStatusChange` (europe-central2; the first attempt failed while Eventarc's permissions were still propagating, the retry worked) and hosting (live files equal main).
+- Migration applied by the author: 273 documents; report `specs/tasks/A1-migration-report-live.md`; second dry run clean.
+- Smoke test on issue 57: the vote was stored; "Finish Voting" moved the issue to `approved`; the trigger stored the option scores (1.488 / 2.457), the winner (option 2) and the tally record. Details in the spec's status log.
+- Findings for the next spec: one member can pass the 10 % phase-move threshold alone in small publics; nothing happens when a voting deadline passes (76 of 77 voting issues on live are past their deadline); 189 of 193 chats have no deadline.
+
 ## U1: fixes from the R0 live smoke test (2026-11-08)
 
 Branch `ui-smoke-fixes`. Spec: `specs/tasks/U1-smoke-test-fixes.md`. Both bugs predate A2/A3/R0.
