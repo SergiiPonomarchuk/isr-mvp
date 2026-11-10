@@ -1,6 +1,6 @@
 # SPEC A4: Working AI (roadmap stage 1)
 
-Status: APPROVED 2026-11-10 (the spec and the recommendations of section 4). Phase A implemented on branch `a4-working-ai`; AC2-AC3 wait for the author's free-tier key. Phase B waits for P1.
+Status: APPROVED 2026-11-10 (the spec and the recommendations of section 4). Phases A-C implemented on branch `a4-working-ai`; AC1-AC4 passed (AC2-AC3 with the free-tier key); AC5-AC6 run after P1 is applied on the emulator (2026-11-11).
 Branch: a4-working-ai (from main at `0448705`; never main)
 Roadmap: stage 1 ([ROADMAP-demo.md](../ROADMAP-demo.md)). "Check" uses a real model; S and the expertise cosines become meaningful; every Analyzer call is logged. Effort estimate: 4-6 developer-days (roadmap), in four phases (section 6).
 Replaces: the A1b expertise placeholder (`expertise_source: "no_issue_vector"`) for the 3 publics that have it.
@@ -262,3 +262,7 @@ On the free tier, the content sent is used to improve Google's products. The pai
     - the topic text fallback.
   - Python: 72 tests OK.
   - Dry run on the emulator: 2 placeholder publics, both left alone ("25 members without current A4 vectors"), 0 requests.
+- 2026-11-10 (agent), preparing the PR:
+  - Merged main (U5, and the L1, U2-U4 and A1b live records) into the branch; the only conflict was in the spec index.
+  - Tests after the merge: Node 55, Python 72.
+  - Drafted CHANGES and the spec-index row; the numbers from phases B and C are added after the runs.

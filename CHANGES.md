@@ -36,6 +36,48 @@ Spec: `specs/tasks/U6-issue-location.md` (author: "U6 approved"; "keep the serve
 ### Author's steps after merging (after A4's deploy)
 1. Deploy functions and hosting: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from a checkout of main.
 2. Optional: create `config/geocoding` with `enabled: true` in the console. Without the document the lookup is on; `enabled: false` turns it off.
+## A4: working AI, roadmap stage 1 (2026-11-10; the PR waits for the runs of phases B and C)
+
+Spec: `specs/tasks/A4-working-ai.md` (approved 2026-11-10; "Try to stay in free-tier limits").
+
+### What changed
+- **Models in one place:** `functions/ai-config.js` holds:
+  - the text model `gemini-3.1-flash-lite`;
+  - the embedding model `gemini-embedding-001` (768 dimensions);
+  - temperature 0 and a fixed seed;
+  - the versions `p2` (prompt) and `t1` (template);
+  - the task types, and k = 5 examples.
+
+  The Python scripts read the same file (`scripts/ai_config.py`). The SDK is `@google/genai` 2.31, replacing `@google/generative-ai`.
+- **The key** is the Firebase secret `GEMINI_API_KEY`, used by the three HTTPS functions. Locally it lives in `functions/.secret.local`, which is gitignored. It is never printed or logged.
+- **Check:**
+  - it embeds the issue text (`{title}. {description}`) first; without a vector it refuses with 503 "AI unavailable", and no random vector is used anywhere;
+  - the Analyzer gets the 5 nearest of the 100 calibrated examples (`functions/data/analyzer_examples.json`, built by `functions/tools/build_examples.js`);
+  - without a key or on an error, the keyword rules answer, labelled as the fallback.
+- **Create** reuses the draft's vector and writes `issue_vectors/{id}` and an `ai` field on the issue.
+- **Logs:** `analyzer_logs` gets one document per Analyzer call: input, model, versions, examples, raw and normalised output, tokens. The rules make it server-only.
+- **The people:** `scripts/embed_people.py` embeds every profile and skill again with template `t1` (`scripts/embedding_templates.py`). It stays within the free tier, resumes, and skips people whose vectors are current.
+- **The A1b publics:** `scripts/migrate_a4.py` replaces the expertise placeholder with real E and the ISR, from the issue vector.
+- **The browser:** the Check window says which model derived the parameters, or shows the fallback label or the server's error.
+
+### Checks
+- **Unit tests:** Node 55; Python 72.
+- **Emulator with the free-tier key:**
+  - AC2: 5 issues, each checked twice; every call used the model; the parameters were identical in both runs.
+  - AC3: the vectors were bit-identical; Create reused the draft's vector.
+  - AC4: without a key, the refusal and the label.
+  - 11 Analyzer calls used about 99,400 tokens: about $0.04 at the paid rate, $0 on the free tier.
+- **Pending (after P1's apply on the emulator, 2026-11-11):**
+  - AC5: the 200-person sample with the task-type comparison, then all people;
+  - AC6: the A1b publics;
+  - AC7: the token totals.
+
+### Author's steps after merging (phase D), after P1 is applied on live
+1. Set the secret: `firebase functions:secrets:set GEMINI_API_KEY --project project-a3d59130-5adf-4677-9e2` (paste the free-tier key when asked).
+2. Deploy from a checkout of main: `firebase deploy --only functions,hosting,firestore:rules --project project-a3d59130-5adf-4677-9e2`.
+3. Embed the people on live: `python scripts/embed_people.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply` (about 300 requests and 30 minutes; it resumes if stopped).
+4. Replace the placeholders: `python scripts/migrate_a4.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`.
+5. The agent then checks live read-only (AC8).
 
 ## U5: Esc closes only the top window; the geotag button stops downloading every profile (2026-11-10)
 
