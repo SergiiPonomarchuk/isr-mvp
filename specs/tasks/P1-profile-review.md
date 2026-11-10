@@ -1,6 +1,6 @@
 # SPEC P1: Review and repair of the synthetic profiles
 
-Status: DRAFT 2026-11-10: the audit is done ([P1-profile-audit.md](P1-profile-audit.md)), and the proposals wait for the author's decisions (section 3).
+Status: APPROVED 2026-11-10 (author: "P1 as recommended": proposals 1a, 2, 3a, 4a, 5a, 6, 7). Implemented on branch `p1-profile-review` (`scripts/migrate_p1.py`); AC1, the 20-profile trial, waits for the author's review.
 Branch: p1-profile-review (from main at `0448705`; never main)
 Source: the author, 2026-11-09: "maybe we should also review Profiles content and fix it according to our current environment (including edition fields content, adding new fields if they are needed, splitting, joining, etc.)". A4 (stage 1) re-embeds the people after P1 (A4 open point 4.2).
 Effort estimate: 1-2 developer-days after the decisions, plus generation time on the free tier.
@@ -49,6 +49,22 @@ Effort estimate: 1-2 developer-days after the decisions, plus generation time on
 6. **The broken document (F7):** **delete `users/None`** (recommended).
 7. **Unused fields (F9):** keep them; no change.
 
+## 3a. How the decisions are implemented (`scripts/migrate_p1.py`)
+
+- **Work experience (1a, 2): the existing fields are filled, no new ones.** The entries already have an empty `name` and `specialization`, and `time` and `comment` are read by the code: `time` by E (`functions/isr.js` experienceSum), `comment` and `time` by the profile view (`prototype/js/main.js`), and `comment` by the A4 skill template `t1`. So the role is stored in `name`, the field in `specialization`, the years in `time`, and the one-sentence description in `comment`. Section 3 named them `title`, `field`, `years` and `description`, but the existing fields need no code change. Every entry keeps its `id` and `type`.
+  - The model sees the uid, the age, the job, its department and place, the education entries (after the graduation repair), the old comments as "notes", and the limit `max_total_years` = age - 16. It sees no names, institutions, places of residence or relations.
+  - The entries are in id order, from the earliest to the latest. For an employed person the latest entry is the current job. The notes are used only where they plausibly describe the person's own work. The fields prefer the 69 education specializations as their vocabulary.
+  - Prompt `p1w1`: `gemini-3.1-flash-lite` (the A4 text model), temperature 0, seed 20261110, a JSON response schema, 10 people a call. The output is checked (every entry id once, non-empty role and field, a description of 20-300 characters, years > 0). A batch with a failed person is retried once with that person alone.
+  - Years: at least 0.5 each, one decimal. A person's total is scaled down to age - 16 if the model gives more.
+  - Every call (prompt, raw output, tokens) goes to `scripts/p1_generated/calls.jsonl`, and every accepted person (uid, input hash, entries) to `scripts/p1_generated/work_experience.jsonl`. The apply reads only that file, so the emulator and live get the same texts. A person whose input differs from the generated one (for example, live differs from the emulator) is reported and left unchanged.
+  - Rate: at most 12 requests a minute and 450 a run (free tier: 15 a minute, 500 a day). The generation resumes where it stopped.
+- **Graduation (3a):** the age by level is 19, 20, 22, 24 or 28 for Vocational Training, College, Bachelor, Master or PhD, plus a per-person offset of -1, 0 or +1 (from the uid). A second entry of the same level comes 2 years after the first, and the years increase with the level. A year after 2026 is kept with `in_progress: true`. Ages and "in progress" are taken on the audit date, 2026-11-10, so that a later run gives the same result.
+- **Job education level (4a):** the highest *completed* education entry (not one in progress); `null` without one, as `post` stores it today.
+- **`users/None` (6):** deleted (no `skills`, uid None). Another document without `skills` would be reported and left alone.
+- **`user_packs` (R3):** rebuilt only where the collection has documents (live: 37). It uses packs of 250 with the fields `migrate_option_a.py` packs, in uid order, and removes surplus packs. The emulator has none, so nothing is written there.
+- **Activities (2), features (5a), unused fields (7):** unchanged.
+- **The vectors** are not touched: A4 phase B re-embeds every profile and skill from the repaired texts. On live, P1's `--apply` should therefore run together with A4's deploy (phase D): until then E would multiply the old vectors by the new years.
+
 ## 4. Non-goals
 
 - Values narratives and taxonomies (F10), demo scenarios (stage 3), relations and places (F8).
@@ -68,3 +84,10 @@ Effort estimate: 1-2 developer-days after the decisions, plus generation time on
 ## 6. Status log
 
 - 2026-11-10: audit script and report (agent, read-only on the emulator). Spec drafted with proposals.
+- 2026-11-10: approved by the author ("P1 as recommended"). Implemented `scripts/migrate_p1.py` (section 3a) and tests `tests/test_migrate_p1.py` (17; the model is mocked). `scripts/audit_profiles.py` now also reports: the job level against the highest *completed* education; the age at graduation by level and `in_progress`; the years over age - 16; the roles and fields of the work experience.
+- 2026-11-10: dry run on the emulator, without generated texts:
+  - 9,150 profiles; 7,844 documents to update, `users/None` to delete.
+  - Education: 4,753 of 5,835 entries change, and 297 are in progress (the audit had 470 graduations in the future). The ages at graduation by level are 18-20 (Vocational Training), 19-21 (College), 21-23 (Bachelor), 23-25 (Master) and 27-29 (PhD).
+  - Job level: 1,878 change, mostly from empty to the person's degree (756 Bachelor, 348 Vocational Training, 332 College, 305 Master, 97 PhD). 34 College and 6 PhD become empty: these people have no completed education entry.
+  - Work experience: 5,097 people wait for generation.
+- 2026-11-10 07:13-07:20: the trial generation (20 people, 2 calls) got HTTP 503 "This model is currently experiencing high demand", 16 attempts with backoff, plus one minimal probe request. No texts yet; a background loop probes every 10 minutes and runs the trial when the model answers.

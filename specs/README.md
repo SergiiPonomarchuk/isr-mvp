@@ -99,7 +99,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U3-message-sorting](tasks/U3-message-sorting.md) | merged (PR 11); hosting deploy and live check pending (author) | 10 (UI) |
 | [U4-voting-view-messages](tasks/U4-voting-view-messages.md) | implemented on branch `u4-voting-messages-fix` (emulator check passed); hosting deploy pending (author) | 10 (UI) |
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | implemented on branch `a1b-expertise-placeholder` (emulator applied; live dry run: 3 publics, 150 members); live apply pending (author) | 02, 04, 06 |
-| [P1-profile-review](tasks/P1-profile-review.md) | draft 2026-11-10: audit done, proposals wait for the author | 11 (synthetic data), 04 |
+| [P1-profile-review](tasks/P1-profile-review.md) | approved 2026-11-10 (as recommended); implemented, the 20-profile trial (AC1) waits for review | 11 (synthetic data), 04 |
 
 Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).
 

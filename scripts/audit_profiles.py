@@ -122,12 +122,13 @@ def audit(users, profile_vec_ids, exp_vec_ids):
           f"{sum(1 for p in posts if not p.get('salary'))}."]
     cmp_ = collections.Counter()
     for u in users:
-        edu = [s for s in (u.get("skills") or []) if s.get("type") == "education"]
+        # P1 (decision 4a): the job level should be the highest completed education entry
+        edu = [s for s in (u.get("skills") or []) if s.get("type") == "education" and not s.get("in_progress")]
         best = max((LEVEL_RANK.get(s.get("educationLevel"), 0) for s in edu), default=None)
         for p in (u.get("post") or [])[:1]:
             lvl = LEVEL_RANK.get(p.get("educationLevel"))
             if best is None:
-                cmp_["no education skill"] += 1
+                cmp_["no completed education, job level " + ("empty" if p.get("educationLevel") is None else "set")] += 1
             elif lvl is None:
                 cmp_["job level unknown"] += 1
             elif lvl == best:
@@ -136,7 +137,7 @@ def audit(users, profile_vec_ids, exp_vec_ids):
                 cmp_["job level higher than any education skill"] += 1
             else:
                 cmp_["job level lower"] += 1
-    L += [f"- Job `educationLevel` against the highest education skill: {top(cmp_)}.", ""]
+    L += [f"- Job `educationLevel` against the highest completed education skill: {top(cmp_)}.", ""]
 
     # ---------------------------------------------------------------- skills
     L += ["## 3. Skills", ""]
@@ -157,16 +158,20 @@ def audit(users, profile_vec_ids, exp_vec_ids):
           f"- `educationLevel`: {top(collections.Counter(s.get('educationLevel') for _, s in edu))}.",
           f"- `specialization`: {len(set(s.get('specialization') for _, s in edu))} distinct; {top(collections.Counter(s.get('specialization') for _, s in edu), 12)}.",
           f"- Institutions (`name`): {len(set(s.get('name') for _, s in edu))} distinct; e.g. {top(collections.Counter(s.get('name') for _, s in edu), 4)}."]
-    grad_age = []
+    grad_age, by_level = [], collections.defaultdict(list)
     for u, s in edu:
         try:
             by = int(str(u.get("birthDate"))[:4])
             grad_age.append(int(s.get("graduationYear")) - by)
+            by_level[s.get("educationLevel")].append(grad_age[-1])
         except (TypeError, ValueError):
             pass
-    future = sum(1 for u, s in edu if isinstance(s.get("graduationYear"), int) and s["graduationYear"] > TODAY.year)
+    future = [s for u, s in edu if isinstance(s.get("graduationYear"), int) and s["graduationYear"] > TODAY.year]
     L += [f"- Age at graduation: {dist(grad_age)}; under 16: {sum(1 for a in grad_age if a < 16)}; over 60: "
-          f"{sum(1 for a in grad_age if a > 60)}; graduation year in the future: {future}.",
+          f"{sum(1 for a in grad_age if a > 60)}; graduation year in the future: {len(future)} "
+          f"(marked `in_progress`: {sum(1 for s in future if s.get('in_progress'))}; `in_progress` on a past year: "
+          f"{sum(1 for _, s in edu if s.get('in_progress') and s not in future)}).",
+          "- Age at graduation by level: " + "; ".join(f"{lvl} {dist(v)}" for lvl, v in sorted(by_level.items(), key=lambda kv: LEVEL_RANK.get(kv[0], 0))) + ".",
           f"- Same level and specialization twice in one profile: "
           f"{sum(1 for u in users if len([(s.get('educationLevel'), s.get('specialization')) for s in u['skills'] if s.get('type') == 'education']) != len({(s.get('educationLevel'), s.get('specialization')) for s in u['skills'] if s.get('type') == 'education'}))}.", ""]
 
@@ -178,7 +183,11 @@ def audit(users, profile_vec_ids, exp_vec_ids):
           f"- `name` empty: {sum(1 for _, s in work if not s.get('name'))}; `specialization` empty: "
           f"{sum(1 for _, s in work if not s.get('specialization'))}.",
           f"- `time` (years; E multiplies each cosine by it, `functions/isr.js` experienceSum): "
-          f"{top(collections.Counter(s.get('time') for _, s in work))}.",
+          f"{top(collections.Counter(s.get('time') for _, s in work))}; {dist([s.get('time') for _, s in work if isinstance(s.get('time'), (int, float))])}.",
+          f"- A person's years in total over age - 16 (P1 limit): "
+          f"{sum(1 for u in users if sum(float(s.get('time') or 0) for s in u.get('skills') or [] if s.get('type') == 'work experience') > max((age_on(u.get('birthDate')) or 0) - 16, 0) + 1e-9)}.",
+          f"- `name` (role): {len({s.get('name') for _, s in work if s.get('name')})} distinct; {top(collections.Counter(s.get('name') for _, s in work if s.get('name')), 8)}.",
+          f"- `specialization` (field): {len({s.get('specialization') for _, s in work if s.get('specialization')})} distinct; {top(collections.Counter(s.get('specialization') for _, s in work if s.get('specialization')), 8)}.",
           f"- `comment` length: {dist(clen)} characters.",
           f"- Comments that describe another person (\"A/An/The … who …\"): {len(other)} of {len(work)} ({pct(len(other), len(work))}).",
           "- Examples: " + "; ".join(f"\"{s.get('comment')}\"" for s in other[:3]) + ".",
