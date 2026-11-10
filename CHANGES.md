@@ -162,7 +162,7 @@ Branch `l1-deadlines`. Spec: `specs/tasks/L1-deadlines-and-management-decisions.
 - Deployed by the author: functions and hosting (live files equal main). `closeExpiredTopics` runs daily at 00:30 Europe/Zurich (europe-central2, Cloud Scheduler job enabled).
 - Browser check (read-only): the lists show the new deadlines; the Deadline window shows the 30 % rule; Start Voting and Finish Voting are disabled with their reasons.
 - Press test (author): a press below 30 % was stored without a question; a second press withdrew it.
-- First nightly run (2026-11-10): pending.
+- First nightly run (2026-11-10, 00:30 Europe/Zurich): "checked 3, changed 0", no errors. The 3 are already decided topics with old deadlines (issues 57 and 182, one inactive discussion).
 - The live preview for 2026-12-10: 113 chats canceled (no options), 1 chat to voting, 76 voting issues canceled (9 below 30 % voted, 67 without votes).
 
 ### Author's steps after merging (order matters)
