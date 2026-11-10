@@ -1,6 +1,6 @@
 # SPEC U6: The issue's location comes from its description
 
-Status: APPROVED 2026-11-10 (author: "U6 approved"); the design follows the author's decisions (U5 section 3a, and "keep the server lookup in U6"). Implementation in progress.
+Status: APPROVED 2026-11-10 (author: "U6 approved"); the design follows the author's decisions (U5 section 3a, and "keep the server lookup in U6"). Implemented 2026-11-10; AC1 passed locally; AC2-AC5 (emulator with the key) pending.
 Branch: u6-issue-location (stacked on `a4-working-ai` at `4fa064a`: it changes the Analyzer prompt and `checkIssue`, which A4 changes too; merged after A4)
 Source: the author, 2026-11-10 (U5 decision 2): "in new issue registration geotag (coordinates, distance and fade) should be taken from the issue description according to 100 examples table by AI Analyzer. If user describe it as "in our house" - it should be coordinates of the house stated in the user profile." The defaults (author: "go ahead with U5 as you described"):
 - a named place is geocoded within the region, else the creator's home is used;
@@ -21,6 +21,7 @@ The author, 2026-11-10, on the place lookup: "keep the server lookup in U6". Thi
 | **Consequence:** A4's test issues sat at the Basel centre, where no synthetic home lies within 100 m, so their publics had 1-3 members. | A4 status log |
 | **The map's place search** calls Nominatim (`nominatim.openstreetmap.org`) from the browser, on Enter or the button, 5 results. It has been in the code since the first commit (2026-06-24). The map credits only Google; OpenStreetMap is not credited. The search cannot be switched off without a deploy. | `prototype/js/main.js:360-364, 5291-5345` |
 | **The Nominatim usage policy** asks for: at most 1 request a second; an identifying User-Agent or Referer, not a library's default; no autocomplete; cached results; the credit "© OpenStreetMap contributors"; a way to switch the use off without a software update; and no personal data. Access can be withdrawn at any time. | https://operations.osmfoundation.org/policies/nominatim/ |
+| **Found while implementing (2026-11-10):** the map keeps the point in two variables. Check and Create send `newTopicGeo`, but a drag, a map click and the profile-place markers changed only `window.newTopicGeo`. The list of profile places changed only `newTopicGeo`, so the pin did not move. Before U6, only the search box actually moved an issue's point. R6 routes every move through one function. | `prototype/js/main.js` (before U6: lines 372, 445, 579, 651, 5070, 5658) |
 | **The Firestore rules** let the browser read every collection except `issue_drafts` and `analyzer_logs`. A new `config` document is therefore readable without a rules change. | `firestore.rules` (R0) |
 
 ## 2. Requirements
@@ -132,3 +133,20 @@ The author, 2026-11-10, on the place lookup: "keep the server lookup in U6". Thi
 - 2026-11-10: spec drafted (agent) from the author's decisions.
 - 2026-11-10: the author kept the server lookup. Added R3 with the policy rules (identification, 1 request a second, cache, switch, credit). Added to R6 the credit and the switch for the existing search box. Added the R7 tests, AC5 and two non-goals.
 - 2026-11-10: the author approved the spec ("U6 approved"). Merged main (U5) into the branch first, because U5 changed the same geotag code.
+- 2026-11-10: implemented (agent):
+  - R1: prompt `p3` (section I); `normalizeIssueParams` and the keyword rules give `location_reference`.
+  - R2: `functions/location.js`.
+  - R3: `functions/geocode.js` with `geocode_cache` and `config/geocoding`.
+  - R4, R5: `checkIssue` resolves the point and stores it in the draft. `createIssue` uses the draft's point and refuses another one (409). The issue stores `location_source` and `location_reference`.
+  - R6: `window.setIssuePoint`, the home at start, the label, the stale Check, the credit and the switch in `main.js` and `index.html`.
+- **Fixed on the way:** drag, map click and profile places now reach Check (see section 1).
+- **Known limit:** like every collection except `issue_drafts` and `analyzer_logs`, `geocode_cache` and `config` are open to clients under the R0 rules, so a client could edit a cached point or the switch. Closing them needs a rules change, which waits for the stage 5 rules.
+- 2026-11-10: checks (agent):
+  - **AC1 (local):** Node 86 (31 new: `location` 10, `geocode` 8, browser 7, `ai` 3, `params` 3); Python 72, unchanged. CI runs on push.
+  - **Browser on the emulator's data:** a static server with the U6 code, the Firestore emulator, test user 2, no Check.
+    - The form starts at the creator's home (47.5943, 7.6205; label "your home").
+    - The profile-place list and a map click move the pin and both copies, mark it "creator", and show "set by you".
+    - The map shows "Search: © OpenStreetMap contributors", and the search box shows its credit.
+    - With `config/geocoding` off, the search says "Place search is switched off." and sends nothing.
+    - No console errors. The test switch was removed afterwards.
+  - **Pending:** AC2-AC5 on the emulator with the key, after P1 day 2 (2026-11-11).

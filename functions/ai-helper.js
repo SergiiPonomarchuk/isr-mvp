@@ -329,7 +329,23 @@ Also include these top-level fields for backward compatibility:
   "reasoning_R": explanation for w_relevance choice,
   "reasoning_E": explanation for w_expertise choice,
   "reasoning_C": explanation for w_contribution choice
+},
+
+────────────────────────────────────────────────────────────────
+I. LOCATION REFERENCE (where the issue is; the server turns it into a point)
+────────────────────────────────────────────────────────────────
+"location_reference": {
+  "anchor": "home" | "work" | "property" | "named_place" | "none",
+  "place":  the place name exactly as written in the issue, only for named_place; "" otherwise
 }
+
+Rules:
+- "our house", "our building", "our entrance", "our yard", "near my home" -> "home"
+- "at work", "our office", "our factory", "our school" (said as staff) -> "work"
+- "my garage", "my plot", "my land" -> "property"
+- a named street, square, park, school or building ("potholes on Linden Street") -> "named_place", with that name
+- no place in the issue -> "none"
+Never invent a place name or coordinates.
 
 ────────────────────────────────────────────────────────────────
 FULL ISR CATEGORY TAXONOMY
@@ -540,6 +556,7 @@ Return ONLY the JSON object. No explanation text outside the JSON.
 // Fields removed by task A2 (PD-8): Expertise has no weights and no resources part.
 const { OBSOLETE_PARAM_FIELDS } = require("./params");
 const { sanitizeDemographicRules } = require("./demographics");
+const { normalizeLocationReference, keywordLocationReference } = require("./location");
 
 // =============================================================================
 // NORMALIZATION
@@ -627,6 +644,9 @@ function normalizeIssueParams(data) {
 
   // ── Resources needed ─────────────────────────────────────────────────────
   if (!data.resources_needed) data.resources_needed = [];
+
+  // ── U6: where the issue is (the server resolves the point) ──────────────
+  data.location_reference = normalizeLocationReference(data.location_reference);
 
   // ── Aggregation weights ───────────────────────────────────────────────────
   const aw = data.aggregation_weights || {};
@@ -1004,6 +1024,8 @@ function getLocalFallbackParams(description, title) {
     resources_needed: resources,
     aggregation_weights: aw,
     aggregation_reasoning: aggregation_reasoning,
+    // U6: the anchor from the same words the prompt lists
+    location_reference: keywordLocationReference(`${title || ""}. ${description || ""}`),
     // Backward-compatible shorthands
     category: cat,
     mu,

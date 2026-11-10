@@ -1,5 +1,42 @@
 # CHANGES
 
+## U6: the issue's point comes from its description (2026-11-10)
+
+Spec: `specs/tasks/U6-issue-location.md` (author: "U6 approved"; "keep the server lookup in U6"). Merged after A4.
+
+### What changed
+- **The Analyzer** (prompt `p3`) says where the issue is: `location_reference` {anchor: home | work | property | named_place | none, place}. The keyword rules give the same field without the model.
+- **Check** turns it into a point (`functions/location.js`):
+  - home, work or property -> the creator's profile place;
+  - a named place -> the place lookup near the creator's home;
+  - no place -> the creator's home;
+  - a pin the creator moved -> that pin.
+
+  The fallbacks are the home, or the browser's point when the profile has no home. The public is formed around that point.
+- **The place lookup** (`functions/geocode.js`) follows OpenStreetMap's Nominatim usage policy:
+  - it sends only the place name, with our own User-Agent;
+  - it sends at most 1 request a second per instance;
+  - it caches answers for 30 days in `geocode_cache`;
+  - the switch `config/geocoding` {enabled} can turn it off without a deploy;
+  - it credits "© OpenStreetMap contributors".
+- **The draft and Create:** the draft keeps the point, its source, a label and the Analyzer's reference. Create uses the draft's point; a different body point gets 409 "The location changed after the check: check again". The issue stores `location_source` and `location_reference`.
+- **The browser:**
+  - the form starts at the creator's home, not the Basel centre;
+  - after Check it shows the point and its label (for example "your home (from the description)");
+  - moving the pin marks it as the creator's, and Create waits for a new Check;
+  - the map and the search box credit OpenStreetMap;
+  - the search box obeys the switch.
+- **Fixed on the way:** a drag, a map click or a profile place changed a copy of the point that Check never read, so only the search box moved an issue.
+
+### Checks
+- **Unit tests:** Node 86 (31 new); Python 72, unchanged.
+- **Browser on the emulator's data (no Check):** the home at start, pin moves, the credit and the switch, as in the spec's status log.
+- **Pending:** AC2-AC5 on the emulator with the free-tier key (about 8 text, 8 embedding and at most 4 Nominatim requests).
+
+### Author's steps after merging (after A4's deploy)
+1. Deploy functions and hosting: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from a checkout of main.
+2. Optional: create `config/geocoding` with `enabled: true` in the console. Without the document the lookup is on; `enabled: false` turns it off.
+
 ## U5: Esc closes only the top window; the geotag button stops downloading every profile (2026-11-10)
 
 Spec: `specs/tasks/U5-esc-and-geotag.md` (author: decisions 1 a, 3 a; decision 2 split).

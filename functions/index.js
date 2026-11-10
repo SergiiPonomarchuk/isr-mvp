@@ -4,7 +4,7 @@ const { onSchedule } = require("firebase-functions/v2/scheduler");
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
 const { FieldValue, GeoPoint } = require("firebase-admin/firestore");
-const { nearestAnchor, gScore: geoScore, withinCutoff } = require("./geo");
+const { nearestAnchor, gScore: geoScore, withinCutoff, toLatLon } = require("./geo");
 const { evaluateDemographics } = require("./demographics");
 const ISR = require("./isr");
 const Lifecycle = require("./lifecycle");
@@ -12,7 +12,9 @@ const Deadlines = require("./deadlines");
 const aiHelper = require("./ai-helper");
 const AI = require("./ai-config");
 const { buildAnalyzerLog } = require("./analyzer-log");
-const { readTextInputs, paramsFromAi, makeDraft, paramsForCreate } = require("./params");
+const { readTextInputs, paramsFromAi, makeDraft, paramsForCreate, locationForCreate } = require("./params");
+const { resolveIssueLocation } = require("./location");
+const { createGeocoder, firestoreStore } = require("./geocode");
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -20,6 +22,14 @@ const db = admin.firestore();
 // A4 (R3): the Gemini API key is a Firebase secret, set by the author
 // (`firebase functions:secrets:set GEMINI_API_KEY`; locally functions/.secret.local).
 const GEMINI_API_KEY = defineSecret("GEMINI_API_KEY");
+
+// U6 (R3): the place lookup (Nominatim) with its cache and switch in Firestore; one per instance,
+// so the 1-request-a-second rule holds per instance.
+const geocoder = createGeocoder({
+  fetchFn: (url, init) => fetch(url, init),
+  store: firestoreStore(db),
+  log: (message, details) => console.log(message, details),
+});
 
 /** A4 (R7): writes one analyzer_logs entry; a failure to log never breaks the request. */
 async function writeAnalyzerLog(entry) {
@@ -94,6 +104,12 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI
       P = paramsForCreate(req.body, draftData);
     } catch (err) {
       return res.status(err.status || 400).json({ error: err.message });
+    }
+    // U6 (R5): the point the check resolved (paramsForCreate refused a different body point).
+    const issueLoc = locationForCreate(req.body, draftData);
+    const issuePoint = issueLoc.location;
+    if (!issuePoint) {
+      return res.status(400).json({ error: "The location must be [latitude, longitude]." });
     }
     const {
       category, demographics, expertise_depth, expertise_domain,
@@ -176,7 +192,7 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI
       if (dScore === 0.0 && w_D > 0 && !isCreator) return; // Excluded by demographics
 
       // Stage 2: Geographic Score (G) from the nearest of home, work and property (A3)
-      const near = nearestAnchor(user.geography, location);
+      const near = nearestAnchor(user.geography, issuePoint);
       let gScore = 1.0;
       let gAnchorType = null;
       if (near) {
@@ -368,7 +384,10 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI
       description,
       starts: FieldValue.serverTimestamp(),
       category: (classification && classification.issue_category) || category || "building.maintenance.general",
-      location: new GeoPoint(location[0], location[1]),
+      location: new GeoPoint(issuePoint[0], issuePoint[1]),
+      // U6 (R5): where the point came from, and the Analyzer's reference
+      location_source: issueLoc.location_source,
+      location_reference: issueLoc.location_reference,
       mu_distance_meters: muVal,
       sigma_decay_meters: sigmaVal,
       // Relevance weights (flat, for query compatibility)
@@ -618,7 +637,7 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI
       creator_uid: String(submitterId),
       created_at: new Date().toISOString(),
       message_count: 1,
-      location: new GeoPoint(location[0], location[1]),
+      location: new GeoPoint(issuePoint[0], issuePoint[1]),
       affection_distance: parseFloat((muVal / 1000).toFixed(3)),
       expertise_depth:  expertise_depth  || "None",
       expertise_domain: expertise_domain  || (expertise_domain_parameters && expertise_domain_parameters.expertise_domain) || "General Maintenance",
@@ -689,6 +708,9 @@ exports.checkIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI_
     if (!title || !description || !location || !submitterId) {
       return res.status(400).json({ error: "Missing required fields: title, description, location, submitterId." });
     }
+    if (!toLatLon(location)) {
+      return res.status(400).json({ error: "The location must be [latitude, longitude]." });
+    }
 
     // 1. Derive every parameter on the server (A2: nobody types a number).
     //    "Derive again" sends only a clarification text; numbers in the body are ignored.
@@ -724,16 +746,28 @@ exports.checkIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI_
     // 2. The issue embedding (A4)
     const issueVector = embedding.vector;
 
-    // 3. Submitter relations
+    // 3. Submitter relations and places
     let submitterRelations = [];
+    let creatorGeography = [];
     try {
       const creatorSnap = await db.collection("users").doc(String(submitterId)).get();
       if (creatorSnap.exists) {
         submitterRelations = creatorSnap.data().socialRelations || [];
+        creatorGeography = creatorSnap.data().geography || [];
       }
     } catch (err) {
       console.error("Error fetching creator social relations during check:", err);
     }
+
+    // 4. U6 (R2): the issue's point from the description (or the pin the creator moved)
+    const loc = await resolveIssueLocation({
+      reference: ai.location_reference,
+      geography: creatorGeography,
+      requested: location,
+      requestedSource: inputs.locationSource,
+      geocode: geocoder.geocode,
+    });
+    const issuePoint = loc.location;
 
     const w_D = data.weights.w_D;
     const w_G = data.weights.w_G;
@@ -781,7 +815,7 @@ exports.checkIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI_
       if (dScore === 0.0 && w_D > 0 && !isCreator) return; // Excluded by demographics
 
       // Stage 2: Geographic Score (G) from the nearest of home, work and property (A3)
-      const near = nearestAnchor(user.geography, location);
+      const near = nearestAnchor(user.geography, issuePoint);
       let gScore = 1.0;
       let gAnchorType = null;
       if (near) {
@@ -915,7 +949,7 @@ exports.checkIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI_
     // Store the derived parameters; createIssue reads its numbers from this draft.
     // A4: the draft also keeps the issue vector and where the parameters came from.
     const { ok: _ok, error: _err, ...issueEmbedding } = embedding;
-    await draftRef.set(Object.assign(makeDraft(inputs, data, nowIso), { issue_embedding: issueEmbedding, ai: aiInfo }));
+    await draftRef.set(Object.assign(makeDraft(inputs, data, nowIso, loc), { issue_embedding: issueEmbedding, ai: aiInfo }));
 
     res.json({
       success: true,
@@ -929,6 +963,11 @@ exports.checkIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI_
       category: data.category,
       classification: data.classification || null,
       // ── Geographic ──────────────────────────────────────────────────────
+      // U6 (R4): the point, where it came from, and a label for the creator
+      location: issuePoint,
+      location_source: loc.source,
+      location_label: loc.label,
+      location_suggested: loc.suggested ? { location: loc.suggested.location, source: loc.suggested.source, label: loc.suggested.label } : null,
       mu: muVal,
       sigma: sigmaVal,
       geographic_parameters: data.geographic_parameters || null,
