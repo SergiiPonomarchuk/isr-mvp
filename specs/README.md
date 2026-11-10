@@ -99,6 +99,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U3-message-sorting](tasks/U3-message-sorting.md) | DONE: merged (PR 11), deployed and checked on live 2026-11-09 | 10 (UI) |
 | [U4-voting-view-messages](tasks/U4-voting-view-messages.md) | DONE: merged (PR 12), deployed and checked on live 2026-11-09 | 10 (UI) |
 | [U5-esc-and-geotag](tasks/U5-esc-and-geotag.md) | DONE on live 2026-11-10 (PR 15); the issue location from the Analyzer follows after A4 | UI |
+| [U8-map-tiles](tasks/U8-map-tiles.md) | draft 2026-11-10: the map's tiles under a provider's terms (now Google's tile servers without a key); waits for the author's choice of option | UI |
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
 
 Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).
