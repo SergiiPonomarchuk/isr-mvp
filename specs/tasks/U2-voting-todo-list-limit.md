@@ -1,6 +1,6 @@
 # SPEC U2: The Voting and ToDo lists show all of a member's issues
 
-Status: IMPLEMENTED on branch `u2-list-limit` 2026-11-09 (emulator AC1-AC5 passed); the author's hosting deploy and AC6 are pending. APPROVED 2026-11-09 (author: decision 1 b, decision 2 "delete Issues", decision 3 a).
+Status: DONE 2026-11-09: merged (PR 10), deployed by the author, AC6 passed on live. APPROVED 2026-11-09 (author: decision 1 b, decision 2 "delete Issues", decision 3 a).
 Branch: u2-list-limit (from main at `14fe1a8`; never main)
 Found in: the L1 emulator test (L1 section 7, first finding; CHANGES.md, L1 findings). The cut predates L1.
 Roadmap: needed for the D1 guided demo, where the Voting and ToDo lists are part of the cycle on screen ([ROADMAP-demo.md](../ROADMAP-demo.md)). Effort estimate: about half a day.
@@ -99,3 +99,4 @@ Counts are from the emulator, which holds the live data after the L1 migration p
   - The Voting and ToDo lists now depend on the Chat listener: if it fails, they stay empty.
   - User 1 needs 7 id queries (194 topic ids).
   - An issue without `created_at` was left out before U2; it is now shown and sorted last. There are none.
+- Live (2026-11-09): merged as PR 10. The author deployed hosting together with U3 and U4; the live files equal main apart from line endings. AC6 (read-only, as Cynthia Gray): the Voting list shows issue 16.

@@ -1,5 +1,66 @@
 # CHANGES
 
+## A4: working AI, roadmap stage 1 (2026-11-10; the PR waits for the runs of phases B and C)
+
+Spec: `specs/tasks/A4-working-ai.md` (approved 2026-11-10; "Try to stay in free-tier limits").
+
+### What changed
+- **Models in one place:** `functions/ai-config.js` holds:
+  - the text model `gemini-3.1-flash-lite`;
+  - the embedding model `gemini-embedding-001` (768 dimensions);
+  - temperature 0 and a fixed seed;
+  - the versions `p2` (prompt) and `t1` (template);
+  - the task types, and k = 5 examples.
+
+  The Python scripts read the same file (`scripts/ai_config.py`). The SDK is `@google/genai` 2.31, replacing `@google/generative-ai`.
+- **The key** is the Firebase secret `GEMINI_API_KEY`, used by the three HTTPS functions. Locally it lives in `functions/.secret.local`, which is gitignored. It is never printed or logged.
+- **Check:**
+  - it embeds the issue text (`{title}. {description}`) first; without a vector it refuses with 503 "AI unavailable", and no random vector is used anywhere;
+  - the Analyzer gets the 5 nearest of the 100 calibrated examples (`functions/data/analyzer_examples.json`, built by `functions/tools/build_examples.js`);
+  - without a key or on an error, the keyword rules answer, labelled as the fallback.
+- **Create** reuses the draft's vector and writes `issue_vectors/{id}` and an `ai` field on the issue.
+- **Logs:** `analyzer_logs` gets one document per Analyzer call: input, model, versions, examples, raw and normalised output, tokens. The rules make it server-only.
+- **The people:** `scripts/embed_people.py` embeds every profile and skill again with template `t1` (`scripts/embedding_templates.py`). It stays within the free tier, resumes, and skips people whose vectors are current.
+- **The A1b publics:** `scripts/migrate_a4.py` replaces the expertise placeholder with real E and the ISR, from the issue vector.
+- **The browser:** the Check window says which model derived the parameters, or shows the fallback label or the server's error.
+
+### Checks
+- **Unit tests:** Node 55; Python 72.
+- **Emulator with the free-tier key:**
+  - AC2: 5 issues, each checked twice; every call used the model; the parameters were identical in both runs.
+  - AC3: the vectors were bit-identical; Create reused the draft's vector.
+  - AC4: without a key, the refusal and the label.
+  - 11 Analyzer calls used about 99,400 tokens: about $0.04 at the paid rate, $0 on the free tier.
+- **Pending (after P1's apply on the emulator, 2026-11-11):**
+  - AC5: the 200-person sample with the task-type comparison, then all people;
+  - AC6: the A1b publics;
+  - AC7: the token totals.
+
+### Author's steps after merging (phase D), after P1 is applied on live
+1. Set the secret: `firebase functions:secrets:set GEMINI_API_KEY --project project-a3d59130-5adf-4677-9e2` (paste the free-tier key when asked).
+2. Deploy from a checkout of main: `firebase deploy --only functions,hosting,firestore:rules --project project-a3d59130-5adf-4677-9e2`.
+3. Embed the people on live: `python scripts/embed_people.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply` (about 300 requests and 30 minutes; it resumes if stopped).
+4. Replace the placeholders: `python scripts/migrate_a4.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`.
+5. The agent then checks live read-only (AC8).
+
+## U5: Esc closes only the top window; the geotag button stops downloading every profile (2026-11-10)
+
+Spec: `specs/tasks/U5-esc-and-geotag.md` (author: decisions 1 a, 3 a; decision 2 split).
+
+### What changed
+- **Esc:** one Esc handler for the page (`prototype/js/esc-order.js`, used by `main.js`) closes only the topmost open window: the geotag map, the values window, the login window, the option/Deadline/Relevance/ISR window, then the section window. The tour still closes itself.
+- **The new-issue form:** with a title, a description or a Check result, Esc asks "Discard this new issue?" instead of throwing the form away.
+- **The geotag button** opens the map at once. It no longer downloads every profile (about 20 MB on each click) to show the distance to the nearest person.
+- **Hosting:** scripts and styles are served with `Cache-Control: no-cache`, so a browser picks up a new deploy on its next load.
+- Next, after A4: the Analyzer derives the issue's location from the description ("in our house" -> the creator's home).
+
+### Checks
+- Unit tests: Node 45 (5 new, `functions/test/esc_geotag.test.js`; they fail on the code before the change). Python unchanged.
+- Emulator: AC1-AC3 as in the spec's status log.
+
+### Author's steps after merging
+1. Deploy hosting (no functions, no rules): `firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`.
+
 ## A1b: an expertise placeholder for publics without E and ISR (2026-11-09)
 
 Spec: `specs/tasks/A1b-expertise-placeholder.md` (author: option b).
@@ -31,6 +92,10 @@ Spec: `specs/tasks/A1b-expertise-placeholder.md` (author: option b).
 2. Run it again without `--apply`, with `--report "$env:TEMP1b-check.md"` so the committed reports stay as they are. It should list 0 publics.
 3. No deploy is needed.
 
+### Live (2026-11-09)
+- Merged as PR 13. Applied by the author: 156 documents (150 members of 3 publics, 6 topic documents); report `specs/tasks/A1b-migration-report-live.md`; the dry run afterwards found nothing to change.
+- Checked (read-only): all 3,195 live members have E and ISR; the placeholder ISRs equal the A1 formula; the maps equal the members.
+
 ## U4: the Voting view keeps its own messages (2026-11-09)
 
 Spec: `specs/tasks/U4-voting-view-messages.md` (author: "fix the Voting bug").
@@ -46,6 +111,9 @@ Spec: `specs/tasks/U4-voting-view-messages.md` (author: "fix the Voting bug").
 
 ### Author's steps after merging
 - Deploy hosting with the next deploy (`firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`).
+
+### Live (2026-11-09)
+- Merged as PR 12 and deployed; opening a voting issue on live logs no error.
 
 ## U3: sort buttons for an issue's messages; dashboard order (2026-11-09)
 
@@ -82,6 +150,9 @@ Spec: `specs/tasks/U3-message-sorting.md` (approved 2026-11-09 with the author's
    - the buttons and the values in one topic;
    - the order of the strip and the cards.
 
+### Live (2026-11-09)
+- Merged as PR 11 (values without the asterisk) and deployed. Checked on live: the buttons, the values and ISR sorting in voting issue 16; the strip and card order.
+
 ## U2: the Voting and ToDo lists show all of a member's issues (2026-11-09)
 
 Spec: `specs/tasks/U2-voting-todo-list-limit.md` (approved 2026-11-09: decision 1 b, "delete Issues", test yes).
@@ -103,6 +174,9 @@ Spec: `specs/tasks/U2-voting-todo-list-limit.md` (approved 2026-11-09: decision 
 ### Author's steps after merging
 1. Deploy hosting: `firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`.
 2. Check on live (Ctrl+F5 or a new incognito window): as Cynthia Gray, issue 16 is in the Voting list; the strip has no "Issues".
+
+### Live (2026-11-09)
+- Merged as PR 10 and deployed. Checked on live: Cynthia Gray's Voting list shows issue 16.
 
 ## L1: deadlines and the public's management decisions (2026-11-09)
 
@@ -143,6 +217,14 @@ Branch `l1-deadlines`. Spec: `specs/tasks/L1-deadlines-and-management-decisions.
 ### Findings (not changed)
 - The Voting and ToDo lists only consider the 30 newest issues (`main.js`, `.limit(30)`), so a member's voting issue can be missing from their list (seen on the emulator).
 - With today's test data, the first run after the migration date cancels every chat (none has an option) and every voting issue (none has 30 % voted). Proposing options and voting first avoids that, and so does prolonging again.
+
+### Live (2026-11-09)
+- Merged as PR 9. Migration applied by the author before the deploy: 269 documents; report `specs/tasks/L1-migration-report-live.md`; second dry run clean. Every chat and voting deadline is now 2026-12-09.
+- Deployed by the author: functions and hosting (live files equal main). `closeExpiredTopics` runs daily at 00:30 Europe/Zurich (europe-central2, Cloud Scheduler job enabled).
+- Browser check (read-only): the lists show the new deadlines; the Deadline window shows the 30 % rule; Start Voting and Finish Voting are disabled with their reasons.
+- Press test (author): a press below 30 % was stored without a question; a second press withdrew it.
+- First nightly run (2026-11-10, 00:30 Europe/Zurich): "checked 3, changed 0", no errors. The 3 are already decided topics with old deadlines (issues 57 and 182, one inactive discussion).
+- The live preview for 2026-12-10: 113 chats canceled (no options), 1 chat to voting, 76 voting issues canceled (9 below 30 % voted, 67 without votes).
 
 ### Author's steps after merging (order matters)
 1. **Migration first:**

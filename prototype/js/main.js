@@ -935,12 +935,52 @@ function closeSectionModal() {
       modalCloseBtn.addEventListener('click', closeSectionModal);
     }
 
+    // U5: one Esc handler for the page. It closes only the topmost open window
+    // (prototype/js/esc-order.js), the way that window's own close button does, and asks before
+    // it discards a new-issue form with content (decision 1 a).
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
-        closeSectionModal();
-        if (menu) menu.classList.remove('menu-open');
+      if (e.key !== 'Escape') return;
+      var isShown = function (id) {
+        var el = document.getElementById(id);
+        return !!el && !el.hidden && window.getComputedStyle(el).display !== 'none';
+      };
+      var bodyEl = document.getElementById('section-modal-body');
+      var sectionOpen = !!overlay && overlay.classList.contains('active');
+      var open = {
+        geoMap: isShown('geo-map-modal-overlay'),
+        tour: isShown('tour-overlay'),
+        values: isShown('values-vector-modal'),
+        login: isShown('login-modal-overlay'),
+        proposal: isShown('proposal-modal-overlay'),
+        section: sectionOpen,
+        createFormHasContent: sectionOpen && createFormHasContent(bodyEl)
+      };
+      var r = window.EscOrder ? window.EscOrder.escAction(open) : { action: 'close', window: 'section' };
+      if (r.action === 'close') {
+        var closeIds = { geoMap: 'geo-map-modal-close-btn', login: 'login-modal-close-btn', proposal: 'proposal-modal-close-btn' };
+        if (r.window === 'values') {
+          if (typeof window.closeValuesVectorModal === 'function') window.closeValuesVectorModal();
+        } else if (r.window === 'section') {
+          closeSectionModal();
+        } else {
+          var btn = document.getElementById(closeIds[r.window]);
+          if (btn) btn.click();
+        }
+      } else if (r.action === 'confirm-discard') {
+        if (window.confirm('Discard this new issue?')) closeSectionModal();
       }
+      if (menu) menu.classList.remove('menu-open');
     });
+  }
+
+  /** U5: the new-issue form is open and holds a title, a description or a Check result. */
+  function createFormHasContent(bodyEl) {
+    if (!bodyEl || bodyEl.getAttribute('data-topic-source-kind') !== 'chat-create') return false;
+    var title = bodyEl.querySelector('.topic-new-title-input');
+    var desc = bodyEl.querySelector('.topic-form-textarea');
+    var results = bodyEl.querySelector('#create-results-members-block');
+    return !!((title && title.value.trim()) || (desc && desc.value.trim())
+      || (results && results.style.display !== 'none'));
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setup);
@@ -2053,11 +2093,8 @@ function initValuesVectorModal() {
   closeBtn.addEventListener('click', closeModal);
   backdrop.addEventListener('click', closeModal);
 
-  document.addEventListener('keydown', function(e) {
-    if (!modal.hidden && e.key === 'Escape') {
-      closeModal();
-    }
-  });
+  // U5: Esc is handled by the page's one Esc handler (initModalCloseHandlers), which calls
+  // window.closeValuesVectorModal when this window is the topmost one.
 
   // Global click delegation for values-vector-btn (Issue 4)
   document.addEventListener('click', function(e) {
@@ -4998,51 +5035,11 @@ function initTopicDetailViews() {
         // Close other popups
         modalBody.querySelectorAll('.reaction-users-popup').forEach(p => p.remove());
 
-        const originalCoordsText = `${newTopicGeo[0].toFixed(2)}, ${newTopicGeo[1].toFixed(2)}`;
-        geoValEl.textContent = "Calculating...";
-
-        let minDistance = Infinity;
-        try {
-          const snap = await db.collection("users").get();
-          snap.forEach(doc => {
-            const user = doc.data();
-            if (user.uid.toString() === currentUserId.toString()) return;
-            // A3: nearest of home, work and property
-            (user.geography || []).forEach(g => {
-              if (!g || !["home", "work", "property"].includes(g.type) || !Array.isArray(g.geo)) return;
-              const dist = localHaversine(newTopicGeo, g.geo);
-              if (dist < minDistance) {
-                minDistance = dist;
-              }
-            });
-          });
-        } catch (err) {
-          console.warn("Could not query user database for nearest distance:", err);
-        }
-
-        let formattedDistance = "No users found";
-        if (minDistance !== Infinity) {
-          if (minDistance < 1000) {
-            formattedDistance = `Nearest: ${Math.round(minDistance)}m`;
-          } else {
-            formattedDistance = `Nearest: ${(minDistance / 1000).toFixed(1)}km`;
-          }
-        }
-
-        geoValEl.textContent = formattedDistance;
-
-        // Fade back to coordinates
-        setTimeout(() => {
-          geoValEl.style.transition = 'opacity 0.6s';
-          geoValEl.style.opacity = '0';
-          setTimeout(() => {
-            geoValEl.textContent = originalCoordsText;
-            geoValEl.style.opacity = '1';
-          }, 600);
-        }, 2500);
+        // U5: the button used to download every profile (about 20 MB) to show the distance to the
+        // nearest other person for 2.5 s. It now opens the map at once and downloads nothing.
 
         // Open map overlay modal
-        setTimeout(() => {
+        {
           geoOverlay.removeAttribute('hidden');
           geoOverlay.style.display = 'flex';
 
@@ -5078,7 +5075,7 @@ function initTopicDetailViews() {
           }
 
           initInteractiveMap();
-        }, 300);
+        }
       });
     }
 
