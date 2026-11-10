@@ -1,7 +1,7 @@
 # SPEC U8: Map tiles under a provider's terms
 
-Status: DRAFT 2026-11-10: waits for the author's choice of option (section 4).
-Branch: u8-map-tiles (from main; never main)
+Status: APPROVED 2026-11-10 (author: option a, OpenStreetMap tiles). Implemented 2026-11-10 on top of U6; AC1-AC2 passed; AC3 after the deploy.
+Branch: u8-map-tiles (from main, with U6 merged in because both change the map's credit; merged after U6; never main)
 Source: a side finding of U5 and U6 (2026-11-10): the map loads Google's tiles without a key or an account.
 
 ## 1. Context (verified 2026-11-10)
@@ -46,7 +46,7 @@ Source: a side finding of U5 and U6 (2026-11-10): the map loads Google's tiles w
 
 ## 4. Open point (author)
 
-- 4.1 Option a, b, c or d (section 2). Recommendation: a.
+- 4.1 Option a, b, c or d (section 2). Recommendation: a. **Decided 2026-11-10: a.**
 
 ## 5. Non-goals
 
@@ -67,3 +67,12 @@ Source: a side finding of U5 and U6 (2026-11-10): the map loads Google's tiles w
 ## 8. Status log
 
 - 2026-11-10: spec drafted (agent) with the facts above; waits for the author's choice (4.1).
+- 2026-11-10: the author chose option a ("Map tiles spec (U8): a").
+- 2026-11-10: implemented (agent):
+  - R1: `MAP_TILES` in `main.js` (URL, `maxZoom` 19, credit). One credit, "© OpenStreetMap contributors", now covers the tiles and U6's place search, and the search box keeps its own line.
+  - R2: the Google Maps JavaScript API branches (circles, map, markers, `updateTargetMarker`) are removed; 112 lines.
+  - R4: `functions/test/map_tiles.test.js` (3). U6's browser test is adapted (one profile-marker handler, the merged credit).
+- 2026-11-10: checks (agent):
+  - AC1: Node 89 pass.
+  - AC2: a static server with this branch's code, the Firestore emulator's data and test user 2. The geotag map loaded 12 of 12 tiles from `tile.openstreetmap.org` and showed "© OpenStreetMap contributors". No request went to Google. Picking a profile place still moved the pin (source "creator"). No console errors.
+  - Pending: AC3 on live after the hosting deploy (with U6).

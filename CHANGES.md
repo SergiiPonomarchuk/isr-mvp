@@ -1,5 +1,22 @@
 # CHANGES
 
+## U8: the map uses OpenStreetMap tiles (2026-11-10)
+
+Spec: `specs/tasks/U8-map-tiles.md` (author: option a). Merged after U6.
+
+### What changed
+- **The tiles:** the map's tiles come from `tile.openstreetmap.org` under the OSMF tile usage policy, with the credit "© OpenStreetMap contributors". Before, they came from Google's own tile servers without a key or account, which Google's terms do not allow.
+- **One setting:** the URL and the credit live in one constant (`MAP_TILES` in `prototype/js/main.js`). The same credit covers U6's place search.
+- **Dead code removed:** the Google Maps JavaScript API branches never ran, because the page never loaded that library.
+
+### Checks
+- Unit tests: Node 89 (3 new in `functions/test/map_tiles.test.js`; U6's browser test adapted).
+- Emulator data with a static server: the tiles loaded from OpenStreetMap, the credit showed, and no request went to Google.
+
+### Author's steps after merging
+1. Deploy hosting with U6: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from a checkout of main.
+2. The agent then checks live read-only (AC3).
+
 ## U6: the issue's point comes from its description (2026-11-10)
 
 Spec: `specs/tasks/U6-issue-location.md` (author: "U6 approved"; "keep the server lookup in U6"). Merged after A4.
