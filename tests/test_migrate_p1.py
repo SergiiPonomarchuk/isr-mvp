@@ -218,6 +218,7 @@ class Generate(unittest.TestCase):
             self.assertEqual(len(m.read_jsonl(os.path.join(d, m.CALLS_FILE))), 3)
             prompt = m.read_jsonl(os.path.join(d, m.CALLS_FILE))[0]["prompt"]
             self.assertIn("as the person's OWN work", prompt)
+            self.assertIn("without education entries has roles that need no degree", prompt)
             s2 = m.generate(users, args, caller=caller, sleep=lambda x: None)    # resume: nothing left
             self.assertEqual(s2["requests"], 0)
             self.assertEqual(sorted(m.load_generated(d), key=int), ["1", "2", "3", "4", "5"])

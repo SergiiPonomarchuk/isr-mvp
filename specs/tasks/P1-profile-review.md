@@ -99,3 +99,5 @@ Effort estimate: 1-2 developer-days after the decisions, plus generation time on
   - The roles follow the job and the education, and the latest entry is the current job. The notes were used only where they fit (2 of 47 entries).
   - One weak case: uid 2910 (68, unemployed, no education) became a "Senior Consultant" for 40 years. 277 of the 5,097 people have no education entry.
   - The generation now stops after 3 failed calls in a row (a long 503 would otherwise spend the day's requests), and a change of prompt version regenerates a person. 1 more test (18).
+- 2026-11-10: the author approved the trial and the full run, with one more rule ("add the no-education rule, start the full run"). Prompt `p1w2` adds: a person without education entries has roles that need no degree (trades, services, manual, transport or clerical work). Everyone, the trial 20 included, is generated with `p1w2`.
+- 2026-11-10 10:03 UTC: full generation started, day 1: at most 470 requests (free tier: 500 a day, reset at midnight Pacific). The rest follows on day 2.

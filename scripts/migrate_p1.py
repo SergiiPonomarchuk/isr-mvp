@@ -63,7 +63,7 @@ CALLS_FILE = "calls.jsonl"
 REF_DATE = _dt.date(2026, 11, 10)            # the date of the audit; ages and "in progress" are taken on it
 TEXT_MODEL = "gemini-3.1-flash-lite"          # the A4 text model (functions/ai-config.js TEXT_MODEL)
 SEED = 20261110                               # functions/ai-config.js SEED
-PROMPT_VERSION = "p1w1"
+PROMPT_VERSION = "p1w2"                        # p1w2: the rule for people without education
 WORK_START_AGE = 16
 MIN_YEARS = 0.5
 GRAD_AGE = {"Vocational Training": 19, "College": 20, "Bachelor": 22, "Master": 24, "PhD": 28}
@@ -212,6 +212,7 @@ Rules:
 - If the person has a job other than "unemployed", the most recent entry is that job: its title is the job name or a close variant, and its years are the years in that job so far.
 - If the person is "unemployed", the entries are earlier jobs; people aged 66 or more have retired from them.
 - Entries fit the person's education, age and job, and a career starts after the education it needs. The years of all entries of a person together are at most max_total_years.
+- A person without education entries has roles that need no degree, for example trades, services, manual, transport or clerical work.
 - "note" is an old persona sketch from a data generator. It often describes another person, a hobby or a trait rather than work. Use a note only where it plausibly describes work this person did; otherwise ignore it.
 - title: the role, 1 to 5 words.
 - field: the domain of the work in 1 to 3 words; prefer one of these: {fields}.
