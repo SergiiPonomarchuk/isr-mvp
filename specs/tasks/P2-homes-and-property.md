@@ -166,3 +166,22 @@ Fictional names, written for this dataset. The rename map is kept in `scripts/mi
 | Bar 2 | Night Owl Bar | Bar 3 | Cellar Bar |
 | Saloon 1 | Silk & Scissors Salon | Saloon 6 | Glow Beauty Salon |
 | Saloon 8 | Mirror Hair Salon | | |
+- 2026-11-10: implemented (agent): `scripts/migrate_p2.py` (R1-R5) and `tests/test_migrate_p2.py` (14 tests).
+  - **How a re-run changes nothing:** `--make-plan` writes the plan once, from the original people, with each person's source hash. `--apply` writes only people whose source is unchanged; a person already as planned is skipped, and a changed one is held.
+  - **The edge of an area:** a moved object keeps 1 m clear of the area's edge, so that rounding never leaves it on the edge.
+- 2026-11-10: read-only preview on the emulator's data, before P1. Nothing was written; the output went to the agent's scratch folder.
+  - **People and buildings:** 9,150 people to move. 1,226 buildings: 35 apartment blocks, 1,145 townhouses, 45 city houses and 1 private house.
+  - **Extents:**
+    - townhouse 1: 536 × 512 m; townhouse 2: 216 × 256 m;
+    - osbb 1: 180 × 210 m; osbb 2: 180 × 140 m; osbb 3: 120 × 140 m;
+    - Andim's city houses: within 377 × 371 m.
+  - **Objects:** 19 move into apartment blocks, 15 move out (20-300 m), and 44 stay.
+  - **Property entries:**
+    - flats 2,948 and houses 1,882 (use: home 4,563, rented out 267);
+    - garages 381, in 3 cooperatives;
+    - garden plots 503, in 3 gardens;
+    - commercial 78.
+  - **Distance rules:** all hold.
+  - **On a map** (OpenStreetMap): the layout has regular, realistic spacing.
+  - **Finding:** the estate centres lie in Weil am Rhein (Germany), just north of Basel; osbb 3 is next to the A5 motorway junction. The author's centres are kept.
+  - **Next:** after P1's apply on 2026-11-11, `--make-plan` on the emulator (the real plan, committed), then AC2-AC4.
