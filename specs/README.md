@@ -98,6 +98,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U2-voting-todo-list-limit](tasks/U2-voting-todo-list-limit.md) | merged (PR 10); hosting deploy and live check pending (author) | 10 (UI) |
 | [U3-message-sorting](tasks/U3-message-sorting.md) | merged (PR 11); hosting deploy and live check pending (author) | 10 (UI) |
 | [U4-voting-view-messages](tasks/U4-voting-view-messages.md) | implemented on branch `u4-voting-messages-fix` (emulator check passed); hosting deploy pending (author) | 10 (UI) |
+| [U6-issue-location](tasks/U6-issue-location.md) | draft 2026-11-10: the issue's location from its description (after A4) | UI, 07 (Analyzer), 03 (G) |
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | implemented on branch `a1b-expertise-placeholder` (emulator applied; live dry run: 3 publics, 150 members); live apply pending (author) | 02, 04, 06 |
 | [A4-working-ai](tasks/A4-working-ai.md) | approved 2026-11-10; phase A implemented on branch `a4-working-ai` (emulator without a key checked); waits for the author's free-tier key | 02, 03, 04, 07, 12, 13 |
 
