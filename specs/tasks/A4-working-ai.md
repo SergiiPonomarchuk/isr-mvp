@@ -123,14 +123,14 @@ On the free tier, the content sent is used to improve Google's products. The pai
      ```
      Occupation: {post.job}, {post.department}.
      Education: {educationLevel} in {specialization}; ...
-     Experience: {comment}; ...
+     Experience: {role} ({field}): {description}; ...
      Activities: {name}, ...
      ```
 
      Empty parts are dropped. Not included: age, gender, nationality, places, relations, values, salary, offences, marks, institution names.
    - **Skill vectors (for E), one text each:**
      - education: `{educationLevel} in {specialization}`;
-     - work experience: `{comment}`;
+     - work experience: `{role} ({field}): {description}`, with P1's fields (`name`, `specialization`, `comment`; amended 2026-11-10, see the status log). An entry without role and field gives only its comment;
      - activity: `{name}`.
    - **Issue vector:** `{title}. {description}`.
 3. **Analyzer logs store the full issue text.** Server-only collection, model and prompt version on every entry, no names (submitter id only). Before a pilot with real people: a retention period, consent, and a paid key.
@@ -225,3 +225,18 @@ On the free tier, the content sent is used to improve Google's products. The pai
   - Requests used today: 13 embedding requests and 12 text requests, within the free tier.
 - Finding: with the model's parameters, the test publics were small (1-3 members). For example, a broken lock gives mu = 40 m, sigma = 30 m, and no synthetic home lies within 100 m of the test point (47.55, 7.61); 123 lie within 1 km, 7,864 within 5 km. A demo must place issues where people live (stage 3).
 - **Deploy only together with phase B.** Until the people are re-embedded, S and E would compare a `gemini-embedding-001` issue vector with person vectors from the old model (`text-embedding-004`, EMBEDDINGS #7). Cosines across two models are meaningless. Phases A-C are therefore one PR and one deploy.
+- Template change (2026-11-10, author: "start Phase B with that template"): P1 fills the empty `name` and `specialization` of every work-experience entry with the role and the field, and `comment` with one sentence on the person's own work. Template `t1` therefore embeds a work-experience entry as `{role} ({field}): {description}`, in the skill vector and on the profile's "Experience:" line. No person had been embedded with `t1`, so the version stays `t1`.
+- Phase B implemented (2026-11-10, agent; worktree of `a4-working-ai`):
+  - `scripts/embedding_templates.py` (R9): the templates.
+  - `scripts/ai_config.py`: the Python scripts read the models, size, template version and task types from `functions/ai-config.js`, so there is one source.
+  - `scripts/gemini_api.py`: `batchEmbedContents` over REST, 100 texts a request, unit vectors (768 dimensions are not returned normalised); the key in a header and redacted from every error.
+  - `scripts/embed_people.py` (R8): a dry run by default; `--apply`, `--limit`, `--max-requests` (default 900 a run), `--compare-task-types` (open point 4.3).
+    - The pace stays below the free tier: at most 24,000 estimated tokens and 60 requests a minute.
+    - On HTTP 429 it waits 60 s; on 5xx it backs off for 30, 60 and 120 s; after 3 failed requests in a row it stops.
+    - A person is written once all their texts are embedded.
+    - `profile_vector` stays a Firestore vector, and `experience_vectors` is replaced as a whole.
+    - Besides R8's fields, it writes `embedding_task_type` and `embedding_text_sha256` (`{"profile": sha, "<skill id>": sha}`). A person is skipped when model, size, template, task type and texts are current. This is how a run resumes, and how a profile changed later is embedded again.
+    - The report: counts, estimated tokens and paid-rate cost, long texts, the median pair cosine (new against the same people's old vectors), example texts (uids only), and, with `--compare-task-types`, S for 5 fixed issue texts against 200 profiles under both task types (6 requests).
+  - Tests: `tests/test_embed_people.py` (15, API mocked): the texts pinned on fixture profiles (after and before P1, a child, a toddler), the excluded fields, the config, the plan and resume rule, batches and the written fields, the stop on errors, the request limit, the pace, the request body. Python 67 OK; Node 50 pass.
+  - Dry run on the emulator (no API call, profiles before P1): 9,150 people (`users/None` skipped), 29,395 texts (9,150 profiles, 5,835 education, 11,057 work experience, 3,353 activities), about 716,000 estimated tokens ($0.11 at the paid rate), 294 requests, about 30 minutes. No text is near the 2,048-token limit.
+  - Next: P1 `--apply` on the emulator, then the `--limit 200` sample with `--compare-task-types`, then the full run (AC5).
