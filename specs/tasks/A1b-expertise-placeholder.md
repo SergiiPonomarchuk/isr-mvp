@@ -1,6 +1,6 @@
 # SPEC A1b: An expertise placeholder for publics without E and ISR
 
-Status: IMPLEMENTED on branch `a1b-expertise-placeholder` 2026-11-09 (emulator applied and checked; live dry run done). The author's live `--apply` is pending. APPROVED 2026-11-09 (author: "option b", U3 decision 6).
+Status: DONE 2026-11-09: merged (PR 13), applied on live by the author, checked. APPROVED 2026-11-09 (author: "option b", U3 decision 6).
 Branch: a1b-expertise-placeholder (from `u4-voting-messages-fix` at `b7b0d44` + U4; never main)
 Source: the author asked (2026-11-09) that every discussion member have E and ISR, after U3 showed "N/A" for the members of the app-created publics.
 Supersedes in part: A1 R11 ("The 2 app-created publics without E stay without ISR until stage 1"). Stage 1 still replaces the placeholder with real E.
@@ -71,4 +71,6 @@ Supersedes in part: A1 R11 ("The 2 app-created publics without E stay without IS
   | `id70DNNSVTNUYpjFv9cN` | `nN4sPhX49dxLqmbuKada` | 100 | 0.65 / 0.15 / 0.20 | 0.537 / 1.005 / 1.005 |
   | `muhSxCg3KQCiyon46dua` | `qTkvs4PP90KIiOt0o6kF` | 25 | 0.40 / 0.30 / 0.30 | 0.705 / 1.012 / 1.013 |
 
-- Live apply (author): pending.
+- Live apply (author, 2026-11-09 21:41): 156 documents (150 members, 6 topic documents); report [A1b-migration-report-live.md](A1b-migration-report-live.md).
+  - The agent's dry run afterwards: 0 publics to change.
+  - Read-only check: all 3,195 live members have E and ISR. In the 3 publics, every ISR equals the A1 formula, every member is marked "no_issue_vector", and the discussion and issue maps equal the members.

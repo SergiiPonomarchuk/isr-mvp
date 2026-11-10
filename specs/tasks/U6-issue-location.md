@@ -1,6 +1,6 @@
 # SPEC U6: The issue's location comes from its description
 
-Status: DRAFT 2026-11-10: the design follows the author's decisions (U5 section 3a, and "keep the server lookup in U6"); waits for approval.
+Status: APPROVED 2026-11-10 (author: "U6 approved"); the design follows the author's decisions (U5 section 3a, and "keep the server lookup in U6"). Implementation in progress.
 Branch: u6-issue-location (stacked on `a4-working-ai` at `4fa064a`: it changes the Analyzer prompt and `checkIssue`, which A4 changes too; merged after A4)
 Source: the author, 2026-11-10 (U5 decision 2): "in new issue registration geotag (coordinates, distance and fade) should be taken from the issue description according to 100 examples table by AI Analyzer. If user describe it as "in our house" - it should be coordinates of the house stated in the user profile." The defaults (author: "go ahead with U5 as you described"):
 - a named place is geocoded within the region, else the creator's home is used;
@@ -131,3 +131,4 @@ The author, 2026-11-10, on the place lookup: "keep the server lookup in U6". Thi
 
 - 2026-11-10: spec drafted (agent) from the author's decisions.
 - 2026-11-10: the author kept the server lookup. Added R3 with the policy rules (identification, 1 request a second, cache, switch, credit). Added to R6 the credit and the switch for the existing search box. Added the R7 tests, AC5 and two non-goals.
+- 2026-11-10: the author approved the spec ("U6 approved"). Merged main (U5) into the branch first, because U5 changed the same geotag code.

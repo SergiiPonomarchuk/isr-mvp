@@ -1,6 +1,6 @@
 # SPEC U4: The Voting view keeps its own messages
 
-Status: IMPLEMENTED on branch `u4-voting-messages-fix` 2026-11-09 (emulator check passed); the author's hosting deploy is pending. APPROVED 2026-11-09 (author: "fix the Voting bug").
+Status: DONE 2026-11-09: merged (PR 12), deployed by the author, checked on live. APPROVED 2026-11-09 (author: "fix the Voting bug").
 Branch: u4-voting-messages-fix (from main at `b7b0d44`; never main)
 Found in: the U3 emulator test (U3 status log, findings). The bug predates U3.
 
@@ -35,3 +35,4 @@ Found in: the U3 emulator test (U3 status log, findings). The bug predates U3.
 - Emulator (2026-11-09, `127.0.0.1:5000/?emulator=1`, user 1):
   - Before: 2 errors, and a global holding 179's 28 messages.
   - After: no errors, no global; 179 shows 27 message cards and 187 shows 25 (each without its description).
+- Live (2026-11-09): merged as PR 12 and deployed. Read-only check: opening voting issue 16 on live logged no error, and `window.currentMessagesRaw` stayed undefined.
