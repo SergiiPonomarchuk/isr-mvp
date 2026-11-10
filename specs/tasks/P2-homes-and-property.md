@@ -185,3 +185,4 @@ Fictional names, written for this dataset. The rename map is kept in `scripts/mi
   - **On a map** (OpenStreetMap): the layout has regular, realistic spacing.
   - **Finding:** the estate centres lie in Weil am Rhein (Germany), just north of Basel; osbb 3 is next to the A5 motorway junction. The author's centres are kept.
   - **Next:** after P1's apply on 2026-11-11, `--make-plan` on the emulator (the real plan, committed), then AC2-AC4.
+- 2026-11-10: the author on the location: "It is ok. All these places In Andim and Bilim - fiction cities for testing environment." The estates belong to the fictional cities Andim and Bilim on real coordinates, so real map features underneath are not a problem. Andim's 123 people, with the home address "Andim", live in the city of Andim; R2 gives them fictional street addresses there.
