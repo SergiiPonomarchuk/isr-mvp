@@ -1,5 +1,21 @@
 # CHANGES
 
+## U7: the page is not cached for an hour after a deploy (2026-11-10)
+
+Spec: `specs/tasks/U7-page-cache.md` (author: "1+2").
+
+### What changed
+- **Hosting** sends `Cache-Control: no-cache` for every response, through one rule (`"source": "**"`) that replaces U5's rule for scripts and styles. Before, the page itself was cached for an hour, so a browser could combine an old page with new scripts after a deploy.
+- **Cost (measured on live):** a full load is 137 KB compressed; U7 adds the page and the logo, about 45 KB, to what U5 already sends on every load. The free hosting transfer covers about 2,600 full loads a day.
+
+### Checks
+- Unit tests: Node 47 (2 new in `functions/test/page_cache.test.js`; U5's test adapted).
+- The local hosting server ignores `headers`, so the headers are checked on live after the deploy.
+
+### Author's steps after merging
+1. Deploy hosting from a checkout of main, on its own or together with A4 or U6: `firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`.
+2. The agent then checks the live headers (AC2).
+
 ## U5: Esc closes only the top window; the geotag button stops downloading every profile (2026-11-10)
 
 Spec: `specs/tasks/U5-esc-and-geotag.md` (author: decisions 1 a, 3 a; decision 2 split).

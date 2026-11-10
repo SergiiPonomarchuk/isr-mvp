@@ -54,9 +54,10 @@ test("the geotag button downloads no profiles", () => {
   assert.match(handler, /initInteractiveMap\(\);/);
 });
 
-test("hosting: scripts and styles are served with Cache-Control: no-cache", () => {
+test("hosting: scripts and styles are served with Cache-Control: no-cache (since U7 by the rule for every response)", () => {
   const cfg = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "..", "firebase.json"), "utf8"));
-  const rule = (cfg.hosting.headers || []).find((h) => h.source === "**/*.@(js|css)");
-  assert.ok(rule, "a header rule for js and css");
+  // U7: one rule for every response (the page too), replacing U5's rule for scripts and styles
+  const rule = (cfg.hosting.headers || []).find((h) => h.source === "**");
+  assert.ok(rule, "a header rule for every response");
   assert.deepEqual(rule.headers, [{ key: "Cache-Control", value: "no-cache" }]);
 });
