@@ -1,6 +1,6 @@
 # SPEC U5: Esc closes only the top window; the geotag button stops downloading every profile
 
-Status: DRAFT 2026-11-10. Decisions 1 and 3 given (a); decision 2 given as a new direction (section 3a), whose details wait for the author.
+Status: IMPLEMENTED on branch `u5-ui-fixes` 2026-11-10 (emulator checked); waits for review, merge and the author's hosting deploy. APPROVED 2026-11-10 (author: decisions 1 a, 3 a; decision 2 split: the download goes now, the location from the Analyzer is a later task after A4).
 Branch: u5-ui-fixes (from main at `ae51eef`; never main)
 Source: the live smoke test of 2026-11-08 (U1 spec, CHANGES.md): "Esc closes the whole new-issue window even while the geotag map is open; the geotag button downloads all profiles in the browser to show the nearest distance."
 
@@ -19,7 +19,7 @@ Source: the live smoke test of 2026-11-08 (U1 spec, CHANGES.md): "Esc closes the
 
 ## 2. Requirements (after the decisions)
 
-- R1 One Esc handler for the page closes only the topmost open window, in this order: the geotag map, the values window, the proposal overlay, then the section window. Each window is closed the way its own ✕ closes it (the geotag map also cleans up its search box). One press closes one window.
+- R1 One Esc handler for the page closes only the topmost open window, in stacking order (z-index): the geotag map (11000), the tour (10000; it closes itself), the values window (2000), the login window (1200), the proposal overlay (600), then the section window (500). Each window is closed the way its own ✕ closes it (the geotag map also cleans up its search box). One press closes one window.
 - R2 In the new-issue form, Esc follows decision 1.
 - R3 The geotag button follows decision 2 (section 3a): no profile download; the location from the Analyzer.
 - R5 `firebase.json`: `Cache-Control: no-cache` for `**/*.js` and `**/*.css` (decision 3 a).
@@ -49,6 +49,12 @@ Source: the live smoke test of 2026-11-08 (U1 spec, CHANGES.md): "Esc closes the
    - Open details (author): a named place; whether the creator may move the pin; a description with no place.
    - **The geotag button** downloads no profiles. Before Check it shows the creator's home; after Check it opens the map at the derived point with its circles.
    - **Dependency:** the Analyzer prompt and `checkIssue` are changed on the A4 branch (prompt `p2`), so this part is built on top of A4 (prompt `p3`), after A4 is merged, and deployed with or after it.
+   - **Split (author, 2026-11-10: "go ahead with U5 as you described"):**
+     - U5 removes the download now: the geotag button opens the map at once.
+     - The location from the Analyzer becomes its own task after A4 is merged, with these defaults:
+       - a named place is geocoded within the region (OpenStreetMap), else the creator's home is used;
+       - the creator may move the pin, and a moved pin is recorded (`location_source` "creator");
+       - with no place in the description, the point is the creator's home.
 3. **a:** `Cache-Control: no-cache` for `**/*.js` and `**/*.css`.
 
 ## 4. Non-goals
@@ -67,3 +73,16 @@ Source: the live smoke test of 2026-11-08 (U1 spec, CHANGES.md): "Esc closes the
 
 - 2026-11-10: spec drafted (agent). Esc and the 20 MB download reproduced on the emulator.
 - 2026-11-10: the author's decisions: 1 a, 3 a, and for 2 the Analyzer-derived location (section 3a). The fixed default point (Basel centre) also explains A4's small test publics.
+- 2026-11-10: implemented (agent).
+  - `prototype/js/esc-order.js` (new; loaded before `main.js`): `escAction(open)` picks what one Esc press closes.
+  - `prototype/js/main.js`:
+    - the page's one Esc handler asks `EscOrder` and closes the topmost window the way its ✕ does (a click on its close button, `closeValuesVectorModal`, or `closeSectionModal`);
+    - with a new-issue form holding a title, a description or a Check result, it asks "Discard this new issue?" first;
+    - the values window's own Esc handler is removed, since it ran in addition to the page's;
+    - the geotag button no longer reads `users` or shows "Nearest: X m", and the map opens at once (the 300 ms delay is gone).
+  - `firebase.json`: `Cache-Control: no-cache` for `**/*.@(js|css)`.
+- Tests: Node 45 pass (5 new, `functions/test/esc_geotag.test.js`). On `ae51eef` they fail: it has 3 Esc handlers, the `users` read, and no `esc-order.js`. Python unchanged.
+- Emulator (2026-11-10, user 1, the worktree's `prototype/` served at `localhost:5055/?emulator=1`, Firestore `127.0.0.1:8080` checked):
+  - AC3: the geotag click opened the map at once and read no collection (a wrapper on `Firestore.collection` logged none).
+  - AC1: with a title typed and the map open, the first Esc closed only the map, and the form and title stayed. The second asked "Discard this new issue?": on no the form stayed, on yes it returned to the Chat list.
+  - AC2: on topic `vnQl2LGXvJ8JpsQtfBeV` with the Deadline window open, Esc closed only that window. The next Esc returned from the topic to the Chat list. No console errors.

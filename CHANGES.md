@@ -1,5 +1,23 @@
 # CHANGES
 
+## U5: Esc closes only the top window; the geotag button stops downloading every profile (2026-11-10)
+
+Spec: `specs/tasks/U5-esc-and-geotag.md` (author: decisions 1 a, 3 a; decision 2 split).
+
+### What changed
+- **Esc:** one Esc handler for the page (`prototype/js/esc-order.js`, used by `main.js`) closes only the topmost open window: the geotag map, the values window, the login window, the option/Deadline/Relevance/ISR window, then the section window. The tour still closes itself.
+- **The new-issue form:** with a title, a description or a Check result, Esc asks "Discard this new issue?" instead of throwing the form away.
+- **The geotag button** opens the map at once. It no longer downloads every profile (about 20 MB on each click) to show the distance to the nearest person.
+- **Hosting:** scripts and styles are served with `Cache-Control: no-cache`, so a browser picks up a new deploy on its next load.
+- Next, after A4: the Analyzer derives the issue's location from the description ("in our house" -> the creator's home).
+
+### Checks
+- Unit tests: Node 45 (5 new, `functions/test/esc_geotag.test.js`; they fail on the code before the change). Python unchanged.
+- Emulator: AC1-AC3 as in the spec's status log.
+
+### Author's steps after merging
+1. Deploy hosting (no functions, no rules): `firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`.
+
 ## A1b: an expertise placeholder for publics without E and ISR (2026-11-09)
 
 Spec: `specs/tasks/A1b-expertise-placeholder.md` (author: option b).
