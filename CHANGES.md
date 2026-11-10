@@ -31,6 +31,10 @@ Spec: `specs/tasks/A1b-expertise-placeholder.md` (author: option b).
 2. Run it again without `--apply`, with `--report "$env:TEMP1b-check.md"` so the committed reports stay as they are. It should list 0 publics.
 3. No deploy is needed.
 
+### Live (2026-11-09)
+- Merged as PR 13. Applied by the author: 156 documents (150 members of 3 publics, 6 topic documents); report `specs/tasks/A1b-migration-report-live.md`; the dry run afterwards found nothing to change.
+- Checked (read-only): all 3,195 live members have E and ISR; the placeholder ISRs equal the A1 formula; the maps equal the members.
+
 ## U4: the Voting view keeps its own messages (2026-11-09)
 
 Spec: `specs/tasks/U4-voting-view-messages.md` (author: "fix the Voting bug").
@@ -46,6 +50,9 @@ Spec: `specs/tasks/U4-voting-view-messages.md` (author: "fix the Voting bug").
 
 ### Author's steps after merging
 - Deploy hosting with the next deploy (`firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`).
+
+### Live (2026-11-09)
+- Merged as PR 12 and deployed; opening a voting issue on live logs no error.
 
 ## U3: sort buttons for an issue's messages; dashboard order (2026-11-09)
 
@@ -82,6 +89,9 @@ Spec: `specs/tasks/U3-message-sorting.md` (approved 2026-11-09 with the author's
    - the buttons and the values in one topic;
    - the order of the strip and the cards.
 
+### Live (2026-11-09)
+- Merged as PR 11 (values without the asterisk) and deployed. Checked on live: the buttons, the values and ISR sorting in voting issue 16; the strip and card order.
+
 ## U2: the Voting and ToDo lists show all of a member's issues (2026-11-09)
 
 Spec: `specs/tasks/U2-voting-todo-list-limit.md` (approved 2026-11-09: decision 1 b, "delete Issues", test yes).
@@ -103,6 +113,9 @@ Spec: `specs/tasks/U2-voting-todo-list-limit.md` (approved 2026-11-09: decision 
 ### Author's steps after merging
 1. Deploy hosting: `firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`.
 2. Check on live (Ctrl+F5 or a new incognito window): as Cynthia Gray, issue 16 is in the Voting list; the strip has no "Issues".
+
+### Live (2026-11-09)
+- Merged as PR 10 and deployed. Checked on live: Cynthia Gray's Voting list shows issue 16.
 
 ## L1: deadlines and the public's management decisions (2026-11-09)
 
@@ -143,6 +156,14 @@ Branch `l1-deadlines`. Spec: `specs/tasks/L1-deadlines-and-management-decisions.
 ### Findings (not changed)
 - The Voting and ToDo lists only consider the 30 newest issues (`main.js`, `.limit(30)`), so a member's voting issue can be missing from their list (seen on the emulator).
 - With today's test data, the first run after the migration date cancels every chat (none has an option) and every voting issue (none has 30 % voted). Proposing options and voting first avoids that, and so does prolonging again.
+
+### Live (2026-11-09)
+- Merged as PR 9. Migration applied by the author before the deploy: 269 documents; report `specs/tasks/L1-migration-report-live.md`; second dry run clean. Every chat and voting deadline is now 2026-12-09.
+- Deployed by the author: functions and hosting (live files equal main). `closeExpiredTopics` runs daily at 00:30 Europe/Zurich (europe-central2, Cloud Scheduler job enabled).
+- Browser check (read-only): the lists show the new deadlines; the Deadline window shows the 30 % rule; Start Voting and Finish Voting are disabled with their reasons.
+- Press test (author): a press below 30 % was stored without a question; a second press withdrew it.
+- First nightly run (2026-11-10, 00:30 Europe/Zurich): "checked 3, changed 0", no errors. The 3 are already decided topics with old deadlines (issues 57 and 182, one inactive discussion).
+- The live preview for 2026-12-10: 113 chats canceled (no options), 1 chat to voting, 76 voting issues canceled (9 below 30 % voted, 67 without votes).
 
 ### Author's steps after merging (order matters)
 1. **Migration first:**

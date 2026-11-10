@@ -1,6 +1,6 @@
 # SPEC U3: Sort buttons for an issue's messages; order of the dashboard
 
-Status: IMPLEMENTED on branch `u3-message-sort` 2026-11-09 (emulator AC1-AC5 passed); the author's hosting deploy and AC6 are pending. APPROVED 2026-11-09 with the author's changes (section 3).
+Status: DONE 2026-11-09: merged (PR 11), deployed by the author, AC6 passed on live. APPROVED 2026-11-09 with the author's changes (section 3).
 Branch: u3-message-sort (from main at `78c1e22`; never main)
 Source: author's requests, 2026-11-09:
 - "In issue discussion there should be messages sorting buttons as issues lists has: date, ISR, R (stands for Relevance) and E (stands for Expertise)."
@@ -101,3 +101,7 @@ Roadmap: UI for the D1 guided demo ([ROADMAP-demo.md](../ROADMAP-demo.md)): show
     - This predates U3: `main.js:4106` on main.
   - Many seeded members of a public share the same R (for example 22 % for most authors in chat 171).
   - Chat 171 shows duplicated messages: the known 184 duplicates in the demo data.
+- Live (2026-11-09): merged as PR 11 (with the asterisk removed) and deployed. AC6 (read-only, as Cynthia Gray, voting issue 16):
+  - the strip reads "Discussions: 0 · Active votes: 1 · To Do: 0", and the cards are Chat, Voting, To Do;
+  - the buttons read "date ↓ ISR R E", and the values sit on the right ("1.22 R 85 E 1.61");
+  - ISR ↓ ordered the 5 messages highest first, with ties newest first.
