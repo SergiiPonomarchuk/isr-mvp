@@ -1,6 +1,6 @@
 # SPEC U5: Esc closes only the top window; the geotag button stops downloading every profile
 
-Status: IMPLEMENTED on branch `u5-ui-fixes` 2026-11-10 (emulator checked); waits for review, merge and the author's hosting deploy. APPROVED 2026-11-10 (author: decisions 1 a, 3 a; decision 2 split: the download goes now, the location from the Analyzer is a later task after A4).
+Status: DONE on live 2026-11-10: merged (PR 15), hosting deployed by the author, checked on live. APPROVED 2026-11-10 (author: decisions 1 a, 3 a; decision 2 split: the download goes now, the location from the Analyzer is a later task after A4).
 Branch: u5-ui-fixes (from main at `ae51eef`; never main)
 Source: the live smoke test of 2026-11-08 (U1 spec, CHANGES.md): "Esc closes the whole new-issue window even while the geotag map is open; the geotag button downloads all profiles in the browser to show the nearest distance."
 
@@ -86,3 +86,13 @@ Source: the live smoke test of 2026-11-08 (U1 spec, CHANGES.md): "Esc closes the
   - AC3: the geotag click opened the map at once and read no collection (a wrapper on `Firestore.collection` logged none).
   - AC1: with a title typed and the map open, the first Esc closed only the map, and the form and title stayed. The second asked "Discard this new issue?": on no the form stayed, on yes it returned to the Chat list.
   - AC2: on topic `vnQl2LGXvJ8JpsQtfBeV` with the Deadline window open, Esc closed only that window. The next Esc returned from the topic to the Chat list. No console errors.
+- Live (2026-11-10): merged as PR 15.
+  - The author's first hosting deploy (16:48) ran in the main folder, which was on `p1-profile-review`, so it uploaded the code from before U5. Live stayed as it was. The agent prepared a checkout of `main` (`.wt-main`), and the author deployed from it at 16:53.
+  - Read-only checks:
+    - live `js/main.js` and `js/esc-order.js` equal `main` (`bc5c5e4`);
+    - `js/*.js` and `styles.css` are served with `Cache-Control: no-cache`; `index.html` keeps the default `max-age=3600`, as decided (scripts and styles only). If a cached page lacks `esc-order.js`, `main.js` falls back to closing the section window.
+  - Browser, user 1, live Firestore (no topic opened, nothing written):
+    - the geotag click opened the map at once and read no collection;
+    - the first Esc closed only the map, and the form and title stayed;
+    - the second asked "Discard this new issue?": on no the form stayed, on yes it returned to the Chat list;
+    - no console errors.
