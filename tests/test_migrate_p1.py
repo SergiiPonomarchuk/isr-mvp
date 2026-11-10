@@ -231,6 +231,20 @@ class Generate(unittest.TestCase):
             self.assertEqual(s["requests"], 2)
             self.assertEqual(s["stopped at the request limit"], 1)
 
+    def test_stops_after_three_failed_calls(self):
+        import urllib.error
+        users = [user(uid, "1980-01-01", [work(2)]) for uid in range(1, 8)]
+
+        def caller(prompt, key):
+            raise urllib.error.HTTPError("u", 503, "high demand", {}, None)
+
+        with tempfile.TemporaryDirectory() as d:
+            args = argparse.Namespace(gen_dir=d, limit=None, batch=1, max_requests=100)
+            s = m.generate(users, args, caller=caller, sleep=lambda x: None)
+            self.assertEqual(s["failed calls"], 3)
+            self.assertEqual(s["requests"], 12)                                   # 3 calls, 4 attempts each
+            self.assertEqual(s["stopped after 3 failed calls in a row"], 1)
+
     def test_redact(self):
         self.assertEqual(m.redact("bad key abc123 at x?key=abc123&a=1", "abc123"), "bad key [redacted] at x?key=[redacted]&a=1")
 

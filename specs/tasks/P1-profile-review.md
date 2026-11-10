@@ -92,3 +92,10 @@ Effort estimate: 1-2 developer-days after the decisions, plus generation time on
   - Work experience: 5,097 people wait for generation.
 - 2026-11-10 07:13-07:20: the trial generation (20 people, 2 calls) got HTTP 503 "This model is currently experiencing high demand", 16 attempts with backoff, plus one minimal probe request. No texts yet; a background loop probes every 10 minutes and runs the trial when the model answers.
 - 2026-11-10: the author confirmed the field mapping of section 3a ("existing fields are fine").
+- 2026-11-10 08:48: the model answered again after 7 failed probes (07:26-08:38). The trial is done: 20 people in 2 calls, all valid on the first try, in [P1-trial-report.md](P1-trial-report.md).
+  - Tokens: 3,397 prompt and 3,561 output, no thinking tokens; about 3,500 a call and 11 s a call.
+  - None was over the years limit, and none was scaled down. Total years: min 7, median 17, max 40.
+  - All 21 fields used are from the specialization vocabulary.
+  - The roles follow the job and the education, and the latest entry is the current job. The notes were used only where they fit (2 of 47 entries).
+  - One weak case: uid 2910 (68, unemployed, no education) became a "Senior Consultant" for 40 years. 277 of the 5,097 people have no education entry.
+  - The generation now stops after 3 failed calls in a row (a long 503 would otherwise spend the day's requests), and a change of prompt version regenerates a person. 1 more test (18).

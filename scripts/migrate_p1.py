@@ -481,7 +481,7 @@ def generate(users, args, caller=call_model, sleep=time.sleep, now=time.monotoni
         if not inp["work_experience"]:
             continue
         g = generated.get(str(u.get("uid")))
-        if g is not None and (g.get("input_sha256") == sha256(canon(inp))
+        if g is not None and ((g.get("input_sha256") == sha256(canon(inp)) and g.get("prompt_version") == PROMPT_VERSION)
                               or work_entries(skills, g["entries"], inp.get("max_total_years"))[0] == skills):
             continue
         todo.append(inp)
@@ -492,7 +492,7 @@ def generate(users, args, caller=call_model, sleep=time.sleep, now=time.monotoni
     call_no = len(read_jsonl(calls_path))
     summary = collections.Counter(todo=len(todo))
     queue = [todo[i:i + args.batch] for i in range(0, len(todo), args.batch)]
-    last = None
+    last, failed_in_a_row = None, 0
     while queue:
         if summary["requests"] >= args.max_requests:
             summary["stopped at the request limit"] = 1
@@ -534,11 +534,15 @@ def generate(users, args, caller=call_model, sleep=time.sleep, now=time.monotoni
         summary["people generated"] += len(ok)
         for k in ("prompt_tokens", "output_tokens", "thought_tokens", "total_tokens"):
             summary[k] += int(usage.get(k) or 0)
+        failed_in_a_row = failed_in_a_row + 1 if error is not None else 0
         if error is not None:
             summary["failed calls"] += 1
             print(f"call {call_no}: {error}")
             if "HTTP 429" in error:
                 summary["stopped on the rate limit"] = 1
+                break
+            if failed_in_a_row >= 3:      # e.g. a long 503 "high demand": stop instead of spending the day's requests
+                summary["stopped after 3 failed calls in a row"] = 1
                 break
         if bad and error is None:
             retry = [by_uid[uid] for uid in bad]
