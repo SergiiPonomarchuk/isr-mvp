@@ -99,7 +99,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U3-message-sorting](tasks/U3-message-sorting.md) | DONE: merged (PR 11), deployed and checked on live 2026-11-09 | 10 (UI) |
 | [U4-voting-view-messages](tasks/U4-voting-view-messages.md) | DONE: merged (PR 12), deployed and checked on live 2026-11-09 | 10 (UI) |
 | [U5-esc-and-geotag](tasks/U5-esc-and-geotag.md) | DONE on live 2026-11-10 (PR 15); the issue location from the Analyzer follows after A4 | UI |
-| [D1-demo-scenarios](tasks/D1-demo-scenarios.md) | draft plan 2026-11-10 (roadmap stage 3): 10 demo scenarios and clean demo data; waits for decisions 5.1-5.5; starts after A4 and U6 are live | 02, 03, 04, 06, 10 |
+| [D1-demo-scenarios](tasks/D1-demo-scenarios.md) | approved 2026-11-10 (roadmap stage 3): 10 demo scenarios and clean demo data; starts after P2 is applied and A4 and U6 are live | 02, 03, 04, 06, 10 |
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
 
 Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).

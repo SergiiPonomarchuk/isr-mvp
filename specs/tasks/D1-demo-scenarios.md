@@ -1,6 +1,6 @@
 # SPEC D1: Demo scenarios and clean demo data (roadmap stage 3)
 
-Status: DRAFT (plan) 2026-11-10: waits for the author's choices (section 5). The work starts after A4 and U6 are live, because the demo data must come from the final pipeline (roadmap section 4).
+Status: APPROVED 2026-11-10 (author: "Five decisions: ok"; the homes and property first, as P2). The work starts after P2 is applied and A4 and U6 are live, because the demo data must come from the final pipeline and the final population (roadmap section 4).
 Branch: d1-demo-data (from main, once A4 and U6 are merged; never main)
 Roadmap: stage 3, "Clean demo data". Its result: a dataset whose every number can be reproduced from stored inputs, plus a written demo script. With stages 1 and 2 it reaches the **D1 guided demo**: one issue goes through the whole cycle on screen (description, AI parameters, ad-hoc public, discussion and options, ISR-weighted vote, stored result, task), and every number can be explained.
 
@@ -8,9 +8,9 @@ Roadmap: stage 3, "Clean demo data". Its result: a dataset whose every number ca
 
 | Fact | Evidence |
 |---|---|
-| **Homes:** 9,151 people; 9,150 homes lie on only 8 points. 5 large complexes hold almost everyone:<ul><li>2,840 townhouses at (47.5919, 7.6261);</li><li>2,154 apartments at (47.5943, 7.6205);</li><li>2,087 apartments at (47.5898, 7.6124);</li><li>1,280 apartments at (47.6016, 7.6056);</li><li>658 townhouses at (47.5894, 7.6188).</li></ul>"Andim" has 123 homes at (47.5538, 7.6066); one point has 6 and one has 2.<br>Every home in a complex shares one point, so a building issue there reaches all its residents; D and the 100-member cap then choose the public. | read-only query of `users.geography` |
+| **Homes (before P2):** 9,151 people; 9,150 homes lie on only 8 points. 5 large complexes hold almost everyone:<ul><li>2,840 townhouses at (47.5919, 7.6261);</li><li>2,154 apartments at (47.5943, 7.6205);</li><li>2,087 apartments at (47.5898, 7.6124);</li><li>1,280 apartments at (47.6016, 7.6056);</li><li>658 townhouses at (47.5894, 7.6188).</li></ul>"Andim" has 123 homes at (47.5538, 7.6066); one point has 6 and one has 2.<br>Every home in a complex shares one point, so a building issue there reaches all its residents; D and the 100-member cap then choose the public. **P2 moves each home to its own building** (apartment blocks, townhouses, private houses) with realistic spacing, so a building issue reaches that building. | read-only query of `users.geography`; P2 spec |
 | **Work:** 4,911 work entries at 78 places, each place at one point. The largest:<ul><li>Andim 1,013 and Argo Industry 930;</li><li>Bilim Farms 474, Office centre 317, Easy House 270;</li><li>Magistrate 191, SPA Hotel 160, Hospital 115;</li><li>4 schools with 93-120 each.</li></ul> | same |
-| **No property entries.** The `property` type has 0 entries, so a scenario about garages, plots or land reaches nobody through property (A3 `property_kinds`). | same |
+| **No property entries.** The `property` type has 0 entries, so a scenario about garages, plots or land reaches nobody through property (A3 `property_kinds`). **P2 adds them** (flats, houses, garages, garden plots, commercial units). | same; P2 spec |
 | **Ages:** under 18: 2,624; 18-29: 1,621; 30-44: 1,973; 45-64: 1,843; 65 and over: 1,089. 4,771 people have a child among their relations. | same (`birthDate`, `socialRelations`) |
 | **The issue's point (U6):** it is the creator's home or a named place. Choosing the creator therefore chooses the complex. | U6 spec R2 |
 | **A public has at most 100 members**, the top by relevance. The cap is removed only in roadmap stage 8. | `functions/index.js` (createIssue) |
@@ -70,16 +70,16 @@ Each one shows a different part of the model. The creator is a synthetic person 
 
 ## 5. Decisions for the author
 
-- 5.1 **The scenarios:** the 10 above, or changes. Property scenarios are not possible without property data.
+- 5.1 **The scenarios:** the 10 above, or changes. **Decided: the 10 above.** With P2's property, a property scenario (for example garage owners) can replace one later.
 - 5.2 **The 192 old publics:**
-  - a. archive them: hidden in the app and kept in the database; the 2026-10-12 export remains the as-built record for the paper (recommended);
+  - a. archive them: hidden in the app and kept in the database; the 2026-10-12 export remains the as-built record for the paper (recommended; **decided**);
   - b. delete them;
   - c. keep them visible.
 - 5.3 **Message and option texts:**
-  - a. generated once by the model (fixed seed) and stored in the repository, so a re-run gives the same data (recommended);
+  - a. generated once by the model (fixed seed) and stored in the repository, so a re-run gives the same data (recommended; **decided**);
   - b. hand-written.
-- 5.4 **The live part of the demo:** scenario 1 is created live with the real AI, and a pre-created copy stands by in case the AI fails (recommended), or everything is pre-created.
-- 5.5 **Where:** the live project, replacing the old data (recommended; it is the only project), or a separate demo project.
+- 5.4 **The live part of the demo:** scenario 1 is created live with the real AI, and a pre-created copy stands by in case the AI fails (recommended; **decided**), or everything is pre-created.
+- 5.5 **Where:** the live project, replacing the old data (recommended; it is the only project; **decided**), or a separate demo project.
 
 ## 6. Acceptance criteria (draft)
 
@@ -91,7 +91,7 @@ Each one shows a different part of the model. The creator is a synthetic person 
 
 ## 7. Plan and effort
 
-1. Decisions 5.1-5.5.
+1. Decisions 5.1-5.5 (taken 2026-11-10). P2 (homes and property) first.
 2. W1, then W2 with tests, on the emulator (AC2).
 3. W3 and W4, then W5 (AC3, AC4).
 4. Status log, CHANGES, PR. The author's live run follows (AC5).
@@ -101,3 +101,4 @@ The roadmap estimates 4-6 developer-days.
 ## 8. Status log
 
 - 2026-11-10: plan drafted (agent) from the roadmap and a read-only look at the emulator's population; waits for decisions 5.1-5.5.
+- 2026-11-10: the author approved decisions 5.1-5.5 as recommended ("Five decisions: ok"). The author also asked for homes split into real buildings with realistic spacing, and for property entries; this is spec P2, which D1 now waits for.
