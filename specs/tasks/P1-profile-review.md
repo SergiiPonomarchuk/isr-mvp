@@ -101,3 +101,10 @@ Effort estimate: 1-2 developer-days after the decisions, plus generation time on
   - The generation now stops after 3 failed calls in a row (a long 503 would otherwise spend the day's requests), and a change of prompt version regenerates a person. 1 more test (18).
 - 2026-11-10: the author approved the trial and the full run, with one more rule ("add the no-education rule, start the full run"). Prompt `p1w2` adds: a person without education entries has roles that need no degree (trades, services, manual, transport or clerical work). Everyone, the trial 20 included, is generated with `p1w2`.
 - 2026-11-10 10:03 UTC: full generation started, day 1: at most 470 requests (free tier: 500 a day, reset at midnight Pacific). The rest follows on day 2.
+  - The first start found the emulator stopped (the app restart had closed its terminal); it was started again from `.emulator-data`, and the profiles were all there (9,151). The run started again at 10:16 UTC.
+- 2026-11-10 13:08 UTC, day 1 done: the run stopped at its limit of 470 requests (433 logged calls, plus retries after HTTP 503 "high demand").
+  - 4,230 of 5,097 people generated, all with `p1w2` (the 20 trial people included). 2 calls failed after their retries; their people stay for day 2. 28 people failed the check inside a batch (wrong number of entries) and succeeded when retried alone.
+  - Tokens: 718,576 prompt and 717,940 output (1,436,516; about $1.26 at the paid rate, $0 on the free tier).
+  - A pause of 73 minutes (10:51-12:05 UTC), probably the computer sleeping; the run continued on its own.
+  - The no-education rule works: uid 2910 is now a "Warehouse Logistics Coordinator" (Logistics, 40 years) instead of a "Senior Consultant". The 234 people without education have no-degree roles, the most common being General Laborer (30), Agricultural Worker (24), Cleaning Staff (21), Logistics Coordinator (16) and Farm Hand (14).
+  - Day 2: 867 people left, about 87 calls.
