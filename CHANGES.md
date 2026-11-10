@@ -1,5 +1,84 @@
 # CHANGES
 
+## U6: the issue's point comes from its description (2026-11-10)
+
+Spec: `specs/tasks/U6-issue-location.md` (author: "U6 approved"; "keep the server lookup in U6"). Merged after A4.
+
+### What changed
+- **The Analyzer** (prompt `p3`) says where the issue is: `location_reference` {anchor: home | work | property | named_place | none, place}. The keyword rules give the same field without the model.
+- **Check** turns it into a point (`functions/location.js`):
+  - home, work or property -> the creator's profile place;
+  - a named place -> the place lookup near the creator's home;
+  - no place -> the creator's home;
+  - a pin the creator moved -> that pin.
+
+  The fallbacks are the home, or the browser's point when the profile has no home. The public is formed around that point.
+- **The place lookup** (`functions/geocode.js`) follows OpenStreetMap's Nominatim usage policy:
+  - it sends only the place name, with our own User-Agent;
+  - it sends at most 1 request a second per instance;
+  - it caches answers for 30 days in `geocode_cache`;
+  - the switch `config/geocoding` {enabled} can turn it off without a deploy;
+  - it credits "© OpenStreetMap contributors".
+- **The draft and Create:** the draft keeps the point, its source, a label and the Analyzer's reference. Create uses the draft's point; a different body point gets 409 "The location changed after the check: check again". The issue stores `location_source` and `location_reference`.
+- **The browser:**
+  - the form starts at the creator's home, not the Basel centre;
+  - after Check it shows the point and its label (for example "your home (from the description)");
+  - moving the pin marks it as the creator's, and Create waits for a new Check;
+  - the map and the search box credit OpenStreetMap;
+  - the search box obeys the switch.
+- **Fixed on the way:** a drag, a map click or a profile place changed a copy of the point that Check never read, so only the search box moved an issue.
+
+### Checks
+- **Unit tests:** Node 86 (31 new); Python 72, unchanged.
+- **Browser on the emulator's data (no Check):** the home at start, pin moves, the credit and the switch, as in the spec's status log.
+- **Pending:** AC2-AC5 on the emulator with the free-tier key (about 8 text, 8 embedding and at most 4 Nominatim requests).
+
+### Author's steps after merging (after A4's deploy)
+1. Deploy functions and hosting: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from a checkout of main.
+2. Optional: create `config/geocoding` with `enabled: true` in the console. Without the document the lookup is on; `enabled: false` turns it off.
+## A4: working AI, roadmap stage 1 (2026-11-10; the PR waits for the runs of phases B and C)
+
+Spec: `specs/tasks/A4-working-ai.md` (approved 2026-11-10; "Try to stay in free-tier limits").
+
+### What changed
+- **Models in one place:** `functions/ai-config.js` holds:
+  - the text model `gemini-3.1-flash-lite`;
+  - the embedding model `gemini-embedding-001` (768 dimensions);
+  - temperature 0 and a fixed seed;
+  - the versions `p2` (prompt) and `t1` (template);
+  - the task types, and k = 5 examples.
+
+  The Python scripts read the same file (`scripts/ai_config.py`). The SDK is `@google/genai` 2.31, replacing `@google/generative-ai`.
+- **The key** is the Firebase secret `GEMINI_API_KEY`, used by the three HTTPS functions. Locally it lives in `functions/.secret.local`, which is gitignored. It is never printed or logged.
+- **Check:**
+  - it embeds the issue text (`{title}. {description}`) first; without a vector it refuses with 503 "AI unavailable", and no random vector is used anywhere;
+  - the Analyzer gets the 5 nearest of the 100 calibrated examples (`functions/data/analyzer_examples.json`, built by `functions/tools/build_examples.js`);
+  - without a key or on an error, the keyword rules answer, labelled as the fallback.
+- **Create** reuses the draft's vector and writes `issue_vectors/{id}` and an `ai` field on the issue.
+- **Logs:** `analyzer_logs` gets one document per Analyzer call: input, model, versions, examples, raw and normalised output, tokens. The rules make it server-only.
+- **The people:** `scripts/embed_people.py` embeds every profile and skill again with template `t1` (`scripts/embedding_templates.py`). It stays within the free tier, resumes, and skips people whose vectors are current.
+- **The A1b publics:** `scripts/migrate_a4.py` replaces the expertise placeholder with real E and the ISR, from the issue vector.
+- **The browser:** the Check window says which model derived the parameters, or shows the fallback label or the server's error.
+
+### Checks
+- **Unit tests:** Node 55; Python 72.
+- **Emulator with the free-tier key:**
+  - AC2: 5 issues, each checked twice; every call used the model; the parameters were identical in both runs.
+  - AC3: the vectors were bit-identical; Create reused the draft's vector.
+  - AC4: without a key, the refusal and the label.
+  - 11 Analyzer calls used about 99,400 tokens: about $0.04 at the paid rate, $0 on the free tier.
+- **Pending (after P1's apply on the emulator, 2026-11-11):**
+  - AC5: the 200-person sample with the task-type comparison, then all people;
+  - AC6: the A1b publics;
+  - AC7: the token totals.
+
+### Author's steps after merging (phase D), after P1 is applied on live
+1. Set the secret: `firebase functions:secrets:set GEMINI_API_KEY --project project-a3d59130-5adf-4677-9e2` (paste the free-tier key when asked).
+2. Deploy from a checkout of main: `firebase deploy --only functions,hosting,firestore:rules --project project-a3d59130-5adf-4677-9e2`.
+3. Embed the people on live: `python scripts/embed_people.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply` (about 300 requests and 30 minutes; it resumes if stopped).
+4. Replace the placeholders: `python scripts/migrate_a4.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`.
+5. The agent then checks live read-only (AC8).
+
 ## U5: Esc closes only the top window; the geotag button stops downloading every profile (2026-11-10)
 
 Spec: `specs/tasks/U5-esc-and-geotag.md` (author: decisions 1 a, 3 a; decision 2 split).

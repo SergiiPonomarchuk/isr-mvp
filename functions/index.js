@@ -1,18 +1,48 @@
 const { onRequest } = require("firebase-functions/v2/https");
 const { onDocumentUpdated } = require("firebase-functions/v2/firestore");
 const { onSchedule } = require("firebase-functions/v2/scheduler");
+const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
 const { FieldValue, GeoPoint } = require("firebase-admin/firestore");
-const { nearestAnchor, gScore: geoScore, withinCutoff } = require("./geo");
+const { nearestAnchor, gScore: geoScore, withinCutoff, toLatLon } = require("./geo");
 const { evaluateDemographics } = require("./demographics");
 const ISR = require("./isr");
 const Lifecycle = require("./lifecycle");
 const Deadlines = require("./deadlines");
 const aiHelper = require("./ai-helper");
-const { readTextInputs, paramsFromAi, makeDraft, paramsForCreate } = require("./params");
+const AI = require("./ai-config");
+const { buildAnalyzerLog } = require("./analyzer-log");
+const { readTextInputs, paramsFromAi, makeDraft, paramsForCreate, locationForCreate } = require("./params");
+const { resolveIssueLocation } = require("./location");
+const { createGeocoder, firestoreStore } = require("./geocode");
 
 admin.initializeApp();
 const db = admin.firestore();
+
+// A4 (R3): the Gemini API key is a Firebase secret, set by the author
+// (`firebase functions:secrets:set GEMINI_API_KEY`; locally functions/.secret.local).
+const GEMINI_API_KEY = defineSecret("GEMINI_API_KEY");
+
+// U6 (R3): the place lookup (Nominatim) with its cache and switch in Firestore; one per instance,
+// so the 1-request-a-second rule holds per instance.
+const geocoder = createGeocoder({
+  fetchFn: (url, init) => fetch(url, init),
+  store: firestoreStore(db),
+  log: (message, details) => console.log(message, details),
+});
+
+/** A4 (R7): writes one analyzer_logs entry; a failure to log never breaks the request. */
+async function writeAnalyzerLog(entry) {
+  try {
+    const ref = await db.collection("analyzer_logs").add(buildAnalyzerLog(entry));
+    return ref.id;
+  } catch (err) {
+    console.error("Writing the analyzer log failed:", aiHelper.redact(err && err.message));
+    return null;
+  }
+}
+
+const AI_UNAVAILABLE = "AI unavailable: the issue text could not be embedded. Nothing was changed; please try again.";
 
 function round3(x) { return Math.round(Number(x) * 1000) / 1000; }
 
@@ -32,15 +62,20 @@ function cosineSimilarity(vecA, vecB) {
 }
 
 // HTTPS Endpoint: Analyze Issue using Gemini 1.5 Flash
-exports.analyzeIssue = onRequest({ cors: true }, async (req, res) => {
+exports.analyzeIssue = onRequest({ cors: true, secrets: [GEMINI_API_KEY] }, async (req, res) => {
   try {
     const { description } = req.body;
     if (!description || description.length < 20) {
       return res.status(400).json({ error: "Description must be at least 20 characters." });
     }
 
-    const suggestions = await aiHelper.suggestIssueParams(description);
-    res.json(suggestions);
+    const { params: suggestions, meta } = await aiHelper.suggestIssueParams(description);
+    await writeAnalyzerLog({
+      endpoint: "analyzeIssue", at: new Date().toISOString(), draftId: null,
+      submitterUid: req.body.submitterId, input: { title: "", description, clarification: "" },
+      meta, normalized: suggestions, shown: suggestions, embedding: null,
+    });
+    res.json(Object.assign({}, suggestions, { ai_source: meta.ai_source, ai_model: meta.model }));
   } catch (error) {
     console.error("Error analyzing issue:", error);
     res.status(500).json({ error: "Failed to analyze issue description." });
@@ -49,7 +84,7 @@ exports.analyzeIssue = onRequest({ cors: true }, async (req, res) => {
 
 // HTTPS Endpoint: Create Issue & Compute Relevance Pipeline
 // R0 fix: 256 MiB (the default) was exceeded on live; see CHANGES
-exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, res) => {
+exports.createIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI_API_KEY] }, async (req, res) => {
   try {
     const { title, description, location, submitterId } = req.body;
 
@@ -60,13 +95,21 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
     // A2: every number comes from the draft that checkIssue derived on the server.
     // Numbers and weight objects in the request body are never read.
     let P;
+    let draftData = null;
     try {
       const draftSnap = req.body.draftId
         ? await db.collection("issue_drafts").doc(String(req.body.draftId)).get()
         : null;
-      P = paramsForCreate(req.body, draftSnap && draftSnap.exists ? draftSnap.data() : null);
+      draftData = draftSnap && draftSnap.exists ? draftSnap.data() : null;
+      P = paramsForCreate(req.body, draftData);
     } catch (err) {
       return res.status(err.status || 400).json({ error: err.message });
+    }
+    // U6 (R5): the point the check resolved (paramsForCreate refused a different body point).
+    const issueLoc = locationForCreate(req.body, draftData);
+    const issuePoint = issueLoc.location;
+    if (!issuePoint) {
+      return res.status(400).json({ error: "The location must be [latitude, longitude]." });
     }
     const {
       category, demographics, expertise_depth, expertise_domain,
@@ -76,8 +119,17 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
     const { reasoning_D, reasoning_G, reasoning_S, reasoning_X } = P.relevance_explanations || {};
     const { reasoning_R, reasoning_E, reasoning_C } = P.isr_explanations || {};
 
-    // Step 1: Vectorize issue description
-    const issueVector = await aiHelper.vectorizeText(description);
+    // Step 1: the issue vector (A4 R6). The check stored it in the draft, and the title and
+    // description cannot change after the check (paramsForCreate), so it is reused; a draft from
+    // before A4 has none and the text is embedded here. No random vector (A4 R5).
+    let embedding = draftData && draftData.issue_embedding && Array.isArray(draftData.issue_embedding.vector)
+      ? Object.assign({ ok: true }, draftData.issue_embedding)
+      : await aiHelper.embedIssue(title, description);
+    if (!embedding.ok) {
+      return res.status(503).json({ error: AI_UNAVAILABLE, ai_unavailable: true });
+    }
+    const issueVector = embedding.vector;
+    const aiInfo = (draftData && draftData.ai) || null;
 
     const w_D = P.weights.w_D;
     const w_G = P.weights.w_G;
@@ -140,7 +192,7 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
       if (dScore === 0.0 && w_D > 0 && !isCreator) return; // Excluded by demographics
 
       // Stage 2: Geographic Score (G) from the nearest of home, work and property (A3)
-      const near = nearestAnchor(user.geography, location);
+      const near = nearestAnchor(user.geography, issuePoint);
       let gScore = 1.0;
       let gAnchorType = null;
       if (near) {
@@ -332,7 +384,10 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
       description,
       starts: FieldValue.serverTimestamp(),
       category: (classification && classification.issue_category) || category || "building.maintenance.general",
-      location: new GeoPoint(location[0], location[1]),
+      location: new GeoPoint(issuePoint[0], issuePoint[1]),
+      // U6 (R5): where the point came from, and the Analyzer's reference
+      location_source: issueLoc.location_source,
+      location_reference: issueLoc.location_reference,
       mu_distance_meters: muVal,
       sigma_decay_meters: sigmaVal,
       // Relevance weights (flat, for query compatibility)
@@ -375,7 +430,16 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
       relevance_scores: relevanceScoresMap,
       isr_scores: isrScoresMap
     };
+    // A4: where the parameters came from (the model or the keyword rules) and which log entry.
+    if (aiInfo) issueDoc.ai = aiInfo;
     await issueRef.set(issueDoc);
+    // A4 (R6): the issue vector in its own collection, so issue documents stay small.
+    await db.collection("issue_vectors").doc(issueId).set({
+      vector: issueVector,
+      model: embedding.model, dims: embedding.dims, task_type: embedding.task_type,
+      template_version: embedding.template_version, text_sha256: embedding.text_sha256,
+      created_at: FieldValue.serverTimestamp(),
+    });
 
     // Create Ad-hoc Public Record (stored in microcommunities collection for schema compatibility)
     const mcRef = db.collection("microcommunities").doc();
@@ -573,7 +637,7 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
       creator_uid: String(submitterId),
       created_at: new Date().toISOString(),
       message_count: 1,
-      location: new GeoPoint(location[0], location[1]),
+      location: new GeoPoint(issuePoint[0], issuePoint[1]),
       affection_distance: parseFloat((muVal / 1000).toFixed(3)),
       expertise_depth:  expertise_depth  || "None",
       expertise_domain: expertise_domain  || (expertise_domain_parameters && expertise_domain_parameters.expertise_domain) || "General Maintenance",
@@ -637,33 +701,73 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, re
 
 // HTTPS Endpoint: Check/Calculate Relevance Pipeline (Dry-run server-side)
 // R0 fix: 256 MiB (the default) was exceeded on live; see CHANGES
-exports.checkIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, res) => {
+exports.checkIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI_API_KEY] }, async (req, res) => {
   try {
     const { title, description, location, submitterId } = req.body;
 
     if (!title || !description || !location || !submitterId) {
       return res.status(400).json({ error: "Missing required fields: title, description, location, submitterId." });
     }
+    if (!toLatLon(location)) {
+      return res.status(400).json({ error: "The location must be [latitude, longitude]." });
+    }
 
     // 1. Derive every parameter on the server (A2: nobody types a number).
     //    "Derive again" sends only a clarification text; numbers in the body are ignored.
     const inputs = readTextInputs(req.body);
-    const ai = await aiHelper.checkIssueParams(description, title, inputs.clarification);
+    const draftRef = db.collection("issue_drafts").doc();
+    const nowIso = new Date().toISOString();
+
+    // A4: the issue vector first ("{title}. {description}"); without it S and E would be
+    // meaningless, so the check is refused (open point 4.1 a). The k closest of the 100
+    // examples go into the Analyzer prompt (R4).
+    const embedding = await aiHelper.embedIssue(title, description);
+    if (!embedding.ok) {
+      await writeAnalyzerLog({
+        endpoint: "checkIssue", at: nowIso, draftId: null, submitterUid: submitterId,
+        input: { title, description, clarification: inputs.clarification },
+        meta: { ai_source: "none", error: "embedding failed" }, embedding,
+      });
+      return res.status(503).json({ error: AI_UNAVAILABLE, ai_unavailable: true });
+    }
+    const examples = aiHelper.nearestExamples(embedding.vector, AI.K_EXAMPLES);
+    const { params: ai, meta } = await aiHelper.checkIssueParams(description, title, inputs.clarification, examples);
     const data = paramsFromAi(ai);
+    const logId = await writeAnalyzerLog({
+      endpoint: "checkIssue", at: nowIso, draftId: draftRef.id, submitterUid: submitterId,
+      input: { title, description, clarification: inputs.clarification },
+      meta, normalized: ai, shown: data, embedding,
+    });
+    const aiInfo = {
+      source: meta.ai_source, model: meta.model, prompt_version: meta.prompt_version,
+      examples_used: meta.examples_used, log_id: logId,
+    };
 
-    // 2. Generate issue embedding
-    const issueVector = await aiHelper.vectorizeText(description);
+    // 2. The issue embedding (A4)
+    const issueVector = embedding.vector;
 
-    // 3. Submitter relations
+    // 3. Submitter relations and places
     let submitterRelations = [];
+    let creatorGeography = [];
     try {
       const creatorSnap = await db.collection("users").doc(String(submitterId)).get();
       if (creatorSnap.exists) {
         submitterRelations = creatorSnap.data().socialRelations || [];
+        creatorGeography = creatorSnap.data().geography || [];
       }
     } catch (err) {
       console.error("Error fetching creator social relations during check:", err);
     }
+
+    // 4. U6 (R2): the issue's point from the description (or the pin the creator moved)
+    const loc = await resolveIssueLocation({
+      reference: ai.location_reference,
+      geography: creatorGeography,
+      requested: location,
+      requestedSource: inputs.locationSource,
+      geocode: geocoder.geocode,
+    });
+    const issuePoint = loc.location;
 
     const w_D = data.weights.w_D;
     const w_G = data.weights.w_G;
@@ -711,7 +815,7 @@ exports.checkIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, res
       if (dScore === 0.0 && w_D > 0 && !isCreator) return; // Excluded by demographics
 
       // Stage 2: Geographic Score (G) from the nearest of home, work and property (A3)
-      const near = nearestAnchor(user.geography, location);
+      const near = nearestAnchor(user.geography, issuePoint);
       let gScore = 1.0;
       let gAnchorType = null;
       if (near) {
@@ -843,17 +947,27 @@ exports.checkIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, res
     }
 
     // Store the derived parameters; createIssue reads its numbers from this draft.
-    const draftRef = db.collection("issue_drafts").doc();
-    await draftRef.set(makeDraft(inputs, data, new Date().toISOString()));
+    // A4: the draft also keeps the issue vector and where the parameters came from.
+    const { ok: _ok, error: _err, ...issueEmbedding } = embedding;
+    await draftRef.set(Object.assign(makeDraft(inputs, data, nowIso, loc), { issue_embedding: issueEmbedding, ai: aiInfo }));
 
     res.json({
       success: true,
       draftId: draftRef.id,
       clarification: inputs.clarification,
+      // ── A4: where the parameters came from ──────────────────────────────
+      ai_source: meta.ai_source,
+      ai_model: meta.model,
+      examples_used: examples.map((e) => ({ id: e.id, title: e.title })),
       // ── Classification ──────────────────────────────────────────────────
       category: data.category,
       classification: data.classification || null,
       // ── Geographic ──────────────────────────────────────────────────────
+      // U6 (R4): the point, where it came from, and a label for the creator
+      location: issuePoint,
+      location_source: loc.source,
+      location_label: loc.label,
+      location_suggested: loc.suggested ? { location: loc.suggested.location, source: loc.suggested.source, label: loc.suggested.label } : null,
       mu: muVal,
       sigma: sigmaVal,
       geographic_parameters: data.geographic_parameters || null,

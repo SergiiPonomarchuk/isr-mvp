@@ -1,42 +1,159 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const crypto = require("crypto");
+const fs = require("fs");
+const path = require("path");
+const { GoogleGenAI } = require("@google/genai");
+const AI = require("./ai-config");
 
-// Initialize Gemini API
-const geminiApiKey = process.env.GEMINI_API_KEY || "";
-const genAI = new GoogleGenerativeAI(geminiApiKey);
+// Task A4 (roadmap stage 1): the current Google Gen AI SDK, models from ai-config.js, and no
+// silent fallback. The key comes from the Firebase secret GEMINI_API_KEY (process.env at
+// runtime); it is read lazily and never logged.
+
+let client = null;
+let clientKey = null;
+let testClient = null;
+
+function apiKey() {
+  return process.env.GEMINI_API_KEY || "";
+}
 
 /**
  * Checks if the Gemini API Key is configured.
  */
 function hasGeminiKey() {
-  return !!geminiApiKey;
+  return !!testClient || !!apiKey();
+}
+
+function getClient() {
+  if (testClient) return testClient;
+  const key = apiKey();
+  if (!key) return null;
+  if (!client || clientKey !== key) {
+    client = new GoogleGenAI({ apiKey: key });
+    clientKey = key;
+  }
+  return client;
+}
+
+/** Tests only: a fake client with models.generateContent / models.embedContent (null resets). */
+function _setClientForTests(fake) {
+  testClient = fake || null;
+}
+
+/** Removes the API key (and any key= parameter) from a message before it is logged or returned. */
+function redact(message) {
+  let m = String(message === undefined || message === null ? "" : message);
+  const key = apiKey();
+  if (key) m = m.split(key).join("[redacted]");
+  return m.replace(/([?&]key=)[^&\s"']+/gi, "$1[redacted]").slice(0, 500);
+}
+
+function sha256(text) {
+  return crypto.createHash("sha256").update(String(text), "utf8").digest("hex");
+}
+
+function unitNormalize(v) {
+  const arr = Array.from(v || [], Number);
+  const mag = Math.sqrt(arr.reduce((s, x) => s + x * x, 0));
+  if (!(mag > 0)) throw new Error("zero vector");
+  return arr.map((x) => x / mag);
+}
+
+function cosine(a, b) {
+  let dot = 0, na = 0, nb = 0;
+  const n = Math.min(a.length, b.length);
+  for (let i = 0; i < n; i++) {
+    dot += a[i] * b[i];
+    na += a[i] * a[i];
+    nb += b[i] * b[i];
+  }
+  return na > 0 && nb > 0 ? dot / Math.sqrt(na * nb) : 0;
 }
 
 /**
- * Generates a 768-dimensional normalized embedding vector for the given text.
- * Falls back to a random mock vector if the API call fails or key is missing.
+ * Embeds texts with the configured model (one request for up to 100 texts) and returns unit
+ * vectors of AI.EMBED_DIMS. Throws when there is no key or the call fails: there is no random
+ * fallback vector any more (A4 R5).
  */
-async function vectorizeText(text) {
-  let issueVector = null;
+async function embedTexts(texts, taskType) {
+  const c = getClient();
+  if (!c) throw new Error("no API key");
+  const list = Array.from(texts || [], (t) => String(t));
+  if (!list.length) return [];
+  const res = await c.models.embedContent({
+    model: AI.EMBED_MODEL,
+    contents: list,
+    config: { taskType, outputDimensionality: AI.EMBED_DIMS },
+  });
+  const embs = (res && res.embeddings) || [];
+  if (embs.length !== list.length) throw new Error(`expected ${list.length} embeddings, got ${embs.length}`);
+  return embs.map((e) => {
+    const v = unitNormalize(e.values || []);
+    if (v.length !== AI.EMBED_DIMS) throw new Error(`expected ${AI.EMBED_DIMS} dimensions, got ${v.length}`);
+    return v;
+  });
+}
 
-  if (hasGeminiKey()) {
-    try {
-      const embedModel = genAI.getGenerativeModel({ model: "text-embedding-004" });
-      const embedResult = await embedModel.embedContent(text);
-      issueVector = embedResult.embedding.values;
-    } catch (err) {
-      console.error("Gemini embedding failed, using a fallback mock vector:", err);
-    }
+/**
+ * The issue vector (A4 R6): template t1 "{title}. {description}", task type for the issue.
+ * Returns {ok: true, vector, model, dims, task_type, template_version, text_sha256} or
+ * {ok: false, error, ...} (never a random vector).
+ */
+async function embedIssue(title, description) {
+  const text = AI.issueText(title, description);
+  const base = {
+    model: AI.EMBED_MODEL, dims: AI.EMBED_DIMS, task_type: AI.TASK_TYPE_ISSUE,
+    template_version: AI.EMBED_TEMPLATE_VERSION, text_sha256: sha256(text),
+  };
+  try {
+    const [vector] = await embedTexts([text], AI.TASK_TYPE_ISSUE);
+    return Object.assign({ ok: true, vector }, base);
+  } catch (err) {
+    const error = redact(err && err.message ? err.message : err);
+    console.error("Embedding the issue failed:", error);
+    return Object.assign({ ok: false, error }, base);
   }
+}
 
-  // If no embedding was generated, create a mock 768-dimensional vector
-  if (!issueVector) {
-    issueVector = new Array(768).fill(0).map(() => Math.random() * 2 - 1);
-    // Normalize mock vector
-    const mag = Math.sqrt(issueVector.reduce((sum, val) => sum + val * val, 0));
-    issueVector = issueVector.map((val) => val / mag);
+// ---------------------------------------------------------------- the 100 examples (A4 R4)
+
+const EXAMPLES_FILE = path.join(__dirname, "data", "analyzer_examples.json");
+let examplesCache = null;
+
+/** The calibrated examples ({id, title, text, params, vector?}), read once from data/. */
+function loadExamples() {
+  if (examplesCache) return examplesCache;
+  try {
+    const data = JSON.parse(fs.readFileSync(EXAMPLES_FILE, "utf8"));
+    examplesCache = Array.isArray(data.examples) ? data : { examples: [] };
+  } catch (err) {
+    console.error("Analyzer examples not available:", err.message);
+    examplesCache = { examples: [] };
   }
+  return examplesCache;
+}
 
-  return issueVector;
+/** Tests only: replace (or with null, reload) the examples. */
+function _setExamplesForTests(data) {
+  examplesCache = data;
+}
+
+/**
+ * The k examples closest to the issue vector (cosine). Examples without a vector, or made with
+ * another embedding model or size, are not used. Ties keep the file order.
+ */
+function nearestExamples(issueVector, k) {
+  const data = loadExamples();
+  if (!issueVector || !data.examples.length) return [];
+  if (data.embedding_model && data.embedding_model !== AI.EMBED_MODEL) return [];
+  const scored = [];
+  data.examples.forEach((ex, i) => {
+    if (!Array.isArray(ex.vector) || ex.vector.length !== issueVector.length) return;
+    scored.push({ ex, i, cos: cosine(issueVector, ex.vector) });
+  });
+  scored.sort((a, b) => (b.cos - a.cos) || (a.i - b.i));
+  return scored.slice(0, k === undefined ? AI.K_EXAMPLES : k).map((s) => ({
+    id: s.ex.id, title: s.ex.title, params: s.ex.params, cosine: s.cos,
+  }));
 }
 
 // =============================================================================
@@ -53,17 +170,26 @@ async function vectorizeText(text) {
  * @param {string} description - Issue description
  * @returns {string} The complete prompt text
  */
-function buildIssueAnalyzerPrompt(title, description, clarification) {
+function examplesBlock(examples) {
+  if (!examples || !examples.length) {
+    return `No calibrated examples are available for this call; derive the parameters from the
+schema and the rules below.`;
+  }
+  const blocks = examples.map((ex) =>
+    `Example ${ex.id}: "${ex.title}"\n${JSON.stringify(ex.params)}`).join("\n\n");
+  return `Your reference is the ISR Issue Analyzer protocol (the schema and the rules below) and
+100 calibrated anchor examples. The ${examples.length} examples closest to this issue follow:
+use their parameters as a starting prior, then adjust them to the specific details of this
+new issue.
+
+${blocks}`;
+}
+
+function buildIssueAnalyzerPrompt(title, description, clarification, examples) {
   return `
 You are the ISR Issue Analyzer for the ISR-vote civic governance platform.
 
-Your two authoritative reference documents are:
-1. ISR-Issue-Analyzer-Protocol-v1.md — defines the schema and scoring rules
-2. ISR-Issue-Analyzer-100-Examples.md — 100 calibrated anchor examples (your primary prior)
-
-When analyzing a new issue, find the closest examples from the 100-examples file
-and use their parameters as a starting prior, then adjust based on the specific details
-of this new issue.
+${examplesBlock(examples)}
 
 Issue to analyze:
   Title: "${title || "(no title yet)"}"
@@ -203,7 +329,23 @@ Also include these top-level fields for backward compatibility:
   "reasoning_R": explanation for w_relevance choice,
   "reasoning_E": explanation for w_expertise choice,
   "reasoning_C": explanation for w_contribution choice
+},
+
+────────────────────────────────────────────────────────────────
+I. LOCATION REFERENCE (where the issue is; the server turns it into a point)
+────────────────────────────────────────────────────────────────
+"location_reference": {
+  "anchor": "home" | "work" | "property" | "named_place" | "none",
+  "place":  the place name exactly as written in the issue, only for named_place; "" otherwise
 }
+
+Rules:
+- "our house", "our building", "our entrance", "our yard", "near my home" -> "home"
+- "at work", "our office", "our factory", "our school" (said as staff) -> "work"
+- "my garage", "my plot", "my land" -> "property"
+- a named street, square, park, school or building ("potholes on Linden Street") -> "named_place", with that name
+- no place in the issue -> "none"
+Never invent a place name or coordinates.
 
 ────────────────────────────────────────────────────────────────
 FULL ISR CATEGORY TAXONOMY
@@ -414,6 +556,7 @@ Return ONLY the JSON object. No explanation text outside the JSON.
 // Fields removed by task A2 (PD-8): Expertise has no weights and no resources part.
 const { OBSOLETE_PARAM_FIELDS } = require("./params");
 const { sanitizeDemographicRules } = require("./demographics");
+const { normalizeLocationReference, keywordLocationReference } = require("./location");
 
 // =============================================================================
 // NORMALIZATION
@@ -501,6 +644,9 @@ function normalizeIssueParams(data) {
 
   // ── Resources needed ─────────────────────────────────────────────────────
   if (!data.resources_needed) data.resources_needed = [];
+
+  // ── U6: where the issue is (the server resolves the point) ──────────────
+  data.location_reference = normalizeLocationReference(data.location_reference);
 
   // ── Aggregation weights ───────────────────────────────────────────────────
   const aw = data.aggregation_weights || {};
@@ -878,6 +1024,8 @@ function getLocalFallbackParams(description, title) {
     resources_needed: resources,
     aggregation_weights: aw,
     aggregation_reasoning: aggregation_reasoning,
+    // U6: the anchor from the same words the prompt lists
+    location_reference: keywordLocationReference(`${title || ""}. ${description || ""}`),
     // Backward-compatible shorthands
     category: cat,
     mu,
@@ -909,70 +1057,87 @@ function getLocalFallbackParams(description, title) {
 // =============================================================================
 
 /**
- * Analyzes a civic issue description and suggests all ISR starting parameters.
- * Called by the analyzeIssue endpoint (pre-fill / early analysis — no title yet).
- *
- * @param {string} description - Issue description text
- * @returns {Promise<object>} Normalized params object
+ * One Analyzer call (A4 R4, R5): temperature 0 and a fixed seed, JSON output, the k closest
+ * examples in the prompt. Returns {params, meta}. On a missing key or any error the keyword
+ * rules give the parameters and meta.ai_source is "fallback" (shown in the Check window).
  */
-async function suggestIssueParams(description) {
-  if (!hasGeminiKey()) {
-    return getLocalFallbackParams(description, "");
+async function runAnalyzer(title, description, clarification, examples) {
+  const exs = Array.isArray(examples) ? examples : [];
+  const prompt = buildIssueAnalyzerPrompt(title, description, clarification, exs);
+  const meta = {
+    ai_source: "fallback",
+    model: AI.TEXT_MODEL,
+    prompt_version: AI.PROMPT_VERSION,
+    prompt_sha256: sha256(prompt),
+    temperature: AI.TEMPERATURE,
+    seed: AI.SEED,
+    examples_used: exs.map((e) => e.id),
+    raw_output: null,
+    usage: null,
+    error: null,
+  };
+  const c = getClient();
+  if (!c) {
+    meta.error = "no API key";
+    return { params: getLocalFallbackParams(description, title || ""), meta };
   }
-
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const prompt = buildIssueAnalyzerPrompt("", description);
-
-    const result = await model.generateContent({
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: { responseMimeType: "application/json" }
+    const res = await c.models.generateContent({
+      model: AI.TEXT_MODEL,
+      contents: prompt,
+      config: { temperature: AI.TEMPERATURE, seed: AI.SEED, responseMimeType: "application/json" },
     });
-
-    const data = JSON.parse(result.response.text());
-    return normalizeIssueParams(data);
+    const text = res && typeof res.text === "string" ? res.text : "";
+    meta.raw_output = text;
+    const u = res && res.usageMetadata;
+    if (u) {
+      meta.usage = {
+        prompt_tokens: u.promptTokenCount || 0,
+        output_tokens: u.candidatesTokenCount || 0,
+        total_tokens: u.totalTokenCount || 0,
+      };
+    }
+    const params = normalizeIssueParams(JSON.parse(text));
+    meta.ai_source = "model";
+    return { params, meta };
   } catch (err) {
-    console.error("Gemini suggestIssueParams failed, using local fallback:", err);
-    return getLocalFallbackParams(description, "");
+    meta.error = redact(err && err.message ? err.message : err);
+    console.error("Analyzer call failed, using the keyword rules:", meta.error);
+    return { params: getLocalFallbackParams(description, title || ""), meta };
   }
 }
 
 /**
- * Full analysis of issue with both title and description.
- * Called by the checkIssue endpoint (dry-run server-side calculation).
- *
- * @param {string} description - Issue description text
- * @param {string} title - Issue title
- * @param {string} [clarification] - Context clarified by the topic starter ("Derive again")
- * @returns {Promise<object>} Normalized params object
+ * Early analysis from the description only (analyzeIssue endpoint; not called by the UI).
+ * @returns {Promise<{params: object, meta: object}>}
  */
-async function checkIssueParams(description, title, clarification) {
-  if (!hasGeminiKey()) {
-    return getLocalFallbackParams(description, title);
-  }
+async function suggestIssueParams(description) {
+  return runAnalyzer("", description, "", []);
+}
 
-  try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const prompt = buildIssueAnalyzerPrompt(title, description, clarification);
-
-    const result = await model.generateContent({
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: { responseMimeType: "application/json" }
-    });
-
-    const data = JSON.parse(result.response.text());
-    return normalizeIssueParams(data);
-  } catch (err) {
-    console.error("Gemini checkIssueParams failed, using local fallback:", err);
-    return getLocalFallbackParams(description, title);
-  }
+/**
+ * Full analysis with title, description, the clarification ("Derive again") and the closest
+ * examples (checkIssue endpoint).
+ * @returns {Promise<{params: object, meta: object}>}
+ */
+async function checkIssueParams(description, title, clarification, examples) {
+  return runAnalyzer(title, description, clarification, examples);
 }
 
 module.exports = {
   hasGeminiKey,
-  vectorizeText,
+  embedTexts,
+  embedIssue,
+  loadExamples,
+  nearestExamples,
+  runAnalyzer,
+  buildIssueAnalyzerPrompt,
   suggestIssueParams,
   checkIssueParams,
+  redact,
+  unitNormalize,
+  _setClientForTests,
+  _setExamplesForTests,
   normalizeIssueParams,
   getLocalFallbackParams,
   OBSOLETE_PARAM_FIELDS
