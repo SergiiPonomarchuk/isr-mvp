@@ -91,3 +91,4 @@ Effort estimate: 1-2 developer-days after the decisions, plus generation time on
   - Job level: 1,878 change, mostly from empty to the person's degree (756 Bachelor, 348 Vocational Training, 332 College, 305 Master, 97 PhD). 34 College and 6 PhD become empty: these people have no completed education entry.
   - Work experience: 5,097 people wait for generation.
 - 2026-11-10 07:13-07:20: the trial generation (20 people, 2 calls) got HTTP 503 "This model is currently experiencing high demand", 16 attempts with backoff, plus one minimal probe request. No texts yet; a background loop probes every 10 minutes and runs the trial when the model answers.
+- 2026-11-10: the author confirmed the field mapping of section 3a ("existing fields are fine").
