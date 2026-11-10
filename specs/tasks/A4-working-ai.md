@@ -240,3 +240,25 @@ On the free tier, the content sent is used to improve Google's products. The pai
   - Tests: `tests/test_embed_people.py` (15, API mocked): the texts pinned on fixture profiles (after and before P1, a child, a toddler), the excluded fields, the config, the plan and resume rule, batches and the written fields, the stop on errors, the request limit, the pace, the request body. Python 67 OK; Node 50 pass.
   - Dry run on the emulator (no API call, profiles before P1): 9,150 people (`users/None` skipped), 29,395 texts (9,150 profiles, 5,835 education, 11,057 work experience, 3,353 activities), about 716,000 estimated tokens ($0.11 at the paid rate), 294 requests, about 30 minutes. No text is near the 2,048-token limit.
   - Next: P1 `--apply` on the emulator, then the `--limit 200` sample with `--compare-task-types`, then the full run (AC5).
+- The emulator (2026-11-10): the app restart closed its terminal, and it was started again from `.emulator-data` (the export of 2026-11-08 21:32). Its changes from 2026-11-09/10 were lost: the A1b placeholder, the L1 deadline migration, and the A4 test issues and logs. The profiles were not affected. `migrate_a1b.py --apply` was run again on the emulator: 2 publics and 50 members (54 documents), as on 2026-11-09; a second run changed nothing.
+- Phase C implemented (2026-11-10, agent): `scripts/migrate_a4.py` (R10, R11).
+  - It selects the publics whose members all have `expertise_source` "no_issue_vector". A public where only some have it is reported and left alone.
+  - The issue vector: `{title}. {description}` of the issue, else of its discussion, as `RETRIEVAL_QUERY`. It is stored in `issue_vectors/{topic id}` with the fields `createIssue` writes. An entry with the same model, template, task type and text is reused without a request.
+  - E per member as `createIssue` computes it (`scripts/expertise.py`, the port of `functions/isr.js`):
+    - the current skills and skill vectors;
+    - the age floor at the topic's `created_at`;
+    - the issue's CBC adjustment, else 1.0.
+  - The ISR comes from `isr_core.isr_for_public`, with the weights A1b used.
+  - It writes the member fields `createIssue` writes, plus `expertise_source` "issue_vector", and rewrites the topic maps.
+  - A public is held back while any member's vectors are not current (Phase B not yet run for that person's present texts).
+  - A second run changes nothing.
+  - Tests: `tests/test_migrate_a4.py` (5), with the API mocked:
+    - E against hand-computed values (cosine powers, years, the age floor of a 16-year-old);
+    - the ISR against `isr_core`, and the maps;
+    - the mixed public left alone;
+    - stale vectors held back;
+    - an existing issue vector reused;
+    - the second run;
+    - the topic text fallback.
+  - Python: 72 tests OK.
+  - Dry run on the emulator: 2 placeholder publics, both left alone ("25 members without current A4 vectors"), 0 requests.
