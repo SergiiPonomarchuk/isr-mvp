@@ -1,6 +1,6 @@
 # SPEC A4: Working AI (roadmap stage 1)
 
-Status: APPROVED 2026-11-10 (the spec and the recommendations of section 4). Phases A-C implemented on branch `a4-working-ai`; AC1-AC4 passed (AC2-AC3 with the free-tier key); AC5-AC6 run after P1 is applied on the emulator (2026-11-11).
+Status: APPROVED 2026-11-10. Phases A-C implemented; AC1-AC7 complete on the emulator, including the successful saved re-run and browser checks on 2026-11-11. All 9,150 people are current; two emulator publics have real E and ISR. Phase D and live AC8 remain the author's steps.
 Branch: a4-working-ai (from main at `0448705`; never main)
 Roadmap: stage 1 ([ROADMAP-demo.md](../ROADMAP-demo.md)). "Check" uses a real model; S and the expertise cosines become meaningful; every Analyzer call is logged. Effort estimate: 4-6 developer-days (roadmap), in four phases (section 6).
 Replaces: the A1b expertise placeholder (`expertise_source: "no_issue_vector"`) for the 3 publics that have it.
@@ -266,3 +266,79 @@ On the free tier, the content sent is used to improve Google's products. The pai
   - Merged main (U5, and the L1, U2-U4 and A1b live records) into the branch; the only conflict was in the spec index.
   - Tests after the merge: Node 55, Python 72.
   - Drafted CHANGES and the spec-index row; the numbers from phases B and C are added after the runs.
+- 2026-11-11, phase B on the emulator, after P1's apply (agent):
+  - **Where it ran:** from `C:\isr-mvp`, detached at `origin/a4-working-ai`, because the key file lives there. The scripts load it themselves. Afterwards the folder went back to `p1-profile-review`.
+  - **Dry run:** 9,150 people, 29,395 texts, 294 requests of up to 100 texts.
+  - **The sample** (`--limit 200 --apply --compare-task-types`): 200 people embedded in about 20 minutes, with repeated per-minute 429s. The task-type comparison then failed on a 429, because `compare_task_types` has no retry, and its report was lost: drive A, which holds this worktree, was disconnected.
+  - **The full run** (`--apply`): 88 more people (300 texts); then one batch failed all 6 attempts with 429, and the run stopped. **288 of 9,150 people** now have `t1` vectors. The report is [A4-embedding-report.md](A4-embedding-report.md). The emulator was exported.
+  - **Finding: the free tier counts every text.**
+    - Google's limit is `EmbedContentRequestsPerDayPerProjectPerModel-FreeTier` = **1,000 a day**, and each text in a `batchEmbedContents` call counts.
+    - A 50-text call got HTTP 429 with "retry after" about 22 h, while a 1-text call passed.
+    - The plan's assumption that a batch counts as one request was wrong.
+    - All 29,395 texts therefore take about **29 days** on the free tier, on the emulator and again on live (phase D).
+  - **Decision for the author:**
+    - a. billing on the AI Studio project of the key (paid rate $0.15 per 1M tokens: about $0.11-0.30 for the whole population, with a budget alert);
+    - b. about a month at under 1,000 texts a day (the script resumes and skips people who are current);
+    - c. a smaller scope, for example only the people of the demo scenarios.
+  - **Follow-up:** `compare_task_types` needs the same retry on 429 as the main loop. Phase C waits until phase B is complete, because it holds back publics whose members' vectors are not current.
+- 2026-11-11: **the author chose option a, billing** ("1 - a"), on the AI Studio project of the key, with a monthly spend cap of about $5.
+  - **The steps** (from Google's billing page, read 2026-11-11):
+    1. https://aistudio.google.com/api-keys → **Set up billing** for the project.
+    2. Choose a billing account.
+    3. Choose Prepay (at least $5) or Postpay.
+    4. Set the spend cap at https://aistudio.google.com/spend.
+    5. The project then shows "Paid" (Tier 1). The key is unchanged.
+  - **The expected cost:** phase B on the emulator about $0.16 (the run report's estimate), the same on live, and the Analyzer's calls cents.
+  - **This supersedes "stay in the free-tier limits"** for this project. With billing, every request of the project is billed.
+  - **Next:**
+    - after "Paid": one tiny probe;
+    - the comparison again (`--limit 200 --compare-task-types`; the 200 people are already embedded);
+    - then the full `--apply` for the remaining 8,862 people;
+    - then phase C.
+- 2026-11-11, after billing (the project shows "Paid"): a 50-text probe passed, where it had been refused on the free tier.
+- **Task-type comparison** (open point 4.3), 6 requests: the report is [A4-embedding-compare-report.md](A4-embedding-compare-report.md).
+  - With `--limit 200`, the next 200 people not yet embedded were also embedded.
+  - a (`RETRIEVAL_QUERY` / `RETRIEVAL_DOCUMENT`, as chosen): mean S about 0.54, sd 0.017-0.033, top 10 minus the median 0.033-0.071.
+  - b (`SEMANTIC_SIMILARITY` for both): mean about 0.70, sd 0.023-0.048, top 10 minus the median 0.041-0.114. Its spread is a little wider on 3 of the 5 issues and narrower on 2; the two agree on 0-10 of the top 10.
+  - Not enough to change the approved choice a, which is kept.
+  - **Fixes:** `compare_task_types` now retries like the main loop (a test was added). The run had ended with exit 1 only because the final message's relative path does not work across drives (C: and A:); that is fixed in both scripts.
+- **Phase B, the full run** (`--apply`, 2026-11-11 12:0x-12:5x):
+  - 8,462 people, 27,200 texts, 273 requests (one retried), 999,784 estimated tokens: about $0.15 at $0.15 per 1M tokens.
+  - **All 9,150 people are current** (a dry run: to embed 0).
+  - **Spread:** the median cosine between random pairs of profile vectors is now 0.811, against 0.911 with the old vectors.
+  - The report is [A4-embedding-report.md](A4-embedding-report.md). **AC5 passed.**
+- **Phase C** (`migrate_a4.py --apply`):
+  - 2 placeholder publics given real E, 50 members, 4 topic documents and 2 issue vectors (1 request); 56 documents written. A second run: 0.
+  - Chess club: E 0.27-35.7, ISR 0.77-1.84. Animal shelter website: E 1.3-16.6, ISR 0.77-1.40.
+  - The report is [A4-migration-report.md](A4-migration-report.md). **AC6** is done on the data; the browser check of the new values is pending.
+- **The emulator could not save the results.** `firebase emulators:export` failed with HTTP 500, to drive C and to drive A alike.
+  - The Firestore emulator's Java process used about 4.5 GB, the default ceiling of a quarter of the 16 GB of RAM, with 0.7 GB of RAM left free. Windows grew its page file, and drive C fell to 3 GB free.
+  - The last saved data (`.emulator-data`, 11:35) holds P1, P2 and 288 embedded people.
+  - **To do:**
+    1. Restart the emulator with more Java memory: in PowerShell, `$env:JAVA_TOOL_OPTIONS="-Xmx8g"` before `firebase emulators:start …`, after closing other large programs.
+    2. Re-run phase B (it resumes: about 8,862 people, about 45 minutes, about $0.15) and phase C (1 request).
+    3. Export.
+- **Cost on the paid tier on 2026-11-11:** about 1.03M estimated embedding tokens (the comparison, the 200 extra people and the full run): about $0.16.
+- 2026-11-11 18:3x-18:56: **a re-run after the memory fix.**
+  - The author freed drive C (8.8 GB free). The emulator was restarted with `$env:JAVA_TOOL_OPTIONS = '-Xmx8g'` from the 11:35 save (P1, P2, 288 people); its Java process then used about 5.4 GB.
+  - `embed_people.py --apply` was re-run, and **stopped by the author at 2,038 of 9,150 people**.
+  - `firebase emulators:export` then **succeeded** (18:56). So 8 GB of Java memory fixes the export, and the saved data now holds 2,038 embedded people. Phase C is not applied in the saved data.
+  - RAM stays tight: 0.3-0.5 GB free with browsers open.
+  - **Next:**
+    1. Close large programs.
+    2. In `C:\isr-mvp` (detached at `origin/a4-working-ai`), run `embed_people.py --apply`, which resumes with about 7,112 people (about 35 minutes, about $0.12), then `migrate_a4.py --apply`.
+    3. Export, and go back to `p1-profile-review`.
+- **Paid usage on 2026-11-11:** the first full run plus the re-run, about 1.3M estimated embedding tokens, about $0.20 in total.
+
+- 2026-11-11 (Codex), **saved emulator completion of phases B and C**:
+  - Resumed from the 18:56 checkpoint (2,038 current people), using A4 commit `3a56913` in `C:\isr-mvp`; billing's Paid confirmation is recorded above. No key was inspected or copied.
+  - Phase B: 7,112 people written, 22,751 texts, 229 requests (228 batches plus one retry), 833,512 estimated tokens, about $0.125 at the recorded $0.15/M rate. No texts over the input limit. Median pair cosine 0.810 for this run, versus 0.913 for the same sample's old vectors. The report is `A4-embedding-report.md`.
+  - Post-run dry run: 9,150 current people, zero to embed and zero requests. Independently scanned every profile and skill vector: 9,150 profiles and 20,245 skills, all finite 768-dimensional unit vectors; maximum norm error 2.0e-15. AC5 passed.
+  - Phase C preview and apply: two publics, 50 members, four topic maps, two issue vectors, 56 documents written. Each used one request for two issue texts (four texts, 230 estimated tokens across the preview and apply). The report is `A4-migration-report.md`. Second run: zero placeholder publics, zero writes, zero requests.
+  - Independent read-only verification recomputed E and ISR for all 50 members using the actual `functions/isr.js` through Node; every rounded value and both topics' stored maps matched. Browser with `?emulator=1`, synthetic uid 37: Chess club ISR 1.84 and Animal sheter website ISR 0.84 in the list and details. AC6 passed.
+  - Browser observation outside this migration's scope: the topic headers still show 2 and 26 members while the stored member collections contain 25 each. No UI or membership fields were changed to address this.
+  - Unit checks on A4: Node 55 passed; Python 73 run, 72 passed and one skipped. No API calls in unit tests.
+  - Repeated checkpoint exports succeeded with Java `-Xmx8g`; final export is 18:34 UTC (20:34 Kyiv). Restarted Firestore from that export and verified the completed state survived. The emulator was then stopped and `C:\isr-mvp` restored to `p1-profile-review`.
+  - Additional paid usage today: approximately $0.13 for this completion, on top of the earlier approximately $0.20 recorded above; cumulative embedding estimate approximately $0.33. Token numbers are estimates, not returned API usage; retry billing is not observable. AC7 recorded. Live unchanged; phase D and AC8 remain pending.
+
+- 2026-11-11, PR preparation: merged main `39c1998` (U7 and handoff); retained both A4 and U7 CHANGES entries. Tests on the merged branch: Node 57 passed; Python 73 run, 72 passed and one skipped. Emulator completion reports refer to the tested A4 migration code before this documentation/hosting merge.
