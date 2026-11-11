@@ -276,6 +276,14 @@ def load(db):
     return all_members, mcs, issues, discussions, users, vectors, issue_vectors
 
 
+def shown_path(path):
+    """The report path relative to the repository, or as given when it is on another drive."""
+    try:
+        return os.path.relpath(path, ROOT)
+    except ValueError:
+        return path
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--apply", action="store_true")
@@ -308,7 +316,7 @@ def main(argv=None):
     with open(a.report, "w", encoding="utf-8", newline="\n") as f:
         f.write(report(p, source, applied))
     print(f"placeholder publics {p['placeholder_publics']}, given real E {len(p['publics'])}, left alone {len(p['skipped'])}, "
-          f"embedding requests {p['requests']}; report {os.path.relpath(a.report, ROOT)}")
+          f"embedding requests {p['requests']}; report {shown_path(a.report)}")
     return 0
 
 

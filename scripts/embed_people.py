@@ -368,6 +368,14 @@ def old_profiles(db, doc_ids):
     return out
 
 
+def shown_path(path):
+    """The report path relative to the repository, or as given when it is on another drive."""
+    try:
+        return os.path.relpath(path, ROOT)
+    except ValueError:
+        return path
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--apply", action="store_true")
@@ -428,7 +436,7 @@ def main(argv=None):
     st = p["stats"]
     print(f"people {st['people']}, to embed {len(p['todo'])}, texts {st['texts to embed']}, requests needed {st['requests needed']}"
           + (", run: " + ", ".join(f"{k} {v}" for k, v in summary.items()) if summary else "")
-          + f"; report {os.path.relpath(a.report, ROOT)}")
+          + f"; report {shown_path(a.report)}")
     return 0
 
 
