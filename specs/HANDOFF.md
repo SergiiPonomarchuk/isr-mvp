@@ -14,11 +14,11 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 - **Live chat deadlines:** they were set to 2026-12-09 by L1. **Before that date** the author must extend them (step 7).
 
 ### The emulator
-- **Its saved data:** `C:\isr-mvp\.emulator-data`, exported 2026-11-11 10:34 local time.
+- **Its saved data:** `C:\isr-mvp\.emulator-data`, last exported **2026-11-11 18:56** local time, with the Java memory at 8 GB.
 - **How it got there:** imported from a live export. A1b and L1 were re-applied on 2026-11-10, and **P1 was applied on 2026-11-11** (9,150 users).
 - **Also there:** **P2 applied on 2026-11-11** (homes in buildings, property; AC2 passed).
-- **In the running emulator only, not saved:** A4 phases B and C (all 9,150 people embedded; the 2 A1b publics given real E). The emulator could not export them: its Java memory was full. The saved data (11:35) has P1, P2 and only 288 embedded people. See section 2.
-- **Running:** from `C:\isr-mvp`, on branch `p1-profile-review`, so its functions are that branch's code (before A4).
+- **A4 in the saved data (18:56):** **2,038 of 9,150 people** have `t1` vectors. Phase B was re-run after the memory fix and stopped by the author at that point. Phase C is not applied. See section 2.
+- **Running:** the emulator was started on 2026-11-11 in the terminal tab "emulator 8g", from `C:\isr-mvp` on branch `p1-profile-review`, with `$env:JAVA_TOOL_OPTIONS = '-Xmx8g'`. Its functions are that branch's code (before A4). It may still be running; stop it with Ctrl+C, which exports on exit.
 
 ### Branches, one worktree each
 `wt-*` = `A:\BackUp\isr-mvp\worktrees\wt-*`.
@@ -62,11 +62,18 @@ Claude Code wrote this file when development moved to Codex for about a month. T
   - **Phase C:** 2 publics, 56 documents.
   - **Two script fixes** pushed: a retry in the comparison, and the report path across drives.
   - **Not saved:** `firebase emulators:export` then failed with HTTP 500. The Firestore emulator's Java process was at its default memory ceiling (about 4.5 GB of 16 GB RAM, 0.7 GB free), so drive C also fell to 3 GB free as Windows grew its page file.
-  - **Next:**
-    1. Close large programs.
-    2. Restart the emulator with `$env:JAVA_TOOL_OPTIONS="-Xmx8g"; firebase emulators:start --only "firestore,functions,hosting" --project project-a3d59130-5adf-4677-9e2 --import=.emulator-data --export-on-exit=.emulator-data`. A clean exit may fail to export too, so expect the 11:35 data.
-    3. Re-run `embed_people.py --apply` (about 8,862 people, 45 minutes, about $0.15) and `migrate_a4.py --apply`.
-    4. Export.
+  - **Later the same day (18:3x-18:56):**
+    - The author freed drive C (8.8 GB free), and the emulator was restarted with `-Xmx8g`. With the 11:35 data loaded, its Java process already used about 5.4 GB.
+    - Phase B was re-run and **stopped by the author at 2,038 of 9,150 people**.
+    - The export then **succeeded** (18:56). The 8 GB memory fixes the export.
+    - RAM stays tight: 0.3-0.5 GB free with browsers open (Brave about 4 GB, Chrome about 3 GB). Windows' page file on C has grown to 16.6 GB.
+  - **The plan for A4 on the emulator** (billing is active, so there is no daily limit):
+    1. Close large programs (the browsers), so the emulator's 5-7 GB fits in RAM.
+    2. If the emulator is not running, start it with `$env:JAVA_TOOL_OPTIONS = '-Xmx8g'; firebase emulators:start --only "firestore,functions,hosting" --project project-a3d59130-5adf-4677-9e2 --import=.emulator-data --export-on-exit=.emulator-data`, from `C:\isr-mvp`.
+    3. In `C:\isr-mvp`, `git checkout --detach origin/a4-working-ai`. Then run `python scripts/embed_people.py --apply`; it resumes with about 7,112 people (about 35 minutes and $0.12). Then `python scripts/migrate_a4.py --apply` (1 request).
+    4. `firebase emulators:export .emulator-data --force --project project-a3d59130-5adf-4677-9e2`.
+    5. `git checkout p1-profile-review`.
+    6. Record the numbers in the A4 Status log and CHANGES, then open the PR.
 
     Details are in the A4 Status log.
 - **The Gemini quota:** the free daily quota was used up on 2026-11-11, and it resets at 08:00 UTC. Every Check uses 1 embedding (one text) and 1 text-model request.
