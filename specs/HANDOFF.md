@@ -43,7 +43,17 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 - **A4 phase B: partial, and blocked by the free tier.**
   - 288 of 9,150 people are embedded. The free tier of `gemini-embedding-001` allows **1,000 texts a day, and every text in a batch counts** (the error names `EmbedContentRequestsPerDayPerProjectPerModel-FreeTier`). The plan had assumed one batch = one request.
   - All texts take about 29 free-tier days, on the emulator and again on live.
-  - **The author decides:** billing (about $0.11-0.30 for everyone at $0.15 per 1M tokens), about a month at under 1,000 texts a day, or a smaller scope. Details are in the A4 Status log.
+  - **Decided by the author on 2026-11-11: option a, billing** on the AI Studio project that owns the key (`C:\isr-mvpunctions\.secret.local`). The author's steps:
+    1. https://aistudio.google.com/api-keys → the key's project → **Set up billing** (Billing Tier column).
+    2. Choose or add a Google billing account.
+    3. Choose a plan: Prepay (at least $5) or Postpay.
+    4. Set a **monthly spend cap** of about $5 at https://aistudio.google.com/spend. With Prepay, turn off or limit the auto-reload at https://aistudio.google.com/billing.
+    5. Check that the project shows **Paid** (Tier 1).
+
+    The key stays the same.
+  - **The expected cost:** about $0.16 for everyone on the emulator (the run report's estimate at $0.15 per 1M tokens), the same again on live, and fractions of a cent per Check.
+  - **Billing status:** check "Paid" on the API keys page before relying on it. Until the project is paid, the free limits apply. With billing, every request of this project is billed, the Analyzer's included.
+  - A dry run of `python scripts/embed_people.py` shows what is left; the script resumes.
   - A dry run of `python scripts/embed_people.py` shows what is left; the script resumes.
 - **The Gemini quota:** the free daily quota was used up on 2026-11-11, and it resets at 08:00 UTC. Every Check uses 1 embedding (one text) and 1 text-model request.
 
@@ -66,8 +76,9 @@ After every step that writes, export the emulator (`AGENTS.md`).
 
    AC4 needs a Check with the key, so it runs with step 3. Then the Status log, CHANGES and the PR.
 2. **A4 phases B and C, in `wt-a4`** (phase B is partial and waits for the author's quota decision; see section 2):
-   1. `python scripts/embed_people.py --limit 200 --apply --compare-task-types` (a sample; read `specs/tasks/A4-embedding-report.md`).
-   2. `python scripts/embed_people.py --apply` for everyone: about 300 requests and 30 minutes. It resumes if stopped, at most 900 requests a run.
+   0. **Where to run it:** the scripts read the key from their own repository folder, and only `C:\isr-mvp` has it. Run them in `C:\isr-mvp` checked out detached at `origin/a4-working-ai` (`git checkout --detach origin/a4-working-ai`; the branch itself is checked out in `wt-a4`). Write the reports into `wt-a4` with `--report A:/BackUp/isr-mvp/worktrees/wt-a4/specs/tasks/<name>.md`. Then go back with `git checkout p1-profile-review` (or main once P1 is merged).
+   1. After the author confirms the project is "Paid": send one tiny embedding request to check the quota. Then run `python scripts/embed_people.py --limit 200 --apply --compare-task-types` again, for the comparison, which failed on 2026-11-11. The 200-person sample is already embedded.
+   2. `python scripts/embed_people.py --apply` for the remaining 8,862 people: 288 requests of up to 100 texts, under an hour. It resumes if stopped, at most 900 requests a run.
    3. `python scripts/migrate_a4.py` (a dry run), then `--apply`, for the A1b publics.
    4. Export the emulator.
    5. Put the numbers into CHANGES and the A4 Status log; open the PR "A4: working AI".

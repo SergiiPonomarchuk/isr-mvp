@@ -21,11 +21,12 @@ ISR MVP: an issue-specific weighted participation prototype. It uses Firebase/Fi
 - Do not edit files under `docs/` unless the spec says so.
 - Never print or save secrets or personal fields (emails, passwords, tokens). Synthetic names are fine.
 - **The Gemini API key** lives in `C:\isr-mvp\functions\.secret.local` (gitignored). Never read, print, copy or grep it; the scripts and the functions emulator load it themselves. If another folder needs the key, ask the author.
-- Stay within the Gemini free tier:
-  - `gemini-3.1-flash-lite`: 15 requests a minute, 500 a day;
-  - `gemini-embedding-001`: 100 a minute, 1,000 a day, with a batch of up to 100 texts counting as one request.
-
-  The daily limits reset at midnight Pacific (08:00 UTC).
+- **The Gemini quota:**
+  - On the free tier, `gemini-3.1-flash-lite` allows 15 requests a minute and 500 a day.
+  - On the free tier, `gemini-embedding-001` allows 1,000 **texts** a day: every text in a batch counts (measured 2026-11-11).
+  - The daily limits reset at midnight Pacific (08:00 UTC).
+  - **Billing (author, 2026-11-11):** the key's AI Studio project moves to the paid tier, with a monthly spend cap of about $5, so that A4 can embed everyone. Check that the project shows "Paid" on https://aistudio.google.com/api-keys before relying on the paid limits.
+  - Either way, keep the usage small and record the request and token counts in the spec.
 
 ## Environment (Windows 11)
 - **Shells:** commands for the author are in **Windows PowerShell 5.1** syntax. Use `;` and `if ($?) { ... }`; never `&&` or `cd /d`. Git Bash is available for agents.
