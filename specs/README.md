@@ -102,6 +102,8 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U7-page-cache](tasks/U7-page-cache.md) | approved 2026-11-10; implemented on branch `u7-page-no-cache` (unit tests); the live header check follows the next hosting deploy | UI, 13 (hosting) |
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
 
+Handoff: [HANDOFF](HANDOFF.md): the state of every branch and the next steps (2026-11-11).
+
 Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).
 
 S0 artefacts: [S0-inventory-report](tasks/S0-inventory-report.md), [S0-structure-proposal](tasks/S0-structure-proposal.md), [S0-decisions-to-import](tasks/S0-decisions-to-import.md).
