@@ -16,7 +16,7 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 ### The emulator
 - **Its saved data:** `C:\isr-mvp\.emulator-data`, exported 2026-11-11 10:34 local time.
 - **How it got there:** imported from a live export. A1b and L1 were re-applied on 2026-11-10, and **P1 was applied on 2026-11-11** (9,150 users).
-- **Not there yet:** no A4 vectors, and P2 not applied, unless section 2 says otherwise.
+- **Also there:** **P2 applied on 2026-11-11** (homes in buildings, property; AC2 passed), and A4 phase B **partly** (288 of 9,150 people have `t1` vectors). See section 2.
 - **Running:** from `C:\isr-mvp`, on branch `p1-profile-review`, so its functions are that branch's code (before A4).
 
 ### Branches, one worktree each
@@ -34,11 +34,18 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 | `handoff-codex` | `wt-handoff` | this file and `AGENTS.md` | | PR |
 | (detached `origin/main`) | `wt-main` | | the deploy copy | refresh before each deploy |
 
-## 2. Possibly done already: check first
+## 2. Done after this file was first written (2026-11-11)
 
-Right after writing this file, Claude planned two more steps on 2026-11-11. Check whether they were done before repeating them:
-- **P2's real plan and its emulator apply.** Done if `scripts/p2_generated/plan.json` is committed on `p2-homes-and-property` and the P2 Status log has a 2026-11-11 apply entry. Check: a dry run of `python scripts/migrate_p2.py` reports "to write 0".
-- **A4 phase B on the emulator.** Done if the A4 Status log has the phase B entries and `specs/tasks/A4-embedding-report.md` shows the full run. Check: a dry run of `python scripts/embed_people.py` reports nothing to embed.
+- **P2: done on the emulator.**
+  - The real plan was made after P1 and committed (`scripts/p2_generated/plan.json`). The apply wrote all 9,150 people, and a second run wrote 0. AC2 passed, and the emulator was exported. CHANGES is written.
+  - **Left:** AC3 (the browser check) and AC4 (a Check of a building issue and a garage issue, with the key), then the PR.
+  - A dry run of `python scripts/migrate_p2.py` reports "done 9150, to write 0".
+- **A4 phase B: partial, and blocked by the free tier.**
+  - 288 of 9,150 people are embedded. The free tier of `gemini-embedding-001` allows **1,000 texts a day, and every text in a batch counts** (the error names `EmbedContentRequestsPerDayPerProjectPerModel-FreeTier`). The plan had assumed one batch = one request.
+  - All texts take about 29 free-tier days, on the emulator and again on live.
+  - **The author decides:** billing (about $0.11-0.30 for everyone at $0.15 per 1M tokens), about a month at under 1,000 texts a day, or a smaller scope. Details are in the A4 Status log.
+  - A dry run of `python scripts/embed_people.py` shows what is left; the script resumes.
+- **The Gemini quota:** the free daily quota was used up on 2026-11-11, and it resets at 08:00 UTC. Every Check uses 1 embedding (one text) and 1 text-model request.
 
 ## 3. Next steps, in order
 
@@ -50,7 +57,7 @@ $env:FIRESTORE_EMULATOR_HOST="127.0.0.1:8080"; $env:GCLOUD_PROJECT="project-a3d5
 
 After every step that writes, export the emulator (`AGENTS.md`).
 
-1. **P2 (if not done), in `wt-p2`:**
+1. **P2 (done up to AC2; see section 2), in `wt-p2`:**
    1. `python scripts/migrate_p2.py --make-plan`. This runs once; then commit `scripts/p2_generated/plan.json`.
    2. `python scripts/migrate_p2.py`: a dry run that writes `specs/tasks/P2-migration-report.md` and the two GeoJSON files.
    3. `python scripts/migrate_p2.py --apply`. A second run writes nothing.
@@ -58,7 +65,7 @@ After every step that writes, export the emulator (`AGENTS.md`).
    5. AC3 in the browser: the profile and the geotag map show the home on its building, and the property entries.
 
    AC4 needs a Check with the key, so it runs with step 3. Then the Status log, CHANGES and the PR.
-2. **A4 phases B and C, in `wt-a4`:**
+2. **A4 phases B and C, in `wt-a4`** (phase B is partial and waits for the author's quota decision; see section 2):
    1. `python scripts/embed_people.py --limit 200 --apply --compare-task-types` (a sample; read `specs/tasks/A4-embedding-report.md`).
    2. `python scripts/embed_people.py --apply` for everyone: about 300 requests and 30 minutes. It resumes if stopped, at most 900 requests a run.
    3. `python scripts/migrate_a4.py` (a dry run), then `--apply`, for the A1b publics.
