@@ -340,3 +340,5 @@ On the free tier, the content sent is used to improve Google's products. The pai
   - Unit checks on A4: Node 55 passed; Python 73 run, 72 passed and one skipped. No API calls in unit tests.
   - Repeated checkpoint exports succeeded with Java `-Xmx8g`; final export is 18:34 UTC (20:34 Kyiv). Restarted Firestore from that export and verified the completed state survived. The emulator was then stopped and `C:\isr-mvp` restored to `p1-profile-review`.
   - Additional paid usage today: approximately $0.13 for this completion, on top of the earlier approximately $0.20 recorded above; cumulative embedding estimate approximately $0.33. Token numbers are estimates, not returned API usage; retry billing is not observable. AC7 recorded. Live unchanged; phase D and AC8 remain pending.
+
+- 2026-11-11, PR preparation: merged main `39c1998` (U7 and handoff); retained both A4 and U7 CHANGES entries. Tests on the merged branch: Node 57 passed; Python 73 run, 72 passed and one skipped. Emulator completion reports refer to the tested A4 migration code before this documentation/hosting merge.

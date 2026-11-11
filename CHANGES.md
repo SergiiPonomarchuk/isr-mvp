@@ -25,7 +25,7 @@ Spec: `specs/tasks/A4-working-ai.md` (approved 2026-11-10; paid-tier billing app
 - **The browser:** the Check window says which model derived the parameters, or shows the fallback label or the server's error.
 
 ### Checks
-- **Unit tests:** Node 55 passed; Python 73 run, 72 passed and one skipped.
+- **Unit tests after merging main:** Node 57 passed; Python 73 run, 72 passed and one skipped.
 - **Emulator with the free-tier key:**
   - AC2: 5 issues, each checked twice; every call used the model; the parameters were identical in both runs.
   - AC3: the vectors were bit-identical; Create reused the draft's vector.
@@ -44,6 +44,25 @@ Spec: `specs/tasks/A4-working-ai.md` (approved 2026-11-10; paid-tier billing app
 3. Embed the people on live: `python scripts/embed_people.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply` (about 300 requests and 30 minutes; it resumes if stopped).
 4. Replace the placeholders: `python scripts/migrate_a4.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`.
 5. The agent then checks live read-only (AC8).
+
+## U7: the page is not cached for an hour after a deploy (2026-11-10)
+
+Spec: `specs/tasks/U7-page-cache.md` (author: "1+2").
+
+### What changed
+- **Hosting** sends `Cache-Control: no-cache` for every response, through one rule (`"source": "**"`) that replaces U5's rule for scripts and styles. Before, the page itself was cached for an hour, so a browser could combine an old page with new scripts after a deploy.
+- **Cost (measured on live):** a full load is 137 KB compressed; U7 adds the page and the logo, about 45 KB, to what U5 already sends on every load. The free hosting transfer covers about 2,600 full loads a day.
+
+### Checks
+- Unit tests: Node 47 (2 new in `functions/test/page_cache.test.js`; U5's test adapted).
+- The local hosting server ignores `headers`, so the headers are checked on live after the deploy.
+
+### Author's steps after merging
+1. Deploy hosting from a checkout of main, on its own or together with A4 or U6: `firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`.
+2. The agent then checks the live headers (AC2).
+
+### Live (2026-11-11)
+- Hosting was deployed by the author. AC2 passed: every response checked carries `Cache-Control: no-cache`, and the files equal main.
 
 ## U5: Esc closes only the top window; the geotag button stops downloading every profile (2026-11-10)
 

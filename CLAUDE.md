@@ -16,6 +16,7 @@ ISR MVP: issue-specific weighted participation prototype (Firebase/Firestore, Cl
 - Never print or save secrets or personal fields (emails, passwords, tokens).
 
 ## Where facts live
+- specs/HANDOFF.md: the current state of every branch and the next steps (Codex reads it through AGENTS.md, which repeats these rules).
 - claude_export/IMPLEMENTATION_FACTS.md: audit of what the code actually does (verified with file and line numbers).
 - claude_export/EMBEDDINGS.md: facts about stored embeddings.
 - docs/: the specification documents (they describe the intended design, which differs from the code in several places).
