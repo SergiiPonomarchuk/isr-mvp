@@ -1,6 +1,6 @@
 # SPEC P2: Homes in real buildings, and property for the synthetic people
 
-Status: APPROVED 2026-11-10 (author: Andim spread around its point with fictional addresses; the 8 current points as estate centres; separate objects outside the estates except those in apartment blocks; new names for numbered objects; "the rest is ok"). Implementation next; writes to the emulator only after P1's apply.
+Status: APPROVED 2026-11-10 (author: Andim spread around its point with fictional addresses; the 8 current points as estate centres; separate objects outside the estates except those in apartment blocks; new names for numbered objects; "the rest is ok"). Implemented; applied on the emulator 2026-11-11 after P1 (AC1-AC2 passed). AC3 (browser) and AC4 (a Check with the key) are pending; AC5 is the author's live run.
 Branch: p2-homes-and-property (from main at `f58bf25`; never main)
 Source: the author, 2026-11-10 (D1 review):
 - "these 8 large housing complexes are multi-storied complexes, townhouses cooperatives and private houses/villas. They should be split for houses and restored in DB with more precise coordinates. Use normal distances between such buildings to plan realistic location of the buildings for each user."
@@ -186,3 +186,19 @@ Fictional names, written for this dataset. The rename map is kept in `scripts/mi
   - **Finding:** the estate centres lie in Weil am Rhein (Germany), just north of Basel; osbb 3 is next to the A5 motorway junction. The author's centres are kept.
   - **Next:** after P1's apply on 2026-11-11, `--make-plan` on the emulator (the real plan, committed), then AC2-AC4.
 - 2026-11-10: the author on the location: "It is ok. All these places In Andim and Bilim - fiction cities for testing environment." The estates belong to the fictional cities Andim and Bilim on real coordinates, so real map features underneath are not a problem. Andim's 123 people, with the home address "Andim", live in the city of Andim; R2 gives them fictional street addresses there.
+- 2026-11-11, the real plan (agent): `--make-plan` on the emulator after P1's apply, committed as `scripts/p2_generated/plan.json` (6 MB). Its report is [P2-migration-report.md](P2-migration-report.md), with `P2-buildings.geojson` and `P2-property.geojson`.
+  - 9,150 people, 1,226 buildings and 78 objects; all distance rules hold.
+  - Objects: 19 into apartment blocks, 15 moved out, 44 stay.
+  - Property entries: flats 2,948, houses 1,882, rented out 267 (counted within the flats), garages 381, garden plots 503, commercial 78.
+- 2026-11-11, `--apply` on the emulator (emulator only): 9,150 people written; `user_packs`: none on the emulator. A second `--apply` wrote 0 (done 9,150).
+- 2026-11-11, **AC2 passed**, checked read-only from the database:
+  - every one of the 9,150 homes is on its building's point (1,226 distinct points; the largest is osbb 1, h5 with 250 residents);
+  - no numbered object name is left in any work or post entry;
+  - the property entries are as planned, and no child owns any;
+  - the plan check reports 0 problems.
+
+  The emulator was exported afterwards.
+- Pending:
+  - **AC3:** the profile and the geotag map in the browser. The browser pane refused the local page this time.
+  - **AC4:** a Check of a building issue, which needs the key and an emulator running A4's or U6's functions; it runs with U6's checks (HANDOFF step 3).
+  - The CHANGES entry and the PR.

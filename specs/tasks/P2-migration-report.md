@@ -85,3 +85,4 @@ Garage cooperatives: 3; gardens: 3.
 
 - planned changes: 9150
 - already as planned: 0; to write: 9150; held (input changed): 0; missing: 0
+- written: 9150 people; user_packs written: 0
