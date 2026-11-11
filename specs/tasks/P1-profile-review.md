@@ -1,6 +1,6 @@
 # SPEC P1: Review and repair of the synthetic profiles
 
-Status: APPROVED 2026-11-10 (author: "P1 as recommended": proposals 1a, 2, 3a, 4a, 5a, 6, 7). Implemented on branch `p1-profile-review` (`scripts/migrate_p1.py`); AC1, the 20-profile trial, waits for the author's review.
+Status: APPROVED 2026-11-10 (author: "P1 as recommended": proposals 1a, 2, 3a, 4a, 5a, 6, 7). Implemented on branch `p1-profile-review` (`scripts/migrate_p1.py`). Generated in two days and applied on the emulator 2026-11-11: AC1-AC3 and AC5 passed. AC4, the live run, is the author's step.
 Branch: p1-profile-review (from main at `0448705`; never main)
 Source: the author, 2026-11-09: "maybe we should also review Profiles content and fix it according to our current environment (including edition fields content, adding new fields if they are needed, splitting, joining, etc.)". A4 (stage 1) re-embeds the people after P1 (A4 open point 4.2).
 Effort estimate: 1-2 developer-days after the decisions, plus generation time on the free tier.
@@ -108,3 +108,32 @@ Effort estimate: 1-2 developer-days after the decisions, plus generation time on
   - A pause of 73 minutes (10:51-12:05 UTC), probably the computer sleeping; the run continued on its own.
   - The no-education rule works: uid 2910 is now a "Warehouse Logistics Coordinator" (Logistics, 40 years) instead of a "Senior Consultant". The 234 people without education have no-degree roles, the most common being General Laborer (30), Agricultural Worker (24), Cleaning Staff (21), Logistics Coordinator (16) and Farm Hand (14).
   - Day 2: 867 people left, about 87 calls.
+- 2026-11-11 08:13-08:4x UTC, day 2 (the scheduled follow-up):
+  - 867 people in 87 calls (calls 440-526), all valid on the first try, 0 failed.
+  - Tokens: 146,760 prompt and 148,232 output (294,992; about $0.26 at the paid rate, $0 on the free tier).
+- Totals (AC5):
+  - 526 logged calls: 520 succeeded, and 6 failed with HTTP 503 "high demand" before their retries.
+  - Every one of the 5,097 people with work experience is generated with `p1w2`.
+  - Tokens: 868,733 prompt and 869,733 output (1,738,466), the trial's 2 `p1w1` calls included. About $1.52 at the paid rate ($0.25 / $1.50 per 1M), $0 on the free tier.
+  - Requests per day stayed under the free tier's 500.
+- 2026-11-11, the dry run on the emulator:
+  - 9,150 profiles; 8,803 to update and 1 to delete (`users/None`);
+  - work experience: 5,097 people from the generated texts, 0 not generated, 0 with changed input.
+- 2026-11-11, `--apply` on the emulator (emulator only):
+  - 8,804 changes: 8,803 updates, and `users/None` deleted;
+  - `user_packs`: none on the emulator, so none written;
+  - a second dry run: 0 updates and 0 deletes. The report is [P1-migration-report.md](P1-migration-report.md).
+- 2026-11-11, AC2, the audit after the apply ([P1-profile-audit-after.md](P1-profile-audit-after.md)). **AC2 passed:**
+  - **F1:** `name` and `specialization` are empty in 0 of 11,057 work-experience entries (1,831 roles, 73 fields).
+  - **F2:** 0 of 11,057 comments describe another person (the median comment is now 125 characters).
+  - **F3:** work-experience `time` holds the generated years (0.5-79, median 10). Activity `time` stays 1, as decided.
+  - **F4:** graduation ages by level: Vocational 18-20, College 19-21, Bachelor 21-23, Master 23-25, PhD 27-29. 297 graduations lie in the future, all marked `in_progress`, and no past one is marked.
+  - **F5:** the job's level equals the highest completed education in 5,538 profiles and is empty without one in 3,612; there are no mismatches.
+  - **F7:** `users/None` is gone; 9,150 users.
+  - **Skill ids unchanged:** 20,245 skills, every one still matching its vector id from the 2026-10-12 export, and no repeated ids.
+  - **Years:** 0 people over age - 16.
+- Next:
+  - export the emulator;
+  - P2's real plan from these profiles (P2 runs after P1);
+  - A4 phase B (the 200-person sample with `--compare-task-types`, then everyone) and phase C on the emulator.
+  - On live, the author runs P1 `--apply` (AC4) after a backup, then P2.
