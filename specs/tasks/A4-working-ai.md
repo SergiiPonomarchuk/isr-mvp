@@ -1,6 +1,6 @@
 # SPEC A4: Working AI (roadmap stage 1)
 
-Status: APPROVED 2026-11-10 (the spec and the recommendations of section 4). Phases A-C implemented on branch `a4-working-ai`; AC1-AC4 passed (AC2-AC3 with the free-tier key). Phases B and C were done on the emulator 2026-11-11 (paid tier: AC5-AC6) but could not be saved (the emulator's Java memory). A re-run with 8 GB was stopped by the author at 2,038 of 9,150 people and saved (18:56); finishing it is the next step (the Status log and HANDOFF.md). Phase D is the author's.
+Status: APPROVED 2026-11-10. Phases A-C implemented; AC1-AC7 complete on the emulator, including the successful saved re-run and browser checks on 2026-11-11. All 9,150 people are current; two emulator publics have real E and ISR. Phase D and live AC8 remain the author's steps.
 Branch: a4-working-ai (from main at `0448705`; never main)
 Roadmap: stage 1 ([ROADMAP-demo.md](../ROADMAP-demo.md)). "Check" uses a real model; S and the expertise cosines become meaningful; every Analyzer call is logged. Effort estimate: 4-6 developer-days (roadmap), in four phases (section 6).
 Replaces: the A1b expertise placeholder (`expertise_source: "no_issue_vector"`) for the 3 publics that have it.
@@ -329,3 +329,14 @@ On the free tier, the content sent is used to improve Google's products. The pai
     2. In `C:\isr-mvp` (detached at `origin/a4-working-ai`), run `embed_people.py --apply`, which resumes with about 7,112 people (about 35 minutes, about $0.12), then `migrate_a4.py --apply`.
     3. Export, and go back to `p1-profile-review`.
 - **Paid usage on 2026-11-11:** the first full run plus the re-run, about 1.3M estimated embedding tokens, about $0.20 in total.
+
+- 2026-11-11 (Codex), **saved emulator completion of phases B and C**:
+  - Resumed from the 18:56 checkpoint (2,038 current people), using A4 commit `3a56913` in `C:\isr-mvp`; billing's Paid confirmation is recorded above. No key was inspected or copied.
+  - Phase B: 7,112 people written, 22,751 texts, 229 requests (228 batches plus one retry), 833,512 estimated tokens, about $0.125 at the recorded $0.15/M rate. No texts over the input limit. Median pair cosine 0.810 for this run, versus 0.913 for the same sample's old vectors. The report is `A4-embedding-report.md`.
+  - Post-run dry run: 9,150 current people, zero to embed and zero requests. Independently scanned every profile and skill vector: 9,150 profiles and 20,245 skills, all finite 768-dimensional unit vectors; maximum norm error 2.0e-15. AC5 passed.
+  - Phase C preview and apply: two publics, 50 members, four topic maps, two issue vectors, 56 documents written. Each used one request for two issue texts (four texts, 230 estimated tokens across the preview and apply). The report is `A4-migration-report.md`. Second run: zero placeholder publics, zero writes, zero requests.
+  - Independent read-only verification recomputed E and ISR for all 50 members using the actual `functions/isr.js` through Node; every rounded value and both topics' stored maps matched. Browser with `?emulator=1`, synthetic uid 37: Chess club ISR 1.84 and Animal sheter website ISR 0.84 in the list and details. AC6 passed.
+  - Browser observation outside this migration's scope: the topic headers still show 2 and 26 members while the stored member collections contain 25 each. No UI or membership fields were changed to address this.
+  - Unit checks on A4: Node 55 passed; Python 73 run, 72 passed and one skipped. No API calls in unit tests.
+  - Repeated checkpoint exports succeeded with Java `-Xmx8g`; final export is 18:34 UTC (20:34 Kyiv). Restarted Firestore from that export and verified the completed state survived. The emulator was then stopped and `C:\isr-mvp` restored to `p1-profile-review`.
+  - Additional paid usage today: approximately $0.13 for this completion, on top of the earlier approximately $0.20 recorded above; cumulative embedding estimate approximately $0.33. Token numbers are estimates, not returned API usage; retry billing is not observable. AC7 recorded. Live unchanged; phase D and AC8 remain pending.

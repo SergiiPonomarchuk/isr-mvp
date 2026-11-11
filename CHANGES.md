@@ -1,8 +1,8 @@
 # CHANGES
 
-## A4: working AI, roadmap stage 1 (2026-11-10; the PR waits for the runs of phases B and C)
+## A4: working AI, roadmap stage 1 (2026-11-11; emulator phases A-C complete)
 
-Spec: `specs/tasks/A4-working-ai.md` (approved 2026-11-10; "Try to stay in free-tier limits").
+Spec: `specs/tasks/A4-working-ai.md` (approved 2026-11-10; paid-tier billing approved 2026-11-11).
 
 ### What changed
 - **Models in one place:** `functions/ai-config.js` holds:
@@ -20,25 +20,27 @@ Spec: `specs/tasks/A4-working-ai.md` (approved 2026-11-10; "Try to stay in free-
   - without a key or on an error, the keyword rules answer, labelled as the fallback.
 - **Create** reuses the draft's vector and writes `issue_vectors/{id}` and an `ai` field on the issue.
 - **Logs:** `analyzer_logs` gets one document per Analyzer call: input, model, versions, examples, raw and normalised output, tokens. The rules make it server-only.
-- **The people:** `scripts/embed_people.py` embeds every profile and skill again with template `t1` (`scripts/embedding_templates.py`). It stays within the free tier, resumes, and skips people whose vectors are current.
+- **The people:** `scripts/embed_people.py` embeds every profile and skill again with template `t1` (`scripts/embedding_templates.py`). It paces API use, resumes, and skips people whose vectors are current; the author approved paid billing to complete the population.
 - **The A1b publics:** `scripts/migrate_a4.py` replaces the expertise placeholder with real E and the ISR, from the issue vector.
 - **The browser:** the Check window says which model derived the parameters, or shows the fallback label or the server's error.
 
 ### Checks
-- **Unit tests:** Node 55; Python 72.
+- **Unit tests:** Node 55 passed; Python 73 run, 72 passed and one skipped.
 - **Emulator with the free-tier key:**
   - AC2: 5 issues, each checked twice; every call used the model; the parameters were identical in both runs.
   - AC3: the vectors were bit-identical; Create reused the draft's vector.
   - AC4: without a key, the refusal and the label.
   - 11 Analyzer calls used about 99,400 tokens: about $0.04 at the paid rate, $0 on the free tier.
-- **Pending (after P1's apply on the emulator, 2026-11-11):**
-  - AC5: the 200-person sample with the task-type comparison, then all people;
-  - AC6: the A1b publics;
-  - AC7: the token totals.
+- **Saved emulator completion (2026-11-11):**
+  - AC5: all 9,150 profile and 20,245 skill vectors current, finite, 768-dimensional and unit length; zero stale people on a second run. The approved task-type comparison is recorded in the spec.
+  - Resumed 7,112 people: 22,751 texts, 229 requests (one retry), 833,512 estimated tokens (about $0.13 at the recorded paid rate). Median pair cosine 0.810 for this run, versus 0.913 before.
+  - AC6: two publics, 50 members, four topic maps and two issue vectors (56 writes). All 50 E and ISR results independently match `functions/isr.js`; maps match; a second migration does nothing. Browser uid 37 sees ISR 1.84 (Chess club) and 0.84 (shelter website).
+  - Phase C preview and apply used two requests total, two issue texts each, 230 estimated tokens. AC7: approximately $0.13 additional embedding usage; approximately $0.33 cumulative paid estimate including earlier lost/repeated runs. Tokens are estimated; actual retry billing is unknown.
+  - Final export at 18:34 UTC (20:34 Kyiv), with Java heap 8 GB; imported again and the completed state verified. No live changes.
 
 ### Author's steps after merging (phase D), after P1 is applied on live
-1. Set the secret: `firebase functions:secrets:set GEMINI_API_KEY --project project-a3d59130-5adf-4677-9e2` (paste the free-tier key when asked).
-2. Deploy from a checkout of main: `firebase deploy --only functions,hosting,firestore:rules --project project-a3d59130-5adf-4677-9e2`.
+1. Set the secret: `firebase functions:secrets:set GEMINI_API_KEY --project project-a3d59130-5adf-4677-9e2` (paste the key when asked).
+2. Deploy from the clean detached `wt-main` checkout, together with U6/U8 as ordered in HANDOFF: `firebase deploy --only functions,hosting,firestore:rules --project project-a3d59130-5adf-4677-9e2`.
 3. Embed the people on live: `python scripts/embed_people.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply` (about 300 requests and 30 minutes; it resumes if stopped).
 4. Replace the placeholders: `python scripts/migrate_a4.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`.
 5. The agent then checks live read-only (AC8).

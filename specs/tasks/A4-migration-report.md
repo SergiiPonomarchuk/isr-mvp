@@ -1,6 +1,6 @@
 # A4 phase C: migration report
 
-Generated 2026-11-11T12:58:29 by `scripts/migrate_a4.py` (APPLIED).
+Generated 2026-11-11T20:32:29 by `scripts/migrate_a4.py` (APPLIED).
 Source: Firestore emulator 127.0.0.1:8080 (project project-a3d59130-5adf-4677-9e2). Issue vectors: `gemini-embedding-001`, 768 dimensions, `RETRIEVAL_QUERY`, template `t1`; embedding requests: 1.
 
 Publics with the A1b placeholder: 2; given real E: 2; left alone: 0; member documents: 50; topic documents (maps): 4; new issue vectors: 2.
