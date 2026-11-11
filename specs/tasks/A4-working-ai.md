@@ -1,6 +1,6 @@
 # SPEC A4: Working AI (roadmap stage 1)
 
-Status: APPROVED 2026-11-10 (the spec and the recommendations of section 4). Phases A-C implemented on branch `a4-working-ai`; AC1-AC4 passed (AC2-AC3 with the free-tier key). Phases B and C done on the emulator 2026-11-11 (paid tier: AC5-AC6). The emulator could not save them (its Java memory is full); see the Status log. Phase D is the author's.
+Status: APPROVED 2026-11-10 (the spec and the recommendations of section 4). Phases A-C implemented on branch `a4-working-ai`; AC1-AC4 passed (AC2-AC3 with the free-tier key). Phases B and C were done on the emulator 2026-11-11 (paid tier: AC5-AC6) but could not be saved (the emulator's Java memory). A re-run with 8 GB was stopped by the author at 2,038 of 9,150 people and saved (18:56); finishing it is the next step (the Status log and HANDOFF.md). Phase D is the author's.
 Branch: a4-working-ai (from main at `0448705`; never main)
 Roadmap: stage 1 ([ROADMAP-demo.md](../ROADMAP-demo.md)). "Check" uses a real model; S and the expertise cosines become meaningful; every Analyzer call is logged. Effort estimate: 4-6 developer-days (roadmap), in four phases (section 6).
 Replaces: the A1b expertise placeholder (`expertise_source: "no_issue_vector"`) for the 3 publics that have it.
@@ -319,3 +319,13 @@ On the free tier, the content sent is used to improve Google's products. The pai
     2. Re-run phase B (it resumes: about 8,862 people, about 45 minutes, about $0.15) and phase C (1 request).
     3. Export.
 - **Cost on the paid tier on 2026-11-11:** about 1.03M estimated embedding tokens (the comparison, the 200 extra people and the full run): about $0.16.
+- 2026-11-11 18:3x-18:56: **a re-run after the memory fix.**
+  - The author freed drive C (8.8 GB free). The emulator was restarted with `$env:JAVA_TOOL_OPTIONS = '-Xmx8g'` from the 11:35 save (P1, P2, 288 people); its Java process then used about 5.4 GB.
+  - `embed_people.py --apply` was re-run, and **stopped by the author at 2,038 of 9,150 people**.
+  - `firebase emulators:export` then **succeeded** (18:56). So 8 GB of Java memory fixes the export, and the saved data now holds 2,038 embedded people. Phase C is not applied in the saved data.
+  - RAM stays tight: 0.3-0.5 GB free with browsers open.
+  - **Next:**
+    1. Close large programs.
+    2. In `C:\isr-mvp` (detached at `origin/a4-working-ai`), run `embed_people.py --apply`, which resumes with about 7,112 people (about 35 minutes, about $0.12), then `migrate_a4.py --apply`.
+    3. Export, and go back to `p1-profile-review`.
+- **Paid usage on 2026-11-11:** the first full run plus the re-run, about 1.3M estimated embedding tokens, about $0.20 in total.
