@@ -7,7 +7,7 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 ## 1. Where things stand
 
 ### main and the live site
-- **main:** `f58bf25` (PR 17, U7). [PR 18](https://github.com/SergiiPonomarchuk/isr-mvp/pull/18) (`u7-live-record`, U7's live record, documents only) is open; merge it when the author says so.
+- **main:** `ae5343a` (PR 18, U7's live record, merged 2026-11-11). Hosting on live is `f58bf25` (PR 17); PR 18 changed documents only.
 - **Live hosting:** main at `f58bf25`, deployed 2026-11-11 06:16 UTC. U5 and U7 are live: every response is sent with `no-cache`.
 - **Live functions:** the code from before A4. The old SDK and the retired models mean that Check falls back to the keyword rules and uses a random issue vector, until A4 is deployed (step 5).
 - **Live data:** A1b and L1 are migrated (2026-11-09). P1, P2 and A4's vectors are **not** on live yet.
@@ -31,7 +31,7 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 | `u6-issue-location` | `wt-u6` | [U6](tasks/U6-issue-location.md) | implemented (Node 86 tests); browser checks without the key; A4 and main merged in | AC2-AC5 with the key; PR after A4 |
 | `u8-map-tiles` | `wt-u8` | [U8](tasks/U8-map-tiles.md) | OpenStreetMap tiles, on top of U6; AC1-AC2 | PR after U6; AC3 on live |
 | `d1-demo-data` | `wt-d1` | [D1](tasks/D1-demo-scenarios.md) | plan approved (decisions 5.1-5.5) | starts after P2 is applied and A4 and U6 are live |
-| `u7-live-record` | `wt-u7` | [U7](tasks/U7-page-cache.md) | PR 18 | merge when the author says so |
+| `u7-live-record` | `wt-u7` | [U7](tasks/U7-page-cache.md) | merged (PR 18) | none; the worktree can be removed |
 | `handoff-codex` | `wt-handoff` | this file and `AGENTS.md` | | PR |
 | (detached `origin/main`) | `wt-main` | | the deploy copy | refresh before each deploy |
 
@@ -115,7 +115,7 @@ After every step that writes, export the emulator (`AGENTS.md`).
 4. **Pull requests, in order:**
    - P1 and P2 at any time;
    - A4, then U6 (merge main into it again if needed), then U8;
-   - PR 18 at any time.
+   - PR 18 is merged.
 5. **The author's live steps,** after the merges. Run them from `C:\isr-mvp` on an up-to-date main: it has the key file and the Python packages. The agent checks read-only after each step.
    1. **Backup:** `python scripts/backup_firestore.py --project project-a3d59130-5adf-4677-9e2 --out A:\ISR\mvp\dbbackup\<date>`.
    2. **P1:** `python scripts/migrate_p1.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`. This also rebuilds `user_packs`. Then the agent runs `python scripts/audit_profiles.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live`, which is read-only.
