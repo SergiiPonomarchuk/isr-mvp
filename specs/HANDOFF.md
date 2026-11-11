@@ -12,6 +12,13 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 - **Do not re-run A4 phase B or C as a next step.** Next: A4 PR/review, then U6 AC2-AC5 with its own functions (section 3, step 3); P2 AC3/AC4 remain as recorded. Live phase D stays the author's step.
 - Drive A was reconnected and readable. All project instructions continue to apply. No live data or deployed code changed.
 
+### U6 checkpoint: 2026-11-11
+
+- AC2-AC5 passed with U6 functions and the completed A4 data. Four location sources, moved-pin invalidation/recheck, forged Create rejection, exact draft-point persistence, logs, cache, geocoding switch and credit verified. See `tasks/U6-emulator-report.md`.
+- Ten text and ten embedding calls, approximately $0.0363 at the spec's recorded rates; exactly four external Nominatim lookups. Switch restored to its original absence. Two emulator test drafts for the pin check and one created test issue remain.
+- Final export: **2026-11-11 19:15 UTC**, exit 0; re-import verified all final U6 records survived. Emulator stopped; main checkout restored to `p1-profile-review`.
+- Next: review A4 PR #20 and the stacked U6 PR; U8 follows U6. P2 browser/Check acceptance remains pending separately. No merges, deploys, rules edits or live writes performed.
+
 The older partial counts and resume commands below are historical handoff context, not the current checkpoint.
 
 ## 1. Where things stand

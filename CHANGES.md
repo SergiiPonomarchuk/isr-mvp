@@ -1,6 +1,6 @@
 # CHANGES
 
-## U6: the issue's point comes from its description (2026-11-10)
+## U6: the issue's point comes from its description (2026-11-11; emulator checks complete)
 
 Spec: `specs/tasks/U6-issue-location.md` (author: "U6 approved"; "keep the server lookup in U6"). Merged after A4.
 
@@ -29,12 +29,13 @@ Spec: `specs/tasks/U6-issue-location.md` (author: "U6 approved"; "keep the serve
 - **Fixed on the way:** a drag, a map click or a profile place changed a copy of the point that Check never read, so only the search box moved an issue.
 
 ### Checks
-- **Unit tests:** Node 86 (31 new); Python 72, unchanged.
+- **Unit tests:** Node 88 passed after merging A4/main; Python 73 run, 72 passed and one skipped.
 - **Browser on the emulator's data (no Check):** the home at start, pin moves, the credit and the switch, as in the spec's status log.
-- **Pending:** AC2-AC5 on the emulator with the free-tier key (about 8 text, 8 embedding and at most 4 Nominatim requests).
+- **AC2-AC5 passed on the emulator:** four location sources; pin move invalidates Check and recheck restores Create; forged location rejected with 409; valid Create uses its draft point; all ten Analyzer logs record location_reference. Four Nominatim lookups total, cache reuse, switch off and OpenStreetMap credit verified. Ten text/embedding calls used 81,465 prompt and 10,588 output tokens plus approximately 342 embedding tokens; approximately $0.0363 at the recorded paid rates. Full evidence: `specs/tasks/U6-emulator-report.md`.
+- **Saved:** final export completed with exit 0; re-import verified the final test state. Emulator stopped, main checkout restored. No live changes.
 
-### Author's steps after merging (after A4's deploy)
-1. Deploy functions and hosting: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from a checkout of main.
+### Author's steps after merging (coordinated with A4 and U8, as in HANDOFF)
+1. Deploy functions and hosting: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from the clean detached `wt-main` checkout.
 2. Optional: create `config/geocoding` with `enabled: true` in the console. Without the document the lookup is on; `enabled: false` turns it off.
 
 ## A4: working AI, roadmap stage 1 (2026-11-11; emulator phases A-C complete)
