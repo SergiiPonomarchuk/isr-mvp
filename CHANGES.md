@@ -16,6 +16,9 @@ Spec: `specs/tasks/U7-page-cache.md` (author: "1+2").
 1. Deploy hosting from a checkout of main, on its own or together with A4 or U6: `firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`.
 2. The agent then checks the live headers (AC2).
 
+### Live (2026-11-11)
+- Hosting was deployed by the author. AC2 passed: every response checked carries `Cache-Control: no-cache`, and the files equal main.
+
 ## U5: Esc closes only the top window; the geotag button stops downloading every profile (2026-11-10)
 
 Spec: `specs/tasks/U5-esc-and-geotag.md` (author: decisions 1 a, 3 a; decision 2 split).
