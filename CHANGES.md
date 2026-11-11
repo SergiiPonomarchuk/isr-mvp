@@ -1,5 +1,37 @@
 # CHANGES
 
+## P2: homes in real buildings, and property for the synthetic people (2026-11-11)
+
+Spec: `specs/tasks/P2-homes-and-property.md` (approved 2026-11-10, with the author's additions). Data only, with no app code change. Runs after P1.
+
+### What changed
+- **New script** `scripts/migrate_p2.py` (dry run by default; `--make-plan` once; `--apply`). The plan is made once from the original people and stored in `scripts/p2_generated/plan.json` with each person's source hash, so a second run changes nothing and a person whose data differs (live against the emulator) is held.
+- **Homes:**
+  - **Estates:** the 8 current estate points are the estates' centres. Apartment blocks are 60 m apart along a row and 70 m between rows; townhouses stand in rows of 8 houses 8 m apart, with rows 32 m apart; private houses are 30 m apart.
+  - **The move:** every home moves to its building's point (address and unit kept; `building` added).
+  - **Andim:** its 45 families get city houses around the Andim point, with fictional addresses.
+- **Objects:**
+  - **In apartment blocks:** shops, pharmacies, cafés and salons on an apartment estate's point move to a block's ground floor.
+  - **Out of the estates:** other objects inside an estate move just outside (20-300 m), with fictional addresses.
+  - **New names:** the 63 numbered objects are renamed ("School 3" -> "Riverside School"; the typos "Phatmacy" and "Kindergarden" are gone).
+  - **Workers:** everyone who works at an object follows it.
+- **Property entries** (`type: "property"`, kinds as in A3), by fixed rules from age, household, home and work. Children own nothing:
+  - flats 2,948, of which 267 are rented out by landlords;
+  - houses 1,882;
+  - garages 381, in 3 cooperatives;
+  - garden plots 503, in 3 gardens;
+  - commercial units 78.
+- **Tests:** `tests/test_migrate_p2.py` (14).
+
+### Checks
+- Unit tests: Python 66 (14 new).
+- **Emulator** (2026-11-11, after P1): 9,150 people written, and a second run wrote 0. Every home is on its building's point (1,226 buildings); no numbered name is left; the property is as planned; the distance rules hold.
+- **Pending:** AC3 (the browser) and AC4 (a Check of a building issue and a garage issue, with the key).
+
+### Author's steps after merging
+1. On live, after P1's live apply and a backup: `python scripts/migrate_p2.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`, from `C:\isr-mvp` on main. It uses the committed plan and rebuilds `user_packs`.
+2. The agent then checks live read-only.
+
 ## U7: the page is not cached for an hour after a deploy (2026-11-10)
 
 Spec: `specs/tasks/U7-page-cache.md` (author: "1+2").
