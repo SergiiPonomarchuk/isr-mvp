@@ -200,6 +200,27 @@ class Api(unittest.TestCase):
         with self.assertRaises(gemini_api.GeminiError):
             gemini_api.unit_normalize([0.0, 0.0])
 
+    def test_compare_retries_429_and_timeouts(self):
+        """2026-11-11: the comparison step had no retry and stopped on a 429 and on a read timeout."""
+        todo = [{"doc_id": str(i), "texts": {"profile": f"Occupation: worker {i}"}} for i in range(3)]
+        failures = [gemini_api.GeminiError("HTTP 429", 429), gemini_api.GeminiError("TimeoutError", None)]
+        calls, sleeps = [], []
+
+        def embed(texts, task, key):
+            calls.append((len(texts), task))
+            if failures:
+                raise failures.pop(0)
+            return [[1.0] + [0.0] * (ai_config.EMBED_DIMS - 1) for _ in texts]
+
+        rows, req, n = m.compare_task_types(todo, "k", embed=embed, sleep=sleeps.append)
+        self.assertEqual(n, 3)
+        self.assertEqual(len(rows), len(m.COMPARE_ISSUES))
+        self.assertEqual(req, 4 + 2)                  # 4 batches, plus 2 failed attempts
+        self.assertEqual(sleeps[:2], [60, 60])        # 60 s after the 429; 30 * 2 s after the timeout (2nd attempt)
+        with self.assertRaises(gemini_api.GeminiError):  # a client error is not retried
+            m.compare_task_types(todo, "k", embed=lambda t, k_, key: (_ for _ in ()).throw(gemini_api.GeminiError("HTTP 400", 400)),
+                                 sleep=lambda s: None)
+
     def test_request_body(self):
         seen = {}
 
