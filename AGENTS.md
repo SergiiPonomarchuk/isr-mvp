@@ -48,6 +48,7 @@ ISR MVP: an issue-specific weighted participation prototype. It uses Firebase/Fi
 
     Keep the quotes around `--only`.
   - It saves only on a clean exit. After every migration, run `firebase emulators:export .emulator-data --force --project project-a3d59130-5adf-4677-9e2`.
+  - **Memory:** with all of A4's vectors loaded, the default Java memory (a quarter of the RAM) is too small to export. Start it with `$env:JAVA_TOOL_OPTIONS="-Xmx8g"` set first.
   - Its functions are the code of the folder it was started from.
 - **Scripts on the emulator:** set `FIRESTORE_EMULATOR_HOST=127.0.0.1:8080` and `GCLOUD_PROJECT=project-a3d59130-5adf-4677-9e2`. The scripts refuse to touch live without `--project … --i-know-this-is-live`, and they are dry runs unless given `--apply`.
 - **Browser tests:**

@@ -16,7 +16,8 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 ### The emulator
 - **Its saved data:** `C:\isr-mvp\.emulator-data`, exported 2026-11-11 10:34 local time.
 - **How it got there:** imported from a live export. A1b and L1 were re-applied on 2026-11-10, and **P1 was applied on 2026-11-11** (9,150 users).
-- **Also there:** **P2 applied on 2026-11-11** (homes in buildings, property; AC2 passed), and A4 phase B **partly** (288 of 9,150 people have `t1` vectors). See section 2.
+- **Also there:** **P2 applied on 2026-11-11** (homes in buildings, property; AC2 passed).
+- **In the running emulator only, not saved:** A4 phases B and C (all 9,150 people embedded; the 2 A1b publics given real E). The emulator could not export them: its Java memory was full. The saved data (11:35) has P1, P2 and only 288 embedded people. See section 2.
 - **Running:** from `C:\isr-mvp`, on branch `p1-profile-review`, so its functions are that branch's code (before A4).
 
 ### Branches, one worktree each
@@ -40,7 +41,7 @@ Claude Code wrote this file when development moved to Codex for about a month. T
   - The real plan was made after P1 and committed (`scripts/p2_generated/plan.json`). The apply wrote all 9,150 people, and a second run wrote 0. AC2 passed, and the emulator was exported. CHANGES is written.
   - **Left:** AC3 (the browser check) and AC4 (a Check of a building issue and a garage issue, with the key), then the PR.
   - A dry run of `python scripts/migrate_p2.py` reports "done 9150, to write 0".
-- **A4 phase B: partial, and blocked by the free tier.**
+- **A4 phase B: done on 2026-11-11 after billing, but not saved** (see the next bullets).
   - 288 of 9,150 people are embedded. The free tier of `gemini-embedding-001` allows **1,000 texts a day, and every text in a batch counts** (the error names `EmbedContentRequestsPerDayPerProjectPerModel-FreeTier`). The plan had assumed one batch = one request.
   - All texts take about 29 free-tier days, on the emulator and again on live.
   - **Decided by the author on 2026-11-11: option a, billing** on the AI Studio project that owns the key (`C:\isr-mvpunctions\.secret.local`). The author's steps:
@@ -55,6 +56,19 @@ Claude Code wrote this file when development moved to Codex for about a month. T
   - **Billing status:** check "Paid" on the API keys page before relying on it. Until the project is paid, the free limits apply. With billing, every request of this project is billed, the Analyzer's included.
   - A dry run of `python scripts/embed_people.py` shows what is left; the script resumes.
   - A dry run of `python scripts/embed_people.py` shows what is left; the script resumes.
+- **A4 after billing (2026-11-11):**
+  - **The comparison** of task types: the approved choice is kept.
+  - **The full phase B:** 8,462 people, 27,200 texts, 273 requests, about $0.15; all 9,150 people current.
+  - **Phase C:** 2 publics, 56 documents.
+  - **Two script fixes** pushed: a retry in the comparison, and the report path across drives.
+  - **Not saved:** `firebase emulators:export` then failed with HTTP 500. The Firestore emulator's Java process was at its default memory ceiling (about 4.5 GB of 16 GB RAM, 0.7 GB free), so drive C also fell to 3 GB free as Windows grew its page file.
+  - **Next:**
+    1. Close large programs.
+    2. Restart the emulator with `$env:JAVA_TOOL_OPTIONS="-Xmx8g"; firebase emulators:start --only "firestore,functions,hosting" --project project-a3d59130-5adf-4677-9e2 --import=.emulator-data --export-on-exit=.emulator-data`. A clean exit may fail to export too, so expect the 11:35 data.
+    3. Re-run `embed_people.py --apply` (about 8,862 people, 45 minutes, about $0.15) and `migrate_a4.py --apply`.
+    4. Export.
+
+    Details are in the A4 Status log.
 - **The Gemini quota:** the free daily quota was used up on 2026-11-11, and it resets at 08:00 UTC. Every Check uses 1 embedding (one text) and 1 text-model request.
 
 ## 3. Next steps, in order
