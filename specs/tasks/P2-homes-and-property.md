@@ -1,6 +1,6 @@
 # SPEC P2: Homes in real buildings, and property for the synthetic people
 
-Status: APPROVED 2026-11-10 (author: Andim spread around its point with fictional addresses; the 8 current points as estate centres; separate objects outside the estates except those in apartment blocks; new names for numbered objects; "the rest is ok"). Implemented; applied on the emulator 2026-11-11 after P1 (AC1-AC2 passed). AC3 (browser) and AC4 (a Check with the key) are pending; AC5 is the author's live run.
+Status: APPROVED 2026-11-10 (author: Andim spread around its point with fictional addresses; the 8 current points as estate centres; separate objects outside the estates except those in apartment blocks; new names for numbered objects; "the rest is ok"). Implemented; applied on the emulator 2026-11-11 after P1 (AC1-AC2 passed). AC3 passed; garage part of AC4 passed, but building-locality AC4 FAILED during the 2026-11-12 acceptance review. P2 remains blocked on a separately approved Analyzer/selection-scope correction; AC5 is the author's live run.
 Branch: p2-homes-and-property (from main at `f58bf25`; never main)
 Source: the author, 2026-11-10 (D1 review):
 - "these 8 large housing complexes are multi-storied complexes, townhouses cooperatives and private houses/villas. They should be split for houses and restored in DB with more precise coordinates. Use normal distances between such buildings to plan realistic location of the buildings for each user."
@@ -202,3 +202,11 @@ Fictional names, written for this dataset. The rename map is kept in `scripts/mi
   - **AC3:** the profile and the geotag map in the browser. The browser pane refused the local page this time.
   - **AC4:** a Check of a building issue, which needs the key and an emulator running A4's or U6's functions; it runs with U6's checks (HANDOFF step 3).
   - The CHANGES entry and the PR.
+
+- 2026-11-12 (Codex, client date), remaining acceptance checks on the verified U8/U6/A4 emulator:
+  - Dry run: 9,150 already planned, 0 to write/held/problems. No apply. Node 47 passed; Python 66 run, 65 passed and one skipped.
+  - AC3 passed, synthetic uid 1189: profile and map show osbb 1 h5 at [47.590114, 7.611201], flat property there, and garage property at [47.589962, 7.610119]. Selecting the garage moves to its exact stored point.
+  - **Building AC4 FAILED:** correct point, mu 40, sigma 30, but 4,941 candidates. Analyzer property_kinds [flat, house] activates A3 distance bypass. The existing D/G modules independently give 1,033 within 130 m plus 3,908 unrelated owners beyond it, exactly matching Check. No public was created.
+  - Garage inclusion part passed: derived property_kinds [garage], 25/25 displayed candidates verified garage owners; full count 1,391 also may include nearby non-owners, so exclusivity is not claimed.
+  - Two text and two embedding requests; 16,436 prompt / 2,059 output tokens, about 121 estimated embedding tokens; about $0.0072 at the recorded paid rates. No Nominatim call. Drafts/logs exported successfully; preview left running.
+  - Evidence and the acceptance blocker: [P2-acceptance-report.md](P2-acceptance-report.md). Data migration unchanged. A separate residential-scope spec/approval is required before changing the Analyzer or distance-bypass behavior. Draft PR only; P2 is not fully accepted. Live unchanged.

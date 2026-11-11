@@ -24,9 +24,11 @@ Spec: `specs/tasks/P2-homes-and-property.md` (approved 2026-11-10, with the auth
 - **Tests:** `tests/test_migrate_p2.py` (14).
 
 ### Checks
-- Unit tests: Python 66 (14 new).
+- Unit tests on the refreshed P2 branch: Node 47 passed; Python 66 run, 65 passed and one skipped (14 P2 tests).
 - **Emulator** (2026-11-11, after P1): 9,150 people written, and a second run wrote 0. Every home is on its building's point (1,226 buildings); no numbered name is left; the property is as planned; the distance rules hold.
-- **Pending:** AC3 (the browser) and AC4 (a Check of a building issue and a garage issue, with the key).
+- **AC3 passed:** profile and geotag map show the h5 building point and flat/garage property; selecting the garage uses its stored coordinates. Dry run remains 9,150 done, 0 to write/held/problems.
+- **AC4 blocked:** the building Check uses the correct point and mu 40 / sigma 30, but returns 4,941 candidates: 1,033 with anchors inside 130 m plus 3,908 owners bypassing the cutoff through Analyzer property_kinds [flat, house]. Garage inclusion passed (25/25 displayed candidates are garage owners). Data migration unchanged; a separate approved scope correction is needed. See `specs/tasks/P2-acceptance-report.md`.
+- Two model/embedding calls, 16,436 prompt / 2,059 output tokens and about 121 estimated embedding tokens; approximately $0.0072 at the recorded rates. Emulator drafts/logs exported; no live changes. P2 PR remains draft.
 
 ### Author's steps after merging
 1. On live, after P1's live apply and a backup: `python scripts/migrate_p2.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`, from `C:\isr-mvp` on main. It uses the committed plan and rebuilds `user_packs`.

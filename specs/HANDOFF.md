@@ -4,6 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
+## Latest checkpoint: P2 acceptance review, 2026-11-12 (supersedes old resume instructions below)
+
+- A4 saved embedding/migration work is complete (9,150 people current). U6 and U8 emulator checks are complete. Review stack: A4 PR #20 -> U6 #21 -> U8 #22. Nothing merged or deployed.
+- Emulator is **running** from `C:\isr-mvp`, detached at U8 `0eddbc6`, with the U6/A4 backend and Java heap 8 GB. Keep the preview available for the author. Latest export **2026-11-11 22:58 UTC**, including the two P2 test drafts/logs.
+- P2 dry run: 9,150 done, 0 to write/held/problems. AC3 profile/map passed; garage-owner inclusion passed. **Building-locality AC4 FAILED:** correct h5 point and 130 m cutoff, but 3,908 unrelated flat/house owners bypass it, giving 4,941 candidates in total. See `tasks/P2-acceptance-report.md`.
+- P2 remains draft/blocked on a separately approved Analyzer/selection-scope fix. Do not reapply P2 or A4 to address this; the data layout is correct. Do not mark AC4 passed or change D/G under this data-only spec.
+- No live writes, deploys or rules changes. Live migrations remain the author's steps. Older partial A4 counts and stopped-emulator notes below are historical.
+
+
 ## 1. Where things stand
 
 ### main and the live site
