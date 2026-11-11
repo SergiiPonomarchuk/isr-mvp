@@ -94,12 +94,16 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [A3-options-and-g-anchors](tasks/A3-options-and-g-anchors.md) | implemented on branch `a3-options-and-g-anchors`; live migration pending (author) | 02, 03, 06, 10 |
 | [R0-keep-alive](tasks/R0-keep-alive.md) | done 2026-11-08: merged (#2-#4), deployed, A2/A3 migrated, smoke test passed | rules, CI, backup, merge of A2/A3 |
 | [U1-smoke-test-fixes](tasks/U1-smoke-test-fixes.md) | done 2026-11-08 (#5, deployed, verified) | 10 (UI) |
-| [L1-deadlines-and-management-decisions](tasks/L1-deadlines-and-management-decisions.md) | implemented on branch `l1-deadlines` (emulator end to end passed); live migration, deploy and smoke test pending (author) | 02, 06, 10 |
-| [U2-voting-todo-list-limit](tasks/U2-voting-todo-list-limit.md) | merged (PR 10); hosting deploy and live check pending (author) | 10 (UI) |
-| [U3-message-sorting](tasks/U3-message-sorting.md) | merged (PR 11); hosting deploy and live check pending (author) | 10 (UI) |
-| [U4-voting-view-messages](tasks/U4-voting-view-messages.md) | implemented on branch `u4-voting-messages-fix` (emulator check passed); hosting deploy pending (author) | 10 (UI) |
-| [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | implemented on branch `a1b-expertise-placeholder` (emulator applied; live dry run: 3 publics, 150 members); live apply pending (author) | 02, 04, 06 |
-| [P1-profile-review](tasks/P1-profile-review.md) | approved 2026-11-10 (as recommended); implemented, the 20-profile trial (AC1) waits for review | 11 (synthetic data), 04 |
+| [L1-deadlines-and-management-decisions](tasks/L1-deadlines-and-management-decisions.md) | DONE: merged (PR 9), migrated and deployed on live 2026-11-09; nightly run daily at 00:30 (first run checked 2026-11-10) | 02, 06, 10 |
+| [U2-voting-todo-list-limit](tasks/U2-voting-todo-list-limit.md) | DONE: merged (PR 10), deployed and checked on live 2026-11-09 | 10 (UI) |
+| [U3-message-sorting](tasks/U3-message-sorting.md) | DONE: merged (PR 11), deployed and checked on live 2026-11-09 | 10 (UI) |
+| [U4-voting-view-messages](tasks/U4-voting-view-messages.md) | DONE: merged (PR 12), deployed and checked on live 2026-11-09 | 10 (UI) |
+| [U5-esc-and-geotag](tasks/U5-esc-and-geotag.md) | DONE on live 2026-11-10 (PR 15); the issue location from the Analyzer follows after A4 | UI |
+| [U7-page-cache](tasks/U7-page-cache.md) | DONE on live 2026-11-11 (PR 17): every hosting response is sent with `no-cache` | UI, 13 (hosting) |
+| [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
+| [P1-profile-review](tasks/P1-profile-review.md) | approved 2026-11-10 (as recommended); generated in two days and applied on the emulator 2026-11-11 (AC1-AC3, AC5 passed); the live apply (AC4) is the author's | 11 (synthetic data), 04 |
+
+Handoff: [HANDOFF](HANDOFF.md): the state of every branch and the next steps (2026-11-11).
 
 Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).
 
