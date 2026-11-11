@@ -99,9 +99,11 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U3-message-sorting](tasks/U3-message-sorting.md) | DONE: merged (PR 11), deployed and checked on live 2026-11-09 | 10 (UI) |
 | [U4-voting-view-messages](tasks/U4-voting-view-messages.md) | DONE: merged (PR 12), deployed and checked on live 2026-11-09 | 10 (UI) |
 | [U5-esc-and-geotag](tasks/U5-esc-and-geotag.md) | DONE on live 2026-11-10 (PR 15); the issue location from the Analyzer follows after A4 | UI |
-| [U7-page-cache](tasks/U7-page-cache.md) | approved 2026-11-10; implemented on branch `u7-page-no-cache` (unit tests); the live header check follows the next hosting deploy | UI, 13 (hosting) |
+| [U7-page-cache](tasks/U7-page-cache.md) | DONE on live 2026-11-11 (PR 17): every hosting response is sent with `no-cache` | UI, 13 (hosting) |
 | [P2-homes-and-property](tasks/P2-homes-and-property.md) | approved 2026-11-10: homes in real buildings with realistic spacing, Andim's households spread, objects kept out of the estates, numbered objects renamed, property entries; runs after P1 | 02, 03 (G), 06 (D) |
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
+
+Handoff: [HANDOFF](HANDOFF.md): the state of every branch and the next steps (2026-11-11).
 
 Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).
 

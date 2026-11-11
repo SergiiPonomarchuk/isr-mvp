@@ -1,6 +1,6 @@
 # SPEC U7: The page is not cached for an hour after a deploy
 
-Status: APPROVED 2026-11-10 (author: "1+2", for the fix described as a short spec plus one rule in `firebase.json`; deployed together with A4 or U6).
+Status: DONE on live 2026-11-11 (merged in PR 17; hosting deployed by the author from `wt-main` at `f58bf25`; AC2 passed).
 Branch: u7-page-no-cache (from main at `7c73ea7`; never main)
 Source: a side finding of U5 (2026-11-10). U5 stopped the caching of scripts and styles, but not of the page itself.
 
@@ -47,3 +47,10 @@ The local hosting server cannot check the headers (section 1), so the first draf
     - the local hosting server ignores `headers`, so the local AC2 was dropped and the check moved to live;
     - on live, `no-cache` files come in full on every load, not as 304s. Section 1 gives the cost.
   - Pending: AC2 on live after the author's hosting deploy.
+- 2026-11-10: merged (PR 17, `f58bf25`).
+- 2026-11-10: the first deploy attempt failed. The agent gave the command in cmd syntax (`cd /d … && …`), which Windows PowerShell 5.1 rejects, so nothing was deployed. The live page still had `max-age=3600` and the release of 2026-11-10 14:53 UTC.
+- 2026-11-11: the author deployed hosting from `A:\BackUp\isr-mvp\worktrees\wt-main` (`f58bf25`), with the command in PowerShell syntax.
+- 2026-11-11, AC2 on live (agent, read-only `curl`):
+  - `Cache-Control: no-cache` for `/`, `/index.html`, a rewritten path (`/some/topic`), `/js/main.js`, `/styles.css`, `/isr-logo.png` and `/firebase-config.js`;
+  - the release is dated 2026-11-11 06:16:27 GMT;
+  - `index.html`, `js/main.js` and `firebase-config.js` are identical to main.
