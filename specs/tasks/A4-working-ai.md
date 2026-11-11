@@ -1,6 +1,6 @@
 # SPEC A4: Working AI (roadmap stage 1)
 
-Status: APPROVED 2026-11-10 (the spec and the recommendations of section 4). Phases A-C implemented on branch `a4-working-ai`; AC1-AC4 passed (AC2-AC3 with the free-tier key). Phase B is partial (288 of 9,150 people): the free tier allows only 1,000 embedded texts a day, so finishing it waits for the author's decision (billing, scope or about a month).
+Status: APPROVED 2026-11-10 (the spec and the recommendations of section 4). Phases A-C implemented on branch `a4-working-ai`; AC1-AC4 passed (AC2-AC3 with the free-tier key). Phases B and C done on the emulator 2026-11-11 (paid tier: AC5-AC6). The emulator could not save them (its Java memory is full); see the Status log. Phase D is the author's.
 Branch: a4-working-ai (from main at `0448705`; never main)
 Roadmap: stage 1 ([ROADMAP-demo.md](../ROADMAP-demo.md)). "Check" uses a real model; S and the expertise cosines become meaningful; every Analyzer call is logged. Effort estimate: 4-6 developer-days (roadmap), in four phases (section 6).
 Replaces: the A1b expertise placeholder (`expertise_source: "no_issue_vector"`) for the 3 publics that have it.
@@ -295,3 +295,27 @@ On the free tier, the content sent is used to improve Google's products. The pai
     - the comparison again (`--limit 200 --compare-task-types`; the 200 people are already embedded);
     - then the full `--apply` for the remaining 8,862 people;
     - then phase C.
+- 2026-11-11, after billing (the project shows "Paid"): a 50-text probe passed, where it had been refused on the free tier.
+- **Task-type comparison** (open point 4.3), 6 requests: the report is [A4-embedding-compare-report.md](A4-embedding-compare-report.md).
+  - With `--limit 200`, the next 200 people not yet embedded were also embedded.
+  - a (`RETRIEVAL_QUERY` / `RETRIEVAL_DOCUMENT`, as chosen): mean S about 0.54, sd 0.017-0.033, top 10 minus the median 0.033-0.071.
+  - b (`SEMANTIC_SIMILARITY` for both): mean about 0.70, sd 0.023-0.048, top 10 minus the median 0.041-0.114. Its spread is a little wider on 3 of the 5 issues and narrower on 2; the two agree on 0-10 of the top 10.
+  - Not enough to change the approved choice a, which is kept.
+  - **Fixes:** `compare_task_types` now retries like the main loop (a test was added). The run had ended with exit 1 only because the final message's relative path does not work across drives (C: and A:); that is fixed in both scripts.
+- **Phase B, the full run** (`--apply`, 2026-11-11 12:0x-12:5x):
+  - 8,462 people, 27,200 texts, 273 requests (one retried), 999,784 estimated tokens: about $0.15 at $0.15 per 1M tokens.
+  - **All 9,150 people are current** (a dry run: to embed 0).
+  - **Spread:** the median cosine between random pairs of profile vectors is now 0.811, against 0.911 with the old vectors.
+  - The report is [A4-embedding-report.md](A4-embedding-report.md). **AC5 passed.**
+- **Phase C** (`migrate_a4.py --apply`):
+  - 2 placeholder publics given real E, 50 members, 4 topic documents and 2 issue vectors (1 request); 56 documents written. A second run: 0.
+  - Chess club: E 0.27-35.7, ISR 0.77-1.84. Animal shelter website: E 1.3-16.6, ISR 0.77-1.40.
+  - The report is [A4-migration-report.md](A4-migration-report.md). **AC6** is done on the data; the browser check of the new values is pending.
+- **The emulator could not save the results.** `firebase emulators:export` failed with HTTP 500, to drive C and to drive A alike.
+  - The Firestore emulator's Java process used about 4.5 GB, the default ceiling of a quarter of the 16 GB of RAM, with 0.7 GB of RAM left free. Windows grew its page file, and drive C fell to 3 GB free.
+  - The last saved data (`.emulator-data`, 11:35) holds P1, P2 and 288 embedded people.
+  - **To do:**
+    1. Restart the emulator with more Java memory: in PowerShell, `$env:JAVA_TOOL_OPTIONS="-Xmx8g"` before `firebase emulators:start …`, after closing other large programs.
+    2. Re-run phase B (it resumes: about 8,862 people, about 45 minutes, about $0.15) and phase C (1 request).
+    3. Export.
+- **Cost on the paid tier on 2026-11-11:** about 1.03M estimated embedding tokens (the comparison, the 200 extra people and the full run): about $0.16.
