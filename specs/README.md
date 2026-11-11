@@ -99,10 +99,13 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U3-message-sorting](tasks/U3-message-sorting.md) | DONE: merged (PR 11), deployed and checked on live 2026-11-09 | 10 (UI) |
 | [U4-voting-view-messages](tasks/U4-voting-view-messages.md) | DONE: merged (PR 12), deployed and checked on live 2026-11-09 | 10 (UI) |
 | [U5-esc-and-geotag](tasks/U5-esc-and-geotag.md) | DONE on live 2026-11-10 (PR 15); the issue location from the Analyzer follows after A4 | UI |
-| [U6-issue-location](tasks/U6-issue-location.md) | approved 2026-11-10 (the server place lookup under the Nominatim usage policy); implementation on branch `u6-issue-location`, merged after A4 | UI, 07 (Analyzer), 03 (G) |
+| [U6-issue-location](tasks/U6-issue-location.md) | implemented; AC2-AC5 passed and exported/re-imported on emulator 2026-11-11; stacked on A4, live pending author | UI, 07 (Analyzer), 03 (G) |
+| [U7-page-cache](tasks/U7-page-cache.md) | DONE on live 2026-11-11 (PR 17): every hosting response is sent with `no-cache` | UI, 13 (hosting) |
 | [U8-map-tiles](tasks/U8-map-tiles.md) | approved 2026-11-10 (option a: OpenStreetMap tiles); implemented on branch `u8-map-tiles`, on top of U6; merged after U6 | UI |
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
-| [A4-working-ai](tasks/A4-working-ai.md) | approved 2026-11-10; phases A-C implemented on branch `a4-working-ai` (emulator with the free-tier key: AC2-AC4 passed); AC5-AC6 run after P1 on the emulator (2026-11-11); one PR and one deploy | 02, 03, 04, 07, 12, 13 |
+| [A4-working-ai](tasks/A4-working-ai.md) | phases A-C complete and saved on emulator 2026-11-11; AC1-AC7 passed (9,150 people, two publics); live phase D/AC8 pending author | 02, 03, 04, 07, 12, 13 |
+
+Handoff: [HANDOFF](HANDOFF.md): the state of every branch and the next steps (2026-11-11).
 
 Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).
 

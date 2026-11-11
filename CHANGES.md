@@ -17,7 +17,7 @@ Spec: `specs/tasks/U8-map-tiles.md` (author: option a). Merged after U6.
 1. Deploy hosting with U6: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from a checkout of main.
 2. The agent then checks live read-only (AC3).
 
-## U6: the issue's point comes from its description (2026-11-10)
+## U6: the issue's point comes from its description (2026-11-11; emulator checks complete)
 
 Spec: `specs/tasks/U6-issue-location.md` (author: "U6 approved"; "keep the server lookup in U6"). Merged after A4.
 
@@ -46,16 +46,18 @@ Spec: `specs/tasks/U6-issue-location.md` (author: "U6 approved"; "keep the serve
 - **Fixed on the way:** a drag, a map click or a profile place changed a copy of the point that Check never read, so only the search box moved an issue.
 
 ### Checks
-- **Unit tests:** Node 86 (31 new); Python 72, unchanged.
+- **Unit tests:** Node 88 passed after merging A4/main; Python 73 run, 72 passed and one skipped.
 - **Browser on the emulator's data (no Check):** the home at start, pin moves, the credit and the switch, as in the spec's status log.
-- **Pending:** AC2-AC5 on the emulator with the free-tier key (about 8 text, 8 embedding and at most 4 Nominatim requests).
+- **AC2-AC5 passed on the emulator:** four location sources; pin move invalidates Check and recheck restores Create; forged location rejected with 409; valid Create uses its draft point; all ten Analyzer logs record location_reference. Four Nominatim lookups total, cache reuse, switch off and OpenStreetMap credit verified. Ten text/embedding calls used 81,465 prompt and 10,588 output tokens plus approximately 342 embedding tokens; approximately $0.0363 at the recorded paid rates. Full evidence: `specs/tasks/U6-emulator-report.md`.
+- **Saved:** final export completed with exit 0; re-import verified the final test state. Emulator stopped, main checkout restored. No live changes.
 
-### Author's steps after merging (after A4's deploy)
-1. Deploy functions and hosting: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from a checkout of main.
+### Author's steps after merging (coordinated with A4 and U8, as in HANDOFF)
+1. Deploy functions and hosting: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from the clean detached `wt-main` checkout.
 2. Optional: create `config/geocoding` with `enabled: true` in the console. Without the document the lookup is on; `enabled: false` turns it off.
-## A4: working AI, roadmap stage 1 (2026-11-10; the PR waits for the runs of phases B and C)
 
-Spec: `specs/tasks/A4-working-ai.md` (approved 2026-11-10; "Try to stay in free-tier limits").
+## A4: working AI, roadmap stage 1 (2026-11-11; emulator phases A-C complete)
+
+Spec: `specs/tasks/A4-working-ai.md` (approved 2026-11-10; paid-tier billing approved 2026-11-11).
 
 ### What changed
 - **Models in one place:** `functions/ai-config.js` holds:
@@ -73,28 +75,49 @@ Spec: `specs/tasks/A4-working-ai.md` (approved 2026-11-10; "Try to stay in free-
   - without a key or on an error, the keyword rules answer, labelled as the fallback.
 - **Create** reuses the draft's vector and writes `issue_vectors/{id}` and an `ai` field on the issue.
 - **Logs:** `analyzer_logs` gets one document per Analyzer call: input, model, versions, examples, raw and normalised output, tokens. The rules make it server-only.
-- **The people:** `scripts/embed_people.py` embeds every profile and skill again with template `t1` (`scripts/embedding_templates.py`). It stays within the free tier, resumes, and skips people whose vectors are current.
+- **The people:** `scripts/embed_people.py` embeds every profile and skill again with template `t1` (`scripts/embedding_templates.py`). It paces API use, resumes, and skips people whose vectors are current; the author approved paid billing to complete the population.
 - **The A1b publics:** `scripts/migrate_a4.py` replaces the expertise placeholder with real E and the ISR, from the issue vector.
 - **The browser:** the Check window says which model derived the parameters, or shows the fallback label or the server's error.
 
 ### Checks
-- **Unit tests:** Node 55; Python 72.
+- **Unit tests after merging main:** Node 57 passed; Python 73 run, 72 passed and one skipped.
 - **Emulator with the free-tier key:**
   - AC2: 5 issues, each checked twice; every call used the model; the parameters were identical in both runs.
   - AC3: the vectors were bit-identical; Create reused the draft's vector.
   - AC4: without a key, the refusal and the label.
   - 11 Analyzer calls used about 99,400 tokens: about $0.04 at the paid rate, $0 on the free tier.
-- **Pending (after P1's apply on the emulator, 2026-11-11):**
-  - AC5: the 200-person sample with the task-type comparison, then all people;
-  - AC6: the A1b publics;
-  - AC7: the token totals.
+- **Saved emulator completion (2026-11-11):**
+  - AC5: all 9,150 profile and 20,245 skill vectors current, finite, 768-dimensional and unit length; zero stale people on a second run. The approved task-type comparison is recorded in the spec.
+  - Resumed 7,112 people: 22,751 texts, 229 requests (one retry), 833,512 estimated tokens (about $0.13 at the recorded paid rate). Median pair cosine 0.810 for this run, versus 0.913 before.
+  - AC6: two publics, 50 members, four topic maps and two issue vectors (56 writes). All 50 E and ISR results independently match `functions/isr.js`; maps match; a second migration does nothing. Browser uid 37 sees ISR 1.84 (Chess club) and 0.84 (shelter website).
+  - Phase C preview and apply used two requests total, two issue texts each, 230 estimated tokens. AC7: approximately $0.13 additional embedding usage; approximately $0.33 cumulative paid estimate including earlier lost/repeated runs. Tokens are estimated; actual retry billing is unknown.
+  - Final export at 18:34 UTC (20:34 Kyiv), with Java heap 8 GB; imported again and the completed state verified. No live changes.
 
 ### Author's steps after merging (phase D), after P1 is applied on live
-1. Set the secret: `firebase functions:secrets:set GEMINI_API_KEY --project project-a3d59130-5adf-4677-9e2` (paste the free-tier key when asked).
-2. Deploy from a checkout of main: `firebase deploy --only functions,hosting,firestore:rules --project project-a3d59130-5adf-4677-9e2`.
+1. Set the secret: `firebase functions:secrets:set GEMINI_API_KEY --project project-a3d59130-5adf-4677-9e2` (paste the key when asked).
+2. Deploy from the clean detached `wt-main` checkout, together with U6/U8 as ordered in HANDOFF: `firebase deploy --only functions,hosting,firestore:rules --project project-a3d59130-5adf-4677-9e2`.
 3. Embed the people on live: `python scripts/embed_people.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply` (about 300 requests and 30 minutes; it resumes if stopped).
 4. Replace the placeholders: `python scripts/migrate_a4.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`.
 5. The agent then checks live read-only (AC8).
+
+## U7: the page is not cached for an hour after a deploy (2026-11-10)
+
+Spec: `specs/tasks/U7-page-cache.md` (author: "1+2").
+
+### What changed
+- **Hosting** sends `Cache-Control: no-cache` for every response, through one rule (`"source": "**"`) that replaces U5's rule for scripts and styles. Before, the page itself was cached for an hour, so a browser could combine an old page with new scripts after a deploy.
+- **Cost (measured on live):** a full load is 137 KB compressed; U7 adds the page and the logo, about 45 KB, to what U5 already sends on every load. The free hosting transfer covers about 2,600 full loads a day.
+
+### Checks
+- Unit tests: Node 47 (2 new in `functions/test/page_cache.test.js`; U5's test adapted).
+- The local hosting server ignores `headers`, so the headers are checked on live after the deploy.
+
+### Author's steps after merging
+1. Deploy hosting from a checkout of main, on its own or together with A4 or U6: `firebase deploy --only hosting --project project-a3d59130-5adf-4677-9e2`.
+2. The agent then checks the live headers (AC2).
+
+### Live (2026-11-11)
+- Hosting was deployed by the author. AC2 passed: every response checked carries `Cache-Control: no-cache`, and the files equal main.
 
 ## U5: Esc closes only the top window; the geotag button stops downloading every profile (2026-11-10)
 

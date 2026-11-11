@@ -255,9 +255,10 @@ def s_stats(issue_vec, profile_vecs):
             "top10_minus_median": statistics.mean(s[-10:]) - statistics.median(s)}
 
 
-def compare_task_types(todo, key, embed=gemini_api.embed_texts):
+def compare_task_types(todo, key, embed=gemini_api.embed_texts, sleep=time.sleep):
     """S for 5 issues against a sample of profiles under (a) RETRIEVAL_QUERY / RETRIEVAL_DOCUMENT and
-    (b) SEMANTIC_SIMILARITY for both. Returns (rows, requests)."""
+    (b) SEMANTIC_SIMILARITY for both. Returns (rows, requests). Each batch is retried like the main
+    loop (60 s after a 429, 30-120 s after a server error or a timeout; 6 attempts), counting every attempt."""
     sample = [t for t in todo if "profile" in t["texts"]][:COMPARE_SAMPLE]
     ptexts = [t["texts"]["profile"] for t in sample]
     issues = [issue_text(a, b) for a, b in COMPARE_ISSUES]
@@ -267,9 +268,16 @@ def compare_task_types(todo, key, embed=gemini_api.embed_texts):
         nonlocal req
         out = []
         for i in range(0, len(texts), gemini_api.MAX_BATCH):
-            req += 1
-            out += embed(texts[i:i + gemini_api.MAX_BATCH], task, key)
-            time.sleep(1)
+            for attempt in range(6):
+                req += 1
+                try:
+                    out += embed(texts[i:i + gemini_api.MAX_BATCH], task, key)
+                    break
+                except gemini_api.GeminiError as err:
+                    if attempt == 5 or err.status not in (429, 500, 502, 503, 504, None):
+                        raise
+                    sleep(60 if err.status == 429 else 30 * 2 ** min(attempt, 2))
+            sleep(1)
         return out
 
     a_p, a_i = emb(ptexts, ai_config.TASK_TYPE_DOCUMENT), emb(issues, ai_config.TASK_TYPE_ISSUE)
@@ -360,6 +368,14 @@ def old_profiles(db, doc_ids):
     return out
 
 
+def shown_path(path):
+    """The report path relative to the repository, or as given when it is on another drive."""
+    try:
+        return os.path.relpath(path, ROOT)
+    except ValueError:
+        return path
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--apply", action="store_true")
@@ -420,7 +436,7 @@ def main(argv=None):
     st = p["stats"]
     print(f"people {st['people']}, to embed {len(p['todo'])}, texts {st['texts to embed']}, requests needed {st['requests needed']}"
           + (", run: " + ", ".join(f"{k} {v}" for k, v in summary.items()) if summary else "")
-          + f"; report {os.path.relpath(a.report, ROOT)}")
+          + f"; report {shown_path(a.report)}")
     return 0
 
 
