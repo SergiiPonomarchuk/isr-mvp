@@ -19,6 +19,13 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 - Final export: **2026-11-11 19:15 UTC**, exit 0; re-import verified all final U6 records survived. Emulator stopped; main checkout restored to `p1-profile-review`.
 - Next: review A4 PR #20 and the stacked U6 PR; U8 follows U6. P2 browser/Check acceptance remains pending separately. No merges, deploys, rules edits or live writes performed.
 
+### U8 checkpoint: 2026-11-11 (current preview state)
+
+- U8 AC2 rechecked on the full emulator; Node 91 passed, Python 73 run with one skip. Editable and read-only OpenStreetMap tiles, credit, pin movement and profile places verified. No Google Maps requests; no console errors. See `tasks/U8-emulator-report.md`.
+- **Emulator left running for the author**, Java heap 8 GB. `C:\isr-mvp` is detached at U8, serving its map code and the verified U6 backend. Keep it running for inspection; do not switch to the pre-A4 P1 branch while serving this preview.
+- No database writes or AI/Nominatim calls for U8; the saved data remains the verified U6 export at 19:15 UTC. Temporary diagnostics removed; source is clean.
+- Next: review the stacked PRs in order A4 #20, U6 #21, then U8. P2's remaining browser/Check acceptance is still separate. Live U8 AC3 waits for the author's coordinated deployment. Nothing merged or deployed.
+
 The older partial counts and resume commands below are historical handoff context, not the current checkpoint.
 
 ## 1. Where things stand

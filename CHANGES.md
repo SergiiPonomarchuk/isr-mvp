@@ -1,6 +1,6 @@
 # CHANGES
 
-## U8: the map uses OpenStreetMap tiles (2026-11-10)
+## U8: the map uses OpenStreetMap tiles (2026-11-11; local verification complete)
 
 Spec: `specs/tasks/U8-map-tiles.md` (author: option a). Merged after U6.
 
@@ -10,11 +10,12 @@ Spec: `specs/tasks/U8-map-tiles.md` (author: option a). Merged after U6.
 - **Dead code removed:** the Google Maps JavaScript API branches never ran, because the page never loaded that library.
 
 ### Checks
-- Unit tests: Node 89 (3 new in `functions/test/map_tiles.test.js`; U6's browser test adapted).
-- Emulator data with a static server: the tiles loaded from OpenStreetMap, the credit showed, and no request went to Google.
+- Unit tests after merging verified U6: Node 91 passed; Python 73 run, 72 passed and one skipped. Includes three map-tile checks and adapted U6 browser tests.
+- Full local emulator: editable map 18/18 tile images and read-only view 12/12 loaded from OpenStreetMap; credit visible. Profile places, map clicks and pin dragging work; read-only point stays fixed. Resource audit found no Google Maps hosts or google.com/subdomains. No console errors/warnings. See `specs/tasks/U8-emulator-report.md`.
+- No database writes or AI/Nominatim calls. Preview left running for the author. AC3 remains after the author's hosting deploy.
 
 ### Author's steps after merging
-1. Deploy hosting with U6: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from a checkout of main.
+1. Deploy hosting with U6: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from the clean detached `wt-main` checkout, in the coordinated A4/U6/U8 deployment recorded in HANDOFF.
 2. The agent then checks live read-only (AC3).
 
 ## U6: the issue's point comes from its description (2026-11-11; emulator checks complete)

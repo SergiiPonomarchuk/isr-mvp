@@ -1,6 +1,6 @@
 # SPEC U8: Map tiles under a provider's terms
 
-Status: APPROVED 2026-11-10 (author: option a, OpenStreetMap tiles). Implemented 2026-11-10 on top of U6; AC1-AC2 passed; AC3 after the deploy.
+Status: APPROVED 2026-11-10 (author: option a, OpenStreetMap tiles). Implemented 2026-11-10 on top of U6; AC1 local and AC2 rechecked 2026-11-11 after merging verified U6. CI checked on the PR; AC3 remains after the author's deploy.
 Branch: u8-map-tiles (from main, with U6 merged in because both change the map's credit; merged after U6; never main)
 Source: a side finding of U5 and U6 (2026-11-10): the map loads Google's tiles without a key or an account.
 
@@ -76,3 +76,11 @@ Source: a side finding of U5 and U6 (2026-11-10): the map loads Google's tiles w
   - AC1: Node 89 pass.
   - AC2: a static server with this branch's code, the Firestore emulator's data and test user 2. The geotag map loaded 12 of 12 tiles from `tile.openstreetmap.org` and showed "© OpenStreetMap contributors". No request went to Google. Picking a profile place still moved the pin (source "creator"). No console errors.
   - Pending: AC3 on live after the hosting deploy (with U6).
+
+- 2026-11-11 (Codex): merged verified U6 `7bbfd45` into U8 (`9aa148d`); only CHANGES and spec-index conflicts, preserving both tasks' records. Backend source is unchanged from U6.
+  - Node 91 passed; Python 73 run, 72 passed and one skipped.
+  - AC2 repeated on the full local emulator, synthetic uid 2: editable map 18/18 tile images loaded after pan, read-only map 12/12, all from OpenStreetMap, with visible credit. Initial tile loading was slow but completed.
+  - Profile-anchor selection, map click and issue-pin drag update coordinates. Read-only pin is not draggable, map clicks leave the point unchanged, and derived controls are disabled.
+  - Resource audit: no google.com/subdomain or Maps API hosts; no Google tile images. No console errors/warnings. Existing non-map font/analytics resources remain outside scope.
+  - Temporary diagnostic removed byte-for-byte; no product-code fix needed. No AI calls, Nominatim lookups or database writes; no new export needed. Full evidence: [U8-emulator-report.md](U8-emulator-report.md).
+  - Emulator deliberately left running for the author; main checkout detached at U8, application code as in this branch. PR stacked on U6 #21/A4 #20. AC3 remains after the author's deploy; no merges or live changes.
