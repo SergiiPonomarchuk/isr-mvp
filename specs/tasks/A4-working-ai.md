@@ -281,3 +281,17 @@ On the free tier, the content sent is used to improve Google's products. The pai
     - b. about a month at under 1,000 texts a day (the script resumes and skips people who are current);
     - c. a smaller scope, for example only the people of the demo scenarios.
   - **Follow-up:** `compare_task_types` needs the same retry on 429 as the main loop. Phase C waits until phase B is complete, because it holds back publics whose members' vectors are not current.
+- 2026-11-11: **the author chose option a, billing** ("1 - a"), on the AI Studio project of the key, with a monthly spend cap of about $5.
+  - **The steps** (from Google's billing page, read 2026-11-11):
+    1. https://aistudio.google.com/api-keys → **Set up billing** for the project.
+    2. Choose a billing account.
+    3. Choose Prepay (at least $5) or Postpay.
+    4. Set the spend cap at https://aistudio.google.com/spend.
+    5. The project then shows "Paid" (Tier 1). The key is unchanged.
+  - **The expected cost:** phase B on the emulator about $0.16 (the run report's estimate), the same on live, and the Analyzer's calls cents.
+  - **This supersedes "stay in the free-tier limits"** for this project. With billing, every request of the project is billed.
+  - **Next:**
+    - after "Paid": one tiny probe;
+    - the comparison again (`--limit 200 --compare-task-types`; the 200 people are already embedded);
+    - then the full `--apply` for the remaining 8,862 people;
+    - then phase C.
