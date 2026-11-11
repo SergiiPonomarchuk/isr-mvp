@@ -1,6 +1,6 @@
 # SPEC A4: Working AI (roadmap stage 1)
 
-Status: APPROVED 2026-11-10 (the spec and the recommendations of section 4). Phases A-C implemented on branch `a4-working-ai`; AC1-AC4 passed (AC2-AC3 with the free-tier key); AC5-AC6 run after P1 is applied on the emulator (2026-11-11).
+Status: APPROVED 2026-11-10 (the spec and the recommendations of section 4). Phases A-C implemented on branch `a4-working-ai`; AC1-AC4 passed (AC2-AC3 with the free-tier key). Phase B is partial (288 of 9,150 people): the free tier allows only 1,000 embedded texts a day, so finishing it waits for the author's decision (billing, scope or about a month).
 Branch: a4-working-ai (from main at `0448705`; never main)
 Roadmap: stage 1 ([ROADMAP-demo.md](../ROADMAP-demo.md)). "Check" uses a real model; S and the expertise cosines become meaningful; every Analyzer call is logged. Effort estimate: 4-6 developer-days (roadmap), in four phases (section 6).
 Replaces: the A1b expertise placeholder (`expertise_source: "no_issue_vector"`) for the 3 publics that have it.
@@ -266,3 +266,18 @@ On the free tier, the content sent is used to improve Google's products. The pai
   - Merged main (U5, and the L1, U2-U4 and A1b live records) into the branch; the only conflict was in the spec index.
   - Tests after the merge: Node 55, Python 72.
   - Drafted CHANGES and the spec-index row; the numbers from phases B and C are added after the runs.
+- 2026-11-11, phase B on the emulator, after P1's apply (agent):
+  - **Where it ran:** from `C:\isr-mvp`, detached at `origin/a4-working-ai`, because the key file lives there. The scripts load it themselves. Afterwards the folder went back to `p1-profile-review`.
+  - **Dry run:** 9,150 people, 29,395 texts, 294 requests of up to 100 texts.
+  - **The sample** (`--limit 200 --apply --compare-task-types`): 200 people embedded in about 20 minutes, with repeated per-minute 429s. The task-type comparison then failed on a 429, because `compare_task_types` has no retry, and its report was lost: drive A, which holds this worktree, was disconnected.
+  - **The full run** (`--apply`): 88 more people (300 texts); then one batch failed all 6 attempts with 429, and the run stopped. **288 of 9,150 people** now have `t1` vectors. The report is [A4-embedding-report.md](A4-embedding-report.md). The emulator was exported.
+  - **Finding: the free tier counts every text.**
+    - Google's limit is `EmbedContentRequestsPerDayPerProjectPerModel-FreeTier` = **1,000 a day**, and each text in a `batchEmbedContents` call counts.
+    - A 50-text call got HTTP 429 with "retry after" about 22 h, while a 1-text call passed.
+    - The plan's assumption that a batch counts as one request was wrong.
+    - All 29,395 texts therefore take about **29 days** on the free tier, on the emulator and again on live (phase D).
+  - **Decision for the author:**
+    - a. billing on the AI Studio project of the key (paid rate $0.15 per 1M tokens: about $0.11-0.30 for the whole population, with a budget alert);
+    - b. about a month at under 1,000 texts a day (the script resumes and skips people who are current);
+    - c. a smaller scope, for example only the people of the demo scenarios.
+  - **Follow-up:** `compare_task_types` needs the same retry on 429 as the main loop. Phase C waits until phase B is complete, because it holds back publics whose members' vectors are not current.
