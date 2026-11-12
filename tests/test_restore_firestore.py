@@ -1,6 +1,7 @@
 """R0 archive recovery tests. Optional integration runs only on the isolated emulator."""
 import base64
 import json
+import math
 import os
 from pathlib import Path
 import sys
@@ -84,7 +85,8 @@ class RecoveryTests(unittest.TestCase):
                       [{"found": {**docs[0], "fields": {"n": {"doubleValue": 1}}}}]):
             with patch.dict(os.environ, FIRESTORE_EMULATOR_HOST=restore.HOST):
                 emulator = restore.Emulator()
-            with patch.object(emulator, "post", side_effect=[{}, reply]), self.assertRaises(restore.RecoveryError):
+            with (patch.object(emulator, "create_documents"), patch.object(emulator, "post", return_value=reply),
+                  self.assertRaises(restore.RecoveryError)):
                 emulator.restore_batch(docs, expected)
 
     @unittest.skipUnless(os.getenv("ISR_RECOVERY_FIXTURE") == "1", "dedicated recovery emulator only")
@@ -101,13 +103,16 @@ class RecoveryTests(unittest.TestCase):
             "bytes": base64.b64decode("AP8="), "point": firestore.GeoPoint(0, -7.1),
             "when": DatetimeWithNanoseconds.from_rfc3339("2026-11-07T02:03:04.123456Z"),
             "ref": db.document("absent/parent"), "vector": Vector([0.5, 0.0]),
-            "a.b": {"empty": {}, "array": []}, "special": float("inf")
+            "a.b": {"empty": {}, "array": []}, "special": float("inf"),
+            "zeroes": [{"negative": -0.0, "positive": 0.0}]
         }
         path = "absent/parent/child/one"
         self.archive([(path, backup_firestore.encode(fields))])
         restore.recover(self.folder, True)
         actual = db.document(path).get().to_dict()
         self.assertEqual(fields, actual)
+        self.assertEqual(math.copysign(1, actual["zeroes"][0]["negative"]), -1)
+        self.assertEqual(math.copysign(1, actual["zeroes"][0]["positive"]), 1)
         self.assertIsInstance(actual["vector"], Vector)
         self.assertIs(type(actual["nested"][0]["double"]), float)
         self.assertFalse(db.document("absent/parent").get().exists)

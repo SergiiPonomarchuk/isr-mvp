@@ -1,5 +1,10 @@
 # CHANGES
 
+## Preserve signed zero during Firestore recovery (2026-11-12)
+
+- The disposable emulator's JSON write endpoint changed a stored negative zero to positive zero in the fresh live backup rehearsal. Recovery now sends binary Firestore writes to the same loopback emulator and independently verifies the returned fields with the original exact comparison.
+- Extended the independent SDK fixture with signed doubles in a nested array and map. The archived data and the application release are unchanged.
+
 ## Firestore recovery rehearsal (2026-11-12)
 
 - Added offline validation and a restore command for the R0 backup format. It creates documents only on an empty dedicated emulator, verifies each path and typed field, and reports aggregate counts. Rehearsed the November 7 pre-migration backup successfully: 24,783 documents in nine manifest entries.

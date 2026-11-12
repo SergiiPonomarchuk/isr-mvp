@@ -13,6 +13,10 @@ The default command validates the R0 manifest, all records, unique paths, type t
 
 The R0 format stores references as relative paths and timestamps at the precision written by the exporter. The tag key `__type` is reserved in nested maps. The original format cannot distinguish a literal map shaped exactly like a known tag from the tagged value. The archive records document data, not indexes, rules, external services or Firestore create/update metadata. A completed comparison establishes equality to the archive, not a point-in-time snapshot of the live database. Run the procedure in [the live runbook](../LIVE-ROLLOUT.md#2-backup-and-recovery-prerequisite-author).
 
+## Fresh archive signed-zero regression
+
+The November 12 pre-migration backup must round-trip Firestore doubles of both signs, including negative zero in a nested map or array. Use the binary Firestore write protocol on the dedicated emulator, retain create-only preconditions, and keep the independent read-back and typed digest. Prove the sign with the SDK, then repeat the full fresh archive rehearsal.
+
 ## Status log
 
 - 2026-11-12: Full rehearsal with the private `2026-11-07-pre-migration` archive from `A:\ISR\mvp\dbbackup`. Validated, created and read back **24,783 of 24,783 documents in nine manifest entries**, including 1,694 nested messages, 9,150 vector documents and 9,151 user documents. All paths and typed field digests matched. This is the historical archive. The author repeats the procedure on the fresh pre-migration backup.
