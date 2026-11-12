@@ -1,5 +1,21 @@
 # CHANGES
 
+## Agent workflow (2026-11-12)
+
+- Codex proceeds through approved work and routine verification. The author handles material decisions, human acceptance, development model switches, merge authorization and live operations.
+
+## Integrated release and live runbook (2026-11-12)
+
+- P1 #25, P2 #23, A4 #20, U6 #21, U8 #22 and A5 #24 are merged following explicit author instructions. Main `47e835a` is tagged `isr-mvp-rc-2026-11-12`; main CI passes. Reconciled the approved development-plan documentation with that release; executable code/data/rules in this PR are identical to main.
+- On the actual release: Node 98 passed; Python 105 run, 104 passed and one optional skip. Exported/restarted the emulator on main, verified all 9,150 profile / 20,245 skill vectors and canonical E/ISR for two migrated publics/50 members, replayed A5's locality regression and checked profile/map flows read-only. Named snapshot on A: 8 files / 550,379,033 bytes, SHA-256 verified. Full evidence: `specs/tasks/INTEGRATED-release-2026-11-12.md`.
+- Added `specs/LIVE-ROLLOUT.md` with checked PowerShell commands, explicit live target/environment clearing, author-only migrations/deploys, report paths and acceptance gates. Read-only live P1 preflight: 8,803 updates proposed, 0 deletes, 0 pending/changed inputs; one incomplete profile retained, 37 packs. No live writes or model calls.
+- Recovery prerequisite remains open: the repository backs up typed JSONL but has no general restore utility. A recovery procedure/rehearsal must be established before live apply. No deployment, new rules edit, production mutation or fresh paid AI request was performed.
+
+## Development plan: milestones and remaining work (2026-11-12)
+
+- At the author's request, added the overall/detailed development plan; the author approved its execution order on 2026-11-12. It covers integration, live rollout, the approved D1 scenarios, later guardrails/access/Contribution/pilot stages, estimates and model choices.
+- Updated the approved plan to mark M0 complete, record the integrated checkpoint and expose the recovery gate before M1. Historical task reports/roadmap remain dated evidence. Later task-specific decisions, explicit merge instructions and author-only live actions remain in force.
+
 ## A5: integrate after U8 reaches main (2026-11-12)
 
 - Author explicitly instructed `merge PR 22`; U8 merged as `996e7b8`, after P1/P2/A4/U6. Retargeted A5 #24 from U8 to main and reconciled that main under the approved development plan.

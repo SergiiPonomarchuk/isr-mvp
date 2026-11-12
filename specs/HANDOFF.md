@@ -4,7 +4,28 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: U8 merged; A5 retargeted and reconciled, 2026-11-12
+## Current checkpoint: integrated release verified; live preparation, 2026-11-12
+
+- Follow `AGENTS.md` through ready work without routine approval pauses. The next author action in the approved plan is the merge instruction for PR #26.
+- **All implementation PRs are merged:** P1 #25 (`6d252c2`), P2 #23 (`a17d5cd`), A4 #20 (`76c50c8`), U6 #21 (`6b6ae7a`), U8 #22 (`996e7b8`), A5 #24 (**`47e835a`**). Each received explicit author merge authorization. Release tag `isr-mvp-rc-2026-11-12` is pushed; main CI passed.
+- **M0 integration is complete.** On merged main: Node 98 passed; Python 105 run, 104 passed and one existing optional skip. Restored/exported data verified: 9,150 profile / 20,245 finite unit skill vectors, 50 canonical E/ISR results/maps, A5 captured replay (3,908 unrelated bypasses removed, 1,033 retained), P1/P2 dry runs with zero changes, and fresh read-only profile/map browser checks. See [release evidence](tasks/INTEGRATED-release-2026-11-12.md).
+- **The preview remains running** from clean detached main `47e835a` in `C:\isr-mvp`, Java heap 8 GB. Successfully exported before restart at 2026-11-12 14:20:56 UTC. Named frozen copy: `A:\BackUp\isr-mvp\emulator-snapshots\2026-11-12-integrated-47e835a` (all 8 files, 550,379,033 bytes, hash verified). Do not overwrite this milestone with daily work.
+- Read-only live P1 preflight: 9,151 documents / 9,150 complete profiles; **8,803 updates proposed, 0 deletes, 0 missing generation/changed inputs**, 37 existing packs. One extra incomplete profile is retained untouched; `users/None` is absent. No live mutation or model request.
+- [Approved development plan](DEVELOPMENT-PLAN.md) and [concrete live runbook](LIVE-ROLLOUT.md) are brought current in **PR #26**. That documentation PR is not yet merged and requires its own `merge PR 26` instruction. Its main reconciliation changes documentation only.
+- **Before any live apply:** establish/rehearse recovery of the private full backup; the repo has a typed JSONL backup script but no general restore utility. Confirm the author's execution window and Paid/budget status. The runbook keeps these as prerequisites, not completed steps. Agents do not read backup credential fields or perform live apply/deploy.
+- Then the author coordinates backup, P1/P2 live apply, secret/deploy from clean `wt-main`, live embeddings and A4 public migration; Codex verifies read-only. D1 still waits for those approved live prerequisites. Preserve A5 in the code deployment for P2 locality. No live writes, deploys, rules edits or new paid AI calls in this checkpoint.
+
+All earlier checkpoints and original resume commands below are historical; the current plan/runbook govern next work.
+
+## Initial plan approval checkpoint, 2026-11-12 (historical)
+
+- **P1 PR #25 is merged** into main as `6d252c2`; final CI passed. Its live AC4 remains the author's step.
+- The author requested and approved the overall and detailed development plan (2026-11-12: "Approved."). [DEVELOPMENT-PLAN.md](DEVELOPMENT-PLAN.md) proposes milestones, the remaining merge/release sequence, detailed D1 work, later guardrails/access/pilot stages, estimates, model choices and decision gates. Its execution order is approved; later task-specific design decisions, explicit PR merge instructions and author-only live actions remain as specified.
+- **P2 #23 reconciled with main at `0c2f336`.** Only CHANGES/HANDOFF conflicted; both records retained and migration source/data unchanged. Combined tests: Node 47 passed; Python 84 run, one existing optional skip; both emulator dry runs propose zero changes to 9,150 profiles. Verify pushed-head CI and request explicit `merge PR 23`. A4 #20 still needs reconciliation; remaining code order #20 -> #21 -> #22 -> #24. P2's live acceptance/deployment remains tied to A5.
+- The A5 preview was restored from the saved snapshot after PR #25 merged. Hosting returned HTTP 200 and functions/Firestore were ready. The serving checkout remains detached at `0ff325b`; do not switch it incidentally. Snapshot remains the 2026-11-12 06:36 UTC export.
+- This planning change edits documentation only. No new application code, data migrations, model calls, rules edits or deploys. D1 implementation still waits for its approved prerequisites: P2 applied and A4/U6 live.
+
+## A5 reconciliation checkpoint, 2026-11-12 (historical)
 
 - The author explicitly instructed `merge PR 22`; **U8 is merged as `996e7b8`**, after P1 #25, P2 #23, A4 #20 and U6 #21. The reviewed merge-head CI passed. No live operations follow automatically.
 - A5 PR #24 now targets main and is reconciled with it. Only CHANGES and the index conflicted; all histories and a single current A4 index row are retained. A5 application/prompt/guard/Create behavior, frontend, dependencies, rules, A4 scripts and fixture are unchanged from accepted head `0ff325b`; P1/P2 source/data match main.

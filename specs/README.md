@@ -106,11 +106,15 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
 | [A4-working-ai](tasks/A4-working-ai.md) | merged PR #20 on 2026-11-12; phases A-C/AC1-AC7 complete and saved (9,150 people, two publics); live phase D/AC8 pending author | 02, 03, 04, 07, 12, 13 |
 | [P1-profile-review](tasks/P1-profile-review.md) | merged PR #25 on 2026-11-12; emulator AC1-AC3/AC5 passed and exact skill IDs retained; live AC4 remains the author's coordinated step | 11 (synthetic data), 04 |
-| [A5-local-residential-scope](tasks/A5-local-residential-scope.md) | AC1-AC4 passed and saved; PR #24 retargeted/reconciled to main after U8 #22 merged; combined Node 98 / Python 105 (one skip); resolves P2 building locality; live pending author | 03, 07 |
+| [A5-local-residential-scope](tasks/A5-local-residential-scope.md) | merged PR #24 on 2026-11-12; integrated release verified, Node 98 / Python 105 (one skip); resolves P2 locality; live pending author | 03, 07 |
 
-Handoff: [HANDOFF](HANDOFF.md): the state of every branch and the next steps (2026-11-11).
+Development plan: [DEVELOPMENT-PLAN](DEVELOPMENT-PLAN.md): overall milestones and detailed remaining work, approved by the author (2026-11-12).
 
-Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).
+Release: [2026-11-12 checkpoint](tasks/INTEGRATED-release-2026-11-12.md), main `47e835a`; local integration complete. [Live rollout runbook](LIVE-ROLLOUT.md): author-only steps, pending backup recovery rehearsal/window/billing confirmation.
+
+Handoff: [HANDOFF](HANDOFF.md): the current checkpoint, branch state and next steps.
+
+Historical roadmap: [ROADMAP-demo](ROADMAP-demo.md): demonstration definitions and original staged estimates (2026-11-07); current status and remaining-work estimates are in the development plan.
 
 S0 artefacts: [S0-inventory-report](tasks/S0-inventory-report.md), [S0-structure-proposal](tasks/S0-structure-proposal.md), [S0-decisions-to-import](tasks/S0-decisions-to-import.md).
 

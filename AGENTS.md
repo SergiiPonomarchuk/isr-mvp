@@ -1,4 +1,4 @@
-# AGENTS.md (for Codex and other coding agents; the same rules as CLAUDE.md)
+# AGENTS.md (for Codex and other coding agents)
 
 **Read first:** `specs/HANDOFF.md`. It holds the state of every branch, the next steps in order, and the author's live steps.
 
@@ -9,11 +9,17 @@ ISR MVP: an issue-specific weighted participation prototype. It uses Firebase/Fi
 
 ## Workflow (specification first)
 1. Work from a spec. `specs/README.md` is the index; task specs live in `specs/tasks/`. Read the spec fully before touching code.
-2. Write a short plan and wait for the author's approval.
+2. State a short plan and proceed within the author's request or approved scope. Follow the handoff through implementation, tests, emulator checks, fixes, documentation and PR checks. Continue to the next ready step without waiting for another “go on”.
 3. Implement on a feature branch, never on main. Run the tests: `cd functions; npm test` and `python -m unittest discover -s tests`.
 4. Fill in the spec's Status log and write CHANGES.md (newest entry on top).
-5. If the spec is ambiguous or conflicts with the code, stop and ask. Do not widen scope.
+5. Make routine, reversible implementation decisions. Ask the author when a spec conflict or ambiguity affects intended behaviour, acceptance criteria, scope or budget. Continue independent work already in scope while waiting.
 6. Open pull requests with `gh`. Merge only when the author writes "merge PR N".
+
+### When to involve the author
+
+- Run objective checks yourself, including browser checks on the emulator and permitted read-only checks on live. When acceptance needs human judgment, give the author the emulator or live URL, steps to reproduce, and what to assess.
+- If the next task warrants a different development AI model or reasoning level, recommend the selection and explain why before starting the work that needs it. The author controls the switch. Changing the application’s Gemini models is a separate project decision.
+- For a decision, give the author the relevant result, your recommendation and the specific choice needed. For an author-only action such as a merge instruction, deploy or live migration, finish the preparation and give the exact next instruction. Resume from that point when the author responds.
 
 ## Guardrails
 - No deploys, no Firestore rules changes, no writes to production data; use the emulator or a copy.
