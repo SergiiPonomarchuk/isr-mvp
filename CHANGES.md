@@ -1,5 +1,10 @@
 # CHANGES
 
+## Live rollout verification (2026-11-13)
+
+- Author applied P1/P2 and deployed the approved code. Read-only checks verify the profiles, homes, 37 packs, active functions, Gemini bindings, Hosting files and rules. The embedding migration remains the next author step. Current counts and evidence paths are in the handoff.
+- Recorded the author's preference for the simplest, lowest-cost sufficient development model.
+
 ## Preserve signed zero during Firestore recovery (2026-11-12)
 
 - The disposable emulator's JSON write endpoint changed a stored negative zero to positive zero in the fresh live backup rehearsal. Recovery now sends binary Firestore writes to the same loopback emulator and independently verifies the returned fields with the original exact comparison.

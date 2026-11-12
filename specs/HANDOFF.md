@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: fresh live backup verified, awaiting author P1, 2026-11-12
+## Current checkpoint: live P1/P2 and deployment verified, 2026-11-13
+
+- The author applied P1 and P2. Live read-only verification passed. P1 has zero further repairs/deletes/pending/changed inputs, 5,097 repaired work profiles and all 37 packs matching. P2 has all 9,150 profiles on plan, homes on 1,226 building points, zero held/missing/problems, no children owning property and matching packs.
+- The author deployed from clean `wt-main` at `a8a9df0`. All five functions are ACTIVE on Node 22. Three AI functions bind the Gemini secret. Live main page, JavaScript, styles and rules match the reviewed release. Firebase config matches the deployment checkout byte for byte, with only line-ending differences from the serving C checkout.
+- The API-free embedding preview needs 9,150 people / 29,395 texts / 294 requests. Its report estimates 1,080,590 tokens and about 46 minutes at the script's throttle. Historical configured rate implies about $0.16, subject to current billing. Next is the author's live embedding apply, then API-free post-check and A4 public migration.
+- Current reports are under `C:\isr-mvp\scratch\live-rollout-20261112-203337`. PR #28 remains subject to explicit merge authorization. The author requests the simplest, lowest-cost sufficient development model. Sol Medium suits this coordinated rollout.
+
+## Fresh live backup verified, awaiting author P1, 2026-11-12 (historical)
 
 - Recovery PR #27 merged at `a8a9df0`. The author opened the live window and confirmed Paid AI Studio project `isr-mvp-ai-dev` has more than $5 available. An exact monthly cap was not reported.
 - Fresh live archive `A:\ISR\mvp\dbbackup\20261112-203337`: 24,884 documents. The first rehearsal exposed a signed-zero change in the disposable emulator's JSON write endpoint. The fix in PR #28 passed read-back of every path and typed field. See [the recovery evidence](tasks/M1-firestore-recovery.md).
