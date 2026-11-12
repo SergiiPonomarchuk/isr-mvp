@@ -1,10 +1,46 @@
 # CHANGES
 
+## Integrated release and live runbook (2026-11-12)
+
+- P1 #25, P2 #23, A4 #20, U6 #21, U8 #22 and A5 #24 are merged following explicit author instructions. Main `47e835a` is tagged `isr-mvp-rc-2026-11-12`; main CI passes. Reconciled the approved development-plan documentation with that release; executable code/data/rules in this PR are identical to main.
+- On the actual release: Node 98 passed; Python 105 run, 104 passed and one optional skip. Exported/restarted the emulator on main, verified all 9,150 profile / 20,245 skill vectors and canonical E/ISR for two migrated publics/50 members, replayed A5's locality regression and checked profile/map flows read-only. Named snapshot on A: 8 files / 550,379,033 bytes, SHA-256 verified. Full evidence: `specs/tasks/INTEGRATED-release-2026-11-12.md`.
+- Added `specs/LIVE-ROLLOUT.md` with checked PowerShell commands, explicit live target/environment clearing, author-only migrations/deploys, report paths and acceptance gates. Read-only live P1 preflight: 8,803 updates proposed, 0 deletes, 0 pending/changed inputs; one incomplete profile retained, 37 packs. No live writes or model calls.
+- Recovery prerequisite remains open: the repository backs up typed JSONL but has no general restore utility. A recovery procedure/rehearsal must be established before live apply. No deployment, new rules edit, production mutation or fresh paid AI request was performed.
+
 ## Development plan: milestones and remaining work (2026-11-12)
 
-- Added `specs/DEVELOPMENT-PLAN.md` at the author's request and recorded their approval (2026-11-12): current baseline, PR dependencies, detailed integration/live-rollout/D1 work, later Analyzer/access/Contribution/pilot stages, estimates and model recommendations. It separates existing approvals from proposals and author-only actions.
-- Updated the index and handoff: P1 #25 is merged; P2 #23 reconciled at `0c2f336` with passing combined local checks and unchanged data/scripts; A4 #20 still needs reconciliation; the A5 emulator preview remains the serving code. The old roadmap and checkpoints are retained as dated history.
-- Documentation only; no runtime behavior, generated dataset, formulas, rules or deployed state changed. The author approved the plan and P2 reconciliation is prepared; PR merges retain their explicit per-number authorization.
+- At the author's request, added the overall/detailed development plan; the author approved its execution order on 2026-11-12. It covers integration, live rollout, the approved D1 scenarios, later guardrails/access/Contribution/pilot stages, estimates and model choices.
+- Updated the approved plan to mark M0 complete, record the integrated checkpoint and expose the recovery gate before M1. Historical task reports/roadmap remain dated evidence. Later task-specific decisions, explicit merge instructions and author-only live actions remain in force.
+
+## A5: integrate after U8 reaches main (2026-11-12)
+
+- Author explicitly instructed `merge PR 22`; U8 merged as `996e7b8`, after P1/P2/A4/U6. Retargeted A5 #24 from U8 to main and reconciled that main under the approved development plan.
+- Only CHANGES and the index conflicted. Retained all task histories and one current A4 index row. A5 guard/prompt/normalization/Create validation, frontend, dependencies, rules, A4 scripts and captured fixture remain unchanged from accepted head `0ff325b`; imported P1/P2 source/data match main.
+- Combined verification: Node 98 passed; Python 105 run, 104 passed and one existing optional skip. The saved captured-result replay and p4 endpoint acceptance remain applicable; no fresh paid/model/geocoder call or data write. CI is checked on the pushed head before explicit `merge PR 24`. Integrated release verification and the author-led live rollout follow.
+
+## U8: integrate after U6 reaches main (2026-11-12)
+
+- Author explicitly instructed `merge PR 21`; U6 merged as `6b6ae7a`, after P1/P2/A4. Retargeted U8 #22 from U6 to main and reconciled that main into the U8 branch under the approved plan.
+- Only CHANGES and the specification index conflicted; retained all task records. Map/frontend/backend source, dependency versions, existing rules and A4 migrations are unchanged from accepted U8 head `0eddbc6`; imported P1/P2 migration artifacts match main.
+- Combined verification: Node 91 passed; Python 105 run, 104 passed and one existing optional skip. Saved AC2 evidence remains applicable to the unchanged map bytes. No new browser/data writes, AI/Nominatim calls, deploy or live operation. AC3 remains after the author's coordinated hosting deploy; CI is checked on the pushed head before explicit `merge PR 22`.
+
+## U6: integrate after A4 reaches main (2026-11-12)
+
+- Author explicitly instructed `merge PR 20`; A4 merged as `76c50c8`, after P1 #25 and P2 #23. Retargeted U6 #21 from A4 to main and reconciled that main into the U6 branch under the approved development plan.
+- Only CHANGES conflicted; retained U6 and all merged task records. Application/frontend/AI/location/geocoder source, dependency versions, rules and A4 migrations are unchanged from the tested U6 head `7bbfd45`; imported P1/P2 migration sources and datasets remain identical to main.
+- Combined verification: Node 88 passed; Python 105 run, 104 passed and one existing optional skip. Existing U6 AC2-AC5 browser/API/export evidence remains applicable. No fresh model/Nominatim requests, database writes, deploy or live operation. CI is checked on the pushed head before explicit `merge PR 21`.
+
+## A4: integrate the merged P1/P2 migrations (2026-11-12)
+
+- P2 PR #23 merged as `a17d5cd` after the author's explicit instruction; P1 PR #25 is already in main. Reconciled that main into A4 PR #20 under the approved development plan.
+- Only CHANGES, HANDOFF and the specification index conflicted. Retained all P1/P2/A4 records. No A4 application code, models, dependencies, migration scripts, generated examples or rules changed in this reconciliation; imported P1/P2 source/data remain identical to main.
+- Combined tests: Node 57 passed; Python 105 run, 104 passed and one existing optional skip. Key-free read-only emulator recheck: all 9,150 people current, 20,245 skill hash keys, 0 texts/requests needed; phase C has 0 placeholder publics, updates, new vectors or requests. Existing saved AC5/AC6 evidence covers vector values and canonical scores. No migration apply, re-embedding, API usage, deploy or live write is performed. Phase D/AC8 remain the author's coordinated rollout.
+
+## P2: reconcile with the merged profile repairs (2026-11-12)
+
+- Author approved the development plan (PR #26). Reconciled main `6d252c2` (P1 PR #25) into P2 PR #23; only CHANGES and the handoff needed conflict resolution. Both tasks' reports and generated records are retained.
+- P2 migration code, committed plan and GeoJSON artifacts are unchanged; application code, dependency versions, formulas and vectors are unchanged. P2's accepted building behavior still depends on the A5 code release (PR #24).
+- Combined verification: Node 47 passed; Python 84 run, 83 passed and one existing optional skip. Read-only dry runs: P2 done 9,150, to write/held/problems 0; P1 profiles 9,150, updates/deletes/pending 0. No migration apply, generation, paid AI calls, deploy, rules edit or live write is part of this reconciliation.
 
 ## P1: repair the synthetic profiles (2026-11-12 review; emulator applied 2026-11-11)
 
@@ -15,6 +51,151 @@ Spec: `specs/tasks/P1-profile-review.md`; approved by the author on 2026-11-10. 
 - Original emulator apply: 8,803 updates and one deletion; no packs existed. Read-only recheck after P2/A4: 9,150 profiles, 0 updates/deletes/pending/changed inputs. All 20,245 skill IDs exactly match the original export and current A4 hash keys. See `specs/tasks/P1-review-report.md` and the original migration/audit reports.
 - Validation: Node 47 passed; Python 70 run, 69 passed and one existing optional skip, including 18 mocked P1 tests. Original generation: 526 logged calls (520 successes, six failed), 868,733 prompt and 869,733 output tokens; $0 on the then-free tier, about $1.52 at recorded paid rates. This review made no model requests or database writes.
 - Remaining: author backup and live AC4 apply/audit, coordinated with P2, A4/U6/U8/A5 and A4 re-embedding. Nothing deployed or written to live by this PR.
+
+## P2: homes in real buildings, and property for the synthetic people (2026-11-11)
+
+Spec: `specs/tasks/P2-homes-and-property.md` (approved 2026-11-10, with the author's additions). Data only, with no app code change. Runs after P1.
+
+### What changed
+- **New script** `scripts/migrate_p2.py` (dry run by default; `--make-plan` once; `--apply`). The plan is made once from the original people and stored in `scripts/p2_generated/plan.json` with each person's source hash, so a second run changes nothing and a person whose data differs (live against the emulator) is held.
+- **Homes:**
+  - **Estates:** the 8 current estate points are the estates' centres. Apartment blocks are 60 m apart along a row and 70 m between rows; townhouses stand in rows of 8 houses 8 m apart, with rows 32 m apart; private houses are 30 m apart.
+  - **The move:** every home moves to its building's point (address and unit kept; `building` added).
+  - **Andim:** its 45 families get city houses around the Andim point, with fictional addresses.
+- **Objects:**
+  - **In apartment blocks:** shops, pharmacies, cafés and salons on an apartment estate's point move to a block's ground floor.
+  - **Out of the estates:** other objects inside an estate move just outside (20-300 m), with fictional addresses.
+  - **New names:** the 63 numbered objects are renamed ("School 3" -> "Riverside School"; the typos "Phatmacy" and "Kindergarden" are gone).
+  - **Workers:** everyone who works at an object follows it.
+- **Property entries** (`type: "property"`, kinds as in A3), by fixed rules from age, household, home and work. Children own nothing:
+  - flats 2,948, of which 267 are rented out by landlords;
+  - houses 1,882;
+  - garages 381, in 3 cooperatives;
+  - garden plots 503, in 3 gardens;
+  - commercial units 78.
+- **Tests:** `tests/test_migrate_p2.py` (14).
+
+### Checks
+- Unit tests on the refreshed P2 branch: Node 47 passed; Python 66 run, 65 passed and one skipped (14 P2 tests).
+- **Emulator** (2026-11-11, after P1): 9,150 people written, and a second run wrote 0. Every home is on its building's point (1,226 buildings); no numbered name is left; the property is as planned; the distance rules hold.
+- **AC3 passed:** profile and geotag map show the h5 building point and flat/garage property; selecting the garage uses its stored coordinates. Dry run remains 9,150 done, 0 to write/held/problems.
+- **AC4 passed after A5 PR #24:** original building failure (4,941 candidates, including 3,908 unrelated distant owners) is resolved by the approved residential-scope guard. Captured replay and fresh p4 Check give 1,033 local/property-linked candidates; garage inclusion remains (displayed 25/25 owners). Original evidence retained in `specs/tasks/P2-acceptance-report.md`. A5 must be merged/deployed with the coordinated code release; no P2 data rerun was needed.
+- Two model/embedding calls, 16,436 prompt / 2,059 output tokens and about 121 estimated embedding tokens; approximately $0.0072 at the recorded rates. Emulator drafts/logs exported; no live changes. P2 PR is ready for review with A5 as a code-deployment dependency.
+
+### Author's steps after merging
+1. On live, after P1's live apply and a backup: `python scripts/migrate_p2.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`, from `C:\isr-mvp` on main. It uses the committed plan and rebuilds `user_packs`.
+2. The agent then checks live read-only.
+
+## A5: keep local residential issues tied to their location (2026-11-12)
+
+Spec: `specs/tasks/A5-local-residential-scope.md`, author's approved P2 locality-fix plan.
+
+- Unit/building parameters remove generic flat/house ownership filters before logging, showing and storing the effective rules. The prompt is p4. Actual affected-property owners still qualify through their property point; explicit place matches, garage/other kinds and broader ownership scopes retain existing behavior.
+- Create rejects an older offending draft with 409 requesting a new Check, rather than silently changing its checked public. Existing issues/scores and D/G arithmetic are untouched.
+- Node 98 passed; Python 73 run, 72 passed and one skipped. Captured P2 replay and fresh p4 Check reduce building candidates from 4,941 to 1,033, with all 3,908 unrelated-owner bypasses removed. Garage inclusion remains (1,391 candidates, displayed 25/25 verified owners).
+- Two text/two embedding calls: 16,632 prompt / 2,030 output tokens, about 121 estimated embedding tokens; about $0.00722. Export saved, preview left running. Evidence: `specs/tasks/A5-emulator-report.md`.
+- Merge/deploy this fix with the coordinated A4/U6/U8 release before claiming P2 locality on live. No deployment or live writes performed.
+
+## U8: the map uses OpenStreetMap tiles (2026-11-11; local verification complete)
+
+Spec: `specs/tasks/U8-map-tiles.md` (author: option a). Merged after U6.
+
+### What changed
+- **The tiles:** the map's tiles come from `tile.openstreetmap.org` under the OSMF tile usage policy, with the credit "© OpenStreetMap contributors". Before, they came from Google's own tile servers without a key or account, which Google's terms do not allow.
+- **One setting:** the URL and the credit live in one constant (`MAP_TILES` in `prototype/js/main.js`). The same credit covers U6's place search.
+- **Dead code removed:** the Google Maps JavaScript API branches never ran, because the page never loaded that library.
+
+### Checks
+- Unit tests after merging verified U6: Node 91 passed; Python 73 run, 72 passed and one skipped. Includes three map-tile checks and adapted U6 browser tests.
+- Full local emulator: editable map 18/18 tile images and read-only view 12/12 loaded from OpenStreetMap; credit visible. Profile places, map clicks and pin dragging work; read-only point stays fixed. Resource audit found no Google Maps hosts or google.com/subdomains. No console errors/warnings. See `specs/tasks/U8-emulator-report.md`.
+- No database writes or AI/Nominatim calls. Preview left running for the author. AC3 remains after the author's hosting deploy.
+
+### Author's steps after merging
+1. Deploy hosting with U6: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from the clean detached `wt-main` checkout, in the coordinated A4/U6/U8 deployment recorded in HANDOFF.
+2. The agent then checks live read-only (AC3).
+
+## U6: the issue's point comes from its description (2026-11-11; emulator checks complete)
+
+Spec: `specs/tasks/U6-issue-location.md` (author: "U6 approved"; "keep the server lookup in U6"). Merged after A4.
+
+### What changed
+- **The Analyzer** (prompt `p3`) says where the issue is: `location_reference` {anchor: home | work | property | named_place | none, place}. The keyword rules give the same field without the model.
+- **Check** turns it into a point (`functions/location.js`):
+  - home, work or property -> the creator's profile place;
+  - a named place -> the place lookup near the creator's home;
+  - no place -> the creator's home;
+  - a pin the creator moved -> that pin.
+
+  The fallbacks are the home, or the browser's point when the profile has no home. The public is formed around that point.
+- **The place lookup** (`functions/geocode.js`) follows OpenStreetMap's Nominatim usage policy:
+  - it sends only the place name, with our own User-Agent;
+  - it sends at most 1 request a second per instance;
+  - it caches answers for 30 days in `geocode_cache`;
+  - the switch `config/geocoding` {enabled} can turn it off without a deploy;
+  - it credits "© OpenStreetMap contributors".
+- **The draft and Create:** the draft keeps the point, its source, a label and the Analyzer's reference. Create uses the draft's point; a different body point gets 409 "The location changed after the check: check again". The issue stores `location_source` and `location_reference`.
+- **The browser:**
+  - the form starts at the creator's home, not the Basel centre;
+  - after Check it shows the point and its label (for example "your home (from the description)");
+  - moving the pin marks it as the creator's, and Create waits for a new Check;
+  - the map and the search box credit OpenStreetMap;
+  - the search box obeys the switch.
+- **Fixed on the way:** a drag, a map click or a profile place changed a copy of the point that Check never read, so only the search box moved an issue.
+
+### Checks
+- **Unit tests:** Node 88 passed after merging A4/main; Python 73 run, 72 passed and one skipped.
+- **Browser on the emulator's data (no Check):** the home at start, pin moves, the credit and the switch, as in the spec's status log.
+- **AC2-AC5 passed on the emulator:** four location sources; pin move invalidates Check and recheck restores Create; forged location rejected with 409; valid Create uses its draft point; all ten Analyzer logs record location_reference. Four Nominatim lookups total, cache reuse, switch off and OpenStreetMap credit verified. Ten text/embedding calls used 81,465 prompt and 10,588 output tokens plus approximately 342 embedding tokens; approximately $0.0363 at the recorded paid rates. Full evidence: `specs/tasks/U6-emulator-report.md`.
+- **Saved:** final export completed with exit 0; re-import verified the final test state. Emulator stopped, main checkout restored. No live changes.
+
+### Author's steps after merging (coordinated with A4 and U8, as in HANDOFF)
+1. Deploy functions and hosting: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from the clean detached `wt-main` checkout.
+2. Optional: create `config/geocoding` with `enabled: true` in the console. Without the document the lookup is on; `enabled: false` turns it off.
+
+## A4: working AI, roadmap stage 1 (2026-11-11; emulator phases A-C complete)
+
+Spec: `specs/tasks/A4-working-ai.md` (approved 2026-11-10; paid-tier billing approved 2026-11-11).
+
+### What changed
+- **Models in one place:** `functions/ai-config.js` holds:
+  - the text model `gemini-3.1-flash-lite`;
+  - the embedding model `gemini-embedding-001` (768 dimensions);
+  - temperature 0 and a fixed seed;
+  - the versions `p2` (prompt) and `t1` (template);
+  - the task types, and k = 5 examples.
+
+  The Python scripts read the same file (`scripts/ai_config.py`). The SDK is `@google/genai` 2.31, replacing `@google/generative-ai`.
+- **The key** is the Firebase secret `GEMINI_API_KEY`, used by the three HTTPS functions. Locally it lives in `functions/.secret.local`, which is gitignored. It is never printed or logged.
+- **Check:**
+  - it embeds the issue text (`{title}. {description}`) first; without a vector it refuses with 503 "AI unavailable", and no random vector is used anywhere;
+  - the Analyzer gets the 5 nearest of the 100 calibrated examples (`functions/data/analyzer_examples.json`, built by `functions/tools/build_examples.js`);
+  - without a key or on an error, the keyword rules answer, labelled as the fallback.
+- **Create** reuses the draft's vector and writes `issue_vectors/{id}` and an `ai` field on the issue.
+- **Logs:** `analyzer_logs` gets one document per Analyzer call: input, model, versions, examples, raw and normalised output, tokens. The rules make it server-only.
+- **The people:** `scripts/embed_people.py` embeds every profile and skill again with template `t1` (`scripts/embedding_templates.py`). It paces API use, resumes, and skips people whose vectors are current; the author approved paid billing to complete the population.
+- **The A1b publics:** `scripts/migrate_a4.py` replaces the expertise placeholder with real E and the ISR, from the issue vector.
+- **The browser:** the Check window says which model derived the parameters, or shows the fallback label or the server's error.
+
+### Checks
+- **Unit tests after merging main:** Node 57 passed; Python 73 run, 72 passed and one skipped.
+- **Emulator with the free-tier key:**
+  - AC2: 5 issues, each checked twice; every call used the model; the parameters were identical in both runs.
+  - AC3: the vectors were bit-identical; Create reused the draft's vector.
+  - AC4: without a key, the refusal and the label.
+  - 11 Analyzer calls used about 99,400 tokens: about $0.04 at the paid rate, $0 on the free tier.
+- **Saved emulator completion (2026-11-11):**
+  - AC5: all 9,150 profile and 20,245 skill vectors current, finite, 768-dimensional and unit length; zero stale people on a second run. The approved task-type comparison is recorded in the spec.
+  - Resumed 7,112 people: 22,751 texts, 229 requests (one retry), 833,512 estimated tokens (about $0.13 at the recorded paid rate). Median pair cosine 0.810 for this run, versus 0.913 before.
+  - AC6: two publics, 50 members, four topic maps and two issue vectors (56 writes). All 50 E and ISR results independently match `functions/isr.js`; maps match; a second migration does nothing. Browser uid 37 sees ISR 1.84 (Chess club) and 0.84 (shelter website).
+  - Phase C preview and apply used two requests total, two issue texts each, 230 estimated tokens. AC7: approximately $0.13 additional embedding usage; approximately $0.33 cumulative paid estimate including earlier lost/repeated runs. Tokens are estimated; actual retry billing is unknown.
+  - Final export at 18:34 UTC (20:34 Kyiv), with Java heap 8 GB; imported again and the completed state verified. No live changes.
+
+### Author's steps after merging (phase D), after P1 is applied on live
+1. Set the secret: `firebase functions:secrets:set GEMINI_API_KEY --project project-a3d59130-5adf-4677-9e2` (paste the key when asked).
+2. Deploy from the clean detached `wt-main` checkout, together with U6/U8 as ordered in HANDOFF: `firebase deploy --only functions,hosting,firestore:rules --project project-a3d59130-5adf-4677-9e2`.
+3. Embed the people on live: `python scripts/embed_people.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply` (about 300 requests and 30 minutes; it resumes if stopped).
+4. Replace the placeholders: `python scripts/migrate_a4.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`.
+5. The agent then checks live read-only (AC8).
 
 ## U7: the page is not cached for an hour after a deploy (2026-11-10)
 

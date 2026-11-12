@@ -1,0 +1,26 @@
+{
+  "source": "P2 AC4 model result before A5; scalar parameters only, no profile fields",
+  "classification": {
+    "scope_type": "building"
+  },
+  "mu": 40,
+  "sigma": 30,
+  "weights": {
+    "w_D": 0.3,
+    "w_G": 0.5,
+    "w_S": 0.05,
+    "w_X": 0.15
+  },
+  "demographics": {
+    "minAge": 14,
+    "maxAge": null,
+    "employmentStatus": "any",
+    "familyStatus": "any",
+    "features": [],
+    "places": [],
+    "property_kinds": [
+      "flat",
+      "house"
+    ]
+  }
+}

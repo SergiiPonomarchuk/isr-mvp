@@ -99,11 +99,18 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U3-message-sorting](tasks/U3-message-sorting.md) | DONE: merged (PR 11), deployed and checked on live 2026-11-09 | 10 (UI) |
 | [U4-voting-view-messages](tasks/U4-voting-view-messages.md) | DONE: merged (PR 12), deployed and checked on live 2026-11-09 | 10 (UI) |
 | [U5-esc-and-geotag](tasks/U5-esc-and-geotag.md) | DONE on live 2026-11-10 (PR 15); the issue location from the Analyzer follows after A4 | UI |
+| [U6-issue-location](tasks/U6-issue-location.md) | merged PR #21 on 2026-11-12; AC2-AC5 passed and saved; combined Node 88 / Python 105 (one skip); live pending author | UI, 07 (Analyzer), 03 (G) |
 | [U7-page-cache](tasks/U7-page-cache.md) | DONE on live 2026-11-11 (PR 17): every hosting response is sent with `no-cache` | UI, 13 (hosting) |
+| [U8-map-tiles](tasks/U8-map-tiles.md) | merged PR #22 on 2026-11-12; AC1/AC2 passed and saved; combined Node 91 / Python 105 (one skip); live AC3 pending author | UI |
+| [P2-homes-and-property](tasks/P2-homes-and-property.md) | merged PR #23 on 2026-11-12; emulator AC2-AC4 pass on A5 PR #24; coordinated A5 deployment required; live AC5 pending author | 02, 03 (G), 06 (D) |
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
+| [A4-working-ai](tasks/A4-working-ai.md) | merged PR #20 on 2026-11-12; phases A-C/AC1-AC7 complete and saved (9,150 people, two publics); live phase D/AC8 pending author | 02, 03, 04, 07, 12, 13 |
 | [P1-profile-review](tasks/P1-profile-review.md) | merged PR #25 on 2026-11-12; emulator AC1-AC3/AC5 passed and exact skill IDs retained; live AC4 remains the author's coordinated step | 11 (synthetic data), 04 |
+| [A5-local-residential-scope](tasks/A5-local-residential-scope.md) | merged PR #24 on 2026-11-12; integrated release verified, Node 98 / Python 105 (one skip); resolves P2 locality; live pending author | 03, 07 |
 
 Development plan: [DEVELOPMENT-PLAN](DEVELOPMENT-PLAN.md): overall milestones and detailed remaining work, approved by the author (2026-11-12).
+
+Release: [2026-11-12 checkpoint](tasks/INTEGRATED-release-2026-11-12.md), main `47e835a`; local integration complete. [Live rollout runbook](LIVE-ROLLOUT.md): author-only steps, pending backup recovery rehearsal/window/billing confirmation.
 
 Handoff: [HANDOFF](HANDOFF.md): the current checkpoint, branch state and next steps.
 

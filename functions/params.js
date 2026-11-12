@@ -13,7 +13,9 @@
  * Pure functions only, so they can be unit tested without Firebase.
  */
 
-const { sanitizeDemographicRules } = require("./demographics");
+const { demographicRulesForScope, needsResidentialScopeRecheck } = require("./issue-scope");
+const { toLatLon } = require("./geo");
+const { samePoint } = require("./location");
 
 const MAX_CLARIFICATION = 2000;
 
@@ -38,6 +40,8 @@ function readTextInputs(body) {
     title: typeof b.title === "string" ? b.title : "",
     description: typeof b.description === "string" ? b.description : "",
     location: b.location,
+    // U6 (R6): "creator" when the creator moved the pin; anything else means the server decides.
+    locationSource: b.location_source === "creator" ? "creator" : "auto",
     submitterId: b.submitterId,
     clarification: readClarification(b)
   };
@@ -83,18 +87,23 @@ function paramsFromAi(ai) {
     },
     aggregation_reasoning: a.aggregation_reasoning || "",
     isr_explanations: a.isr_explanations || null,
-    demographics: sanitizeDemographicRules(a.demographics || a.demographic_rules || { employmentStatus: "any", familyStatus: "any" }),
-    demographic_rules: sanitizeDemographicRules(a.demographic_rules || a.demographics || {}),
+    demographics: demographicRulesForScope(a.demographics || a.demographic_rules || { employmentStatus: "any", familyStatus: "any" }, a.classification),
+    demographic_rules: demographicRulesForScope(a.demographic_rules || a.demographics || {}, a.classification),
     expertise_depth: a.expertise_depth || "None",
     expertise_domain: a.expertise_domain || (edp && edp.expertise_domain) || "General Maintenance",
     expertise_domain_parameters: edp,
-    resources_needed: Array.isArray(a.resources_needed) ? a.resources_needed : []
+    resources_needed: Array.isArray(a.resources_needed) ? a.resources_needed : [],
+    // U6 (R1): where the issue is, as the Analyzer said; the point is resolved at Check.
+    location_reference: a.location_reference || { anchor: "none", place: "" }
   };
 }
 
-/** The draft document checkIssue stores (server-only collection `issue_drafts`). */
-function makeDraft(inputs, params, nowIso) {
-  return {
+/**
+ * The draft document checkIssue stores (server-only collection `issue_drafts`).
+ * U6 (R4): `loc` is location.js resolveIssueLocation's answer; createIssue uses its point.
+ */
+function makeDraft(inputs, params, nowIso, loc) {
+  const draft = {
     submitter_id: String(inputs.submitterId),
     title: inputs.title,
     description: inputs.description,
@@ -102,6 +111,16 @@ function makeDraft(inputs, params, nowIso) {
     params,
     created_at: nowIso
   };
+  if (loc && toLatLon(loc.location)) {
+    draft.location = toLatLon(loc.location);
+    draft.location_source = loc.source;
+    draft.location_label = loc.label || "";
+    draft.location_reference = (params && params.location_reference) || { anchor: "none", place: "" };
+    draft.location_suggested = loc.suggested && toLatLon(loc.suggested.location)
+      ? { location: toLatLon(loc.suggested.location), source: loc.suggested.source, label: loc.suggested.label || "" }
+      : null;
+  }
+  return draft;
 }
 
 /**
@@ -123,7 +142,30 @@ function paramsForCreate(body, draft) {
   if (draft.title !== inputs.title || draft.description !== inputs.description) {
     throw Object.assign(new Error("Title or description changed after the check: derive the parameters again."), { status: 409 });
   }
+  // U6 (R5): the point is the one the check resolved; a different one needs a new check.
+  if (Array.isArray(draft.location) && !samePoint(toLatLon(inputs.location), draft.location, 1)) {
+    throw Object.assign(new Error("The location changed after the check: check again."), { status: 409 });
+  }
+  // A5: do not silently change the membership implied by a previously checked draft.
+  if (needsResidentialScopeRecheck(draft.params)) {
+    throw Object.assign(new Error("The issue scope needs a new check: check again."), { status: 409 });
+  }
   return draft.params;
+}
+
+/**
+ * U6 (R5): the point createIssue uses: the draft's, or, for a draft from before U6, the body's.
+ * Call it after paramsForCreate, which refuses a body point that differs from the draft's.
+ */
+function locationForCreate(body, draft) {
+  if (draft && Array.isArray(draft.location)) {
+    return {
+      location: draft.location,
+      location_source: draft.location_source || null,
+      location_reference: draft.location_reference || null,
+    };
+  }
+  return { location: toLatLon(body && body.location), location_source: null, location_reference: null };
 }
 
 module.exports = {
@@ -133,5 +175,6 @@ module.exports = {
   readTextInputs,
   paramsFromAi,
   makeDraft,
-  paramsForCreate
+  paramsForCreate,
+  locationForCreate
 };

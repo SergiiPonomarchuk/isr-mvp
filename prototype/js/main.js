@@ -239,6 +239,25 @@ function isUrgentDate(dateStr) {
 let currentSectionId = null;
 let newTopicGeo = [47.553832, 7.606599]; // default Basel center
 window.newTopicGeo = newTopicGeo;
+// U6 (R6): one function sets the issue point, in both copies (`newTopicGeo`, which Check and
+// Create send, and `window.newTopicGeo`, which the map draws). Before U6 a drag, a map click or a
+// profile place changed only window.newTopicGeo, so they never reached Check or Create.
+// byCreator marks a point the creator chose: Check then keeps it (location_source "creator").
+window.newTopicGeoSource = 'auto';
+window.issuePointMoves = 0;
+window.setIssuePoint = function(lat, lng, byCreator) {
+  newTopicGeo = [lat, lng];
+  window.newTopicGeo = newTopicGeo;
+  const coordsInput = document.getElementById('geo-epicenter-coords');
+  if (coordsInput) {
+    coordsInput.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+  }
+  if (byCreator) {
+    window.newTopicGeoSource = 'creator';
+    window.issuePointMoves += 1;
+    if (typeof window.onIssuePointMoved === 'function') window.onIssuePointMoved();
+  }
+};
 let profileGeotags = [];
 let suggestedParams = null;
 
@@ -247,8 +266,17 @@ let suggestedParams = null;
 // ==========================================
 window.leafletInnerCircle = null;
 window.leafletOuterCircle = null;
-window.googleInnerCircle = null;
-window.googleOuterCircle = null;
+
+// U8 (option a): OpenStreetMap's standard tiles under the OSMF tile usage policy
+// (https://operations.osmfoundation.org/policies/tiles/): the HTTPS URL, the visible credit,
+// only the tiles in view (Leaflet's default). Before U8 the map loaded Google's tile servers
+// without a key, outside Google's terms. The URL and the credit live here only (the policy
+// recommends a configurable URL); the place search (U6) keeps its own credit below.
+const MAP_TILES = {
+  url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+  maxZoom: 19,
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>'
+};
 
 window.updateCircles = function(lat, lng, mu, sigma) {
   const center = [lat, lng];
@@ -279,39 +307,6 @@ window.updateCircles = function(lat, lng, mu, sigma) {
       window.leafletOuterCircle.setLatLng(center);
       window.leafletOuterCircle.setRadius(totalRadius);
     }
-  } else if (typeof google !== 'undefined' && google.maps && window.mapInstance instanceof google.maps.Map) {
-    const googleCenter = { lat: lat, lng: lng };
-    if (!window.googleInnerCircle) {
-      window.googleInnerCircle = new google.maps.Circle({
-        strokeColor: '#3182ce',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: '#3182ce',
-        fillOpacity: 0.25,
-        map: window.mapInstance,
-        center: googleCenter,
-        radius: mu
-      });
-    } else {
-      window.googleInnerCircle.setCenter(googleCenter);
-      window.googleInnerCircle.setRadius(mu);
-    }
-
-    if (!window.googleOuterCircle) {
-      window.googleOuterCircle = new google.maps.Circle({
-        strokeColor: '#e53e3e',
-        strokeOpacity: 0.6,
-        strokeWeight: 1.5,
-        fillColor: '#e53e3e',
-        fillOpacity: 0.08,
-        map: window.mapInstance,
-        center: googleCenter,
-        radius: totalRadius
-      });
-    } else {
-      window.googleOuterCircle.setCenter(googleCenter);
-      window.googleOuterCircle.setRadius(totalRadius);
-    }
   }
 };
 
@@ -322,9 +317,7 @@ window.initInteractiveMap = function(isReadOnly = false) {
   
   window.leafletInnerCircle = null;
   window.leafletOuterCircle = null;
-  window.googleInnerCircle = null;
-  window.googleOuterCircle = null;
-  
+
   const distInput = document.getElementById('geo-affect-distance');
   const fadeInput = document.getElementById('geo-affect-fade');
   const getMuSigma = () => {
@@ -357,22 +350,18 @@ window.initInteractiveMap = function(isReadOnly = false) {
     window.detailMapInstance = map;
     window.mapInstance = map;
 
-    // Load Google Maps tiles
-    L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-      maxZoom: 20,
-      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-      attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
+    // U8: OpenStreetMap tiles (MAP_TILES). One credit covers the tiles and the place search (U6).
+    L.tileLayer(MAP_TILES.url, {
+      maxZoom: MAP_TILES.maxZoom,
+      attribution: MAP_TILES.attribution
     }).addTo(map);
 
     const marker = L.marker([window.newTopicGeo[0], window.newTopicGeo[1]], { draggable: !isReadOnly }).addTo(map);
     window.mapMarker = marker;
 
-    const coordsInput = document.getElementById('geo-epicenter-coords');
-    const updateCoords = (lat, lng) => {
-      window.newTopicGeo = [lat, lng];
-      if (coordsInput) {
-        coordsInput.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-      }
+    // U6 (R6): byCreator = true for a drag, a map click or a profile place
+    const updateCoords = (lat, lng, byCreator) => {
+      window.setIssuePoint(lat, lng, !!byCreator && !isReadOnly);
       updateCirclesLocal();
     };
 
@@ -382,12 +371,12 @@ window.initInteractiveMap = function(isReadOnly = false) {
     if (!isReadOnly) {
       marker.on('dragend', function() {
         const latLng = marker.getLatLng();
-        updateCoords(latLng.lat, latLng.lng);
+        updateCoords(latLng.lat, latLng.lng, true);
       });
 
       map.on('click', function(e) {
         marker.setLatLng(e.latlng);
-        updateCoords(e.latlng.lat, e.latlng.lng);
+        updateCoords(e.latlng.lat, e.latlng.lng, true);
       });
 
       const tags = window.profileGeotags || profileGeotags || [];
@@ -406,72 +395,8 @@ window.initInteractiveMap = function(isReadOnly = false) {
         pMarker.on('click', () => {
           marker.setLatLng([tag.geo[0], tag.geo[1]]);
           map.panTo([tag.geo[0], tag.geo[1]]);
-          updateCoords(tag.geo[0], tag.geo[1]);
+          updateCoords(tag.geo[0], tag.geo[1], true);
         });
-      });
-    }
-
-    // Draw initial circles
-    updateCirclesLocal();
-
-    // Bind input listeners
-    if (distInput) {
-      distInput.removeEventListener('input', updateCirclesLocal);
-      distInput.addEventListener('input', updateCirclesLocal);
-    }
-    if (fadeInput) {
-      fadeInput.removeEventListener('input', updateCirclesLocal);
-      fadeInput.addEventListener('input', updateCirclesLocal);
-    }
-
-  } else if (typeof google !== 'undefined' && google.maps) {
-    const center = { lat: window.newTopicGeo[0], lng: window.newTopicGeo[1] };
-    window.mapInstance = new google.maps.Map(mapCanvas, {
-      center: center,
-      zoom: 15,
-      panControl: !isReadOnly,
-      zoomControl: true
-    });
-    
-    window.mapMarker = new google.maps.Marker({
-      position: center,
-      map: window.mapInstance,
-      draggable: !isReadOnly,
-      icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
-    });
-
-    const coordsInput = document.getElementById('geo-epicenter-coords');
-    const updateCoords = (lat, lng) => {
-      window.newTopicGeo = [lat, lng];
-      if (coordsInput) {
-        coordsInput.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-      }
-      updateCirclesLocal();
-    };
-
-    if (!isReadOnly) {
-      const tags = window.profileGeotags || profileGeotags || [];
-      tags.forEach(tag => {
-        const marker = new google.maps.Marker({
-          position: { lat: tag.geo[0], lng: tag.geo[1] },
-          map: window.mapInstance,
-          title: `${tag.type}: ${tag.place || tag.address || ''}`,
-          icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-        });
-        marker.addListener('click', () => {
-          updateCoords(tag.geo[0], tag.geo[1]);
-          window.mapMarker.setPosition({ lat: tag.geo[0], lng: tag.geo[1] });
-          window.mapInstance.panTo({ lat: tag.geo[0], lng: tag.geo[1] });
-        });
-      });
-
-      window.mapInstance.addListener('click', (e) => {
-        updateCoords(e.latLng.lat(), e.latLng.lng());
-        window.mapMarker.setPosition(e.latLng);
-      });
-
-      window.mapMarker.addListener('dragend', (e) => {
-        updateCoords(e.latLng.lat(), e.latLng.lng());
       });
     }
 
@@ -489,7 +414,8 @@ window.initInteractiveMap = function(isReadOnly = false) {
     }
 
   } else {
-    // Fallback SVG Map Rendering
+    // Fallback SVG Map Rendering (when Leaflet does not load). U8 removed the Google Maps
+    // JavaScript API branch: index.html never loaded that library, so it never ran.
     const svgNamespace = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNamespace, "svg");
     svg.setAttribute("width", "100%");
@@ -576,11 +502,7 @@ window.initInteractiveMap = function(isReadOnly = false) {
 
           c.onclick = (e) => {
             e.stopPropagation();
-            window.newTopicGeo = [tag.geo[0], tag.geo[1]];
-            const coordsInput = document.getElementById('geo-epicenter-coords');
-            if (coordsInput) {
-              coordsInput.value = `${window.newTopicGeo[0].toFixed(6)}, ${window.newTopicGeo[1].toFixed(6)}`;
-            }
+            window.setIssuePoint(tag.geo[0], tag.geo[1], true); // U6
             drawSvg();
           };
           svg.appendChild(c);
@@ -648,11 +570,8 @@ window.initInteractiveMap = function(isReadOnly = false) {
         const rect = svg.getBoundingClientRect();
         const clickX = e.clientX - rect.left;
         const clickY = e.clientY - rect.top;
-        window.newTopicGeo = toCoords(clickX, clickY);
-        const coordsInput = document.getElementById('geo-epicenter-coords');
-        if (coordsInput) {
-          coordsInput.value = `${window.newTopicGeo[0].toFixed(6)}, ${window.newTopicGeo[1].toFixed(6)}`;
-        }
+        const clicked = toCoords(clickX, clickY);
+        window.setIssuePoint(clicked[0], clicked[1], true); // U6
         drawSvg();
       });
 
@@ -697,9 +616,6 @@ window.updateTargetMarker = function() {
     if (typeof L !== 'undefined' && window.mapInstance instanceof L.Map) {
       window.mapMarker.setLatLng(center);
       window.mapInstance.panTo(center);
-    } else if (typeof google !== 'undefined' && google.maps && window.mapInstance instanceof google.maps.Map) {
-      window.mapMarker.setPosition({ lat: center[0], lng: center[1] });
-      window.mapInstance.panTo({ lat: center[0], lng: center[1] });
     }
   } else {
     window.initInteractiveMap();
@@ -2805,6 +2721,9 @@ function initTopicDetailViews() {
           '</div>' +
         '</div>' +
 
+        // A4: where the derived parameters came from (the model, or the keyword rules)
+        '<div id="create-ai-source" style="display: none; margin-top: 10px; font-size: 0.82rem; color: var(--text-muted);"></div>' +
+
         '<div class="topic-detail-block" id="create-results-members-block" style="display: none; margin-top: 16px;">' +
           '<div class="topic-detail-block-title">Suggested Ad-hoc Public Members (Relevance > 0.15)</div>' +
           '<div id="create-mc-values-diagram" style="display: none; padding: 0 4px;"></div>' +
@@ -4909,9 +4828,13 @@ function initTopicDetailViews() {
 
     // L1 (decision 8): every chat has a deadline; the default is today + 1 month.
     let newTopicDeadline = Lifecycle.chatDeadline(null, Lifecycle.todayIn(Lifecycle.TIME_ZONE));
-    newTopicGeo = [47.553832, 7.606599]; // default Basel center
-    window.newTopicGeo = newTopicGeo;
+    // U6 (R6): the point starts at the creator's home once the profile is loaded (below); the
+    // Basel centre stays only for a profile without a home.
+    window.setIssuePoint(47.553832, 7.606599, false);
+    window.newTopicGeoSource = 'auto';
+    window.issuePointLabel = '';
     let suggestedParams = null;
+    let checkedPointMoves = null; // U6: window.issuePointMoves at the last successful Check
     // A2: the topic starter can only clarify the context; the server derives again.
     let pendingClarification = "";
     let calculatedMembers = [];
@@ -4995,12 +4918,28 @@ function initTopicDetailViews() {
     // 2. Fetch Creator Profile Geotags for Map select shortcuts
     profileGeotags = [];
     window.profileGeotags = profileGeotags;
+    // U6 (R6): the 📍 value says where the point came from; its tooltip has the coordinates.
+    function showIssuePointLabel(label) {
+      window.issuePointLabel = label || '';
+      const el = modalBody.querySelector('#create-val-geo');
+      if (!el) return;
+      const p = window.newTopicGeo || [0, 0];
+      el.textContent = window.issuePointLabel || `${p[0].toFixed(2)}, ${p[1].toFixed(2)}`;
+      el.title = `${p[0].toFixed(5)}, ${p[1].toFixed(5)}`;
+    }
+
     async function loadCreatorGeotags() {
       try {
         const userSnap = await db.collection("users").doc(currentUserId.toString()).get();
         if (userSnap.exists) {
           profileGeotags = userSnap.data().geography || [];
           window.profileGeotags = profileGeotags;
+          // U6 (R6): before Check, the point is the creator's home, unless the creator moved it already.
+          const home = profileGeotags.find(g => g && g.type === 'home' && Array.isArray(g.geo));
+          if (home && window.newTopicGeoSource !== 'creator') {
+            window.setIssuePoint(home.geo[0], home.geo[1], false);
+            showIssuePointLabel('your home');
+          }
         }
       } catch (err) {
         console.error("Error loading user profile geotags:", err);
@@ -5064,7 +5003,8 @@ function initTopicDetailViews() {
                  <span class="geo-anchor-coord">${tag.geo[0].toFixed(4)}, ${tag.geo[1].toFixed(4)}</span>
               `;
               row.addEventListener('click', () => {
-                newTopicGeo = [tag.geo[0], tag.geo[1]];
+                // U6: before, only newTopicGeo changed, so the pin on the map did not move
+                window.setIssuePoint(tag.geo[0], tag.geo[1], true);
                 updateTargetMarker();
               });
               geoAnchorsList.appendChild(row);
@@ -5245,11 +5185,25 @@ function initTopicDetailViews() {
 
     // Global map rendering and update logic moved to top level
 
+    // U6 (R6): moving the pin marks it as the creator's; after a Check, Create waits for a new Check.
+    window.onIssuePointMoved = () => {
+      showIssuePointLabel('set by you');
+      if (suggestedParams && submitBtn) {
+        submitBtn.setAttribute('disabled', 'true');
+        const aiSourceEl = modalBody.querySelector('#create-ai-source');
+        if (aiSourceEl) {
+          aiSourceEl.textContent = 'The point moved after the check: press Check again.';
+          aiSourceEl.style.color = 'var(--urgent)';
+          aiSourceEl.style.display = 'block';
+        }
+      }
+    };
+
     if (geoConfirmBtn) {
       geoConfirmBtn.onclick = (e) => {
         e.stopPropagation();
         // A2: μ and σ are derived by the server (Check); the map only shows them.
-        geoValEl.textContent = `${newTopicGeo[0].toFixed(2)}, ${newTopicGeo[1].toFixed(2)}`;
+        showIssuePointLabel(window.newTopicGeoSource === 'creator' ? 'set by you' : window.issuePointLabel); // U6
         geoOverlay.setAttribute('hidden', 'true');
         geoOverlay.style.display = 'none';
         const searchInput = document.getElementById('geo-map-search-input');
@@ -5282,6 +5236,22 @@ function initTopicDetailViews() {
     const searchBtn = document.getElementById('geo-map-search-btn');
     const searchResults = document.getElementById('geo-map-search-results');
 
+    // U6 (R6): the switch config/geocoding {enabled}, read at most once a minute; a missing or
+    // unreadable document counts as on (the same rule as the server's lookup).
+    let placeSearchSwitch = { value: true, at: 0 };
+    async function placeSearchEnabled() {
+      if (Date.now() - placeSearchSwitch.at < 60 * 1000) return placeSearchSwitch.value;
+      let on = true;
+      try {
+        const snap = await db.collection('config').doc('geocoding').get();
+        on = !(snap.exists && snap.data().enabled === false);
+      } catch (e) {
+        on = true;
+      }
+      placeSearchSwitch = { value: on, at: Date.now() };
+      return on;
+    }
+
     async function handleGeoSearch() {
       if (!searchInput) return;
       const query = searchInput.value.trim();
@@ -5297,6 +5267,12 @@ function initTopicDetailViews() {
       }
 
       try {
+        if (!(await placeSearchEnabled())) {
+          if (searchResults) {
+            searchResults.innerHTML = '<div style="color: var(--text-muted); padding: 4px;">Place search is switched off.</div>';
+          }
+          return;
+        }
         const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=5`, {
           headers: {
             'Accept-Language': 'en'
@@ -5358,13 +5334,7 @@ function initTopicDetailViews() {
     }
 
     function applySearchResult(lat, lon) {
-      newTopicGeo = [lat, lon];
-      window.newTopicGeo = newTopicGeo;
-
-      const coordsInput = document.getElementById('geo-epicenter-coords');
-      if (coordsInput) {
-        coordsInput.value = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
-      }
+      window.setIssuePoint(lat, lon, true); // U6: a searched place is the creator's choice
 
       window.updateTargetMarker();
 
@@ -5645,13 +5615,17 @@ function initTopicDetailViews() {
 
         try {
           let data = null;
+          let serverError = null; // A4: e.g. "AI unavailable: ... please try again."
+          const movesAtCheck = window.issuePointMoves; // U6: a pin moved during the Check makes it stale
           // Attempt server-side check calculation
           try {
             // A2: text only. Numbers are derived on the server and never sent.
             const payload = {
               title: title,
               description: description,
-              location: newTopicGeo,
+              location: window.newTopicGeo,
+              // U6 (R6): "creator" keeps the creator's pin; "auto" lets the server take the point from the description
+              location_source: window.newTopicGeoSource,
               submitterId: currentUserId,
               clarification: pendingClarification
             };
@@ -5669,6 +5643,7 @@ function initTopicDetailViews() {
             }
           } catch (err) {
             console.warn("Server check failed:", err);
+            serverError = err && err.message;
           }
 
           if (data && data.success) {
@@ -5696,6 +5671,22 @@ function initTopicDetailViews() {
             };
             calculatedMembers = data.members;
             pendingClarification = "";
+            // U6 (R4, R6): the server's point and where it came from, unless the pin moved meanwhile
+            checkedPointMoves = movesAtCheck;
+            if (Array.isArray(data.location) && window.issuePointMoves === movesAtCheck) {
+              window.setIssuePoint(data.location[0], data.location[1], false);
+              if (window.mapInstance && window.mapMarker) window.updateTargetMarker();
+              showIssuePointLabel(data.location_label || '');
+            }
+            const aiSourceEl = modalBody.querySelector('#create-ai-source');
+            if (aiSourceEl) {
+              const exCount = Array.isArray(data.examples_used) ? data.examples_used.length : 0;
+              aiSourceEl.textContent = data.ai_source === 'model'
+                ? `Parameters derived by ${data.ai_model} with ${exCount} reference example${exCount === 1 ? '' : 's'}.`
+                : 'AI unavailable: parameters from keyword rules.';
+              aiSourceEl.style.color = data.ai_source === 'model' ? 'var(--text-muted)' : 'var(--urgent)';
+              aiSourceEl.style.display = 'block';
+            }
             const distShow = document.getElementById('geo-affect-distance');
             const fadeShow = document.getElementById('geo-affect-fade');
             if (distShow && fadeShow) {
@@ -5705,7 +5696,7 @@ function initTopicDetailViews() {
           } else {
             // A2: no parameters are derived in the browser. Without the server
             // nothing can be checked or published.
-            throw new Error("The server could not derive the issue parameters. Nothing was changed; please try again.");
+            throw new Error(serverError || "The server could not derive the issue parameters. Nothing was changed; please try again.");
           }
 
           // Calculate aggregated values preview
@@ -5774,7 +5765,11 @@ function initTopicDetailViews() {
           if (expBtnEl) expBtnEl.removeAttribute('disabled');
 
           if (submitBtn) {
-            submitBtn.removeAttribute('disabled');
+            if (window.issuePointMoves === checkedPointMoves) {
+              submitBtn.removeAttribute('disabled');
+            } else if (typeof window.onIssuePointMoved === 'function') {
+              window.onIssuePointMoved(); // U6: the pin moved during the Check
+            }
           }
 
         } catch(err) {
@@ -5793,6 +5788,10 @@ function initTopicDetailViews() {
         const title = titleInput.value.trim();
         const description = descTextarea.value.trim();
         if (!title || !description || !suggestedParams) return;
+        if (window.issuePointMoves !== checkedPointMoves) {
+          alert('The point moved after the check: press Check again.'); // U6 (R6)
+          return;
+        }
 
         submitBtn.disabled = true;
         submitBtn.textContent = "Creating issue...";
@@ -6432,9 +6431,7 @@ function initTopicDetailViews() {
           }
           window.leafletInnerCircle = null;
           window.leafletOuterCircle = null;
-          window.googleInnerCircle = null;
-          window.googleOuterCircle = null;
-          
+
           // Restore inputs and buttons to original state
           if (coordsInput) {
             coordsInput.value = '';

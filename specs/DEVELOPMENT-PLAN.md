@@ -1,6 +1,6 @@
 # ISR MVP: overall and detailed development plan
 
-Prepared: **2026-11-12**, Europe/Kyiv. Baseline: main `6d252c2` (P1 PR #25 merged), with the A5 emulator preview at `0ff325b`.
+Prepared: **2026-11-12**, Europe/Kyiv. Current baseline: main `47e835a`, all P1/P2/A4/U6/U8/A5 implementation PRs merged; the emulator preview now runs this release. Tag: `isr-mvp-rc-2026-11-12`.
 
 **Status: APPROVED 2026-11-12 (author: "Approved.").** Existing approved task specs and decisions remain authoritative. This document organizes their remaining work and proposes the order for later stages; it does not authorize merges, live writes, deploys, new formulas or new features. Model recommendations are advisory. Estimates are planning ranges, not delivery commitments.
 
@@ -22,27 +22,27 @@ This follows [PD-6](decisions/PD-6-mvp-status-and-paper.md): a design proposal a
 
 ## 2. Current position: finished versus remaining
 
-| Area | Recorded state on 2026-11-12 | Remaining |
+**M0 complete, 2026-11-12.** [Integrated release evidence](tasks/INTEGRATED-release-2026-11-12.md) records main `47e835a`, its passing CI, 98 Node tests, Python 105 run with one optional skip, full vector/canonical-score checks, locality replay, browser recheck and the named snapshot. [The concrete live runbook](LIVE-ROLLOUT.md) covers the next milestone.
+
+| Area | Current recorded state | Remaining |
 |---|---|---|
-| P1 profile repairs | PR #25 merged into main; emulator verified; 9,150 users and 20,245 unchanged skill IDs. | Author live apply/cache rebuild and read-only audit (AC4). |
-| P2 homes/property | PR #23; applied to all 9,150 emulator profiles. AC2-AC4 accepted on the A5 stack. | Reconcile with main, merge, author live apply and AC5. |
-| A4 working AI | PR #20; phases A-C complete on emulator, all profile/skill vectors current; real E/ISR checked. | Reconcile with main, merge; author phase D and live AC8. |
-| U6 issue locations | PR #21, stacked on A4; emulator AC2-AC5 passed. | Integrate after A4; live verification after author rollout. |
-| U8 map tiles | PR #22, stacked on U6; emulator acceptance passed. | Integrate after U6; live AC3 after author hosting deploy. |
-| A5 local ownership | PR #24, stacked on U8; building inclusion regression fixed; emulator acceptance passed. | Integrate after U8 and include in the coordinated deployment. |
-| ISR/voting/lifecycle | A1 v2 and L1 already implemented and recorded live. | Preserve behavior; exercise the complete combined path with D1. Votes and some management writes still originate in the client until access work. |
-| D1 scenarios | Ten scenarios and decisions 5.1-5.5 approved; implementation has not started. | Starts after P2 apply and A4/U6 are live, as its spec requires. |
-| Documentation | Task reports are detailed; many component pages and old roadmap/index rows lag behind. | Update current status and component evidence incrementally, retaining the historical audit. |
+| P1 | PR #25 merged; emulator accepted. Live read-only preflight: 8,803 updates, 0 deletes, no missing generation/changed inputs; 37 packs; extra incomplete profile retained. | Author live apply and AC4. |
+| P2 | PR #23 merged; all 9,150 emulator people done, AC2-AC4 accepted with A5. | Author live apply after P1; AC5. |
+| A4 | PR #20 merged; all 9,150 profile / 20,245 skill vectors current on emulator; real E/ISR verified. | Author phase D and live AC8. |
+| U6 | PR #21 merged; saved location/pin/draft/cache/switch acceptance. | Coordinated deployment and live verification. |
+| U8 | PR #22 merged; fresh release map recheck passed. | Author hosting deployment and AC3. |
+| A5 | PR #24 merged as `47e835a`; captured replay and saved p4 endpoint acceptance pass. | Include in coordinated live deployment. |
+| ISR/lifecycle | A1/L1 already implemented; canonical migrated-public scores remain verified. | Full D1 demonstration and later protected write boundary. |
+| D1 | Ten scenarios and decisions approved; not implemented. | Start after P2 applied and A4/U6 live. |
+| Plan/runbook docs | Approved plan updated with the integrated checkpoint in PR #26. | Separate explicit merge instruction for #26. |
 
-GitHub checks passed on the existing PR heads. **After P1 merged, #20 and #23 report merge conflicts with main.** Their earlier green CI does not establish that the combined release passes. The stacked children must also be reconciled/rechecked when their parents reach main.
+**M1 prerequisites remain open:** a full backup with an agreed/rehearsed recovery method, the author's execution window, and billing/budget confirmation. The repository has a typed JSONL backup script but no general restore utility; resolve this before live apply. Re-estimate M1 preparation if a restore utility must be implemented. No deployment/live apply has been performed by Codex.
 
-The last recorded live state is still pre-A4 functions and old embeddings; P1/P2 are not recorded applied live. That is a deployment gap, not unfinished emulator embedding work. Do not regenerate P1 texts or restart the completed full emulator migration as a routine next step.
-
-The main working folder is deliberately serving the A5 preview. Keep it on the tested code until an intentional clean export/restart. Development work belongs in feature worktrees on drive A.
+The current source/scripts are verified together. Do not regenerate P1 texts or repeat completed emulator re-embedding. The serving checkout remains clean detached main; feature work belongs on A. Historical seeded data and the paper's frozen audit remain separate.
 
 ## 3. Order and dependencies
 
-Recommended merge sequence: **#23 -> #20 -> #21 -> #22 -> #24**, with #25 already merged. P2's scripts can merge first, but its live apply/release remains coordinated with A5. The essential code dependency is A4 -> U6 -> U8 -> A5.
+Completed integration sequence: **#25 -> #23 -> #20 -> #21 -> #22 -> #24**. The code dependency A4 -> U6 -> U8 -> A5 is now in main. The remaining critical path is recovery/rollout preparation -> author live rollout -> D1, then guardrails/access. The diagram retains the implementation dependencies as context.
 
 ```mermaid
 flowchart TD
@@ -65,7 +65,7 @@ Guardrail design can be drafted after M1, but the proposed implementation priori
 
 ## 4. Detailed near-term plan
 
-### M0. Integrate the finished branches
+### M0. Integrate the finished branches (completed; retained as the acceptance checklist)
 
 | Step | Work by Codex | Acceptance / evidence |
 |---|---|---|
@@ -242,11 +242,11 @@ This task mapping is a project recommendation, informed by [official OpenAI mode
 
 ### Decisions to take at the relevant gate
 
-1. **Approved 2026-11-12:** the author accepted the milestone priority and execution order. PR merges retain their separate explicit authorization.
+1. **Approved 2026-11-12:** the author accepted the milestone priority/execution order; all implementation merges are complete with explicit authorization. PR #26 remains a separate documentation merge.
 2. **Per merge:** the author writes `merge PR N` for the reviewed, checked head.
-3. **Before rollout:** choose the coordinated author execution window, verify billing/budget and approve the final release runbook, including the existing A4 log protection requirement.
+3. **Before rollout:** establish/rehearse backup recovery (no general restore utility exists in the repo), choose the author execution window, verify billing/budget and review the concrete runbook, including existing A4 log protection.
 4. **Before D1 code:** settle archive/query mechanics, stable IDs/time inputs and the flagship standby representation in its approved spec.
 5. **Before guardrails/access:** resolve range/clarification policy, sign-in/profile adoption and who may create issues.
 6. **Before advanced features:** resolve Contribution edge cases, public-change voting and the remaining PD-1/PD-5 pilot policy.
 
-**Progress after approval, 2026-11-12:** P2 PR #23 reconciled with main at `0c2f336`. Node 47 passed; Python 84 run, 83 passed and one existing optional skip. P1/P2 emulator dry runs propose zero changes to 9,150 users. CI is checked on the pushed head; explicit `merge PR 23` remains the next gate, followed by A4 reconciliation. This update supersedes the original conflict snapshot in section 2.
+**Current next gate, 2026-11-12:** merge the updated plan/runbook documentation PR #26 on explicit instruction, then resolve the backup recovery prerequisite and author execution window. Local integrated release `47e835a` is verified; live operations and D1 prerequisites remain pending. See the release report and runbook for current evidence/commands.
