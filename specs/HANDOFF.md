@@ -4,7 +4,18 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: approved plan and P2 reconciliation, 2026-11-12
+## Current checkpoint: P2 merged; A4 reconciliation, 2026-11-12
+
+- The author approved the development plan in [PR #26](https://github.com/SergiiPonomarchuk/isr-mvp/pull/26), then explicitly instructed `merge PR 23`. **P2 is merged as `a17d5cd`**, after P1 #25 (`6d252c2`). This is source integration, not a live migration or deploy.
+- A4 #20 is reconciled with that main. Conflicts were limited to CHANGES, this handoff and the index. P1/P2 source and generated artifacts remain identical to main; A4 source, examples, models, dependencies and existing rules are unchanged by reconciliation.
+- Combined verification passed: Node 57; Python 105 run, 104 passed and one existing optional skip. Key-free read-only check: all 9,150 profiles current, 20,245 skill hash keys, no texts/requests needed; phase C has no placeholder publics, updates, new vectors or requests. Existing AC5/AC6 evidence remains applicable. CI is checked on the pushed head before presenting #20. Do not restart paid generation or migration apply.
+- Next: explicit author merge instruction for A4 #20, then retarget U6 #21 to main, reconcile/verify it, followed by U8 #22 and A5 #24. The plan documentation PR #26 is still unmerged and also needs its own explicit instruction.
+- Preserve the running A5 preview in `C:\isr-mvp`, detached at `0ff325b`, with its saved 2026-11-12 06:36 UTC export and 8 GB Java heap. Do not switch the serving checkout as a side effect of this integration.
+- Live P1/P2 apply, A4 phase D and the coordinated code deploy remain the author's steps. Include A5 for P2's accepted building locality. D1 waits for P2 applied and A4/U6 live. No deploys, live writes, fresh API calls or rules edits in this reconciliation.
+
+The checkpoints and original resume commands below are historical; this checkpoint governs next work.
+
+## P2 reconciliation checkpoint, 2026-11-12 (historical)
 
 - The author approved the [overall/detailed development plan, PR #26](https://github.com/SergiiPonomarchuk/isr-mvp/pull/26). Approval authorizes its next implementation work; PR merges still need explicit `merge PR N` instructions. The documentation PR itself is not merged by that approval.
 - P1 PR #25 is merged into main as `6d252c2`. P2 PR #23 has been reconciled with that main; only CHANGES and this handoff conflicted, and both historical records are retained below. The P1/P2 generated artifacts and migration code remain unchanged.
@@ -36,10 +47,20 @@ The remaining sections describe the original handoff and historical run state; t
 - No live writes, deploys or rules changes. Live migrations remain the author's steps. Older partial A4 counts and stopped-emulator notes below are historical.
 
 
+## A4 completion checkpoint, 2026-11-11 (historical)
+
+- **A4 phases B and C are complete and saved.** All 9,150 people are current, with 20,245 skill vectors. Two publics (50 members) have real E and ISR; 56 documents were written. Independent checks against `functions/isr.js` and browser checks passed; repeat runs make no changes.
+- Final emulator export: **18:34 UTC / 20:34 Kyiv**, `C:\isr-mvp\.emulator-data`, Java heap 8 GB. Imported again and the completed state verified. The emulator is stopped; the main checkout is back on `p1-profile-review`.
+- This resume used 229 embedding requests for 22,751 texts (833,512 estimated tokens, approximately $0.13), plus two small phase C requests (preview/apply). See A4's Status log and reports for the complete accounting.
+- **Do not re-run A4 phase B or C as a next step.** Next: A4 PR/review, then U6 AC2-AC5 with its own functions (section 3, step 3); P2 AC3/AC4 remain as recorded. Live phase D stays the author's step.
+- Drive A was reconnected and readable. All project instructions continue to apply. No live data or deployed code changed.
+
+The older partial counts and resume commands below are historical handoff context, not the current checkpoint.
+
 ## 1. Where things stand
 
 ### main and the live site
-- **main:** `ae5343a` (PR 18, U7's live record, merged 2026-11-11). Hosting on live is `f58bf25` (PR 17); PR 18 changed documents only.
+- **main:** `39c1998` (PR 19, handoff instructions, merged 2026-11-11). Hosting on live is `f58bf25` (PR 17); PR 18 changed documents only.
 - **Live hosting:** main at `f58bf25`, deployed 2026-11-11 06:16 UTC. U5 and U7 are live: every response is sent with `no-cache`.
 - **Live functions:** the code from before A4. The old SDK and the retired models mean that Check falls back to the keyword rules and uses a random issue vector, until A4 is deployed (step 5).
 - **Live data:** A1b and L1 are migrated (2026-11-09). P1, P2 and A4's vectors are **not** on live yet.

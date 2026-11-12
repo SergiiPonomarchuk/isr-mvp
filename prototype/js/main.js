@@ -2805,6 +2805,9 @@ function initTopicDetailViews() {
           '</div>' +
         '</div>' +
 
+        // A4: where the derived parameters came from (the model, or the keyword rules)
+        '<div id="create-ai-source" style="display: none; margin-top: 10px; font-size: 0.82rem; color: var(--text-muted);"></div>' +
+
         '<div class="topic-detail-block" id="create-results-members-block" style="display: none; margin-top: 16px;">' +
           '<div class="topic-detail-block-title">Suggested Ad-hoc Public Members (Relevance > 0.15)</div>' +
           '<div id="create-mc-values-diagram" style="display: none; padding: 0 4px;"></div>' +
@@ -5645,6 +5648,7 @@ function initTopicDetailViews() {
 
         try {
           let data = null;
+          let serverError = null; // A4: e.g. "AI unavailable: ... please try again."
           // Attempt server-side check calculation
           try {
             // A2: text only. Numbers are derived on the server and never sent.
@@ -5669,6 +5673,7 @@ function initTopicDetailViews() {
             }
           } catch (err) {
             console.warn("Server check failed:", err);
+            serverError = err && err.message;
           }
 
           if (data && data.success) {
@@ -5696,6 +5701,15 @@ function initTopicDetailViews() {
             };
             calculatedMembers = data.members;
             pendingClarification = "";
+            const aiSourceEl = modalBody.querySelector('#create-ai-source');
+            if (aiSourceEl) {
+              const exCount = Array.isArray(data.examples_used) ? data.examples_used.length : 0;
+              aiSourceEl.textContent = data.ai_source === 'model'
+                ? `Parameters derived by ${data.ai_model} with ${exCount} reference example${exCount === 1 ? '' : 's'}.`
+                : 'AI unavailable: parameters from keyword rules.';
+              aiSourceEl.style.color = data.ai_source === 'model' ? 'var(--text-muted)' : 'var(--urgent)';
+              aiSourceEl.style.display = 'block';
+            }
             const distShow = document.getElementById('geo-affect-distance');
             const fadeShow = document.getElementById('geo-affect-fade');
             if (distShow && fadeShow) {
@@ -5705,7 +5719,7 @@ function initTopicDetailViews() {
           } else {
             // A2: no parameters are derived in the browser. Without the server
             // nothing can be checked or published.
-            throw new Error("The server could not derive the issue parameters. Nothing was changed; please try again.");
+            throw new Error(serverError || "The server could not derive the issue parameters. Nothing was changed; please try again.");
           }
 
           // Calculate aggregated values preview
