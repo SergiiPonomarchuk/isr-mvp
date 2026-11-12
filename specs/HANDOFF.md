@@ -6,10 +6,12 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 ## Latest checkpoint: P2 acceptance review, 2026-11-12 (supersedes old resume instructions below)
 
+**Follow-up:** A5 PR #24 resolves the original building failure described below. Current preview is detached at A5 with prompt p4; its saved export includes both successful repeated Checks. Review code stack A4 #20 -> U6 #21 -> U8 #22 -> A5 #24, plus P2 data PR #23. Emulator remains running. See the updated P2 acceptance report for the passing follow-up.
+
 - A4 saved embedding/migration work is complete (9,150 people current). U6 and U8 emulator checks are complete. Review stack: A4 PR #20 -> U6 #21 -> U8 #22. Nothing merged or deployed.
 - Emulator is **running** from `C:\isr-mvp`, detached at U8 `0eddbc6`, with the U6/A4 backend and Java heap 8 GB. Keep the preview available for the author. Latest export **2026-11-11 22:58 UTC**, including the two P2 test drafts/logs.
 - P2 dry run: 9,150 done, 0 to write/held/problems. AC3 profile/map passed; garage-owner inclusion passed. **Building-locality AC4 FAILED:** correct h5 point and 130 m cutoff, but 3,908 unrelated flat/house owners bypass it, giving 4,941 candidates in total. See `tasks/P2-acceptance-report.md`.
-- P2 remains draft/blocked on a separately approved Analyzer/selection-scope fix. Do not reapply P2 or A4 to address this; the data layout is correct. Do not mark AC4 passed or change D/G under this data-only spec.
+- P2 AC4 now passes on the approved A5 fixed stack (PR #24): building count 1,033, all 3,908 unrelated bypasses removed, garage behavior retained. Original failure is historical regression evidence. P2 is review-ready; A5 must be merged/deployed with the coordinated release. Do not reapply P2/A4; no data or D/G formula change is needed.
 - No live writes, deploys or rules changes. Live migrations remain the author's steps. Older partial A4 counts and stopped-emulator notes below are historical.
 
 

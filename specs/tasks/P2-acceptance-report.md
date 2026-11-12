@@ -2,7 +2,13 @@
 
 Recorded 2026-11-12 (client date). P2 branch code `15e13f5`; running application is U8 `0eddbc6` with the verified U6/A4 backend. All database operations targeted emulator `127.0.0.1:8080`. No live writes or deployment.
 
-## Result
+## Follow-up verified: A5, 2026-11-12
+
+The building-locality blocker below is resolved on the tested A5 stack, [PR #24](https://github.com/SergiiPonomarchuk/isr-mvp/pull/24). Captured-result replay and a fresh p4 Check retain 1,033 local/property-linked candidates and remove all 3,908 unrelated-owner bypasses. Garage inclusion remains (1,391 candidates; displayed 25/25 verified owners). The old offending draft now receives 409 requesting a new Check. No P2 migration rerun or old public-score rewrite was performed.
+
+P2 AC3/AC4 therefore pass on this stack. A5 must be merged and included in the coordinated code deployment before relying on locality on live. Live AC5 remains the author's step. See A5's emulator report in PR #24 for its separate two-call usage and export record. The original failed observations below are retained as regression evidence.
+
+## Original result (before A5)
 
 **AC3 passed. AC4 is partial and blocked: the building locality requirement failed.** The data-only P2 implementation was not changed to conceal or work around this failure.
 
