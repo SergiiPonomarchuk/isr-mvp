@@ -21,6 +21,8 @@ db/vectorization_progress.json
 scratch/
 
 # Environment variables and secrets
+*.secret.local
+.secret.local
 .env
 .env.*
 .secrets/

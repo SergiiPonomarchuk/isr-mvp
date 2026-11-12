@@ -1,5 +1,21 @@
 # CHANGES
 
+## P2: reconcile with the merged profile repairs (2026-11-12)
+
+- Author approved the development plan (PR #26). Reconciled main `6d252c2` (P1 PR #25) into P2 PR #23; only CHANGES and the handoff needed conflict resolution. Both tasks' reports and generated records are retained.
+- P2 migration code, committed plan and GeoJSON artifacts are unchanged; application code, dependency versions, formulas and vectors are unchanged. P2's accepted building behavior still depends on the A5 code release (PR #24).
+- Combined verification: Node 47 passed; Python 84 run, 83 passed and one existing optional skip. Read-only dry runs: P2 done 9,150, to write/held/problems 0; P1 profiles 9,150, updates/deletes/pending 0. No migration apply, generation, paid AI calls, deploy, rules edit or live write is part of this reconciliation.
+
+## P1: repair the synthetic profiles (2026-11-12 review; emulator applied 2026-11-11)
+
+Spec: `specs/tasks/P1-profile-review.md`; approved by the author on 2026-11-10. The existing migration and its committed output are ready for review.
+
+- Structured 11,057 work-experience entries for 5,097 people into the existing role, specialization, years and own-work description fields. Skill IDs/types are retained; generated years total no more than age minus 16. Graduation ages follow education level, future entries are marked in progress, and job education reflects the highest completed education. Deleted the broken `users/None` stub. Features, activity times and unused fields were kept as decided.
+- `scripts/migrate_p1.py` is dry-run by default, guards live access, holds changed inputs, resumes generation and rebuilds existing `user_packs` on apply. Committed `p1w2` records provide identical texts for emulator and live; `scripts/audit_profiles.py` reports the repairs. No app/scoring source or vectors changed in P1.
+- Original emulator apply: 8,803 updates and one deletion; no packs existed. Read-only recheck after P2/A4: 9,150 profiles, 0 updates/deletes/pending/changed inputs. All 20,245 skill IDs exactly match the original export and current A4 hash keys. See `specs/tasks/P1-review-report.md` and the original migration/audit reports.
+- Validation: Node 47 passed; Python 70 run, 69 passed and one existing optional skip, including 18 mocked P1 tests. Original generation: 526 logged calls (520 successes, six failed), 868,733 prompt and 869,733 output tokens; $0 on the then-free tier, about $1.52 at recorded paid rates. This review made no model requests or database writes.
+- Remaining: author backup and live AC4 apply/audit, coordinated with P2, A4/U6/U8/A5 and A4 re-embedding. Nothing deployed or written to live by this PR.
+
 ## P2: homes in real buildings, and property for the synthetic people (2026-11-11)
 
 Spec: `specs/tasks/P2-homes-and-property.md` (approved 2026-11-10, with the author's additions). Data only, with no app code change. Runs after P1.
