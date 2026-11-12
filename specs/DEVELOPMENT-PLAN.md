@@ -2,7 +2,7 @@
 
 Prepared: **2026-11-12**, Europe/Kyiv. Baseline: main `6d252c2` (P1 PR #25 merged), with the A5 emulator preview at `0ff325b`.
 
-**Status: proposed execution plan for author review.** Existing approved task specs and decisions remain authoritative. This document organizes their remaining work and proposes the order for later stages; it does not authorize merges, live writes, deploys, new formulas or new features. Model recommendations are advisory. Estimates are planning ranges, not delivery commitments.
+**Status: APPROVED 2026-11-12 (author: "Approved.").** Existing approved task specs and decisions remain authoritative. This document organizes their remaining work and proposes the order for later stages; it does not authorize merges, live writes, deploys, new formulas or new features. Model recommendations are advisory. Estimates are planning ranges, not delivery commitments.
 
 ## 1. Direction and finish lines
 
@@ -242,11 +242,11 @@ This task mapping is a project recommendation, informed by [official OpenAI mode
 
 ### Decisions to take at the relevant gate
 
-1. **Now:** approve or revise the proposed milestone priority and execution order. Preparing this plan does not merge any other PR.
+1. **Approved 2026-11-12:** the author accepted the milestone priority and execution order. PR merges retain their separate explicit authorization.
 2. **Per merge:** the author writes `merge PR N` for the reviewed, checked head.
 3. **Before rollout:** choose the coordinated author execution window, verify billing/budget and approve the final release runbook, including the existing A4 log protection requirement.
 4. **Before D1 code:** settle archive/query mechanics, stable IDs/time inputs and the flagship standby representation in its approved spec.
 5. **Before guardrails/access:** resolve range/clarification policy, sign-in/profile adoption and who may create issues.
 6. **Before advanced features:** resolve Contribution edge cases, public-change voting and the remaining PD-1/PD-5 pilot policy.
 
-**Recommended next implementation task after plan approval:** reconcile P2 PR #23 with main, run the combined tests and present the updated PR for its separate merge instruction.
+**Progress after approval, 2026-11-12:** P2 PR #23 reconciled with main at `0c2f336`. Node 47 passed; Python 84 run, 83 passed and one existing optional skip. P1/P2 emulator dry runs propose zero changes to 9,150 users. CI is checked on the pushed head; explicit `merge PR 23` remains the next gate, followed by A4 reconciliation. This update supersedes the original conflict snapshot in section 2.

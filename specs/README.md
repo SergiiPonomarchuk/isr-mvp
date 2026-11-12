@@ -103,7 +103,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
 | [P1-profile-review](tasks/P1-profile-review.md) | merged PR #25 on 2026-11-12; emulator AC1-AC3/AC5 passed and exact skill IDs retained; live AC4 remains the author's coordinated step | 11 (synthetic data), 04 |
 
-Development plan: [DEVELOPMENT-PLAN](DEVELOPMENT-PLAN.md): overall milestones and detailed remaining work, proposed for author review (2026-11-12).
+Development plan: [DEVELOPMENT-PLAN](DEVELOPMENT-PLAN.md): overall milestones and detailed remaining work, approved by the author (2026-11-12).
 
 Handoff: [HANDOFF](HANDOFF.md): the current checkpoint, branch state and next steps.
 
