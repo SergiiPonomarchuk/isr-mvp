@@ -4,7 +4,13 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: integrated release verified; live preparation, 2026-11-12
+## Current checkpoint: Firestore recovery rehearsal, 2026-11-12
+
+- Plan and workflow PR #26 merged at `cb8d001`. The preview runs release `47e835a`.
+- Recovered all 24,783 documents from the November 7 pre-migration backup on a separate local emulator. Every path and typed document body matched on read-back. See [recovery evidence](tasks/M1-firestore-recovery.md) and [the author's repeatable procedure](LIVE-ROLLOUT.md#2-backup-and-recovery-prerequisite-author).
+- Next: merge the recovery branch on the author's explicit PR instruction. The author then chooses the live window, confirms Gemini billing/budget, takes a fresh full backup and rehearses that archive before P1. D1 still depends on the live rollout.
+
+## Integrated release verified; live preparation, 2026-11-12 (historical)
 
 - Follow `AGENTS.md` through ready work without routine approval pauses. The next author action in the approved plan is the merge instruction for PR #26.
 - **All implementation PRs are merged:** P1 #25 (`6d252c2`), P2 #23 (`a17d5cd`), A4 #20 (`76c50c8`), U6 #21 (`6b6ae7a`), U8 #22 (`996e7b8`), A5 #24 (**`47e835a`**). Each received explicit author merge authorization. Release tag `isr-mvp-rc-2026-11-12` is pushed; main CI passed.

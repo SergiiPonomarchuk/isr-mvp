@@ -2,7 +2,7 @@
 
 Prepared 2026-11-12 for release `47e835a`, tag `isr-mvp-rc-2026-11-12`. [Local release evidence](tasks/INTEGRATED-release-2026-11-12.md). Author-only operations below are **not executed** by preparing this document.
 
-**Current gate:** local integration is verified. Before any live apply, the author must have a completed full backup and an agreed, rehearsed recovery procedure, and confirm the Gemini project's paid tier/budget and execution window. The repository has a typed JSONL backup script but no general restore utility. Resolve recovery by documenting an existing tested procedure or approving a focused restore-to-copy implementation/rehearsal. Do not treat the unrelated `restore_names.py` as recovery of the database.
+**Current gate:** local integration is verified. Before any live apply, the author must have a completed full backup and an agreed, rehearsed recovery procedure, and confirm the Gemini project's paid tier/budget and execution window. Section 2 gives the procedure for restoring the exact backup to a disposable Firestore emulator.
 
 This runbook uses Windows PowerShell 5.1. Run the blocks in order and inspect their counts before the next dependent step. Every deploy and live `--apply` is the author's action. Codex performs read-only verification; the author performs live browser actions that write drafts/issues/votes.
 
@@ -22,7 +22,7 @@ Remove-Item Env:\FIRESTORE_EMULATOR_HOST -ErrorAction SilentlyContinue
 if ($env:FIRESTORE_EMULATOR_HOST) { throw 'This shell still targets the emulator' }
 $env:GCLOUD_PROJECT = $isrProject
 git status --short --branch
-git diff --exit-code $isrReleaseTag -- functions prototype firestore.rules scripts
+git diff --exit-code $isrReleaseTag -- functions prototype firestore.rules scripts ':(exclude)scripts/restore_firestore.py' ':(exclude)scripts/firebase-recovery.json'
 if ($LASTEXITCODE -ne 0) { throw 'Application/scripts differ from the reviewed release' }
 ```
 
@@ -37,7 +37,34 @@ python scripts/backup_firestore.py --project $isrProject --out $isrBackup
 if ($LASTEXITCODE -ne 0) { throw 'Backup incomplete; do not apply migrations' }
 ```
 
-An interrupted run may resume with the same path and `--resume`; confirm its manifest/target and completed collections before proceeding. Keep the old deployment references with this backup. Establish/rehearse the recovery method on an isolated copy before live migration; no general restore command is supplied by this repository yet. A code rollback by itself does not restore profiles or vectors.
+An interrupted run may resume with the same path and `--resume`; confirm its manifest/target and completed collections before proceeding. Keep the old deployment references with this backup. Use a quiet backup window because the exporter reads collections over time. Check the manifest's source project, live target, completion time and counts. Rehearse the fresh archive before applying the migration. Use a checkout containing the reviewed recovery script and configuration. The preview checkout can stay at its release tag.
+
+```powershell
+$isrRecoveryCheckout = 'A:\BackUp\isr-mvp\worktrees\wt-firestore-recovery'
+$isrRestore = Join-Path $isrRecoveryCheckout 'scripts\restore_firestore.py'
+$isrRecoveryConfig = Join-Path $isrRecoveryCheckout 'scripts\firebase-recovery.json'
+$isrRehearsal = 'python "{0}" --backup "{1}" --apply' -f $isrRestore, $isrBackup
+$isrJavaHome = (java -XshowSettings:properties -version 2>&1 | Select-String '^\s*java.home\s*=\s*(.+)$').Matches.Groups[1].Value
+if (-not (Test-Path -LiteralPath (Join-Path $isrJavaHome 'bin\java.exe'))) { throw 'JDK not found' }
+$isrPreviousPath = $env:Path
+$isrPreviousJavaOptions = $env:JAVA_TOOL_OPTIONS
+Push-Location -LiteralPath $isrReports
+try {
+    $env:Path = (Join-Path $isrJavaHome 'bin') + ';' + $env:Path
+    $env:JAVA_TOOL_OPTIONS = '-Xmx2400m'
+    firebase emulators:exec --only "firestore" --project demo-isr-recovery --config $isrRecoveryConfig $isrRehearsal
+    if ($LASTEXITCODE -ne 0) { throw 'Recovery rehearsal failed' }
+} finally {
+    $env:Path = $isrPreviousPath
+    $env:JAVA_TOOL_OPTIONS = $isrPreviousJavaOptions
+    Pop-Location
+}
+if (Get-NetTCPConnection -State Listen -LocalPort 8185,9185,4485,4585 -ErrorAction SilentlyContinue) {
+    throw 'Recovery emulator still listening; identify the recovery process before retrying'
+}
+```
+
+Using the JDK's own executable avoids a Windows Java launcher that can leave the emulator running after the CLI exits. The CLI starts Firestore on loopback port 8185, supplies its address to the child process and shuts it down when the command exits. Success reads `Restored and verified N documents`, where N equals the final manifest total. For an interrupted run, repeat the command with a fresh empty emulator. For offline validation alone, run `python $isrRestore --backup $isrBackup`. Keep the original private backup. This rehearsal recovers document data into a copy. A production cutover or in-place rollback needs the author's target, write window and treatment of intervening writes. See [the recovery spec and evidence](tasks/M1-firestore-recovery.md).
 
 ## 3. P1 preview, apply and verification (author)
 
@@ -99,7 +126,7 @@ git -C $isrDeploy fetch origin
 if ($LASTEXITCODE -ne 0) { throw 'Deploy fetch failed' }
 git -C $isrDeploy checkout --detach origin/main
 if ($LASTEXITCODE -ne 0) { throw 'Deploy checkout failed' }
-git -C $isrDeploy diff --exit-code $isrReleaseTag -- functions prototype firestore.rules scripts
+git -C $isrDeploy diff --exit-code $isrReleaseTag -- functions prototype firestore.rules scripts ':(exclude)scripts/restore_firestore.py' ':(exclude)scripts/firebase-recovery.json'
 if ($LASTEXITCODE -ne 0) { throw 'Deploy content differs from the reviewed release' }
 Set-Location -LiteralPath (Join-Path $isrDeploy 'functions')
 npm ci --cache 'A:/BackUp/isr-mvp/npm-cache'

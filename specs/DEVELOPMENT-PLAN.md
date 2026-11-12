@@ -36,7 +36,7 @@ This follows [PD-6](decisions/PD-6-mvp-status-and-paper.md): a design proposal a
 | D1 | Ten scenarios and decisions approved; not implemented. | Start after P2 applied and A4/U6 live. |
 | Plan/runbook docs | Approved plan updated with the integrated checkpoint in PR #26. | Separate explicit merge instruction for #26. |
 
-**M1 prerequisites remain open:** a full backup with an agreed/rehearsed recovery method, the author's execution window, and billing/budget confirmation. The repository has a typed JSONL backup script but no general restore utility; resolve this before live apply. Re-estimate M1 preparation if a restore utility must be implemented. No deployment/live apply has been performed by Codex.
+**M1 preparation:** the restore-to-copy rehearsal verified all 24,783 documents in the November 7 archive. The author selects the live window, confirms billing/budget, takes a fresh backup and rehearses that specific archive before live apply. See [recovery evidence](tasks/M1-firestore-recovery.md).
 
 The current source/scripts are verified together. Do not regenerate P1 texts or repeat completed emulator re-embedding. The serving checkout remains clean detached main; feature work belongs on A. Historical seeded data and the paper's frozen audit remain separate.
 
@@ -242,11 +242,11 @@ This task mapping is a project recommendation, informed by [official OpenAI mode
 
 ### Decisions to take at the relevant gate
 
-1. **Approved 2026-11-12:** the author accepted the milestone priority/execution order; all implementation merges are complete with explicit authorization. PR #26 remains a separate documentation merge.
+1. **Approved 2026-11-12:** the author accepted the milestone priority/execution order; all implementation merges are complete with explicit authorization. PR #26 merged at `cb8d001`.
 2. **Per merge:** the author writes `merge PR N` for the reviewed, checked head.
-3. **Before rollout:** establish/rehearse backup recovery (no general restore utility exists in the repo), choose the author execution window, verify billing/budget and review the concrete runbook, including existing A4 log protection.
+3. **Before rollout:** choose the author's execution window, confirm billing/budget, take a fresh backup, repeat the tested recovery procedure and review the concrete runbook, including existing A4 log protection.
 4. **Before D1 code:** settle archive/query mechanics, stable IDs/time inputs and the flagship standby representation in its approved spec.
 5. **Before guardrails/access:** resolve range/clarification policy, sign-in/profile adoption and who may create issues.
 6. **Before advanced features:** resolve Contribution edge cases, public-change voting and the remaining PD-1/PD-5 pilot policy.
 
-**Current next gate, 2026-11-12:** merge the updated plan/runbook documentation PR #26 on explicit instruction, then resolve the backup recovery prerequisite and author execution window. Local integrated release `47e835a` is verified; live operations and D1 prerequisites remain pending. See the release report and runbook for current evidence/commands.
+**Current next gate, 2026-11-12:** merge the recovery tool on explicit instruction, then schedule the author's rollout and use the runbook to verify a fresh pre-migration backup. Local integrated release `47e835a` is verified; live operations and D1 prerequisites remain pending. See the release report and runbook for current evidence/commands.
