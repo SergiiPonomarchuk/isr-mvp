@@ -132,7 +132,9 @@ Effort estimate: 1-2 developer-days after the decisions, plus generation time on
   - **F7:** `users/None` is gone; 9,150 users.
   - **Skill ids unchanged:** 20,245 skills, every one still matching its vector id from the 2026-10-12 export, and no repeated ids.
   - **Years:** 0 people over age - 16.
-- Next:
+- 2026-11-12: PR preparation and read-only recheck after P2/A4. No source/generated-text changes or migration reapply. Dry run: 9,150 profiles, 0 updates/deletes/pending/changed inputs; all 5,097 work-experience profiles already repaired. The original audit findings remain resolved. Exact original profile/skill ID sets and current A4 text-hash keys match (9,150 / 20,245). Node 47 passed; Python 70 run, 69 passed, one existing optional skip. No model requests, tokens or live reads/writes. See [P1-review-report.md](P1-review-report.md).
+- Current next: review/merge P1, followed by the already prepared P2 PR #23. A4 phases B/C and P2's emulator acceptance are complete; P2 AC4 depends on A5 PR #24. Live AC4 remains the author's coordinated step, after backup. The following original next-step list is historical.
+- Next (recorded 2026-11-11):
   - export the emulator;
   - P2's real plan from these profiles (P2 runs after P1);
   - A4 phase B (the 200-person sample with `--compare-task-types`, then everyone) and phase C on the emulator.
