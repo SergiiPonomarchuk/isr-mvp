@@ -1,5 +1,11 @@
 # CHANGES
 
+## U6: integrate after A4 reaches main (2026-11-12)
+
+- Author explicitly instructed `merge PR 20`; A4 merged as `76c50c8`, after P1 #25 and P2 #23. Retargeted U6 #21 from A4 to main and reconciled that main into the U6 branch under the approved development plan.
+- Only CHANGES conflicted; retained U6 and all merged task records. Application/frontend/AI/location/geocoder source, dependency versions, rules and A4 migrations are unchanged from the tested U6 head `7bbfd45`; imported P1/P2 migration sources and datasets remain identical to main.
+- Combined verification: Node 88 passed; Python 105 run, 104 passed and one existing optional skip. Existing U6 AC2-AC5 browser/API/export evidence remains applicable. No fresh model/Nominatim requests, database writes, deploy or live operation. CI is checked on the pushed head before explicit `merge PR 21`.
+
 ## A4: integrate the merged P1/P2 migrations (2026-11-12)
 
 - P2 PR #23 merged as `a17d5cd` after the author's explicit instruction; P1 PR #25 is already in main. Reconciled that main into A4 PR #20 under the approved development plan.
@@ -55,6 +61,44 @@ Spec: `specs/tasks/P2-homes-and-property.md` (approved 2026-11-10, with the auth
 ### Author's steps after merging
 1. On live, after P1's live apply and a backup: `python scripts/migrate_p2.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`, from `C:\isr-mvp` on main. It uses the committed plan and rebuilds `user_packs`.
 2. The agent then checks live read-only.
+
+## U6: the issue's point comes from its description (2026-11-11; emulator checks complete)
+
+Spec: `specs/tasks/U6-issue-location.md` (author: "U6 approved"; "keep the server lookup in U6"). Merged after A4.
+
+### What changed
+- **The Analyzer** (prompt `p3`) says where the issue is: `location_reference` {anchor: home | work | property | named_place | none, place}. The keyword rules give the same field without the model.
+- **Check** turns it into a point (`functions/location.js`):
+  - home, work or property -> the creator's profile place;
+  - a named place -> the place lookup near the creator's home;
+  - no place -> the creator's home;
+  - a pin the creator moved -> that pin.
+
+  The fallbacks are the home, or the browser's point when the profile has no home. The public is formed around that point.
+- **The place lookup** (`functions/geocode.js`) follows OpenStreetMap's Nominatim usage policy:
+  - it sends only the place name, with our own User-Agent;
+  - it sends at most 1 request a second per instance;
+  - it caches answers for 30 days in `geocode_cache`;
+  - the switch `config/geocoding` {enabled} can turn it off without a deploy;
+  - it credits "© OpenStreetMap contributors".
+- **The draft and Create:** the draft keeps the point, its source, a label and the Analyzer's reference. Create uses the draft's point; a different body point gets 409 "The location changed after the check: check again". The issue stores `location_source` and `location_reference`.
+- **The browser:**
+  - the form starts at the creator's home, not the Basel centre;
+  - after Check it shows the point and its label (for example "your home (from the description)");
+  - moving the pin marks it as the creator's, and Create waits for a new Check;
+  - the map and the search box credit OpenStreetMap;
+  - the search box obeys the switch.
+- **Fixed on the way:** a drag, a map click or a profile place changed a copy of the point that Check never read, so only the search box moved an issue.
+
+### Checks
+- **Unit tests:** Node 88 passed after merging A4/main; Python 73 run, 72 passed and one skipped.
+- **Browser on the emulator's data (no Check):** the home at start, pin moves, the credit and the switch, as in the spec's status log.
+- **AC2-AC5 passed on the emulator:** four location sources; pin move invalidates Check and recheck restores Create; forged location rejected with 409; valid Create uses its draft point; all ten Analyzer logs record location_reference. Four Nominatim lookups total, cache reuse, switch off and OpenStreetMap credit verified. Ten text/embedding calls used 81,465 prompt and 10,588 output tokens plus approximately 342 embedding tokens; approximately $0.0363 at the recorded paid rates. Full evidence: `specs/tasks/U6-emulator-report.md`.
+- **Saved:** final export completed with exit 0; re-import verified the final test state. Emulator stopped, main checkout restored. No live changes.
+
+### Author's steps after merging (coordinated with A4 and U8, as in HANDOFF)
+1. Deploy functions and hosting: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from the clean detached `wt-main` checkout.
+2. Optional: create `config/geocoding` with `enabled: true` in the console. Without the document the lookup is on; `enabled: false` turns it off.
 
 ## A4: working AI, roadmap stage 1 (2026-11-11; emulator phases A-C complete)
 

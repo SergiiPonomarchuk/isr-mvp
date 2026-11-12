@@ -4,7 +4,18 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: P2 merged; A4 reconciliation, 2026-11-12
+## Current checkpoint: A4 merged; U6 retargeted and reconciled, 2026-11-12
+
+- The author explicitly instructed `merge PR 20`; **A4 is merged into main as `76c50c8`**, after P1 #25 and P2 #23. All merge-head checks passed. No live migration or deployment follows automatically.
+- U6 #21 now targets main. Reconciled main into its feature branch; only CHANGES conflicted. Preserved all task records. U6 application/frontend/location/geocoder code, dependencies, existing rules and A4 migration code are unchanged from the already accepted U6 head `7bbfd45`; imported P1/P2 source/data match main.
+- Combined verification: **Node 88 passed; Python 105 run, 104 passed, one existing optional skip**. Existing U6 AC2-AC5 evidence is `tasks/U6-emulator-report.md`. No new model/Nominatim calls, writes or paid acceptance runs are required for this source-preserving reconciliation. CI is checked on the pushed head.
+- Next: author explicitly instructs `merge PR 21`; after it merges, retarget/reconcile U8 #22 to main, then A5 #24. The approved plan documentation PR #26 remains unmerged; it needs its own explicit merge instruction when ready.
+- Keep `C:\isr-mvp` serving A5 `0ff325b` and the saved 2026-11-12 06:36 UTC snapshot with 8 GB Java heap. Do not switch the serving checkout as a side effect of integration.
+- Live P1/P2 apply, A4 phase D and the combined A4/U6/U8/A5 deployment remain the author's steps. P2 building acceptance depends on A5. D1 still waits for P2 applied and A4/U6 live. No deploy, rules edit or production write in this reconciliation.
+
+Older checkpoints and resume commands below are historical.
+
+## A4 reconciliation checkpoint, 2026-11-12 (historical)
 
 - The author approved the development plan in [PR #26](https://github.com/SergiiPonomarchuk/isr-mvp/pull/26), then explicitly instructed `merge PR 23`. **P2 is merged as `a17d5cd`**, after P1 #25 (`6d252c2`). This is source integration, not a live migration or deploy.
 - A4 #20 is reconciled with that main. Conflicts were limited to CHANGES, this handoff and the index. P1/P2 source and generated artifacts remain identical to main; A4 source, examples, models, dependencies and existing rules are unchanged by reconciliation.
@@ -54,6 +65,13 @@ The remaining sections describe the original handoff and historical run state; t
 - This resume used 229 embedding requests for 22,751 texts (833,512 estimated tokens, approximately $0.13), plus two small phase C requests (preview/apply). See A4's Status log and reports for the complete accounting.
 - **Do not re-run A4 phase B or C as a next step.** Next: A4 PR/review, then U6 AC2-AC5 with its own functions (section 3, step 3); P2 AC3/AC4 remain as recorded. Live phase D stays the author's step.
 - Drive A was reconnected and readable. All project instructions continue to apply. No live data or deployed code changed.
+
+### U6 checkpoint: 2026-11-11
+
+- AC2-AC5 passed with U6 functions and the completed A4 data. Four location sources, moved-pin invalidation/recheck, forged Create rejection, exact draft-point persistence, logs, cache, geocoding switch and credit verified. See `tasks/U6-emulator-report.md`.
+- Ten text and ten embedding calls, approximately $0.0363 at the spec's recorded rates; exactly four external Nominatim lookups. Switch restored to its original absence. Two emulator test drafts for the pin check and one created test issue remain.
+- Final export: **2026-11-11 19:15 UTC**, exit 0; re-import verified all final U6 records survived. Emulator stopped; main checkout restored to `p1-profile-review`.
+- Next: review A4 PR #20 and the stacked U6 PR; U8 follows U6. P2 browser/Check acceptance remains pending separately. No merges, deploys, rules edits or live writes performed.
 
 The older partial counts and resume commands below are historical handoff context, not the current checkpoint.
 

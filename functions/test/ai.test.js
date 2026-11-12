@@ -100,7 +100,7 @@ test("the Analyzer call: temperature 0, seed, JSON; the source, usage and exampl
   assert.equal(meta.ai_source, "model");
   assert.deepEqual(meta.examples_used, [3]);
   assert.deepEqual(meta.usage, { prompt_tokens: 3000, output_tokens: 800, total_tokens: 3800 });
-  assert.equal(meta.prompt_version, "p2");
+  assert.equal(meta.prompt_version, "p3"); // U6: p3 adds location_reference
   assert.ok(params.weights || params.relevance_weights, "normalised parameters");
 });
 
@@ -152,4 +152,38 @@ test("rules and endpoints: analyzer_logs server-only; the key is a secret of the
   assert.ok(!/vectorizeText/.test(index));
   assert.match(index, /collection\("issue_vectors"\)\.doc\(issueId\)/);
   assert.match(index, /status\(503\)\.json\(\{ error: AI_UNAVAILABLE/);
+});
+
+// Task U6 (R1): the Analyzer says where the issue is; the server turns it into a point.
+test("U6: prompt p3 asks for location_reference with the five anchors", () => {
+  assert.equal(AI.PROMPT_VERSION, "p3");
+  const p = ai.buildIssueAnalyzerPrompt("Lock", "The entrance door of our house does not lock", "", []);
+  assert.match(p, /"location_reference": \{/);
+  assert.match(p, /"home" \| "work" \| "property" \| "named_place" \| "none"/);
+  assert.match(p, /"our house", "our building", "our entrance", "our yard", "near my home" -> "home"/);
+  assert.match(p, /"my garage", "my plot", "my land" -> "property"/);
+  assert.match(p, /-> "named_place", with that name/);
+  assert.match(p, /Never invent a place name or coordinates/);
+});
+
+test("U6: the model's location_reference is normalised; a missing or odd one is none", async () => {
+  const answer = (loc) => fakeClient({ generate: () => ({ text: JSON.stringify(Object.assign({ category: "infrastructure.transport.streets" }, loc === undefined ? {} : { location_reference: loc })) }) });
+  ai._setClientForTests(answer({ anchor: "named_place", place: " Linden  Street " }));
+  let out = await ai.checkIssueParams("Potholes on Linden Street", "Potholes", "", []);
+  assert.deepEqual(out.params.location_reference, { anchor: "named_place", place: "Linden Street" });
+  ai._setClientForTests(answer(undefined));
+  out = await ai.checkIssueParams("Potholes", "Potholes", "", []);
+  assert.deepEqual(out.params.location_reference, { anchor: "none", place: "" });
+  ai._setClientForTests(answer({ anchor: "GPS", place: "47.5, 7.6" }));
+  out = await ai.checkIssueParams("x", "y", "", []);
+  assert.deepEqual(out.params.location_reference, { anchor: "none", place: "" });
+});
+
+test("U6: the keyword fallback gives location_reference from the same words", async () => {
+  const home = await ai.checkIssueParams("The entrance door of our house does not lock", "Door", "", []);
+  assert.equal(home.meta.ai_source, "fallback");
+  assert.deepEqual(home.params.location_reference, { anchor: "home", place: "" });
+  const street = ai.getLocalFallbackParams("Potholes on Linden Street after the winter", "Potholes");
+  assert.deepEqual(street.location_reference, { anchor: "named_place", place: "Linden Street" });
+  assert.deepEqual(ai.getLocalFallbackParams("The city should publish its budget online", "Budget").location_reference, { anchor: "none", place: "" });
 });
