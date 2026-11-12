@@ -4,7 +4,18 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current queue: P1 review checkpoint, 2026-11-12 (supersedes the older state below)
+## Current checkpoint: approved plan and P2 reconciliation, 2026-11-12
+
+- The author approved the [overall/detailed development plan, PR #26](https://github.com/SergiiPonomarchuk/isr-mvp/pull/26). Approval authorizes its next implementation work; PR merges still need explicit `merge PR N` instructions. The documentation PR itself is not merged by that approval.
+- P1 PR #25 is merged into main as `6d252c2`. P2 PR #23 has been reconciled with that main; only CHANGES and this handoff conflicted, and both historical records are retained below. The P1/P2 generated artifacts and migration code remain unchanged.
+- Combined local verification passed: Node 47; Python 84 run, 83 passed and one existing optional skip. Emulator dry runs: P2 9,150 done, 0 to write/held/problems; P1 9,150 profiles, 0 updates/deletes/pending. CI is checked on the pushed head before presenting #23 for merge. Do not rerun migration apply or regenerate content.
+- Remaining order: author-approved merge of P2 #23, then reconcile/integrate A4 #20 -> U6 #21 -> U8 #22 -> A5 #24. A4 currently needs reconciliation with main. Retarget stacked children to main after their parents merge and check the resulting heads.
+- P2 emulator AC3/AC4 passed on the A5 stack. Its live deployment dependency on A5 remains explicit; P1/P2 live migrations and A4 phase D are the author's coordinated steps. D1 still waits for P2 applied and A4/U6 live.
+- Preserve the A5 preview in `C:\isr-mvp`, detached at `0ff325b`, with the 8 GB emulator. Saved export: 2026-11-12 06:36 UTC; the preview was restored after P1 merged. No serving-code change, API calls, data writes or live operations are needed for this documentation reconciliation.
+
+All checkpoints and run-state counts below are historical; this checkpoint governs next work.
+
+## P1 review checkpoint, 2026-11-12 (historical)
 
 - P1 has been rechecked read-only after P2/A4: 9,150 users, zero changes to make, all 20,245 original skill IDs retained. Node 47 passed; Python 70 run with one existing optional skip. No generation or apply rerun. See `tasks/P1-review-report.md`. The author approved PR #25 for merge to main on 2026-11-12 (`merge PR 25`); live AC4 remains the author's step.
 - Code PR dependency order: **A4 #20 -> U6 #21 -> U8 #22 -> A5 #24**. Profile migration PRs: **P1 #25 -> P2 #23**; P2's building acceptance depends on A5. All five existing PRs were green and conflict-free against their current bases at this checkpoint. Recheck bases/CI after each authorized merge. Merge only on the author's explicit `merge PR N` instruction.
@@ -13,6 +24,17 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 - No merges, deploys, rules edits, live writes or new AI calls were performed for this checkpoint. Live is still pre-A4 code/data; P1, P2 and the A4 re-embedding/deployment must be coordinated by the author after backup. Include A5 in that code deployment. D1 still waits for its specified live prerequisites.
 
 The remaining sections describe the original handoff and historical run state; this checkpoint governs the next work.
+
+## P2 acceptance checkpoint, 2026-11-12 (historical)
+
+**Follow-up:** A5 PR #24 resolves the original building failure described below. Current preview is detached at A5 with prompt p4; its saved export includes both successful repeated Checks. Review code stack A4 #20 -> U6 #21 -> U8 #22 -> A5 #24, plus P2 data PR #23. Emulator remains running. See the updated P2 acceptance report for the passing follow-up.
+
+- A4 saved embedding/migration work is complete (9,150 people current). U6 and U8 emulator checks are complete. Review stack: A4 PR #20 -> U6 #21 -> U8 #22. Nothing merged or deployed.
+- Emulator is **running** from `C:\isr-mvp`, detached at U8 `0eddbc6`, with the U6/A4 backend and Java heap 8 GB. Keep the preview available for the author. Latest export **2026-11-11 22:58 UTC**, including the two P2 test drafts/logs.
+- P2 dry run: 9,150 done, 0 to write/held/problems. AC3 profile/map passed; garage-owner inclusion passed. **Building-locality AC4 FAILED:** correct h5 point and 130 m cutoff, but 3,908 unrelated flat/house owners bypass it, giving 4,941 candidates in total. See `tasks/P2-acceptance-report.md`.
+- P2 AC4 now passes on the approved A5 fixed stack (PR #24): building count 1,033, all 3,908 unrelated bypasses removed, garage behavior retained. Original failure is historical regression evidence. P2 is review-ready; A5 must be merged/deployed with the coordinated release. Do not reapply P2/A4; no data or D/G formula change is needed.
+- No live writes, deploys or rules changes. Live migrations remain the author's steps. Older partial A4 counts and stopped-emulator notes below are historical.
+
 
 ## 1. Where things stand
 

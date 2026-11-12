@@ -100,8 +100,9 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U4-voting-view-messages](tasks/U4-voting-view-messages.md) | DONE: merged (PR 12), deployed and checked on live 2026-11-09 | 10 (UI) |
 | [U5-esc-and-geotag](tasks/U5-esc-and-geotag.md) | DONE on live 2026-11-10 (PR 15); the issue location from the Analyzer follows after A4 | UI |
 | [U7-page-cache](tasks/U7-page-cache.md) | DONE on live 2026-11-11 (PR 17): every hosting response is sent with `no-cache` | UI, 13 (hosting) |
+| [P2-homes-and-property](tasks/P2-homes-and-property.md) | migration/AC2, browser AC3 and AC4 pass on A5 PR #24; review ready, coordinated A5 code deployment required; live AC5 pending author | 02, 03 (G), 06 (D) |
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
-| [P1-profile-review](tasks/P1-profile-review.md) | AC1-AC3/AC5 passed; read-only recheck after P2/A4 on 2026-11-12: no migration changes, exact skill IDs retained; review-ready; live AC4 is the author's coordinated step | 11 (synthetic data), 04 |
+| [P1-profile-review](tasks/P1-profile-review.md) | merged PR #25 on 2026-11-12; emulator AC1-AC3/AC5 passed and exact skill IDs retained; live AC4 remains the author's coordinated step | 11 (synthetic data), 04 |
 
 Handoff: [HANDOFF](HANDOFF.md): the state of every branch and the next steps (2026-11-11).
 
