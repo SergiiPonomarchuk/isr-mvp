@@ -6,7 +6,7 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 ## Current queue: P1 review checkpoint, 2026-11-12 (supersedes the older state below)
 
-- P1 has been rechecked read-only after P2/A4: 9,150 users, zero changes to make, all 20,245 original skill IDs retained. Node 47 passed; Python 70 run with one existing optional skip. No generation or apply rerun. See `tasks/P1-review-report.md`. P1 is open as PR #25 to main; live AC4 remains the author's step.
+- P1 has been rechecked read-only after P2/A4: 9,150 users, zero changes to make, all 20,245 original skill IDs retained. Node 47 passed; Python 70 run with one existing optional skip. No generation or apply rerun. See `tasks/P1-review-report.md`. The author approved PR #25 for merge to main on 2026-11-12 (`merge PR 25`); live AC4 remains the author's step.
 - Code PR dependency order: **A4 #20 -> U6 #21 -> U8 #22 -> A5 #24**. Profile migration PRs: **P1 #25 -> P2 #23**; P2's building acceptance depends on A5. All five existing PRs were green and conflict-free against their current bases at this checkpoint. Recheck bases/CI after each authorized merge. Merge only on the author's explicit `merge PR N` instruction.
 - A4 phases B/C, U6 AC2-AC5, U8 AC2 and P2 AC2-AC4 are complete on the emulator. P2 AC4 originally found the unrelated-owner inclusion bug; A5 fixes it and passes the recorded replay and fresh Checks. See their branch specs/reports, rather than repeating the old run instructions below.
 - **Keep the preview running.** `C:\isr-mvp` remains detached at A5 `0ff325b`, with its backend and U8 frontend. Saved emulator export: 2026-11-12 06:36 UTC. P1 now has its own `A:\BackUp\isr-mvp\worktrees\wt-p1` checkout, so do not switch the serving checkout to P1.
