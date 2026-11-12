@@ -1,7 +1,7 @@
 # A5: Local residential ownership scope
 
 Status: approved plan, 2026-11-12 (author: "ok" to the linked P2 locality-fix proposal). Implemented and emulator-verified; AC1-AC4 passed, final export saved. PR/CI follows; no live change.
-Branch: `codex/local-residential-scope`, based on U8 `0eddbc6` (stacked after PR #22).
+Branch: `codex/local-residential-scope`, originally based on U8 `0eddbc6`; PR #24 retargeted to main after U8 #22 merged as `996e7b8` on 2026-11-12.
 Components: 03 (relevance input interpretation), 07 (Analyzer, not yet a component file); P2 AC4.
 
 ## Evidence and intended behavior
@@ -39,3 +39,9 @@ This is a narrow interpretation guard at the Analyzer boundary, superseding A3's
 
 - 2026-11-12: implementation `a817694`; Node 98 passed, Python 73 run with one skip. Captured P2 replay: 4,941 -> 1,033, removing all 3,908 unrelated owner bypasses while retaining property-linked members. Fresh p4 building Check 1,033, garage Check 1,391; old offending Create draft rejected with 409. Two text/two embedding calls, 16,632 prompt / 2,030 output tokens plus about 121 estimated embedding tokens, about $0.00722. Export 2026-11-12 06:36 UTC. Full evidence: [A5-emulator-report.md](A5-emulator-report.md). Preview left running, no live changes.
 - Outcome merged into [03-relevance.md](../03-relevance.md) (A5 scoped input interpretation and Change history); D/G engines remain unchanged. CI/PR and P2 cross-record follow.
+
+- 2026-11-12, approved development-plan integration: the author explicitly instructed `merge PR 22`; U8 merged as `996e7b8`, including P1/P2/A4/U6. Retargeted A5 PR #24 from U8 to main and reconciled that main. Only CHANGES and the index conflicted; preserved all task histories and avoided duplicating A4's index row.
+  - A5 application/guard/prompt/normalization/Create behavior, frontend, dependency lockfile, rules, A4 migration scripts and captured fixture are unchanged from pre-reconciliation head `0ff325b`. Imported P1/P2 source, generated artifacts and tests match main. main.js retains its exact CRLF/final-CR bytes.
+  - Combined suites: **Node 98 passed; Python 105 run, 104 passed and one existing optional skip**. Matching SDK dependencies through `NODE_PATH=C:\isr-mvp\functions\node_modules`; external calls in tests are mocked.
+  - Saved [captured-result and p4 endpoint evidence](A5-emulator-report.md) remains the behavioral acceptance record; this reconciliation changes no executable code. No fresh AI/Nominatim requests, browser/data writes, migration apply, deploy or rules edit. CI is checked on the pushed head before requesting explicit `merge PR 24`.
+  - After its authorized merge: integrated release verification and current plan/runbook records, followed by the author's coordinated live steps. P2's accepted locality depends on deploying A5. Live remains unchanged.

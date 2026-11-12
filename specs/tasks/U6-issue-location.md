@@ -1,7 +1,7 @@
 # SPEC U6: The issue's location comes from its description
 
 Status: APPROVED 2026-11-10 (author: "U6 approved"); the design follows the author's decisions (U5 section 3a, and "keep the server lookup in U6"). Implemented 2026-11-10; AC1 local and AC2-AC5 emulator checks passed 2026-11-11. Final test export was re-imported and verified; CI and PR review follow. Live unchanged.
-Branch: u6-issue-location (stacked on `a4-working-ai` at `4fa064a`: it changes the Analyzer prompt and `checkIssue`, which A4 changes too; merged after A4)
+Branch: u6-issue-location (originally stacked on `a4-working-ai` at `4fa064a`; PR #21 retargeted to main after A4 #20 merged as `76c50c8` on 2026-11-12)
 Source: the author, 2026-11-10 (U5 decision 2): "in new issue registration geotag (coordinates, distance and fade) should be taken from the issue description according to 100 examples table by AI Analyzer. If user describe it as "in our house" - it should be coordinates of the house stated in the user profile." The defaults (author: "go ahead with U5 as you described"):
 - a named place is geocoded within the region, else the creator's home is used;
 - the creator may move the pin, and a moved pin is recorded;
@@ -159,3 +159,8 @@ The author, 2026-11-10, on the place lookup: "keep the server lookup in U6". Thi
   - All ten model-backed Analyzer logs use prompt p3 and record location_reference. Ten text and ten embedding calls; text usage 81,465 input / 10,588 output tokens; approximately 342 embedding tokens estimated. Approximately $0.0363 at A4's recorded paid rates. Two extra Checks were the unsuccessful initial street-name variants.
   - Four external Nominatim requests total, including a diagnostic using the production geocoder; repeated Swiss-street Checks use cache. Switch off: server home fallback, browser search-off message, no request. OpenStreetMap credit present; switch restored to its original absence.
   - Final export completed with exit 0; re-import verified all final test data survived. Earlier intermediate exports had post-completion CLI timeouts. Emulator stopped; main checkout back on p1-profile-review. Full evidence and limits: [U6-emulator-report.md](U6-emulator-report.md). No live changes.
+
+- 2026-11-12, approved development-plan integration: the author explicitly instructed `merge PR 20`; A4 merged as `76c50c8`, including P1/P2. Retargeted U6 PR #21 from A4 to main and reconciled that main. Only CHANGES conflicted; all histories retained and HANDOFF/index updated.
+  - U6 application/frontend/AI/location/geocoder source, dependency lockfile, rules and A4 migrations remain byte-identical to pre-reconciliation head `7bbfd45`. P1/P2 migration sources, tests and generated artifacts match main. main.js retains its original CRLF/final-CR bytes. No behavior change is hidden in the reconciliation.
+  - Combined suites: **Node 88 passed; Python 105 run, 104 passed, one existing optional skip**. Used the matching `C:\isr-mvp\functions\node_modules` through NODE_PATH. API/model/geocoder calls in tests are mocked.
+  - The saved [U6 emulator report](U6-emulator-report.md) remains the AC2-AC5 acceptance record, including its stated lookup limitations. No new browser writes, AI/Nominatim requests, migration apply, production write, deploy or rules edit. CI is checked on the pushed head before requesting explicit `merge PR 21`. Live remains unchanged; continue U8 #22 then A5 #24 after authorized merges.
