@@ -13,7 +13,7 @@
  * Pure functions only, so they can be unit tested without Firebase.
  */
 
-const { sanitizeDemographicRules } = require("./demographics");
+const { demographicRulesForScope, needsResidentialScopeRecheck } = require("./issue-scope");
 const { toLatLon } = require("./geo");
 const { samePoint } = require("./location");
 
@@ -87,8 +87,8 @@ function paramsFromAi(ai) {
     },
     aggregation_reasoning: a.aggregation_reasoning || "",
     isr_explanations: a.isr_explanations || null,
-    demographics: sanitizeDemographicRules(a.demographics || a.demographic_rules || { employmentStatus: "any", familyStatus: "any" }),
-    demographic_rules: sanitizeDemographicRules(a.demographic_rules || a.demographics || {}),
+    demographics: demographicRulesForScope(a.demographics || a.demographic_rules || { employmentStatus: "any", familyStatus: "any" }, a.classification),
+    demographic_rules: demographicRulesForScope(a.demographic_rules || a.demographics || {}, a.classification),
     expertise_depth: a.expertise_depth || "None",
     expertise_domain: a.expertise_domain || (edp && edp.expertise_domain) || "General Maintenance",
     expertise_domain_parameters: edp,
@@ -145,6 +145,10 @@ function paramsForCreate(body, draft) {
   // U6 (R5): the point is the one the check resolved; a different one needs a new check.
   if (Array.isArray(draft.location) && !samePoint(toLatLon(inputs.location), draft.location, 1)) {
     throw Object.assign(new Error("The location changed after the check: check again."), { status: 409 });
+  }
+  // A5: do not silently change the membership implied by a previously checked draft.
+  if (needsResidentialScopeRecheck(draft.params)) {
+    throw Object.assign(new Error("The issue scope needs a new check: check again."), { status: 409 });
   }
   return draft.params;
 }

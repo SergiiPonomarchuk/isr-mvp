@@ -100,7 +100,7 @@ test("the Analyzer call: temperature 0, seed, JSON; the source, usage and exampl
   assert.equal(meta.ai_source, "model");
   assert.deepEqual(meta.examples_used, [3]);
   assert.deepEqual(meta.usage, { prompt_tokens: 3000, output_tokens: 800, total_tokens: 3800 });
-  assert.equal(meta.prompt_version, "p3"); // U6: p3 adds location_reference
+  assert.equal(meta.prompt_version, "p4"); // U6: p3 adds location_reference
   assert.ok(params.weights || params.relevance_weights, "normalised parameters");
 });
 
@@ -155,8 +155,8 @@ test("rules and endpoints: analyzer_logs server-only; the key is a secret of the
 });
 
 // Task U6 (R1): the Analyzer says where the issue is; the server turns it into a point.
-test("U6: prompt p3 asks for location_reference with the five anchors", () => {
-  assert.equal(AI.PROMPT_VERSION, "p3");
+test("U6: current prompt retains location_reference with the five anchors", () => {
+  assert.equal(AI.PROMPT_VERSION, "p4");
   const p = ai.buildIssueAnalyzerPrompt("Lock", "The entrance door of our house does not lock", "", []);
   assert.match(p, /"location_reference": \{/);
   assert.match(p, /"home" \| "work" \| "property" \| "named_place" \| "none"/);

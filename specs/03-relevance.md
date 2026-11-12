@@ -1,5 +1,5 @@
 # 03 Relevance
-Status: PARTIAL   Verified against: commit `0620f27` (PD-6)
+Status: PARTIAL   Verified against: historical audit `0620f27` (PD-6); A5 input guard verified at `a817694` (not a re-audit of legacy statements below)
 Owns contradictions: C-06 to C-15, C-18; shares C-16 with 12 (see [README](README.md#contradiction-map))
 
 ## Purpose
@@ -20,6 +20,12 @@ Relevance R measures how directly an issue and its resolution affect a user. It 
 - **Threshold:** see Gaps, C-06 and C-07. The docs disagree.
 
 ## As built
+
+### Local residential input guard (A5)
+
+- **VERIFIED at `a817694`:** for unit/building scope, generic flat/house kinds are removed from both normalized demographic aliases; other kinds and explicit places remain. Broader scopes retain their filters. This is the approved A5 interpretation rule; the A3 D/G engines and nearest home/work/property logic are unchanged. Evidence: `functions/issue-scope.js:13`, `functions/ai-helper.js:632`, `functions/params.js:90`; spec [A5](tasks/A5-local-residential-scope.md).
+- **VERIFIED:** prompt p4 requests that interpretation; raw model output stays auditable, effective filters are logged/stored/used consistently. A previously checked offending draft receives 409 and requires a new Check. Evidence: `functions/ai-config.js:17`, `functions/ai-helper.js:268`, `functions/params.js:150`; `functions/test/issue_scope.test.js` and [emulator report](tasks/A5-emulator-report.md).
+
 
 ### Variants
 There are four implementations (IF §0, l.11-18):
@@ -115,3 +121,5 @@ Path C duplicates the relevance logic in the browser and is used only when the C
 - S0 (2026-10-12): created.
 - A3 (2026-11-05, branch `a3-options-and-g-anchors`, not merged): `functions/geo.js` (nearest of home, work and property; G formula and μ + 3σ cutoff unchanged) and `functions/demographics.js` (D with `places` and `property_kinds` from the Analyzer's `demographic_rules`; a match sets D = 1 and skips the distance cutoff and the `features` check; age, employment and family checks still apply; `features` also matched against interests). Members get `G_anchor_type` and `D_match`. Python port in `relevance_evaluator.py` (path B keeps its category heuristics; a place match gives D = 1). Shared fixture `tests/fixtures/a3_d_g_cases.json`. Impact: `tasks/A3-impact-report.md`. Existing publics: G, relevance and ISR recomputed for the 74 publics with a stored location and recoverable weights (`scripts/migrate_a3.py`, `tasks/A3-migration-report.md`; emulator only so far).
 - A1 (open): R1 (canonical `relevance()` with an optional clamp, never gating on D) and R8 (wire-up in `functions/index.js` and `relevance_evaluator.py`).
+
+- A5 (2026-11-12, `a817694`): approved local residential parameter guard, prompt p4, and recheck for old offending drafts. Captured P2 h5 Check narrows 4,941 to 1,033 candidates by removing 3,908 unrelated residential-owner bypasses; property-linked members and garage/broader ownership behavior remain. No formula, threshold, cutoff, membership cap or old public-score change.

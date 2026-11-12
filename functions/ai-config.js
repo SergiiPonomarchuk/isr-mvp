@@ -13,8 +13,8 @@ const AI = Object.freeze({
   TEMPERATURE: 0,
   SEED: 20261110,
   // p1 = the prompt before A4 (it only named the 100 examples); p2 sends the k closest ones;
-  // p3 (U6) adds location_reference, where the issue is.
-  PROMPT_VERSION: "p3",
+  // p3 (U6) adds location_reference; p4 (A5) constrains local residential ownership filters.
+  PROMPT_VERSION: "p4",
   // t1 = A4 decision 2: the issue text is "{title}. {description}".
   EMBED_TEMPLATE_VERSION: "t1",
   // A4 open point 4.3 (a): finding the people for an issue is a search.

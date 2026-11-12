@@ -4,7 +4,18 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: U6 merged; U8 retargeted and reconciled, 2026-11-12
+## Current checkpoint: U8 merged; A5 retargeted and reconciled, 2026-11-12
+
+- The author explicitly instructed `merge PR 22`; **U8 is merged as `996e7b8`**, after P1 #25, P2 #23, A4 #20 and U6 #21. The reviewed merge-head CI passed. No live operations follow automatically.
+- A5 PR #24 now targets main and is reconciled with it. Only CHANGES and the index conflicted; all histories and a single current A4 index row are retained. A5 application/prompt/guard/Create behavior, frontend, dependencies, rules, A4 scripts and fixture are unchanged from accepted head `0ff325b`; P1/P2 source/data match main.
+- Combined verification: **Node 98 passed; Python 105 run, 104 passed and one existing optional skip**. Saved A5 captured-result and p4 endpoint evidence is `tasks/A5-emulator-report.md`, with the original P2 failure retained. No new model/Nominatim requests or database writes for this documentation reconciliation. CI is checked on the pushed head.
+- Next: explicit author `merge PR 24`, then complete the integrated release checkpoint, bring the approved plan documentation PR #26 current and prepare the concrete live runbook. PR #26 still needs its own explicit merge instruction. Do not begin D1 before its live prerequisites.
+- Preserve the A5 preview in `C:\isr-mvp`, detached at `0ff325b`, with the 2026-11-12 06:36 UTC saved export and 8 GB Java heap. Final integrated release verification may intentionally export/stop and restart it on the merged release; do not switch it incidentally.
+- Live P1/P2 apply, A4 phase D, U8 AC3 and the combined code deployment remain the author's steps. A5 must be included for P2's building locality; D1 waits for P2 applied and A4/U6 live. No deploy, rules edit or production write in this reconciliation.
+
+Older checkpoints and original resume commands below are historical.
+
+## U8 reconciliation checkpoint, 2026-11-12 (historical)
 
 - The author explicitly instructed `merge PR 21`; **U6 is merged as `6b6ae7a`**, after P1 #25, P2 #23 and A4 #20. The reviewed merge-head CI passed. No live changes follow automatically.
 - U8 PR #22 now targets main and is reconciled with it. Only CHANGES and the index conflicted. Map/frontend/backend source, dependencies, existing rules and A4 migration code remain unchanged from accepted U8 head `0eddbc6`; imported P1/P2 source/data match main. main.js bytes, including CRLF and the final CR, are retained.
@@ -90,6 +101,13 @@ The remaining sections describe the original handoff and historical run state; t
 - **Emulator left running for the author**, Java heap 8 GB. `C:\isr-mvp` is detached at U8, serving its map code and the verified U6 backend. Keep it running for inspection; do not switch to the pre-A4 P1 branch while serving this preview.
 - No database writes or AI/Nominatim calls for U8; the saved data remains the verified U6 export at 19:15 UTC. Temporary diagnostics removed; source is clean.
 - Next: review the stacked PRs in order A4 #20, U6 #21, then U8. P2's remaining browser/Check acceptance is still separate. Live U8 AC3 waits for the author's coordinated deployment. Nothing merged or deployed.
+
+### A5 checkpoint: 2026-11-12 (current preview)
+
+- Author approved the locality fix discovered in P2 draft PR #23. A5 is implemented on `codex/local-residential-scope`, stacked after U8 #22. Prompt p4 removes generic flat/house filters at unit/building scope; garage and broader ownership cases retained. Old offending drafts require a new Check.
+- Node 98 / Python 73 (one skipped); captured P2 replay and fresh building Check give 1,033 candidates instead of 4,941, eliminating all 3,908 unrelated-owner bypasses. Garage Check 1,391; displayed 25/25 verified owners. P2 AC4 passes on A5. See `tasks/A5-emulator-report.md`.
+- Export **2026-11-12 06:36 UTC**, two text/two embedding calls (about $0.00722). Preview remains running from the A5 branch in the main checkout, with the unchanged U8 frontend. Do not switch to older code while serving the preview.
+- Review/merge code stack A4 #20 -> U6 #21 -> U8 #22 -> A5; P2 #23's acceptance depends on A5. Coordinate its live deployment with the earlier code tasks. No PR merges, deploys, rules edits, profile migration or live writes performed.
 
 The older partial counts and resume commands below are historical handoff context, not the current checkpoint.
 

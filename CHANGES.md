@@ -1,5 +1,11 @@
 # CHANGES
 
+## A5: integrate after U8 reaches main (2026-11-12)
+
+- Author explicitly instructed `merge PR 22`; U8 merged as `996e7b8`, after P1/P2/A4/U6. Retargeted A5 #24 from U8 to main and reconciled that main under the approved development plan.
+- Only CHANGES and the index conflicted. Retained all task histories and one current A4 index row. A5 guard/prompt/normalization/Create validation, frontend, dependencies, rules, A4 scripts and captured fixture remain unchanged from accepted head `0ff325b`; imported P1/P2 source/data match main.
+- Combined verification: Node 98 passed; Python 105 run, 104 passed and one existing optional skip. The saved captured-result replay and p4 endpoint acceptance remain applicable; no fresh paid/model/geocoder call or data write. CI is checked on the pushed head before explicit `merge PR 24`. Integrated release verification and the author-led live rollout follow.
+
 ## U8: integrate after U6 reaches main (2026-11-12)
 
 - Author explicitly instructed `merge PR 21`; U6 merged as `6b6ae7a`, after P1/P2/A4. Retargeted U8 #22 from U6 to main and reconciled that main into the U8 branch under the approved plan.
@@ -67,6 +73,16 @@ Spec: `specs/tasks/P2-homes-and-property.md` (approved 2026-11-10, with the auth
 ### Author's steps after merging
 1. On live, after P1's live apply and a backup: `python scripts/migrate_p2.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`, from `C:\isr-mvp` on main. It uses the committed plan and rebuilds `user_packs`.
 2. The agent then checks live read-only.
+
+## A5: keep local residential issues tied to their location (2026-11-12)
+
+Spec: `specs/tasks/A5-local-residential-scope.md`, author's approved P2 locality-fix plan.
+
+- Unit/building parameters remove generic flat/house ownership filters before logging, showing and storing the effective rules. The prompt is p4. Actual affected-property owners still qualify through their property point; explicit place matches, garage/other kinds and broader ownership scopes retain existing behavior.
+- Create rejects an older offending draft with 409 requesting a new Check, rather than silently changing its checked public. Existing issues/scores and D/G arithmetic are untouched.
+- Node 98 passed; Python 73 run, 72 passed and one skipped. Captured P2 replay and fresh p4 Check reduce building candidates from 4,941 to 1,033, with all 3,908 unrelated-owner bypasses removed. Garage inclusion remains (1,391 candidates, displayed 25/25 verified owners).
+- Two text/two embedding calls: 16,632 prompt / 2,030 output tokens, about 121 estimated embedding tokens; about $0.00722. Export saved, preview left running. Evidence: `specs/tasks/A5-emulator-report.md`.
+- Merge/deploy this fix with the coordinated A4/U6/U8 release before claiming P2 locality on live. No deployment or live writes performed.
 
 ## U8: the map uses OpenStreetMap tiles (2026-11-11; local verification complete)
 
