@@ -101,11 +101,13 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U5-esc-and-geotag](tasks/U5-esc-and-geotag.md) | DONE on live 2026-11-10 (PR 15); the issue location from the Analyzer follows after A4 | UI |
 | [U7-page-cache](tasks/U7-page-cache.md) | DONE on live 2026-11-11 (PR 17): every hosting response is sent with `no-cache` | UI, 13 (hosting) |
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
-| [P1-profile-review](tasks/P1-profile-review.md) | AC1-AC3/AC5 passed; read-only recheck after P2/A4 on 2026-11-12: no migration changes, exact skill IDs retained; review-ready; live AC4 is the author's coordinated step | 11 (synthetic data), 04 |
+| [P1-profile-review](tasks/P1-profile-review.md) | merged PR #25 on 2026-11-12; emulator AC1-AC3/AC5 passed and exact skill IDs retained; live AC4 remains the author's coordinated step | 11 (synthetic data), 04 |
 
-Handoff: [HANDOFF](HANDOFF.md): the state of every branch and the next steps (2026-11-11).
+Development plan: [DEVELOPMENT-PLAN](DEVELOPMENT-PLAN.md): overall milestones and detailed remaining work, proposed for author review (2026-11-12).
 
-Roadmap: [ROADMAP-demo](ROADMAP-demo.md): distance to a demonstration stage and the staged plan (2026-11-07).
+Handoff: [HANDOFF](HANDOFF.md): the current checkpoint, branch state and next steps.
+
+Historical roadmap: [ROADMAP-demo](ROADMAP-demo.md): demonstration definitions and original staged estimates (2026-11-07); current status and remaining-work estimates are in the development plan.
 
 S0 artefacts: [S0-inventory-report](tasks/S0-inventory-report.md), [S0-structure-proposal](tasks/S0-structure-proposal.md), [S0-decisions-to-import](tasks/S0-decisions-to-import.md).
 

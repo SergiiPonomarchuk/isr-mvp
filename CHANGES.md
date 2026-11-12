@@ -1,5 +1,11 @@
 # CHANGES
 
+## Development plan: milestones and remaining work (2026-11-12)
+
+- Added `specs/DEVELOPMENT-PLAN.md` at the author's request: current baseline, PR dependencies, detailed integration/live-rollout/D1 work, later Analyzer/access/Contribution/pilot stages, estimates and model recommendations. It separates existing approvals from proposals and author-only actions.
+- Updated the index and handoff: P1 #25 is merged; #20/#23 need reconciliation with current main; the A5 emulator preview remains the serving code. The old roadmap and checkpoints are retained as dated history.
+- Documentation only; no runtime behavior, generated dataset, formulas, rules or deployed state changed. Implementation of the proposed next task waits for plan approval; PR merges retain their explicit per-number authorization.
+
 ## P1: repair the synthetic profiles (2026-11-12 review; emulator applied 2026-11-11)
 
 Spec: `specs/tasks/P1-profile-review.md`; approved by the author on 2026-11-10. The existing migration and its committed output are ready for review.

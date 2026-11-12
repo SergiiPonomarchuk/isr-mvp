@@ -4,7 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current queue: P1 review checkpoint, 2026-11-12 (supersedes the older state below)
+## Development-plan checkpoint, 2026-11-12 (current; older checkpoints below are history)
+
+- **P1 PR #25 is merged** into main as `6d252c2`; final CI passed. Its live AC4 remains the author's step.
+- The author requested an overall and detailed development plan. [DEVELOPMENT-PLAN.md](DEVELOPMENT-PLAN.md) proposes milestones, the remaining merge/release sequence, detailed D1 work, later guardrails/access/pilot stages, estimates, model choices and decision gates. It is a proposal for review, not approval to execute later features or live actions.
+- **#20 (A4) and #23 (P2) now conflict with main after P1's merge.** Their existing heads have green CI; reconciliation and combined verification are still needed. Proposed next task: reconcile #23, then integrate #20 -> #21 -> #22 -> #24, with explicit author instructions for each merge. P2's live acceptance/deployment remains tied to A5.
+- The A5 preview was restored from the saved snapshot after PR #25 merged. Hosting returned HTTP 200 and functions/Firestore were ready. The serving checkout remains detached at `0ff325b`; do not switch it incidentally. Snapshot remains the 2026-11-12 06:36 UTC export.
+- This planning change edits documentation only. No new application code, data migrations, model calls, rules edits or deploys. D1 implementation still waits for its approved prerequisites: P2 applied and A4/U6 live.
+
+## P1 review checkpoint, 2026-11-12 (historical)
 
 - P1 has been rechecked read-only after P2/A4: 9,150 users, zero changes to make, all 20,245 original skill IDs retained. Node 47 passed; Python 70 run with one existing optional skip. No generation or apply rerun. See `tasks/P1-review-report.md`. The author approved PR #25 for merge to main on 2026-11-12 (`merge PR 25`); live AC4 remains the author's step.
 - Code PR dependency order: **A4 #20 -> U6 #21 -> U8 #22 -> A5 #24**. Profile migration PRs: **P1 #25 -> P2 #23**; P2's building acceptance depends on A5. All five existing PRs were green and conflict-free against their current bases at this checkpoint. Recheck bases/CI after each authorized merge. Merge only on the author's explicit `merge PR N` instruction.
