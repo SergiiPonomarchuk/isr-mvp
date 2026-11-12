@@ -6,6 +6,7 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 ## Current checkpoint: integrated release verified; live preparation, 2026-11-12
 
+- Follow `AGENTS.md` through ready work without routine approval pauses. The next author action in the approved plan is the merge instruction for PR #26.
 - **All implementation PRs are merged:** P1 #25 (`6d252c2`), P2 #23 (`a17d5cd`), A4 #20 (`76c50c8`), U6 #21 (`6b6ae7a`), U8 #22 (`996e7b8`), A5 #24 (**`47e835a`**). Each received explicit author merge authorization. Release tag `isr-mvp-rc-2026-11-12` is pushed; main CI passed.
 - **M0 integration is complete.** On merged main: Node 98 passed; Python 105 run, 104 passed and one existing optional skip. Restored/exported data verified: 9,150 profile / 20,245 finite unit skill vectors, 50 canonical E/ISR results/maps, A5 captured replay (3,908 unrelated bypasses removed, 1,033 retained), P1/P2 dry runs with zero changes, and fresh read-only profile/map browser checks. See [release evidence](tasks/INTEGRATED-release-2026-11-12.md).
 - **The preview remains running** from clean detached main `47e835a` in `C:\isr-mvp`, Java heap 8 GB. Successfully exported before restart at 2026-11-12 14:20:56 UTC. Named frozen copy: `A:\BackUp\isr-mvp\emulator-snapshots\2026-11-12-integrated-47e835a` (all 8 files, 550,379,033 bytes, hash verified). Do not overwrite this milestone with daily work.

@@ -1,5 +1,9 @@
 # CHANGES
 
+## Agent workflow (2026-11-12)
+
+- Codex proceeds through approved work and routine verification. The author handles material decisions, human acceptance, development model switches, merge authorization and live operations.
+
 ## Integrated release and live runbook (2026-11-12)
 
 - P1 #25, P2 #23, A4 #20, U6 #21, U8 #22 and A5 #24 are merged following explicit author instructions. Main `47e835a` is tagged `isr-mvp-rc-2026-11-12`; main CI passes. Reconciled the approved development-plan documentation with that release; executable code/data/rules in this PR are identical to main.
