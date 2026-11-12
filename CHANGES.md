@@ -1,5 +1,15 @@
 # CHANGES
 
+## A5: keep local residential issues tied to their location (2026-11-12)
+
+Spec: `specs/tasks/A5-local-residential-scope.md`, author's approved P2 locality-fix plan.
+
+- Unit/building parameters remove generic flat/house ownership filters before logging, showing and storing the effective rules. The prompt is p4. Actual affected-property owners still qualify through their property point; explicit place matches, garage/other kinds and broader ownership scopes retain existing behavior.
+- Create rejects an older offending draft with 409 requesting a new Check, rather than silently changing its checked public. Existing issues/scores and D/G arithmetic are untouched.
+- Node 98 passed; Python 73 run, 72 passed and one skipped. Captured P2 replay and fresh p4 Check reduce building candidates from 4,941 to 1,033, with all 3,908 unrelated-owner bypasses removed. Garage inclusion remains (1,391 candidates, displayed 25/25 verified owners).
+- Two text/two embedding calls: 16,632 prompt / 2,030 output tokens, about 121 estimated embedding tokens; about $0.00722. Export saved, preview left running. Evidence: `specs/tasks/A5-emulator-report.md`.
+- Merge/deploy this fix with the coordinated A4/U6/U8 release before claiming P2 locality on live. No deployment or live writes performed.
+
 ## U8: the map uses OpenStreetMap tiles (2026-11-11; local verification complete)
 
 Spec: `specs/tasks/U8-map-tiles.md` (author: option a). Merged after U6.

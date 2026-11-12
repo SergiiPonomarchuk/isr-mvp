@@ -1,6 +1,6 @@
 # A5: Local residential ownership scope
 
-Status: approved plan, 2026-11-12 (author: "ok" to the linked P2 locality-fix proposal). Implementation pending.
+Status: approved plan, 2026-11-12 (author: "ok" to the linked P2 locality-fix proposal). Implemented and emulator-verified; AC1-AC4 passed, final export saved. PR/CI follows; no live change.
 Branch: `codex/local-residential-scope`, based on U8 `0eddbc6` (stacked after PR #22).
 Components: 03 (relevance input interpretation), 07 (Analyzer, not yet a component file); P2 AC4.
 
@@ -36,3 +36,6 @@ This is a narrow interpretation guard at the Analyzer boundary, superseding A3's
 4. Update component history/status, P2's blocker record, and CHANGES; open a PR after U8 and retest P2.
 
 - 2026-11-12: formal spec written from the approved proposal; exact normalization rule stated above. No product code changed yet.
+
+- 2026-11-12: implementation `a817694`; Node 98 passed, Python 73 run with one skip. Captured P2 replay: 4,941 -> 1,033, removing all 3,908 unrelated owner bypasses while retaining property-linked members. Fresh p4 building Check 1,033, garage Check 1,391; old offending Create draft rejected with 409. Two text/two embedding calls, 16,632 prompt / 2,030 output tokens plus about 121 estimated embedding tokens, about $0.00722. Export 2026-11-12 06:36 UTC. Full evidence: [A5-emulator-report.md](A5-emulator-report.md). Preview left running, no live changes.
+- Outcome merged into [03-relevance.md](../03-relevance.md) (A5 scoped input interpretation and Change history); D/G engines remain unchanged. CI/PR and P2 cross-record follow.

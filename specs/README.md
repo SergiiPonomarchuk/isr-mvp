@@ -104,6 +104,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U8-map-tiles](tasks/U8-map-tiles.md) | implemented; AC1 local/AC2 rechecked 2026-11-11 on emulator; stacked on U6; live AC3 pending author | UI |
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
 | [A4-working-ai](tasks/A4-working-ai.md) | phases A-C complete and saved on emulator 2026-11-11; AC1-AC7 passed (9,150 people, two publics); live phase D/AC8 pending author | 02, 03, 04, 07, 12, 13 |
+| [A5-local-residential-scope](tasks/A5-local-residential-scope.md) | approved 2026-11-12; implemented, tests/emulator pass; resolves P2 building locality in the preview; stacked after U8 | 03, 07 |
 
 Handoff: [HANDOFF](HANDOFF.md): the state of every branch and the next steps (2026-11-11).
 

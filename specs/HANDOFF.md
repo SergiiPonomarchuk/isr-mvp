@@ -26,6 +26,13 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 - No database writes or AI/Nominatim calls for U8; the saved data remains the verified U6 export at 19:15 UTC. Temporary diagnostics removed; source is clean.
 - Next: review the stacked PRs in order A4 #20, U6 #21, then U8. P2's remaining browser/Check acceptance is still separate. Live U8 AC3 waits for the author's coordinated deployment. Nothing merged or deployed.
 
+### A5 checkpoint: 2026-11-12 (current preview)
+
+- Author approved the locality fix discovered in P2 draft PR #23. A5 is implemented on `codex/local-residential-scope`, stacked after U8 #22. Prompt p4 removes generic flat/house filters at unit/building scope; garage and broader ownership cases retained. Old offending drafts require a new Check.
+- Node 98 / Python 73 (one skipped); captured P2 replay and fresh building Check give 1,033 candidates instead of 4,941, eliminating all 3,908 unrelated-owner bypasses. Garage Check 1,391; displayed 25/25 verified owners. P2 AC4 passes on A5. See `tasks/A5-emulator-report.md`.
+- Export **2026-11-12 06:36 UTC**, two text/two embedding calls (about $0.00722). Preview remains running from the A5 branch in the main checkout, with the unchanged U8 frontend. Do not switch to older code while serving the preview.
+- Review/merge code stack A4 #20 -> U6 #21 -> U8 #22 -> A5; P2 #23's acceptance depends on A5. Coordinate its live deployment with the earlier code tasks. No PR merges, deploys, rules edits, profile migration or live writes performed.
+
 The older partial counts and resume commands below are historical handoff context, not the current checkpoint.
 
 ## 1. Where things stand
