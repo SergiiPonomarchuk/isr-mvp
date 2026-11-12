@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: Firestore recovery rehearsal, 2026-11-12
+## Current checkpoint: fresh live backup verified, awaiting author P1, 2026-11-12
+
+- Recovery PR #27 merged at `a8a9df0`. The author opened the live window and confirmed Paid AI Studio project `isr-mvp-ai-dev` has more than $5 available. An exact monthly cap was not reported.
+- Fresh live archive `A:\ISR\mvp\dbbackup\20261112-203337`: 24,884 documents. The first rehearsal exposed a signed-zero change in the disposable emulator's JSON write endpoint. The fix in PR #28 passed read-back of every path and typed field. See [the recovery evidence](tasks/M1-firestore-recovery.md).
+- Local rollout reports are in `C:\isr-mvp\scratch\live-rollout-20261112-203337`, including prior deployment identifiers and the P1 preview. The preview found 8,803 updates, zero deletes, no changed/missing inputs and 37 packs to rebuild. The deploy checkout is clean at `a8a9df0` with locked dependencies installed.
+- The author runs P1 live apply. Verify its result read-only before the P2 preview, following [the rollout runbook](LIVE-ROLLOUT.md). PR #28 separately needs an explicit merge instruction.
+
+## Firestore recovery rehearsal, 2026-11-12 (historical)
 
 - Plan and workflow PR #26 merged at `cb8d001`. The preview runs release `47e835a`.
 - Recovered all 24,783 documents from the November 7 pre-migration backup on a separate local emulator. Every path and typed document body matched on read-back. See [recovery evidence](tasks/M1-firestore-recovery.md) and [the author's repeatable procedure](LIVE-ROLLOUT.md#2-backup-and-recovery-prerequisite-author).

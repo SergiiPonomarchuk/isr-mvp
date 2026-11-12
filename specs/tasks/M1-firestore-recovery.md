@@ -19,6 +19,8 @@ The November 12 pre-migration backup must round-trip Firestore doubles of both s
 
 ## Status log
 
+- 2026-11-12 rollout window: the fresh read-only backup at `A:\ISR\mvp\dbbackup\20261112-203337` contained **24,884 documents in ten manifest entries**, including 1,695 nested messages. The first rehearsal detected a signed-zero mismatch in a microcommunity. An independent synthetic probe reproduced the sign change with JSON writes and confirmed that binary writes preserve it. After the fix, **all 24,884 paths and typed document bodies matched**, and the disposable emulator released its ports. All six SDK/recovery fixture tests passed. The normal suites passed (98 Node tests, 111 Python tests with two optional skips).
+
 - 2026-11-12: Full rehearsal with the private `2026-11-07-pre-migration` archive from `A:\ISR\mvp\dbbackup`. Validated, created and read back **24,783 of 24,783 documents in nine manifest entries**, including 1,694 nested messages, 9,150 vector documents and 9,151 user documents. All paths and typed field digests matched. This is the historical archive. The author repeats the procedure on the fresh pre-migration backup.
 - Independent SDK fixture passed on a fresh instance. R0's actual encoder produced the test archive. The SDK read back timestamps, geopoints, bytes, document references, a typed vector, nested maps/arrays, dotted field names, nulls, nonfinite doubles and distinct integer/double values. A missing parent stayed absent. A second apply to the populated target was refused.
 - Node 98 passed. Python 111 run, 109 passed with two optional checks skipped in the normal suite. All six focused recovery tests, including the optional SDK fixture, passed in the dedicated emulator run.
