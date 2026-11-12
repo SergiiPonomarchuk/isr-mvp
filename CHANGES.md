@@ -1,5 +1,10 @@
 # CHANGES
 
+## Firestore recovery rehearsal (2026-11-12)
+
+- Added offline validation and a restore command for the R0 backup format. It creates documents only on an empty dedicated emulator, verifies each path and typed field, and reports aggregate counts. Rehearsed the November 7 pre-migration backup successfully: 24,783 documents in nine manifest entries.
+- Added [the repeatable recovery procedure](specs/LIVE-ROLLOUT.md#2-backup-and-recovery-prerequisite-author), [evidence and format limits](specs/tasks/M1-firestore-recovery.md), regression tests and an independent SDK fixture. The author takes and verifies a fresh backup at rollout.
+
 ## Agent workflow (2026-11-12)
 
 - Codex proceeds through approved work and routine verification. The author handles material decisions, human acceptance, development model switches, merge authorization and live operations.
