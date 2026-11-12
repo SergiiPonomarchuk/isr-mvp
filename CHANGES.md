@@ -1,5 +1,11 @@
 # CHANGES
 
+## U8: integrate after U6 reaches main (2026-11-12)
+
+- Author explicitly instructed `merge PR 21`; U6 merged as `6b6ae7a`, after P1/P2/A4. Retargeted U8 #22 from U6 to main and reconciled that main into the U8 branch under the approved plan.
+- Only CHANGES and the specification index conflicted; retained all task records. Map/frontend/backend source, dependency versions, existing rules and A4 migrations are unchanged from accepted U8 head `0eddbc6`; imported P1/P2 migration artifacts match main.
+- Combined verification: Node 91 passed; Python 105 run, 104 passed and one existing optional skip. Saved AC2 evidence remains applicable to the unchanged map bytes. No new browser/data writes, AI/Nominatim calls, deploy or live operation. AC3 remains after the author's coordinated hosting deploy; CI is checked on the pushed head before explicit `merge PR 22`.
+
 ## U6: integrate after A4 reaches main (2026-11-12)
 
 - Author explicitly instructed `merge PR 20`; A4 merged as `76c50c8`, after P1 #25 and P2 #23. Retargeted U6 #21 from A4 to main and reconciled that main into the U6 branch under the approved development plan.
@@ -61,6 +67,24 @@ Spec: `specs/tasks/P2-homes-and-property.md` (approved 2026-11-10, with the auth
 ### Author's steps after merging
 1. On live, after P1's live apply and a backup: `python scripts/migrate_p2.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`, from `C:\isr-mvp` on main. It uses the committed plan and rebuilds `user_packs`.
 2. The agent then checks live read-only.
+
+## U8: the map uses OpenStreetMap tiles (2026-11-11; local verification complete)
+
+Spec: `specs/tasks/U8-map-tiles.md` (author: option a). Merged after U6.
+
+### What changed
+- **The tiles:** the map's tiles come from `tile.openstreetmap.org` under the OSMF tile usage policy, with the credit "© OpenStreetMap contributors". Before, they came from Google's own tile servers without a key or account, which Google's terms do not allow.
+- **One setting:** the URL and the credit live in one constant (`MAP_TILES` in `prototype/js/main.js`). The same credit covers U6's place search.
+- **Dead code removed:** the Google Maps JavaScript API branches never ran, because the page never loaded that library.
+
+### Checks
+- Unit tests after merging verified U6: Node 91 passed; Python 73 run, 72 passed and one skipped. Includes three map-tile checks and adapted U6 browser tests.
+- Full local emulator: editable map 18/18 tile images and read-only view 12/12 loaded from OpenStreetMap; credit visible. Profile places, map clicks and pin dragging work; read-only point stays fixed. Resource audit found no Google Maps hosts or google.com/subdomains. No console errors/warnings. See `specs/tasks/U8-emulator-report.md`.
+- No database writes or AI/Nominatim calls. Preview left running for the author. AC3 remains after the author's hosting deploy.
+
+### Author's steps after merging
+1. Deploy hosting with U6: `firebase deploy --only functions,hosting --project project-a3d59130-5adf-4677-9e2`, from the clean detached `wt-main` checkout, in the coordinated A4/U6/U8 deployment recorded in HANDOFF.
+2. The agent then checks live read-only (AC3).
 
 ## U6: the issue's point comes from its description (2026-11-11; emulator checks complete)
 

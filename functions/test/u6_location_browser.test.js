@@ -31,8 +31,8 @@ test("one function sets both copies of the point and marks a pin the creator mov
 test("drag, map click, profile place and search mark the pin as the creator's", () => {
   assert.match(main, /updateCoords\(latLng\.lat, latLng\.lng, true\)/); // Leaflet drag
   assert.match(main, /updateCoords\(e\.latlng\.lat, e\.latlng\.lng, true\)/); // Leaflet click
-  assert.equal((main.match(/updateCoords\(e\.latLng\.lat\(\), e\.latLng\.lng\(\), true\)/g) || []).length, 2); // Google click, drag
-  assert.equal((main.match(/updateCoords\(tag\.geo\[0\], tag\.geo\[1\], true\)/g) || []).length, 2); // profile markers
+  // U8 removed the Google Maps branch (it never ran), so only Leaflet's profile markers remain
+  assert.equal((main.match(/updateCoords\(tag\.geo\[0\], tag\.geo\[1\], true\)/g) || []).length, 1); // profile markers
   assert.match(main, /window\.setIssuePoint\(tag\.geo\[0\], tag\.geo\[1\], true\);\s+updateTargetMarker\(\);/); // profile list
   assert.match(body("function applySearchResult(lat, lon) {", 200), /window\.setIssuePoint\(lat, lon, true\)/);
   assert.match(main, /window\.setIssuePoint\(clicked\[0\], clicked\[1\], true\)/); // drawn fallback map
@@ -61,7 +61,9 @@ test("a pin moved after Check disables Create until Check runs again", () => {
 });
 
 test("the map and the search box credit OpenStreetMap", () => {
-  assert.match(main, /attribution: '[^']*Search: &copy; <a href="https:\/\/www\.openstreetmap\.org\/copyright"[^']*OpenStreetMap contributors<\/a>'/);
+  // U8: the map's tiles are OpenStreetMap's too, so one credit covers the tiles and the search
+  assert.match(main, /attribution: '&copy; <a href="https:\/\/www\.openstreetmap\.org\/copyright"[^']*>OpenStreetMap contributors<\/a>'/);
+  assert.match(main, /attribution: MAP_TILES\.attribution/);
   assert.match(html, /id="geo-map-search-credit"[^>]*>Place search: &copy; <a href="https:\/\/www\.openstreetmap\.org\/copyright"[^>]*>OpenStreetMap contributors<\/a>/);
 });
 

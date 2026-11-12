@@ -4,7 +4,18 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: A4 merged; U6 retargeted and reconciled, 2026-11-12
+## Current checkpoint: U6 merged; U8 retargeted and reconciled, 2026-11-12
+
+- The author explicitly instructed `merge PR 21`; **U6 is merged as `6b6ae7a`**, after P1 #25, P2 #23 and A4 #20. The reviewed merge-head CI passed. No live changes follow automatically.
+- U8 PR #22 now targets main and is reconciled with it. Only CHANGES and the index conflicted. Map/frontend/backend source, dependencies, existing rules and A4 migration code remain unchanged from accepted U8 head `0eddbc6`; imported P1/P2 source/data match main. main.js bytes, including CRLF and the final CR, are retained.
+- Combined verification: **Node 91 passed; Python 105 run, 104 passed and one existing optional skip**. Existing map/browser AC2 evidence is `tasks/U8-emulator-report.md`. No new API requests or data writes for this documentation reconciliation. CI is checked on the pushed head.
+- Next: explicit author `merge PR 22`; then retarget/reconcile A5 PR #24 to main and verify it. The approved plan documentation PR #26 remains unmerged and needs its own explicit merge instruction when ready. Final integrated release checks follow the code stack.
+- Keep the A5 preview in `C:\isr-mvp`, detached at `0ff325b`, with the 2026-11-12 06:36 UTC saved snapshot and 8 GB Java heap. Do not switch serving code incidentally.
+- U8 live AC3 and the A4/U6/U8/A5 deployment remain the author's steps, coordinated with P1/P2 live apply and A4 re-embedding. P2's locality acceptance depends on A5. D1 still waits for P2 applied and A4/U6 live. No deploy, rules edit or production write in this reconciliation.
+
+Older checkpoints and original resume commands below are historical.
+
+## U6 reconciliation checkpoint, 2026-11-12 (historical)
 
 - The author explicitly instructed `merge PR 20`; **A4 is merged into main as `76c50c8`**, after P1 #25 and P2 #23. All merge-head checks passed. No live migration or deployment follows automatically.
 - U6 #21 now targets main. Reconciled main into its feature branch; only CHANGES conflicted. Preserved all task records. U6 application/frontend/location/geocoder code, dependencies, existing rules and A4 migration code are unchanged from the already accepted U6 head `7bbfd45`; imported P1/P2 source/data match main.
@@ -72,6 +83,13 @@ The remaining sections describe the original handoff and historical run state; t
 - Ten text and ten embedding calls, approximately $0.0363 at the spec's recorded rates; exactly four external Nominatim lookups. Switch restored to its original absence. Two emulator test drafts for the pin check and one created test issue remain.
 - Final export: **2026-11-11 19:15 UTC**, exit 0; re-import verified all final U6 records survived. Emulator stopped; main checkout restored to `p1-profile-review`.
 - Next: review A4 PR #20 and the stacked U6 PR; U8 follows U6. P2 browser/Check acceptance remains pending separately. No merges, deploys, rules edits or live writes performed.
+
+### U8 checkpoint: 2026-11-11 (current preview state)
+
+- U8 AC2 rechecked on the full emulator; Node 91 passed, Python 73 run with one skip. Editable and read-only OpenStreetMap tiles, credit, pin movement and profile places verified. No Google Maps requests; no console errors. See `tasks/U8-emulator-report.md`.
+- **Emulator left running for the author**, Java heap 8 GB. `C:\isr-mvp` is detached at U8, serving its map code and the verified U6 backend. Keep it running for inspection; do not switch to the pre-A4 P1 branch while serving this preview.
+- No database writes or AI/Nominatim calls for U8; the saved data remains the verified U6 export at 19:15 UTC. Temporary diagnostics removed; source is clean.
+- Next: review the stacked PRs in order A4 #20, U6 #21, then U8. P2's remaining browser/Check acceptance is still separate. Live U8 AC3 waits for the author's coordinated deployment. Nothing merged or deployed.
 
 The older partial counts and resume commands below are historical handoff context, not the current checkpoint.
 

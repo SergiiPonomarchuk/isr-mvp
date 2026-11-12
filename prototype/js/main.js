@@ -266,8 +266,17 @@ let suggestedParams = null;
 // ==========================================
 window.leafletInnerCircle = null;
 window.leafletOuterCircle = null;
-window.googleInnerCircle = null;
-window.googleOuterCircle = null;
+
+// U8 (option a): OpenStreetMap's standard tiles under the OSMF tile usage policy
+// (https://operations.osmfoundation.org/policies/tiles/): the HTTPS URL, the visible credit,
+// only the tiles in view (Leaflet's default). Before U8 the map loaded Google's tile servers
+// without a key, outside Google's terms. The URL and the credit live here only (the policy
+// recommends a configurable URL); the place search (U6) keeps its own credit below.
+const MAP_TILES = {
+  url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+  maxZoom: 19,
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>'
+};
 
 window.updateCircles = function(lat, lng, mu, sigma) {
   const center = [lat, lng];
@@ -298,39 +307,6 @@ window.updateCircles = function(lat, lng, mu, sigma) {
       window.leafletOuterCircle.setLatLng(center);
       window.leafletOuterCircle.setRadius(totalRadius);
     }
-  } else if (typeof google !== 'undefined' && google.maps && window.mapInstance instanceof google.maps.Map) {
-    const googleCenter = { lat: lat, lng: lng };
-    if (!window.googleInnerCircle) {
-      window.googleInnerCircle = new google.maps.Circle({
-        strokeColor: '#3182ce',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: '#3182ce',
-        fillOpacity: 0.25,
-        map: window.mapInstance,
-        center: googleCenter,
-        radius: mu
-      });
-    } else {
-      window.googleInnerCircle.setCenter(googleCenter);
-      window.googleInnerCircle.setRadius(mu);
-    }
-
-    if (!window.googleOuterCircle) {
-      window.googleOuterCircle = new google.maps.Circle({
-        strokeColor: '#e53e3e',
-        strokeOpacity: 0.6,
-        strokeWeight: 1.5,
-        fillColor: '#e53e3e',
-        fillOpacity: 0.08,
-        map: window.mapInstance,
-        center: googleCenter,
-        radius: totalRadius
-      });
-    } else {
-      window.googleOuterCircle.setCenter(googleCenter);
-      window.googleOuterCircle.setRadius(totalRadius);
-    }
   }
 };
 
@@ -341,9 +317,7 @@ window.initInteractiveMap = function(isReadOnly = false) {
   
   window.leafletInnerCircle = null;
   window.leafletOuterCircle = null;
-  window.googleInnerCircle = null;
-  window.googleOuterCircle = null;
-  
+
   const distInput = document.getElementById('geo-affect-distance');
   const fadeInput = document.getElementById('geo-affect-fade');
   const getMuSigma = () => {
@@ -376,12 +350,10 @@ window.initInteractiveMap = function(isReadOnly = false) {
     window.detailMapInstance = map;
     window.mapInstance = map;
 
-    // Load Google Maps tiles
-    L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-      maxZoom: 20,
-      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-      // U6 (R6): the place search (OpenStreetMap Nominatim) needs the OpenStreetMap credit
-      attribution: '&copy; <a href="https://maps.google.com">Google Maps</a> | Search: &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>'
+    // U8: OpenStreetMap tiles (MAP_TILES). One credit covers the tiles and the place search (U6).
+    L.tileLayer(MAP_TILES.url, {
+      maxZoom: MAP_TILES.maxZoom,
+      attribution: MAP_TILES.attribution
     }).addTo(map);
 
     const marker = L.marker([window.newTopicGeo[0], window.newTopicGeo[1]], { draggable: !isReadOnly }).addTo(map);
@@ -441,69 +413,9 @@ window.initInteractiveMap = function(isReadOnly = false) {
       fadeInput.addEventListener('input', updateCirclesLocal);
     }
 
-  } else if (typeof google !== 'undefined' && google.maps) {
-    const center = { lat: window.newTopicGeo[0], lng: window.newTopicGeo[1] };
-    window.mapInstance = new google.maps.Map(mapCanvas, {
-      center: center,
-      zoom: 15,
-      panControl: !isReadOnly,
-      zoomControl: true
-    });
-    
-    window.mapMarker = new google.maps.Marker({
-      position: center,
-      map: window.mapInstance,
-      draggable: !isReadOnly,
-      icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
-    });
-
-    // U6 (R6): byCreator = true for a drag, a map click or a profile place
-    const updateCoords = (lat, lng, byCreator) => {
-      window.setIssuePoint(lat, lng, !!byCreator && !isReadOnly);
-      updateCirclesLocal();
-    };
-
-    if (!isReadOnly) {
-      const tags = window.profileGeotags || profileGeotags || [];
-      tags.forEach(tag => {
-        const marker = new google.maps.Marker({
-          position: { lat: tag.geo[0], lng: tag.geo[1] },
-          map: window.mapInstance,
-          title: `${tag.type}: ${tag.place || tag.address || ''}`,
-          icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-        });
-        marker.addListener('click', () => {
-          updateCoords(tag.geo[0], tag.geo[1], true);
-          window.mapMarker.setPosition({ lat: tag.geo[0], lng: tag.geo[1] });
-          window.mapInstance.panTo({ lat: tag.geo[0], lng: tag.geo[1] });
-        });
-      });
-
-      window.mapInstance.addListener('click', (e) => {
-        updateCoords(e.latLng.lat(), e.latLng.lng(), true);
-        window.mapMarker.setPosition(e.latLng);
-      });
-
-      window.mapMarker.addListener('dragend', (e) => {
-        updateCoords(e.latLng.lat(), e.latLng.lng(), true);
-      });
-    }
-
-    // Draw initial circles
-    updateCirclesLocal();
-
-    // Bind input listeners
-    if (distInput) {
-      distInput.removeEventListener('input', updateCirclesLocal);
-      distInput.addEventListener('input', updateCirclesLocal);
-    }
-    if (fadeInput) {
-      fadeInput.removeEventListener('input', updateCirclesLocal);
-      fadeInput.addEventListener('input', updateCirclesLocal);
-    }
-
   } else {
-    // Fallback SVG Map Rendering
+    // Fallback SVG Map Rendering (when Leaflet does not load). U8 removed the Google Maps
+    // JavaScript API branch: index.html never loaded that library, so it never ran.
     const svgNamespace = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNamespace, "svg");
     svg.setAttribute("width", "100%");
@@ -704,9 +616,6 @@ window.updateTargetMarker = function() {
     if (typeof L !== 'undefined' && window.mapInstance instanceof L.Map) {
       window.mapMarker.setLatLng(center);
       window.mapInstance.panTo(center);
-    } else if (typeof google !== 'undefined' && google.maps && window.mapInstance instanceof google.maps.Map) {
-      window.mapMarker.setPosition({ lat: center[0], lng: center[1] });
-      window.mapInstance.panTo({ lat: center[0], lng: center[1] });
     }
   } else {
     window.initInteractiveMap();
@@ -6522,9 +6431,7 @@ function initTopicDetailViews() {
           }
           window.leafletInnerCircle = null;
           window.leafletOuterCircle = null;
-          window.googleInnerCircle = null;
-          window.googleOuterCircle = null;
-          
+
           // Restore inputs and buttons to original state
           if (coordsInput) {
             coordsInput.value = '';

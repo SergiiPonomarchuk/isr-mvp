@@ -99,8 +99,9 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U3-message-sorting](tasks/U3-message-sorting.md) | DONE: merged (PR 11), deployed and checked on live 2026-11-09 | 10 (UI) |
 | [U4-voting-view-messages](tasks/U4-voting-view-messages.md) | DONE: merged (PR 12), deployed and checked on live 2026-11-09 | 10 (UI) |
 | [U5-esc-and-geotag](tasks/U5-esc-and-geotag.md) | DONE on live 2026-11-10 (PR 15); the issue location from the Analyzer follows after A4 | UI |
-| [U6-issue-location](tasks/U6-issue-location.md) | AC2-AC5 passed and saved; PR #21 retargeted/reconciled to main after A4 #20 merged; combined Node 88 / Python 105 (one skip); live pending author | UI, 07 (Analyzer), 03 (G) |
+| [U6-issue-location](tasks/U6-issue-location.md) | merged PR #21 on 2026-11-12; AC2-AC5 passed and saved; combined Node 88 / Python 105 (one skip); live pending author | UI, 07 (Analyzer), 03 (G) |
 | [U7-page-cache](tasks/U7-page-cache.md) | DONE on live 2026-11-11 (PR 17): every hosting response is sent with `no-cache` | UI, 13 (hosting) |
+| [U8-map-tiles](tasks/U8-map-tiles.md) | AC1/AC2 passed and saved; PR #22 retargeted/reconciled to main after U6 #21 merged; combined Node 91 / Python 105 (one skip); live AC3 pending author | UI |
 | [P2-homes-and-property](tasks/P2-homes-and-property.md) | merged PR #23 on 2026-11-12; emulator AC2-AC4 pass on A5 PR #24; coordinated A5 deployment required; live AC5 pending author | 02, 03 (G), 06 (D) |
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
 | [A4-working-ai](tasks/A4-working-ai.md) | merged PR #20 on 2026-11-12; phases A-C/AC1-AC7 complete and saved (9,150 people, two publics); live phase D/AC8 pending author | 02, 03, 04, 07, 12, 13 |
