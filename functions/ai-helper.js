@@ -265,6 +265,11 @@ D. DEMOGRAPHIC RULES (simplified backend schema)
     // a person who works at or owns a listed place is included through D even if they live far away
   "property_kinds": [ any of "flat", "house", "land", "garage", "commercial", "other"; [] if none ]
     // kinds of real estate whose owners are affected (matched against registered property locations)
+    // For unit/building scope, NEVER select generic flat/house ownership: use [] for these kinds.
+    // A broken entrance, lift, roof or local residential maintenance affects this location,
+    // not all flat/house owners elsewhere. Actual landlords remain relevant through property there.
+    // Genuinely broader ownership issues need the corresponding broader scope, not unit/building.
+    // Garage, land, commercial and other property kinds keep their existing inclusion behavior.
 },
 
 ────────────────────────────────────────────────────────────────
@@ -556,6 +561,7 @@ Return ONLY the JSON object. No explanation text outside the JSON.
 // Fields removed by task A2 (PD-8): Expertise has no weights and no resources part.
 const { OBSOLETE_PARAM_FIELDS } = require("./params");
 const { sanitizeDemographicRules } = require("./demographics");
+const { demographicRulesForScope } = require("./issue-scope");
 const { normalizeLocationReference, keywordLocationReference } = require("./location");
 
 // =============================================================================
@@ -622,8 +628,9 @@ function normalizeIssueParams(data) {
   }
   if (!data.demographics) data.demographics = data.demographic_rules;
   // A3: places and property kinds (causes to include through D); clean lists only
-  data.demographic_rules = sanitizeDemographicRules(data.demographic_rules);
-  data.demographics = sanitizeDemographicRules(data.demographics);
+  // A5: local residential issues must not recruit every flat/house owner elsewhere.
+  data.demographic_rules = demographicRulesForScope(data.demographic_rules, data.classification);
+  data.demographics = demographicRulesForScope(data.demographics, data.classification);
 
   // ── Obsolete fields (A2, PD-8): never passed on, even if the model returns them
   for (const k of OBSOLETE_PARAM_FIELDS) delete data[k];
