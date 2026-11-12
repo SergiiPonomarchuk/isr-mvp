@@ -1,7 +1,7 @@
 # SPEC U8: Map tiles under a provider's terms
 
 Status: APPROVED 2026-11-10 (author: option a, OpenStreetMap tiles). Implemented 2026-11-10 on top of U6; AC1 local and AC2 rechecked 2026-11-11 after merging verified U6. CI checked on the PR; AC3 remains after the author's deploy.
-Branch: u8-map-tiles (from main, with U6 merged in because both change the map's credit; merged after U6; never main)
+Branch: u8-map-tiles (originally stacked on U6; PR #22 retargeted to main after U6 #21 merged as `6b6ae7a` on 2026-11-12; never main)
 Source: a side finding of U5 and U6 (2026-11-10): the map loads Google's tiles without a key or an account.
 
 ## 1. Context (verified 2026-11-10)
@@ -84,3 +84,8 @@ Source: a side finding of U5 and U6 (2026-11-10): the map loads Google's tiles w
   - Resource audit: no google.com/subdomain or Maps API hosts; no Google tile images. No console errors/warnings. Existing non-map font/analytics resources remain outside scope.
   - Temporary diagnostic removed byte-for-byte; no product-code fix needed. No AI calls, Nominatim lookups or database writes; no new export needed. Full evidence: [U8-emulator-report.md](U8-emulator-report.md).
   - Emulator deliberately left running for the author; main checkout detached at U8, application code as in this branch. PR stacked on U6 #21/A4 #20. AC3 remains after the author's deploy; no merges or live changes.
+
+- 2026-11-12, approved development-plan integration: author explicitly instructed `merge PR 21`; U6 merged as `6b6ae7a`, including P1/P2/A4. Retargeted U8 PR #22 from U6 to main and reconciled that main. Only CHANGES and the index conflicted; retained all histories and added a current HANDOFF checkpoint.
+  - Map/frontend/backend source, dependency lockfile, existing rules and A4 migration scripts are unchanged from pre-reconciliation head `0eddbc6`. P1/P2 source, generated artifacts and tests match main. main.js retains its exact CRLF and final-CR bytes.
+  - Combined suites: **Node 91 passed; Python 105 run, 104 passed and one existing optional skip**. Used matching SDK dependencies via `NODE_PATH=C:\isr-mvp\functions\node_modules`; API calls in tests are mocked.
+  - Saved [U8 AC2 browser evidence](U8-emulator-report.md) remains applicable because the map code is unchanged. No fresh browser writes, AI/Nominatim calls, migration apply, deploy, production write or rules edit. CI is checked on the pushed head before requesting explicit `merge PR 22`. Next: A5 #24, then integrated release verification; live AC3 remains the author's deployment followed by read-only checks.

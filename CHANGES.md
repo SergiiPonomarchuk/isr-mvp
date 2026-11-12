@@ -1,5 +1,73 @@
 # CHANGES
 
+## U8: integrate after U6 reaches main (2026-11-12)
+
+- Author explicitly instructed `merge PR 21`; U6 merged as `6b6ae7a`, after P1/P2/A4. Retargeted U8 #22 from U6 to main and reconciled that main into the U8 branch under the approved plan.
+- Only CHANGES and the specification index conflicted; retained all task records. Map/frontend/backend source, dependency versions, existing rules and A4 migrations are unchanged from accepted U8 head `0eddbc6`; imported P1/P2 migration artifacts match main.
+- Combined verification: Node 91 passed; Python 105 run, 104 passed and one existing optional skip. Saved AC2 evidence remains applicable to the unchanged map bytes. No new browser/data writes, AI/Nominatim calls, deploy or live operation. AC3 remains after the author's coordinated hosting deploy; CI is checked on the pushed head before explicit `merge PR 22`.
+
+## U6: integrate after A4 reaches main (2026-11-12)
+
+- Author explicitly instructed `merge PR 20`; A4 merged as `76c50c8`, after P1 #25 and P2 #23. Retargeted U6 #21 from A4 to main and reconciled that main into the U6 branch under the approved development plan.
+- Only CHANGES conflicted; retained U6 and all merged task records. Application/frontend/AI/location/geocoder source, dependency versions, rules and A4 migrations are unchanged from the tested U6 head `7bbfd45`; imported P1/P2 migration sources and datasets remain identical to main.
+- Combined verification: Node 88 passed; Python 105 run, 104 passed and one existing optional skip. Existing U6 AC2-AC5 browser/API/export evidence remains applicable. No fresh model/Nominatim requests, database writes, deploy or live operation. CI is checked on the pushed head before explicit `merge PR 21`.
+
+## A4: integrate the merged P1/P2 migrations (2026-11-12)
+
+- P2 PR #23 merged as `a17d5cd` after the author's explicit instruction; P1 PR #25 is already in main. Reconciled that main into A4 PR #20 under the approved development plan.
+- Only CHANGES, HANDOFF and the specification index conflicted. Retained all P1/P2/A4 records. No A4 application code, models, dependencies, migration scripts, generated examples or rules changed in this reconciliation; imported P1/P2 source/data remain identical to main.
+- Combined tests: Node 57 passed; Python 105 run, 104 passed and one existing optional skip. Key-free read-only emulator recheck: all 9,150 people current, 20,245 skill hash keys, 0 texts/requests needed; phase C has 0 placeholder publics, updates, new vectors or requests. Existing saved AC5/AC6 evidence covers vector values and canonical scores. No migration apply, re-embedding, API usage, deploy or live write is performed. Phase D/AC8 remain the author's coordinated rollout.
+
+## P2: reconcile with the merged profile repairs (2026-11-12)
+
+- Author approved the development plan (PR #26). Reconciled main `6d252c2` (P1 PR #25) into P2 PR #23; only CHANGES and the handoff needed conflict resolution. Both tasks' reports and generated records are retained.
+- P2 migration code, committed plan and GeoJSON artifacts are unchanged; application code, dependency versions, formulas and vectors are unchanged. P2's accepted building behavior still depends on the A5 code release (PR #24).
+- Combined verification: Node 47 passed; Python 84 run, 83 passed and one existing optional skip. Read-only dry runs: P2 done 9,150, to write/held/problems 0; P1 profiles 9,150, updates/deletes/pending 0. No migration apply, generation, paid AI calls, deploy, rules edit or live write is part of this reconciliation.
+
+## P1: repair the synthetic profiles (2026-11-12 review; emulator applied 2026-11-11)
+
+Spec: `specs/tasks/P1-profile-review.md`; approved by the author on 2026-11-10. The existing migration and its committed output are ready for review.
+
+- Structured 11,057 work-experience entries for 5,097 people into the existing role, specialization, years and own-work description fields. Skill IDs/types are retained; generated years total no more than age minus 16. Graduation ages follow education level, future entries are marked in progress, and job education reflects the highest completed education. Deleted the broken `users/None` stub. Features, activity times and unused fields were kept as decided.
+- `scripts/migrate_p1.py` is dry-run by default, guards live access, holds changed inputs, resumes generation and rebuilds existing `user_packs` on apply. Committed `p1w2` records provide identical texts for emulator and live; `scripts/audit_profiles.py` reports the repairs. No app/scoring source or vectors changed in P1.
+- Original emulator apply: 8,803 updates and one deletion; no packs existed. Read-only recheck after P2/A4: 9,150 profiles, 0 updates/deletes/pending/changed inputs. All 20,245 skill IDs exactly match the original export and current A4 hash keys. See `specs/tasks/P1-review-report.md` and the original migration/audit reports.
+- Validation: Node 47 passed; Python 70 run, 69 passed and one existing optional skip, including 18 mocked P1 tests. Original generation: 526 logged calls (520 successes, six failed), 868,733 prompt and 869,733 output tokens; $0 on the then-free tier, about $1.52 at recorded paid rates. This review made no model requests or database writes.
+- Remaining: author backup and live AC4 apply/audit, coordinated with P2, A4/U6/U8/A5 and A4 re-embedding. Nothing deployed or written to live by this PR.
+
+## P2: homes in real buildings, and property for the synthetic people (2026-11-11)
+
+Spec: `specs/tasks/P2-homes-and-property.md` (approved 2026-11-10, with the author's additions). Data only, with no app code change. Runs after P1.
+
+### What changed
+- **New script** `scripts/migrate_p2.py` (dry run by default; `--make-plan` once; `--apply`). The plan is made once from the original people and stored in `scripts/p2_generated/plan.json` with each person's source hash, so a second run changes nothing and a person whose data differs (live against the emulator) is held.
+- **Homes:**
+  - **Estates:** the 8 current estate points are the estates' centres. Apartment blocks are 60 m apart along a row and 70 m between rows; townhouses stand in rows of 8 houses 8 m apart, with rows 32 m apart; private houses are 30 m apart.
+  - **The move:** every home moves to its building's point (address and unit kept; `building` added).
+  - **Andim:** its 45 families get city houses around the Andim point, with fictional addresses.
+- **Objects:**
+  - **In apartment blocks:** shops, pharmacies, cafés and salons on an apartment estate's point move to a block's ground floor.
+  - **Out of the estates:** other objects inside an estate move just outside (20-300 m), with fictional addresses.
+  - **New names:** the 63 numbered objects are renamed ("School 3" -> "Riverside School"; the typos "Phatmacy" and "Kindergarden" are gone).
+  - **Workers:** everyone who works at an object follows it.
+- **Property entries** (`type: "property"`, kinds as in A3), by fixed rules from age, household, home and work. Children own nothing:
+  - flats 2,948, of which 267 are rented out by landlords;
+  - houses 1,882;
+  - garages 381, in 3 cooperatives;
+  - garden plots 503, in 3 gardens;
+  - commercial units 78.
+- **Tests:** `tests/test_migrate_p2.py` (14).
+
+### Checks
+- Unit tests on the refreshed P2 branch: Node 47 passed; Python 66 run, 65 passed and one skipped (14 P2 tests).
+- **Emulator** (2026-11-11, after P1): 9,150 people written, and a second run wrote 0. Every home is on its building's point (1,226 buildings); no numbered name is left; the property is as planned; the distance rules hold.
+- **AC3 passed:** profile and geotag map show the h5 building point and flat/garage property; selecting the garage uses its stored coordinates. Dry run remains 9,150 done, 0 to write/held/problems.
+- **AC4 passed after A5 PR #24:** original building failure (4,941 candidates, including 3,908 unrelated distant owners) is resolved by the approved residential-scope guard. Captured replay and fresh p4 Check give 1,033 local/property-linked candidates; garage inclusion remains (displayed 25/25 owners). Original evidence retained in `specs/tasks/P2-acceptance-report.md`. A5 must be merged/deployed with the coordinated code release; no P2 data rerun was needed.
+- Two model/embedding calls, 16,436 prompt / 2,059 output tokens and about 121 estimated embedding tokens; approximately $0.0072 at the recorded rates. Emulator drafts/logs exported; no live changes. P2 PR is ready for review with A5 as a code-deployment dependency.
+
+### Author's steps after merging
+1. On live, after P1's live apply and a backup: `python scripts/migrate_p2.py --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`, from `C:\isr-mvp` on main. It uses the committed plan and rebuilds `user_packs`.
+2. The agent then checks live read-only.
+
 ## U8: the map uses OpenStreetMap tiles (2026-11-11; local verification complete)
 
 Spec: `specs/tasks/U8-map-tiles.md` (author: option a). Merged after U6.

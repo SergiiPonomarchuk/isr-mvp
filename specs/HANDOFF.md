@@ -4,7 +4,72 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Latest checkpoint: Codex, 2026-11-11 (supersedes older A4 run instructions below)
+## Current checkpoint: U6 merged; U8 retargeted and reconciled, 2026-11-12
+
+- The author explicitly instructed `merge PR 21`; **U6 is merged as `6b6ae7a`**, after P1 #25, P2 #23 and A4 #20. The reviewed merge-head CI passed. No live changes follow automatically.
+- U8 PR #22 now targets main and is reconciled with it. Only CHANGES and the index conflicted. Map/frontend/backend source, dependencies, existing rules and A4 migration code remain unchanged from accepted U8 head `0eddbc6`; imported P1/P2 source/data match main. main.js bytes, including CRLF and the final CR, are retained.
+- Combined verification: **Node 91 passed; Python 105 run, 104 passed and one existing optional skip**. Existing map/browser AC2 evidence is `tasks/U8-emulator-report.md`. No new API requests or data writes for this documentation reconciliation. CI is checked on the pushed head.
+- Next: explicit author `merge PR 22`; then retarget/reconcile A5 PR #24 to main and verify it. The approved plan documentation PR #26 remains unmerged and needs its own explicit merge instruction when ready. Final integrated release checks follow the code stack.
+- Keep the A5 preview in `C:\isr-mvp`, detached at `0ff325b`, with the 2026-11-12 06:36 UTC saved snapshot and 8 GB Java heap. Do not switch serving code incidentally.
+- U8 live AC3 and the A4/U6/U8/A5 deployment remain the author's steps, coordinated with P1/P2 live apply and A4 re-embedding. P2's locality acceptance depends on A5. D1 still waits for P2 applied and A4/U6 live. No deploy, rules edit or production write in this reconciliation.
+
+Older checkpoints and original resume commands below are historical.
+
+## U6 reconciliation checkpoint, 2026-11-12 (historical)
+
+- The author explicitly instructed `merge PR 20`; **A4 is merged into main as `76c50c8`**, after P1 #25 and P2 #23. All merge-head checks passed. No live migration or deployment follows automatically.
+- U6 #21 now targets main. Reconciled main into its feature branch; only CHANGES conflicted. Preserved all task records. U6 application/frontend/location/geocoder code, dependencies, existing rules and A4 migration code are unchanged from the already accepted U6 head `7bbfd45`; imported P1/P2 source/data match main.
+- Combined verification: **Node 88 passed; Python 105 run, 104 passed, one existing optional skip**. Existing U6 AC2-AC5 evidence is `tasks/U6-emulator-report.md`. No new model/Nominatim calls, writes or paid acceptance runs are required for this source-preserving reconciliation. CI is checked on the pushed head.
+- Next: author explicitly instructs `merge PR 21`; after it merges, retarget/reconcile U8 #22 to main, then A5 #24. The approved plan documentation PR #26 remains unmerged; it needs its own explicit merge instruction when ready.
+- Keep `C:\isr-mvp` serving A5 `0ff325b` and the saved 2026-11-12 06:36 UTC snapshot with 8 GB Java heap. Do not switch the serving checkout as a side effect of integration.
+- Live P1/P2 apply, A4 phase D and the combined A4/U6/U8/A5 deployment remain the author's steps. P2 building acceptance depends on A5. D1 still waits for P2 applied and A4/U6 live. No deploy, rules edit or production write in this reconciliation.
+
+Older checkpoints and resume commands below are historical.
+
+## A4 reconciliation checkpoint, 2026-11-12 (historical)
+
+- The author approved the development plan in [PR #26](https://github.com/SergiiPonomarchuk/isr-mvp/pull/26), then explicitly instructed `merge PR 23`. **P2 is merged as `a17d5cd`**, after P1 #25 (`6d252c2`). This is source integration, not a live migration or deploy.
+- A4 #20 is reconciled with that main. Conflicts were limited to CHANGES, this handoff and the index. P1/P2 source and generated artifacts remain identical to main; A4 source, examples, models, dependencies and existing rules are unchanged by reconciliation.
+- Combined verification passed: Node 57; Python 105 run, 104 passed and one existing optional skip. Key-free read-only check: all 9,150 profiles current, 20,245 skill hash keys, no texts/requests needed; phase C has no placeholder publics, updates, new vectors or requests. Existing AC5/AC6 evidence remains applicable. CI is checked on the pushed head before presenting #20. Do not restart paid generation or migration apply.
+- Next: explicit author merge instruction for A4 #20, then retarget U6 #21 to main, reconcile/verify it, followed by U8 #22 and A5 #24. The plan documentation PR #26 is still unmerged and also needs its own explicit instruction.
+- Preserve the running A5 preview in `C:\isr-mvp`, detached at `0ff325b`, with its saved 2026-11-12 06:36 UTC export and 8 GB Java heap. Do not switch the serving checkout as a side effect of this integration.
+- Live P1/P2 apply, A4 phase D and the coordinated code deploy remain the author's steps. Include A5 for P2's accepted building locality. D1 waits for P2 applied and A4/U6 live. No deploys, live writes, fresh API calls or rules edits in this reconciliation.
+
+The checkpoints and original resume commands below are historical; this checkpoint governs next work.
+
+## P2 reconciliation checkpoint, 2026-11-12 (historical)
+
+- The author approved the [overall/detailed development plan, PR #26](https://github.com/SergiiPonomarchuk/isr-mvp/pull/26). Approval authorizes its next implementation work; PR merges still need explicit `merge PR N` instructions. The documentation PR itself is not merged by that approval.
+- P1 PR #25 is merged into main as `6d252c2`. P2 PR #23 has been reconciled with that main; only CHANGES and this handoff conflicted, and both historical records are retained below. The P1/P2 generated artifacts and migration code remain unchanged.
+- Combined local verification passed: Node 47; Python 84 run, 83 passed and one existing optional skip. Emulator dry runs: P2 9,150 done, 0 to write/held/problems; P1 9,150 profiles, 0 updates/deletes/pending. CI is checked on the pushed head before presenting #23 for merge. Do not rerun migration apply or regenerate content.
+- Remaining order: author-approved merge of P2 #23, then reconcile/integrate A4 #20 -> U6 #21 -> U8 #22 -> A5 #24. A4 currently needs reconciliation with main. Retarget stacked children to main after their parents merge and check the resulting heads.
+- P2 emulator AC3/AC4 passed on the A5 stack. Its live deployment dependency on A5 remains explicit; P1/P2 live migrations and A4 phase D are the author's coordinated steps. D1 still waits for P2 applied and A4/U6 live.
+- Preserve the A5 preview in `C:\isr-mvp`, detached at `0ff325b`, with the 8 GB emulator. Saved export: 2026-11-12 06:36 UTC; the preview was restored after P1 merged. No serving-code change, API calls, data writes or live operations are needed for this documentation reconciliation.
+
+All checkpoints and run-state counts below are historical; this checkpoint governs next work.
+
+## P1 review checkpoint, 2026-11-12 (historical)
+
+- P1 has been rechecked read-only after P2/A4: 9,150 users, zero changes to make, all 20,245 original skill IDs retained. Node 47 passed; Python 70 run with one existing optional skip. No generation or apply rerun. See `tasks/P1-review-report.md`. The author approved PR #25 for merge to main on 2026-11-12 (`merge PR 25`); live AC4 remains the author's step.
+- Code PR dependency order: **A4 #20 -> U6 #21 -> U8 #22 -> A5 #24**. Profile migration PRs: **P1 #25 -> P2 #23**; P2's building acceptance depends on A5. All five existing PRs were green and conflict-free against their current bases at this checkpoint. Recheck bases/CI after each authorized merge. Merge only on the author's explicit `merge PR N` instruction.
+- A4 phases B/C, U6 AC2-AC5, U8 AC2 and P2 AC2-AC4 are complete on the emulator. P2 AC4 originally found the unrelated-owner inclusion bug; A5 fixes it and passes the recorded replay and fresh Checks. See their branch specs/reports, rather than repeating the old run instructions below.
+- **Keep the preview running.** `C:\isr-mvp` remains detached at A5 `0ff325b`, with its backend and U8 frontend. Saved emulator export: 2026-11-12 06:36 UTC. P1 now has its own `A:\BackUp\isr-mvp\worktrees\wt-p1` checkout, so do not switch the serving checkout to P1.
+- No merges, deploys, rules edits, live writes or new AI calls were performed for this checkpoint. Live is still pre-A4 code/data; P1, P2 and the A4 re-embedding/deployment must be coordinated by the author after backup. Include A5 in that code deployment. D1 still waits for its specified live prerequisites.
+
+The remaining sections describe the original handoff and historical run state; this checkpoint governs the next work.
+
+## P2 acceptance checkpoint, 2026-11-12 (historical)
+
+**Follow-up:** A5 PR #24 resolves the original building failure described below. Current preview is detached at A5 with prompt p4; its saved export includes both successful repeated Checks. Review code stack A4 #20 -> U6 #21 -> U8 #22 -> A5 #24, plus P2 data PR #23. Emulator remains running. See the updated P2 acceptance report for the passing follow-up.
+
+- A4 saved embedding/migration work is complete (9,150 people current). U6 and U8 emulator checks are complete. Review stack: A4 PR #20 -> U6 #21 -> U8 #22. Nothing merged or deployed.
+- Emulator is **running** from `C:\isr-mvp`, detached at U8 `0eddbc6`, with the U6/A4 backend and Java heap 8 GB. Keep the preview available for the author. Latest export **2026-11-11 22:58 UTC**, including the two P2 test drafts/logs.
+- P2 dry run: 9,150 done, 0 to write/held/problems. AC3 profile/map passed; garage-owner inclusion passed. **Building-locality AC4 FAILED:** correct h5 point and 130 m cutoff, but 3,908 unrelated flat/house owners bypass it, giving 4,941 candidates in total. See `tasks/P2-acceptance-report.md`.
+- P2 AC4 now passes on the approved A5 fixed stack (PR #24): building count 1,033, all 3,908 unrelated bypasses removed, garage behavior retained. Original failure is historical regression evidence. P2 is review-ready; A5 must be merged/deployed with the coordinated release. Do not reapply P2/A4; no data or D/G formula change is needed.
+- No live writes, deploys or rules changes. Live migrations remain the author's steps. Older partial A4 counts and stopped-emulator notes below are historical.
+
+
+## A4 completion checkpoint, 2026-11-11 (historical)
 
 - **A4 phases B and C are complete and saved.** All 9,150 people are current, with 20,245 skill vectors. Two publics (50 members) have real E and ISR; 56 documents were written. Independent checks against `functions/isr.js` and browser checks passed; repeat runs make no changes.
 - Final emulator export: **18:34 UTC / 20:34 Kyiv**, `C:\isr-mvp\.emulator-data`, Java heap 8 GB. Imported again and the completed state verified. The emulator is stopped; the main checkout is back on `p1-profile-review`.
