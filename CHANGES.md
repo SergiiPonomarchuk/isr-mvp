@@ -1,5 +1,11 @@
 # CHANGES
 
+## U9 member preview and list (2026-11-13)
+
+- Check exposes the projected capped public size alongside its existing 25-person sample. The badge displays the public size and the preview labels the sample. Create's existing 100-member cap is retained.
+- Moved the existing values calculation helper to shared scope, fixing the detail popup's out-of-scope call. Render cached member rows and ISR scores immediately while existing metadata reads run. Dismissed popups stay closed when reads finish.
+- Node 100 passed, Python 111 run with two optional skips. Synthetic browser regression verified stalled reads, dismissal and completed 100-row rendering. Full live acceptance follows author deployment.
+
 ## Firestore recovery rehearsal (2026-11-12)
 
 - Added offline validation and a restore command for the R0 backup format. It creates documents only on an empty dedicated emulator, verifies each path and typed field, and reports aggregate counts. Rehearsed the November 7 pre-migration backup successfully: 24,783 documents in nine manifest entries.

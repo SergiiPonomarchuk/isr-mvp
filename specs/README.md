@@ -102,6 +102,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U5-esc-and-geotag](tasks/U5-esc-and-geotag.md) | DONE on live 2026-11-10 (PR 15); the issue location from the Analyzer follows after A4 | UI |
 | [U6-issue-location](tasks/U6-issue-location.md) | merged PR #21 on 2026-11-12; AC2-AC5 passed and saved; combined Node 88 / Python 105 (one skip); live pending author | UI, 07 (Analyzer), 03 (G) |
 | [U7-page-cache](tasks/U7-page-cache.md) | DONE on live 2026-11-11 (PR 17): every hosting response is sent with `no-cache` | UI, 13 (hosting) |
+| [U9-member-preview-popup](tasks/U9-member-preview-popup.md) | Count labeling and immediate member popup rendering implemented, deployment pending | UI, Analyzer |
 | [U8-map-tiles](tasks/U8-map-tiles.md) | merged PR #22 on 2026-11-12; AC1/AC2 passed and saved; combined Node 91 / Python 105 (one skip); live AC3 pending author | UI |
 | [P2-homes-and-property](tasks/P2-homes-and-property.md) | merged PR #23 on 2026-11-12; emulator AC2-AC4 pass on A5 PR #24; coordinated A5 deployment required; live AC5 pending author | 02, 03 (G), 06 (D) |
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
