@@ -52,6 +52,20 @@ Code use (grep of `collection("…")` in `functions/index.js` and `prototype/js/
 | No invariant is enforced server-side: the Firestore rules allow anyone to read and write every document until 2026-12-31. | VERIFIED | IF l.129 (`firestore.rules:4-6`); details in 09 |
 | For seeded publics, `microcommunity_id` equals the numeric discussion/issue id (example: `microcommunity_id` "1", `issue_id` "1"). Whether this holds for all 190 seeded publics is not verified. | UNSURE | SCHEMA l.21568-21637 |
 
+## U10 duplicate review and explicit membership (feature implementation, 2026-11-13)
+
+The [U10 contract](tasks/U10-similar-active-issues.md) adds these representations without changing existing collection names:
+
+| Record | Fields and ownership |
+|---|---|
+| `issue_drafts/{draftId}` | Server-only `duplicate_check` (matching version, shortlist, coverage), optional `duplicate_review` (reason, matched issue ids/versions, matching version), and completed `creation_result` for idempotent replay. A completed draft is retained, overriding the older A2 deletion description. Existing draft ownership/text/point validation still applies. |
+| `issue_drafts/__u10_creation_registry` | Server-only revision used to serialize concurrent Create transactions and make their final duplicate query consistent. Not an ordinary user draft. |
+| `issues/{issueId}` | `matching_version` and `duplicate_review` creation provenance. The review is null when no active match requires it. |
+| `microcommunity_members/{microcommunityId}_{uid}` | Explicit join uses existing score fields plus `membership_source: "explicit_join"`; existing members' normalized score fields are recomputed atomically. |
+| `membership_events/{issueId}_{uid}` | One explicit-join event: `issue_id`, `microcommunity_id`, `user_id`, `type: "explicit_join"`, `created_at`. Deterministic key and transaction prevent duplicate events. |
+
+Join atomically updates `microcommunities.member_count/values_taxonomy`, `issues` and `discussions` relevance/ISR maps, and discussion `participants`. Automatic selection remains capped at 100; explicit discussion-phase joins may exceed it. Existing open prototype access rules and adopted synthetic identities remain unchanged; these events are not a production authentication or audit-security guarantee.
+
 ## Gaps
 - **C-44** Collections: the manifesto, `project-map.md` and the `query_isr_firestore` skill name six collections, of which three are empty, while the code uses five unlisted ones. The design docs name a further five collections that do not exist: `user_expertise_profiles`, `microcommunity_expertise_scores`, `microcommunity_relevance_scores`, `issue_actions`, `user_action_vectors`.
 - **C-45** Naming: the snake_case rule (vision and agent files) is broken by the data and by the design docs themselves (Analyzer l.364-368 `minAge`, `employmentStatus`; Relevance doc l.614, l.633-640 `displayName`, `birthDate`, `socialRelations`).
@@ -85,3 +99,5 @@ None. There is no schema validation, no test suite, and no Firestore rules that 
 - L1 (2026-11-09, branch `l1-deadlines`, not merged): every chat has a deadline (`ends`, `YYYY-MM-DD`; default creation + 1 month; "Ongoing" no longer written); the deadline of the current phase is written to both `issues` and `discussions`; seeded discussions of voting and ToDo topics get `status` `Voting` / `approved`; canceled at the deadline = `status: "inactive"`, `previous_status`, `cancel_reason: "deadline"`; each deadline-run change appends `{at, by: "deadline", from, action, reason, voted_share, deadline, new_deadline}` to `lifecycle` on both documents.
 - R0 (2026-11-07, branch `r0-keep-alive`, not merged): `firestore.rules` keep client access open until 2027-06-30 for every collection except `issue_drafts`, which only the Cloud Functions (Admin SDK) can read and write.
 - A2 (2026-11-04, branch `a2-expertise-cleanup`, not merged): new server-only collection `issue_drafts` (parameters derived by `checkIssue`; read and deleted by `createIssue`; `functions/params.js`). Removed fields: `microcommunity_members.resources_expertise`; `issues`/`discussions` `w_education`, `w_experience`, `w_resources`, `reasoning_education`, `reasoning_experience`, `reasoning_resources`. `birthDate` required by `seed_db.py`. Data changed on the emulator only (`scripts/migrate_a2.py`, report `tasks/A2-migration-report.md`); the live data still has the old fields until the author runs the migration.
+
+U10 revision (`u10-v2`): `duplicate_check.title_conflicts` contains every active issue id with the same normalized title, independent of the five-result shortlist. Check returns it as `title_conflicts`; Create rejects any active conflict even with an explanation. No new collection.

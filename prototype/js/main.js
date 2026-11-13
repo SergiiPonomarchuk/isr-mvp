@@ -2680,6 +2680,7 @@ function initTopicDetailViews() {
           '</div>' +
         '</div>' +
 
+        '<section id="similar-issues-panel" hidden aria-live="polite" style="margin-bottom: 16px;"></section>' +
         '<div class="topic-detail-meta" style="position: relative; margin-bottom: 14px;">' +
           '<div class="topic-detail-meta-item-wrapper" style="position:relative;">' +
             '<button type="button" class="topic-detail-meta-item" data-meta="Ad-hoc Public" id="create-meta-microcommunity" disabled>' +
@@ -5033,6 +5034,9 @@ function initTopicDetailViews() {
     let pendingClarification = "";
     let calculatedMembers = [];
     let calculatedPublicSize = 0;
+    let similarIssues = [];
+    let titleConflicts = [];
+    let duplicateReview = null;
     let microcommunityPreviewValues = null;
     const currentUserId = safeGetStorage('userId') || "1";
     const db = firebase.firestore();
@@ -5040,6 +5044,114 @@ function initTopicDetailViews() {
     const functionsBaseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       ? 'http://127.0.0.1:5001/project-a3d59130-5adf-4677-9e2/us-central1'
       : `https://us-central1-project-a3d59130-5adf-4677-9e2.cloudfunctions.net`;
+
+    function updateCreateAvailability() {
+      if (submitBtn) submitBtn.disabled = !suggestedParams || titleConflicts.length > 0 || window.issuePointMoves !== checkedPointMoves || (similarIssues.length > 0 && !duplicateReview);
+    }
+
+    function showSimilarIssues(matches, coverage, conflicts) {
+      similarIssues = Array.isArray(matches) ? matches : [];
+      titleConflicts = Array.isArray(conflicts) ? conflicts : similarIssues.filter(m => m.title_conflict).map(m => m.issue_id);
+      duplicateReview = null;
+      const panel = modalBody.querySelector('#similar-issues-panel');
+      const preview = modalBody.querySelector('.topic-detail-meta');
+      panel.textContent = '';
+      panel.hidden = !similarIssues.length && !(coverage && coverage.legacy_text_only);
+      if (preview) { preview.hidden = false; preview.style.display = ''; }
+      if (titleConflicts.length) {
+        const warning = document.createElement('p');
+        warning.setAttribute('role', 'status');
+        warning.textContent = 'An active issue already uses this title. Choose a distinct title and press Check again.';
+        panel.appendChild(warning);
+      }
+      if (similarIssues.length) {
+        const heading = document.createElement('h4');
+        heading.textContent = 'Similar active issues';
+        panel.appendChild(heading);
+      }
+      similarIssues.forEach(match => {
+        const card = document.createElement('article');
+        card.className = 'topic-detail-card';
+        const title = document.createElement('strong');
+        title.textContent = match.title;
+        const description = document.createElement('p');
+        description.textContent = match.description;
+        const context = document.createElement('p');
+        const location = Array.isArray(match.location) ? match.location.map(x => Number(x).toFixed(5)).join(', ') : '';
+        context.textContent = `${match.reason}. ${match.phase === 'chat' ? 'Discussion' : 'Voting'}. ${location}`;
+        const open = document.createElement('button');
+        open.type = 'button';
+        open.className = 'tour-btn tour-btn-secondary';
+        open.textContent = 'Open issue';
+        open.onclick = () => renderTopicDetail(match.phase === 'voting' ? 'voting' : 'chat', match.issue_id, sourceViewHtml, titleText);
+        card.append(title, description, context, open);
+        if (match.already_member) {
+          const status = document.createElement('p');
+          status.textContent = 'You are already a member';
+          card.appendChild(status);
+        } else if (match.join_allowed) {
+          const join = document.createElement('button');
+          join.type = 'button';
+          join.className = 'tour-btn tour-btn-primary';
+          join.textContent = 'Join issue';
+          const error = document.createElement('p');
+          error.setAttribute('role', 'status');
+          join.onclick = async () => {
+            join.disabled = true;
+            error.textContent = 'Joining...';
+            try {
+              const response = await fetch(`${functionsBaseUrl}/joinIssue`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ issueId: match.issue_id, submitterId: currentUserId })
+              });
+              const result = await response.json();
+              if (!response.ok || !result.success) throw new Error(result.error || 'Joining failed. Please retry.');
+              await renderTopicDetail('chat', match.issue_id, sourceViewHtml, titleText);
+            } catch (failure) {
+              error.textContent = failure.message;
+              join.disabled = false;
+            }
+          };
+          card.append(join, error);
+        } else {
+          const status = document.createElement('p');
+          status.textContent = 'Joining is available during discussion';
+          card.appendChild(status);
+        }
+        panel.appendChild(card);
+      });
+      if (coverage && coverage.legacy_text_only) {
+        const note = document.createElement('p');
+        note.textContent = `${coverage.legacy_text_only} active legacy issues were checked using text and place context. Their semantic vectors are unavailable.`;
+        panel.appendChild(note);
+      }
+      if (similarIssues.length) {
+        const label = document.createElement('label');
+        label.textContent = 'How is your issue different?';
+        const reason = document.createElement('textarea');
+        reason.className = 'topic-form-textarea';
+        reason.maxLength = 1000;
+        reason.setAttribute('aria-label', 'How is your issue different?');
+        reason.oninput = () => {
+          duplicateReview = reason.value.trim() ? { reason: reason.value.trim(), matches: similarIssues.map(({ issue_id, version }) => ({ issue_id, version })) } : null;
+          updateCreateAvailability();
+        };
+        panel.append(label, reason);
+      }
+      updateCreateAvailability();
+    }
+
+    function invalidateDuplicateCheck() {
+      suggestedParams = null;
+      duplicateReview = null;
+      similarIssues = [];
+      titleConflicts = [];
+      const panel = modalBody.querySelector('#similar-issues-panel');
+      if (panel) { panel.hidden = true; panel.textContent = ''; }
+      updateCreateAvailability();
+    }
+    titleInput.addEventListener('input', invalidateDuplicateCheck);
+    descTextarea.addEventListener('input', invalidateDuplicateCheck);
 
     // 1. Deadline absolute popup picker
     const deadlineBtn = modalBody.querySelector('#create-meta-deadline');
@@ -5386,6 +5498,11 @@ function initTopicDetailViews() {
 
     // U6 (R6): moving the pin marks it as the creator's; after a Check, Create waits for a new Check.
     window.onIssuePointMoved = () => {
+      duplicateReview = null;
+      similarIssues = [];
+      titleConflicts = [];
+      const panel = modalBody.querySelector('#similar-issues-panel');
+      if (panel) { panel.hidden = true; panel.textContent = ''; }
       showIssuePointLabel('set by you');
       if (suggestedParams && submitBtn) {
         submitBtn.setAttribute('disabled', 'true');
@@ -5658,6 +5775,9 @@ function initTopicDetailViews() {
             serverError = err && err.message;
           }
 
+          if (titleInput.value.trim() !== title || descTextarea.value.trim() !== description) {
+            throw new Error('The text changed during Check. Please check again.');
+          }
           if (data && data.success) {
             suggestedParams = {
               draftId: data.draftId,
@@ -5683,6 +5803,7 @@ function initTopicDetailViews() {
             };
             calculatedMembers = data.members;
             calculatedPublicSize = checkedPublicSize(data);
+            showSimilarIssues(data.similar_issues, data.duplicate_coverage, data.title_conflicts);
             pendingClarification = "";
             // U6 (R4, R6): the server's point and where it came from, unless the pin moved meanwhile
             checkedPointMoves = movesAtCheck;
@@ -5779,7 +5900,7 @@ function initTopicDetailViews() {
 
           if (submitBtn) {
             if (window.issuePointMoves === checkedPointMoves) {
-              submitBtn.removeAttribute('disabled');
+              updateCreateAvailability();
             } else if (typeof window.onIssuePointMoved === 'function') {
               window.onIssuePointMoved(); // U6: the pin moved during the Check
             }
@@ -5800,7 +5921,7 @@ function initTopicDetailViews() {
       submitBtn.addEventListener('click', async () => {
         const title = titleInput.value.trim();
         const description = descTextarea.value.trim();
-        if (!title || !description || !suggestedParams) return;
+        if (!title || !description || !suggestedParams || titleConflicts.length > 0 || (similarIssues.length && !duplicateReview)) return;
         if (window.issuePointMoves !== checkedPointMoves) {
           alert('The point moved after the check: press Check again.'); // U6 (R6)
           return;
@@ -5821,11 +5942,13 @@ function initTopicDetailViews() {
               description: description,
               location: newTopicGeo,
               submitterId: currentUserId,
-              deadline: newTopicDeadline
+              deadline: newTopicDeadline,
+              duplicate_review: duplicateReview
             })
           });
           const out = await res.json().catch(() => ({}));
           if (!res.ok || !out.success) {
+            if (out.similar_issues) showSimilarIssues(out.similar_issues.matches, out.similar_issues.coverage, out.similar_issues.title_conflicts);
             throw new Error(out.error || "The server could not create the issue.");
           }
 
@@ -5835,7 +5958,7 @@ function initTopicDetailViews() {
         } catch(err) {
           console.error("Create failed:", err);
           alert(`Create issue error: ${err.message}`);
-          submitBtn.removeAttribute('disabled');
+          updateCreateAvailability();
           submitBtn.textContent = "Create";
         }
       });

@@ -4,7 +4,21 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: live member UI findings fixed on feature branch, 2026-11-13
+## Current checkpoint: U10 accepted for main, 2026-11-13
+
+- Author explicitly instructed `merge PR 32`. PR #32 targets main directly and carries both the approved proposal documentation and implementation. No separate merge of PR #31 is authorized or required for this integration.
+- U10 implements active-issue discovery, Open/member status, explicit discussion-phase Join beyond the initial 100-member formation cap, unique titles among active issues only, and a single Create action with any required distinction explanation. Create rechecks atomically; retries replay the existing result.
+- Author accepted the original and revised browser flows on the isolated mocked-AI emulator. Read-only verification confirms the separately created rear-entrance issue. Node: 105 passed plus one optional integration skip. Python: 111 run/two existing skips. Revised real-handler emulator test passed title conflicts/reuse, racing Create, rollback/replay and 102-member canonical maps. Final CI must pass before merge.
+- Next after PR #32 is merged: prepare the clean detached `wt-main` deployment checkout; the author deploys hosting plus `checkIssue`, `createIssue` and new `joinIssue`. Agent then verifies live read-only. No agent deployment, rules changes or production writes.
+- The synthetic manual preview runs on port 5001/Firestore 8080, project demo-u10. Saved main emulator data was not imported. PR #28/#29 remain separately unmerged. D1 must reflect the accepted duplicate/member/nonmember flow in its spec before changing seed data.
+
+## U9 accepted live, duplicate flow proposal, 2026-11-13 (historical)
+
+- U9 PR #30 merged at `b189d3f`, deployed by the author and checked read-only. The author confirmed the saved member list works and the new Check badge/sample labels behave as specified.
+- The author requires Check to show similar registered active issues and offer Join for a nonmember. This intent already appears in the Request Guide. [U10](tasks/U10-similar-active-issues.md) proposes the implementation behavior, matching calibration and acceptance cases. Detailed cap/lifecycle choices await review.
+- Next is author review of the documentation proposal. PR #28/#29 remain separately subject to explicit merge instructions. D1 must reflect the accepted duplicate/join flow before its scenarios are changed.
+
+## Live member UI findings fixed on feature branch, 2026-11-13 (historical)
 
 - Live P1/P2, A4 embeddings and the three-public migration passed read-only checks. All 9,150 profile and 20,245 skill vectors are current. All 150 migrated member scores/maps match the Node implementation.
 - The author created the live entrance-lock test issue. Topic `46AQ1D2KJu5sAk7sQMli` has 100-entry relevance and ISR maps. The author saw 25 at Check and 100 at Create, then a stuck member popup.
@@ -285,3 +299,7 @@ After every step that writes, export the emulator (`AGENTS.md`).
 - The map's marker icons come from `raw.githubusercontent.com` (a GitHub repository, not a CDN), and the shadow from Leaflet 0.7.7 on cdnjs (noted in U8).
 - U6: `geocode_cache` and `config` are open to clients under the R0 rules until the stage 5 rules.
 - The R0 Firestore rules expire 2027-06-30.
+
+## U10 active-title revision, 2026-11-13
+
+Author approved unique titles among active issues only, allowing reuse of closed/expired names, and one Create action. Implemented all-active title checks with transactional recheck and explanation-driven Create. Full Node/Python and revised emulator tests passed. PR #32 is ready for review after author acceptance of the revised UI. Manual preview refreshed with clean disposable demo data on port 5001/Firestore 8080. No merge, deploy or production write.

@@ -1,5 +1,22 @@
 # CHANGES
 
+## 2026-11-13 - U10 main integration
+
+Author authorized merge of PR #32. Retargeted directly to main, including the approved proposal documentation. Preserved accepted source, tests and browser evidence; deployment remains the author's step.
+
+## 2026-11-13 - U10 active title uniqueness and one Create action
+
+Require unique active titles (case/whitespace normalized), including across locations and beyond the shortlist. Recheck atomically at Create; closed titles may be reused. Remove Continue and enable Create once any required explanation is entered. Node/Python and revised emulator tests passed; author accepted the revised UI; separate creation independently verified read-only on the emulator.
+
+## 2026-11-13 — U10 similar active issues and explicit joining
+
+Approved similar-issue Check flow with Open/member status, explicit discussion-phase Join beyond the initial 100-member cap, and explained separate creation. Recheck/Create and membership writes are transactional; completed creation retries return their original result. Reuse compatible issue vectors and show legacy semantic-coverage limits. Added recorded eight-text calibration and real-handler emulator regressions. Updated U10, data model, relevance and handoff. Author browser acceptance passed duplicate Check and explicit Join to 101; remaining browser cases are pending. No deployment, live writes or rules changes.
+
+
+## Similar active issues proposal (2026-11-13)
+
+- Recorded the author's requested Check behavior in U10, grounded in the Request Guide. Proposed matching, Open/Join actions, explicit distinct-issue continuation, concurrency checks and acceptance cases. Joining-cap and voting-phase policies remain decisions for review.
+
 ## U9 member preview and list (2026-11-13)
 
 - Check exposes the projected capped public size alongside its existing 25-person sample. The badge displays the public size and the preview labels the sample. Create's existing 100-member cap is retained.
