@@ -88,7 +88,7 @@ Path C duplicates the relevance logic in the browser and is used only when the C
 | C-15 | The Request Guide calls σ the "impact radius" (l.88), with values matching the Relevance doc's μ ranges | The client derives σ = fade / 3 |
 | C-16 | Issue vector stored as `issues.issue_vector` (Relevance doc l.395, l.690) | Not stored; random when the API key is missing (IF l.38; EMBEDDINGS #12) |
 | C-18 | No default weights in the docs (examples only) | A: 0.1/0.4/0.4/0.1. B: 0.2/0.6/0.1/0.1. |
-| C-09 | Joining by special request and voting (Request Guide l.371) | Not covered by IF (UNSURE; probably absent). [U10 proposal](tasks/U10-similar-active-issues.md) records the requested Check/Join flow and pending lifecycle/cap decisions. |
+| C-09 | Joining by special request and voting (Request Guide l.371) | [U10](tasks/U10-similar-active-issues.md) implements explicit discussion-phase joining, including beyond 100 members. Voting-phase joining remains pending. Browser/live acceptance is outstanding. |
 | (none) | R in [0,1] (Relevance doc l.507) | A: no clamp, and the weights are unvalidated, so R can exceed 1 (whether any stored R does is UNSURE). B: clamps. |
 | (none) | S computed for all candidates surviving the upper-bound check (up to 300) | Same. Everyone else gets S = 0, which matters under PD-1's multi-channel retrieval. |
 | (none) | `legal_coverage` triage (PD-1) | Absent |
@@ -123,3 +123,7 @@ Path C duplicates the relevance logic in the browser and is used only when the C
 - A1 (open): R1 (canonical `relevance()` with an optional clamp, never gating on D) and R8 (wire-up in `functions/index.js` and `relevance_evaluator.py`).
 
 - A5 (2026-11-12, `a817694`): approved local residential parameter guard, prompt p4, and recheck for old offending drafts. Captured P2 h5 Check narrows 4,941 to 1,033 candidates by removing 3,908 unrelated residential-owner bypasses; property-linked members and garage/broader ownership behavior remain. No formula, threshold, cutoff, membership cap or old public-score change.
+
+## U10 explicit joining update (2026-11-13, feature implementation)
+
+C-08 retains the 100-member cap for automatic formation only. The author accepted explicit joins beyond it. [U10](tasks/U10-similar-active-issues.md) implements C-09 for discussion-phase synthetic-profile joins: canonical D/G/S/X, education/experience and normalization, transactional member/event/maps/participant/value updates and retry safety. Voting-phase joining stays open pending the weight-freeze policy. No eligibility cutoff is imposed on explicit joining.

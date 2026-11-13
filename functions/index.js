@@ -11,6 +11,9 @@ const Lifecycle = require("./lifecycle");
 const Deadlines = require("./deadlines");
 const aiHelper = require("./ai-helper");
 const AI = require("./ai-config");
+const Similar = require("./similar-issues");
+const { joinIssue } = require("./join-issue");
+const { aggregateValues } = require("./public-values");
 const { buildAnalyzerLog } = require("./analyzer-log");
 const { readTextInputs, paramsFromAi, makeDraft, paramsForCreate, locationForCreate } = require("./params");
 const { resolveIssueLocation } = require("./location");
@@ -129,6 +132,12 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI
       return res.status(503).json({ error: AI_UNAVAILABLE, ai_unavailable: true });
     }
     const issueVector = embedding.vector;
+    if (draftData.creation_result) return res.json(draftData.creation_result);
+    const duplicateQuery = { title, description, location: issuePoint, vector: issueVector,
+      classification: P.classification, mu_distance_meters: P.mu };
+    const initialMatches = await Similar.findSimilar(db, duplicateQuery, submitterId);
+    Similar.requireReview(initialMatches, req.body.duplicate_review);
+    const stagedWrites = [];
     const aiInfo = (draftData && draftData.ai) || null;
 
     const w_D = P.weights.w_D;
@@ -432,14 +441,14 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI
     };
     // A4: where the parameters came from (the model or the keyword rules) and which log entry.
     if (aiInfo) issueDoc.ai = aiInfo;
-    await issueRef.set(issueDoc);
+    stagedWrites.push([issueRef, issueDoc]);
     // A4 (R6): the issue vector in its own collection, so issue documents stay small.
-    await db.collection("issue_vectors").doc(issueId).set({
+    stagedWrites.push([db.collection("issue_vectors").doc(issueId), {
       vector: issueVector,
       model: embedding.model, dims: embedding.dims, task_type: embedding.task_type,
       template_version: embedding.template_version, text_sha256: embedding.text_sha256,
       created_at: FieldValue.serverTimestamp(),
-    });
+    }]);
 
     // Create Ad-hoc Public Record (stored in microcommunities collection for schema compatibility)
     const mcRef = db.collection("microcommunities").doc();
@@ -467,99 +476,7 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI
         });
 
         if (memberTaxonomies.length > 0) {
-          const avg_domains = [];
-          for (let i = 0; i < 10; i++) {
-            let val_sum = 0;
-            let rel_sum = 0;
-            memberTaxonomies.forEach(mt => {
-              const domains_list = mt.taxonomy.domains || [];
-              if (domains_list[i] !== undefined && domains_list[i] !== null) {
-                val_sum += domains_list[i] * mt.relevance;
-                rel_sum += mt.relevance;
-              }
-            });
-            avg_domains.push(rel_sum > 0 ? Math.round(val_sum / rel_sum) : 50);
-          }
-
-          const avg_context_shifts = {};
-          for (const ctx of ['work', 'family', 'private', 'crisis']) {
-            const avg_ctx_list = [];
-            for (let i = 0; i < 10; i++) {
-              let val_sum = 0;
-              let rel_sum = 0;
-              memberTaxonomies.forEach(mt => {
-                const shifts_dict = mt.taxonomy.contextual_shifts || {};
-                const ctx_list = shifts_dict[ctx] || [];
-                if (ctx_list[i] !== undefined && ctx_list[i] !== null) {
-                  val_sum += ctx_list[i] * mt.relevance;
-                  rel_sum += mt.relevance;
-                }
-              });
-              avg_ctx_list.push(rel_sum > 0 ? Math.round(val_sum / rel_sum) : 0);
-            }
-            avg_context_shifts[ctx] = avg_ctx_list;
-          }
-
-          const avg_items = {};
-          for (let i = 1; i <= 10; i++) {
-            const key = `d${i}`;
-            let items_len = 0;
-            for (let mt of memberTaxonomies) {
-              const items_dict = mt.taxonomy.items || {};
-              if (items_dict[key] && items_dict[key].length > 0) {
-                items_len = items_dict[key].length;
-                break;
-              }
-            }
-            if (items_len > 0) {
-              const avg_item_list = [];
-              for (let j = 0; j < items_len; j++) {
-                let val_sum = 0;
-                let rel_sum = 0;
-                memberTaxonomies.forEach(mt => {
-                  const items_dict = mt.taxonomy.items || {};
-                  const item_list = items_dict[key] || [];
-                  if (item_list[j] !== undefined && item_list[j] !== null) {
-                    val_sum += item_list[j] * mt.relevance;
-                    rel_sum += mt.relevance;
-                  }
-                });
-                avg_item_list.push(rel_sum > 0 ? Math.round(val_sum / rel_sum) : 50);
-              }
-              avg_items[key] = avg_item_list;
-            } else {
-              avg_items[key] = [];
-            }
-          }
-
-          const avg_conflict_resolution = [];
-          for (let i = 0; i < 36; i++) {
-            let val_sum = 0;
-            let rel_sum = 0;
-            memberTaxonomies.forEach(mt => {
-              const conflicts_list = mt.taxonomy.conflict_resolution || [];
-              let val = null;
-              if (conflicts_list[i] !== undefined && conflicts_list[i] !== null) {
-                if (typeof conflicts_list[i] === 'object') {
-                  val = conflicts_list[i].weight;
-                } else {
-                  val = conflicts_list[i];
-                }
-              }
-              if (val !== null) {
-                val_sum += val * mt.relevance;
-                rel_sum += mt.relevance;
-              }
-            });
-            avg_conflict_resolution.push(rel_sum > 0 ? Math.round(val_sum / rel_sum) : 50);
-          }
-
-          mcTaxonomy = {
-            domains: avg_domains,
-            items: avg_items,
-            contextual_shifts: avg_context_shifts,
-            conflict_resolution: avg_conflict_resolution
-          };
+          mcTaxonomy = aggregateValues(memberTaxonomies);
         }
       } catch (err) {
         console.error("Error aggregating values taxonomy in createIssue:", err);
@@ -577,13 +494,12 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI
       status: "active",
       values_taxonomy: mcTaxonomy
     };
-    await mcRef.set(mcDoc);
+    stagedWrites.push([mcRef, mcDoc]);
 
     // Upload ad-hoc public members
-    const batch = db.batch();
     microcommunityMembers.forEach((member) => {
       const memberRef = db.collection("microcommunity_members").doc(`${mcId}_${member.user_id}`);
-      batch.set(memberRef, {
+      stagedWrites.push([memberRef, {
         microcommunity_id: mcId,
         user_id: member.user_id,
         displayName: member.displayName,
@@ -606,12 +522,10 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI
         isr_score: member.isr_score,
         calculated_at: FieldValue.serverTimestamp(),
         accepted_rejected: null
-      });
+      }]);
     });
     
-    if (microcommunityMembers.length > 0) {
-      await batch.commit();
-    }
+
 
     // Add to discussions collection so it shows up in real-time chat
     const discRef = db.collection("discussions").doc(issueId); // Use same ID for simplicity
@@ -631,7 +545,7 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI
 
     const participantUids = microcommunityMembers.map(m => String(m.user_id));
 
-    await discRef.set({
+    stagedWrites.push([discRef, {
       discussion_id: issueId,
       topic: title,
       creator_uid: String(submitterId),
@@ -671,31 +585,44 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI
       classification:             classification             || null,
       expertise_domain_parameters: expertise_domain_parameters || null,
       resources_needed:           resources_needed           || []
-    });
+    }]);
 
     // Add initial message in subcollection (the topic description by starter)
-    await discRef.collection("messages").doc("msg_init").set({
+    stagedWrites.push([discRef.collection("messages").doc("msg_init"), {
       id: "msg_init",
       uid: String(submitterId),
       text: description,
       timestamp: new Date().toISOString(),
       marks: [],
       child: []
-    });
+    }]);
 
-    // A draft is single-use: one Check, one issue.
-    await db.collection("issue_drafts").doc(String(req.body.draftId)).delete();
-
-    res.json({
-      success: true,
-      issue_id: issueId,
-      microcommunity_id: mcId,
-      members_count: microcommunityMembers.length,
-      members: microcommunityMembers.map(m => ({ uid: m.user_id, name: m.displayName, score: m.relevance_score.toFixed(3) }))
+    // Serialize Create rechecks and publish every new issue record atomically.
+    const result = await db.runTransaction(async tx => {
+      const registryRef = db.collection("issue_drafts").doc("__u10_creation_registry");
+      await tx.get(registryRef);
+      const draftRef = db.collection("issue_drafts").doc(String(req.body.draftId));
+      const freshDraft = await tx.get(draftRef);
+      const checked = freshDraft.exists ? freshDraft.data() : null;
+      paramsForCreate(req.body, checked);
+      if (checked.creation_result) return checked.creation_result;
+      const latest = await Similar.findSimilar(db, duplicateQuery, submitterId, tx);
+      const review = Similar.requireReview(latest, req.body.duplicate_review);
+      const response = { success: true, issue_id: issueId, microcommunity_id: mcId,
+        members_count: microcommunityMembers.length,
+        members: microcommunityMembers.map(m => ({ uid: m.user_id, name: m.displayName, score: m.relevance_score.toFixed(3) })) };
+      issueDoc.duplicate_review = review;
+      issueDoc.matching_version = Similar.VERSION;
+      for (const [ref, data] of stagedWrites) tx.create(ref, data);
+      tx.update(draftRef, { creation_result: response, duplicate_review: review });
+      tx.set(registryRef, { revision: FieldValue.increment(1) }, { merge: true });
+      return response;
     });
+    res.json(result);
   } catch (error) {
-    console.error("Error creating issue:", error);
-    res.status(500).json({ error: "Failed to create issue and form ad-hoc public." });
+    console.error("Error creating issue:", error.status ? error.message : error.code || "internal");
+    res.status(error.status || 500).json({ error: error.status ? error.message : "Failed to create issue and form ad-hoc public.",
+      similar_issues: error.similar_issues || null });
   }
 });
 
@@ -768,6 +695,8 @@ exports.checkIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI_
       geocode: geocoder.geocode,
     });
     const issuePoint = loc.location;
+    const similar = await Similar.findSimilar(db, { title, description, location: issuePoint,
+      vector: embedding.vector, classification: data.classification, mu_distance_meters: data.mu }, submitterId);
 
     const w_D = data.weights.w_D;
     const w_G = data.weights.w_G;
@@ -949,7 +878,7 @@ exports.checkIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI_
     // Store the derived parameters; createIssue reads its numbers from this draft.
     // A4: the draft also keeps the issue vector and where the parameters came from.
     const { ok: _ok, error: _err, ...issueEmbedding } = embedding;
-    await draftRef.set(Object.assign(makeDraft(inputs, data, nowIso, loc), { issue_embedding: issueEmbedding, ai: aiInfo }));
+    await draftRef.set(Object.assign(makeDraft(inputs, data, nowIso, loc), { issue_embedding: issueEmbedding, ai: aiInfo, duplicate_check: similar }));
 
     res.json({
       success: true,
@@ -990,6 +919,9 @@ exports.checkIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI_
       // ── Resources ───────────────────────────────────────────────────────
       resources_needed: data.resources_needed || [],
       // ── Ad-hoc Public ──────────────────────────────────────────────────
+      similar_issues: similar.matches,
+      duplicate_coverage: similar.coverage,
+      matching_version: similar.version,
       members_count: candidates.length,
       public_members_count: Math.min(candidates.length, 100),
       members: top25
@@ -1074,4 +1006,14 @@ exports.closeExpiredTopics = onSchedule({ schedule: "30 0 * * *", timeZone: Life
   const today = Lifecycle.todayIn(Lifecycle.TIME_ZONE, new Date());
   const result = await Deadlines.closeExpiredTopics(db, FieldValue, today);
   console.log(`closeExpiredTopics ${today}: checked ${result.checked}, changed ${result.changes.length}`, JSON.stringify(result.changes));
+});
+
+// U10: explicit membership requests use the existing synthetic-profile identity workflow.
+exports.joinIssue = onRequest({ cors: true, memory: "512MiB" }, async (req, res) => {
+  try {
+    res.json(await joinIssue(db, req.body || {}, FieldValue.serverTimestamp()));
+  } catch (error) {
+    console.error("Join failed:", error.status ? error.message : error.code || "internal");
+    res.status(error.status || 503).json({ error: error.status ? error.message : "Joining is temporarily unavailable. Please retry." });
+  }
 });

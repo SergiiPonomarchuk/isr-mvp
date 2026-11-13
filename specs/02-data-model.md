@@ -52,6 +52,20 @@ Code use (grep of `collection("…")` in `functions/index.js` and `prototype/js/
 | No invariant is enforced server-side: the Firestore rules allow anyone to read and write every document until 2026-12-31. | VERIFIED | IF l.129 (`firestore.rules:4-6`); details in 09 |
 | For seeded publics, `microcommunity_id` equals the numeric discussion/issue id (example: `microcommunity_id` "1", `issue_id` "1"). Whether this holds for all 190 seeded publics is not verified. | UNSURE | SCHEMA l.21568-21637 |
 
+## U10 duplicate review and explicit membership (feature implementation, 2026-11-13)
+
+The [U10 contract](tasks/U10-similar-active-issues.md) adds these representations without changing existing collection names:
+
+| Record | Fields and ownership |
+|---|---|
+| `issue_drafts/{draftId}` | Server-only `duplicate_check` (matching version, shortlist, coverage), optional `duplicate_review` (reason, matched issue ids/versions, matching version), and completed `creation_result` for idempotent replay. A completed draft is retained, overriding the older A2 deletion description. Existing draft ownership/text/point validation still applies. |
+| `issue_drafts/__u10_creation_registry` | Server-only revision used to serialize concurrent Create transactions and make their final duplicate query consistent. Not an ordinary user draft. |
+| `issues/{issueId}` | `matching_version` and `duplicate_review` creation provenance. The review is null when no active match requires it. |
+| `microcommunity_members/{microcommunityId}_{uid}` | Explicit join uses existing score fields plus `membership_source: "explicit_join"`; existing members' normalized score fields are recomputed atomically. |
+| `membership_events/{issueId}_{uid}` | One explicit-join event: `issue_id`, `microcommunity_id`, `user_id`, `type: "explicit_join"`, `created_at`. Deterministic key and transaction prevent duplicate events. |
+
+Join atomically updates `microcommunities.member_count/values_taxonomy`, `issues` and `discussions` relevance/ISR maps, and discussion `participants`. Automatic selection remains capped at 100; explicit discussion-phase joins may exceed it. Existing open prototype access rules and adopted synthetic identities remain unchanged; these events are not a production authentication or audit-security guarantee.
+
 ## Gaps
 - **C-44** Collections: the manifesto, `project-map.md` and the `query_isr_firestore` skill name six collections, of which three are empty, while the code uses five unlisted ones. The design docs name a further five collections that do not exist: `user_expertise_profiles`, `microcommunity_expertise_scores`, `microcommunity_relevance_scores`, `issue_actions`, `user_action_vectors`.
 - **C-45** Naming: the snake_case rule (vision and agent files) is broken by the data and by the design docs themselves (Analyzer l.364-368 `minAge`, `employmentStatus`; Relevance doc l.614, l.633-640 `displayName`, `birthDate`, `socialRelations`).

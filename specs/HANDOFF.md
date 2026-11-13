@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: U9 accepted live, duplicate flow proposal, 2026-11-13
+## Current checkpoint: U10 approved and implemented, 2026-11-13
+
+- Author accepted explicit joins beyond 100 and instructed applying U10. Feature branch `codex/similar-active-issues` is based on proposal PR #31; neither PR is merged by that instruction.
+- Implemented similar active matches at Check, Open/status, explicit discussion Join, explained separate creation, final transactional recheck and completed-Create replay. See [U10](tasks/U10-similar-active-issues.md) for calibration, schemas and verification limits.
+- Required suites: Node 104 passed plus optional emulator skip; Python 111 run, two existing skips. Browser automation cannot start (security-environment runtime error); browser/human acceptance remains outstanding. The real-handler emulator test passed, including concurrent Create (one success/one 409), atomic rollback/retry and a 102-member public. Evidence is recorded in U10's status log.
+- Next: review the implementation PR and resolve browser acceptance before author deployment. Merge only on explicit PR instructions; PR #28/#29/#31 remain separately unmerged. No agent deploy or production writes. D1 must add the approved duplicate/member/nonmember scenarios to its spec before changing seed data.
+
+## U9 accepted live, duplicate flow proposal, 2026-11-13 (historical)
 
 - U9 PR #30 merged at `b189d3f`, deployed by the author and checked read-only. The author confirmed the saved member list works and the new Check badge/sample labels behave as specified.
 - The author requires Check to show similar registered active issues and offer Join for a nonmember. This intent already appears in the Request Guide. [U10](tasks/U10-similar-active-issues.md) proposes the implementation behavior, matching calibration and acceptance cases. Detailed cap/lifecycle choices await review.
