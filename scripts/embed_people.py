@@ -347,6 +347,20 @@ def report(p, source, applied, summary, spread, compare, examples):
 
 # ------------------------------------------------------------------ Firestore
 
+def commit_with_retry(batch, transient_errors, sleep=time.sleep):
+    """Keep an idempotent merge batch intact while retrying transient writes."""
+    for attempt in range(6):
+        try:
+            return batch.commit(retry=None, timeout=120)
+        except transient_errors as error:
+            if attempt == 5:
+                raise
+            delay = min(30, 2 ** (attempt + 1))
+            print(f"Firestore {type(error).__name__}; retry {attempt + 1} in {delay}s", flush=True)
+            sleep(delay)
+
+
+
 def load(db):
     users = []
     for d in db.collection("users").select(["uid", "post", "skills"]).stream():
@@ -393,6 +407,10 @@ def main(argv=None):
     warnings.filterwarnings("ignore")
     from google.cloud import firestore
     from google.cloud.firestore_v1.vector import Vector
+    from google.api_core import exceptions as firestore_errors
+    transient_errors = (firestore_errors.DeadlineExceeded, firestore_errors.ServiceUnavailable,
+                        firestore_errors.Aborted, firestore_errors.InternalServerError,
+                        firestore_errors.ResourceExhausted)
     project = a.project or os.environ.get("GCLOUD_PROJECT") or "demo-isr"
     db = firestore.Client(project=project)
     source = f"Firestore emulator {emulator} (project {project})" if emulator else f"LIVE project {project}"
@@ -421,7 +439,7 @@ def main(argv=None):
             for item, vectors in buf:
                 fields = doc_fields(item, vectors, Vector, firestore.SERVER_TIMESTAMP)
                 batch.set(db.collection("user_vectors").document(item["doc_id"]), fields, merge=list(fields))
-            batch.commit()
+            commit_with_retry(batch, transient_errors)
             buf.clear()
 
         summary, new_profiles = run(p["todo"], key, write, a.max_requests)

@@ -1,5 +1,10 @@
 # CHANGES
 
+## Retry embedding batch writes (2026-11-13)
+
+- After a live Firestore timeout, retry the buffered merge writes with six attempts, per-request timeout and bounded delay. Completed Gemini vectors stay in memory during retry. Permanent write failures propagate immediately.
+- Live interrupted-run verification found 3,050 saved profiles and 6,100 remaining. Added three retry regressions. Node 98 passed, Python 114 run with two optional skips. Live resume remains the author's step.
+
 ## Firestore recovery rehearsal (2026-11-12)
 
 - Added offline validation and a restore command for the R0 backup format. It creates documents only on an empty dedicated emulator, verifies each path and typed field, and reports aggregate counts. Rehearsed the November 7 pre-migration backup successfully: 24,783 documents in nine manifest entries.

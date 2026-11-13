@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: Firestore recovery rehearsal, 2026-11-12
+## Current checkpoint: embedding run interrupted, retry fix, 2026-11-13
+
+- Author P1/P2 live apply and code deployment passed read-only verification. See the current rollout evidence under `C:\isr-mvp\scratch\live-rollout-20261112-203337`. Recovery PR #28 contains the fuller rollout history.
+- Embedding apply stopped on Firestore DeadlineExceeded. Live dry run confirms 3,050 saved and 6,100 remaining (19,485 texts / 195 estimated requests). The progress counter said 3,079 completed in memory before the uncommitted batch failed. Read-only checks establish durable coverage.
+- [Write retry fix](tasks/A4-embedding-write-retry.md) keeps the existing batch for bounded retries, preserving the already-returned vectors. Author resumes from the feature script through the root scratch launcher. No key is copied or displayed.
+- After the resumed run exits, verify exact text hashes and vectors, then give the author the A4 public migration command. Three live placeholder publics / 150 members await this migration. All live writes and deploys remain author actions.
+
+## Firestore recovery rehearsal, 2026-11-12 (historical)
 
 - Plan and workflow PR #26 merged at `cb8d001`. The preview runs release `47e835a`.
 - Recovered all 24,783 documents from the November 7 pre-migration backup on a separate local emulator. Every path and typed document body matched on read-back. See [recovery evidence](tasks/M1-firestore-recovery.md) and [the author's repeatable procedure](LIVE-ROLLOUT.md#2-backup-and-recovery-prerequisite-author).
