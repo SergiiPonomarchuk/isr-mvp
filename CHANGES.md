@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-14 - U10 live acceptance and D1 refinement
+
+Recorded author deployment/live Check acceptance and independent read-only hosting/endpoint checks. Imported the original approved D1 scenario plan and proposed archive/standby, U10 rehearsal, durable retry manifest and first-pass usage refinements for review. Original ten subjects and decisions retained; no application code, data mutation or API generation.
+
 ## 2026-11-13 - U10 main integration
 
 Author authorized merge of PR #32. Retargeted directly to main, including the approved proposal documentation. Preserved accepted source, tests and browser evidence; deployment remains the author's step.

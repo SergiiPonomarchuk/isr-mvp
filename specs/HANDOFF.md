@@ -4,13 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: U10 accepted for main, 2026-11-13
+## Current checkpoint: U10 live accepted; D1 refinement, 2026-11-14
 
-- Author explicitly instructed `merge PR 32`. PR #32 targets main directly and carries both the approved proposal documentation and implementation. No separate merge of PR #31 is authorized or required for this integration.
-- U10 implements active-issue discovery, Open/member status, explicit discussion-phase Join beyond the initial 100-member formation cap, unique titles among active issues only, and a single Create action with any required distinction explanation. Create rechecks atomically; retries replay the existing result.
-- Author accepted the original and revised browser flows on the isolated mocked-AI emulator. Read-only verification confirms the separately created rear-entrance issue. Node: 105 passed plus one optional integration skip. Python: 111 run/two existing skips. Revised real-handler emulator test passed title conflicts/reuse, racing Create, rollback/replay and 102-member canonical maps. Final CI must pass before merge.
-- Next after PR #32 is merged: prepare the clean detached `wt-main` deployment checkout; the author deploys hosting plus `checkIssue`, `createIssue` and new `joinIssue`. Agent then verifies live read-only. No agent deployment, rules changes or production writes.
-- The synthetic manual preview runs on port 5001/Firestore 8080, project demo-u10. Saved main emulator data was not imported. PR #28/#29 remain separately unmerged. D1 must reflect the accepted duplicate/member/nonmember flow in its spec before changing seed data.
+- PR #32 merged to main `8466b13` on explicit instruction. Its proposal ancestor #31 was also marked merged by GitHub. Main CI passed. Author deployed hosting and the three changed/new HTTP functions from clean detached `wt-main` and confirmed the live Check flow works.
+- Read-only verification: 13 hosted code files byte-identical with main/no-cache headers; `checkIssue`, `createIssue`, `joinIssue` ACTIVE on Node 22; all three preflight requests returned 204. See [U10 live evidence](tasks/U10-live-report.md). This is not an agent live write/browser pass.
+- U10 emulator acceptance covers unique active titles, single Create, explained separate creation, explicit Join beyond 100, canonical score/maps, concurrent requests and rollback/replay. Voting-phase Join stays disabled; synthetic identity/open prototype rules remain limitations.
+- Next: [D1 refinement](tasks/D1-demo-scenarios.md), section 9, proposes archive exclusion, a hidden inactive flagship standby with explicit promotion, duplicate/Open/Join exercises, durable manifest/retry recovery and first-pass request ceilings. The original ten scenarios and decisions 5.1-5.5 remain approved. Author review of the refinement is needed before implementation/data changes.
+- No seed/archive, model request, secret access, deploy, rules change or production write in this documentation work. PR #28/#29 remain unmerged; reconcile their utility dependencies before D1 needs them.
+- `wt-main` stays clean detached at deployed main. The temporary manual preview runs on 5001/Firestore 8080, project demo-u10; main's saved emulator data was not imported. Agent browser tools remain unavailable (0x8007000F); arrange manual acceptance if necessary.
 
 ## U9 accepted live, duplicate flow proposal, 2026-11-13 (historical)
 
