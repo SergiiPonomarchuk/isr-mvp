@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-14 - D1 implementation in progress
+
+Added explicit archived lifecycle exclusions, retired hard-coded task mocks, and implemented current-state transactional tally plus guarded demo seed/check foundations. Author approved D1 refinement; inventory is read-only. Emulator integration and complete D1 acceptance are still in progress; no paid generation or production mutation.
+
 ## 2026-11-14 - U10 live acceptance and D1 refinement
 
 Recorded author deployment/live Check acceptance and independent read-only hosting/endpoint checks. Imported the original approved D1 scenario plan and proposed archive/standby, U10 rehearsal, durable retry manifest and first-pass usage refinements for review. Original ten subjects and decisions retained; no application code, data mutation or API generation.

@@ -1,7 +1,7 @@
 # SPEC D1: Demo scenarios and clean demo data (roadmap stage 3)
 
 Status: APPROVED 2026-11-10 (author: "Five decisions: ok"; the homes and property first, as P2). The work starts after P2 is applied and A4 and U6 are live, because the demo data must come from the final pipeline and the final population (roadmap section 4).
-Current refinement branch: `codex/d1-spec-refresh`, based on deployed main `8466b13`. Original approved plan preserved from `d1-demo-data` (`af72ad0`). The refinement in section 9 needs author review before implementation.
+Current refinement branch: `codex/d1-spec-refresh`, based on deployed main `8466b13`. Original approved plan preserved from `d1-demo-data` (`af72ad0`). Section 9 approved by the author on 2026-11-14; implementation in `codex/d1-guided-demo`.
 Roadmap: stage 3, "Clean demo data". Its result: a dataset whose every number can be reproduced from stored inputs, plus a written demo script. With stages 1 and 2 it reaches the **D1 guided demo**: one issue goes through the whole cycle on screen (description, AI parameters, ad-hoc public, discussion and options, ISR-weighted vote, stored result, task), and every number can be explained.
 
 ## 1. Historical facts that shaped the scenarios (emulator, 2026-11-10)
@@ -107,7 +107,7 @@ The roadmap estimates 4-6 developer-days.
 
 ## 9. Proposed implementation refinement after U10 (2026-11-14)
 
-**Status: proposed for author review.** Decisions 5.1-5.5 remain approved. This section resolves the archive/standby mechanics left open in the approved development plan and adds U10 acceptance without replacing any of the ten scenarios. No seeding, generated content, model requests or application changes are made by this refinement.
+**Status: APPROVED by the author, 2026-11-14 ("approved").** Decisions 5.1-5.5 remain approved. This section resolves the archive/standby mechanics left open in the approved development plan and adds U10 acceptance without replacing any of the ten scenarios. No seeding, generated content, model requests or application changes are made by this refinement.
 
 ### 9.1 Current prerequisites and scenario identity
 
@@ -145,6 +145,8 @@ For the first complete seed/rehearsal: at most 15 Check pairs (one text request 
 
 AC1-AC5 additionally require archive invisibility/nonmutation across all relevant paths, hidden standby not matching at Check, safe explicit fallback promotion, exactly one visible flagship, duplicate/Open/Join/unique-title UI acceptance, canonical post-Join scores and retry-safe manifest recovery. The author performs live seed/activation and live writes; the agent uses the emulator and read-only live verification. Browser automation remains unavailable, so arrange a concrete manual walkthrough if it is still unavailable at acceptance time.
 
-**Author choice needed:** approve the hidden archived standby with explicit promotion, the archive behavior above and this bounded first-pass plan, or specify a different fallback/visibility policy. Implementation and data changes wait for this decision. PR merge remains separately authorized by `merge PR N`.
+**Author decision:** hidden archived standby with explicit promotion, archive exclusion and the bounded first-pass plan approved on 2026-11-14. PR merge remains separately authorized by `merge PR N`.
 
 - 2026-11-14: Imported the original approved D1 plan from `af72ad0` onto current main and prepared this U10-aware refinement. Historical facts are labeled, original ten subjects/decisions preserved. No code, data, key access or model calls.
+
+- 2026-11-14 implementation checkpoint: author approved section 9. Archive lifecycle/UI exclusions, atomic tally adapter and guarded seed/check tooling are being implemented on `codex/d1-guided-demo`. Read-only inventory counts are recorded in the handoff. No real seed, generated content or paid calls yet; acceptance remains pending.

@@ -9,6 +9,7 @@ const { evaluateDemographics } = require("./demographics");
 const ISR = require("./isr");
 const Lifecycle = require("./lifecycle");
 const Deadlines = require("./deadlines");
+const {tallyApprovedIssue} = require("./close-voting");
 const aiHelper = require("./ai-helper");
 const AI = require("./ai-config");
 const Similar = require("./similar-issues");
@@ -949,51 +950,7 @@ exports.onIssueStatusChange = onDocumentUpdated({ document: "issues/{issueId}", 
   const after = event.data.after.data() || {};
   if (after.status !== "approved" || before.status === "approved") return;
 
-  const issueId = event.params.issueId;
-  let mcId = issueId;  // seeded publics use the issue id; app-created ones are linked by issue_id
-  const mcSnap = await db.collection("microcommunities").where("issue_id", "==", issueId).limit(1).get();
-  mcSnap.forEach((d) => { mcId = d.id; });
-
-  const isrByUid = {};
-  const memSnap = await db.collection("microcommunity_members")
-    .where("microcommunity_id", "==", mcId).select("user_id", "isr_score").get();
-  memSnap.forEach((d) => {
-    const x = d.data();
-    if (x.isr_score !== undefined && x.isr_score !== null) isrByUid[String(x.user_id)] = Number(x.isr_score);
-  });
-
-  const options = Array.isArray(after.options) ? after.options : [];
-  const votes = {};
-  Object.keys(after.votes || {}).forEach((uid) => { votes[String(uid)] = after.votes[uid]; });
-  const result = ISR.tally(votes, isrByUid, options.length);
-
-  const update = {
-    options: options.map((o, i) => Object.assign({}, o, { score: round3(result.scores[i] || 0) })),
-    winning_option_index: result.winner,
-    tally: {
-      computed_at: FieldValue.serverTimestamp(),
-      microcommunity_id: mcId,
-      isr_source: "microcommunity_members.isr_score",
-      counted: result.counted.map((c) => ({ uid: c.uid, option: c.option, weight: round3(c.weight) })),
-      excluded: result.excluded,
-      note: result.note
-    }
-  };
-  if (result.winner !== null && !(Array.isArray(after.tasks) && after.tasks.length > 0)) {
-    const steps = Array.isArray(options[result.winner].description) ? options[result.winner].description : [];
-    update.tasks = steps.map((s, i) => ({
-      id: i + 1,
-      step: s.step || "",
-      in_charge_uid: s.in_charge_uid !== undefined ? String(s.in_charge_uid) : "",
-      in_charge_name: s.in_charge_name || "",
-      deadline: s.deadline || null,
-      status: "in_process",
-      results: "",
-      comments: [],
-      subtasks: []
-    }));
-  }
-  await event.data.after.ref.update(update);
+  await tallyApprovedIssue(db, event.params.issueId, FieldValue);
 });
 
 
