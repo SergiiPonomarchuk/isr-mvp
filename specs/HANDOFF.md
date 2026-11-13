@@ -9,6 +9,7 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 - Author P1/P2 live apply and code deployment passed read-only verification. See the current rollout evidence under `C:\isr-mvp\scratch\live-rollout-20261112-203337`. Recovery PR #28 contains the fuller rollout history.
 - Embedding apply stopped on Firestore DeadlineExceeded. Live dry run confirms 3,050 saved and 6,100 remaining (19,485 texts / 195 estimated requests). The progress counter said 3,079 completed in memory before the uncommitted batch failed. Read-only checks establish durable coverage.
 - [Write retry fix](tasks/A4-embedding-write-retry.md) keeps the existing batch for bounded retries, preserving the already-returned vectors. Author resumes from the feature script through the root scratch launcher. No key is copied or displayed.
+- Resumed apply stopped on Gemini HTTP IncompleteRead. Read-only coverage confirms 7,350 saved and 1,800 remaining. PR #29 now handles truncated HTTP/JSON responses with the existing bounded Gemini retries. Author resumes the same launcher.
 - After the resumed run exits, verify exact text hashes and vectors, then give the author the A4 public migration command. Three live placeholder publics / 150 members await this migration. All live writes and deploys remain author actions.
 
 ## Firestore recovery rehearsal, 2026-11-12 (historical)

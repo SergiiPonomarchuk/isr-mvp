@@ -1,9 +1,10 @@
 # CHANGES
 
-## Retry embedding batch writes (2026-11-13)
+## Retry embedding writes and interrupted responses (2026-11-13)
 
 - After a live Firestore timeout, retry the buffered merge writes with six attempts, per-request timeout and bounded delay. Completed Gemini vectors stay in memory during retry. Permanent write failures propagate immediately.
-- Live interrupted-run verification found 3,050 saved profiles and 6,100 remaining. Added three retry regressions. Node 98 passed, Python 114 run with two optional skips. Live resume remains the author's step.
+- The subsequent run reached 7,350 saved profiles before a truncated HTTP response. Interrupted protocol and JSON responses now use the existing bounded Gemini retry policy with safe error messages. Added three response regressions (Python 117 run with two optional skips, Node 98 passed).
+- Live initial interrupted-run verification found 3,050 saved profiles and 6,100 remaining. Added three retry regressions. Node 98 passed, Python 114 run with two optional skips. Live resume remains the author's step.
 
 ## Firestore recovery rehearsal (2026-11-12)
 

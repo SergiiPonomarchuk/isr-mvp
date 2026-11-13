@@ -6,6 +6,10 @@ Retry the current buffered merge batch for transient Firestore failures, with bo
 
 Verify with fake batches that the same writes survive transient failures, timeout settings and delays are bounded, permanent errors propagate and exhausted attempts stop. Run the project suites. Open a PR, and provide an author resume command from the tested worktree using the root key through its existing loader path.
 
+Also recover a truncated Gemini HTTP response through the existing bounded API retry loop. Convert HTTP protocol failures and incomplete JSON to GeminiError without logging the response body. Mock a truncated response followed by success to verify request counts and backoff.
+
 ## Status log
+
+- 2026-11-13: Resumed run later encountered HTTP IncompleteRead. Live read-only coverage is 7,350 saved and 1,800 remaining. Added safe conversion of interrupted/malformed responses to retryable GeminiError, using the existing request budget and backoff. A synthetic truncated-response-then-success test proves two counted requests and the normal retry delay. Python 117 run with two optional skips, Node 98 passed. Author resumes the same launcher.
 
 - 2026-11-13: Focused fix plan recorded before code changes. Sol Medium is sufficient. Node 98 passed. Python 114 run, 112 passed and two optional skips. Three regression tests prove transient retry, permanent error propagation and bounded exhaustion. The root scratch launcher imports the feature script and directs the existing Gemini loader to its original root path. No key is copied. The author resumes the live run.
