@@ -4,7 +4,13 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: live member UI findings fixed on feature branch, 2026-11-13
+## Current checkpoint: U9 accepted live, duplicate flow proposal, 2026-11-13
+
+- U9 PR #30 merged at `b189d3f`, deployed by the author and checked read-only. The author confirmed the saved member list works and the new Check badge/sample labels behave as specified.
+- The author requires Check to show similar registered active issues and offer Join for a nonmember. This intent already appears in the Request Guide. [U10](tasks/U10-similar-active-issues.md) proposes the implementation behavior, matching calibration and acceptance cases. Detailed cap/lifecycle choices await review.
+- Next is author review of the documentation proposal. PR #28/#29 remain separately subject to explicit merge instructions. D1 must reflect the accepted duplicate/join flow before its scenarios are changed.
+
+## Live member UI findings fixed on feature branch, 2026-11-13 (historical)
 
 - Live P1/P2, A4 embeddings and the three-public migration passed read-only checks. All 9,150 profile and 20,245 skill vectors are current. All 150 migrated member scores/maps match the Node implementation.
 - The author created the live entrance-lock test issue. Topic `46AQ1D2KJu5sAk7sQMli` has 100-entry relevance and ISR maps. The author saw 25 at Check and 100 at Create, then a stuck member popup.

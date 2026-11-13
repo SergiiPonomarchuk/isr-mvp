@@ -88,7 +88,7 @@ Path C duplicates the relevance logic in the browser and is used only when the C
 | C-15 | The Request Guide calls σ the "impact radius" (l.88), with values matching the Relevance doc's μ ranges | The client derives σ = fade / 3 |
 | C-16 | Issue vector stored as `issues.issue_vector` (Relevance doc l.395, l.690) | Not stored; random when the API key is missing (IF l.38; EMBEDDINGS #12) |
 | C-18 | No default weights in the docs (examples only) | A: 0.1/0.4/0.4/0.1. B: 0.2/0.6/0.1/0.1. |
-| C-09 | Joining by special request and voting (Request Guide l.371) | Not covered by IF (UNSURE; probably absent) |
+| C-09 | Joining by special request and voting (Request Guide l.371) | Not covered by IF (UNSURE; probably absent). [U10 proposal](tasks/U10-similar-active-issues.md) records the requested Check/Join flow and pending lifecycle/cap decisions. |
 | (none) | R in [0,1] (Relevance doc l.507) | A: no clamp, and the weights are unvalidated, so R can exceed 1 (whether any stored R does is UNSURE). B: clamps. |
 | (none) | S computed for all candidates surviving the upper-bound check (up to 300) | Same. Everyone else gets S = 0, which matters under PD-1's multi-channel retrieval. |
 | (none) | `legal_coverage` triage (PD-1) | Absent |

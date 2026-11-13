@@ -1,5 +1,9 @@
 # CHANGES
 
+## Similar active issues proposal (2026-11-13)
+
+- Recorded the author's requested Check behavior in U10, grounded in the Request Guide. Proposed matching, Open/Join actions, explicit distinct-issue continuation, concurrency checks and acceptance cases. Joining-cap and voting-phase policies remain decisions for review.
+
 ## U9 member preview and list (2026-11-13)
 
 - Check exposes the projected capped public size alongside its existing 25-person sample. The badge displays the public size and the preview labels the sample. Create's existing 100-member cap is retained.
