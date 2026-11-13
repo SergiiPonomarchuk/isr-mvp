@@ -1,5 +1,20 @@
 # CHANGES
 
+## Live public expertise verified (2026-11-13)
+
+- Author migrated all three placeholder publics with 150 members. Canonical Node expertise/ISR recomputation and cached maps match every live member. Repeat migration finds zero placeholders, changes or model requests. Browser acceptance remains the next author step.
+
+## Live embedding completion (2026-11-13)
+
+- Author resume completed, with all 9,150 profiles and 20,245 skills verified read-only against current text hashes and embedding metadata. Every vector is finite, 768-dimensional and normalized. Zero embeddings remain.
+- Three live publics / 150 members are ready for the author's expertise migration. Final-run usage is recorded in the retry spec, earlier interrupted-run totals are incomplete.
+
+## Retry embedding writes and interrupted responses (2026-11-13)
+
+- After a live Firestore timeout, retry the buffered merge writes with six attempts, per-request timeout and bounded delay. Completed Gemini vectors stay in memory during retry. Permanent write failures propagate immediately.
+- The subsequent run reached 7,350 saved profiles before a truncated HTTP response. Interrupted protocol and JSON responses now use the existing bounded Gemini retry policy with safe error messages. Added three response regressions (Python 117 run with two optional skips, Node 98 passed).
+- Live initial interrupted-run verification found 3,050 saved profiles and 6,100 remaining. Added three retry regressions. Node 98 passed, Python 114 run with two optional skips. Live resume remains the author's step.
+
 ## Firestore recovery rehearsal (2026-11-12)
 
 - Added offline validation and a restore command for the R0 backup format. It creates documents only on an empty dedicated emulator, verifies each path and typed field, and reports aggregate counts. Rehearsed the November 7 pre-migration backup successfully: 24,783 documents in nine manifest entries.

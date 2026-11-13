@@ -4,7 +4,29 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: Firestore recovery rehearsal, 2026-11-12
+## Current checkpoint: live public migration verified, browser acceptance next, 2026-11-13
+
+- The author applied A4 to three publics. The report records 159 documents (150 members, six topic maps and three issue vectors) and one embedding request.
+- Read-only recomputation against actual `functions/isr.js` matched education, experience, E and ISR for all 150 members. Both relevance and ISR maps matched in each issue/discussion. A key-free, API-blocked repeat migration found zero placeholders, changes or requests.
+- All 9,150 profile and 20,245 skill vectors were verified previously. Live rollout code/data checks pass. Next is the author's live browser Check/Create/voting acceptance, followed by read-only Analyzer log and persisted-record verification. PR #28 and #29 still require explicit merge instructions.
+- Give the author the full URL, commands and numbered instructions every time they need to act, per the author's request.
+
+## Live embeddings verified, public migration next, 2026-11-13 (historical)
+
+- The author's resumed embedding run completed. Read-only verification confirms all 9,150 profiles and 20,245 skill vectors current, finite, 768-dimensional and unit-normalized. Zero people or texts remain. Results are `scratch/live-rollout-20261112-203337/A4-live-vector-check.json` in C.
+- Final resume report `A4-embedding-resumed.md`: 62 requests, 5,763 texts, 208,764 estimated tokens and 1,800 people written. Earlier interrupted runs have incomplete usage totals.
+- API-free public preflight: three placeholder publics / 150 members, all members current, all topics have text and three issue vectors need embedding. Next is author `scripts/migrate_a4.py --apply` with explicit live project and report. Afterward verify canonical E/ISR and topic maps, and a repeat run with no changes or model calls.
+- P1/P2 and deployment have passed their read-only checks. Live browser acceptance remains author work after the public migration. PR #28 and #29 still require explicit merge instructions.
+
+## Embedding run interrupted, retry fix, 2026-11-13 (historical)
+
+- Author P1/P2 live apply and code deployment passed read-only verification. See the current rollout evidence under `C:\isr-mvp\scratch\live-rollout-20261112-203337`. Recovery PR #28 contains the fuller rollout history.
+- Embedding apply stopped on Firestore DeadlineExceeded. Live dry run confirms 3,050 saved and 6,100 remaining (19,485 texts / 195 estimated requests). The progress counter said 3,079 completed in memory before the uncommitted batch failed. Read-only checks establish durable coverage.
+- [Write retry fix](tasks/A4-embedding-write-retry.md) keeps the existing batch for bounded retries, preserving the already-returned vectors. Author resumes from the feature script through the root scratch launcher. No key is copied or displayed.
+- Resumed apply stopped on Gemini HTTP IncompleteRead. Read-only coverage confirms 7,350 saved and 1,800 remaining. PR #29 now handles truncated HTTP/JSON responses with the existing bounded Gemini retries. Author resumes the same launcher.
+- After the resumed run exits, verify exact text hashes and vectors, then give the author the A4 public migration command. Three live placeholder publics / 150 members await this migration. All live writes and deploys remain author actions.
+
+## Firestore recovery rehearsal, 2026-11-12 (historical)
 
 - Plan and workflow PR #26 merged at `cb8d001`. The preview runs release `47e835a`.
 - Recovered all 24,783 documents from the November 7 pre-migration backup on a separate local emulator. Every path and typed document body matched on read-back. See [recovery evidence](tasks/M1-firestore-recovery.md) and [the author's repeatable procedure](LIVE-ROLLOUT.md#2-backup-and-recovery-prerequisite-author).

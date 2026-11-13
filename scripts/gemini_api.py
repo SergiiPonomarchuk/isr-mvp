@@ -5,6 +5,7 @@ never in a URL, and is never printed: every error message passes through redact(
 """
 from __future__ import annotations
 
+import http.client
 import json
 import math
 import os
@@ -59,7 +60,13 @@ def post(path, body, key, timeout=120):
         with urllib.request.urlopen(req, timeout=timeout) as r:
             return json.load(r)
     except urllib.error.HTTPError as err:
-        raise GeminiError(redact(f"HTTP {err.code}: {err.read()[:300]!r}", key), err.code) from None
+        try:
+            detail = err.read()[:300]
+        except (http.client.HTTPException, OSError):
+            detail = b"response body unavailable"
+        raise GeminiError(redact(f"HTTP {err.code}: {detail!r}", key), err.code) from None
+    except (http.client.HTTPException, json.JSONDecodeError, UnicodeDecodeError) as err:
+        raise GeminiError(f"Response interrupted or malformed ({type(err).__name__})") from None
     except (urllib.error.URLError, TimeoutError, OSError) as err:
         raise GeminiError(redact(f"{type(err).__name__}: {err}", key)) from None
 
