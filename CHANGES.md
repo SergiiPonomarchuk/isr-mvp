@@ -2,7 +2,7 @@
 
 ## 2026-11-13 — U10 similar active issues and explicit joining
 
-Approved similar-issue Check flow with Open/member status, explicit discussion-phase Join beyond the initial 100-member cap, and explained separate creation. Recheck/Create and membership writes are transactional; completed creation retries return their original result. Reuse compatible issue vectors and show legacy semantic-coverage limits. Added recorded eight-text calibration and real-handler emulator regressions. Updated U10, data model, relevance and handoff. Browser acceptance remains pending a computer-use runtime startup failure. No deployment, live writes or rules changes.
+Approved similar-issue Check flow with Open/member status, explicit discussion-phase Join beyond the initial 100-member cap, and explained separate creation. Recheck/Create and membership writes are transactional; completed creation retries return their original result. Reuse compatible issue vectors and show legacy semantic-coverage limits. Added recorded eight-text calibration and real-handler emulator regressions. Updated U10, data model, relevance and handoff. Author browser acceptance passed duplicate Check and explicit Join to 101; remaining browser cases are pending. No deployment, live writes or rules changes.
 
 
 ## Similar active issues proposal (2026-11-13)

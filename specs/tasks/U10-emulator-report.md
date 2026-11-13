@@ -24,6 +24,12 @@ $env:JAVA_TOOL_OPTIONS = '-Xmx1400m'
 firebase emulators:exec --only "firestore" --project demo-u10 --config functions/test/u10-emulator.json "node --test functions/test/u10-integration.test.js"
 ```
 
+## Author browser acceptance
+
+2026-11-13: Author manually verified the isolated demo-u10 preview as Synthetic 95: Check showed the existing entrance-lock issue with Open/Join, and Join opened it with 101 members. Author reported “all is ok - exactly as you have described”. This confirms the repeated-issue/nonmember-join UI path with mocked AI; already-member status, explained separate creation and input invalidation still need their browser checks. No live deployment or writes.
+
+The manual preview runs from an ignored scratch harness on http://127.0.0.1:5001/main.html?emulator=1, with synthetic login and a runtime emulator-host safety banner. No API key is used.
+
 ## Remaining browser acceptance
 
 On a safely isolated emulator, adopt an actual nonmember, enter the entrance-lock title/description and Check. Confirm the existing issue appears with Open and Join before the new-public preview. Join must open it and show 101 members; repeating Check must show membership status. Separately confirm that explaining a distinct repair enables Create, changing text/pin requires Check again, and a later new match returns for review. Check visual layout and wording. Human judgment of the narrow English demo match calibration remains required before live deployment. Provide a concrete running preview and full user steps when browser tooling is available; do not deploy to obtain this check.
