@@ -1,5 +1,10 @@
 # CHANGES
 
+## Live embedding completion (2026-11-13)
+
+- Author resume completed, with all 9,150 profiles and 20,245 skills verified read-only against current text hashes and embedding metadata. Every vector is finite, 768-dimensional and normalized. Zero embeddings remain.
+- Three live publics / 150 members are ready for the author's expertise migration. Final-run usage is recorded in the retry spec, earlier interrupted-run totals are incomplete.
+
 ## Retry embedding writes and interrupted responses (2026-11-13)
 
 - After a live Firestore timeout, retry the buffered merge writes with six attempts, per-request timeout and bounded delay. Completed Gemini vectors stay in memory during retry. Permanent write failures propagate immediately.

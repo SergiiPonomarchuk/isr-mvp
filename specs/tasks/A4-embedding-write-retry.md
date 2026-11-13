@@ -10,6 +10,10 @@ Also recover a truncated Gemini HTTP response through the existing bounded API r
 
 ## Status log
 
+- 2026-11-13: Final author resume completed. Its report records 62 requests, 5,763 embedded texts, 208,764 estimated tokens and 1,800 people written. Exact request/token totals for the two interrupted runs are unavailable because they exited before saving their reports.
+- Final read-only check: all 9,150 profile texts and 20,245 skill texts match the current metadata. All 29,395 vectors are finite, 768-dimensional and normalized, maximum norm error 1.9984014443252818e-15. Zero people/texts remain. An initial vector scan failed on a read-side AttributeError; the repeat scan completed successfully.
+- Next preflight: three placeholder publics / 150 members, zero stale/missing members, zero topics without text and three missing issue vectors. The author applies the A4 public migration, then Codex verifies its results.
+
 - 2026-11-13: Resumed run later encountered HTTP IncompleteRead. Live read-only coverage is 7,350 saved and 1,800 remaining. Added safe conversion of interrupted/malformed responses to retryable GeminiError, using the existing request budget and backoff. A synthetic truncated-response-then-success test proves two counted requests and the normal retry delay. Python 117 run with two optional skips, Node 98 passed. Author resumes the same launcher.
 
 - 2026-11-13: Focused fix plan recorded before code changes. Sol Medium is sufficient. Node 98 passed. Python 114 run, 112 passed and two optional skips. Three regression tests prove transient retry, permanent error propagation and bounded exhaustion. The root scratch launcher imports the feature script and directs the existing Gemini loader to its original root path. No key is copied. The author resumes the live run.

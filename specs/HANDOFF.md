@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: embedding run interrupted, retry fix, 2026-11-13
+## Current checkpoint: live embeddings verified, public migration next, 2026-11-13
+
+- The author's resumed embedding run completed. Read-only verification confirms all 9,150 profiles and 20,245 skill vectors current, finite, 768-dimensional and unit-normalized. Zero people or texts remain. Results are `scratch/live-rollout-20261112-203337/A4-live-vector-check.json` in C.
+- Final resume report `A4-embedding-resumed.md`: 62 requests, 5,763 texts, 208,764 estimated tokens and 1,800 people written. Earlier interrupted runs have incomplete usage totals.
+- API-free public preflight: three placeholder publics / 150 members, all members current, all topics have text and three issue vectors need embedding. Next is author `scripts/migrate_a4.py --apply` with explicit live project and report. Afterward verify canonical E/ISR and topic maps, and a repeat run with no changes or model calls.
+- P1/P2 and deployment have passed their read-only checks. Live browser acceptance remains author work after the public migration. PR #28 and #29 still require explicit merge instructions.
+
+## Embedding run interrupted, retry fix, 2026-11-13 (historical)
 
 - Author P1/P2 live apply and code deployment passed read-only verification. See the current rollout evidence under `C:\isr-mvp\scratch\live-rollout-20261112-203337`. Recovery PR #28 contains the fuller rollout history.
 - Embedding apply stopped on Firestore DeadlineExceeded. Live dry run confirms 3,050 saved and 6,100 remaining (19,485 texts / 195 estimated requests). The progress counter said 3,079 completed in memory before the uncommitted batch failed. Read-only checks establish durable coverage.
