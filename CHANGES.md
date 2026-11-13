@@ -2,7 +2,7 @@
 
 ## 2026-11-13 - U10 active title uniqueness and one Create action
 
-Require unique active titles (case/whitespace normalized), including across locations and beyond the shortlist. Recheck atomically at Create; closed titles may be reused. Remove Continue and enable Create once any required explanation is entered. Node/Python and revised emulator tests passed; revised UI acceptance pending.
+Require unique active titles (case/whitespace normalized), including across locations and beyond the shortlist. Recheck atomically at Create; closed titles may be reused. Remove Continue and enable Create once any required explanation is entered. Node/Python and revised emulator tests passed; author accepted the revised UI; separate creation independently verified read-only on the emulator.
 
 ## 2026-11-13 — U10 similar active issues and explicit joining
 

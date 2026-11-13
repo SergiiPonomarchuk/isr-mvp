@@ -1,6 +1,6 @@
 # U10 Similar active issues at Check
 
-Status: APPROVED; implementation under verification, 2026-11-13. The author accepted explicit joins beyond the initial 100-member cap and instructed “apply the proposal”. Discussion-phase joining is the first milestone; voting-phase joining remains disabled pending its separate policy.
+Status: IMPLEMENTED; author emulator acceptance complete, ready for PR review, 2026-11-13. The author accepted explicit joins beyond the initial 100-member cap and instructed “apply the proposal”. Discussion-phase joining is the first milestone; voting-phase joining remains disabled pending its separate policy.
 
 ## Existing requirement and implementation gap
 
@@ -96,3 +96,5 @@ Verify independently the joining member's scores, normalization changes for exis
 - 2026-11-13: Author manually verified the isolated demo-u10 preview as Synthetic 95: Check showed the existing entrance-lock issue with Open/Join, and Join opened it with 101 members. Author reported “all is ok - exactly as you have described”. This confirms the repeated-issue/nonmember-join UI path with mocked AI; already-member status, explained separate creation and input invalidation still need their browser checks. No live deployment or writes.
 
 - 2026-11-13 revision: Author confirmed the remaining original UI checks, then approved unique titles among active issues only and removal of Continue. Creation dates and other metadata distinguish closed occurrences. Node 105 passed with one optional integration skip; Python 111 run/two existing skips; revised real-handler emulator scenario passed in 18.5 seconds. Cases cover normalized title collisions beyond the shortlist and across locations, no explanation override, closed/expired title reuse, racing Create, rollback/replay and 102-member joins. No new API requests; revised UI acceptance pending.
+
+- 2026-11-13: Author replied "ok" after the full revised manual procedure. Read-only emulator verification independently found both the original entrance-lock issue and the separately created rear-entrance issue with distinct titles. Revised active-title/single-Create UI accepted; ready for PR review. No agent browser automation pass is claimed; human checks used the mocked-AI demo preview. No merge, deploy or production writes.

@@ -37,3 +37,7 @@ On a safely isolated emulator, adopt an actual nonmember, enter the entrance-loc
 ## Active-title/single-Create revision
 
 Author approved active-only title uniqueness and removing Continue. Revised emulator test passed in 18.5 seconds; Node 105 passed plus one optional skip, Python 111 run/two skips. Tests cover title conflicts beyond five shortlist entries and across locations, case/space normalization, no explanation override, closed-title reuse and existing transactional regressions. Author confirmed the original remaining browser cases; revised UI acceptance pending. No additional paid requests.
+
+## Revised author acceptance
+
+2026-11-13: Author replied "ok" after the full revised manual procedure. Read-only emulator verification independently found both the original entrance-lock issue and the separately created rear-entrance issue with distinct titles. Revised active-title/single-Create UI accepted; ready for PR review. No agent browser automation pass is claimed; human checks used the mocked-AI demo preview. No merge, deploy or production writes.
