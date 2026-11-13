@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: Firestore recovery rehearsal, 2026-11-12
+## Current checkpoint: live member UI findings fixed on feature branch, 2026-11-13
+
+- Live P1/P2, A4 embeddings and the three-public migration passed read-only checks. All 9,150 profile and 20,245 skill vectors are current. All 150 migrated member scores/maps match the Node implementation.
+- The author created the live entrance-lock test issue. Topic `46AQ1D2KJu5sAk7sQMli` has 100-entry relevance and ISR maps. The author saw 25 at Check and 100 at Create, then a stuck member popup.
+- [U9](tasks/U9-member-preview-popup.md) fixes the preview badge/sample labeling and moves the values helper into shared scope. Cached members render immediately while existing reads run, with stale completion guarded. Regression suites and isolated browser fixture passed. Full application acceptance remains pending deployment.
+- Next: open/review U9 PR, merge on explicit author instruction and give full deployment commands from the clean deploy worktree. PR #28/#29 also remain unmerged pending explicit instructions. Agent deployment/live writes remain prohibited.
+
+## Firestore recovery rehearsal, 2026-11-12 (historical)
 
 - Plan and workflow PR #26 merged at `cb8d001`. The preview runs release `47e835a`.
 - Recovered all 24,783 documents from the November 7 pre-migration backup on a separate local emulator. Every path and typed document body matched on read-back. See [recovery evidence](tasks/M1-firestore-recovery.md) and [the author's repeatable procedure](LIVE-ROLLOUT.md#2-backup-and-recovery-prerequisite-author).

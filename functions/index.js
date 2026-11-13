@@ -991,6 +991,7 @@ exports.checkIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI_
       resources_needed: data.resources_needed || [],
       // ── Ad-hoc Public ──────────────────────────────────────────────────
       members_count: candidates.length,
+      public_members_count: Math.min(candidates.length, 100),
       members: top25
     });
 

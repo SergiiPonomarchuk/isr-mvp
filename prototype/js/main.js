@@ -4801,6 +4801,200 @@ function initTopicDetailViews() {
     }
   }
 
+  // Helper to calculate microcommunity values preview from members list
+  async function calculateMicrocommunityValuesFromMembers(members) {
+    if (!members || members.length === 0) return null;
+
+    const uidsToFetch = members.map(m => m.uid.toString());
+    const userTaxonomies = {};
+
+    if (typeof firebase !== 'undefined') {
+      const db = firebase.firestore();
+      await Promise.all(uidsToFetch.map(async (uid) => {
+        try {
+          const userDoc = await db.collection("users").doc(uid).get();
+          if (userDoc.exists) {
+            const uData = userDoc.data();
+            if (uData && uData.values_taxonomy) {
+              userTaxonomies[uid] = uData.values_taxonomy;
+            }
+          }
+        } catch (e) {
+          console.warn(`Failed to fetch values taxonomy for user ${uid}:`, e);
+        }
+      }));
+    }
+
+    // Provide mock taxonomies for missing users so the prototype always renders a chart
+    members.forEach((m, index) => {
+      const uid = m.uid.toString();
+      if (!userTaxonomies[uid]) {
+        const sourceTax = window.currentUserValues || window.vectorData || {};
+        let rawDomains = [];
+        if (Array.isArray(sourceTax.domains)) {
+          rawDomains = sourceTax.domains.map(d => {
+            if (typeof d === 'number') return d;
+            if (d && typeof d.score === 'number') return d.score;
+            return 50;
+          });
+        } else {
+          rawDomains = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50];
+        }
+
+        let rawShifts = { work: [], family: [], private: [], crisis: [] };
+        const shiftsObj = sourceTax.contextual_shifts || sourceTax.contextShifts || {};
+        ['work', 'family', 'private', 'crisis'].forEach(ctx => {
+          rawShifts[ctx] = Array.isArray(shiftsObj[ctx]) ? [...shiftsObj[ctx]] : [0,0,0,0,0,0,0,0,0,0];
+        });
+
+        let rawConflict = [];
+        const cr = sourceTax.conflict_resolution || sourceTax.conflictResolution || [];
+        for (let i = 0; i < 36; i++) {
+          const entry = cr[i];
+          if (typeof entry === 'number') {
+            rawConflict.push(entry);
+          } else if (entry && typeof entry.weight === 'number') {
+            rawConflict.push(entry.weight);
+          } else {
+            rawConflict.push(50);
+          }
+        }
+
+        const rawItems = {};
+        const itemsObj = sourceTax.items || {};
+        for (let i = 1; i <= 10; i++) {
+          const key = 'd' + i;
+          rawItems[key] = Array.isArray(itemsObj[key]) ? [...itemsObj[key]] : [];
+        }
+
+        // Slightly perturb the values based on index to make it look distinct from personal vector
+        const perturbedDomains = rawDomains.map(d => Math.max(0, Math.min(100, d + (index % 3 === 1 ? 15 : (index % 3 === 2 ? -10 : 5)))));
+
+        userTaxonomies[uid] = {
+          domains: perturbedDomains,
+          contextual_shifts: rawShifts,
+          items: rawItems,
+          conflict_resolution: rawConflict
+        };
+      }
+    });
+
+    const validMembers = members.filter(m => userTaxonomies[m.uid.toString()]);
+    if (validMembers.length === 0) return null;
+
+    try {
+      const avgDomains = [];
+      for (let i = 0; i < 10; i++) {
+        let valSum = 0;
+        let relSum = 0;
+        validMembers.forEach(m => {
+          const taxonomy = userTaxonomies[m.uid.toString()];
+          const domainsList = taxonomy.domains || [];
+          const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
+          if (domainsList[i] !== undefined && domainsList[i] !== null) {
+            valSum += domainsList[i] * score;
+            relSum += score;
+          }
+        });
+        avgDomains.push(relSum > 0 ? Math.round(valSum / relSum) : 50);
+      }
+
+      const avgContextShifts = {};
+      ['work', 'family', 'private', 'crisis'].forEach(ctx => {
+        const avgCtxList = [];
+        for (let i = 0; i < 10; i++) {
+          let valSum = 0;
+          let relSum = 0;
+          validMembers.forEach(m => {
+            const taxonomy = userTaxonomies[m.uid.toString()];
+            const shifts = taxonomy.contextual_shifts || {};
+            const ctxList = shifts[ctx] || [];
+            const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
+            if (ctxList[i] !== undefined && ctxList[i] !== null) {
+              valSum += ctxList[i] * score;
+              relSum += score;
+            }
+          });
+          avgCtxList.push(relSum > 0 ? Math.round(valSum / relSum) : 0);
+        }
+        avgContextShifts[ctx] = avgCtxList;
+      });
+
+      const avgItems = {};
+      for (let i = 1; i <= 10; i++) {
+        const key = 'd' + i;
+        let itemsLen = 0;
+        for (let m of validMembers) {
+          const taxonomy = userTaxonomies[m.uid.toString()];
+          const items = taxonomy.items || {};
+          if (items[key] && items[key].length > 0) {
+            itemsLen = items[key].length;
+            break;
+          }
+        }
+        if (itemsLen > 0) {
+          const avgItemList = [];
+          for (let j = 0; j < itemsLen; j++) {
+            let valSum = 0;
+            let relSum = 0;
+            validMembers.forEach(m => {
+              const taxonomy = userTaxonomies[m.uid.toString()];
+              const items = taxonomy.items || {};
+              const itemList = items[key] || [];
+              const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
+              if (itemList[j] !== undefined && itemList[j] !== null) {
+                valSum += itemList[j] * score;
+                relSum += score;
+              }
+            });
+            avgItemList.push(relSum > 0 ? Math.round(valSum / relSum) : null);
+          }
+          avgItems[key] = avgItemList;
+        } else {
+          avgItems[key] = [];
+        }
+      }
+
+      const avgConflictResolution = [];
+      for (let i = 0; i < 36; i++) {
+        let valSum = 0;
+        let relSum = 0;
+        validMembers.forEach(m => {
+          const taxonomy = userTaxonomies[m.uid.toString()];
+          const conflicts = taxonomy.conflict_resolution || [];
+          let val = null;
+          if (conflicts[i] !== undefined && conflicts[i] !== null) {
+            const entry = conflicts[i];
+            val = (typeof entry === 'object' && entry !== null) ? entry.weight : entry;
+          }
+          const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
+          if (val !== null) {
+            valSum += val * score;
+            relSum += score;
+          }
+        });
+        avgConflictResolution.push(relSum > 0 ? Math.round(valSum / relSum) : 50);
+      }
+
+      return {
+        domains: avgDomains,
+        contextual_shifts: avgContextShifts,
+        items: avgItems,
+        conflict_resolution: avgConflictResolution
+      };
+    } catch (err) {
+      console.error("calculateMicrocommunityValuesFromMembers error:", err);
+      return null;
+    }
+  }
+
+  function checkedPublicSize(data) {
+    const count = data.public_members_count ?? data.members_count;
+    return Number.isInteger(count) && count >= 0
+      ? Math.min(count, 100)
+      : (Array.isArray(data.members) ? data.members.length : 0);
+  }
+
   function renderChatCreateView(sourceViewHtml, titleText) {
     modalBody.setAttribute('data-topic-detail-open', '1');
     modalBody.setAttribute('data-topic-source-kind', 'chat-create');
@@ -4838,6 +5032,7 @@ function initTopicDetailViews() {
     // A2: the topic starter can only clarify the context; the server derives again.
     let pendingClarification = "";
     let calculatedMembers = [];
+    let calculatedPublicSize = 0;
     let microcommunityPreviewValues = null;
     const currentUserId = safeGetStorage('userId') || "1";
     const db = firebase.firestore();
@@ -5052,6 +5247,10 @@ function initTopicDetailViews() {
           item.textContent = "Please click 'Check' to suggest members.";
           popup.appendChild(item);
         } else {
+          const sampleLabel = document.createElement('div');
+          sampleLabel.className = 'reaction-user-item';
+          sampleLabel.textContent = `Previewing ${calculatedMembers.length} of ${calculatedPublicSize} members`;
+          popup.appendChild(sampleLabel);
           if (microcommunityPreviewValues && microcommunityPreviewValues.domains) {
             const chartWrapper = document.createElement('div');
             chartWrapper.className = 'bar-chart';
@@ -5413,193 +5612,6 @@ function initTopicDetailViews() {
       return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     }
 
-    // Helper to calculate microcommunity values preview from members list
-    async function calculateMicrocommunityValuesFromMembers(members) {
-      if (!members || members.length === 0) return null;
-      
-      const uidsToFetch = members.map(m => m.uid.toString());
-      const userTaxonomies = {};
-      
-      if (typeof firebase !== 'undefined') {
-        const db = firebase.firestore();
-        await Promise.all(uidsToFetch.map(async (uid) => {
-          try {
-            const userDoc = await db.collection("users").doc(uid).get();
-            if (userDoc.exists) {
-              const uData = userDoc.data();
-              if (uData && uData.values_taxonomy) {
-                userTaxonomies[uid] = uData.values_taxonomy;
-              }
-            }
-          } catch (e) {
-            console.warn(`Failed to fetch values taxonomy for user ${uid}:`, e);
-          }
-        }));
-      }
-
-      // Provide mock taxonomies for missing users so the prototype always renders a chart
-      members.forEach((m, index) => {
-        const uid = m.uid.toString();
-        if (!userTaxonomies[uid]) {
-          const sourceTax = window.currentUserValues || window.vectorData || {};
-          let rawDomains = [];
-          if (Array.isArray(sourceTax.domains)) {
-            rawDomains = sourceTax.domains.map(d => {
-              if (typeof d === 'number') return d;
-              if (d && typeof d.score === 'number') return d.score;
-              return 50;
-            });
-          } else {
-            rawDomains = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50];
-          }
-
-          let rawShifts = { work: [], family: [], private: [], crisis: [] };
-          const shiftsObj = sourceTax.contextual_shifts || sourceTax.contextShifts || {};
-          ['work', 'family', 'private', 'crisis'].forEach(ctx => {
-            rawShifts[ctx] = Array.isArray(shiftsObj[ctx]) ? [...shiftsObj[ctx]] : [0,0,0,0,0,0,0,0,0,0];
-          });
-
-          let rawConflict = [];
-          const cr = sourceTax.conflict_resolution || sourceTax.conflictResolution || [];
-          for (let i = 0; i < 36; i++) {
-            const entry = cr[i];
-            if (typeof entry === 'number') {
-              rawConflict.push(entry);
-            } else if (entry && typeof entry.weight === 'number') {
-              rawConflict.push(entry.weight);
-            } else {
-              rawConflict.push(50);
-            }
-          }
-
-          const rawItems = {};
-          const itemsObj = sourceTax.items || {};
-          for (let i = 1; i <= 10; i++) {
-            const key = 'd' + i;
-            rawItems[key] = Array.isArray(itemsObj[key]) ? [...itemsObj[key]] : [];
-          }
-
-          // Slightly perturb the values based on index to make it look distinct from personal vector
-          const perturbedDomains = rawDomains.map(d => Math.max(0, Math.min(100, d + (index % 3 === 1 ? 15 : (index % 3 === 2 ? -10 : 5)))));
-
-          userTaxonomies[uid] = {
-            domains: perturbedDomains,
-            contextual_shifts: rawShifts,
-            items: rawItems,
-            conflict_resolution: rawConflict
-          };
-        }
-      });
-
-      const validMembers = members.filter(m => userTaxonomies[m.uid.toString()]);
-      if (validMembers.length === 0) return null;
-
-      try {
-        const avgDomains = [];
-        for (let i = 0; i < 10; i++) {
-          let valSum = 0;
-          let relSum = 0;
-          validMembers.forEach(m => {
-            const taxonomy = userTaxonomies[m.uid.toString()];
-            const domainsList = taxonomy.domains || [];
-            const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
-            if (domainsList[i] !== undefined && domainsList[i] !== null) {
-              valSum += domainsList[i] * score;
-              relSum += score;
-            }
-          });
-          avgDomains.push(relSum > 0 ? Math.round(valSum / relSum) : 50);
-        }
-
-        const avgContextShifts = {};
-        ['work', 'family', 'private', 'crisis'].forEach(ctx => {
-          const avgCtxList = [];
-          for (let i = 0; i < 10; i++) {
-            let valSum = 0;
-            let relSum = 0;
-            validMembers.forEach(m => {
-              const taxonomy = userTaxonomies[m.uid.toString()];
-              const shifts = taxonomy.contextual_shifts || {};
-              const ctxList = shifts[ctx] || [];
-              const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
-              if (ctxList[i] !== undefined && ctxList[i] !== null) {
-                valSum += ctxList[i] * score;
-                relSum += score;
-              }
-            });
-            avgCtxList.push(relSum > 0 ? Math.round(valSum / relSum) : 0);
-          }
-          avgContextShifts[ctx] = avgCtxList;
-        });
-
-        const avgItems = {};
-        for (let i = 1; i <= 10; i++) {
-          const key = 'd' + i;
-          let itemsLen = 0;
-          for (let m of validMembers) {
-            const taxonomy = userTaxonomies[m.uid.toString()];
-            const items = taxonomy.items || {};
-            if (items[key] && items[key].length > 0) {
-              itemsLen = items[key].length;
-              break;
-            }
-          }
-          if (itemsLen > 0) {
-            const avgItemList = [];
-            for (let j = 0; j < itemsLen; j++) {
-              let valSum = 0;
-              let relSum = 0;
-              validMembers.forEach(m => {
-                const taxonomy = userTaxonomies[m.uid.toString()];
-                const items = taxonomy.items || {};
-                const itemList = items[key] || [];
-                const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
-                if (itemList[j] !== undefined && itemList[j] !== null) {
-                  valSum += itemList[j] * score;
-                  relSum += score;
-                }
-              });
-              avgItemList.push(relSum > 0 ? Math.round(valSum / relSum) : null);
-            }
-            avgItems[key] = avgItemList;
-          } else {
-            avgItems[key] = [];
-          }
-        }
-
-        const avgConflictResolution = [];
-        for (let i = 0; i < 36; i++) {
-          let valSum = 0;
-          let relSum = 0;
-          validMembers.forEach(m => {
-            const taxonomy = userTaxonomies[m.uid.toString()];
-            const conflicts = taxonomy.conflict_resolution || [];
-            let val = null;
-            if (conflicts[i] !== undefined && conflicts[i] !== null) {
-              const entry = conflicts[i];
-              val = (typeof entry === 'object' && entry !== null) ? entry.weight : entry;
-            }
-            const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
-            if (val !== null) {
-              valSum += val * score;
-              relSum += score;
-            }
-          });
-          avgConflictResolution.push(relSum > 0 ? Math.round(valSum / relSum) : 50);
-        }
-
-        return {
-          domains: avgDomains,
-          contextual_shifts: avgContextShifts,
-          items: avgItems,
-          conflict_resolution: avgConflictResolution
-        };
-      } catch (err) {
-        console.error("calculateMicrocommunityValuesFromMembers error:", err);
-        return null;
-      }
-    }
-
     // 5. Check calculation triggers (Recalculation supported)
     if (checkBtn) {
       checkBtn.addEventListener('click', async () => {
@@ -5670,6 +5682,7 @@ function initTopicDetailViews() {
               resources_needed: data.resources_needed || []
             };
             calculatedMembers = data.members;
+            calculatedPublicSize = checkedPublicSize(data);
             pendingClarification = "";
             // U6 (R4, R6): the server's point and where it came from, unless the pin moved meanwhile
             checkedPointMoves = movesAtCheck;
@@ -5712,7 +5725,7 @@ function initTopicDetailViews() {
           }
 
           // Render metadata button value labels
-          valMicrocommunity.textContent = `${calculatedMembers.length} members`;
+          valMicrocommunity.textContent = `${calculatedPublicSize} members`;
           
           const dataWeights = suggestedParams.weights;
           const wRelevanceObj = {
@@ -6102,8 +6115,27 @@ function initTopicDetailViews() {
           loadingPopup.style.padding = '12px';
           loadingPopup.style.textAlign = 'center';
           loadingPopup.style.color = 'var(--text-muted)';
-          loadingPopup.textContent = 'Loading ad-hoc public...';
+          const pendingMembers = uids.map(uid => ({
+            uid,
+            score: Number((disc && disc.isr_scores || {})[uid] ?? -1)
+          })).sort((a, b) => b.score - a.score);
+          const renderPendingNames = () => {
+            loadingPopup.textContent = '';
+            pendingMembers.forEach(member => {
+              const row = document.createElement('div');
+              row.className = 'reaction-user-item';
+              const name = window.userCache[member.uid] || ('User ' + member.uid);
+              const score = member.score >= 0 ? member.score.toFixed(2) : 'N/A';
+              row.textContent = `${name} (id: ${member.uid}) - ${score}`;
+              loadingPopup.appendChild(row);
+            });
+          };
+          renderPendingNames();
           itemEl.appendChild(loadingPopup);
+          const namesReady = resolveUserNames(uids);
+          namesReady.then(() => {
+            if (loadingPopup.isConnected) renderPendingNames();
+          });
 
           const db = typeof firebase !== 'undefined' ? firebase.firestore() : null;
           let issueData = null;
@@ -6162,11 +6194,14 @@ function initTopicDetailViews() {
             if (fallbackTax) mcValues = mapTaxonomyToUserValues(fallbackTax);
           }
 
+          // Keep a dismissed or replaced popup closed when background reads finish.
+          if (!loadingPopup.isConnected) return;
           // Remove the temporary loading popup
           const tempLoading = itemEl.querySelector('.loading-popup-temp');
+          await namesReady;
+          if (!loadingPopup.isConnected) return;
           if (tempLoading) tempLoading.remove();
-
-          await resolveUserNames(uids);
+          if (!itemEl.isConnected) return;
           
           // Map to objects containing score and metadata for sorting
           const memberList = uids.map(uid => {
