@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-13 - U10 main integration
+
+Author authorized merge of PR #32. Retargeted directly to main, including the approved proposal documentation. Preserved accepted source, tests and browser evidence; deployment remains the author's step.
+
 ## 2026-11-13 - U10 active title uniqueness and one Create action
 
 Require unique active titles (case/whitespace normalized), including across locations and beyond the shortlist. Recheck atomically at Create; closed titles may be reused. Remove Continue and enable Create once any required explanation is entered. Node/Python and revised emulator tests passed; author accepted the revised UI; separate creation independently verified read-only on the emulator.

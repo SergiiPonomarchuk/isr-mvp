@@ -4,12 +4,13 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: U10 approved and implemented, 2026-11-13
+## Current checkpoint: U10 accepted for main, 2026-11-13
 
-- Author accepted explicit joins beyond 100 and instructed applying U10. Feature branch `codex/similar-active-issues` is based on proposal PR #31; neither PR is merged by that instruction.
-- Implemented similar active matches at Check, Open/status, explicit discussion Join, explained separate creation, final transactional recheck and completed-Create replay. See [U10](tasks/U10-similar-active-issues.md) for calibration, schemas and verification limits.
-- Required suites: Node 105 passed plus optional emulator skip; Python 111 run, two existing skips. Browser automation cannot start (security-environment runtime error); author confirmed duplicate Check and Join to 101 in the isolated preview. Author confirmed the remaining original browser steps, then approved active-only title uniqueness and removing Continue. Author accepted the revised single-Create UI; a read-only emulator check confirms the separate rear-entrance issue was created. The real-handler emulator test passed, including concurrent Create (one success/one 409), atomic rollback/retry and a 102-member public. Evidence is recorded in U10's status log.
-- Next: review implementation [PR #32](https://github.com/SergiiPonomarchuk/isr-mvp/pull/32), stacked on #31, after explicit merge authorization for parent PR #31. Revised emulator acceptance is complete; live deployment remains the author's step after merging. The synthetic manual preview currently runs on port 5001 with Firestore 8080 (demo-u10); no saved main data was imported. PR #32 Node/Python CI passed on the published implementation. Merge only on explicit PR instructions; PR #28/#29/#31 remain separately unmerged. No agent deploy or production writes. D1 must add the approved duplicate/member/nonmember scenarios to its spec before changing seed data.
+- Author explicitly instructed `merge PR 32`. PR #32 targets main directly and carries both the approved proposal documentation and implementation. No separate merge of PR #31 is authorized or required for this integration.
+- U10 implements active-issue discovery, Open/member status, explicit discussion-phase Join beyond the initial 100-member formation cap, unique titles among active issues only, and a single Create action with any required distinction explanation. Create rechecks atomically; retries replay the existing result.
+- Author accepted the original and revised browser flows on the isolated mocked-AI emulator. Read-only verification confirms the separately created rear-entrance issue. Node: 105 passed plus one optional integration skip. Python: 111 run/two existing skips. Revised real-handler emulator test passed title conflicts/reuse, racing Create, rollback/replay and 102-member canonical maps. Final CI must pass before merge.
+- Next after PR #32 is merged: prepare the clean detached `wt-main` deployment checkout; the author deploys hosting plus `checkIssue`, `createIssue` and new `joinIssue`. Agent then verifies live read-only. No agent deployment, rules changes or production writes.
+- The synthetic manual preview runs on port 5001/Firestore 8080, project demo-u10. Saved main emulator data was not imported. PR #28/#29 remain separately unmerged. D1 must reflect the accepted duplicate/member/nonmember flow in its spec before changing seed data.
 
 ## U9 accepted live, duplicate flow proposal, 2026-11-13 (historical)
 
