@@ -5,7 +5,7 @@ const ISR = require("./isr");
 const Lifecycle = require("./lifecycle");
 const { haversineDistance, toLatLon } = require("./geo");
 
-const VERSION = "u10-v1";
+const VERSION = "u10-v2";
 const SEMANTIC_THRESHOLD = 0.8018;
 const TEXT_THRESHOLD = 0.5;
 const LIMIT = 5;
@@ -14,6 +14,7 @@ const WORDS = { repairing: "repair", repairs: "repair", fix: "repair", fixing: "
 function normalize(text) {
   return String(text || "").normalize("NFKC").toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim().replace(/\s+/g, " ");
 }
+function titleKey(text) { return String(text || "").normalize("NFKC").toLowerCase().trim().replace(/\s+/g, " "); }
 function terms(text) {
   return new Set(normalize(text).replace(/\b(?:osbb|building|block|house|h)\s*\d+\b/g, " ").split(" ").filter(w => w && !STOP.has(w)).map(w => WORDS[w] || w));
 }
@@ -61,6 +62,7 @@ function compatibleContext(query, issue) {
 }
 function rankMatches(query, entries, submitterId, today = Lifecycle.todayIn(Lifecycle.TIME_ZONE)) {
   const matches = [];
+  const titleConflicts = [];
   let active = 0, semanticReady = 0;
   for (const { id, issue, discussion, embedding } of entries) {
     const phase = Lifecycle.phaseOf(discussion, issue);
@@ -70,7 +72,9 @@ function rankMatches(query, entries, submitterId, today = Lifecycle.todayIn(Life
     active++;
     const ready = currentVector(embedding, issue);
     if (ready) semanticReady++;
-    if (!compatibleContext(query, issue)) continue;
+    const titleConflict = titleKey(query.title) === titleKey(issue.title);
+    if (titleConflict) titleConflicts.push(id);
+    if (!titleConflict && !compatibleContext(query, issue)) continue;
     const titleExact = normalize(query.title) === normalize(issue.title);
     const lexical = overlap(query.title, issue.title);
     const semantic = ready && query.vector ? ISR.cosine(query.vector, vector(embedding.vector)) : 0;
@@ -80,13 +84,16 @@ function rankMatches(query, entries, submitterId, today = Lifecycle.todayIn(Life
       (discussion.participants || []).map(String).includes(String(submitterId));
     matches.push({ issue_id: id, title: issue.title, description: String(issue.description || "").slice(0, 400),
       location: toLatLon(issue.location), phase, already_member: alreadyMember, join_allowed: phase === "chat",
-      version, reason: titleExact ? "Same title and affected place" : semantic >= SEMANTIC_THRESHOLD ? "Similar problem at the same affected place" : "Related wording at the same affected place",
-      score: titleExact ? 1 : Math.max(lexical, semantic) });
+      title_conflict: titleConflict, version, reason: titleConflict ? "Another active issue already uses this title" : titleExact ? "Same title and affected place" : semantic >= SEMANTIC_THRESHOLD ? "Similar problem at the same affected place" : "Related wording at the same affected place",
+      score: titleConflict ? 2 : titleExact ? 1 : Math.max(lexical, semantic) });
   }
   matches.sort((a, b) => b.score - a.score || a.issue_id.localeCompare(b.issue_id));
-  return { version: VERSION, matches: matches.slice(0, LIMIT), coverage: { active, semantic_ready: semanticReady, legacy_text_only: active - semanticReady } };
+  return { version: VERSION, title_conflicts: titleConflicts.sort(), matches: matches.slice(0, LIMIT), coverage: { active, semantic_ready: semanticReady, legacy_text_only: active - semanticReady } };
 }
 function requireReview(result, review) {
+  if (result.title_conflicts && result.title_conflicts.length) {
+    throw Object.assign(new Error("An active issue already uses this title. Choose a distinct title and check again."), { status: 409, similar_issues: result });
+  }
   if (!result.matches.length) return null;
   const reason = review && typeof review.reason === "string" ? review.reason.trim() : "";
   const seen = new Set((review && Array.isArray(review.matches) ? review.matches : []).map(m => `${m.issue_id}:${m.version}`));
@@ -114,4 +121,4 @@ async function findSimilar(db, query, submitterId, transaction) {
   embeddings.forEach(s => { if (byId.has(s.id)) byId.get(s.id).embedding = s.data(); });
   return rankMatches(query, [...byId.values()], submitterId);
 }
-module.exports = { VERSION, SEMANTIC_THRESHOLD, TEXT_THRESHOLD, LIMIT, normalize, terms, overlap, hash, issueText, vector, currentVector, compatibleContext, rankMatches, requireReview, findSimilar };
+module.exports = { VERSION, SEMANTIC_THRESHOLD, TEXT_THRESHOLD, LIMIT, normalize, titleKey, terms, overlap, hash, issueText, vector, currentVector, compatibleContext, rankMatches, requireReview, findSimilar };

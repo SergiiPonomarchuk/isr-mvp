@@ -50,8 +50,12 @@ test('U10 real Check/Create/Join transactions on isolated Firestore', {skip:proc
     const scores=ISR.isrForPublic(rows.map(m=>({uid:String(m.user_id),R:m.relevance_score,E:m.expertise_score})),issue);
     rows.forEach((m,i)=>assert.equal(m.isr_score,Math.round(scores[i].isr*1000)/1000));
     const memberCheck=await call('checkIssue',other);assert.equal(memberCheck.data.similar_issues[0].already_member,true);
-    const reason={reason:'This is a separate repair for the rear entrance',matches:memberCheck.data.similar_issues};
-    const second=await call('createIssue',{...other,draftId:memberCheck.data.draftId,duplicate_review:reason});assert.equal(second.status,200,JSON.stringify(second.data));
+    const blocked=await call('createIssue',{...other,draftId:memberCheck.data.draftId,duplicate_review:{reason:'Different entrance',matches:memberCheck.data.similar_issues}});
+    assert.equal(blocked.status,409,'explanation cannot override an active title conflict');
+    const separate={...other,title:'Repair the rear entrance lock at osbb 1, h5'};
+    const separateCheck=await call('checkIssue',separate);
+    const reason={reason:'This is a separate repair for the rear entrance',matches:separateCheck.data.similar_issues};
+    const second=await call('createIssue',{...separate,draftId:separateCheck.data.draftId,duplicate_review:reason});assert.equal(second.status,200,JSON.stringify(second.data));
     const stale=await call('createIssue',{...other,draftId:duplicate.data.draftId,duplicate_review:reason});assert.equal(stale.status,409,'newly created issue must be reviewed');
     // Two independent drafts race to register the same newly affected building.
     const fresh={...body,location_source:'creator',title:'Repair entrance lock at osbb 1 h99',description:'The entrance lock at osbb 1 h99 is broken.',location:[47.592114,7.611201]};
@@ -75,6 +79,12 @@ test('U10 real Check/Create/Join transactions on isolated Firestore', {skip:proc
     assert.equal(recovered.status,200,JSON.stringify(recovered.data));
     await db.collection('issues').doc(created.data.issue_id).update({status:'in_process'});
     const voting=await call('joinIssue',{issueId:created.data.issue_id,submitterId:outside[2]});assert.equal(voting.status,409);
+    await db.collection('issues').doc(created.data.issue_id).update({status:'completed'});
+    await db.collection('discussions').doc(created.data.issue_id).update({status:'approved'});
+    const reuse=await call('checkIssue',body);
+    assert.equal(reuse.data.title_conflicts.length,0,'closed title may be reused');
+    const reused=await call('createIssue',{...body,draftId:reuse.data.draftId,duplicate_review:{reason:'A later occurrence',matches:reuse.data.similar_issues}});
+    assert.equal(reused.status,200,JSON.stringify(reused.data));
     const invalid=await call('joinIssue',{issueId:created.data.issue_id,submitterId:'unknown'});assert.equal(invalid.status,400);
     console.log('U10 verified real HTTP entry points, 102-member public, concurrent idempotent joins, canonical maps, duplicate recheck and creation replay');
   } finally {await new Promise(r=>server.close(r));await admin.app().delete();}

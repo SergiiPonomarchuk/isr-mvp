@@ -57,7 +57,7 @@ test("a pin moved after Check disables Create until Check runs again", () => {
   assert.match(moved, /submitBtn\.setAttribute\('disabled', 'true'\)/);
   assert.match(moved, /press Check again/);
   assert.match(main, /if \(window\.issuePointMoves === checkedPointMoves\) \{\s+updateCreateAvailability\(\);/);
-  assert.match(main, /submitBtn\.disabled = !suggestedParams \|\| window\.issuePointMoves !== checkedPointMoves/);
+  assert.match(main, /submitBtn\.disabled = !suggestedParams[^;]*window\.issuePointMoves !== checkedPointMoves/);
   assert.match(main, /if \(window\.issuePointMoves !== checkedPointMoves\) \{\s+alert\('The point moved after the check: press Check again\.'\)/);
 });
 

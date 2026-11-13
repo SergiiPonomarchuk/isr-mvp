@@ -5035,6 +5035,7 @@ function initTopicDetailViews() {
     let calculatedMembers = [];
     let calculatedPublicSize = 0;
     let similarIssues = [];
+    let titleConflicts = [];
     let duplicateReview = null;
     let microcommunityPreviewValues = null;
     const currentUserId = safeGetStorage('userId') || "1";
@@ -5045,17 +5046,24 @@ function initTopicDetailViews() {
       : `https://us-central1-project-a3d59130-5adf-4677-9e2.cloudfunctions.net`;
 
     function updateCreateAvailability() {
-      if (submitBtn) submitBtn.disabled = !suggestedParams || window.issuePointMoves !== checkedPointMoves || (similarIssues.length > 0 && !duplicateReview);
+      if (submitBtn) submitBtn.disabled = !suggestedParams || titleConflicts.length > 0 || window.issuePointMoves !== checkedPointMoves || (similarIssues.length > 0 && !duplicateReview);
     }
 
-    function showSimilarIssues(matches, coverage) {
+    function showSimilarIssues(matches, coverage, conflicts) {
       similarIssues = Array.isArray(matches) ? matches : [];
+      titleConflicts = Array.isArray(conflicts) ? conflicts : similarIssues.filter(m => m.title_conflict).map(m => m.issue_id);
       duplicateReview = null;
       const panel = modalBody.querySelector('#similar-issues-panel');
       const preview = modalBody.querySelector('.topic-detail-meta');
       panel.textContent = '';
       panel.hidden = !similarIssues.length && !(coverage && coverage.legacy_text_only);
-      if (preview) { preview.hidden = similarIssues.length > 0; preview.style.display = similarIssues.length ? 'none' : ''; }
+      if (preview) { preview.hidden = false; preview.style.display = ''; }
+      if (titleConflicts.length) {
+        const warning = document.createElement('p');
+        warning.setAttribute('role', 'status');
+        warning.textContent = 'An active issue already uses this title. Choose a distinct title and press Check again.';
+        panel.appendChild(warning);
+      }
       if (similarIssues.length) {
         const heading = document.createElement('h4');
         heading.textContent = 'Similar active issues';
@@ -5124,22 +5132,11 @@ function initTopicDetailViews() {
         reason.className = 'topic-form-textarea';
         reason.maxLength = 1000;
         reason.setAttribute('aria-label', 'How is your issue different?');
-        const proceed = document.createElement('button');
-        proceed.type = 'button';
-        proceed.className = 'tour-btn tour-btn-secondary';
-        proceed.textContent = 'Continue with a separate issue';
-        proceed.disabled = true;
         reason.oninput = () => {
-          duplicateReview = null;
-          proceed.disabled = !reason.value.trim();
+          duplicateReview = reason.value.trim() ? { reason: reason.value.trim(), matches: similarIssues.map(({ issue_id, version }) => ({ issue_id, version })) } : null;
           updateCreateAvailability();
         };
-        proceed.onclick = () => {
-          duplicateReview = { reason: reason.value.trim(), matches: similarIssues.map(({ issue_id, version }) => ({ issue_id, version })) };
-          if (preview) { preview.hidden = false; preview.style.display = ''; }
-          updateCreateAvailability();
-        };
-        panel.append(label, reason, proceed);
+        panel.append(label, reason);
       }
       updateCreateAvailability();
     }
@@ -5148,6 +5145,7 @@ function initTopicDetailViews() {
       suggestedParams = null;
       duplicateReview = null;
       similarIssues = [];
+      titleConflicts = [];
       const panel = modalBody.querySelector('#similar-issues-panel');
       if (panel) { panel.hidden = true; panel.textContent = ''; }
       updateCreateAvailability();
@@ -5502,6 +5500,7 @@ function initTopicDetailViews() {
     window.onIssuePointMoved = () => {
       duplicateReview = null;
       similarIssues = [];
+      titleConflicts = [];
       const panel = modalBody.querySelector('#similar-issues-panel');
       if (panel) { panel.hidden = true; panel.textContent = ''; }
       showIssuePointLabel('set by you');
@@ -5804,7 +5803,7 @@ function initTopicDetailViews() {
             };
             calculatedMembers = data.members;
             calculatedPublicSize = checkedPublicSize(data);
-            showSimilarIssues(data.similar_issues, data.duplicate_coverage);
+            showSimilarIssues(data.similar_issues, data.duplicate_coverage, data.title_conflicts);
             pendingClarification = "";
             // U6 (R4, R6): the server's point and where it came from, unless the pin moved meanwhile
             checkedPointMoves = movesAtCheck;
@@ -5922,7 +5921,7 @@ function initTopicDetailViews() {
       submitBtn.addEventListener('click', async () => {
         const title = titleInput.value.trim();
         const description = descTextarea.value.trim();
-        if (!title || !description || !suggestedParams || (similarIssues.length && !duplicateReview)) return;
+        if (!title || !description || !suggestedParams || titleConflicts.length > 0 || (similarIssues.length && !duplicateReview)) return;
         if (window.issuePointMoves !== checkedPointMoves) {
           alert('The point moved after the check: press Check again.'); // U6 (R6)
           return;
@@ -5949,7 +5948,7 @@ function initTopicDetailViews() {
           });
           const out = await res.json().catch(() => ({}));
           if (!res.ok || !out.success) {
-            if (out.similar_issues) showSimilarIssues(out.similar_issues.matches, out.similar_issues.coverage);
+            if (out.similar_issues) showSimilarIssues(out.similar_issues.matches, out.similar_issues.coverage, out.similar_issues.title_conflicts);
             throw new Error(out.error || "The server could not create the issue.");
           }
 

@@ -920,6 +920,7 @@ exports.checkIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI_
       resources_needed: data.resources_needed || [],
       // ── Ad-hoc Public ──────────────────────────────────────────────────
       similar_issues: similar.matches,
+      title_conflicts: similar.title_conflicts,
       duplicate_coverage: similar.coverage,
       matching_version: similar.version,
       members_count: candidates.length,

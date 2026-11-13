@@ -14,7 +14,7 @@ test('U10 calibrated text/context duplicate cases', () => {
     ['Repair the entrance lock at osbb 1, h6', '', base.location, false],
     ['Repair the entrance lock at osbb 2, h5', '', base.location, false],
     ['Repair the entrance intercom at osbb 1, h5', '', base.location, false],
-    [base.title, '', [47.59,7.62], false],
+    [base.title, '', [47.59,7.62], true],
     ['Repair entrance lock in 2027', '', base.location, false]
   ]) {
     const existing = title.endsWith('2027') ? {...base, title:'Repair entrance lock in 2026'} : base;
@@ -37,7 +37,7 @@ test('U10 semantic path is versioned and checks place and lifecycle', () => {
   assert.equal(voting.matches[0].join_allowed,false);
 });
 test('U10 a new match requires renewed explicit review', () => {
-  const result=M.rankMatches(base,entries(base),'2','2026-11-13');
+  const result=M.rankMatches({...base,title:'Fix faulty entry lock at osbb 1 h5'},entries(base),'2','2026-11-13');
   assert.throws(()=>M.requireReview(result,null),/Review/);
   const review={reason:'The back door is a separate repair',matches:result.matches};
   assert.equal(M.requireReview(result,review).reason,review.reason);
@@ -56,4 +56,20 @@ test('U10 recorded model calibration preserves contextual distinctions', () => {
    const result=M.rankMatches(query,[entry],'2','2026-11-13');
    assert.equal(result.matches.length>0,i<4,f.titles[i]);
  }
+});
+
+
+test('U10 titles are unique across active issues regardless of place or shortlist', () => {
+  const rows=Array.from({length:8},(_,i)=>({id:String(i),issue:{...base,location:[48+i/100,8]},discussion:{}}));
+  const query={...base,title:'  REPAIR   the entrance lock at osbb 1, h5  '};
+  const result=M.rankMatches(query,rows,'2','2026-11-13');
+  assert.equal(result.matches.length,5);
+  assert.equal(result.title_conflicts.length,8);
+  assert.throws(()=>M.requireReview(result,{reason:'Different city',matches:result.matches}),/already uses this title/);
+  for(const issue of [{...base,status:'completed'},{...base,ends:'2026-11-12'}]){
+    const reusable=M.rankMatches(query,entries(issue),'2','2026-11-13');
+    assert.equal(reusable.title_conflicts.length,0);
+    assert.equal(M.requireReview(reusable,null),null);
+  }
+  assert.notEqual(M.titleKey('Repair lock!'),M.titleKey('Repair lock'));
 });
