@@ -1,5 +1,9 @@
 # CHANGES
 
+## Live public expertise verified (2026-11-13)
+
+- Author migrated all three placeholder publics with 150 members. Canonical Node expertise/ISR recomputation and cached maps match every live member. Repeat migration finds zero placeholders, changes or model requests. Browser acceptance remains the next author step.
+
 ## Live embedding completion (2026-11-13)
 
 - Author resume completed, with all 9,150 profiles and 20,245 skills verified read-only against current text hashes and embedding metadata. Every vector is finite, 768-dimensional and normalized. Zero embeddings remain.

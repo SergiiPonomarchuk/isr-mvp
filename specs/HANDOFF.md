@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: live embeddings verified, public migration next, 2026-11-13
+## Current checkpoint: live public migration verified, browser acceptance next, 2026-11-13
+
+- The author applied A4 to three publics. The report records 159 documents (150 members, six topic maps and three issue vectors) and one embedding request.
+- Read-only recomputation against actual `functions/isr.js` matched education, experience, E and ISR for all 150 members. Both relevance and ISR maps matched in each issue/discussion. A key-free, API-blocked repeat migration found zero placeholders, changes or requests.
+- All 9,150 profile and 20,245 skill vectors were verified previously. Live rollout code/data checks pass. Next is the author's live browser Check/Create/voting acceptance, followed by read-only Analyzer log and persisted-record verification. PR #28 and #29 still require explicit merge instructions.
+- Give the author the full URL, commands and numbered instructions every time they need to act, per the author's request.
+
+## Live embeddings verified, public migration next, 2026-11-13 (historical)
 
 - The author's resumed embedding run completed. Read-only verification confirms all 9,150 profiles and 20,245 skill vectors current, finite, 768-dimensional and unit-normalized. Zero people or texts remain. Results are `scratch/live-rollout-20261112-203337/A4-live-vector-check.json` in C.
 - Final resume report `A4-embedding-resumed.md`: 62 requests, 5,763 texts, 208,764 estimated tokens and 1,800 people written. Earlier interrupted runs have incomplete usage totals.

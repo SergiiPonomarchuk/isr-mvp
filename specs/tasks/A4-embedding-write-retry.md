@@ -10,6 +10,8 @@ Also recover a truncated Gemini HTTP response through the existing bounded API r
 
 ## Status log
 
+- 2026-11-13: Author applied A4 public migration: 159 documents / three publics / 150 members, one issue-embedding request. Independent Node canonical E/ISR and both topic-map checks passed for all members. API-blocked repeat migration proposes zero changes and zero requests. Browser acceptance remains pending.
+
 - 2026-11-13: Final author resume completed. Its report records 62 requests, 5,763 embedded texts, 208,764 estimated tokens and 1,800 people written. Exact request/token totals for the two interrupted runs are unavailable because they exited before saving their reports.
 - Final read-only check: all 9,150 profile texts and 20,245 skill texts match the current metadata. All 29,395 vectors are finite, 768-dimensional and normalized, maximum norm error 1.9984014443252818e-15. Zero people/texts remain. An initial vector scan failed on a read-side AttributeError; the repeat scan completed successfully.
 - Next preflight: three placeholder publics / 150 members, zero stale/missing members, zero topics without text and three missing issue vectors. The author applies the A4 public migration, then Codex verifies its results.
