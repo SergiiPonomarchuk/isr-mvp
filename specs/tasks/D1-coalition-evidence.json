@@ -46,5 +46,33 @@
   },
   "production_writes": 0,
   "provider_calls": 0,
-  "live_ac5": "pending author helper applies and final UI actions"
+  "live_ac5": "pending author helper applies and final UI actions",
+  "read_only_live_preflight": {
+    "plan": {
+      "combined_isr": 31.142,
+      "creator_isr": 1,
+      "operation": "make-plan",
+      "option": "Emergency Locksmith Service",
+      "pool": 101.00199999999998,
+      "synthetic_isr": 30.142,
+      "synthetic_profiles": 27,
+      "writes": 0
+    },
+    "start_support_preview": {
+      "apply": false,
+      "combined_isr": 31.142,
+      "documents_proposed": 1,
+      "operation": "start-support",
+      "option": "Emergency Locksmith Service",
+      "phase": "chat",
+      "pool": 101.00199999999998,
+      "status": "ready",
+      "synthetic_isr": 30.142,
+      "synthetic_profiles": 27,
+      "writes": 0
+    },
+    "plan_path": "A:/BackUp/isr-mvp/rollouts/d1-20261114-123138/author-coalition-v1.json",
+    "plan_source_release": "c50ee1fc43fa587520ff0211ecbaa56421cb3ed1",
+    "production_writes": 0
+  }
 }
