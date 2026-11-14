@@ -45,6 +45,8 @@ def make_plan(db,content,run_id,project,creators=None):
         plan['scenarios'][key]={'phase':phase,'creator':creator,'content':source,'stage':'planned',
             'input':{'title':source['title'],'description':source['description'],'location':creator['location'],
                      'submitterId':creator['uid']}}
+        if source.get('registration_clarification'):
+            plan['scenarios'][key]['input']['clarification']=source['registration_clarification']
     return plan
 
 def recover_results(db,plan,save):

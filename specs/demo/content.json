@@ -107,7 +107,8 @@
       "D1-03: safety closure precedes repair and reopening",
       "D1-05: collective on-site shift decision, not personal emergency or remote work",
       "D1-07: online participation, no invented physical workplace or calendar quarter",
-      "D1-10: city-wide allocation, not only creator neighbourhood"
+      "D1-10: city-wide allocation, not only creator neighbourhood",
+      "D1-02: preserve successful full street/city/country registration clarification for future plans"
     ],
     "date": "2026-11-14",
     "original_scenarios_sha256": "40a7f2487ece6febc371eaac39d1211840538b9cb648a9bece78bcb54e6f02ac",
@@ -388,6 +389,7 @@
         }
       ],
       "purpose": "Pothole on local street",
+      "registration_clarification": "The complete named street reference is Hauptstra\u00dfe, Weil am Rhein, Deutschland. Include the city and country as part of the named place to distinguish streets with the same name; this is not the home address.",
       "title": "Repair hazardous pothole on Hauptstra\u00dfe"
     },
     "D1-03": {
