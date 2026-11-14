@@ -14,11 +14,13 @@ Reviewed/deployed release: `236e7d3`, after explicit author merges #33/#34/#28. 
 | Post-flagship independent check | 11 records including standby, ten visible cases, 605 members, zero differences |
 | Creator duplicate UI | Exact active title: Open/already-member and Create blocked; paraphrased title/body: same issue found at the same affected place; author screenshots |
 | Explicit nonmember Join | Author adopted verified synthetic ID 5 after U11 deployment and joined; 101 members, one Join event, unique participants/maps; independent post-Join checker 606 members, zero differences |
+| Author discussion/options | Comparison message and two reviewed options saved; exact fields and six creator-assigned steps verified read-only |
+| Management preflight | Pool 101.002; 30% threshold 30.3006; creator + 27-member coalition 31.142 ISR; no support yet |
 | Successful Check pairs accounted | Fourteen of fifteen; seed journal does not independently count hidden transport retries |
 
 Evidence: `../demo/live-acceptance-evidence.json`. Full live execution journal and reports stay outside git in `A:/BackUp/isr-mvp/rollouts/d1-20261114-123138`. Preserve the presentation-started manifest and original drafts; never reuse the committed emulator journal on live. The local port-5002 guide is for the emulator.
 
-Next: author adopts creator ID 2, adds the comparison message and two reviewed options, then continues management threshold, weighted vote, stored winner and tasks. Duplicate/Open/Join and numeric search/adoption are now accepted live. Do not spend another Check for this cycle. AC5 remains pending until final cycle/checker/human task review. No agent production writes/deploys/provider calls.
+Next: author decides how to provide synthetic coalition inputs: manually adopt profiles, or approve preparation of a bounded author-run helper for the other 27 profiles while retaining creator's final phase/vote actions in the UI. Options/message are accepted. Management support, weighted vote, winner/tasks and final review remain; AC5 is pending. No support/phase write has been made by the agent. No further Check is needed.
 
 ## Observed login-search defect and workaround
 

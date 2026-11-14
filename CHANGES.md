@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-14 - D1 live options verified and coalition prepared read-only
+
+Verified author discussion message, two reviewed repair options and six creator-assigned steps. Calculated the synthetic management coalition from current stored weights: 31.142 of 101.002 ISR, with creator's final support needed to cross 30%. Requested author choice of rehearsal method before any support/vote/phase writes. Documentation only; no additional AI request or agent production mutation.
+
 ## 2026-11-14 - U11 deployment and D1 live Join accepted
 
 Verified author hosting-only U11 deployment against all 14 files; author numeric-profile adoption and explicit Join succeeded. Public grew to 101 with one Join event and coherent maps; independent post-Join verification covers 606 members with zero differences. Recorded remaining live discussion/options/vote/task gate; no additional AI request is needed for that cycle. Documentation only; no agent production writes or deployments.

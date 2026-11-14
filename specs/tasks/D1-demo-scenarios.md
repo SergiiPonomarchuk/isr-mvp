@@ -102,6 +102,8 @@ The roadmap estimates 4-6 developer-days.
 
 ## 8. Status log
 
+- 2026-11-14 live discussion/options: author added comparison message and both reviewed options; exact cost/funding/resources and all six creator-assigned steps verified read-only. Pool 101.002 ISR; threshold 30.3006; creator + 27-member coalition 31.142 ISR. No management supports yet. Author choice requested for manual profile switching versus preparation of a bounded author-run synthetic coalition helper with final creator UI actions. No new Checks/provider calls or agent production writes; AC5 remains pending.
+
 - 2026-11-14 live Join checkpoint: U11 hosting verified and numeric adoption accepted; author explicitly joined as reviewed synthetic nonmember, public 100 -> 101. Read-only audit: one event, unique participants/coherent maps. Independent checker: 606 members, zero differences. Fourteen successful Check pairs accounted of fifteen; discussion/options and vote/task cycle require no further Checks. Live AC5 remains in progress.
 
 - 2026-11-14 live duplicate UI: author screenshots confirm exact-active-title blocking/Open/already-member, and a genuinely paraphrased title/body finds the registered issue at the same place. Thirteen successful Check pairs accounted of fifteen approved. Fixed synthetic nonmember verified read-only; explicit Join and the vote/task cycle remain. No agent production writes/provider calls.

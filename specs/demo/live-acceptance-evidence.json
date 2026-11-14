@@ -224,7 +224,7 @@
   "successful_check_pairs_accounted": 14,
   "approved_check_pair_ceiling": 15,
   "live_journal": "A:/BackUp/isr-mvp/rollouts/d1-20261114-123138/live-manifest.json",
-  "live_ac5": "in progress: discussion/options -> management -> weighted vote -> winner/tasks remains",
+  "live_ac5": "in progress: management support -> weighted vote -> winner/tasks remains",
   "agent_production_writes": 0,
   "agent_provider_calls": 0,
   "identity_policy": "Only aggregate live results copied here; browser identity is the reviewed synthetic D1-01 creator. Full execution journal stays outside the repository.",
@@ -369,5 +369,21 @@
     "production_writes": 0,
     "provider_calls": 0,
     "live_ui_acceptance": "pending author profile adoption"
+  },
+  "discussion_options": {
+    "options": 2,
+    "implementation_steps": 6,
+    "all_steps_assigned_to_creator": true,
+    "message_count": 2,
+    "phase": "discussion",
+    "isr_pool": 101.00199999999997,
+    "management_threshold_isr": 30.30059999999999,
+    "creator_support_isr": 1.0,
+    "coalition_size_including_creator": 28,
+    "coalition_support_isr": 31.142,
+    "coalition_share": 0.3083305281083544,
+    "existing_management_support_count": 0,
+    "production_writes": 0,
+    "provider_calls": 0
   }
 }
