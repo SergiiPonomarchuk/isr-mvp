@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-14 - U11 deployment and D1 live Join accepted
+
+Verified author hosting-only U11 deployment against all 14 files; author numeric-profile adoption and explicit Join succeeded. Public grew to 101 with one Join event and coherent maps; independent post-Join verification covers 606 members with zero differences. Recorded remaining live discussion/options/vote/task gate; no additional AI request is needed for that cycle. Documentation only; no agent production writes or deployments.
+
 ## 2026-11-14 - U11 merged; D1 acceptance documentation reconciled
 
 Author explicitly instructed merge PR #36; profile-search fix merged as `db26dba`. Reconciled draft live-acceptance PR #35 with main; only CHANGES/HANDOFF conflicted and both histories are retained. Runtime matches the reviewed fix; no additional code/data changes or model requests. Clean `wt-main` is ready for the author's hosting-only deploy; live Join remains paused until that deployment is verified.
