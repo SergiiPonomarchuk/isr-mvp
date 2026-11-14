@@ -2,7 +2,7 @@
 
 ## 2026-11-14 - Recovery fix reconciled for D1 rollout
 
-D1 plan #33 and implementation #34 merged (`2048912`, `9b9ce79`) on explicit author instructions; main CI passed. Reconciled recovery PR #28 with main, preserving binary signed-zero writes and independent typed verification. Only CHANGES/HANDOFF conflicted; both histories are retained. D1 runtime, content and accepted snapshots are unchanged. Fresh private backup and live writes remain author steps; no new provider calls.
+D1 plan #33 and implementation #34 merged (`2048912`, `9b9ce79`) on explicit author instructions; main CI passed. Reconciled recovery PR #28 with main, preserving binary signed-zero writes and independent typed verification. Only CHANGES/HANDOFF conflicted; both histories are retained. D1 runtime, content and accepted snapshots are unchanged. Added the D1 author runbook with separate live journal, fresh backup/recovery, exact release/blob checks, functions/hosting-only deploy and bounded seeding/AC5 gates. Read-only live inventory/dry plan passed (276 archive roots, zero writes/requests). Node 110 passed; Python 120 run; two optional skips each; all six isolated recovery tests passed. Fresh private backup and live writes remain author steps; no new provider calls.
 
 ## 2026-11-14 - D1 plan merged and implementation reconciled
 
@@ -682,4 +682,3 @@ Report: `specs/tasks/A2-migration-report.md`.
 
 - The disposable emulator's JSON write endpoint changed a stored negative zero to positive zero in the fresh live backup rehearsal. Recovery now sends binary Firestore writes to the same loopback emulator and independently verifies the returned fields with the original exact comparison.
 - Extended the independent SDK fixture with signed doubles in a nested array and map. The archived data and the application release are unchanged.
-
