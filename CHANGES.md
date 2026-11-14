@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-14 - U11 exact-ID and full-name profile search
+
+Fixed profile adoption search discarding exact numeric IDs through its name filter and omitting specific full names after common-first-name query limits. Added bounded full-name prefixes, numeric/string uid lookup and a clearer field placeholder while retaining other filters and adoption behavior. Actual-handler regressions and masked emulator queries pass; Node 119 passed/three optional skips, Python 120 run/two optional skips. Main.js CRLF/final CR retained. No agent deployment, production write or provider call.
+
 ## 2026-11-14 - Recovery fix reconciled for D1 rollout
 
 D1 plan #33 and implementation #34 merged (`2048912`, `9b9ce79`) on explicit author instructions; main CI passed. Reconciled recovery PR #28 with main, preserving binary signed-zero writes and independent typed verification. Only CHANGES/HANDOFF conflicted; both histories are retained. D1 runtime, content and accepted snapshots are unchanged. Added the D1 author runbook with separate live journal, fresh backup/recovery, exact release/blob checks, functions/hosting-only deploy and bounded seeding/AC5 gates. Read-only live inventory/dry plan passed (276 archive roots, zero writes/requests). Node 110 passed; Python 120 run; two optional skips each; all six isolated recovery tests passed. Fresh private backup and live writes remain author steps; no new provider calls.

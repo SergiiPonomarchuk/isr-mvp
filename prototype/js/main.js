@@ -894,23 +894,36 @@ function initLoginPage() {
         const ageMax = parseInt(document.getElementById("search-age-max").value) || 200;
 
         const nameTerms = nameVal ? nameVal.toLowerCase().split(/\s+/).filter(Boolean) : [];
+        const isIdSearch = /^\d+$/.test(nameVal);
         let snapDocs = [];
         
         if (nameTerms.length > 0) {
           const firstTerm = nameTerms[0];
-          if (/^\d+$/.test(firstTerm)) {
-            const doc = await db.collection("users").doc(firstTerm).get();
+          if (isIdSearch) {
+            const doc = await db.collection("users").doc(nameVal).get();
             if (doc.exists) snapDocs.push(doc);
             
-            const uidSnap = await db.collection("users").where("uid", "==", parseInt(firstTerm)).get();
-            uidSnap.forEach(d => {
+            const uidValues = [nameVal];
+            const numericUid = Number(nameVal);
+            if (Number.isSafeInteger(numericUid) && String(numericUid) === nameVal) uidValues.push(numericUid);
+            const uidResults = await Promise.all(uidValues.map(uid => db.collection("users").where("uid", "==", uid).get()));
+            uidResults.forEach(snap => snap.forEach(d => {
               if (!snapDocs.some(sd => sd.id === d.id)) snapDocs.push(d);
-            });
+            }));
           } else {
             const capName = firstTerm.charAt(0).toUpperCase() + firstTerm.slice(1);
             const lowerName = firstTerm;
 
             let queries = [];
+            // Retrieve the specific full name before broad first-name limits can hide it.
+            if (nameTerms.length > 1) {
+              const normalized = nameVal.split(/\s+/).join(" ");
+              const titleName = nameTerms.map(term => term.charAt(0).toUpperCase() + term.slice(1)).join(" ");
+              const fullPrefixes = new Set([normalized, titleName, nameTerms.join(" ")]);
+              fullPrefixes.forEach(prefix => {
+                queries.push(db.collection("users").where("displayName", ">=", prefix).where("displayName", "<=", prefix + "\uf8ff").limit(50).get());
+              });
+            }
             queries.push(db.collection("users").where("displayName", ">=", capName).where("displayName", "<=", capName + "\uf8ff").limit(50).get());
             queries.push(db.collection("users").where("firstName", ">=", capName).where("firstName", "<=", capName + "\uf8ff").limit(50).get());
             queries.push(db.collection("users").where("lastName", ">=", capName).where("lastName", "<=", capName + "\uf8ff").limit(50).get());
@@ -948,7 +961,7 @@ function initLoginPage() {
         snapDocs.forEach(doc => {
           const user = doc.data();
           
-          if (nameTerms.length > 0) {
+          if (nameTerms.length > 0 && !isIdSearch) {
             const fullName = (user.displayName || "").toLowerCase();
             const matchesAll = nameTerms.every(term => fullName.includes(term));
             if (!matchesAll) return;
