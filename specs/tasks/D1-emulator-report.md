@@ -4,6 +4,8 @@ Scope: approved D1 section 9 on `codex/d1-guided-demo`, stacked on documentation
 
 ## Actual final-population run and browser evidence
 
+- Full-cycle update (2026-11-14): 28 counted option votes, no exclusions; locksmith won with 31.117 ISR. After canonical subthreshold support preparation (to avoid further heavy profile reloads), the final normal Finish Voting UI/desktop confirmation crossed 30.9%. Server created three pending tasks assigned to Christine (uid 2); To Do was verified. Independent checker: 606 members, zero differences. No additional AI calls. Evidence: `specs/demo/full-cycle-evidence.json`; proof: `C:\isr-mvp\scratch\d1-winning-tasks.png`. Next human step is final result/task review. Disposable separate-creation rehearsal and live acceptance remain pending; PR #34 stays draft. Earlier pending-cycle checkpoints below are historical.
+
 Author authorized the existing main key loader in memory on 2026-11-14. No secret file was copied, displayed or read by the launcher adapter. Firebase discovery required local lockfile dependencies; the emulator-only secret bridge refuses unavailable/unknown declarations. Fixed seed metadata reading to use flat `ai_source` and draft provenance, and fixed the standalone checker JSON import. A previously cached Hauptstraße miss was retained, then resolved with a complete street/city/country clarification that future plans preserve. No score/weight was hand-entered.
 
 | Check | Actual result |

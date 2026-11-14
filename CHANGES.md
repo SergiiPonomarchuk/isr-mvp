@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-14 - D1 weighted vote to winning tasks
+
+Completed the guided emulator cycle: author/synthetic option votes, canonical subthreshold Finish Voting fixture preparation, final normal UI confirmation, server tally and three tasks assigned to Christine. Locksmith won with 31.117 ISR; 28 counted votes, no exclusions. Independent checker: 606 members, zero differences. No source/formula changes, extra AI calls or production mutations. Final human task review and remaining acceptance cases are pending.
+
 ## 2026-11-14 - D1 guided Start Voting rehearsal
 
 Author added both decision options and discussion message. Synthetic coalition support through the normal UI crossed 30% and moved the flagship into Voting with deadline 21.11.2026. Zero option votes cast; independent checker still reports 606 members and zero differences. Extended canonical geographic/domain metadata rendering to Voting/To Do and metadata popups; browser verified 40m/30m. Required Node/Python suites pass. No AI requests, production writes or deploys.
