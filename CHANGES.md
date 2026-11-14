@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-14 - D1 live duplicate acceptance
+
+Recorded author acceptance of exact-title blocking/Open/member status and genuine paraphrase matching on live. Verified a fixed synthetic nonmember read-only for the next explicit Join test. Thirteen successful Check pairs accounted of fifteen approved; live AC5 remains in progress. Documentation only; no agent production write or provider call.
+
 ## 2026-11-14 - D1 live seed and flagship checkpoint
 
 Recorded author deployment/live seed and normal flagship creation/member-list acceptance. Fresh backup recovery verified all 25,000 documents; deployed source/Hosting matched exactly. Seed: ten scenarios/505 members, zero differences, zero-change rerun. Post-flagship checker: 605 members, zero differences. Live duplicate/Join and full vote/task cycle remain pending. Documentation/aggregate evidence only; no agent production write or provider call.

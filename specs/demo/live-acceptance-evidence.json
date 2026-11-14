@@ -221,11 +221,22 @@
     "journal_recorded": true,
     "successful_browser_check_pairs": 1
   },
-  "successful_check_pairs_accounted": 11,
+  "successful_check_pairs_accounted": 13,
   "approved_check_pair_ceiling": 15,
   "live_journal": "A:/BackUp/isr-mvp/rollouts/d1-20261114-123138/live-manifest.json",
   "live_ac5": "in progress: duplicate/Open/Join and full discussion/vote/task acceptance remain",
   "agent_production_writes": 0,
   "agent_provider_calls": 0,
-  "identity_policy": "Only aggregate live results copied here; browser identity is the reviewed synthetic D1-01 creator. Full execution journal stays outside the repository."
+  "identity_policy": "Only aggregate live results copied here; browser identity is the reviewed synthetic D1-01 creator. Full execution journal stays outside the repository.",
+  "duplicate_ui": {
+    "fixed_synthetic_candidate_exists": true,
+    "fixed_candidate_is_nonmember": true,
+    "current_members": 100,
+    "exact_active_title_ui": "passed; author screenshot",
+    "paraphrase_same_place_ui": "passed; author screenshot",
+    "successful_check_pairs_accounted": 13,
+    "approved_check_pair_ceiling": 15,
+    "agent_production_writes": 0,
+    "agent_provider_calls": 0
+  }
 }
