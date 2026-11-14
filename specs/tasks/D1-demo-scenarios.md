@@ -102,6 +102,10 @@ The roadmap estimates 4-6 developer-days.
 
 ## 8. Status log
 
+- 2026-11-14 live duplicate UI: author screenshots confirm exact-active-title blocking/Open/already-member, and a genuinely paraphrased title/body finds the registered issue at the same place. Thirteen successful Check pairs accounted of fifteen approved. Fixed synthetic nonmember verified read-only; explicit Join and the vote/task cycle remain. No agent production writes/provider calls.
+
+- 2026-11-14 live checkpoint: PR #28 merged as `236e7d3`; author deployed functions/hosting, verified read-only (all six source archives and 14 Hosting files match). Fresh private backup/recovery matched all 25,000 documents; ports closed. Author approved separate live budget and seeded ten scenarios/505 members; checker zero differences and completed rerun zero writes/requests. Author created normal flagship and accepted its 100-member list; agent locally recorded it and independently checked 605 members with zero differences. Eleven successful Check pairs accounted; seed text usage 93,417 reported tokens, one logged place request. Live duplicate/Open/Join and full vote/task acceptance remain; AC5 is in progress. See [live report](D1-live-report.md).
+
 - 2026-11-14 live preparation: PR #34 merged as `9b9ce79`; main CI passed. Read-only production inventory and separate preliminary dry plan passed (276 archive roots, ten scenarios, zero writes/requests; creator fingerprints valid). Added [author live runbook](../D1-LIVE-ROLLOUT.md) and aggregate `../demo/live-preflight-evidence.json`. Recovery PR #28 reconciled and independently retested; explicit merge, proposed new live budget, fresh author backup/recovery and deployment/seed/AC5 remain gates. No production mutations or extra provider calls.
 
 - 2026-11-14 integration: author instructed `merge PR 33`; approved plan merged as `2048912`. Implementation PR #34 retargeted/reconciled onto main without conflicts or application/data changes. Required suites and CI checked on the resulting head. Emulator AC1-AC4 accepted; live AC5 pending. Next author instruction: `merge PR 34`; no deploy/live apply authorized.

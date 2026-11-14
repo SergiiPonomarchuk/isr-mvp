@@ -1,6 +1,6 @@
 # D1 guided demonstration - rehearsal draft
 
-Status: real seed/import verified; browser normal creation, duplicate/title/Open and explicit 101st-member Join passed. Full human option/vote/result/task cycle remains pending. **Current session:** the flagship already exists; open it as the flagship creator and continue from step 5. Steps 3/4/6 have already been exercised; do not repeat their Checks because the first-pass Check/lookup ceiling is reached. Read [current setup](demo/README.md). The numbered full script below also describes a future fresh presentation with its own approved budget.
+Status: emulator whole-cycle acceptance complete. Live D1 has been deployed/seeded, and the normal flagship was created and its 100-member list accepted. Post-flagship live checker: 605 members, zero differences. Live duplicate/Open/Join and the author vote/task cycle remain in progress; see [live report](tasks/D1-live-report.md). The local guide/commands below describe the accepted emulator rehearsal and are not live profile links. Live commands and the separate live journal are in [the D1 runbook](D1-LIVE-ROLLOUT.md).
 
 1. Complete the local seed and read-only checker, confirm nine visible seeded cases and one hidden standby, and keep the emulator/export and preview running.
 2. Open http://127.0.0.1:5002/d1-guide. Its cards provide the actual stored creator ids, exact title/description and options/steps after content generation. Open the flagship creator link; verify the green `Emulator verified` banner.
