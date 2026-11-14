@@ -4240,7 +4240,7 @@ function initTopicDetailViews() {
             const notCounted = liveTally.excluded.filter(x => x.reason === "no ISR").length;
 
             let geopositionVal = "N/A";
-            const geoDoc = disc || issue;
+            const geoDoc = discussionParameters(disc, issue);
             if (geoDoc && geoDoc.location && typeof geoDoc.location.latitude === 'number' && typeof geoDoc.location.longitude === 'number') {
               const lat = geoDoc.location.latitude;
               const lon = geoDoc.location.longitude;
@@ -4261,7 +4261,8 @@ function initTopicDetailViews() {
               relevanceWeights: relevanceWeights,
               isrWeights: isrWeights,
               participants: combinedUids,
-              expertiseDepth: expertiseDepth,
+              expertiseDepth: geoDoc.expertise_depth || expertiseDepth,
+              expertiseDomain: geoDoc.expertise_domain || "",
               geoposition: geopositionVal,
               options: baseOptions,
               messages: resolvedMessages
@@ -4270,8 +4271,8 @@ function initTopicDetailViews() {
             // Render topic detailed HTML
             if (showArchivedTopic(currentDiscData, currentIssueData)) return;
             modalBody.innerHTML = renderVotingTopic(topicData);
-            bindDetailViewButtons(titleText, Object.assign({}, issue, disc));
-            bindChatMetaButtons(Object.assign({}, issue, disc));
+            bindDetailViewButtons(titleText, discussionParameters(Object.assign({}, issue, disc), issue));
+            bindChatMetaButtons(discussionParameters(Object.assign({}, issue, disc), issue));
             bindDiscussionInteractionHandlers(topicId, modalBody, db, currentUserId);
 
             // Bind discussion toggle button click handler
@@ -4551,7 +4552,7 @@ function initTopicDetailViews() {
             const isrWeights = formatIsrWeights(issue);
 
             let geopositionVal = "N/A";
-            const geoDoc = discData || issue;
+            const geoDoc = discussionParameters(discData, issue);
             if (geoDoc && geoDoc.location && typeof geoDoc.location.latitude === 'number' && typeof geoDoc.location.longitude === 'number') {
               const lat = geoDoc.location.latitude;
               const lon = geoDoc.location.longitude;
@@ -4571,7 +4572,8 @@ function initTopicDetailViews() {
               relevanceWeights: relevanceWeights,
               isrWeights: isrWeights,
               participants: combinedUids,
-              expertiseDepth: expertiseDepth,
+              expertiseDepth: geoDoc.expertise_depth || expertiseDepth,
+              expertiseDomain: geoDoc.expertise_domain || "",
               geoposition: geopositionVal,
               tasks: Array.isArray(issue.tasks) ? issue.tasks : (issue.tasks ? [issue.tasks] : []),
               comments: safeComments,
@@ -4584,7 +4586,7 @@ function initTopicDetailViews() {
 
             if (showArchivedTopic(currentDiscRaw, currentIssueRaw)) return;
             modalBody.innerHTML = renderTasksTopic(topicData);
-            bindDetailViewButtons(titleText, Object.assign({}, issue, discData));
+            bindDetailViewButtons(titleText, discussionParameters(Object.assign({}, issue, discData), issue));
             bindChatMetaButtons(Object.assign({}, issue, discData));
             bindTaskModalInteractions(topicId, issue);
             bindDiscussionInteractionHandlers(topicId, modalBody, db, currentUserId);

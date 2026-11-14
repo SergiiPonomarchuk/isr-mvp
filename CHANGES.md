@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-14 - D1 guided Start Voting rehearsal
+
+Author added both decision options and discussion message. Synthetic coalition support through the normal UI crossed 30% and moved the flagship into Voting with deadline 21.11.2026. Zero option votes cast; independent checker still reports 606 members and zero differences. Extended canonical geographic/domain metadata rendering to Voting/To Do and metadata popups; browser verified 40m/30m. Required Node/Python suites pass. No AI requests, production writes or deploys.
+
 ## 2026-11-14 - D1 real seed, snapshot and browser verification
 
 Seeded ten reviewed scenarios on final P2/A4 emulator data, archived 276 old topic roots without deleting history, and independently validated 505 members with zero differences. Completed rerun wrote/spent zero; named snapshot imported and checked independently. Browser created a normal flagship and verified exact-title blocking, paraphrase/Open, and nonmember Join from 100 to 101; post-Join checker validated 606 members with zero differences. Corrected chat geographic/domain display to use canonical issue fields, plus runtime/CLI response-contract fixes. Actual budgets reached: 15 Check pairs and two place lookups; ten content requests used. Human full-cycle acceptance remains pending; draft PR #34, no live writes/deploy/secret copying.
