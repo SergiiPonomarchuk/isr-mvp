@@ -443,8 +443,15 @@
     "text": 15
   },
   "proof": "C:/isr-mvp/scratch/d1-winning-tasks.png",
-  "author_final_task_review": "pending",
-  "separate_creation_disposable_rehearsal": "pending",
+  "author_final_task_review": {
+    "status": "accepted",
+    "date": "2026-11-14",
+    "author_message": "looks good - proceed"
+  },
+  "separate_creation_disposable_rehearsal": {
+    "status": "passed",
+    "evidence": "separate-creation-evidence.json"
+  },
   "live_acceptance": "pending",
   "recovery": {
     "replayed": true,
@@ -455,5 +462,13 @@
     "issue_id": "MaqfWmIkAmJpsjouSTzM",
     "reason": "Emulator stopped before final export; restore existing Voting checkpoint and replay verified recorded inputs only; no AI calls",
     "verified_after_replay": true
-  }
+  },
+  "restored_independent_check": {
+    "members": 606,
+    "problems": [],
+    "scenarios": 11,
+    "tolerance": 0.00100001,
+    "visible_scenarios_before_flagship": 10
+  },
+  "accepted_snapshot": "A:/BackUp/isr-mvp/emulator-snapshots/2026-11-14-d1-author-accepted-7259ca3"
 }

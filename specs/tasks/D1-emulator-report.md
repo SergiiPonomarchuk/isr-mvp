@@ -1,10 +1,12 @@
 # D1 implementation evidence - 2026-11-14
 
-Scope: approved D1 section 9 on `codex/d1-guided-demo`, stacked on documentation PR #33. Final-population seed/import and targeted browser checks are now verified; full human-cycle acceptance is pending.
+Scope: approved D1 section 9 on `codex/d1-guided-demo`, stacked on documentation PR #33. Final-population seed/import and targeted browser checks are now verified; human full-cycle and disposable UI acceptance are complete; live AC5 is pending.
 
 ## Actual final-population run and browser evidence
 
-- Full-cycle update (2026-11-14): 28 counted option votes, no exclusions; locksmith won with 31.117 ISR. After canonical subthreshold support preparation (to avoid further heavy profile reloads), the final normal Finish Voting UI/desktop confirmation crossed 30.9%. Server created three pending tasks assigned to Christine (uid 2); To Do was verified. Independent checker: 606 members, zero differences. No additional AI calls. Evidence: `specs/demo/full-cycle-evidence.json`; proof: `C:\isr-mvp\scratch\d1-winning-tasks.png`. Next human step is final result/task review. Disposable separate-creation rehearsal and live acceptance remain pending; PR #34 stays draft. Earlier pending-cycle checkpoints below are historical.
+- Author accepted the final winning option and three assigned tasks with "looks good - proceed". Full-cycle evidence: `specs/demo/full-cycle-evidence.json`.
+- Disposable full-copy UI rehearsal passed same-title blocking even with explanation, distinct-title/explanation with single Create, and text/point invalidation requiring a fresh Check. Actual Create returned HTTP 200 with explanation; copy issue count rose 93 -> 95 (one setup issue, one UI-created issue). Stored analysis/vector replay used zero additional provider calls. Final screenshot was unavailable because browser control could not verify the URL; server evidence is retained.
+- Disposable emulator stopped without export. Normal accepted demo restored: 93 issues/205 discussions, both test ids absent, flagship approved. Independent checker: 11 records including standby, 606 members, zero differences. Completed frozen snapshot `A:/BackUp/isr-mvp/emulator-snapshots/2026-11-14-d1-author-accepted-7259ca3` and file hashes are recorded in `specs/demo/separate-creation-evidence.json`.
 
 Author authorized the existing main key loader in memory on 2026-11-14. No secret file was copied, displayed or read by the launcher adapter. Firebase discovery required local lockfile dependencies; the emulator-only secret bridge refuses unavailable/unknown declarations. Fixed seed metadata reading to use flat `ai_source` and draft provenance, and fixed the standalone checker JSON import. A previously cached Hauptstraße miss was retained, then resolved with a complete street/city/country clarification that future plans preserve. No score/weight was hand-entered.
 
@@ -22,7 +24,7 @@ Author authorized the existing main key loader in memory on 2026-11-14. No secre
 
 Actual Check transport: 15 text requests with 140,377 reported tokens and 15 embedding texts (about 869 registration-text tokens by character estimate; not provider-reported embedding usage). Two total Nominatim calls: one reverse and one forward. No more Check/place calls under this ceiling. The first local HTTP 404 dispatched zero provider calls and remains in the attempt/recovery journal. Aggregate evidence, snapshot file hashes and exact results are in `specs/demo/run-evidence.json`; baseline/current journals are separate. Browser proof is `C:\isr-mvp\scratch\d1-joined-browser.png`.
 
-Human review of generated scenarios and the complete option -> management -> weighted vote -> stored result/task cycle is next. Disposable separate-creation UI rehearsal remains. AC2 is satisfied on the actual seed; AC3 and live AC5 remain pending. No production mutation, rules change or deploy. PR #34 remains draft, stacked on #33.
+Emulator AC1-AC4 are satisfied, subject to green CI on the final documentation head. Live AC5 remains pending. PR #34 can leave draft after final CI; it is stacked on #33. Merge #33 first, then reconcile/recheck #34. No production mutation, rules change or deploy.
 
 ## Historical mocked checks and pre-authorization checkpoints
 

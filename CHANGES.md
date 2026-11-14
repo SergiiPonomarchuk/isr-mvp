@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-14 - D1 emulator acceptance and restored demo
+
+Recorded author acceptance of the winning tasks and completed disposable separate-creation UI checks with stored AI replay (zero additional provider calls). Restored and independently checked the accepted demo: 606 members, zero differences, no disposable test issues. Preserved a named completed snapshot with hashes. Emulator AC1-AC4 complete; live AC5 pending. Documentation/evidence only; no application changes, merge, deployment or production write.
+
 ## 2026-11-14 - D1 weighted vote to winning tasks
 
 Completed the guided emulator cycle: author/synthetic option votes, canonical subthreshold Finish Voting fixture preparation, final normal UI confirmation, server tally and three tasks assigned to Christine. Locksmith won with 31.117 ISR; 28 counted votes, no exclusions. Independent checker: 606 members, zero differences. No source/formula changes, extra AI calls or production mutations. Final human task review and remaining acceptance cases are pending.

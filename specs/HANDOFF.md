@@ -4,7 +4,19 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: D1 real seed verified; human rehearsal review next, 2026-11-14
+## Current checkpoint: D1 emulator acceptance complete; merge plan PR #33 next, 2026-11-14
+
+- The author accepted the winning result and three tasks with "looks good - proceed". Normal flagship creation, duplicate/Open/Join (100 to 101), discussion/options, weighted vote, management threshold, stored winner and tasks have been rehearsed. The independent restored-state checker validates 11 scenario records including standby and 606 members with zero differences. See `specs/demo/full-cycle-evidence.json`.
+- Disposable separate-creation UI acceptance passed: same active title remains blocked with explanation; distinct title needs explanation; text and point edits invalidate Check; fresh Check/explanation enables the single Create. Real Create returned HTTP 200 with the explanation. Stored analysis/vector replay kept additional provider calls at zero; no new AI-quality claim. Final screenshot capture was blocked by browser URL verification; backend evidence is retained in `specs/demo/separate-creation-evidence.json`.
+- Disposable copy was stopped without export. Normal emulator 8080/5001/5000 and guide http://127.0.0.1:5002/d1-guide are restored. Original 93 issues/205 discussions are present, both disposable test issues absent, accepted flagship remains approved. Frozen completed snapshot: `A:/BackUp/isr-mvp/emulator-snapshots/2026-11-14-d1-author-accepted-7259ca3`, file hashes recorded with acceptance evidence. Seed-start snapshot `2026-11-14-d1-1a242df` remains separate. Do not silently reseed the presentation-started journal.
+- D1 emulator AC1-AC4 are satisfied, subject to green CI on the final documentation head; live AC5 remains pending. Implementation PR #34 is stacked on plan PR #33. Next author instruction: **merge PR 33**. After that, retarget/reconcile #34 onto main and check it before requesting its separate merge instruction. No merge is authorized by prior "proceed" messages.
+- Usage unchanged: ten content requests / 6,694 reported tokens; fifteen Check text requests / 140,377 reported tokens; fifteen embedding texts (about 869 tokens, character estimate); two Nominatim lookups. Check/place ceilings are reached. No further provider calls without explicit new budget approval.
+- Required suites on application head `7259ca3`: Node 110 passed/two optional integration skips; Python 120 run/two existing skips. This acceptance closeout changes documentation/evidence only. CI is checked on the pushed head. Active tracked `firestore-debug.log` is generated runtime output and is excluded from commits.
+- No production write, deploy, rules edit or secret-file copy. Production remains author-deployed U10 `8466b13`. Live seed/deploy require explicit merges, fresh backup/recovery preflight and a separately reviewed live budget/runbook. Utility PRs #28/#29 remain to reconcile separately.
+
+## Earlier D1 checkpoints (historical)
+
+## D1 earlier checkpoint: D1 real seed verified; human rehearsal review next, 2026-11-14
 
 - Recovery note: the emulator stopped before the completed-cycle export. Restored its saved Voting checkpoint and replayed only recorded option/support inputs with the canonical lifecycle/tally helpers, preserving issue id and original registration time. Recovered final checker: zero differences. Named baseline and request ceilings remain untouched. The original UI result/tasks and the recovered equivalent are evidenced in `specs/demo/full-cycle-evidence.json`.
 

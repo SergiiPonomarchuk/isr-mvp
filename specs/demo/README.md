@@ -1,6 +1,6 @@
 # D1 generated artefacts and local journal
 
-Status: actual generated content, final-population seed, zero-change rerun, named snapshot/import and browser creation/duplicate/Join checks completed. Human full-cycle acceptance remains pending. See `run-evidence.json` and the D1 emulator report.
+Status: actual generated content, final-population seed, zero-change rerun, named snapshot/import and browser creation/duplicate/Join checks completed. Human full-cycle and disposable separate-creation acceptance are complete; live AC5 remains pending. See `run-evidence.json` and the D1 emulator report.
 
 The approved contract is [D1 section 9](../tasks/D1-demo-scenarios.md#9-proposed-implementation-refinement-after-u10-2026-11-14). This folder will hold `content.json` (generated once, creator bindings, prompt/model/usage metadata), `manifest.json` (metadata inventory, exact drafts/results, phase/record ids and progress), and `network-ledger.json` (actual emulator request reservations only; no headers, bodies, queries or keys).
 
@@ -50,12 +50,14 @@ node functions/tools/demo-preview.cjs
 
 The source worktree must be committed before a real plan is made. The checker must report zero problems and the rerun zero writes/requests before a named demo snapshot is declared. Keep the preview terminal running. The local guide is http://127.0.0.1:5002/d1-guide; the runtime checks the actual browser SDK emulator host and displays a green banner. No developer console is needed. Local profile links do not change the application's synthetic identity mechanism.
 
-## Current review and remaining acceptance
+## Accepted rehearsal and next steps
 
-The existing flagship has already been created normally and explicitly joined from 100 to 101. The current journal is presentation-started. Open http://127.0.0.1:5002/d1-guide, then **Open as flagship creator**, then Chat's existing **Repair of broken main entrance lock**. Verify the green emulator banner. Review and continue from step 5 of `specs/DEMO-script.md`; no console or new Check is needed.
+The author accepted the full winner/task cycle. The flagship is approved and its three winning tasks are assigned to Christine (uid 2). Open http://127.0.0.1:5002/d1-guide to inspect the accepted demo; verify the green emulator banner. No new Check is needed.
 
-The first-pass Check ceiling is reached: 15 actual text plus 15 embedding requests; both allowed Nominatim lookups have been used. Do not repeat Check or try another place lookup. Content generation used ten of its twenty allowed text requests, but that spare content allocation does not increase the Check/lookup ceiling.
+Disposable separate-creation acceptance passed and its two test issues were discarded. Normal accepted data is restored: 93 issues/205 discussions, 606 checked members, zero differences. See `full-cycle-evidence.json` and `separate-creation-evidence.json`. Browser control could not capture the final success screen because URL verification stopped; HTTP 200 and copied-data counts confirm creation.
 
-Named baseline: `A:\BackUp\isr-mvp\emulator-snapshots\2026-11-14-d1-1a242df`, with its baseline-only `seed-manifest.json`, reviewed content and checksum/validation evidence. It was independently imported and checked on port 8286. `specs/demo/seed-manifest.json` is the baseline; `manifest.json` is the current browser rehearsal. Import/check with the matching manifest; do not expect the baseline snapshot to contain the later normal flagship.
+The Check/place ceilings are exhausted (15 text + 15 embedding Check calls, two Nominatim lookups); no further calls without an explicit budget decision. Stored-response replay in the disposable UI check added zero provider calls.
 
-Human option/management/vote/result/task walkthrough and a disposable separate-creation rehearsal remain. AC3 and AC5 are not complete. Keep PR #34 draft until the required rehearsal acceptance. Live commands will be prepared only with the separate author budget and fresh backup/recovery preflight; no deploy/live apply follows automatically.
+Seed-start snapshot: `A:/BackUp/isr-mvp/emulator-snapshots/2026-11-14-d1-1a242df` with matching `seed-manifest.json`. Completed accepted snapshot: `A:/BackUp/isr-mvp/emulator-snapshots/2026-11-14-d1-author-accepted-7259ca3`, matching current `manifest.json`. File hashes are recorded in the acceptance evidence. Neither is a reset instruction; a presentation-started manifest refuses silent reseeding.
+
+AC1-AC4 emulator acceptance is complete, subject to final-head CI. AC5 live remains pending. Merge plan #33 first, then reconcile/recheck implementation #34 for its separate merge authorization. Deployment and live apply remain author-only after fresh backup/recovery and separate live budget/runbook review.
