@@ -1,0 +1,78 @@
+{
+  "date": "2026-11-15",
+  "approval": "Author approved helper preparation on 2026-11-14",
+  "operations": {
+    "start-support": [
+      "discussions.deadline_votes"
+    ],
+    "option-votes": [
+      "issues.votes"
+    ],
+    "finish-support": [
+      "discussions.deadline_votes",
+      "issues.deadline_votes"
+    ]
+  },
+  "limits": {
+    "max_other_synthetic_profiles": 27,
+    "creator_written": false,
+    "phase_date_score_option_task_writes": false
+  },
+  "isolated_copy": {
+    "project": "demo-d1-coalition",
+    "host": "127.0.0.1:8187",
+    "root_records": 3,
+    "member_weight_rows": 101,
+    "profiles_copied": 0,
+    "credential_fields_copied": 0,
+    "exact_python_cli_tested": true,
+    "creator_transactions": "Actual frontend management/option transaction code, compat-shaped VM/SDK adapter; no visual-browser acceptance claim",
+    "counted_votes": 28,
+    "winner_index": 0,
+    "creator_tasks": 3,
+    "registration_nanoseconds_preserved": true,
+    "members_public_unrelated_preserved": true,
+    "dedicated_ports_closed": true,
+    "dry_run_no_writes": true,
+    "repeated_apply_no_writes": true,
+    "conflicts_and_weight_drift_refused": true,
+    "committed_synthetic_fixture_reproducible": true
+  },
+  "tests": {
+    "node_passed": 129,
+    "node_optional_skips": 4,
+    "python_run": 127,
+    "python_optional_skips": 2
+  },
+  "production_writes": 0,
+  "provider_calls": 0,
+  "live_ac5": "pending author helper applies and final UI actions",
+  "read_only_live_preflight": {
+    "plan": {
+      "combined_isr": 31.142,
+      "creator_isr": 1,
+      "operation": "make-plan",
+      "option": "Emergency Locksmith Service",
+      "pool": 101.00199999999998,
+      "synthetic_isr": 30.142,
+      "synthetic_profiles": 27,
+      "writes": 0
+    },
+    "start_support_preview": {
+      "apply": false,
+      "combined_isr": 31.142,
+      "documents_proposed": 1,
+      "operation": "start-support",
+      "option": "Emergency Locksmith Service",
+      "phase": "chat",
+      "pool": 101.00199999999998,
+      "status": "ready",
+      "synthetic_isr": 30.142,
+      "synthetic_profiles": 27,
+      "writes": 0
+    },
+    "plan_path": "A:/BackUp/isr-mvp/rollouts/d1-20261114-123138/author-coalition-v1.json",
+    "plan_source_release": "c50ee1fc43fa587520ff0211ecbaa56421cb3ed1",
+    "production_writes": 0
+  }
+}
