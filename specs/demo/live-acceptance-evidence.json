@@ -428,6 +428,30 @@
       "with_creator_share": 0.3083305281083544,
       "agent_production_writes": 0,
       "provider_calls": 0
+    },
+    "creator_start_voting": {
+      "creator_ui_start_voting": "passed",
+      "issue_status": "in_process",
+      "discussion_status": "Voting",
+      "ends": "2026-11-21",
+      "option_votes": 0,
+      "management_maps_cleared": true,
+      "frozen_plan_revalidated": true,
+      "option_preview": {
+        "apply": false,
+        "combined_isr": 31.142,
+        "documents_proposed": 1,
+        "operation": "option-votes",
+        "option": "Emergency Locksmith Service",
+        "phase": "voting",
+        "pool": 101.00199999999998,
+        "status": "ready",
+        "synthetic_isr": 30.142,
+        "synthetic_profiles": 27,
+        "writes": 0
+      },
+      "agent_production_writes": 0,
+      "provider_calls": 0
     }
   }
 }

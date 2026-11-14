@@ -31,3 +31,5 @@ U11 deployment accepted: author hosting-only deployment matched all 14 files exa
 ## Author Start Voting support prepared — 2026-11-15
 
 Author applied start-support (one discussion document). Read-only plan/audit confirm 27 selected supports, creator absent, phase still Chat; repeat preview is already_prepared with zero writes. Other support 30.142 ISR; creator brings it to 31.142 (30.833%). Next is Christine's final normal Deadline -> Start Voting action. Option votes, Finish support/result/tasks remain pending; no additional Check or agent live write.
+
+- 2026-11-15: author creator UI Start Voting completed. Live pair is in_process/Voting, deadline 2026-11-21, zero option votes and cleared management maps. Saved-plan option-votes preview ready: one proposed document, zero writes. Author option-votes apply is next; no agent production write/provider call.

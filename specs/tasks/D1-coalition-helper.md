@@ -35,3 +35,5 @@ Implement a dry-run-first Python CLI and Node transaction adapter, using the exi
 - 2026-11-15 merge: author instructed `merge PR 37`; merged as `a64cb08`. Clean wt-main refreshed and saved-plan start-support preview revalidated with zero writes, one proposed document and 27 synthetic profiles. Actual author start-support apply remains pending; no deployment required or agent production mutation.
 
 - 2026-11-15 first live apply: author prepared start-support (one document). Agent read-only audit confirms the 27 selected supports, no creator support, still discussion; saved-plan repeat preview writes zero. Christine's final UI Start Voting is next. No agent production write/provider call.
+
+- 2026-11-15: author creator UI Start Voting completed. Live pair is in_process/Voting, deadline 2026-11-21, zero option votes and cleared management maps. Saved-plan option-votes preview ready: one proposed document, zero writes. Author option-votes apply is next; no agent production write/provider call.

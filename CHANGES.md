@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-15 - Live creator Start Voting accepted
+
+Recorded creator's normal UI phase transition; verified Voting pair/deadline, cleared management maps and zero option votes. Saved-plan option-votes preview passed with zero writes. Author option-vote preparation is next; no agent live mutation or AI request.
+
 ## 2026-11-15 - Author Start Voting support prepared and verified
 
 Recorded author's first coalition apply and read-only verification: 27 selected supports/30.142 ISR, creator absent, phase unchanged; repeat preview writes zero. Creator's normal UI action is next. Documentation only; no agent production write or model request.
