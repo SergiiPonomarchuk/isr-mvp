@@ -401,7 +401,33 @@
       "synthetic_profiles": 27,
       "writes": 0
     },
-    "live_apply": "pending author",
-    "agent_production_writes": 0
+    "live_apply": "start-support prepared by author; creator Start Voting UI next",
+    "agent_production_writes": 0,
+    "start_support_author_apply": {
+      "apply": true,
+      "combined_isr": 31.142,
+      "documents_proposed": 1,
+      "operation": "start-support",
+      "option": "Emergency Locksmith Service",
+      "phase": "chat",
+      "pool": 101.00199999999998,
+      "status": "prepared",
+      "synthetic_isr": 30.142,
+      "synthetic_profiles": 27,
+      "writes": 1
+    },
+    "start_support_verified": {
+      "operation": "start-support",
+      "verified": true,
+      "phase": "chat",
+      "supporters": 27,
+      "creator_support_present": false,
+      "support_isr": 30.142,
+      "support_share": 0.2984297340646721,
+      "with_creator_isr": 31.142,
+      "with_creator_share": 0.3083305281083544,
+      "agent_production_writes": 0,
+      "provider_calls": 0
+    }
   }
 }

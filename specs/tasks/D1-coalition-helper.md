@@ -33,3 +33,5 @@ Implement a dry-run-first Python CLI and Node transaction adapter, using the exi
 - 2026-11-15 read-only live preflight: saved separate durable author-coalition-v1.json, then previewed start-support against the frozen real flagship. Selected 27 profiles, synthetic ISR 30.142, creator 1.000, combined 31.142; one proposed document and zero writes. Source provenance recorded in the local plan. PR #37 is prepared; explicit merge and every author apply remain pending.
 
 - 2026-11-15 merge: author instructed `merge PR 37`; merged as `a64cb08`. Clean wt-main refreshed and saved-plan start-support preview revalidated with zero writes, one proposed document and 27 synthetic profiles. Actual author start-support apply remains pending; no deployment required or agent production mutation.
+
+- 2026-11-15 first live apply: author prepared start-support (one document). Agent read-only audit confirms the 27 selected supports, no creator support, still discussion; saved-plan repeat preview writes zero. Christine's final UI Start Voting is next. No agent production write/provider call.

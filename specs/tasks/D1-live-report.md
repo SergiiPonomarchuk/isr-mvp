@@ -27,3 +27,7 @@ Next: author decides how to provide synthetic coalition inputs: manually adopt p
 Numeric-ID login search bug (author screenshot, 2026-11-14): the numeric lookup finds a profile, then the shared name filter incorrectly requires its display name to contain the number. Earlier numeric-ID login instructions were unsuitable for the current UI. Use full-name search for Michael Sherman (committed D1-02 synthetic creator, ID 5), verified read-only to be outside the flagship public. This workaround consumes no Check/model request; 13 successful Check pairs remain accounted. The full-name workaround also failed due to first-token query truncation. U11 now fixes both failures and merged as `db26dba` on explicit author instruction. Hosting deployment/verification is pending; after it, use ID 5. No additional live Check was consumed by these failed login searches.
 
 U11 deployment accepted: author hosting-only deployment matched all 14 files exactly; numeric ID 5 search/adoption and subsequent 101st-member Join passed. Read-only audit/evidence are in `../demo/live-acceptance-evidence.json`.
+
+## Author Start Voting support prepared — 2026-11-15
+
+Author applied start-support (one discussion document). Read-only plan/audit confirm 27 selected supports, creator absent, phase still Chat; repeat preview is already_prepared with zero writes. Other support 30.142 ISR; creator brings it to 31.142 (30.833%). Next is Christine's final normal Deadline -> Start Voting action. Option votes, Finish support/result/tasks remain pending; no additional Check or agent live write.
