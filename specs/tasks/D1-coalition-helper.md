@@ -37,3 +37,5 @@ Implement a dry-run-first Python CLI and Node transaction adapter, using the exi
 - 2026-11-15 first live apply: author prepared start-support (one document). Agent read-only audit confirms the 27 selected supports, no creator support, still discussion; saved-plan repeat preview writes zero. Christine's final UI Start Voting is next. No agent production write/provider call.
 
 - 2026-11-15: author creator UI Start Voting completed. Live pair is in_process/Voting, deadline 2026-11-21, zero option votes and cleared management maps. Saved-plan option-votes preview ready: one proposed document, zero writes. Author option-votes apply is next; no agent production write/provider call.
+
+- 2026-11-15 author option preparation: one issue document, 27 votes for option 0. Read-only canonical audit: 27 counted/zero excluded, creator absent, 30.142 ISR (29.843%); idempotent preview writes zero. Creator's normal UI vote is next; expected quorum 31.142 ISR/28 votes. No agent production write/provider call.
