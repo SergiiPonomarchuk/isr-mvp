@@ -3021,6 +3021,17 @@ function initTopicDetailViews() {
   // Active listener token to cancel when exiting modal detail view
   let activeDetailListener = null;
 
+  function discussionParameters(disc, issue) {
+    const result = Object.assign({}, disc);
+    // These Check-derived parameters belong to the issue; legacy discussion
+    // documents may omit them. Keep thread identity/options/messages separate.
+    for (const key of ['location', 'location_source', 'location_reference',
+      'mu_distance_meters', 'sigma_decay_meters', 'expertise_domain', 'expertise_depth']) {
+      if (issue && issue[key] !== undefined) result[key] = issue[key];
+    }
+    return result;
+  }
+
   function showArchivedTopic(disc, issue) {
     const activeId = modalBody.getAttribute('data-active-topic-id');
     if (Lifecycle.phaseOf(disc, issue) !== 'archived' && !(window.isTopicArchived && window.isTopicArchived(activeId))) return false;
@@ -3827,6 +3838,7 @@ function initTopicDetailViews() {
 
     if (kind === 'chat') {
       try {
+        let rawChatDiscussion = null;
         let currentMessagesRaw = null;
         let isRendering = false;
         let pendingRender = false;
@@ -3978,7 +3990,8 @@ function initTopicDetailViews() {
               options: disc.options_v2 || [],
               messages: messages,
               participants: combinedUids,
-              expertiseDepth: disc.expertise_depth || "None"
+              expertiseDepth: disc.expertise_depth || "None",
+              expertiseDomain: disc.expertise_domain || ""
             };
 
             if (showArchivedTopic(currentDiscData, null)) return;
@@ -4018,11 +4031,19 @@ function initTopicDetailViews() {
             modalBody.innerHTML = '<div style="padding:20px; color:var(--urgent);">Discussion thread not found in database.</div>';
             return;
           }
-          currentDiscData = discDoc.data();
-          if (showArchivedTopic(currentDiscData, null)) return;
+          rawChatDiscussion = discDoc.data();
+          currentDiscData = discussionParameters(rawChatDiscussion, currentPhaseIssue);
+          if (showArchivedTopic(currentDiscData, currentPhaseIssue)) return;
           await updateUI();
         }, (err) => {
           console.error("Discussion listener error:", err);
+        });
+
+        const issueUnsubscribe = db.collection("issues").doc(topicId).onSnapshot(async (doc) => {
+          currentPhaseIssue = doc.exists ? doc.data() : null;
+          if (rawChatDiscussion) currentDiscData = discussionParameters(rawChatDiscussion, currentPhaseIssue);
+          if (showArchivedTopic(currentDiscData, currentPhaseIssue)) return;
+          await updateUI();
         });
 
         // 2. Subscribe to messages changes
@@ -4040,6 +4061,7 @@ function initTopicDetailViews() {
 
         activeDetailListener = () => {
           if (discUnsubscribe) discUnsubscribe();
+          if (issueUnsubscribe) issueUnsubscribe();
           if (messagesUnsubscribe) messagesUnsubscribe();
         };
 
