@@ -1,5 +1,13 @@
 # CHANGES
 
+## 2026-11-14 - U11 merged; D1 acceptance documentation reconciled
+
+Author explicitly instructed merge PR #36; profile-search fix merged as `db26dba`. Reconciled draft live-acceptance PR #35 with main; only CHANGES/HANDOFF conflicted and both histories are retained. Runtime matches the reviewed fix; no additional code/data changes or model requests. Clean `wt-main` is ready for the author's hosting-only deploy; live Join remains paused until that deployment is verified.
+
+## 2026-11-14 - U11 exact-ID and full-name profile search
+
+Fixed profile adoption search discarding exact numeric IDs through its name filter and omitting specific full names after common-first-name query limits. Added bounded full-name prefixes, numeric/string uid lookup and a clearer field placeholder while retaining other filters and adoption behavior. Actual-handler regressions and masked emulator queries pass; Node 119 passed/three optional skips, Python 120 run/two optional skips. Main.js CRLF/final CR retained. No agent deployment, production write or provider call.
+
 ## 2026-11-14 - D1 live duplicate acceptance
 
 Recorded author acceptance of exact-title blocking/Open/member status and genuine paraphrase matching on live. Verified a fixed synthetic nonmember read-only for the next explicit Join test. Thirteen successful Check pairs accounted of fifteen approved; live AC5 remains in progress. Documentation only; no agent production write or provider call.

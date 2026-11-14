@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-14",
+  "baseline": "236e7d3",
+  "live_reproduction": [
+    {
+      "case": "numeric",
+      "fetched_candidates": 1,
+      "target_fetched": true,
+      "matched_candidates": 0,
+      "target_matched": false
+    },
+    {
+      "case": "full_name",
+      "fetched_candidates": 107,
+      "target_fetched": false,
+      "matched_candidates": 0,
+      "target_matched": false
+    }
+  ],
+  "regression_tests": {
+    "old_source_failing_cases": 5,
+    "patched_focused_passed": 9,
+    "real_emulator_focused_passed": 10,
+    "emulator_host": "127.0.0.1:8080",
+    "method": "Actual initLoginPage callback in VM DOM harness; masked SDK reads against emulator; no visual-browser acceptance claimed."
+  },
+  "suites": {
+    "node_passed": 119,
+    "node_optional_skips": 3,
+    "python_run": 120,
+    "python_optional_skips": 2
+  },
+  "production_writes": 0,
+  "provider_calls": 0,
+  "main_js_crlf_and_final_cr_preserved": true,
+  "live_acceptance": "pending author deployment"
+}

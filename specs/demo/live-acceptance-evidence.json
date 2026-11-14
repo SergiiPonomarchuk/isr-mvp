@@ -244,6 +244,8 @@
     "reason": "numeric lookup result is incorrectly passed through substring name filter",
     "workaround": "Use reviewed synthetic full name; nonmember verified",
     "check_pairs_consumed": 0,
-    "fixed": false
+    "fixed": false,
+    "fix_merge": "db26dbaaf0af5dc0f8662700979948bf18196a97",
+    "live_fix_deployment": "pending author hosting-only deploy"
   }
 }
