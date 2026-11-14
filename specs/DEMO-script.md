@@ -1,6 +1,6 @@
 # D1 guided demonstration - rehearsal draft
 
-Status: prepared guide; not yet rehearsed on final-population/generated content. Read [setup and pending acceptance](demo/README.md) first. The first-pass usage ceiling is not permission for unlimited repeated Checks.
+Status: real seed/import verified; browser normal creation, duplicate/title/Open and explicit 101st-member Join passed. Full human option/vote/result/task cycle remains pending. **Current session:** the flagship already exists; open it as the flagship creator and continue from step 5. Steps 3/4/6 have already been exercised; do not repeat their Checks because the first-pass Check/lookup ceiling is reached. Read [current setup](demo/README.md). The numbered full script below also describes a future fresh presentation with its own approved budget.
 
 1. Complete the local seed and read-only checker, confirm nine visible seeded cases and one hidden standby, and keep the emulator/export and preview running.
 2. Open http://127.0.0.1:5002/d1-guide. Its cards provide the actual stored creator ids, exact title/description and options/steps after content generation. Open the flagship creator link; verify the green `Emulator verified` banner.

@@ -1,6 +1,6 @@
 # D1 generated artefacts and local journal
 
-Status: tooling implemented; actual content, final-population seed, snapshot and human full-cycle acceptance still pending. No generated scenario content is claimed by the mocked tests.
+Status: actual generated content, final-population seed, zero-change rerun, named snapshot/import and browser creation/duplicate/Join checks completed. Human full-cycle acceptance remains pending. See `run-evidence.json` and the D1 emulator report.
 
 The approved contract is [D1 section 9](../tasks/D1-demo-scenarios.md#9-proposed-implementation-refinement-after-u10-2026-11-14). This folder will hold `content.json` (generated once, creator bindings, prompt/model/usage metadata), `manifest.json` (metadata inventory, exact drafts/results, phase/record ids and progress), and `network-ledger.json` (actual emulator request reservations only; no headers, bodies, queries or keys).
 
@@ -12,9 +12,9 @@ Legacy issues/discussions become `status: archived`, with previous status/time/r
 
 The standby's real topic/vector/public is retained but archived. Explicit promotion rechecks active matches in the same creation-registry transaction used by Create. A normal Create and promotion cannot both win. Promotion does not reset registration time or recompute stored expertise. The checker independently recomputes D/G/X, nonzero fetched S, R aggregation, education/experience, mean-normalized ISR, both maps, quorum-result evidence and winning tasks using the existing Python ports. An automatically stored S=0 may denote the existing top-300 fetch shortcut; a full re-ranking audit is not claimed. Stored rounded fields use tolerance 0.00100001.
 
-## Local commands (after key-loader approval)
+## Local commands (key loader authorized 2026-11-14)
 
-Only `C:\isr-mvp` has the local secret. AGENTS.md requires asking before another folder uses it. `demo_runtime.py` is prepared to invoke the existing main-checkout loader in a private child and pass its value in memory. It writes/copies no secret file and never includes the value in arguments or output. Do not run its opt-in until the author has approved.
+Only `C:\isr-mvp` has the local secret. AGENTS.md requires asking before another folder uses it. `demo_runtime.py` is prepared to invoke the existing main-checkout loader in a private child and pass its value in memory. It writes/copies no secret file and never includes the value in arguments or output. The author authorized this memory-only loader with "run D1 please". Firebase discovery requires lockfile dependencies installed in this worktree; NODE_PATH alone is dropped. The launcher-only adapter supplies the inherited known key to the emulator without a local secret file or cloud-secret fallback.
 
 Start the full D1 emulator in one PowerShell window:
 
@@ -50,6 +50,12 @@ node functions/tools/demo-preview.cjs
 
 The source worktree must be committed before a real plan is made. The checker must report zero problems and the rerun zero writes/requests before a named demo snapshot is declared. Keep the preview terminal running. The local guide is http://127.0.0.1:5002/d1-guide; the runtime checks the actual browser SDK emulator host and displays a green banner. No developer console is needed. Local profile links do not change the application's synthetic identity mechanism.
 
-## Pending real acceptance
+## Current review and remaining acceptance
 
-Actual generated content review; final-population seed/check; zero-change real rerun; named export/import verification; complete presenter cycle and U10 exercises. Only then finish AC1-AC4 and prepare the author's live commands (AC5). No author live apply/deploy is authorized by running these emulator commands. PR #28/#29 utility dependencies remain to reconcile before relying on their unpublished fixes.
+The existing flagship has already been created normally and explicitly joined from 100 to 101. The current journal is presentation-started. Open http://127.0.0.1:5002/d1-guide, then **Open as flagship creator**, then Chat's existing **Repair of broken main entrance lock**. Verify the green emulator banner. Review and continue from step 5 of `specs/DEMO-script.md`; no console or new Check is needed.
+
+The first-pass Check ceiling is reached: 15 actual text plus 15 embedding requests; both allowed Nominatim lookups have been used. Do not repeat Check or try another place lookup. Content generation used ten of its twenty allowed text requests, but that spare content allocation does not increase the Check/lookup ceiling.
+
+Named baseline: `A:\BackUp\isr-mvp\emulator-snapshots\2026-11-14-d1-1a242df`, with its baseline-only `seed-manifest.json`, reviewed content and checksum/validation evidence. It was independently imported and checked on port 8286. `specs/demo/seed-manifest.json` is the baseline; `manifest.json` is the current browser rehearsal. Import/check with the matching manifest; do not expect the baseline snapshot to contain the later normal flagship.
+
+Human option/management/vote/result/task walkthrough and a disposable separate-creation rehearsal remain. AC3 and AC5 are not complete. Keep PR #34 draft until the required rehearsal acceptance. Live commands will be prepared only with the separate author budget and fresh backup/recovery preflight; no deploy/live apply follows automatically.

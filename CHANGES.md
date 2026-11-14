@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-14 - D1 real seed, snapshot and browser verification
+
+Seeded ten reviewed scenarios on final P2/A4 emulator data, archived 276 old topic roots without deleting history, and independently validated 505 members with zero differences. Completed rerun wrote/spent zero; named snapshot imported and checked independently. Browser created a normal flagship and verified exact-title blocking, paraphrase/Open, and nonmember Join from 100 to 101; post-Join checker validated 606 members with zero differences. Corrected chat geographic/domain display to use canonical issue fields, plus runtime/CLI response-contract fixes. Actual budgets reached: 15 Check pairs and two place lookups; ten content requests used. Human full-cycle acceptance remains pending; draft PR #34, no live writes/deploy/secret copying.
+
 ## 2026-11-14 - D1 real generation and runtime repair
 
 Author authorized the existing key loader in memory. Generated and reviewed all ten scenarios with ten text requests (6,694 reported total tokens) and one reverse street lookup; recorded editorial corrections without extra requests. Emulator dry plan preserved 276 legacy topic roots. Initial Check hit an unloaded local function (zero model dispatches); fixed Firebase discovery dependency setup and added an emulator-only memory-secret bridge that refuses unknown secrets. Node 109 passed/two optional skips; Python 119 run/two existing skips. Full real seed, snapshot and manual acceptance remain in progress. No production mutation or secret file copying.

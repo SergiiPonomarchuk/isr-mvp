@@ -1,6 +1,30 @@
 # D1 implementation evidence - 2026-11-14
 
-Scope: approved D1 section 9 on `codex/d1-guided-demo`, stacked on documentation PR #33. This is an in-progress implementation; not a completed final-population demonstration.
+Scope: approved D1 section 9 on `codex/d1-guided-demo`, stacked on documentation PR #33. Final-population seed/import and targeted browser checks are now verified; full human-cycle acceptance is pending.
+
+## Actual final-population run and browser evidence
+
+Author authorized the existing main key loader in memory on 2026-11-14. No secret file was copied, displayed or read by the launcher adapter. Firebase discovery required local lockfile dependencies; the emulator-only secret bridge refuses unavailable/unknown declarations. Fixed seed metadata reading to use flat `ai_source` and draft provenance, and fixed the standalone checker JSON import. A previously cached Hauptstraße miss was retained, then resolved with a complete street/city/country clarification that future plans preserve. No score/weight was hand-entered.
+
+| Check | Actual result |
+|---|---|
+| Stored generation | Ten reviewed scenarios, 10 text requests, 6,694 reported tokens; editorial corrections recorded without additional requests |
+| Real seed | Ten scenario records, nine visible and one archived standby; 505 members; checker zero differences |
+| Archive | 276 topic roots archived; 1,696 messages and historical public/member payload fingerprints preserved |
+| Completed rerun | Zero writes, zero requests |
+| Named export/import | `A:\BackUp\isr-mvp\emulator-snapshots\2026-11-14-d1-1a242df`; independent 8286 import checker zero differences |
+| Browser | Normal flagship created with 100 members; hidden standby absent from matches; exact-title block survives explanation; text invalidates Check; paraphrase matches/Open/member status; nonmember Join reaches 101 |
+| Post-Join independent check | 11 records including standby, ten visible cases, 606 member records; zero differences; deterministic Join event exists |
+| Geographic card regression | Corrected discussion to read canonical issue parameters/domain; browser shows 40m/30m and locksmith.security, replacing erroneous default 100m/50m |
+| Required suites | Node 110 passed / two optional integration skips; Python 120 run / two existing skips |
+
+Actual Check transport: 15 text requests with 140,377 reported tokens and 15 embedding texts (about 869 registration-text tokens by character estimate; not provider-reported embedding usage). Two total Nominatim calls: one reverse and one forward. No more Check/place calls under this ceiling. The first local HTTP 404 dispatched zero provider calls and remains in the attempt/recovery journal. Aggregate evidence, snapshot file hashes and exact results are in `specs/demo/run-evidence.json`; baseline/current journals are separate. Browser proof is `C:\isr-mvp\scratch\d1-joined-browser.png`.
+
+Human review of generated scenarios and the complete option -> management -> weighted vote -> stored result/task cycle is next. Disposable separate-creation UI rehearsal remains. AC2 is satisfied on the actual seed; AC3 and live AC5 remain pending. No production mutation, rules change or deploy. PR #34 remains draft, stacked on #33.
+
+## Historical mocked checks and pre-authorization checkpoints
+
+The sections below describe earlier evidence before the authorized actual run; their "not yet"/"next" statements are historical.
 
 ## Completed checks
 

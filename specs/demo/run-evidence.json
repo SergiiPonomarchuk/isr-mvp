@@ -1,0 +1,117 @@
+{
+  "archive_roots": 276,
+  "baseline": {
+    "members": 505,
+    "problems": [],
+    "scenarios": 10,
+    "tolerance": 0.00100001,
+    "visible_scenarios_before_flagship": 9
+  },
+  "browser": {
+    "canonical_geo_card_verified": [
+      40,
+      30
+    ],
+    "exact_title_blocked_even_with_explanation": true,
+    "flagship_members": 101,
+    "human_full_cycle": "pending",
+    "join_event_exists": true,
+    "nonmember_joined_beyond_initial_cap": true,
+    "normal_flagship_created": true,
+    "paraphrase_matched": true,
+    "proof": "C:/isr-mvp/scratch/d1-joined-browser.png",
+    "standby_hidden": true
+  },
+  "browser_post_join": {
+    "members": 606,
+    "problems": [],
+    "scenarios": 11,
+    "tolerance": 0.00100001,
+    "visible_scenarios_before_flagship": 10
+  },
+  "date": "2026-11-14",
+  "environment": "local emulator only",
+  "idempotent_rerun": {
+    "complete": true,
+    "requests": 0,
+    "writes": 0
+  },
+  "preserved_messages": 1696,
+  "runtime_release": "0a78bb929097677dba1ad8270c6228f2728af41a",
+  "snapshot": {
+    "files": [
+      {
+        "bytes": 28148,
+        "path": "content.json",
+        "sha256": "c252d5a1226d356f4549dabb4b19b009b085adb01f938636109902f7fd779429"
+      },
+      {
+        "bytes": 185,
+        "path": "firebase-export-metadata.json",
+        "sha256": "10bdc6ace944fe84aa78e8ffae3bae3de80a328ff66a71c1f5fee987d36be619"
+      },
+      {
+        "bytes": 92,
+        "path": "firestore_export/all_namespaces/all_kinds/all_namespaces_all_kinds.export_metadata",
+        "sha256": "cb534985377ea71cc667a56ca7570bd0672b69481a1222c0bb17d74548f450a7"
+      },
+      {
+        "bytes": 160526266,
+        "path": "firestore_export/all_namespaces/all_kinds/output-0",
+        "sha256": "f8e6eb6674fbb567ce1d7f2d3e75398ddd75f9ace49befd4e82523a108ef0eaa"
+      },
+      {
+        "bytes": 44904795,
+        "path": "firestore_export/all_namespaces/all_kinds/output-1",
+        "sha256": "4d6af1726c686dd0c8969f387a5b0d43c23f0878e2736b1f6d271d6a40df7d24"
+      },
+      {
+        "bytes": 123320127,
+        "path": "firestore_export/all_namespaces/all_kinds/output-2",
+        "sha256": "d305d94113cc6df2b428d8b8e605385932b6ba94d9c3a8f2cc3f74be379d3f64"
+      },
+      {
+        "bytes": 116761118,
+        "path": "firestore_export/all_namespaces/all_kinds/output-3",
+        "sha256": "1955911b7ba2da08c30dbed91abd799d673cb12691696323a275eb946874edec"
+      },
+      {
+        "bytes": 106166111,
+        "path": "firestore_export/all_namespaces/all_kinds/output-4",
+        "sha256": "16a4ee31a49f9961657adbc54dff813a946af8685882596f817caa0987568411"
+      },
+      {
+        "bytes": 100,
+        "path": "firestore_export/firestore_export.overall_export_metadata",
+        "sha256": "ccd78cd737360c6574d4370ac68c84e218869d3bd483ec96ee0e927fdddf4586"
+      },
+      {
+        "bytes": 326170,
+        "path": "seed-manifest.json",
+        "sha256": "d6c5b5cbdac2685c0dce3a425028b854c3c63ca16e9095ada18f82cea0e22b60"
+      }
+    ],
+    "path": "A:\\BackUp\\isr-mvp\\emulator-snapshots\\2026-11-14-d1-1a242df"
+  },
+  "snapshot_import": {
+    "members": 505,
+    "problems": [],
+    "scenarios": 10,
+    "tolerance": 0.00100001,
+    "visible_scenarios_before_flagship": 9
+  },
+  "usage": {
+    "check_reported_tokens": 140377,
+    "check_transport": {
+      "embedding": 15,
+      "nominatim": 1,
+      "text": 15
+    },
+    "checks_with_usage": 15,
+    "content_reported_tokens": 6694,
+    "content_text_requests": 10,
+    "embedding_estimated_input_tokens": 869,
+    "embedding_texts": 15,
+    "nominatim_total": 2
+  }
+}
