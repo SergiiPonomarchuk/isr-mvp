@@ -90,7 +90,7 @@ async function closeExpiredTopics(db, FieldValue, today, options) {
       if (phase === "chat" && out.action === "to_voting") {
         tx.update(discRef, { status: "Voting", ends: out.newEnds, deadline_votes: {}, lifecycle: log });
         const fields = Object.assign(L.votingIssueFields(disc, out.newEnds, nowIso), { lifecycle: log });
-        if (issue) tx.update(issueRef, fields); else tx.set(issueRef, fields);
+        if (issue) { for (const key of ["created_at", "title", "description", "category"]) delete fields[key]; tx.update(issueRef, fields); } else tx.set(issueRef, fields);
       } else if (phase === "chat" && out.action === "cancel") {
         // As Cancel Issue in Chat: the discussion is canceled; an app-created issue keeps "open".
         discUpd({ status: "inactive", previous_status: "discussion", cancel_reason: "deadline", deadline_votes: {} });

@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-14 - D1 seed/presenter tooling and guarded emulator verification
+
+Added one-time stored content preparation, durable single-writer seed/check journals, original-history fingerprints, current-state transactional tally, race-safe standby promotion and normal flagship registration. Retired task mocks and fixed phase/cache exclusions, preserving original registration time/text through voting transitions. Added actual SDK request-ceiling transport tests, dummy private-loader tests, and complete mocked-AI real-handler emulator seed/recovery/race checks. Node 108 passed/two optional skips; Python 119 run/two existing skips; explicit D1/U10 emulator scenarios passed. Real content, final-population seed, snapshot and manual cycle remain pending key-loader authorization. No paid calls or live data changes.
+
 ## 2026-11-14 - D1 implementation in progress
 
 Added explicit archived lifecycle exclusions, retired hard-coded task mocks, and implemented current-state transactional tally plus guarded demo seed/check foundations. Author approved D1 refinement; inventory is read-only. Emulator integration and complete D1 acceptance are still in progress; no paid generation or production mutation.

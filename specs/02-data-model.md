@@ -101,3 +101,11 @@ None. There is no schema validation, no test suite, and no Firestore rules that 
 - A2 (2026-11-04, branch `a2-expertise-cleanup`, not merged): new server-only collection `issue_drafts` (parameters derived by `checkIssue`; read and deleted by `createIssue`; `functions/params.js`). Removed fields: `microcommunity_members.resources_expertise`; `issues`/`discussions` `w_education`, `w_experience`, `w_resources`, `reasoning_education`, `reasoning_experience`, `reasoning_resources`. `birthDate` required by `seed_db.py`. Data changed on the emulator only (`scripts/migrate_a2.py`, report `tasks/A2-migration-report.md`); the live data still has the old fields until the author runs the migration.
 
 U10 revision (`u10-v2`): `duplicate_check.title_conflicts` contains every active issue id with the same normalized title, independent of the five-result shortlist. Check returns it as `title_conflicts`; Create rejects any active conflict even with an explanation. No new collection.
+
+## D1 archive and demo metadata (implementation, pending real-data acceptance)
+
+`issues` and `discussions` gain shared lifecycle status `archived`. `demo_archive` holds run id, reason, time and the previous status; existing topic roots/history/publics/member bodies remain intact. `demo_run_id`, `demo_scenario` and `demo_plan_hash` identify prepared records. Standby promotion adds `demo_standby_activated_at`, restores discussion/open status and a current deadline, retaining registration time/vector/member inputs. It serializes through the existing U10 creation-registry document; no new production collection.
+
+The tally record gains `input_fingerprint` so retries of the same canonical vote/options/member inputs do not rewrite results, while changed inputs can be counted on a later approval. Tally reads current status transactionally to exclude archived records. Existing registration title/description/category/timestamp survive phase moves; new discussions explicitly retain description/category/status.
+
+`specs/demo/content.json`, `manifest.json` and `network-ledger.json` are local artefacts, not collections. They contain stored synthetic content/creator ids, input/result/version/progress evidence and metadata-only request counters. No credentials/contact fields. Their actual generated/demo values are not yet prepared.

@@ -1,5 +1,6 @@
 """D1 target guards, atomic local journal and synthetic-data inventory."""
 from __future__ import annotations
+from contextlib import contextmanager
 import datetime as dt
 import hashlib
 import json
@@ -12,7 +13,26 @@ import urllib.request
 ROOT = Path(__file__).resolve().parents[1]
 
 def digest(value):
-    return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':'),default=str).encode()).hexdigest()
+    def encode(v):
+        if hasattr(v,'latitude') and hasattr(v,'longitude'):return {'geopoint':[v.latitude,v.longitude]}
+        if hasattr(v,'isoformat'):return {'timestamp':v.isoformat()}
+        if hasattr(v,'to_map_value'):return {'vector':list(v)}
+        if isinstance(v,(bytes,bytearray)):return {'blob_sha256':hashlib.sha256(v).hexdigest()}
+        if hasattr(v,'path') and hasattr(v,'_client'):return {'reference':v.path,'project':v._client.project}
+        raise TypeError('Unsupported fingerprint input')
+    return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':'),default=encode,allow_nan=False).encode()).hexdigest()
+
+@contextmanager
+def exclusive(path):
+    path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
+    lock=path.with_name(path.name+'.lock')
+    try:descriptor=os.open(lock,os.O_CREAT|os.O_EXCL|os.O_WRONLY)
+    except FileExistsError:raise ValueError('Journal is already in use; inspect the owner before repairing a stale lock') from None
+    try:
+        os.write(descriptor,str(os.getpid()).encode());os.fsync(descriptor)
+        yield
+    finally:
+        os.close(descriptor);lock.unlink()
 
 def load_json(path):
     return json.loads(Path(path).read_text(encoding='utf8'))
@@ -53,15 +73,20 @@ def inventory(db):
     result={'topics':{},'publics':{},'member_count':0,'vectors':0,'messages':{},'protected_counts':{}}
     for name in ('issues','discussions'):
         result['topics'][name]={s.id:{'status':s.to_dict().get('status'),'update_time':s.update_time.isoformat(),
-            'demo_run_id':s.to_dict().get('demo_run_id')} for s in db.collection(name).select(TOPIC_FIELDS).stream()}
-    result['publics']={s.id:str(s.to_dict().get('issue_id') or s.id) for s in db.collection('microcommunities').select(['issue_id']).stream()}
-    result['member_count']=len(list(db.collection('microcommunity_members').select([]).stream()))
+            'demo_run_id':s.to_dict().get('demo_run_id'),'payload_sha256':digest({k:v for k,v in s.to_dict().items() if k not in ('status','demo_archive')})} for s in db.collection(name).stream()}
+    publics=list(db.collection('microcommunities').stream())
+    result['publics']={s.id:str(s.to_dict().get('issue_id') or s.id) for s in publics}
+    result['public_payload_sha256']=digest(sorted(((s.id,s.to_dict()) for s in publics),key=lambda x:x[0]))
+    members=list(db.collection('microcommunity_members').stream())
+    result['member_count']=len(members);result['member_ids']=sorted(s.id for s in members)
+    result['member_payload_sha256']=digest(sorted(((s.id,s.to_dict()) for s in members),key=lambda x:x[0]))
     result['vectors']=len(list(db.collection('issue_vectors').select([]).stream()))
     for topic_id in result['topics']['discussions']:
-        ids=sorted(s.id for s in db.collection('discussions').document(topic_id).collection('messages').select([]).stream())
-        result['messages'][topic_id]={'count':len(ids),'ids_sha256':digest(ids)}
+        messages=sorted(((s.id,s.to_dict()) for s in db.collection('discussions').document(topic_id).collection('messages').stream()),key=lambda x:x[0])
+        ids=[ident for ident,_ in messages]
+        result['messages'][topic_id]={'count':len(ids),'ids_sha256':digest(ids),'content_sha256':digest(messages)}
     for name in ('users','user_packs','user_vectors'):
-        result['protected_counts'][name]=len(list(db.collection(name).select([]).stream()))
+        result['protected_counts'][name]=db.collection(name).count().get()[0][0].value
     issue_ids=set(result['topics']['issues']);disc_ids=set(result['topics']['discussions'])
     result['orphans']={'issue_only':sorted(issue_ids-disc_ids),'discussion_only':sorted(disc_ids-issue_ids),
         'public_without_topic':sorted(p for p,i in result['publics'].items() if i not in issue_ids|disc_ids)}
@@ -79,6 +104,7 @@ def archive_inventory(db,original,run_id,apply=False):
             ref=db.collection(collection).document(topic_id);snap=ref.get(transaction=tx)
             if not snap.exists: raise ValueError('Planned topic disappeared: '+topic_id)
             data=snap.to_dict()
+            if expected.get('payload_sha256') and digest({k:v for k,v in data.items() if k not in ('status','demo_archive')})!=expected['payload_sha256']:raise ValueError('Historical payload changed: '+topic_id)
             archived=data.get('status')=='archived'
             if archived:
                 if expected['status']=='archived' or (data.get('demo_archive') or {}).get('run_id')==run_id: continue
@@ -92,8 +118,12 @@ def archive_inventory(db,original,run_id,apply=False):
         return len(roots)
     ids=sorted(set(original['topics']['issues'])|set(original['topics']['discussions']))
     # Read/validate every planned root before starting any archive writes.
-    for ident in ids: one(db.transaction(),ident,False)
-    if not apply:return sum(1 for c in original['topics'].values() for v in c.values() if v['status']!='archived')
+    for ident,baseline in original['messages'].items():
+        if baseline.get('content_sha256'):
+            messages=sorted(((s.id,s.to_dict()) for s in db.collection('discussions').document(ident).collection('messages').stream()),key=lambda x:x[0])
+            if digest(messages)!=baseline['content_sha256']:raise ValueError('Historical messages changed before archive: '+ident)
+    counts=[one(db.transaction(),ident,False) for ident in ids]
+    if not apply:return sum(counts)
     return sum(one(db.transaction(),ident,True) for ident in ids)
 
 def assert_known_topics(db,manifest):
@@ -120,9 +150,11 @@ def select_creators(users,today):
     def choose(candidates,label):
         if not candidates:raise ValueError('No suitable creator: '+label)
         return candidates[0]
-    def skill(u,words):return any(any(word in str(s.get('name','')).lower()+' '+str(s.get('specialization','')).lower() for word in words) for s in u.get('skills',[]))
+    def skill(u,words,types):return any(re.search(r'\b(?:'+ '|'.join(map(re.escape,words))+r')\b',str(s.get('name','')).lower()+' '+str(s.get('specialization','')).lower()) for s in u.get('skills',[]) if s.get('type') in types)
     parent=lambda u:any(str(r.get('type','')).lower() in ('child','son','daughter') for r in u.get('socialRelations',[]))
-    work=lambda u:next((g for g in u.get('geography',[]) if g.get('type')=='work' and 'argo' in str(g.get('place','')).lower()),None)
+    def work(u):
+        first=next((g for g in u.get('geography',[]) if g.get('type')=='work'),None)
+        return first if first and 'argo' in str(first.get('place','')).lower() else None
     def estate(u):
         home=next(g for g in u['geography'] if g.get('type')=='home')
         return str(home['building']).split(', h')[0]
@@ -133,8 +165,8 @@ def select_creators(users,today):
         if len(names)!=1:raise ValueError('Cannot uniquely map original estate population '+str(size))
         return [u for u in adults if estate(u)==names[0]]
     selectors=[original_group(2154),original_group(2840),[u for u in original_group(2087) if parent(u)],[u for u in adults if age(u)>=65],
-        [u for u in adults if work(u)],[u for u in adults if skill(u,('music','art','choir'))],
-        [u for u in adults if skill(u,('software','program','developer'))],adults,
+        [u for u in adults if work(u)],[u for u in adults if skill(u,('music','musical','art','arts','artist','choir','painting','singing','piano','guitar','violin','dance','theatre','theater','drawing','sculpture','photography'),('activity',))],
+        [u for u in adults if skill(u,('software','programmer','programming','developer'),('work experience',))],adults,
         sorted(adults,key=lambda u:(-len(u.get('socialRelations',[])),int(u['uid']))),adults]
     result={}
     for number,candidates in enumerate(selectors,1):

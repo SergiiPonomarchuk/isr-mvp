@@ -549,6 +549,9 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB", secrets: [GEMINI
     stagedWrites.push([discRef, {
       discussion_id: issueId,
       topic: title,
+      description,
+      category: issueDoc.category,
+      status: "discussion",
       creator_uid: String(submitterId),
       created_at: new Date().toISOString(),
       message_count: 1,

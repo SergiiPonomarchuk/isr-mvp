@@ -4,14 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: U10 live accepted; D1 refinement, 2026-11-14
+## Current checkpoint: D1 tooling tested; key-loader authorization next, 2026-11-14
 
-- PR #32 merged to main `8466b13` on explicit instruction. Its proposal ancestor #31 was also marked merged by GitHub. Main CI passed. Author deployed hosting and the three changed/new HTTP functions from clean detached `wt-main` and confirmed the live Check flow works.
-- Read-only verification: 13 hosted code files byte-identical with main/no-cache headers; `checkIssue`, `createIssue`, `joinIssue` ACTIVE on Node 22; all three preflight requests returned 204. See [U10 live evidence](tasks/U10-live-report.md). This is not an agent live write/browser pass.
-- U10 emulator acceptance covers unique active titles, single Create, explained separate creation, explicit Join beyond 100, canonical score/maps, concurrent requests and rollback/replay. Voting-phase Join stays disabled; synthetic identity/open prototype rules remain limitations.
-- Next: [D1 refinement](tasks/D1-demo-scenarios.md), section 9, proposes archive exclusion, a hidden inactive flagship standby with explicit promotion, duplicate/Open/Join exercises, durable manifest/retry recovery and first-pass request ceilings. The original ten scenarios and decisions 5.1-5.5 remain approved. Author approved the refinement on 2026-11-14. Implementation is in progress on `codex/d1-guided-demo`; no real-data seed or paid generation has started.
-- No seed/archive, model request, secret access, deploy, rules change or production write in this documentation work. PR #28/#29 remain unmerged; reconcile their utility dependencies before D1 needs them.
-- `wt-main` stays clean detached at deployed main. The temporary manual preview runs on 5001/Firestore 8080, project demo-u10; main's saved emulator data was not imported. Agent browser tools remain unavailable (0x8007000F); arrange manual acceptance if necessary.
+- Author approved D1 section 9 after U10's deployed live acceptance. Work is on `codex/d1-guided-demo`, worktree `A:\BackUp\isr-mvp\worktrees\wt-d1-guided-demo`, stacked on documentation PR #33. Neither plan approval nor implementation merges a PR.
+- Implemented explicit archived lifecycle/UI/deadline/tally exclusions, task-mock retirement, resumable Check/Create seed journal, independent Python verifier, bounded one-time content generation, explicit race-safe standby promotion, console-free flagship registration and a local presenter/coalition guide. Phase moves preserve registration time/text. Source formulas are unchanged.
+- Final Node: 108 passed/two optional integration skips. Python: 119 run/two existing skips. Explicit D1 and U10 real-handler emulator tests pass, including 10 seeded fixtures/one hidden standby, zero-change rerun, lost-response recovery, preserved history, canonical nonzero expertise/ISR/tally/tasks, normal flagship recording, promotion/Create race and 102-member Join regression. AI is mocked in these tests. See [D1 evidence](tasks/D1-emulator-report.md).
+- Next attention gate: AGENTS.md requires asking before another folder needs the key. `scripts/demo_runtime.py` is prepared and dummy-tested to invoke the existing main-checkout loader privately and pass the key in process memory only. Its `--use-main-key-loader` flag has not been used. Obtain author authorization before real preparation.
+- After authorization: launch the full D1 emulator from the frozen integrated snapshot, generate/review stored content within approved ceilings, seed/check/rerun against the final P2 population, create/verify a named snapshot/import and run the manual full-cycle/U10 walkthrough. AC2-AC5 are not complete. Browser tools remain unavailable (0x8007000F); use the local 5002 presenter guide and actual SDK-host safety banner for human acceptance.
+- No actual D1 paid requests, named-place lookups, full-population seed, rules change, deploy or production mutation has occurred. Live metadata/creator selection were checked read-only. PR #28/#29 remain unmerged; do not rely on their unpublished utilities without reconciling them.
+- Production remains author-deployed U10 main `8466b13`, with live Check accepted. Deploy checkout `wt-main` stays clean/detached there. The old tiny U10 manual preview still owns 5001/8080; stop only its known disposable process before full D1 launch. Saved main data and the frozen snapshot have not been overwritten.
 
 ## U9 accepted live, duplicate flow proposal, 2026-11-13 (historical)
 
@@ -308,3 +309,9 @@ Author approved unique titles among active issues only, allowing reuse of closed
 ## D1 implementation in progress, 2026-11-14
 
 Shared archived lifecycle and UI/task-mock retirement implemented; initial Node regression suite passes. Atomic current-state tally adapter, guarded phase arranger, metadata inventory, durable seed journal and independent numeric checker are under test. Read-only live inventory: 82 issues, 194 discussions/publics, 3,295 members, 1,696 messages, four issue vectors; 112 discussion-only records, no issue-only/public-without-topic records. No production mutations. Real AI content, full-population seed, snapshot and browser acceptance remain pending; do not treat AC1-AC5 as complete.
+
+## D1 code and mocked-emulator checkpoint, 2026-11-14
+
+Archive lifecycle/UI/task-mock retirement, current-state transactional tally, resumable seed/check/content tools, guarded explicit standby promotion, local presenter guide and request ceilings are implemented. [Evidence](tasks/D1-emulator-report.md) distinguishes real handlers/mock AI from unstarted final-population acceptance. The first full tests and D1/U10 emulator regressions passed; final registration/text preservation and full reruns are recorded in the spec status log.
+
+Next: finish final checks/PR, then ask the author before invoking the existing main-checkout key loader for D1. The reviewable runtime passes its result only in private process memory and copies no secret file. Do not use it without that authorization. Then content review, real emulator seed/check/rerun, named snapshot/import and manual full-cycle acceptance remain. PR #33 and implementation PR require explicit merge instructions; approval of the plan does not merge them. No paid calls, live mutations, rules edits or deploys yet.

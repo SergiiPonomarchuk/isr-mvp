@@ -34,12 +34,12 @@ async function prepareTopic(db, input, FieldValue) {
       timestamp:new Date(date.getTime()+(i+1)*60000).toISOString(), marks:{}, reactions:{}, child:[]}));
     // Initial message from Create remains; stable keys make retries harmless.
     const shared = {demo_run_id:runId, demo_scenario:input.scenarioKey, demo_plan_hash:fingerprint, ends};
-    const discUpdate = {...shared, options_v2:options, message_count:1+messages.length};
+    const discUpdate = {...shared, status:"discussion", description:issue.description, options_v2:options, message_count:1+messages.length};
     if (messages.length) Object.assign(discUpdate,{last_message_text:messages.at(-1).text,
       last_message_sender_uid:messages.at(-1).uid,last_message_timestamp:messages.at(-1).timestamp});
     let issueUpdate = {...shared};
     if (phase === "voting" || phase === "todo") {
-      const fields=L.votingIssueFields({...disc,options_v2:options},ends,now);
+      const fields=L.votingIssueFields({...disc,...discUpdate,topic:issue.title,category:issue.category},ends,now);
       // Registration-time expertise depends on the original timestamp.
       delete fields.created_at;
       issueUpdate={...issueUpdate,...fields};
@@ -52,7 +52,7 @@ async function prepareTopic(db, input, FieldValue) {
     } else if (phase === "standby") {
       issueUpdate.status="archived";discUpdate.status="archived";
       issueUpdate.demo_archive={run_id:runId,reason:"flagship standby",previous_status:issue.status,at:now};
-      discUpdate.demo_archive={run_id:runId,reason:"flagship standby",previous_status:disc.status,at:now};
+      discUpdate.demo_archive={run_id:runId,reason:"flagship standby",previous_status:disc.status || "discussion",at:now};
     }
     for(const m of messages) tx.create(discRef.collection("messages").doc(m.id),m);
     tx.update(issueRef,issueUpdate);tx.update(discRef,discUpdate);

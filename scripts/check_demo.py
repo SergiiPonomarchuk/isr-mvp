@@ -49,15 +49,23 @@ def check_plan(db,plan):
         for ident in roots:
             snap=db.collection(collection).document(ident).get()
             if not snap.exists or snap.to_dict().get('status')!='archived':problems.append(f'legacy not archived: {collection}/{ident}')
+            elif roots[ident].get('payload_sha256') and digest({k:v for k,v in snap.to_dict().items() if k not in ('status','demo_archive')})!=roots[ident]['payload_sha256']:problems.append(f'legacy payload changed: {collection}/{ident}')
+    for ident,baseline in plan['inventory']['messages'].items():
+        if baseline.get('content_sha256'):
+            messages=sorted(((s.id,s.to_dict()) for s in db.collection('discussions').document(ident).collection('messages').stream()),key=lambda x:x[0])
+            if digest(messages)!=baseline['content_sha256']:problems.append('legacy messages changed: '+ident)
     for key,entry in plan['scenarios'].items():
         if entry['stage']!='complete':problems.append(key+': incomplete');continue
         ident=entry['issue_id'];snap=db.collection('issues').document(ident).get();disc_snap=db.collection('discussions').document(ident).get()
         if not snap.exists or not disc_snap.exists:problems.append(key+': topic pair missing');continue
         issue=snap.to_dict();disc=disc_snap.to_dict();checked+=1
-        phase=entry['phase'];expected={'chat':('open','discussion'),'voting':('in_process','Voting'),'todo':('approved','approved'),'standby':('archived','archived')}[phase]
-        if (issue.get('status'),disc.get('status'))!=expected:problems.append(key+': phase drift')
+        phase=entry['phase'];expected={'chat':('open','discussion'),'voting':('in_process','Voting'),'todo':('approved','approved'),'standby':('archived','archived'),'live':(issue.get('status'),disc.get('status'))}[phase]
+        if not (plan.get('presentation_started') and key=='D1-01') and (issue.get('status'),disc.get('status'))!=expected:problems.append(key+': phase drift')
         if phase!='standby':visible+=1
         if issue.get('demo_plan_hash')!=entry.get('demo_plan_hash') or disc.get('demo_plan_hash')!=entry.get('demo_plan_hash'):problems.append(key+': plan marker drift')
+        registered=issue['created_at'].isoformat() if hasattr(issue['created_at'],'isoformat') else issue['created_at']
+        if registered!=entry.get('created_at'):problems.append(key+': registration time drift')
+        if phase!='live' and not (plan.get('presentation_started') and key=='D1-01') and (issue.get('ends')!=entry.get('ends') or disc.get('ends')!=entry.get('ends')):problems.append(key+': deadline drift')
         if issue.get('title')!=entry['input']['title'] or issue.get('description')!=entry['input']['description']:problems.append(key+': text drift')
         public=db.collection('microcommunities').document(entry['microcommunity_id']).get()
         if not public.exists or public.to_dict().get('issue_id')!=ident:problems.append(key+': public link');continue
@@ -86,17 +94,39 @@ def check_plan(db,plan):
                     if abs((topic.get(field) or {}).get(uid,float('inf'))-m[source])>TOL:problems.append(f'{key}/{uid}: {field}')
         for topic in (issue,disc):
             if set(topic.get('isr_scores',{}))!=set(ids) or set(topic.get('relevance_scores',{}))!=set(ids):problems.append(key+': map membership')
-        message_ids={s.id for s in db.collection('discussions').document(ident).collection('messages').select([]).stream()}
+        messages={s.id:s.to_dict() for s in db.collection('discussions').document(ident).collection('messages').stream()}
+        message_ids=set(messages)
         expected_messages={'msg_init'}|{f'{key}-message-{i+1}' for i in range(len(entry['content']['messages']))}
-        if message_ids!=expected_messages or disc.get('message_count')!=len(message_ids):problems.append(key+': message identity/count')
-        if phase=='todo':
+        if (phase!='live' and message_ids!=expected_messages) or disc.get('message_count')!=len(message_ids):problems.append(key+': message identity/count')
+        if phase!='live':
+            for i,source in enumerate(entry['content']['messages']):
+                actual=messages.get(f'{key}-message-{i+1}',{})
+                actor=sorted(ids)[(i+1)%len(ids)] if source['author']=='member' else entry['creator']['uid']
+                if actual.get('text')!=source['text'] or str(actual.get('uid'))!=actor:problems.append(key+': stored message content/actor drift')
+            options=disc.get('options_v2',[])
+            if len(options)!=len(entry['content']['options']):problems.append(key+': option count drift')
+            for actual,source in zip(options,entry['content']['options']):
+                if any(actual.get(k)!=source.get(k) for k in ('title','budget','funding_source','resources_needed')) or [x.get('step') for x in actual.get('description',[])]!=source['steps']:problems.append(key+': option content drift')
+        if issue.get('status') in ('approved','tasks'):
             result=ISR.tally(issue.get('votes'),{str(m['user_id']):m['isr_score'] for m in rows},len(issue.get('options',[])))
             if result['winner']!=issue.get('winning_option_index') or not issue.get('tally'):problems.append(key+': tally/winner')
+            recorded=issue.get('tally') or {}
+            if recorded.get('microcommunity_id')!=entry['microcommunity_id'] or recorded.get('isr_source')!='microcommunity_members.isr_score' or recorded.get('excluded')!=result['excluded'] or recorded.get('note')!=result['note'] or recorded.get('counted')!=result['counted']:problems.append(key+': stored tally evidence')
             for option,score in zip(issue.get('options',[]),result['scores']):
                 if abs(option.get('score',float('inf'))-score)>TOL:problems.append(key+': option score')
             if result['winner'] is not None:
                 steps=issue['options'][result['winner']].get('description',[])
-                if [x.get('step') for x in issue.get('tasks',[])]!=[x.get('step') for x in steps]:problems.append(key+': winning tasks')
+                if [{k:x.get(k) for k in ('step','in_charge_uid','in_charge_name','deadline')} for x in issue.get('tasks',[])]!=[{k:x.get(k) for k in ('step','in_charge_uid','in_charge_name','deadline')} for x in steps]:problems.append(key+': winning tasks')
+    for name,expected_count in plan['inventory']['protected_counts'].items():
+        if db.collection(name).count().get()[0][0].value!=expected_count:problems.append('protected collection count changed: '+name)
+    if plan['inventory'].get('public_payload_sha256'):
+        roots=[(ident,db.collection('microcommunities').document(ident).get()) for ident in plan['inventory']['publics']]
+        if any(not snap.exists for _,snap in roots) or digest(sorted(((ident,snap.to_dict()) for ident,snap in roots),key=lambda x:x[0]))!=plan['inventory']['public_payload_sha256']:problems.append('historical publics changed')
+    if plan['inventory'].get('member_payload_sha256'):
+        all_members=list(db.collection('microcommunity_members').stream());old_ids=set(plan['inventory']['member_ids'])
+        preserved=sorted(((snap.id,snap.to_dict()) for snap in all_members if snap.id in old_ids),key=lambda x:x[0])
+        if digest(preserved)!=plan['inventory']['member_payload_sha256']:problems.append('historical members changed')
+        if len(all_members)!=plan['inventory']['member_count']+member_count:problems.append('unplanned membership records')
     return {'scenarios':checked,'visible_scenarios_before_flagship':visible,'members':member_count,'tolerance':TOL,'problems':problems}
 
 def main(argv=None):

@@ -3596,7 +3596,7 @@ function initTopicDetailViews() {
         const newEnds = Lifecycle.addDays(today, Lifecycle.EXTEND_DAYS);
         Object.assign(updateFields, { status: 'Voting', ends: newEnds, deadline_votes: {} });
         const issueData = Lifecycle.votingIssueFields(data, newEnds, new Date().toISOString());
-        if (issue) transaction.update(issueRef, issueData); else transaction.set(issueRef, issueData);
+        if (issue) { for (const key of ["created_at", "title", "description", "category"]) delete issueData[key]; transaction.update(issueRef, issueData); } else transaction.set(issueRef, issueData);
         close = toList = true;
       } else if (outcome.action === 'back_to_chat') {
         const newEnds = Lifecycle.addDays(today, Lifecycle.EXTEND_DAYS);
@@ -3981,6 +3981,7 @@ function initTopicDetailViews() {
               expertiseDepth: disc.expertise_depth || "None"
             };
 
+            if (showArchivedTopic(currentDiscData, null)) return;
             modalBody.innerHTML = renderChatTopic(topicData);
             bindDetailViewButtons(titleText, disc, true);
 
@@ -4245,6 +4246,7 @@ function initTopicDetailViews() {
             };
 
             // Render topic detailed HTML
+            if (showArchivedTopic(currentDiscData, currentIssueData)) return;
             modalBody.innerHTML = renderVotingTopic(topicData);
             bindDetailViewButtons(titleText, Object.assign({}, issue, disc));
             bindChatMetaButtons(Object.assign({}, issue, disc));
@@ -4558,6 +4560,7 @@ function initTopicDetailViews() {
 
             currentDiscData = Object.assign({}, issue, discData); // For deadline modal, etc.
 
+            if (showArchivedTopic(currentDiscRaw, currentIssueRaw)) return;
             modalBody.innerHTML = renderTasksTopic(topicData);
             bindDetailViewButtons(titleText, Object.assign({}, issue, discData));
             bindChatMetaButtons(Object.assign({}, issue, discData));
@@ -6500,7 +6503,7 @@ function initTopicDetailViews() {
           return;
         }
 
-        
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -6577,7 +6580,7 @@ function initTopicDetailViews() {
           return;
         }
 
-        
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -6611,7 +6614,7 @@ function initTopicDetailViews() {
           return;
         }
 
-        
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -6653,7 +6656,7 @@ function initTopicDetailViews() {
           return;
         }
 
-        
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -6689,7 +6692,7 @@ function initTopicDetailViews() {
           return;
         }
 
-        
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -6748,7 +6751,7 @@ function initTopicDetailViews() {
           deadline: deadline
         };
 
-        
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -6802,7 +6805,7 @@ function initTopicDetailViews() {
            timestamp: formatDateWithSetting(new Date()) // e.g. "06.06.2026"
         };
 
-        
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -6876,7 +6879,7 @@ function initTopicDetailViews() {
              parent_id: parentId
           };
 
-          
+
 
           try {
             await db.runTransaction(async (transaction) => {
@@ -6910,7 +6913,7 @@ function initTopicDetailViews() {
              parent_id: parentId
           };
 
-          
+
 
           try {
             await db.runTransaction(async (transaction) => {
@@ -6968,7 +6971,7 @@ function initTopicDetailViews() {
         if (!textarea) return;
         const resultsText = textarea.value.trim();
 
-        
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -7045,7 +7048,7 @@ function initTopicDetailViews() {
           timestamp: formatDateWithSetting(new Date())
         };
 
-        
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -7109,7 +7112,7 @@ function initTopicDetailViews() {
         if (!textarea) return;
         const resultsText = textarea.value.trim();
 
-        
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -7134,7 +7137,7 @@ function initTopicDetailViews() {
     });
 
     async function toggleTaskOrCommentReaction(msgId, reactionType) {
-      
+
 
       if (msgId.startsWith('task_')) {
         const taskIdx = parseInt(msgId.substring(5), 10);
@@ -7859,6 +7862,18 @@ function initRealTimeDashboardSync(db, storedUid) {
   const archivedDiscussionIds = new Set();
   const archivedIssueIds = new Set();
   window.isTopicArchived = id => archivedDiscussionIds.has(id) || archivedIssueIds.has(id);
+  let allDiscussionDocs = [];
+  let relevantDiscussionIds = new Set();
+  function visibleChatDocs() {
+    return allDiscussionDocs.filter(doc => {
+      if (!relevantDiscussionIds.has(doc.id) || window.isTopicArchived(doc.id)) return false;
+      const data = doc.data();
+      const issueDoc = memberIssueDocs.get(doc.id);
+      const phase = Lifecycle.phaseOf(data, issueDoc ? issueDoc.data() : null);
+      return phase === 'chat' || (phase === 'inactive' && data.previous_status === 'discussion');
+    });
+  }
+
   let chatSortMode = 'new';
   const healedTopicIds = new Set();
 
@@ -8160,11 +8175,16 @@ function initRealTimeDashboardSync(db, storedUid) {
                   senderName = `User ${senderUid}`;
                 }
               }
-              db.collection("discussions").doc(topicId).update({
-                last_message_text: lastMsg.text || "",
-                last_message_sender_uid: senderUid.toString(),
-                last_message_sender_name: senderName,
-                last_message_timestamp: lastMsg.timestamp || new Date().toISOString()
+              const repairRef = db.collection("discussions").doc(topicId);
+              db.runTransaction(async tx => {
+                const current = await tx.get(repairRef);
+                if (!current.exists || current.data().status === 'archived' || window.isTopicArchived(topicId)) return;
+                tx.update(repairRef, {
+                  last_message_text: lastMsg.text || "",
+                  last_message_sender_uid: senderUid.toString(),
+                  last_message_sender_name: senderName,
+                  last_message_timestamp: lastMsg.timestamp || new Date().toISOString()
+                });
               }).catch(err => console.error("Error healing discussion document:", err));
             }
           }).catch(err => console.error("Error fetching last message for healing:", err));
@@ -8560,28 +8580,11 @@ function initRealTimeDashboardSync(db, storedUid) {
     snapshot.forEach(doc => { if (doc.data().status === 'archived') archivedDiscussionIds.add(doc.id); });
     const relevantIds = await getRelevantDiscussionIds(db, storedUid);
     archivedDiscussionIds.forEach(id => relevantIds.delete(id));
+    allDiscussionDocs = snapshot.docs;
+    relevantDiscussionIds = relevantIds;
     subscribeMemberIssues(relevantIds); // U2: the Voting and ToDo lists read these issues
     
-    const filteredDocs = [];
-    snapshot.forEach(doc => {
-      const data = doc.data();
-      const topicId = doc.id;
-      
-      if (data.status === 'archived' || archivedIssueIds.has(topicId)) return;
-      // L1: an expired chat stays listed ("Deadline passed") until the server's daily deadline run moves it.
-      if (data.status === 'inactive') {
-        if (data.previous_status !== 'discussion') {
-          return;
-        }
-      } else if (data.status === 'Voting') {
-        // closed as discussion (exclude from chat list)
-        return;
-      }
-      
-      if (relevantIds.has(topicId)) {
-        filteredDocs.push(doc);
-      }
-    });
+    const filteredDocs = visibleChatDocs();
 
     cachedChatDocs = filteredDocs;
     discussionsCount = filteredDocs.length;
@@ -8672,9 +8675,9 @@ function initRealTimeDashboardSync(db, storedUid) {
   };
 
   function applyMemberIssues() {
-    const oldChatCount = cachedChatDocs.length;
-    cachedChatDocs = cachedChatDocs.filter(doc => !window.isTopicArchived(doc.id));
-    if (oldChatCount !== cachedChatDocs.length) {
+    const oldChatKey = cachedChatDocs.map(doc => doc.id).join('|');
+    cachedChatDocs = visibleChatDocs();
+    if (oldChatKey !== cachedChatDocs.map(doc => doc.id).join('|')) {
       discussionsCount = cachedChatDocs.length;
       updateSummaryStrip();
       renderChatList();

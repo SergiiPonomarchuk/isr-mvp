@@ -1,0 +1,27 @@
+# D1 implementation evidence - 2026-11-14
+
+Scope: approved D1 section 9 on `codex/d1-guided-demo`, stacked on documentation PR #33. This is an in-progress implementation; not a completed final-population demonstration.
+
+## Completed checks
+
+- Read-only live metadata inventory: 82 issues, 194 discussions/publics, 3,295 members, 1,696 messages, four issue vectors. There are 112 discussion-only records; zero issue-only/public-without-topic records. No production write or model call.
+- Deterministic creator selection was exercised read-only on the final P2 population, respecting original estate populations, adult/parent/elderly/workplace/social constraints and arts/software skill evidence. This is selection validation, not generated content acceptance.
+- Disposable emulator `demo-d1` on 8285 uses real Check/Create/Join handler code and mock AI. Ten scenario records were created, including one hidden standby and the required chat/voting/task split; the independent Python checker reported zero numeric/structural differences. Fixtures include nonzero education and varied work-experience values.
+- A successful first Create response was deliberately lost. Resume recovered its exact durable draft result: no extra Check/public. Completed apply and dry reruns reported zero writes/requests/proposed archives. History roots, publics/members/messages and duplicate legacy messages are preserved and checked by fingerprints. Injected ISR/history drift was detected.
+- Archived legacy/discussion-only and standby records do not match or join; deadlines/tally leave them unchanged. Normal creation blocks standby activation, activation replays idempotently, and a concurrent normal Create versus activation leaves exactly one active flagship.
+- The installed Gemini SDK was exercised with a fake transport to verify that the opt-in emulator ledger counts actual requests and prevents dispatch past the ceiling; no real key or provider request was used. Private-loader behavior was tested with a dummy loader/value and no secret file.
+- Shared JS/browser/Python lifecycle fixtures include archive precedence. The actual frontend archive entry helper was run under a VM with stale cached entry cases. Frontend syntax, CRLF/final-CR preservation and task-mock removal were checked.
+
+Earlier full suites passed Node 107 with two optional integration skips and Python 118 with two existing skips. The isolated D1 run passed in 47.7 seconds; the U10 102-member/atomic-create regression passed in 21.3 seconds. These timings precede the final registration-time/text preservation check; the final status log records the rerun result.
+
+## Not yet completed
+
+No paid API call or named-place lookup in D1, no actual generated/reviewed content, no final-population seed, no real rerun, no named D1 snapshot/import verification, and no full browser walkthrough. Browser tools still fail to start; arrange a concrete manual preview after real preparation. No deploy, rules change, live seed/archive or production write by the agent.
+
+## Next attention gate
+
+Only the main checkout contains the local Gemini key. AGENTS.md requires asking before another folder needs it. `scripts/demo_runtime.py` is reviewable and requires explicit `--use-main-key-loader`; it runs the existing main loader in a private child, then passes the value in memory only. Author authorization is still needed before it is used. The approved request ceilings do not bypass that project-specific requirement.
+
+## Final pre-key checkpoint
+
+Final pre-key checkpoint (2026-11-14): Node 110 cases, 108 passed and two optional emulator skips; Python 119 run, two existing skips. Explicit real-handler D1 emulator test passed in 38.5 seconds, including normal flagship auto-registration, refusal to reseed after presentation, legacy text/registration-time preservation, history/numeric drift, lost-response recovery and concurrent standby/Create. U10 regression passed in 15.3 seconds, including 102-member joins and atomic creation. Request-ledger SDK transport and loader tests use dummy values; actual D1 paid requests/embedding texts/Nominatim lookups remain zero. Frontend CRLF/final-CR and whitespace checks passed. Final-population generated content, real seed/rerun, named snapshot/import and manual full-cycle acceptance are pending. Existing root Gemini loader has not been invoked for this worktree; author authorization is the next gate.
