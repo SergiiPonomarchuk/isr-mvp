@@ -1,6 +1,7 @@
 """Read-only D1 numeric, archive, membership and manifest verification."""
 from __future__ import annotations
 import argparse
+import json
 import math
 import sys
 from demo_common import ROOT,assert_known_topics,digest,load_json,save_json,target
