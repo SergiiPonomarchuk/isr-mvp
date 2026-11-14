@@ -4,7 +4,18 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: D1 plan #33 merged; implementation #34 reconciled, 2026-11-14
+## Current checkpoint: D1 merged; live rollout preparation and recovery PR #28, 2026-11-14
+
+- Author instructed `merge PR 33` and `merge PR 34`; both are merged as `2048912` and `9b9ce79`. Main CI passes. Clean detached deploy checkout `wt-main` is at `9b9ce79`; live still serves U10 `8466b13`.
+- D1 emulator AC1-AC4 and the author's winning-task review are accepted. Restored normal preview has 93 issues/205 discussions, 606 validated members and zero differences; disposable test issues are absent. Guide: http://127.0.0.1:5002/d1-guide. Both named seed-start and completed accepted snapshots remain untouched. No new Check/place calls are approved.
+- Author said `go` for live preparation. Recovery PR #28 is reconciled with D1 main; binary signed-zero restore/test behavior is unchanged. Only CHANGES/HANDOFF conflicted and both histories were preserved. Required suites, isolated synthetic recovery fixture and current-head CI are checked before requesting **merge PR 28**. No merge is authorized by `go`.
+- Read-only live inventory and preliminary dry plan passed: 82 issues, 194 discussions/publics, 3,295 members, 1,696 messages; 276 archive roots, ten scenarios left, zero writes/requests. All ten stored creator fingerprints validated. Live Hosting remains U10 `8466b13` (HTML/lifecycle normalized for CRLF, main.js exact). New [D1 live runbook](D1-LIVE-ROLLOUT.md) gives full PowerShell blocks; metadata evidence: `specs/demo/live-preflight-evidence.json`. Proposed new live ceiling is 15 Check pairs and two place lookups, zero content regeneration/profile re-embedding; not yet approved. Reconciled tests: Node 110 passed/two optional skips, Python 120 run/two optional skips, all six isolated SDK recovery tests passed and dedicated ports released.
+- Fresh private live backup is an author step because it includes credential-like profile fields. Agent inspects aggregate manifests/recovery results, not JSONL contents. Use a new live manifest/report folder; never reuse committed emulator `specs/demo/manifest.json` on live. Fresh recovery, exact live archive counts, deployment identity and a separately approved live request ceiling must precede live seeding. The forthcoming D1-specific runbook replaces no historical rollout evidence.
+- PR #29 embedding retry utility is separate; D1 rollout does not require rerunning profile embeddings. No production write, deployment, rules edit, secret read/copy or additional paid/model/place request in this preparation. Live AC5 remains pending.
+
+## Previous D1 acceptance checkpoint (historical)
+
+## D1 checkpoint: D1 plan #33 merged; implementation #34 reconciled, 2026-11-14
 
 - The author accepted the winning result and three tasks with "looks good - proceed". Normal flagship creation, duplicate/Open/Join (100 to 101), discussion/options, weighted vote, management threshold, stored winner and tasks have been rehearsed. The independent restored-state checker validates 11 scenario records including standby and 606 members with zero differences. See `specs/demo/full-cycle-evidence.json`.
 - Disposable separate-creation UI acceptance passed: same active title remains blocked with explanation; distinct title needs explanation; text and point edits invalidate Check; fresh Check/explanation enables the single Create. Real Create returned HTTP 200 with the explanation. Stored analysis/vector replay kept additional provider calls at zero; no new AI-quality claim. Final screenshot capture was blocked by browser URL verification; backend evidence is retained in `specs/demo/separate-creation-evidence.json`.
@@ -334,3 +345,19 @@ Shared archived lifecycle and UI/task-mock retirement implemented; initial Node 
 Archive lifecycle/UI/task-mock retirement, current-state transactional tally, resumable seed/check/content tools, guarded explicit standby promotion, local presenter guide and request ceilings are implemented. [Evidence](tasks/D1-emulator-report.md) distinguishes real handlers/mock AI from unstarted final-population acceptance. The first full tests and D1/U10 emulator regressions passed; final registration/text preservation and full reruns are recorded in the spec status log.
 
 Next: finish final checks/PR, then ask the author before invoking the existing main-checkout key loader for D1. The reviewable runtime passes its result only in private process memory and copies no secret file. Do not use it without that authorization. Then content review, real emulator seed/check/rerun, named snapshot/import and manual full-cycle acceptance remain. PR #33 and implementation PR require explicit merge instructions; approval of the plan does not merge them. No paid calls, live mutations, rules edits or deploys yet.
+
+## Earlier recovery-branch checkpoint (historical)
+
+## Current checkpoint: live P1/P2 and deployment verified, 2026-11-13
+
+- The author applied P1 and P2. Live read-only verification passed. P1 has zero further repairs/deletes/pending/changed inputs, 5,097 repaired work profiles and all 37 packs matching. P2 has all 9,150 profiles on plan, homes on 1,226 building points, zero held/missing/problems, no children owning property and matching packs.
+- The author deployed from clean `wt-main` at `a8a9df0`. All five functions are ACTIVE on Node 22. Three AI functions bind the Gemini secret. Live main page, JavaScript, styles and rules match the reviewed release. Firebase config matches the deployment checkout byte for byte, with only line-ending differences from the serving C checkout.
+- The API-free embedding preview needs 9,150 people / 29,395 texts / 294 requests. Its report estimates 1,080,590 tokens and about 46 minutes at the script's throttle. Historical configured rate implies about $0.16, subject to current billing. Next is the author's live embedding apply, then API-free post-check and A4 public migration.
+- Current reports are under `C:\isr-mvp\scratch\live-rollout-20261112-203337`. PR #28 remains subject to explicit merge authorization. The author requests the simplest, lowest-cost sufficient development model. Sol Medium suits this coordinated rollout.
+
+## Fresh live backup verified, awaiting author P1, 2026-11-12 (historical)
+
+- Recovery PR #27 merged at `a8a9df0`. The author opened the live window and confirmed Paid AI Studio project `isr-mvp-ai-dev` has more than $5 available. An exact monthly cap was not reported.
+- Fresh live archive `A:\ISR\mvp\dbbackup\20261112-203337`: 24,884 documents. The first rehearsal exposed a signed-zero change in the disposable emulator's JSON write endpoint. The fix in PR #28 passed read-back of every path and typed field. See [the recovery evidence](tasks/M1-firestore-recovery.md).
+- Local rollout reports are in `C:\isr-mvp\scratch\live-rollout-20261112-203337`, including prior deployment identifiers and the P1 preview. The preview found 8,803 updates, zero deletes, no changed/missing inputs and 37 packs to rebuild. The deploy checkout is clean at `a8a9df0` with locked dependencies installed.
+- The author runs P1 live apply. Verify its result read-only before the P2 preview, following [the rollout runbook](LIVE-ROLLOUT.md). PR #28 separately needs an explicit merge instruction.

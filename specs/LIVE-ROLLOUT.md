@@ -40,7 +40,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Backup incomplete; do not apply migrations' }
 An interrupted run may resume with the same path and `--resume`; confirm its manifest/target and completed collections before proceeding. Keep the old deployment references with this backup. Use a quiet backup window because the exporter reads collections over time. Check the manifest's source project, live target, completion time and counts. Rehearse the fresh archive before applying the migration. Use a checkout containing the reviewed recovery script and configuration. The preview checkout can stay at its release tag.
 
 ```powershell
-$isrRecoveryCheckout = 'A:\BackUp\isr-mvp\worktrees\wt-firestore-recovery'
+$isrRecoveryCheckout = 'A:\BackUp\isr-mvp\worktrees\wt-recovery-signed-zero'
 $isrRestore = Join-Path $isrRecoveryCheckout 'scripts\restore_firestore.py'
 $isrRecoveryConfig = Join-Path $isrRecoveryCheckout 'scripts\firebase-recovery.json'
 $isrRehearsal = 'python "{0}" --backup "{1}" --apply' -f $isrRestore, $isrBackup

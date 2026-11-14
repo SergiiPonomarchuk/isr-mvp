@@ -170,6 +170,7 @@ class Emulator:
         require(os.environ.get("FIRESTORE_EMULATOR_HOST") == HOST,
                 f"Set FIRESTORE_EMULATOR_HOST to the dedicated emulator at {HOST}.")
         self.http = http.client.HTTPConnection(HOST, timeout=120)
+        self.writer = None
 
     def post(self, method, body):
         self.http.request("POST", f"/v1/{ROOT}:{method}", wire_bytes(body),
@@ -179,9 +180,29 @@ class Emulator:
         require(response.status == 200, f"Emulator {method} failed (HTTP {response.status}).")
         return json.loads(raw)
 
-    def restore_batch(self, docs, expected):
+    def create_documents(self, docs):
+        # The emulator's JSON write endpoint changes -0.0 to +0.0.
+        # Send the typed values as binary protobuf over the fixed loopback channel.
+        import grpc
+        from google.cloud.firestore_v1.services.firestore.transports.grpc import FirestoreGrpcTransport
+        from google.cloud.firestore_v1.types import CommitRequest
+        from google.protobuf.json_format import ParseDict
+
+        if self.writer is None:
+            channel = grpc.insecure_channel(HOST, options=(("grpc.enable_http_proxy", 0),))
+            self.writer = FirestoreGrpcTransport(channel=channel)
+        request = CommitRequest(database=ROOT.removesuffix("/documents"))
         writes = [{"update": doc, "currentDocument": {"exists": False}} for doc in docs]
-        self.post("commit", {"writes": writes})
+        ParseDict({"writes": writes}, CommitRequest.pb(request))
+        self.writer.commit(request, timeout=120, metadata=(("authorization", "Bearer owner"),))
+
+    def close(self):
+        self.http.close()
+        if self.writer is not None:
+            self.writer.close()
+
+    def restore_batch(self, docs, expected):
+        self.create_documents(docs)
         remaining = {doc["name"] for doc in docs}
         for result in self.post("batchGet", {"documents": sorted(remaining)}):
             doc = result.get("found", {})
@@ -229,7 +250,7 @@ def recover(folder, apply):
             verified += len(docs)
         print(f"Restored and verified {verified} documents.", flush=True)
     finally:
-        emulator.http.close()
+        emulator.close()
 
 
 def main():

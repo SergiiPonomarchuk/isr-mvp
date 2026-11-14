@@ -1,0 +1,94 @@
+{
+  "date": "2026-11-14",
+  "d1_merge": "9b9ce79496d9a02a9ec10f5af8c2e724f0dd49b3",
+  "production_inventory": {
+    "issues": 82,
+    "discussions": 194,
+    "publics": 194,
+    "members": 3295,
+    "messages": 1696,
+    "issue_vectors": 4,
+    "orphans": {
+      "discussion_only": 112,
+      "issue_only": 0,
+      "public_without_topic": 0
+    },
+    "protected_counts": {
+      "user_packs": 37,
+      "user_vectors": 9150,
+      "users": 9151
+    }
+  },
+  "preliminary_live_dry_plan": {
+    "archive_documents": 276,
+    "requests": 0,
+    "scenarios_left": 10,
+    "writes": 0
+  },
+  "hosting": {
+    "date": "2026-11-14",
+    "expected_deployed_release": "8466b13",
+    "files": [
+      {
+        "path": "main.html",
+        "sha256": "7aabae5eec10573f1b8c989424617a4b64fabf470b8fdef6b9fdaa9fa4b7c3f0",
+        "matches_git_blob_exactly": false,
+        "matches_deployed_release": true,
+        "headers": {
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "no-cache"
+        }
+      },
+      {
+        "path": "js/main.js",
+        "sha256": "6b7fa2c11ce4af69cee67c72d0ccd4383297bfe69371fe9d180a11d0dde82b3b",
+        "matches_git_blob_exactly": true,
+        "matches_deployed_release": true,
+        "headers": {
+          "Content-Type": "text/javascript; charset=utf-8",
+          "Cache-Control": "no-cache"
+        }
+      },
+      {
+        "path": "js/lifecycle.js",
+        "sha256": "3d10105d3dbb1f63c9bd96f2c477d08a1664b6313502b14713a0e8b04cdf8085",
+        "matches_git_blob_exactly": false,
+        "matches_deployed_release": true,
+        "headers": {
+          "Content-Type": "text/javascript; charset=utf-8",
+          "Cache-Control": "no-cache"
+        }
+      }
+    ]
+  },
+  "recovery_implementation_git_blob": "408ff14589b1558241fa76201dcd994be503cf66",
+  "tests": {
+    "node_passed": 110,
+    "node_optional_skips": 2,
+    "python_run": 120,
+    "python_optional_skips": 2,
+    "isolated_recovery_tests_passed": 6,
+    "recovery_ports_closed": true
+  },
+  "proposed_live_budget": {
+    "check_pairs": 15,
+    "content_generation_requests": 0,
+    "profile_embedding_requests": 0,
+    "place_lookups": 2,
+    "approved": false
+  },
+  "completed_operations": {
+    "production_writes": 0,
+    "deployments": 0,
+    "provider_requests": 0
+  },
+  "pending": [
+    "explicit merge PR 28",
+    "live request-budget approval and billing confirmation",
+    "fresh private author backup",
+    "fresh full-archive recovery rehearsal",
+    "author deployment",
+    "author seed and live browser AC5"
+  ],
+  "journal_policy": "Fresh post-backup live manifest outside repository; never reuse committed emulator manifests."
+}

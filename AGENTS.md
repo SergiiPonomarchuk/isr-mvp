@@ -18,6 +18,7 @@ ISR MVP: an issue-specific weighted participation prototype. It uses Firebase/Fi
 ### When to involve the author
 
 - Run objective checks yourself, including browser checks on the emulator and permitted read-only checks on live. When acceptance needs human judgment, give the author the emulator or live URL, steps to reproduce, and what to assess.
+- Recommend the simplest, lowest-cost development model and reasoning level sufficient for the current task. Suggest an upgrade when the task needs it.
 - If the next task warrants a different development AI model or reasoning level, recommend the selection and explain why before starting the work that needs it. The author controls the switch. Changing the application’s Gemini models is a separate project decision.
 - For a decision, give the author the relevant result, your recommendation and the specific choice needed. For an author-only action such as a merge instruction, deploy or live migration, finish the preparation and give the exact next instruction. Resume from that point when the author responds.
 
