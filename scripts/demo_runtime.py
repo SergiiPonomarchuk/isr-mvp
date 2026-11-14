@@ -60,6 +60,11 @@ def main(argv=None):
         if not launcher:parser.error('Firebase CLI not found')
         firebase_js=Path(launcher).resolve().parent/'node_modules/firebase-tools/lib/bin/firebase.js'
         if not firebase_js.is_file():parser.error('Firebase CLI entry point not found; inspect the installed CLI before launch')
+        if not (ROOT/'functions/node_modules/firebase-functions').is_dir():
+            parser.error('Firebase discovery drops NODE_PATH; install the lockfile dependencies in this worktree first')
+        env['D1_FIREBASE_CLI_ENTRY']=str(firebase_js)
+        bridge=str(ROOT/'functions/tools/d1-secret-env.cjs').replace('\\','/')
+        env['NODE_OPTIONS']+=f' --require="{bridge}"'
         command=['node',str(firebase_js),'emulators:start','--only','firestore,functions,hosting','--project',args.project,
             '--import='+str(snapshot.resolve()),'--export-on-exit='+str(saved)]
         # Java's shim may fork an untracked child; use the actual installed JDK.

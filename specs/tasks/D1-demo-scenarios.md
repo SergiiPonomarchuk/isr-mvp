@@ -102,6 +102,8 @@ The roadmap estimates 4-6 developer-days.
 
 ## 8. Status log
 
+- 2026-11-14 real-run checkpoint: author "run D1 please" authorized the existing loader in memory. Ten scenarios generated/reviewed (10 text requests, 6,694 reported total tokens, one reverse lookup); editorial corrections recorded without more calls. Full-population dry plan proposes archiving 276 topic roots. Initial Check reached an unloaded function, with zero transport ledger requests. Installed lockfile dependencies on A (Firebase discovery drops NODE_PATH) and added a tested emulator-only in-memory secret adapter; no secret file copied/read by the adapter. Node 109 passed/two optional skips; Python 119 run/two existing skips. Resume same journal after the saved emulator checkpoint; no production writes.
+
 - 2026-11-10: plan drafted (agent) from the roadmap and a read-only look at the emulator's population; waits for decisions 5.1-5.5.
 - 2026-11-10: the author approved decisions 5.1-5.5 as recommended ("Five decisions: ok"). The author also asked for homes split into real buildings with realistic spacing, and for property entries; this is spec P2, which D1 now waits for.
 

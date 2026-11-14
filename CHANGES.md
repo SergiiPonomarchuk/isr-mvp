@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-14 - D1 real generation and runtime repair
+
+Author authorized the existing key loader in memory. Generated and reviewed all ten scenarios with ten text requests (6,694 reported total tokens) and one reverse street lookup; recorded editorial corrections without extra requests. Emulator dry plan preserved 276 legacy topic roots. Initial Check hit an unloaded local function (zero model dispatches); fixed Firebase discovery dependency setup and added an emulator-only memory-secret bridge that refuses unknown secrets. Node 109 passed/two optional skips; Python 119 run/two existing skips. Full real seed, snapshot and manual acceptance remain in progress. No production mutation or secret file copying.
+
 ## 2026-11-14 - D1 seed/presenter tooling and guarded emulator verification
 
 Added one-time stored content preparation, durable single-writer seed/check journals, original-history fingerprints, current-state transactional tally, race-safe standby promotion and normal flagship registration. Retired task mocks and fixed phase/cache exclusions, preserving original registration time/text through voting transitions. Added actual SDK request-ceiling transport tests, dummy private-loader tests, and complete mocked-AI real-handler emulator seed/recovery/race checks. Node 108 passed/two optional skips; Python 119 run/two existing skips; explicit D1/U10 emulator scenarios passed. Real content, final-population seed, snapshot and manual cycle remain pending key-loader authorization. No paid calls or live data changes.
