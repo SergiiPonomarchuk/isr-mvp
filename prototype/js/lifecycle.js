@@ -106,10 +106,11 @@
 
   /**
    * Phase of a topic from its discussion and issue documents (either may be null):
-   * "voting", "todo", "inactive" or "chat".
+   * "archived", "voting", "todo", "inactive" or "chat".
    */
   function phaseOf(disc, issue) {
     var ds = disc ? disc.status : undefined, is = issue ? issue.status : undefined;
+    if (is === "archived" || ds === "archived") return "archived";
     if (is === "in_process" || ds === "Voting") return "voting";
     if (is === "approved" || is === "tasks" || ds === "approved") return "todo";
     if (is === "inactive" || ds === "inactive") return "inactive";
@@ -156,6 +157,7 @@
    * Order as built: cancel, +1 week, start voting / back to chat / finish voting.
    */
   function managementOutcome(input) {
+    if (input.status === "archived" || input.phase === "archived") return {pool: 0, buttons: [], support: {}, share: {}, blocked: {}, action: null};
     var p = pool(input.isrByUid);
     var inactive = input.status === "inactive";
     var deadlineCanceled = inactive && input.cancelReason === "deadline";

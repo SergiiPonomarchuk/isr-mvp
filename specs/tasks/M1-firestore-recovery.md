@@ -19,6 +19,8 @@ The November 12 pre-migration backup must round-trip Firestore doubles of both s
 
 ## Status log
 
+- 2026-11-14 D1 rollout preparation: reconciled PR #28 onto merged D1 main `9b9ce79`; only CHANGES/HANDOFF conflicted. Binary signed-zero restore implementation and independent fixture are unchanged. Combined Node/Python suites, isolated synthetic SDK recovery and CI checked before separate `merge PR 28` authorization. Fresh private archive remains an author action; no production writes/provider calls.
+
 - 2026-11-12 rollout window: the fresh read-only backup at `A:\ISR\mvp\dbbackup\20261112-203337` contained **24,884 documents in ten manifest entries**, including 1,695 nested messages. The first rehearsal detected a signed-zero mismatch in a microcommunity. An independent synthetic probe reproduced the sign change with JSON writes and confirmed that binary writes preserve it. After the fix, **all 24,884 paths and typed document bodies matched**, and the disposable emulator released its ports. All six SDK/recovery fixture tests passed. The normal suites passed (98 Node tests, 111 Python tests with two optional skips).
 
 - 2026-11-12: Full rehearsal with the private `2026-11-07-pre-migration` archive from `A:\ISR\mvp\dbbackup`. Validated, created and read back **24,783 of 24,783 documents in nine manifest entries**, including 1,694 nested messages, 9,150 vector documents and 9,151 user documents. All paths and typed field digests matched. This is the historical archive. The author repeats the procedure on the fresh pre-migration backup.

@@ -1,0 +1,474 @@
+{
+  "date": "2026-11-14",
+  "environment": "emulator 127.0.0.1:8080",
+  "issue_id": "MaqfWmIkAmJpsjouSTzM",
+  "issue_status": "approved",
+  "discussion_status": "approved",
+  "winner": "Emergency Locksmith Service",
+  "winner_index": 0,
+  "option_scores": [
+    31.117,
+    0
+  ],
+  "counted_votes": 28,
+  "excluded_votes": [],
+  "voted_isr": 31.116999999999994,
+  "pool_isr": 101.009,
+  "tasks": [
+    {
+      "id": 1,
+      "step": "Contact local locksmith service",
+      "in_charge_uid": "2",
+      "in_charge_name": "Christine Bowman",
+      "status": "in_process",
+      "deadline": null
+    },
+    {
+      "id": 2,
+      "step": "Authorize emergency call-out",
+      "in_charge_uid": "2",
+      "in_charge_name": "Christine Bowman",
+      "status": "in_process",
+      "deadline": null
+    },
+    {
+      "id": 3,
+      "step": "Verify installation and test keys",
+      "in_charge_uid": "2",
+      "in_charge_name": "Christine Bowman",
+      "status": "in_process",
+      "deadline": null
+    }
+  ],
+  "verification": {
+    "members": 606,
+    "problems": [],
+    "scenarios": 11,
+    "tolerance": 0.00100001,
+    "visible_scenarios_before_flagship": 10
+  },
+  "method": "Author option vote plus 27 synthetic option votes through UI. Two initial Finish Voting supports through UI; remaining subthreshold synthetic support prepared with canonical lifecycle helper after emulator memory pressure. Final 30.9% crossing through normal UI and desktop confirmation. Server trigger stored winner and tasks.",
+  "support_preparation": {
+    "dry": {
+      "emulator": "127.0.0.1:8080",
+      "issue_id": "MaqfWmIkAmJpsjouSTzM",
+      "applied": false,
+      "prior_votes": {
+        "2774": "finish_voting",
+        "3294": "finish_voting"
+      },
+      "added_uids": [
+        "3263",
+        "2452",
+        "4868",
+        "4030",
+        "4515",
+        "3734",
+        "3075",
+        "2505",
+        "3786",
+        "2345",
+        "3708",
+        "4012",
+        "3065",
+        "3241",
+        "2627",
+        "719",
+        "1962",
+        "2326",
+        "3795",
+        "108",
+        "2085",
+        "3020",
+        "3088",
+        "123",
+        "2564"
+      ],
+      "prepared_support": 30.118,
+      "pool": 101.00900000000003,
+      "prepared_share": 0.29817145006880563,
+      "final_uid": "3778",
+      "final_support": 31.171999999999997,
+      "final_share": 0.30860616380718536,
+      "option_voters": 28,
+      "option_tally": {
+        "scores": [
+          31.116999999999994,
+          0
+        ],
+        "counted": [
+          {
+            "uid": "108",
+            "option": 0,
+            "weight": 1.073
+          },
+          {
+            "uid": "123",
+            "option": 0,
+            "weight": 1.065
+          },
+          {
+            "uid": "1962",
+            "option": 0,
+            "weight": 1.085
+          },
+          {
+            "uid": "2",
+            "option": 0,
+            "weight": 0.999
+          },
+          {
+            "uid": "2085",
+            "option": 0,
+            "weight": 1.068
+          },
+          {
+            "uid": "2326",
+            "option": 0,
+            "weight": 1.082
+          },
+          {
+            "uid": "2345",
+            "option": 0,
+            "weight": 1.12
+          },
+          {
+            "uid": "2452",
+            "option": 0,
+            "weight": 1.187
+          },
+          {
+            "uid": "2505",
+            "option": 0,
+            "weight": 1.139
+          },
+          {
+            "uid": "2564",
+            "option": 0,
+            "weight": 1.062
+          },
+          {
+            "uid": "2627",
+            "option": 0,
+            "weight": 1.09
+          },
+          {
+            "uid": "2774",
+            "option": 0,
+            "weight": 1.231
+          },
+          {
+            "uid": "3020",
+            "option": 0,
+            "weight": 1.067
+          },
+          {
+            "uid": "3065",
+            "option": 0,
+            "weight": 1.099
+          },
+          {
+            "uid": "3075",
+            "option": 0,
+            "weight": 1.146
+          },
+          {
+            "uid": "3088",
+            "option": 0,
+            "weight": 1.067
+          },
+          {
+            "uid": "3241",
+            "option": 0,
+            "weight": 1.097
+          },
+          {
+            "uid": "3263",
+            "option": 0,
+            "weight": 1.205
+          },
+          {
+            "uid": "3294",
+            "option": 0,
+            "weight": 1.056
+          },
+          {
+            "uid": "3708",
+            "option": 0,
+            "weight": 1.11
+          },
+          {
+            "uid": "3734",
+            "option": 0,
+            "weight": 1.153
+          },
+          {
+            "uid": "3786",
+            "option": 0,
+            "weight": 1.132
+          },
+          {
+            "uid": "3795",
+            "option": 0,
+            "weight": 1.081
+          },
+          {
+            "uid": "4012",
+            "option": 0,
+            "weight": 1.101
+          },
+          {
+            "uid": "4030",
+            "option": 0,
+            "weight": 1.171
+          },
+          {
+            "uid": "4515",
+            "option": 0,
+            "weight": 1.156
+          },
+          {
+            "uid": "4868",
+            "option": 0,
+            "weight": 1.186
+          },
+          {
+            "uid": "719",
+            "option": 0,
+            "weight": 1.089
+          }
+        ],
+        "excluded": [],
+        "winner": 0,
+        "note": ""
+      }
+    },
+    "apply": {
+      "emulator": "127.0.0.1:8080",
+      "issue_id": "MaqfWmIkAmJpsjouSTzM",
+      "applied": true,
+      "prior_votes": {
+        "108": "finish_voting",
+        "123": "finish_voting",
+        "719": "finish_voting",
+        "1962": "finish_voting",
+        "2085": "finish_voting",
+        "2326": "finish_voting",
+        "2345": "finish_voting",
+        "2452": "finish_voting",
+        "2505": "finish_voting",
+        "2564": "finish_voting",
+        "2627": "finish_voting",
+        "2774": "finish_voting",
+        "3020": "finish_voting",
+        "3065": "finish_voting",
+        "3075": "finish_voting",
+        "3088": "finish_voting",
+        "3241": "finish_voting",
+        "3263": "finish_voting",
+        "3294": "finish_voting",
+        "3708": "finish_voting",
+        "3734": "finish_voting",
+        "3786": "finish_voting",
+        "3795": "finish_voting",
+        "4012": "finish_voting",
+        "4030": "finish_voting",
+        "4515": "finish_voting",
+        "4868": "finish_voting"
+      },
+      "added_uids": [],
+      "prepared_support": 30.118,
+      "pool": 101.00900000000003,
+      "prepared_share": 0.29817145006880563,
+      "final_uid": "3778",
+      "final_support": 31.171999999999997,
+      "final_share": 0.30860616380718536,
+      "option_voters": 28,
+      "option_tally": {
+        "scores": [
+          31.116999999999994,
+          0
+        ],
+        "counted": [
+          {
+            "uid": "108",
+            "option": 0,
+            "weight": 1.073
+          },
+          {
+            "uid": "123",
+            "option": 0,
+            "weight": 1.065
+          },
+          {
+            "uid": "1962",
+            "option": 0,
+            "weight": 1.085
+          },
+          {
+            "uid": "2",
+            "option": 0,
+            "weight": 0.999
+          },
+          {
+            "uid": "2085",
+            "option": 0,
+            "weight": 1.068
+          },
+          {
+            "uid": "2326",
+            "option": 0,
+            "weight": 1.082
+          },
+          {
+            "uid": "2345",
+            "option": 0,
+            "weight": 1.12
+          },
+          {
+            "uid": "2452",
+            "option": 0,
+            "weight": 1.187
+          },
+          {
+            "uid": "2505",
+            "option": 0,
+            "weight": 1.139
+          },
+          {
+            "uid": "2564",
+            "option": 0,
+            "weight": 1.062
+          },
+          {
+            "uid": "2627",
+            "option": 0,
+            "weight": 1.09
+          },
+          {
+            "uid": "2774",
+            "option": 0,
+            "weight": 1.231
+          },
+          {
+            "uid": "3020",
+            "option": 0,
+            "weight": 1.067
+          },
+          {
+            "uid": "3065",
+            "option": 0,
+            "weight": 1.099
+          },
+          {
+            "uid": "3075",
+            "option": 0,
+            "weight": 1.146
+          },
+          {
+            "uid": "3088",
+            "option": 0,
+            "weight": 1.067
+          },
+          {
+            "uid": "3241",
+            "option": 0,
+            "weight": 1.097
+          },
+          {
+            "uid": "3263",
+            "option": 0,
+            "weight": 1.205
+          },
+          {
+            "uid": "3294",
+            "option": 0,
+            "weight": 1.056
+          },
+          {
+            "uid": "3708",
+            "option": 0,
+            "weight": 1.11
+          },
+          {
+            "uid": "3734",
+            "option": 0,
+            "weight": 1.153
+          },
+          {
+            "uid": "3786",
+            "option": 0,
+            "weight": 1.132
+          },
+          {
+            "uid": "3795",
+            "option": 0,
+            "weight": 1.081
+          },
+          {
+            "uid": "4012",
+            "option": 0,
+            "weight": 1.101
+          },
+          {
+            "uid": "4030",
+            "option": 0,
+            "weight": 1.171
+          },
+          {
+            "uid": "4515",
+            "option": 0,
+            "weight": 1.156
+          },
+          {
+            "uid": "4868",
+            "option": 0,
+            "weight": 1.186
+          },
+          {
+            "uid": "719",
+            "option": 0,
+            "weight": 1.089
+          }
+        ],
+        "excluded": [],
+        "winner": 0,
+        "note": ""
+      }
+    }
+  },
+  "model_usage_after": {
+    "embedding": 15,
+    "nominatim": 1,
+    "text": 15
+  },
+  "proof": "C:/isr-mvp/scratch/d1-winning-tasks.png",
+  "author_final_task_review": {
+    "status": "accepted",
+    "date": "2026-11-14",
+    "author_message": "looks good - proceed"
+  },
+  "separate_creation_disposable_rehearsal": {
+    "status": "passed",
+    "evidence": "separate-creation-evidence.json"
+  },
+  "live_acceptance": "pending",
+  "recovery": {
+    "replayed": true,
+    "counted_votes": 28,
+    "voted_isr": 31.116999999999994,
+    "pool": 101.00900000000003,
+    "finish_share": 0.30860616380718536,
+    "issue_id": "MaqfWmIkAmJpsjouSTzM",
+    "reason": "Emulator stopped before final export; restore existing Voting checkpoint and replay verified recorded inputs only; no AI calls",
+    "verified_after_replay": true
+  },
+  "restored_independent_check": {
+    "members": 606,
+    "problems": [],
+    "scenarios": 11,
+    "tolerance": 0.00100001,
+    "visible_scenarios_before_flagship": 10
+  },
+  "accepted_snapshot": "A:/BackUp/isr-mvp/emulator-snapshots/2026-11-14-d1-author-accepted-7259ca3"
+}

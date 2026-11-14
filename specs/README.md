@@ -102,6 +102,9 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U5-esc-and-geotag](tasks/U5-esc-and-geotag.md) | DONE on live 2026-11-10 (PR 15); the issue location from the Analyzer follows after A4 | UI |
 | [U6-issue-location](tasks/U6-issue-location.md) | merged PR #21 on 2026-11-12; AC2-AC5 passed and saved; combined Node 88 / Python 105 (one skip); live pending author | UI, 07 (Analyzer), 03 (G) |
 | [U7-page-cache](tasks/U7-page-cache.md) | DONE on live 2026-11-11 (PR 17): every hosting response is sent with `no-cache` | UI, 13 (hosting) |
+| [D1-demo-scenarios](tasks/D1-demo-scenarios.md) | Section 9 approved; tooling/mocked-emulator checks pass; real-data acceptance pending | Demo data, lifecycle, UI |
+| [U10-similar-active-issues](tasks/U10-similar-active-issues.md) | IMPLEMENTED; author emulator/live Check acceptance recorded | Analyzer, UI, membership |
+| [U9-member-preview-popup](tasks/U9-member-preview-popup.md) | Count labeling and immediate member popup rendering implemented, deployment pending | UI, Analyzer |
 | [U8-map-tiles](tasks/U8-map-tiles.md) | merged PR #22 on 2026-11-12; AC1/AC2 passed and saved; combined Node 91 / Python 105 (one skip); live AC3 pending author | UI |
 | [P2-homes-and-property](tasks/P2-homes-and-property.md) | merged PR #23 on 2026-11-12; emulator AC2-AC4 pass on A5 PR #24; coordinated A5 deployment required; live AC5 pending author | 02, 03 (G), 06 (D) |
 | [A1b-expertise-placeholder](tasks/A1b-expertise-placeholder.md) | DONE: merged (PR 13), applied on live 2026-11-09 (3 publics, 150 members) and checked | 02, 04, 06 |
@@ -176,4 +179,5 @@ The ids come from `tasks/S0-inventory-report.md` §3, where each contradiction i
 | C-43 | IF header describes an uncommitted tree | 11 | resolved (PD-6: audited state is `0620f27`) |
 | C-44 | Six-collection matrix vs real collections | 02 / 14 | open |
 | C-45 | snake_case rule vs camelCase fields | 02 / 14 | open |
+| C-47 | Similar registered active issues at Check | [U10](tasks/U10-similar-active-issues.md) | implemented; emulator and live Check accepted |
 | C-46 | AAuth, logging, encryption described but absent | 09 | partly decided (PD-5 defines gISR and AAuth). R0: rules stay open until 2027-06-30 except `issue_drafts` (server only); real access rules are roadmap stage 5 |

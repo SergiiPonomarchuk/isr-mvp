@@ -1,0 +1,794 @@
+{
+  "creators": {
+    "D1-01": {
+      "anchor": "osbb 2, h12",
+      "location": [
+        47.593671,
+        7.621699
+      ],
+      "name": "Christine Bowman",
+      "selection_input_sha256": "14bf572ba30dfece3952aa5bbfe22559b7ca1471692aa21661dd9221a1b3dcf6",
+      "uid": "2"
+    },
+    "D1-02": {
+      "anchor": "townhouse 1, house 188",
+      "location": [
+        47.593912,
+        7.627325
+      ],
+      "name": "Michael Sherman",
+      "selection_input_sha256": "a3e7b79de1214afa2aa10b5a6eaef86bda76e39b00f342093bdf428a0dfeb86e",
+      "uid": "5"
+    },
+    "D1-03": {
+      "anchor": "osbb 1, h6",
+      "location": [
+        47.590114,
+        7.612
+      ],
+      "name": "Joshua Moore",
+      "selection_input_sha256": "44335ae3a2e2a9a5a39b2eb615df194be2acef1cdfc07e3817b1b8549535ad4a",
+      "uid": "4"
+    },
+    "D1-04": {
+      "anchor": "osbb 1, h2",
+      "location": [
+        47.590743,
+        7.612
+      ],
+      "name": "Sarah Watson",
+      "selection_input_sha256": "760fd3dd43a6a0eb76047d447e1db4a17e93fad58233baae66344efdf019af8a",
+      "uid": "3"
+    },
+    "D1-05": {
+      "anchor": "Argo Industry",
+      "location": [
+        47.601,
+        7.618
+      ],
+      "name": "Liliana Geiger",
+      "selection_input_sha256": "46144b919db904923b13ea9673f6cde2a86ae07e36172ef003fa3f311e0d2bb0",
+      "uid": "1"
+    },
+    "D1-06": {
+      "anchor": "townhouse 1, house 1557",
+      "location": [
+        47.589888,
+        7.624981
+      ],
+      "name": "Emily Brown",
+      "selection_input_sha256": "8f684e7d4edb2a19bb8c7e5ec1087e42ab95d86b67058a5a0366566d3f70621a",
+      "uid": "10"
+    },
+    "D1-07": {
+      "anchor": "Quill Lane 3",
+      "location": [
+        47.555461,
+        7.606584
+      ],
+      "name": "Lawrence Evans",
+      "selection_input_sha256": "faf5a1d57a357b56f78faa13fdf5ad09b993de1c8f0534ef2ce1c4f61bbaca88",
+      "uid": "21"
+    },
+    "D1-08": {
+      "anchor": "Quill Lane 1",
+      "location": [
+        47.555466,
+        7.605061
+      ],
+      "name": "Liliana Geiger",
+      "selection_input_sha256": "46144b919db904923b13ea9673f6cde2a86ae07e36172ef003fa3f311e0d2bb0",
+      "uid": "1"
+    },
+    "D1-09": {
+      "anchor": "osbb 2, h3",
+      "location": [
+        47.594929,
+        7.6209
+      ],
+      "name": "Vincent Martinez",
+      "selection_input_sha256": "dc453898a0e81a8721ef61d66e59f4288a834a850ac2003b70c52467a59e8f5a",
+      "uid": "222"
+    },
+    "D1-10": {
+      "anchor": "Quill Lane 1",
+      "location": [
+        47.555466,
+        7.605061
+      ],
+      "name": "Liliana Geiger",
+      "selection_input_sha256": "46144b919db904923b13ea9673f6cde2a86ae07e36172ef003fa3f311e0d2bb0",
+      "uid": "1"
+    }
+  },
+  "editorial_review": {
+    "additional_requests": 0,
+    "changes": [
+      "D1-03: safety closure precedes repair and reopening",
+      "D1-05: collective on-site shift decision, not personal emergency or remote work",
+      "D1-07: online participation, no invented physical workplace or calendar quarter",
+      "D1-10: city-wide allocation, not only creator neighbourhood",
+      "D1-02: preserve successful full street/city/country registration clarification for future plans"
+    ],
+    "date": "2026-11-14",
+    "original_scenarios_sha256": "40a7f2487ece6febc371eaac39d1211840538b9cb648a9bece78bcb54e6f02ac",
+    "reviewed_scenarios_sha256": "3881531c1e6eede8064679a0a9e0e4b0c23a9050c2d31a3068944a55741d677c"
+  },
+  "generation": {
+    "D1-01": {
+      "estimated_prompt_tokens": 301,
+      "model": "gemini-3.1-flash-lite",
+      "prompt_sha256": "373237c545b897d922b31f2d65963bdd5bade22e51fa9b128b6f5f988f1b5cb5",
+      "usage": {
+        "candidatesTokenCount": 402,
+        "promptTokenCount": 263,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 263
+          }
+        ],
+        "serviceTier": "standard",
+        "totalTokenCount": 665
+      }
+    },
+    "D1-02": {
+      "estimated_prompt_tokens": 310,
+      "model": "gemini-3.1-flash-lite",
+      "prompt_sha256": "77037b50175b2e2121a1d6c26053da8ca225b0879c73f99619c2940263aa044a",
+      "usage": {
+        "candidatesTokenCount": 395,
+        "promptTokenCount": 271,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 271
+          }
+        ],
+        "serviceTier": "standard",
+        "totalTokenCount": 666
+      }
+    },
+    "D1-03": {
+      "estimated_prompt_tokens": 300,
+      "model": "gemini-3.1-flash-lite",
+      "prompt_sha256": "878c8ea280ec3350b4d3008207fee5830d2af512195844c90c933b76f792c511",
+      "usage": {
+        "candidatesTokenCount": 385,
+        "promptTokenCount": 259,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 259
+          }
+        ],
+        "serviceTier": "standard",
+        "totalTokenCount": 644
+      }
+    },
+    "D1-04": {
+      "estimated_prompt_tokens": 304,
+      "model": "gemini-3.1-flash-lite",
+      "prompt_sha256": "dc76b7753caddcb44d12253722f4ed6149eea06848a340bd38e525c37774c0f3",
+      "usage": {
+        "candidatesTokenCount": 419,
+        "promptTokenCount": 263,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 263
+          }
+        ],
+        "serviceTier": "standard",
+        "totalTokenCount": 682
+      }
+    },
+    "D1-05": {
+      "estimated_prompt_tokens": 304,
+      "model": "gemini-3.1-flash-lite",
+      "prompt_sha256": "15ff17661b56a8648bbff5bfb79503d99207a1828dbae7f25b7816b40da3431d",
+      "usage": {
+        "candidatesTokenCount": 404,
+        "promptTokenCount": 247,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 247
+          }
+        ],
+        "serviceTier": "standard",
+        "totalTokenCount": 651
+      }
+    },
+    "D1-06": {
+      "estimated_prompt_tokens": 312,
+      "model": "gemini-3.1-flash-lite",
+      "prompt_sha256": "5b062d25e10c1387c45b36bdae2c812308427fe087b768d25201cb0143679fff",
+      "usage": {
+        "candidatesTokenCount": 411,
+        "promptTokenCount": 270,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 270
+          }
+        ],
+        "serviceTier": "standard",
+        "totalTokenCount": 681
+      }
+    },
+    "D1-07": {
+      "estimated_prompt_tokens": 304,
+      "model": "gemini-3.1-flash-lite",
+      "prompt_sha256": "eafab26b548eb9532c81839ba50b1400fbf020fa9e4369f8e16d61b3396eb91d",
+      "usage": {
+        "candidatesTokenCount": 411,
+        "promptTokenCount": 253,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 253
+          }
+        ],
+        "serviceTier": "standard",
+        "totalTokenCount": 664
+      }
+    },
+    "D1-08": {
+      "estimated_prompt_tokens": 301,
+      "model": "gemini-3.1-flash-lite",
+      "prompt_sha256": "73164cdef0857e1c8d091f938e9ffb11be6fbc20439481bfb8272a09572a7b72",
+      "usage": {
+        "candidatesTokenCount": 425,
+        "promptTokenCount": 251,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 251
+          }
+        ],
+        "serviceTier": "standard",
+        "totalTokenCount": 676
+      }
+    },
+    "D1-09": {
+      "estimated_prompt_tokens": 297,
+      "model": "gemini-3.1-flash-lite",
+      "prompt_sha256": "88d00ff35c019943a4b543810d1faef74d01f2c333fb786111ba51d99ad8cbff",
+      "usage": {
+        "candidatesTokenCount": 416,
+        "promptTokenCount": 258,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 258
+          }
+        ],
+        "serviceTier": "standard",
+        "totalTokenCount": 674
+      }
+    },
+    "D1-10": {
+      "estimated_prompt_tokens": 303,
+      "model": "gemini-3.1-flash-lite",
+      "prompt_sha256": "e94b4b7bc399f21424ad4405763d3f03db7186bde6164d0397e2538126736c37",
+      "usage": {
+        "candidatesTokenCount": 440,
+        "promptTokenCount": 251,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 251
+          }
+        ],
+        "serviceTier": "standard",
+        "totalTokenCount": 691
+      }
+    }
+  },
+  "named_place": "Hauptstra\u00dfe, Weil am Rhein, Deutschland",
+  "project": "project-a3d59130-5adf-4677-9e2",
+  "scenarios": {
+    "D1-01": {
+      "description": "The main entrance lock at my home building osbb 2, h12 is jammed, preventing residents from entering or securing the building properly.",
+      "example_id": 1,
+      "messages": [
+        {
+          "author": "creator",
+          "text": "The main entrance lock at my home building osbb 2, h12 is completely broken. It won't turn with the key, leaving the building unsecured."
+        },
+        {
+          "author": "member",
+          "text": "I noticed this earlier today. We need to get a locksmith out here immediately to prevent unauthorized access."
+        },
+        {
+          "author": "creator",
+          "text": "Agreed. I will coordinate with the maintenance team to get this resolved by end of day."
+        }
+      ],
+      "options": [
+        {
+          "budget": "150 credits",
+          "funding_source": "Building Maintenance Fund",
+          "resources_needed": [
+            "Professional locksmith",
+            "Replacement heavy-duty cylinder"
+          ],
+          "steps": [
+            "Contact local locksmith service",
+            "Authorize emergency call-out",
+            "Verify installation and test keys"
+          ],
+          "title": "Emergency Locksmith Service"
+        },
+        {
+          "budget": "30 credits",
+          "funding_source": "Petty Cash",
+          "resources_needed": [
+            "Lubricant spray",
+            "Basic tool kit"
+          ],
+          "steps": [
+            "Apply lubricant to the mechanism",
+            "Attempt to realign the strike plate",
+            "Test functionality"
+          ],
+          "title": "DIY Temporary Repair"
+        }
+      ],
+      "purpose": "House entrance lock broken",
+      "title": "Repair of broken main entrance lock"
+    },
+    "D1-02": {
+      "description": "A deep, widening pothole has formed on Hauptstra\u00dfe, Weil am Rhein, posing a significant risk to cyclists and vehicles near my home.",
+      "example_id": 21,
+      "messages": [
+        {
+          "author": "creator",
+          "text": "I have identified a dangerous pothole on Hauptstra\u00dfe near my home. It is deep enough to cause tire damage or accidents."
+        },
+        {
+          "author": "member",
+          "text": "Acknowledged. I will mark the coordinates for the maintenance crew to inspect the site."
+        },
+        {
+          "author": "creator",
+          "text": "Thank you. Please prioritize this as traffic is heavy during peak hours."
+        }
+      ],
+      "options": [
+        {
+          "budget": "250 EUR",
+          "funding_source": "Municipal Infrastructure Fund",
+          "resources_needed": [
+            "Cold patch asphalt",
+            "Compactor",
+            "Safety cones"
+          ],
+          "steps": [
+            "Clear debris from the pothole",
+            "Fill with asphalt material",
+            "Compact the surface"
+          ],
+          "title": "Emergency Asphalt Patch"
+        },
+        {
+          "budget": "1200 EUR",
+          "funding_source": "Road Maintenance Budget",
+          "resources_needed": [
+            "Asphalt milling machine",
+            "Paving crew",
+            "Traffic diversion signage"
+          ],
+          "steps": [
+            "Mill the damaged section",
+            "Apply bonding agent",
+            "Lay new asphalt layer"
+          ],
+          "title": "Full Surface Resurfacing"
+        }
+      ],
+      "purpose": "Pothole on local street",
+      "registration_clarification": "The complete named street reference is Hauptstra\u00dfe, Weil am Rhein, Deutschland. Include the city and country as part of the named place to distinguish streets with the same name; this is not the home address.",
+      "title": "Repair hazardous pothole on Hauptstra\u00dfe"
+    },
+    "D1-03": {
+      "description": "The slide at the playground near my home building osbb 1, h6 has a jagged metal edge that poses a safety risk to children.",
+      "example_id": 32,
+      "messages": [
+        {
+          "author": "creator",
+          "text": "I noticed the slide at the playground near my home building osbb 1, h6 is broken and has sharp edges. Can we get this fixed?"
+        },
+        {
+          "author": "member",
+          "text": "I have seen the damage as well. We should organize a repair or replacement to ensure the area is safe."
+        }
+      ],
+      "options": [
+        {
+          "budget": "450 credits",
+          "funding_source": "Community maintenance fund",
+          "resources_needed": [
+            "Professional welder",
+            "Safety signage",
+            "Protective gear"
+          ],
+          "steps": [
+            "Temporarily close the damaged slide and install warning signs",
+            "Have a qualified playground contractor inspect and repair the metal edge",
+            "Reopen only after a safety inspection"
+          ],
+          "title": "Professional metal welding repair"
+        },
+        {
+          "budget": "1200 credits",
+          "funding_source": "Capital improvement grant",
+          "resources_needed": [
+            "New slide unit",
+            "Installation crew",
+            "Safety inspection report"
+          ],
+          "steps": [
+            "Remove the damaged slide unit",
+            "Install the new safety-compliant slide",
+            "Conduct a final safety audit"
+          ],
+          "title": "Full slide replacement"
+        }
+      ],
+      "purpose": "Broken playground equipment",
+      "title": "Repair of damaged playground equipment"
+    },
+    "D1-04": {
+      "description": "Residents at my home building osbb 1, h2 are seeking to organize a volunteer-led respite service for elderly neighbors to provide caregivers with short-term relief.",
+      "example_id": 44,
+      "messages": [
+        {
+          "author": "creator",
+          "text": "Many elderly residents near my home are isolated. I propose we set up a rotating respite schedule to assist their primary caregivers."
+        },
+        {
+          "author": "member",
+          "text": "This is a great initiative. We need to ensure we have a safe space in the common area to host these sessions."
+        },
+        {
+          "author": "creator",
+          "text": "Agreed. I will draft a volunteer sign-up sheet and coordinate with the building management for space access."
+        }
+      ],
+      "options": [
+        {
+          "budget": "250 credits",
+          "funding_source": "Community Association Fund",
+          "resources_needed": [
+            "Common room access",
+            "Board games and tea supplies",
+            "Volunteer roster"
+          ],
+          "steps": [
+            "Secure permission for common room usage",
+            "Distribute sign-up flyers to residents",
+            "Host an introductory meeting for volunteers"
+          ],
+          "title": "Common Room Respite Pilot"
+        },
+        {
+          "budget": "100 credits",
+          "funding_source": "Neighbourhood Grant",
+          "resources_needed": [
+            "Digital coordination app",
+            "Printed information pamphlets"
+          ],
+          "steps": [
+            "Create a digital schedule for home visits",
+            "Print and distribute contact information to elderly households"
+          ],
+          "title": "Mobile Companion Network"
+        }
+      ],
+      "purpose": "Elderly day-care / respite services",
+      "title": "Establishment of a Neighbourhood Respite Care Hub"
+    },
+    "D1-05": {
+      "description": "At my workplace Argo Industry, the proposed on-site shift rotation would move a production team from fixed morning shifts to alternating morning and evening shifts. Workers need to agree on a predictable schedule that maintains safe staffing and accommodates commuting and caring responsibilities.",
+      "example_id": 86,
+      "messages": [
+        {
+          "author": "creator",
+          "text": "The proposed alternating rotation affects our whole production team at Argo Industry. We need a predictable schedule and safe handovers."
+        },
+        {
+          "author": "member",
+          "text": "Please compare coverage and commuting constraints before changing the rota. Some colleagues also have caring responsibilities."
+        },
+        {
+          "author": "creator",
+          "text": "Let us choose between a fixed-shift pilot and a published alternating rotation, then review coverage and worker feedback."
+        }
+      ],
+      "options": [
+        {
+          "budget": "120 credits",
+          "funding_source": "Departmental operations budget",
+          "resources_needed": [
+            "Shift scheduling software",
+            "Team lead and worker representatives"
+          ],
+          "steps": [
+            "Collect availability and coverage requirements",
+            "Publish a fixed morning/evening team allocation",
+            "Review safe coverage and feedback after the pilot"
+          ],
+          "title": "Fixed-shift pilot"
+        },
+        {
+          "budget": "180 credits",
+          "funding_source": "Departmental operations budget",
+          "resources_needed": [
+            "Rota coordinator",
+            "Handover checklist"
+          ],
+          "steps": [
+            "Agree a repeating morning/evening rotation with workers",
+            "Publish the complete rota in advance",
+            "Check staffing and handover feedback before extending it"
+          ],
+          "title": "Predictable alternating rotation"
+        }
+      ],
+      "purpose": "On-site shift scheduling change",
+      "title": "Adjustment of On-site Shift Scheduling at Argo Industry"
+    },
+    "D1-06": {
+      "description": "Our neighbourhood arts group has outgrown the local community center. We are seeking a larger, accessible space near my home building townhouse 1, house 1557 to host our weekly rehearsals and upcoming winter concert.",
+      "example_id": 82,
+      "messages": [
+        {
+          "author": "creator",
+          "text": "Hi everyone, our choir membership has doubled! We need a bigger space near my home building townhouse 1, house 1557 to accommodate our 30 members."
+        },
+        {
+          "author": "member",
+          "text": "I agree, the current room is too cramped. Could we look into the basement of the nearby church or the school hall?"
+        },
+        {
+          "author": "creator",
+          "text": "Great suggestions. I will reach out to the school board today to see if they allow community arts groups to rent their space after hours."
+        }
+      ],
+      "options": [
+        {
+          "budget": "200 credits",
+          "funding_source": "Member dues",
+          "resources_needed": [
+            "Rental agreement form",
+            "Liability insurance"
+          ],
+          "steps": [
+            "Contact school administration",
+            "Submit facility usage request"
+          ],
+          "title": "School Hall Rental"
+        },
+        {
+          "budget": "50 credits",
+          "funding_source": "Neighbourhood grant",
+          "resources_needed": [
+            "Petition signatures",
+            "Space usage proposal"
+          ],
+          "steps": [
+            "Draft proposal for larger room",
+            "Collect signatures from local residents"
+          ],
+          "title": "Community Center Expansion"
+        }
+      ],
+      "purpose": "Community choir / arts group",
+      "title": "Community Choir Rehearsal Space Shortage"
+    },
+    "D1-07": {
+      "description": "The project roadmap requires synchronization across global time zones to ensure consistent feature delivery for our open-source software suite. We need to establish a unified development cadence to prevent integration bottlenecks.",
+      "example_id": 90,
+      "messages": [
+        {
+          "author": "creator",
+          "text": "Our online open-source contributors work across time zones. We need a shared roadmap with clear priorities and accessible asynchronous decisions."
+        },
+        {
+          "author": "member",
+          "text": "The current workflow delays integration. Could we compare automated roadmap tracking with regional coordination?"
+        },
+        {
+          "author": "creator",
+          "text": "Both approaches must let contributors participate online regardless of where they live. Let us document the selected workflow in the repository."
+        }
+      ],
+      "options": [
+        {
+          "budget": "450 Credits",
+          "funding_source": "Community Grant",
+          "resources_needed": [
+            "CI/CD pipeline access",
+            "Repository project board"
+          ],
+          "steps": [
+            "Integrate roadmap tracking with GitHub Projects",
+            "Automate status updates for global contributors"
+          ],
+          "title": "Automated Roadmap Synchronization Tooling"
+        },
+        {
+          "budget": "200 Credits",
+          "funding_source": "Internal Development Fund",
+          "resources_needed": [
+            "Virtual meeting infrastructure",
+            "Shared documentation repository"
+          ],
+          "steps": [
+            "Define regional sprint leads",
+            "Establish a 24-hour rotation schedule for code reviews"
+          ],
+          "title": "Global Contributor Sprint Coordination"
+        }
+      ],
+      "purpose": "Open-source project roadmap",
+      "title": "Global Digital Roadmap Alignment for Open-Source Project"
+    },
+    "D1-08": {
+      "description": "I am seeking a zoning variance to convert a portion of my residential property at my home building Quill Lane 1 into a small-scale home office studio. The current district zoning code restricts commercial activity, but this modification is necessary to support my independent software development work.",
+      "example_id": 98,
+      "messages": [
+        {
+          "author": "creator",
+          "text": "I would like to formally request a zoning variance for my property at Quill Lane 1 to allow for a dedicated home office space."
+        },
+        {
+          "author": "member",
+          "text": "Please submit the formal site plan and a description of the intended use to the district planning office for review."
+        },
+        {
+          "author": "creator",
+          "text": "Understood. I will prepare the site plan and documentation regarding the low-impact nature of my software work."
+        }
+      ],
+      "options": [
+        {
+          "budget": "450 Credits",
+          "funding_source": "Personal Savings",
+          "resources_needed": [
+            "Property survey map",
+            "Architectural sketch",
+            "District zoning application form"
+          ],
+          "steps": [
+            "Complete the district zoning application form",
+            "Submit the site plan to the planning department"
+          ],
+          "title": "Standard Variance Application"
+        },
+        {
+          "budget": "850 Credits",
+          "funding_source": "Professional Development Grant",
+          "resources_needed": [
+            "Expedited processing fee",
+            "Notarized impact statement"
+          ],
+          "steps": [
+            "File the expedited request form",
+            "Schedule a preliminary consultation with the zoning board"
+          ],
+          "title": "Expedited Review Process"
+        }
+      ],
+      "purpose": "Zoning / building permit",
+      "title": "Zoning Variance Request for Quill Lane 1"
+    },
+    "D1-09": {
+      "description": "Due to a sudden family emergency, I need to relocate several heavy household items from my residence to a storage unit. I am currently unable to manage the physical labor alone and require assistance to clear the space.",
+      "example_id": 51,
+      "messages": [
+        {
+          "author": "creator",
+          "text": "I have a family emergency that requires me to clear out my apartment at my home building osbb 2, h3 immediately. Is there a community team available to help move furniture?"
+        },
+        {
+          "author": "member",
+          "text": "I can assist with the heavy lifting. Are you looking for a transport vehicle as well, or just manual labor?"
+        },
+        {
+          "author": "creator",
+          "text": "Manual labor is the priority. I have a rental van, but I need two people to help load it near my home."
+        }
+      ],
+      "options": [
+        {
+          "budget": "0 credits",
+          "funding_source": "Community Mutual Aid",
+          "resources_needed": [
+            "2 volunteers",
+            "Work gloves"
+          ],
+          "steps": [
+            "Coordinate arrival time at osbb 2, h3",
+            "Load furniture into the rental van"
+          ],
+          "title": "Community Volunteer Assistance"
+        },
+        {
+          "budget": "150 credits",
+          "funding_source": "Personal Emergency Fund",
+          "resources_needed": [
+            "2 professional movers",
+            "Moving blankets"
+          ],
+          "steps": [
+            "Book local moving service",
+            "Supervise loading at osbb 2, h3"
+          ],
+          "title": "Professional Moving Support"
+        }
+      ],
+      "purpose": "Family emergency",
+      "title": "Urgent assistance needed for family relocation"
+    },
+    "D1-10": {
+      "description": "Residents across the city need to choose how a shared city improvement budget should support accessible public green spaces and safer pedestrian routes. Compare projects by their city-wide benefit, cost, funding source and delivery steps, rather than prioritizing only the area near my home.",
+      "example_id": 97,
+      "messages": [
+        {
+          "author": "creator",
+          "text": "I propose that residents across the city choose between green-space improvements and pedestrian safety lighting using the shared improvement budget."
+        },
+        {
+          "author": "member",
+          "text": "We should consider underserved areas across the city and publish the costs and funding sources for both choices."
+        },
+        {
+          "author": "creator",
+          "text": "Agreed. The selected project should use a city-wide needs survey and report how the allocation serves residents."
+        }
+      ],
+      "options": [
+        {
+          "budget": "15,000 Credits",
+          "funding_source": "Municipal Urban Development Fund",
+          "resources_needed": [
+            "Landscaping tools",
+            "Native plant seeds",
+            "Volunteer coordination software"
+          ],
+          "steps": [
+            "Survey residents across the city to identify underserved green spaces",
+            "Select a public site and agree maintenance responsibilities",
+            "Prepare and plant the selected community garden"
+          ],
+          "title": "Community Garden Revitalization"
+        },
+        {
+          "budget": "25,000 Credits",
+          "funding_source": "Public Safety Infrastructure Grant",
+          "resources_needed": [
+            "Solar-powered LED lamps",
+            "Mounting hardware",
+            "Electrical safety permit"
+          ],
+          "steps": [
+            "Identify high-traffic dark pedestrian routes across the city",
+            "Contract local installation team",
+            "Conduct post-installation safety audit"
+          ],
+          "title": "Pedestrian Safety Lighting"
+        }
+      ],
+      "purpose": "City budget participatory allocation",
+      "title": "Participatory allocation of the city improvement budget"
+    }
+  },
+  "usage": {
+    "nominatim_lookups": 1,
+    "requests": 10
+  },
+  "version": "d1-content-v1"
+}

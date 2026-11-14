@@ -129,7 +129,7 @@ The garage case remains a regression/acceptance example; it does not replace one
 | 2.6 Presenter package | Named emulator snapshot, manifest and `specs/DEMO-script.md`; flagship standby copy. | A fresh import passes the checker and the 10-15 minute rehearsal. Other cases start as approved: discussion 2/6/9, voting 3/5/8, completed with tasks 4/7/10. |
 | 2.7 Live demo dataset | PR/review/explicit merge, then author backup and live seed; Codex read-only checks and author guided run. | D1 AC1-AC5 recorded. Live scenario creation/votes remain author actions under the current production-write guardrail. |
 
-The demonstration must disclose the current prototype limits: synthetic data, Contribution placeholder, D as a gate, and the top-100 membership cap. It must not imply those implement the full intended model or that the prototype has been validated in a real pilot.
+The demonstration must disclose the current prototype limits: synthetic data, Contribution placeholder, D as a gate, and the initial automatic top-100 selection cap. U10 now permits explicit discussion-phase joins beyond 100. It must not imply those implement the full intended model or that the prototype has been validated in a real pilot.
 
 ## 5. Detailed later-stage backlog
 
@@ -250,3 +250,7 @@ This task mapping is a project recommendation, informed by [official OpenAI mode
 6. **Before advanced features:** resolve Contribution edge cases, public-change voting and the remaining PD-1/PD-5 pilot policy.
 
 **Current next gate, 2026-11-12:** merge the recovery tool on explicit instruction, then schedule the author's rollout and use the runbook to verify a fresh pre-migration backup. Local integrated release `47e835a` is verified; live operations and D1 prerequisites remain pending. See the release report and runbook for current evidence/commands.
+
+## 2026-11-14 execution checkpoint
+
+U10 is merged, author-deployed and live Check accepted; see [live report](tasks/U10-live-report.md). Original D1 decisions remain approved. Its [section 9 refinement](tasks/D1-demo-scenarios.md#9-proposed-implementation-refinement-after-u10-2026-11-14) now concretely proposes the archive/hidden-standby mechanism, U10 rehearsal and bounded usage. Author review precedes D1 code/data changes. PR #28/#29 require their own merge instructions before their utilities are treated as main.

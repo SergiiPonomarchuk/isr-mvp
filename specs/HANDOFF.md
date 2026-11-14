@@ -4,19 +4,57 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: live P1/P2 and deployment verified, 2026-11-13
+## Current checkpoint: D1 merged; live rollout preparation and recovery PR #28, 2026-11-14
 
-- The author applied P1 and P2. Live read-only verification passed. P1 has zero further repairs/deletes/pending/changed inputs, 5,097 repaired work profiles and all 37 packs matching. P2 has all 9,150 profiles on plan, homes on 1,226 building points, zero held/missing/problems, no children owning property and matching packs.
-- The author deployed from clean `wt-main` at `a8a9df0`. All five functions are ACTIVE on Node 22. Three AI functions bind the Gemini secret. Live main page, JavaScript, styles and rules match the reviewed release. Firebase config matches the deployment checkout byte for byte, with only line-ending differences from the serving C checkout.
-- The API-free embedding preview needs 9,150 people / 29,395 texts / 294 requests. Its report estimates 1,080,590 tokens and about 46 minutes at the script's throttle. Historical configured rate implies about $0.16, subject to current billing. Next is the author's live embedding apply, then API-free post-check and A4 public migration.
-- Current reports are under `C:\isr-mvp\scratch\live-rollout-20261112-203337`. PR #28 remains subject to explicit merge authorization. The author requests the simplest, lowest-cost sufficient development model. Sol Medium suits this coordinated rollout.
+- Author instructed `merge PR 33` and `merge PR 34`; both are merged as `2048912` and `9b9ce79`. Main CI passes. Clean detached deploy checkout `wt-main` is at `9b9ce79`; live still serves U10 `8466b13`.
+- D1 emulator AC1-AC4 and the author's winning-task review are accepted. Restored normal preview has 93 issues/205 discussions, 606 validated members and zero differences; disposable test issues are absent. Guide: http://127.0.0.1:5002/d1-guide. Both named seed-start and completed accepted snapshots remain untouched. No new Check/place calls are approved.
+- Author said `go` for live preparation. Recovery PR #28 is reconciled with D1 main; binary signed-zero restore/test behavior is unchanged. Only CHANGES/HANDOFF conflicted and both histories were preserved. Required suites, isolated synthetic recovery fixture and current-head CI are checked before requesting **merge PR 28**. No merge is authorized by `go`.
+- Fresh private live backup is an author step because it includes credential-like profile fields. Agent inspects aggregate manifests/recovery results, not JSONL contents. Use a new live manifest/report folder; never reuse committed emulator `specs/demo/manifest.json` on live. Fresh recovery, exact live archive counts, deployment identity and a separately approved live request ceiling must precede live seeding. The forthcoming D1-specific runbook replaces no historical rollout evidence.
+- PR #29 embedding retry utility is separate; D1 rollout does not require rerunning profile embeddings. No production write, deployment, rules edit, secret read/copy or additional paid/model/place request in this preparation. Live AC5 remains pending.
 
-## Fresh live backup verified, awaiting author P1, 2026-11-12 (historical)
+## Previous D1 acceptance checkpoint (historical)
 
-- Recovery PR #27 merged at `a8a9df0`. The author opened the live window and confirmed Paid AI Studio project `isr-mvp-ai-dev` has more than $5 available. An exact monthly cap was not reported.
-- Fresh live archive `A:\ISR\mvp\dbbackup\20261112-203337`: 24,884 documents. The first rehearsal exposed a signed-zero change in the disposable emulator's JSON write endpoint. The fix in PR #28 passed read-back of every path and typed field. See [the recovery evidence](tasks/M1-firestore-recovery.md).
-- Local rollout reports are in `C:\isr-mvp\scratch\live-rollout-20261112-203337`, including prior deployment identifiers and the P1 preview. The preview found 8,803 updates, zero deletes, no changed/missing inputs and 37 packs to rebuild. The deploy checkout is clean at `a8a9df0` with locked dependencies installed.
-- The author runs P1 live apply. Verify its result read-only before the P2 preview, following [the rollout runbook](LIVE-ROLLOUT.md). PR #28 separately needs an explicit merge instruction.
+## D1 checkpoint: D1 plan #33 merged; implementation #34 reconciled, 2026-11-14
+
+- The author accepted the winning result and three tasks with "looks good - proceed". Normal flagship creation, duplicate/Open/Join (100 to 101), discussion/options, weighted vote, management threshold, stored winner and tasks have been rehearsed. The independent restored-state checker validates 11 scenario records including standby and 606 members with zero differences. See `specs/demo/full-cycle-evidence.json`.
+- Disposable separate-creation UI acceptance passed: same active title remains blocked with explanation; distinct title needs explanation; text and point edits invalidate Check; fresh Check/explanation enables the single Create. Real Create returned HTTP 200 with the explanation. Stored analysis/vector replay kept additional provider calls at zero; no new AI-quality claim. Final screenshot capture was blocked by browser URL verification; backend evidence is retained in `specs/demo/separate-creation-evidence.json`.
+- Disposable copy was stopped without export. Normal emulator 8080/5001/5000 and guide http://127.0.0.1:5002/d1-guide are restored. Original 93 issues/205 discussions are present, both disposable test issues absent, accepted flagship remains approved. Frozen completed snapshot: `A:/BackUp/isr-mvp/emulator-snapshots/2026-11-14-d1-author-accepted-7259ca3`, file hashes recorded with acceptance evidence. Seed-start snapshot `2026-11-14-d1-1a242df` remains separate. Do not silently reseed the presentation-started journal.
+- Author explicitly instructed `merge PR 33`; plan PR #33 merged into main as `2048912`. Implementation PR #34 now targets main and incorporates that merge without conflicts or application/data changes. D1 emulator AC1-AC4 are satisfied; live AC5 remains pending. Required suites and CI are checked on the reconciled head. Next author instruction after green checks: **merge PR 34**. No implementation merge or live operation is authorized by the plan merge.
+- Usage unchanged: ten content requests / 6,694 reported tokens; fifteen Check text requests / 140,377 reported tokens; fifteen embedding texts (about 869 tokens, character estimate); two Nominatim lookups. Check/place ceilings are reached. No further provider calls without explicit new budget approval.
+- Required suites on application head `7259ca3`: Node 110 passed/two optional integration skips; Python 120 run/two existing skips. This acceptance closeout changes documentation/evidence only. CI is checked on the pushed head. Active tracked `firestore-debug.log` is generated runtime output and is excluded from commits.
+- No production write, deploy, rules edit or secret-file copy. Production remains author-deployed U10 `8466b13`. Live seed/deploy require explicit merges, fresh backup/recovery preflight and a separately reviewed live budget/runbook. Utility PRs #28/#29 remain to reconcile separately.
+
+## Earlier D1 checkpoints (historical)
+
+## D1 earlier checkpoint: D1 real seed verified; human rehearsal review next, 2026-11-14
+
+- Recovery note: the emulator stopped before the completed-cycle export. Restored its saved Voting checkpoint and replayed only recorded option/support inputs with the canonical lifecycle/tally helpers, preserving issue id and original registration time. Recovered final checker: zero differences. Named baseline and request ceilings remain untouched. The original UI result/tasks and the recovered equivalent are evidenced in `specs/demo/full-cycle-evidence.json`.
+
+- Full-cycle update (2026-11-14): 28 counted option votes, no exclusions; locksmith won with 31.117 ISR. After canonical subthreshold support preparation (to avoid further heavy profile reloads), the final normal Finish Voting UI/desktop confirmation crossed 30.9%. Server created three pending tasks assigned to Christine (uid 2); To Do was verified. Independent checker: 606 members, zero differences. No additional AI calls. Evidence: `specs/demo/full-cycle-evidence.json`; proof: `C:\isr-mvp\scratch\d1-winning-tasks.png`. Next human step is final result/task review. Disposable separate-creation rehearsal and live acceptance remain pending; PR #34 stays draft. Earlier pending-cycle checkpoints below are historical.
+
+- Rehearsal progressed: author added the discussion message and both options with Christine assigned to all six steps, then supported Start Voting. Agent added synthetic coalition support through ordinary browser controls; the threshold confirmation showed 30.8%. Stored issue is `in_process`, discussion `Voting`, deadline `2026-11-21`, two options, zero option votes. Post-transition checker: 606 members, zero differences. Canonical geographic/domain display is now also used in Voting/To Do; browser verified Voting 40m/30m and locksmith domain. Proof: `C:\isr-mvp\scratch\d1-voting-ready.png`. Next author step: select an option and press Vote in Christine's Voting view; no new Check. Full-cycle completion remains pending.
+
+- Author authorized D1 and the existing main key loader in memory ("run D1 please"). Worktree `A:\BackUp\isr-mvp\worktrees\wt-d1-guided-demo`, branch `codex/d1-guided-demo`, draft PR #34 stacked on documentation PR #33. No merge is authorized by running D1.
+- Generated/reviewed all ten scenario texts, with documented editorial corrections and a successful street/city clarification. Real Check/Create seeded ten records against final P2/A4 population: nine visible cases and a hidden standby, 505 members. Independently checked zero differences; completed rerun wrote/spent zero. Archived 276 old topic roots, preserving 1,696 messages and the historical publics/members by fingerprint.
+- Named baseline `A:\BackUp\isr-mvp\emulator-snapshots\2026-11-14-d1-1a242df` was exported and imported into separate Firestore 8286; checker again found zero differences. Companion `seed-manifest.json`, content and verification/checksums are retained beside it. Repository `specs/demo/seed-manifest.json` refers to this baseline; `manifest.json` records the later browser rehearsal. Never silently reseed a presentation-started journal.
+- Browser access recovered. Agent verified actual normal flagship creation (100 members), hidden standby exclusion, same-active-title block even with explanation, text invalidation, paraphrase/Open/member status, and an explicit nonmember Join to 101. Post-Join independent checker: 11 records including hidden standby, ten visible cases, 606 members, zero differences. Found/fixed a real detail-card bug: chat now reads canonical issue distances/domain instead of default 100/50. Browser confirmed 40/30 and locksmith domain. Proof: `C:\isr-mvp\scratch\d1-joined-browser.png`.
+- Actual usage: 10 content text requests / 6,694 reported tokens; 15 Check text requests / 140,377 reported tokens; 15 issue embedding texts (about 869 registration-text tokens, character estimate); two total Nominatim lookups. The approved Check and lookup ceilings are reached. No more Checks or place requests without an explicit new budget decision. Full-cycle voting on existing records needs no model calls. The first unloaded-handler HTTP 404 remains in recovery history/attempt count; no provider request was dispatched for it. A cached street miss consumed one real Check and was retained before the clarified retry.
+- Required suites: Node 110 passed/two optional integration skips; Python 120 run/two existing skips. Earlier isolated D1/U10 real-handler mock-AI integration/race/recovery tests passed. Current actual evidence is [D1 report](tasks/D1-emulator-report.md) and `specs/demo/run-evidence.json`. CI must be green on the pushed final head.
+- **Next human attention:** review the local generated scenarios/UI, then the full option -> management coalition -> vote -> result/task cycle using the existing flagship. Guide: http://127.0.0.1:5002/d1-guide. Click flagship creator, open Chat's existing entrance-lock issue, verify the green emulator banner. Do not create/check another issue. The guide has actual option/step text and coalition profile links. Full human cycle and disposable separate-creation rehearsal remain pending; AC3/AC5 are not complete. PR #34 stays draft.
+- Full D1 emulator is running on 8080/5001/5000; local guide on 5002. Current review state is exported to this worktree's ignored `.emulator-data`. Saved main data and the original frozen integrated snapshot are untouched. Production remains author-deployed U10 `8466b13`; no production write, deploy, rules edit or secret-file copy. Author-only live seed/deploy still require merges, fresh backup/recovery and a separately reviewed live budget. PR #28/#29 utility dependencies remain to reconcile.
+
+## U9 accepted live, duplicate flow proposal, 2026-11-13 (historical)
+
+- U9 PR #30 merged at `b189d3f`, deployed by the author and checked read-only. The author confirmed the saved member list works and the new Check badge/sample labels behave as specified.
+- The author requires Check to show similar registered active issues and offer Join for a nonmember. This intent already appears in the Request Guide. [U10](tasks/U10-similar-active-issues.md) proposes the implementation behavior, matching calibration and acceptance cases. Detailed cap/lifecycle choices await review.
+- Next is author review of the documentation proposal. PR #28/#29 remain separately subject to explicit merge instructions. D1 must reflect the accepted duplicate/join flow before its scenarios are changed.
+
+## Live member UI findings fixed on feature branch, 2026-11-13 (historical)
+
+- Live P1/P2, A4 embeddings and the three-public migration passed read-only checks. All 9,150 profile and 20,245 skill vectors are current. All 150 migrated member scores/maps match the Node implementation.
+- The author created the live entrance-lock test issue. Topic `46AQ1D2KJu5sAk7sQMli` has 100-entry relevance and ISR maps. The author saw 25 at Check and 100 at Create, then a stuck member popup.
+- [U9](tasks/U9-member-preview-popup.md) fixes the preview badge/sample labeling and moves the values helper into shared scope. Cached members render immediately while existing reads run, with stale completion guarded. Regression suites and isolated browser fixture passed. Full application acceptance remains pending deployment.
+- Next: open/review U9 PR, merge on explicit author instruction and give full deployment commands from the clean deploy worktree. PR #28/#29 also remain unmerged pending explicit instructions. Agent deployment/live writes remain prohibited.
 
 ## Firestore recovery rehearsal, 2026-11-12 (historical)
 
@@ -292,3 +330,34 @@ After every step that writes, export the emulator (`AGENTS.md`).
 - The map's marker icons come from `raw.githubusercontent.com` (a GitHub repository, not a CDN), and the shadow from Leaflet 0.7.7 on cdnjs (noted in U8).
 - U6: `geocode_cache` and `config` are open to clients under the R0 rules until the stage 5 rules.
 - The R0 Firestore rules expire 2027-06-30.
+
+## U10 active-title revision, 2026-11-13
+
+Author approved unique titles among active issues only, allowing reuse of closed/expired names, and one Create action. Implemented all-active title checks with transactional recheck and explanation-driven Create. Full Node/Python and revised emulator tests passed. PR #32 is ready for review after author acceptance of the revised UI. Manual preview refreshed with clean disposable demo data on port 5001/Firestore 8080. No merge, deploy or production write.
+
+## D1 implementation in progress, 2026-11-14
+
+Shared archived lifecycle and UI/task-mock retirement implemented; initial Node regression suite passes. Atomic current-state tally adapter, guarded phase arranger, metadata inventory, durable seed journal and independent numeric checker are under test. Read-only live inventory: 82 issues, 194 discussions/publics, 3,295 members, 1,696 messages, four issue vectors; 112 discussion-only records, no issue-only/public-without-topic records. No production mutations. Real AI content, full-population seed, snapshot and browser acceptance remain pending; do not treat AC1-AC5 as complete.
+
+## D1 code and mocked-emulator checkpoint, 2026-11-14
+
+Archive lifecycle/UI/task-mock retirement, current-state transactional tally, resumable seed/check/content tools, guarded explicit standby promotion, local presenter guide and request ceilings are implemented. [Evidence](tasks/D1-emulator-report.md) distinguishes real handlers/mock AI from unstarted final-population acceptance. The first full tests and D1/U10 emulator regressions passed; final registration/text preservation and full reruns are recorded in the spec status log.
+
+Next: finish final checks/PR, then ask the author before invoking the existing main-checkout key loader for D1. The reviewable runtime passes its result only in private process memory and copies no secret file. Do not use it without that authorization. Then content review, real emulator seed/check/rerun, named snapshot/import and manual full-cycle acceptance remain. PR #33 and implementation PR require explicit merge instructions; approval of the plan does not merge them. No paid calls, live mutations, rules edits or deploys yet.
+
+## Earlier recovery-branch checkpoint (historical)
+
+## Current checkpoint: live P1/P2 and deployment verified, 2026-11-13
+
+- The author applied P1 and P2. Live read-only verification passed. P1 has zero further repairs/deletes/pending/changed inputs, 5,097 repaired work profiles and all 37 packs matching. P2 has all 9,150 profiles on plan, homes on 1,226 building points, zero held/missing/problems, no children owning property and matching packs.
+- The author deployed from clean `wt-main` at `a8a9df0`. All five functions are ACTIVE on Node 22. Three AI functions bind the Gemini secret. Live main page, JavaScript, styles and rules match the reviewed release. Firebase config matches the deployment checkout byte for byte, with only line-ending differences from the serving C checkout.
+- The API-free embedding preview needs 9,150 people / 29,395 texts / 294 requests. Its report estimates 1,080,590 tokens and about 46 minutes at the script's throttle. Historical configured rate implies about $0.16, subject to current billing. Next is the author's live embedding apply, then API-free post-check and A4 public migration.
+- Current reports are under `C:\isr-mvp\scratch\live-rollout-20261112-203337`. PR #28 remains subject to explicit merge authorization. The author requests the simplest, lowest-cost sufficient development model. Sol Medium suits this coordinated rollout.
+
+## Fresh live backup verified, awaiting author P1, 2026-11-12 (historical)
+
+- Recovery PR #27 merged at `a8a9df0`. The author opened the live window and confirmed Paid AI Studio project `isr-mvp-ai-dev` has more than $5 available. An exact monthly cap was not reported.
+- Fresh live archive `A:\ISR\mvp\dbbackup\20261112-203337`: 24,884 documents. The first rehearsal exposed a signed-zero change in the disposable emulator's JSON write endpoint. The fix in PR #28 passed read-back of every path and typed field. See [the recovery evidence](tasks/M1-firestore-recovery.md).
+- Local rollout reports are in `C:\isr-mvp\scratch\live-rollout-20261112-203337`, including prior deployment identifiers and the P1 preview. The preview found 8,803 updates, zero deletes, no changed/missing inputs and 37 packs to rebuild. The deploy checkout is clean at `a8a9df0` with locked dependencies installed.
+- The author runs P1 live apply. Verify its result read-only before the P2 preview, following [the rollout runbook](LIVE-ROLLOUT.md). PR #28 separately needs an explicit merge instruction.
+

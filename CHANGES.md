@@ -1,14 +1,67 @@
 # CHANGES
 
-## Live rollout verification (2026-11-13)
+## 2026-11-14 - Recovery fix reconciled for D1 rollout
 
-- Author applied P1/P2 and deployed the approved code. Read-only checks verify the profiles, homes, 37 packs, active functions, Gemini bindings, Hosting files and rules. The embedding migration remains the next author step. Current counts and evidence paths are in the handoff.
-- Recorded the author's preference for the simplest, lowest-cost sufficient development model.
+D1 plan #33 and implementation #34 merged (`2048912`, `9b9ce79`) on explicit author instructions; main CI passed. Reconciled recovery PR #28 with main, preserving binary signed-zero writes and independent typed verification. Only CHANGES/HANDOFF conflicted; both histories are retained. D1 runtime, content and accepted snapshots are unchanged. Fresh private backup and live writes remain author steps; no new provider calls.
 
-## Preserve signed zero during Firestore recovery (2026-11-12)
+## 2026-11-14 - D1 plan merged and implementation reconciled
 
-- The disposable emulator's JSON write endpoint changed a stored negative zero to positive zero in the fresh live backup rehearsal. Recovery now sends binary Firestore writes to the same loopback emulator and independently verifies the returned fields with the original exact comparison.
-- Extended the independent SDK fixture with signed doubles in a nested array and map. The archived data and the application release are unchanged.
+Merged plan PR #33 on explicit author instruction (`2048912`). Retargeted implementation PR #34 onto main and incorporated the plan merge without conflicts or application/data changes. Preserved the accepted emulator and frozen snapshots. Required suites and final-head CI checked before presenting #34 for its separate merge authorization; live AC5 remains pending.
+
+## 2026-11-14 - D1 emulator acceptance and restored demo
+
+Recorded author acceptance of the winning tasks and completed disposable separate-creation UI checks with stored AI replay (zero additional provider calls). Restored and independently checked the accepted demo: 606 members, zero differences, no disposable test issues. Preserved a named completed snapshot with hashes. Emulator AC1-AC4 complete; live AC5 pending. Documentation/evidence only; no application changes, merge, deployment or production write.
+
+## 2026-11-14 - D1 weighted vote to winning tasks
+
+Completed the guided emulator cycle: author/synthetic option votes, canonical subthreshold Finish Voting fixture preparation, final normal UI confirmation, server tally and three tasks assigned to Christine. Locksmith won with 31.117 ISR; 28 counted votes, no exclusions. Independent checker: 606 members, zero differences. No source/formula changes, extra AI calls or production mutations. Final human task review and remaining acceptance cases are pending.
+
+## 2026-11-14 - D1 guided Start Voting rehearsal
+
+Author added both decision options and discussion message. Synthetic coalition support through the normal UI crossed 30% and moved the flagship into Voting with deadline 21.11.2026. Zero option votes cast; independent checker still reports 606 members and zero differences. Extended canonical geographic/domain metadata rendering to Voting/To Do and metadata popups; browser verified 40m/30m. Required Node/Python suites pass. No AI requests, production writes or deploys.
+
+## 2026-11-14 - D1 real seed, snapshot and browser verification
+
+Seeded ten reviewed scenarios on final P2/A4 emulator data, archived 276 old topic roots without deleting history, and independently validated 505 members with zero differences. Completed rerun wrote/spent zero; named snapshot imported and checked independently. Browser created a normal flagship and verified exact-title blocking, paraphrase/Open, and nonmember Join from 100 to 101; post-Join checker validated 606 members with zero differences. Corrected chat geographic/domain display to use canonical issue fields, plus runtime/CLI response-contract fixes. Actual budgets reached: 15 Check pairs and two place lookups; ten content requests used. Human full-cycle acceptance remains pending; draft PR #34, no live writes/deploy/secret copying.
+
+## 2026-11-14 - D1 real generation and runtime repair
+
+Author authorized the existing key loader in memory. Generated and reviewed all ten scenarios with ten text requests (6,694 reported total tokens) and one reverse street lookup; recorded editorial corrections without extra requests. Emulator dry plan preserved 276 legacy topic roots. Initial Check hit an unloaded local function (zero model dispatches); fixed Firebase discovery dependency setup and added an emulator-only memory-secret bridge that refuses unknown secrets. Node 109 passed/two optional skips; Python 119 run/two existing skips. Full real seed, snapshot and manual acceptance remain in progress. No production mutation or secret file copying.
+
+## 2026-11-14 - D1 seed/presenter tooling and guarded emulator verification
+
+Added one-time stored content preparation, durable single-writer seed/check journals, original-history fingerprints, current-state transactional tally, race-safe standby promotion and normal flagship registration. Retired task mocks and fixed phase/cache exclusions, preserving original registration time/text through voting transitions. Added actual SDK request-ceiling transport tests, dummy private-loader tests, and complete mocked-AI real-handler emulator seed/recovery/race checks. Node 108 passed/two optional skips; Python 119 run/two existing skips; explicit D1/U10 emulator scenarios passed. Real content, final-population seed, snapshot and manual cycle remain pending key-loader authorization. No paid calls or live data changes.
+
+## 2026-11-14 - D1 implementation in progress
+
+Added explicit archived lifecycle exclusions, retired hard-coded task mocks, and implemented current-state transactional tally plus guarded demo seed/check foundations. Author approved D1 refinement; inventory is read-only. Emulator integration and complete D1 acceptance are still in progress; no paid generation or production mutation.
+
+## 2026-11-14 - U10 live acceptance and D1 refinement
+
+Recorded author deployment/live Check acceptance and independent read-only hosting/endpoint checks. Imported the original approved D1 scenario plan and proposed archive/standby, U10 rehearsal, durable retry manifest and first-pass usage refinements for review. Original ten subjects and decisions retained; no application code, data mutation or API generation.
+
+## 2026-11-13 - U10 main integration
+
+Author authorized merge of PR #32. Retargeted directly to main, including the approved proposal documentation. Preserved accepted source, tests and browser evidence; deployment remains the author's step.
+
+## 2026-11-13 - U10 active title uniqueness and one Create action
+
+Require unique active titles (case/whitespace normalized), including across locations and beyond the shortlist. Recheck atomically at Create; closed titles may be reused. Remove Continue and enable Create once any required explanation is entered. Node/Python and revised emulator tests passed; author accepted the revised UI; separate creation independently verified read-only on the emulator.
+
+## 2026-11-13 — U10 similar active issues and explicit joining
+
+Approved similar-issue Check flow with Open/member status, explicit discussion-phase Join beyond the initial 100-member cap, and explained separate creation. Recheck/Create and membership writes are transactional; completed creation retries return their original result. Reuse compatible issue vectors and show legacy semantic-coverage limits. Added recorded eight-text calibration and real-handler emulator regressions. Updated U10, data model, relevance and handoff. Author browser acceptance passed duplicate Check and explicit Join to 101; remaining browser cases are pending. No deployment, live writes or rules changes.
+
+
+## Similar active issues proposal (2026-11-13)
+
+- Recorded the author's requested Check behavior in U10, grounded in the Request Guide. Proposed matching, Open/Join actions, explicit distinct-issue continuation, concurrency checks and acceptance cases. Joining-cap and voting-phase policies remain decisions for review.
+
+## U9 member preview and list (2026-11-13)
+
+- Check exposes the projected capped public size alongside its existing 25-person sample. The badge displays the public size and the preview labels the sample. Create's existing 100-member cap is retained.
+- Moved the existing values calculation helper to shared scope, fixing the detail popup's out-of-scope call. Render cached member rows and ISR scores immediately while existing metadata reads run. Dismissed popups stay closed when reads finish.
+- Node 100 passed, Python 111 run with two optional skips. Synthetic browser regression verified stalled reads, dismissal and completed 100-row rendering. Full live acceptance follows author deployment.
 
 ## Firestore recovery rehearsal (2026-11-12)
 
@@ -617,3 +670,16 @@ Report: `specs/tasks/A2-migration-report.md`.
 1. Fresh export: `python export_live_db.py`, then a dry run against it.
 2. Live run: `python scripts/migrate_a2.py --source firestore --project project-a3d59130-5adf-4677-9e2 --i-know-this-is-live --apply`. The live Firestore must have the same 4 memberships and 0 members without `birthDate`; the script stops otherwise.
 3. Deploy the functions and the prototype (no Firestore rules change).
+
+## Historical recovery-branch records
+
+## Live rollout verification (2026-11-13)
+
+- Author applied P1/P2 and deployed the approved code. Read-only checks verify the profiles, homes, 37 packs, active functions, Gemini bindings, Hosting files and rules. The embedding migration remains the next author step. Current counts and evidence paths are in the handoff.
+- Recorded the author's preference for the simplest, lowest-cost sufficient development model.
+
+## Preserve signed zero during Firestore recovery (2026-11-12)
+
+- The disposable emulator's JSON write endpoint changed a stored negative zero to positive zero in the fresh live backup rehearsal. Recovery now sends binary Firestore writes to the same loopback emulator and independently verifies the returned fields with the original exact comparison.
+- Extended the independent SDK fixture with signed doubles in a nested array and map. The archived data and the application release are unchanged.
+

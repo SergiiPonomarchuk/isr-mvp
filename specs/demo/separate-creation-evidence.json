@@ -1,0 +1,147 @@
+{
+  "date": "2026-11-14",
+  "environment": "Disposable full accepted-snapshot copy on 127.0.0.1:8080",
+  "method": "External Chrome native controls; real frontend and Check/Create handlers; stored normalized analysis and vector replayed, with no provider access/key. This checks UI/protocol behavior, not new AI semantic quality.",
+  "sdk_host_verified": "127.0.0.1:8080",
+  "observed_ui": {
+    "same_active_title_blocked_even_with_explanation": true,
+    "title_change_invalidates_check": true,
+    "distinct_title_requires_explanation": true,
+    "single_create_enabled_with_distinct_title_and_explanation": true,
+    "description_edit_invalidates_check": true,
+    "point_move_invalidates_check": true,
+    "point_move_requires_fresh_check_and_explanation": true,
+    "single_create_clicked_once": true
+  },
+  "point_before": {
+    "lat": 47.593671,
+    "lng": 7.621699
+  },
+  "point_after": {
+    "lat": 47.593637,
+    "lng": 7.621794
+  },
+  "backend_evidence": {
+    "base_counts": {
+      "issues": 93,
+      "discussions": 205
+    },
+    "current_issues": 95,
+    "calls": [
+      {
+        "endpoint": "checkIssue",
+        "status": 200,
+        "draft_id": "E7Ywt66QKJkniMTUoShE",
+        "issue_id": null,
+        "title": "Repair of broken main entrance lock",
+        "has_reason": false
+      },
+      {
+        "endpoint": "createIssue",
+        "status": 200,
+        "draft_id": "E7Ywt66QKJkniMTUoShE",
+        "issue_id": "iaCN6c7yhfh2cf1YJQdq",
+        "title": "Repair of broken main entrance lock",
+        "has_reason": false
+      },
+      {
+        "endpoint": "checkIssue",
+        "status": 200,
+        "draft_id": "sroCmkBfVwvZCfvFtdKp",
+        "issue_id": null,
+        "title": "Repair of broken main entrance lock",
+        "has_reason": false
+      },
+      {
+        "endpoint": "checkIssue",
+        "status": 200,
+        "draft_id": "23unZJU8OHPl68TW3oVY",
+        "issue_id": null,
+        "title": "Repair of rear entrance lock at osbb 2, h12",
+        "has_reason": false
+      },
+      {
+        "endpoint": "checkIssue",
+        "status": 200,
+        "draft_id": "kJfTM4Gn7YdDgoO1nGb8",
+        "issue_id": null,
+        "title": "Repair of rear entrance lock at osbb 2, h12",
+        "has_reason": false
+      },
+      {
+        "endpoint": "checkIssue",
+        "status": 200,
+        "draft_id": "py28EhGMx0BdVGSlpIJ8",
+        "issue_id": null,
+        "title": "Repair of rear entrance lock at osbb 2, h12",
+        "has_reason": false
+      },
+      {
+        "endpoint": "createIssue",
+        "status": 200,
+        "draft_id": "py28EhGMx0BdVGSlpIJ8",
+        "issue_id": "RPy65galwdC6sJWyYu3d",
+        "title": "Repair of rear entrance lock at osbb 2, h12",
+        "has_reason": true
+      }
+    ],
+    "provider_calls": 0,
+    "original_completed_issue": "approved"
+  },
+  "capture_limit": "Final success screenshot could not be saved: Computer Use stopped because it could not confidently verify the current browser URL. Successful Create is confirmed by HTTP 200 and the disposable issue count; no further browser actions followed.",
+  "cleanup": "Disposable emulator stopped without export. Accepted working export restored with normal runtime; no test issues retained.",
+  "restored_state": {
+    "emulator_host": "127.0.0.1:8080",
+    "counts": {
+      "issues": 93,
+      "discussions": 205
+    },
+    "disposable_issues_absent": true,
+    "flagship_status": "approved",
+    "flagship_discussion_status": "approved"
+  },
+  "restored_independent_check": {
+    "members": 606,
+    "problems": [],
+    "scenarios": 11,
+    "tolerance": 0.00100001,
+    "visible_scenarios_before_flagship": 10
+  },
+  "accepted_snapshot": "A:/BackUp/isr-mvp/emulator-snapshots/2026-11-14-d1-author-accepted-7259ca3",
+  "accepted_snapshot_files": {
+    "firebase-export-metadata.json": {
+      "bytes": 185,
+      "sha256": "10bdc6ace944fe84aa78e8ffae3bae3de80a328ff66a71c1f5fee987d36be619"
+    },
+    "firestore_export/firestore_export.overall_export_metadata": {
+      "bytes": 100,
+      "sha256": "218e4f1886e2f543cdaff55ff8ff7d30edba11f3ebe1368bd228972dc5ff082c"
+    },
+    "firestore_export/all_namespaces/all_kinds/output-0": {
+      "bytes": 160519622,
+      "sha256": "381c3037f30e76891cf56e7261b68998ee65ccc078040faa889ce2b2a834786a"
+    },
+    "firestore_export/all_namespaces/all_kinds/output-1": {
+      "bytes": 44443220,
+      "sha256": "705f2bc8207f3622dd080531b60c1d1422ae8e4520bd179b23f86054f7e2c9ca"
+    },
+    "firestore_export/all_namespaces/all_kinds/output-2": {
+      "bytes": 121572326,
+      "sha256": "89aa803c22300ae6cbb7b8705c1d3f9a9c8ceea0e29c558fa89482a177d0a235"
+    },
+    "firestore_export/all_namespaces/all_kinds/output-3": {
+      "bytes": 118808266,
+      "sha256": "b60e09667a6e71bc5880ee2295d1bb9298b62c12329cd44edc852f04a595c0af"
+    },
+    "firestore_export/all_namespaces/all_kinds/output-4": {
+      "bytes": 106617002,
+      "sha256": "26594c6cc03b1036a8d5c66c31c398342b24919612c88e39b9933fc04cf2ccd3"
+    },
+    "firestore_export/all_namespaces/all_kinds/all_namespaces_all_kinds.export_metadata": {
+      "bytes": 92,
+      "sha256": "70596835e9be21040e640e068da4b72b3ebe8c9224883ddefefc87b525c3c865"
+    }
+  },
+  "production_writes": 0,
+  "additional_provider_calls": 0
+}

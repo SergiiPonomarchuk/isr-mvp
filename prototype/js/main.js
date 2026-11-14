@@ -31,125 +31,7 @@ const sectionTitles = {
   actions: 'Actions'
 };
 
-var staticTasksMockData = {
-  "task-1": {
-    title: "Fence door renew",
-    description: "Replace the broken wooden door on the northern fence line with a modern metal frame door. Secure locking mechanism to be integrated.",
-    status: "approved",
-    ends: "2026-04-01",
-    submitter_id: "System",
-    created_at: "2026-01-10T00:00:00Z",
-    participants: ["1", "2", "3"],
-    relevance_scores: { "1": 0.95 },
-    isr_scores: { "1": 1.07 },
-    tasks: [
-      { step: "Collect contractor quotes", status: "done", in_charge_uid: "2", in_charge_name: "Iryna V.", deadline: "2026-02-28", marks: [], results: "Got quotes from 3 local suppliers." },
-      { step: "Approve budget at next meeting", status: "in_process", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-03-18", marks: [] },
-      { step: "Install new door", status: "pending", in_charge_uid: "3", in_charge_name: "Andrii D.", deadline: "2026-04-01", marks: [] }
-    ],
-    options: [
-      { label: "Option A: Local Direct Fix", score: 4.65, author_name: "Iryna V.", budget: "€250", description: [] },
-      { label: "Option B: External Contractor Hire", score: 0.00, author_name: "System", budget: "€600", description: [] }
-    ],
-    winning_option_index: 0,
-    messages: []
-  },
-  "task-2": {
-    title: "Ladders to 1st entrance",
-    description: "Procure and install heavy-duty aluminum step ladders to the first entrance side ramp to facilitate delivery drivers.",
-    status: "tasks",
-    ends: "2026-05-25",
-    submitter_id: "System",
-    created_at: "2026-02-05T00:00:00Z",
-    participants: ["1", "4"],
-    relevance_scores: { "1": 0.65 },
-    isr_scores: { "1": 0.77 },
-    tasks: [
-      { step: "Safety inspection", status: "in_process", in_charge_uid: "4", in_charge_name: "Audrey T.", deadline: "2026-05-15", marks: [] },
-      { step: "Order replacement parts", status: "pending", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-05-25", marks: [] }
-    ],
-    options: [],
-    winning_option_index: null,
-    messages: []
-  },
-  "task-3": {
-    title: "Studio rental contract extension",
-    description: "Negotiate lease extension terms for the community choreography studio room with the building association landlord.",
-    status: "tasks",
-    ends: "2026-07-01",
-    submitter_id: "System",
-    created_at: "2026-03-01T00:00:00Z",
-    participants: ["2", "4"],
-    relevance_scores: { "1": 0.48 },
-    isr_scores: { "1": 1.42 },
-    tasks: [
-      { step: "Review current lease terms", status: "done", in_charge_uid: "2", in_charge_name: "Iryna V.", deadline: "2026-04-10", marks: [], results: "Reviewed. Found €15/hour flat rate." },
-      { step: "Negotiate new rate", status: "in_process", in_charge_uid: "4", in_charge_name: "Audrey T.", deadline: "2026-05-01", marks: [] },
-      { step: "Sign updated contract", status: "pending", in_charge_uid: "4", in_charge_name: "Audrey T.", deadline: "2026-07-01", marks: [] }
-    ],
-    options: [],
-    winning_option_index: null,
-    messages: []
-  },
-  "task-4": {
-    title: "After-school program funding",
-    description: "Organize parent association fundraising campaign and apply for the local district grant to support the weekly after-school educational kids club.",
-    status: "tasks",
-    ends: "2026-05-10",
-    submitter_id: "System",
-    created_at: "2026-01-20T00:00:00Z",
-    participants: ["1", "2"],
-    relevance_scores: { "1": 0.88 },
-    isr_scores: { "1": 0.93 },
-    tasks: [
-      { step: "Draft budget proposal", status: "done", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-03-20", marks: [], results: "Drafted proposal requesting €2000." },
-      { step: "Present to parent committee", status: "done", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-04-02", marks: [], results: "Approved by committee unanimously." },
-      { step: "Apply for district grant", status: "in_process", in_charge_uid: "2", in_charge_name: "Iryna V.", deadline: "2026-04-15", marks: [] },
-      { step: "Hire program coordinator", status: "pending", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-05-10", marks: [] }
-    ],
-    options: [],
-    winning_option_index: null,
-    messages: []
-  },
-  "task-5": {
-    title: "Switch CI/CD to GitHub Actions",
-    description: "Decommission Jenkins server and write native GitHub Actions workflows for continuous integration build and test pipelines.",
-    status: "tasks",
-    ends: "2026-06-01",
-    submitter_id: "System",
-    created_at: "2026-02-15T00:00:00Z",
-    participants: ["5", "1"],
-    relevance_scores: { "1": 0.91 },
-    isr_scores: { "1": 1.15 },
-    tasks: [
-      { step: "Audit existing Jenkins pipelines", status: "done", in_charge_uid: "5", in_charge_name: "Elon M.", deadline: "2026-05-05", marks: [], results: "Audited. Found 12 distinct build configurations." },
-      { step: "Write GitHub Actions workflows", status: "in_process", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-05-20", marks: [] },
-      { step: "Decommission Jenkins server", status: "pending", in_charge_uid: "5", in_charge_name: "Elon M.", deadline: "2026-06-01", marks: [] }
-    ],
-    options: [],
-    winning_option_index: null,
-    messages: []
-  },
-  "task-6": {
-    title: "Bike lane on Central Avenue",
-    description: "Proposal to coordinate with the city municipality to mark a dedicated bike lane along Central Avenue adjacent to the building complex.",
-    status: "approved",
-    ends: "2026-05-15",
-    submitter_id: "System",
-    created_at: "2026-01-05T00:00:00Z",
-    participants: ["1"],
-    relevance_scores: { "1": 0.95 },
-    isr_scores: { "1": 1.07 },
-    tasks: [
-      { step: "Conduct traffic impact study", status: "done", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-02-15", marks: [], results: "Traffic impact study done. Positive results." },
-      { step: "Approve final route design", status: "done", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-03-30", marks: [], results: "Route design approved by district engineer." },
-      { step: "Begin road marking and signage", status: "in_process", in_charge_uid: "1", in_charge_name: "Sergey B.", deadline: "2026-05-15", marks: [] }
-    ],
-    options: [],
-    winning_option_index: null,
-    messages: []
-  }
-};
+
 
 function formatDateWithSetting(val) {
   if (!val) return '';
@@ -2033,7 +1915,7 @@ function initTopicDetailViews() {
 
   if (!modalBody) return;
 
-  // staticTasksMockData is declared globally at the top of the file
+  // Tasks are read from stored issue results.
 
 
   var reactionChoices = [
@@ -2680,6 +2562,7 @@ function initTopicDetailViews() {
           '</div>' +
         '</div>' +
 
+        '<section id="similar-issues-panel" hidden aria-live="polite" style="margin-bottom: 16px;"></section>' +
         '<div class="topic-detail-meta" style="position: relative; margin-bottom: 14px;">' +
           '<div class="topic-detail-meta-item-wrapper" style="position:relative;">' +
             '<button type="button" class="topic-detail-meta-item" data-meta="Ad-hoc Public" id="create-meta-microcommunity" disabled>' +
@@ -3138,6 +3021,24 @@ function initTopicDetailViews() {
   // Active listener token to cancel when exiting modal detail view
   let activeDetailListener = null;
 
+  function discussionParameters(disc, issue) {
+    const result = Object.assign({}, disc);
+    // These Check-derived parameters belong to the issue; legacy discussion
+    // documents may omit them. Keep thread identity/options/messages separate.
+    for (const key of ['location', 'location_source', 'location_reference',
+      'mu_distance_meters', 'sigma_decay_meters', 'expertise_domain', 'expertise_depth']) {
+      if (issue && issue[key] !== undefined) result[key] = issue[key];
+    }
+    return result;
+  }
+
+  function showArchivedTopic(disc, issue) {
+    const activeId = modalBody.getAttribute('data-active-topic-id');
+    if (Lifecycle.phaseOf(disc, issue) !== 'archived' && !(window.isTopicArchived && window.isTopicArchived(activeId))) return false;
+    modalBody.innerHTML = '<p style="padding:20px;">This topic is archived and is unavailable in the active demo.</p>';
+    return true;
+  }
+
   async function renderTopicDetail(kind, topicId, sourceViewHtml, titleText) {
     const overlay = document.getElementById('section-modal-overlay');
     if (overlay && !overlay.classList.contains('active')) {
@@ -3149,6 +3050,7 @@ function initTopicDetailViews() {
     modalBody.setAttribute('data-topic-source-kind', kind);
     modalBody.setAttribute('data-topic-source-title', titleText || '');
     modalBody.setAttribute('data-active-topic-id', topicId);
+    if (showArchivedTopic(null, null)) return;
     messageAuthorScores = { topicId: null, mcId: null, byUid: {} }; // U3: read again for this topic
     modalBody.__sourceViewHtml = sourceViewHtml || modalBody.innerHTML;
     modalBody.__restoreView = restoreTopicListView;
@@ -3661,6 +3563,7 @@ function initTopicDetailViews() {
       const issueDoc = await transaction.get(issueRef);
       const data = doc.data();
       const issue = issueDoc.exists ? issueDoc.data() : null;
+      if (Lifecycle.phaseOf(data, issue) === "archived") return null;
       const phase = deadlinePhase(data);
 
       const votesMap = Object.assign({}, data.deadline_votes || {});
@@ -3704,7 +3607,7 @@ function initTopicDetailViews() {
         const newEnds = Lifecycle.addDays(today, Lifecycle.EXTEND_DAYS);
         Object.assign(updateFields, { status: 'Voting', ends: newEnds, deadline_votes: {} });
         const issueData = Lifecycle.votingIssueFields(data, newEnds, new Date().toISOString());
-        if (issue) transaction.update(issueRef, issueData); else transaction.set(issueRef, issueData);
+        if (issue) { for (const key of ["created_at", "title", "description", "category"]) delete issueData[key]; transaction.update(issueRef, issueData); } else transaction.set(issueRef, issueData);
         close = toList = true;
       } else if (outcome.action === 'back_to_chat') {
         const newEnds = Lifecycle.addDays(today, Lifecycle.EXTEND_DAYS);
@@ -3935,12 +3838,14 @@ function initTopicDetailViews() {
 
     if (kind === 'chat') {
       try {
+        let rawChatDiscussion = null;
         let currentMessagesRaw = null;
         let isRendering = false;
         let pendingRender = false;
 
         // Fetch missing user profiles in parallel & render UI
         async function updateUI() {
+          if (showArchivedTopic(currentDiscData, null)) return;
           if (!currentDiscData || !currentMessagesRaw) return;
           if (isRendering) {
             pendingRender = true;
@@ -4085,9 +3990,11 @@ function initTopicDetailViews() {
               options: disc.options_v2 || [],
               messages: messages,
               participants: combinedUids,
-              expertiseDepth: disc.expertise_depth || "None"
+              expertiseDepth: disc.expertise_depth || "None",
+              expertiseDomain: disc.expertise_domain || ""
             };
 
+            if (showArchivedTopic(currentDiscData, null)) return;
             modalBody.innerHTML = renderChatTopic(topicData);
             bindDetailViewButtons(titleText, disc, true);
 
@@ -4124,10 +4031,19 @@ function initTopicDetailViews() {
             modalBody.innerHTML = '<div style="padding:20px; color:var(--urgent);">Discussion thread not found in database.</div>';
             return;
           }
-          currentDiscData = discDoc.data();
+          rawChatDiscussion = discDoc.data();
+          currentDiscData = discussionParameters(rawChatDiscussion, currentPhaseIssue);
+          if (showArchivedTopic(currentDiscData, currentPhaseIssue)) return;
           await updateUI();
         }, (err) => {
           console.error("Discussion listener error:", err);
+        });
+
+        const issueUnsubscribe = db.collection("issues").doc(topicId).onSnapshot(async (doc) => {
+          currentPhaseIssue = doc.exists ? doc.data() : null;
+          if (rawChatDiscussion) currentDiscData = discussionParameters(rawChatDiscussion, currentPhaseIssue);
+          if (showArchivedTopic(currentDiscData, currentPhaseIssue)) return;
+          await updateUI();
         });
 
         // 2. Subscribe to messages changes
@@ -4145,6 +4061,7 @@ function initTopicDetailViews() {
 
         activeDetailListener = () => {
           if (discUnsubscribe) discUnsubscribe();
+          if (issueUnsubscribe) issueUnsubscribe();
           if (messagesUnsubscribe) messagesUnsubscribe();
         };
 
@@ -4161,6 +4078,7 @@ function initTopicDetailViews() {
         let pendingRender = false;
 
         async function updateVotingUI() {
+          if (showArchivedTopic(currentDiscData, currentIssueData)) return;
           const fallbackIssueRaw = currentIssueData || currentDiscData;
           if (!fallbackIssueRaw) return;
           if (isRendering) {
@@ -4322,7 +4240,7 @@ function initTopicDetailViews() {
             const notCounted = liveTally.excluded.filter(x => x.reason === "no ISR").length;
 
             let geopositionVal = "N/A";
-            const geoDoc = disc || issue;
+            const geoDoc = discussionParameters(disc, issue);
             if (geoDoc && geoDoc.location && typeof geoDoc.location.latitude === 'number' && typeof geoDoc.location.longitude === 'number') {
               const lat = geoDoc.location.latitude;
               const lon = geoDoc.location.longitude;
@@ -4343,16 +4261,18 @@ function initTopicDetailViews() {
               relevanceWeights: relevanceWeights,
               isrWeights: isrWeights,
               participants: combinedUids,
-              expertiseDepth: expertiseDepth,
+              expertiseDepth: geoDoc.expertise_depth || expertiseDepth,
+              expertiseDomain: geoDoc.expertise_domain || "",
               geoposition: geopositionVal,
               options: baseOptions,
               messages: resolvedMessages
             };
 
             // Render topic detailed HTML
+            if (showArchivedTopic(currentDiscData, currentIssueData)) return;
             modalBody.innerHTML = renderVotingTopic(topicData);
-            bindDetailViewButtons(titleText, Object.assign({}, issue, disc));
-            bindChatMetaButtons(Object.assign({}, issue, disc));
+            bindDetailViewButtons(titleText, discussionParameters(Object.assign({}, issue, disc), issue));
+            bindChatMetaButtons(discussionParameters(Object.assign({}, issue, disc), issue));
             bindDiscussionInteractionHandlers(topicId, modalBody, db, currentUserId);
 
             // Bind discussion toggle button click handler
@@ -4452,6 +4372,7 @@ function initTopicDetailViews() {
 
         const discUnsubscribe = db.collection("discussions").doc(topicId).onSnapshot(doc => {
           currentDiscData = doc.exists ? doc.data() : {};
+          if (showArchivedTopic(currentDiscData, currentPhaseIssue)) return;
           ensureTopicLocation(currentDiscData, topicId);
           updateVotingUI();
         }, err => {
@@ -4495,63 +4416,6 @@ function initTopicDetailViews() {
       }
 
     } else if (kind === 'tasks') {
-      if (staticTasksMockData[topicId]) {
-        try {
-          const issue = staticTasksMockData[topicId];
-          const currentUserId = safeGetStorage('userId') || "1";
-          
-          const relevanceWeights = formatRelevanceWeights(issue);
-          const isrWeights = formatIsrWeights(issue);
-          
-          const topicData = {
-            name: issue.title,
-            description: issue.description,
-            status: issue.status || "In progress",
-            counter: `Submitter: ${issue.submitter_id}`,
-            deadline: formatDeadlineDisplay(issue.ends || "Active"),
-            relevance: (issue.relevance_scores[currentUserId] !== undefined) ? (issue.relevance_scores[currentUserId] * 100).toFixed(0) + "%" : "N/A",
-            isrScore: (issue.isr_scores[currentUserId] !== undefined) ? issue.isr_scores[currentUserId].toFixed(2) : "N/A",
-            relevanceWeights: relevanceWeights,
-            isrWeights: isrWeights,
-            participants: issue.participants || [],
-            expertiseDepth: "None",
-            geoposition: "47.5583, 7.6065<br>μ: 100m, σ: 50m",
-            tasks: issue.tasks || [],
-            comments: [],
-            options: issue.options || [],
-            winning_option_index: issue.winning_option_index !== undefined ? issue.winning_option_index : null,
-            messages: []
-          };
-          
-          modalBody.innerHTML = renderTasksTopic(topicData);
-          bindDetailViewButtons(titleText, issue);
-          bindChatMetaButtons(issue);
-          bindTaskModalInteractions(topicId, issue);
-          
-          // Bind collapsible discussion drawer toggles
-          const discussionToggleBtn = modalBody.querySelector('.tasks-discussion-toggle-btn');
-          const discussionContainer = modalBody.querySelector('.tasks-discussion-container');
-          if (discussionToggleBtn && discussionContainer) {
-            discussionToggleBtn.onclick = function() {
-              discussionContainer.style.display = discussionContainer.style.display === 'none' ? 'block' : 'none';
-              discussionToggleBtn.textContent = discussionContainer.style.display === 'block' ? 'Hide Discussion' : 'Discussion';
-            };
-          }
-          
-          const otherOptionsToggleBtn = modalBody.querySelector('.tasks-other-options-toggle-btn');
-          const otherOptionsContainer = modalBody.querySelector('.tasks-other-options-container');
-          if (otherOptionsToggleBtn && otherOptionsContainer) {
-            otherOptionsToggleBtn.onclick = function() {
-              otherOptionsContainer.style.display = otherOptionsContainer.style.display === 'none' ? 'block' : 'none';
-              otherOptionsToggleBtn.textContent = otherOptionsContainer.style.display === 'block' ? 'Hide other options' : 'Other options';
-            };
-          }
-          
-          return;
-        } catch (e) {
-          console.error("Render static mock tasks detail failed:", e);
-        }
-      }
 
       try {
         let currentMessagesRaw = null;
@@ -4561,6 +4425,7 @@ function initTopicDetailViews() {
         let pendingRender = false;
 
         async function updateTasksUI() {
+          if (showArchivedTopic(currentDiscRaw, currentIssueRaw)) return;
           const fallbackIssueRaw = currentIssueRaw || currentDiscRaw;
           if (!fallbackIssueRaw) return;
           if (isRendering) {
@@ -4687,7 +4552,7 @@ function initTopicDetailViews() {
             const isrWeights = formatIsrWeights(issue);
 
             let geopositionVal = "N/A";
-            const geoDoc = discData || issue;
+            const geoDoc = discussionParameters(discData, issue);
             if (geoDoc && geoDoc.location && typeof geoDoc.location.latitude === 'number' && typeof geoDoc.location.longitude === 'number') {
               const lat = geoDoc.location.latitude;
               const lon = geoDoc.location.longitude;
@@ -4707,7 +4572,8 @@ function initTopicDetailViews() {
               relevanceWeights: relevanceWeights,
               isrWeights: isrWeights,
               participants: combinedUids,
-              expertiseDepth: expertiseDepth,
+              expertiseDepth: geoDoc.expertise_depth || expertiseDepth,
+              expertiseDomain: geoDoc.expertise_domain || "",
               geoposition: geopositionVal,
               tasks: Array.isArray(issue.tasks) ? issue.tasks : (issue.tasks ? [issue.tasks] : []),
               comments: safeComments,
@@ -4718,8 +4584,9 @@ function initTopicDetailViews() {
 
             currentDiscData = Object.assign({}, issue, discData); // For deadline modal, etc.
 
+            if (showArchivedTopic(currentDiscRaw, currentIssueRaw)) return;
             modalBody.innerHTML = renderTasksTopic(topicData);
-            bindDetailViewButtons(titleText, Object.assign({}, issue, discData));
+            bindDetailViewButtons(titleText, discussionParameters(Object.assign({}, issue, discData), issue));
             bindChatMetaButtons(Object.assign({}, issue, discData));
             bindTaskModalInteractions(topicId, issue);
             bindDiscussionInteractionHandlers(topicId, modalBody, db, currentUserId);
@@ -4801,6 +4668,200 @@ function initTopicDetailViews() {
     }
   }
 
+  // Helper to calculate microcommunity values preview from members list
+  async function calculateMicrocommunityValuesFromMembers(members) {
+    if (!members || members.length === 0) return null;
+
+    const uidsToFetch = members.map(m => m.uid.toString());
+    const userTaxonomies = {};
+
+    if (typeof firebase !== 'undefined') {
+      const db = firebase.firestore();
+      await Promise.all(uidsToFetch.map(async (uid) => {
+        try {
+          const userDoc = await db.collection("users").doc(uid).get();
+          if (userDoc.exists) {
+            const uData = userDoc.data();
+            if (uData && uData.values_taxonomy) {
+              userTaxonomies[uid] = uData.values_taxonomy;
+            }
+          }
+        } catch (e) {
+          console.warn(`Failed to fetch values taxonomy for user ${uid}:`, e);
+        }
+      }));
+    }
+
+    // Provide mock taxonomies for missing users so the prototype always renders a chart
+    members.forEach((m, index) => {
+      const uid = m.uid.toString();
+      if (!userTaxonomies[uid]) {
+        const sourceTax = window.currentUserValues || window.vectorData || {};
+        let rawDomains = [];
+        if (Array.isArray(sourceTax.domains)) {
+          rawDomains = sourceTax.domains.map(d => {
+            if (typeof d === 'number') return d;
+            if (d && typeof d.score === 'number') return d.score;
+            return 50;
+          });
+        } else {
+          rawDomains = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50];
+        }
+
+        let rawShifts = { work: [], family: [], private: [], crisis: [] };
+        const shiftsObj = sourceTax.contextual_shifts || sourceTax.contextShifts || {};
+        ['work', 'family', 'private', 'crisis'].forEach(ctx => {
+          rawShifts[ctx] = Array.isArray(shiftsObj[ctx]) ? [...shiftsObj[ctx]] : [0,0,0,0,0,0,0,0,0,0];
+        });
+
+        let rawConflict = [];
+        const cr = sourceTax.conflict_resolution || sourceTax.conflictResolution || [];
+        for (let i = 0; i < 36; i++) {
+          const entry = cr[i];
+          if (typeof entry === 'number') {
+            rawConflict.push(entry);
+          } else if (entry && typeof entry.weight === 'number') {
+            rawConflict.push(entry.weight);
+          } else {
+            rawConflict.push(50);
+          }
+        }
+
+        const rawItems = {};
+        const itemsObj = sourceTax.items || {};
+        for (let i = 1; i <= 10; i++) {
+          const key = 'd' + i;
+          rawItems[key] = Array.isArray(itemsObj[key]) ? [...itemsObj[key]] : [];
+        }
+
+        // Slightly perturb the values based on index to make it look distinct from personal vector
+        const perturbedDomains = rawDomains.map(d => Math.max(0, Math.min(100, d + (index % 3 === 1 ? 15 : (index % 3 === 2 ? -10 : 5)))));
+
+        userTaxonomies[uid] = {
+          domains: perturbedDomains,
+          contextual_shifts: rawShifts,
+          items: rawItems,
+          conflict_resolution: rawConflict
+        };
+      }
+    });
+
+    const validMembers = members.filter(m => userTaxonomies[m.uid.toString()]);
+    if (validMembers.length === 0) return null;
+
+    try {
+      const avgDomains = [];
+      for (let i = 0; i < 10; i++) {
+        let valSum = 0;
+        let relSum = 0;
+        validMembers.forEach(m => {
+          const taxonomy = userTaxonomies[m.uid.toString()];
+          const domainsList = taxonomy.domains || [];
+          const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
+          if (domainsList[i] !== undefined && domainsList[i] !== null) {
+            valSum += domainsList[i] * score;
+            relSum += score;
+          }
+        });
+        avgDomains.push(relSum > 0 ? Math.round(valSum / relSum) : 50);
+      }
+
+      const avgContextShifts = {};
+      ['work', 'family', 'private', 'crisis'].forEach(ctx => {
+        const avgCtxList = [];
+        for (let i = 0; i < 10; i++) {
+          let valSum = 0;
+          let relSum = 0;
+          validMembers.forEach(m => {
+            const taxonomy = userTaxonomies[m.uid.toString()];
+            const shifts = taxonomy.contextual_shifts || {};
+            const ctxList = shifts[ctx] || [];
+            const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
+            if (ctxList[i] !== undefined && ctxList[i] !== null) {
+              valSum += ctxList[i] * score;
+              relSum += score;
+            }
+          });
+          avgCtxList.push(relSum > 0 ? Math.round(valSum / relSum) : 0);
+        }
+        avgContextShifts[ctx] = avgCtxList;
+      });
+
+      const avgItems = {};
+      for (let i = 1; i <= 10; i++) {
+        const key = 'd' + i;
+        let itemsLen = 0;
+        for (let m of validMembers) {
+          const taxonomy = userTaxonomies[m.uid.toString()];
+          const items = taxonomy.items || {};
+          if (items[key] && items[key].length > 0) {
+            itemsLen = items[key].length;
+            break;
+          }
+        }
+        if (itemsLen > 0) {
+          const avgItemList = [];
+          for (let j = 0; j < itemsLen; j++) {
+            let valSum = 0;
+            let relSum = 0;
+            validMembers.forEach(m => {
+              const taxonomy = userTaxonomies[m.uid.toString()];
+              const items = taxonomy.items || {};
+              const itemList = items[key] || [];
+              const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
+              if (itemList[j] !== undefined && itemList[j] !== null) {
+                valSum += itemList[j] * score;
+                relSum += score;
+              }
+            });
+            avgItemList.push(relSum > 0 ? Math.round(valSum / relSum) : null);
+          }
+          avgItems[key] = avgItemList;
+        } else {
+          avgItems[key] = [];
+        }
+      }
+
+      const avgConflictResolution = [];
+      for (let i = 0; i < 36; i++) {
+        let valSum = 0;
+        let relSum = 0;
+        validMembers.forEach(m => {
+          const taxonomy = userTaxonomies[m.uid.toString()];
+          const conflicts = taxonomy.conflict_resolution || [];
+          let val = null;
+          if (conflicts[i] !== undefined && conflicts[i] !== null) {
+            const entry = conflicts[i];
+            val = (typeof entry === 'object' && entry !== null) ? entry.weight : entry;
+          }
+          const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
+          if (val !== null) {
+            valSum += val * score;
+            relSum += score;
+          }
+        });
+        avgConflictResolution.push(relSum > 0 ? Math.round(valSum / relSum) : 50);
+      }
+
+      return {
+        domains: avgDomains,
+        contextual_shifts: avgContextShifts,
+        items: avgItems,
+        conflict_resolution: avgConflictResolution
+      };
+    } catch (err) {
+      console.error("calculateMicrocommunityValuesFromMembers error:", err);
+      return null;
+    }
+  }
+
+  function checkedPublicSize(data) {
+    const count = data.public_members_count ?? data.members_count;
+    return Number.isInteger(count) && count >= 0
+      ? Math.min(count, 100)
+      : (Array.isArray(data.members) ? data.members.length : 0);
+  }
+
   function renderChatCreateView(sourceViewHtml, titleText) {
     modalBody.setAttribute('data-topic-detail-open', '1');
     modalBody.setAttribute('data-topic-source-kind', 'chat-create');
@@ -4838,6 +4899,10 @@ function initTopicDetailViews() {
     // A2: the topic starter can only clarify the context; the server derives again.
     let pendingClarification = "";
     let calculatedMembers = [];
+    let calculatedPublicSize = 0;
+    let similarIssues = [];
+    let titleConflicts = [];
+    let duplicateReview = null;
     let microcommunityPreviewValues = null;
     const currentUserId = safeGetStorage('userId') || "1";
     const db = firebase.firestore();
@@ -4845,6 +4910,114 @@ function initTopicDetailViews() {
     const functionsBaseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       ? 'http://127.0.0.1:5001/project-a3d59130-5adf-4677-9e2/us-central1'
       : `https://us-central1-project-a3d59130-5adf-4677-9e2.cloudfunctions.net`;
+
+    function updateCreateAvailability() {
+      if (submitBtn) submitBtn.disabled = !suggestedParams || titleConflicts.length > 0 || window.issuePointMoves !== checkedPointMoves || (similarIssues.length > 0 && !duplicateReview);
+    }
+
+    function showSimilarIssues(matches, coverage, conflicts) {
+      similarIssues = Array.isArray(matches) ? matches : [];
+      titleConflicts = Array.isArray(conflicts) ? conflicts : similarIssues.filter(m => m.title_conflict).map(m => m.issue_id);
+      duplicateReview = null;
+      const panel = modalBody.querySelector('#similar-issues-panel');
+      const preview = modalBody.querySelector('.topic-detail-meta');
+      panel.textContent = '';
+      panel.hidden = !similarIssues.length && !(coverage && coverage.legacy_text_only);
+      if (preview) { preview.hidden = false; preview.style.display = ''; }
+      if (titleConflicts.length) {
+        const warning = document.createElement('p');
+        warning.setAttribute('role', 'status');
+        warning.textContent = 'An active issue already uses this title. Choose a distinct title and press Check again.';
+        panel.appendChild(warning);
+      }
+      if (similarIssues.length) {
+        const heading = document.createElement('h4');
+        heading.textContent = 'Similar active issues';
+        panel.appendChild(heading);
+      }
+      similarIssues.forEach(match => {
+        const card = document.createElement('article');
+        card.className = 'topic-detail-card';
+        const title = document.createElement('strong');
+        title.textContent = match.title;
+        const description = document.createElement('p');
+        description.textContent = match.description;
+        const context = document.createElement('p');
+        const location = Array.isArray(match.location) ? match.location.map(x => Number(x).toFixed(5)).join(', ') : '';
+        context.textContent = `${match.reason}. ${match.phase === 'chat' ? 'Discussion' : 'Voting'}. ${location}`;
+        const open = document.createElement('button');
+        open.type = 'button';
+        open.className = 'tour-btn tour-btn-secondary';
+        open.textContent = 'Open issue';
+        open.onclick = () => renderTopicDetail(match.phase === 'voting' ? 'voting' : 'chat', match.issue_id, sourceViewHtml, titleText);
+        card.append(title, description, context, open);
+        if (match.already_member) {
+          const status = document.createElement('p');
+          status.textContent = 'You are already a member';
+          card.appendChild(status);
+        } else if (match.join_allowed) {
+          const join = document.createElement('button');
+          join.type = 'button';
+          join.className = 'tour-btn tour-btn-primary';
+          join.textContent = 'Join issue';
+          const error = document.createElement('p');
+          error.setAttribute('role', 'status');
+          join.onclick = async () => {
+            join.disabled = true;
+            error.textContent = 'Joining...';
+            try {
+              const response = await fetch(`${functionsBaseUrl}/joinIssue`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ issueId: match.issue_id, submitterId: currentUserId })
+              });
+              const result = await response.json();
+              if (!response.ok || !result.success) throw new Error(result.error || 'Joining failed. Please retry.');
+              await renderTopicDetail('chat', match.issue_id, sourceViewHtml, titleText);
+            } catch (failure) {
+              error.textContent = failure.message;
+              join.disabled = false;
+            }
+          };
+          card.append(join, error);
+        } else {
+          const status = document.createElement('p');
+          status.textContent = 'Joining is available during discussion';
+          card.appendChild(status);
+        }
+        panel.appendChild(card);
+      });
+      if (coverage && coverage.legacy_text_only) {
+        const note = document.createElement('p');
+        note.textContent = `${coverage.legacy_text_only} active legacy issues were checked using text and place context. Their semantic vectors are unavailable.`;
+        panel.appendChild(note);
+      }
+      if (similarIssues.length) {
+        const label = document.createElement('label');
+        label.textContent = 'How is your issue different?';
+        const reason = document.createElement('textarea');
+        reason.className = 'topic-form-textarea';
+        reason.maxLength = 1000;
+        reason.setAttribute('aria-label', 'How is your issue different?');
+        reason.oninput = () => {
+          duplicateReview = reason.value.trim() ? { reason: reason.value.trim(), matches: similarIssues.map(({ issue_id, version }) => ({ issue_id, version })) } : null;
+          updateCreateAvailability();
+        };
+        panel.append(label, reason);
+      }
+      updateCreateAvailability();
+    }
+
+    function invalidateDuplicateCheck() {
+      suggestedParams = null;
+      duplicateReview = null;
+      similarIssues = [];
+      titleConflicts = [];
+      const panel = modalBody.querySelector('#similar-issues-panel');
+      if (panel) { panel.hidden = true; panel.textContent = ''; }
+      updateCreateAvailability();
+    }
+    titleInput.addEventListener('input', invalidateDuplicateCheck);
+    descTextarea.addEventListener('input', invalidateDuplicateCheck);
 
     // 1. Deadline absolute popup picker
     const deadlineBtn = modalBody.querySelector('#create-meta-deadline');
@@ -5052,6 +5225,10 @@ function initTopicDetailViews() {
           item.textContent = "Please click 'Check' to suggest members.";
           popup.appendChild(item);
         } else {
+          const sampleLabel = document.createElement('div');
+          sampleLabel.className = 'reaction-user-item';
+          sampleLabel.textContent = `Previewing ${calculatedMembers.length} of ${calculatedPublicSize} members`;
+          popup.appendChild(sampleLabel);
           if (microcommunityPreviewValues && microcommunityPreviewValues.domains) {
             const chartWrapper = document.createElement('div');
             chartWrapper.className = 'bar-chart';
@@ -5187,6 +5364,11 @@ function initTopicDetailViews() {
 
     // U6 (R6): moving the pin marks it as the creator's; after a Check, Create waits for a new Check.
     window.onIssuePointMoved = () => {
+      duplicateReview = null;
+      similarIssues = [];
+      titleConflicts = [];
+      const panel = modalBody.querySelector('#similar-issues-panel');
+      if (panel) { panel.hidden = true; panel.textContent = ''; }
       showIssuePointLabel('set by you');
       if (suggestedParams && submitBtn) {
         submitBtn.setAttribute('disabled', 'true');
@@ -5413,193 +5595,6 @@ function initTopicDetailViews() {
       return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     }
 
-    // Helper to calculate microcommunity values preview from members list
-    async function calculateMicrocommunityValuesFromMembers(members) {
-      if (!members || members.length === 0) return null;
-      
-      const uidsToFetch = members.map(m => m.uid.toString());
-      const userTaxonomies = {};
-      
-      if (typeof firebase !== 'undefined') {
-        const db = firebase.firestore();
-        await Promise.all(uidsToFetch.map(async (uid) => {
-          try {
-            const userDoc = await db.collection("users").doc(uid).get();
-            if (userDoc.exists) {
-              const uData = userDoc.data();
-              if (uData && uData.values_taxonomy) {
-                userTaxonomies[uid] = uData.values_taxonomy;
-              }
-            }
-          } catch (e) {
-            console.warn(`Failed to fetch values taxonomy for user ${uid}:`, e);
-          }
-        }));
-      }
-
-      // Provide mock taxonomies for missing users so the prototype always renders a chart
-      members.forEach((m, index) => {
-        const uid = m.uid.toString();
-        if (!userTaxonomies[uid]) {
-          const sourceTax = window.currentUserValues || window.vectorData || {};
-          let rawDomains = [];
-          if (Array.isArray(sourceTax.domains)) {
-            rawDomains = sourceTax.domains.map(d => {
-              if (typeof d === 'number') return d;
-              if (d && typeof d.score === 'number') return d.score;
-              return 50;
-            });
-          } else {
-            rawDomains = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50];
-          }
-
-          let rawShifts = { work: [], family: [], private: [], crisis: [] };
-          const shiftsObj = sourceTax.contextual_shifts || sourceTax.contextShifts || {};
-          ['work', 'family', 'private', 'crisis'].forEach(ctx => {
-            rawShifts[ctx] = Array.isArray(shiftsObj[ctx]) ? [...shiftsObj[ctx]] : [0,0,0,0,0,0,0,0,0,0];
-          });
-
-          let rawConflict = [];
-          const cr = sourceTax.conflict_resolution || sourceTax.conflictResolution || [];
-          for (let i = 0; i < 36; i++) {
-            const entry = cr[i];
-            if (typeof entry === 'number') {
-              rawConflict.push(entry);
-            } else if (entry && typeof entry.weight === 'number') {
-              rawConflict.push(entry.weight);
-            } else {
-              rawConflict.push(50);
-            }
-          }
-
-          const rawItems = {};
-          const itemsObj = sourceTax.items || {};
-          for (let i = 1; i <= 10; i++) {
-            const key = 'd' + i;
-            rawItems[key] = Array.isArray(itemsObj[key]) ? [...itemsObj[key]] : [];
-          }
-
-          // Slightly perturb the values based on index to make it look distinct from personal vector
-          const perturbedDomains = rawDomains.map(d => Math.max(0, Math.min(100, d + (index % 3 === 1 ? 15 : (index % 3 === 2 ? -10 : 5)))));
-
-          userTaxonomies[uid] = {
-            domains: perturbedDomains,
-            contextual_shifts: rawShifts,
-            items: rawItems,
-            conflict_resolution: rawConflict
-          };
-        }
-      });
-
-      const validMembers = members.filter(m => userTaxonomies[m.uid.toString()]);
-      if (validMembers.length === 0) return null;
-
-      try {
-        const avgDomains = [];
-        for (let i = 0; i < 10; i++) {
-          let valSum = 0;
-          let relSum = 0;
-          validMembers.forEach(m => {
-            const taxonomy = userTaxonomies[m.uid.toString()];
-            const domainsList = taxonomy.domains || [];
-            const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
-            if (domainsList[i] !== undefined && domainsList[i] !== null) {
-              valSum += domainsList[i] * score;
-              relSum += score;
-            }
-          });
-          avgDomains.push(relSum > 0 ? Math.round(valSum / relSum) : 50);
-        }
-
-        const avgContextShifts = {};
-        ['work', 'family', 'private', 'crisis'].forEach(ctx => {
-          const avgCtxList = [];
-          for (let i = 0; i < 10; i++) {
-            let valSum = 0;
-            let relSum = 0;
-            validMembers.forEach(m => {
-              const taxonomy = userTaxonomies[m.uid.toString()];
-              const shifts = taxonomy.contextual_shifts || {};
-              const ctxList = shifts[ctx] || [];
-              const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
-              if (ctxList[i] !== undefined && ctxList[i] !== null) {
-                valSum += ctxList[i] * score;
-                relSum += score;
-              }
-            });
-            avgCtxList.push(relSum > 0 ? Math.round(valSum / relSum) : 0);
-          }
-          avgContextShifts[ctx] = avgCtxList;
-        });
-
-        const avgItems = {};
-        for (let i = 1; i <= 10; i++) {
-          const key = 'd' + i;
-          let itemsLen = 0;
-          for (let m of validMembers) {
-            const taxonomy = userTaxonomies[m.uid.toString()];
-            const items = taxonomy.items || {};
-            if (items[key] && items[key].length > 0) {
-              itemsLen = items[key].length;
-              break;
-            }
-          }
-          if (itemsLen > 0) {
-            const avgItemList = [];
-            for (let j = 0; j < itemsLen; j++) {
-              let valSum = 0;
-              let relSum = 0;
-              validMembers.forEach(m => {
-                const taxonomy = userTaxonomies[m.uid.toString()];
-                const items = taxonomy.items || {};
-                const itemList = items[key] || [];
-                const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
-                if (itemList[j] !== undefined && itemList[j] !== null) {
-                  valSum += itemList[j] * score;
-                  relSum += score;
-                }
-              });
-              avgItemList.push(relSum > 0 ? Math.round(valSum / relSum) : null);
-            }
-            avgItems[key] = avgItemList;
-          } else {
-            avgItems[key] = [];
-          }
-        }
-
-        const avgConflictResolution = [];
-        for (let i = 0; i < 36; i++) {
-          let valSum = 0;
-          let relSum = 0;
-          validMembers.forEach(m => {
-            const taxonomy = userTaxonomies[m.uid.toString()];
-            const conflicts = taxonomy.conflict_resolution || [];
-            let val = null;
-            if (conflicts[i] !== undefined && conflicts[i] !== null) {
-              const entry = conflicts[i];
-              val = (typeof entry === 'object' && entry !== null) ? entry.weight : entry;
-            }
-            const score = m.score !== undefined ? m.score : (m.relevance !== undefined ? m.relevance : 0.1);
-            if (val !== null) {
-              valSum += val * score;
-              relSum += score;
-            }
-          });
-          avgConflictResolution.push(relSum > 0 ? Math.round(valSum / relSum) : 50);
-        }
-
-        return {
-          domains: avgDomains,
-          contextual_shifts: avgContextShifts,
-          items: avgItems,
-          conflict_resolution: avgConflictResolution
-        };
-      } catch (err) {
-        console.error("calculateMicrocommunityValuesFromMembers error:", err);
-        return null;
-      }
-    }
-
     // 5. Check calculation triggers (Recalculation supported)
     if (checkBtn) {
       checkBtn.addEventListener('click', async () => {
@@ -5646,6 +5641,9 @@ function initTopicDetailViews() {
             serverError = err && err.message;
           }
 
+          if (titleInput.value.trim() !== title || descTextarea.value.trim() !== description) {
+            throw new Error('The text changed during Check. Please check again.');
+          }
           if (data && data.success) {
             suggestedParams = {
               draftId: data.draftId,
@@ -5670,6 +5668,8 @@ function initTopicDetailViews() {
               resources_needed: data.resources_needed || []
             };
             calculatedMembers = data.members;
+            calculatedPublicSize = checkedPublicSize(data);
+            showSimilarIssues(data.similar_issues, data.duplicate_coverage, data.title_conflicts);
             pendingClarification = "";
             // U6 (R4, R6): the server's point and where it came from, unless the pin moved meanwhile
             checkedPointMoves = movesAtCheck;
@@ -5712,7 +5712,7 @@ function initTopicDetailViews() {
           }
 
           // Render metadata button value labels
-          valMicrocommunity.textContent = `${calculatedMembers.length} members`;
+          valMicrocommunity.textContent = `${calculatedPublicSize} members`;
           
           const dataWeights = suggestedParams.weights;
           const wRelevanceObj = {
@@ -5766,7 +5766,7 @@ function initTopicDetailViews() {
 
           if (submitBtn) {
             if (window.issuePointMoves === checkedPointMoves) {
-              submitBtn.removeAttribute('disabled');
+              updateCreateAvailability();
             } else if (typeof window.onIssuePointMoved === 'function') {
               window.onIssuePointMoved(); // U6: the pin moved during the Check
             }
@@ -5787,7 +5787,7 @@ function initTopicDetailViews() {
       submitBtn.addEventListener('click', async () => {
         const title = titleInput.value.trim();
         const description = descTextarea.value.trim();
-        if (!title || !description || !suggestedParams) return;
+        if (!title || !description || !suggestedParams || titleConflicts.length > 0 || (similarIssues.length && !duplicateReview)) return;
         if (window.issuePointMoves !== checkedPointMoves) {
           alert('The point moved after the check: press Check again.'); // U6 (R6)
           return;
@@ -5808,11 +5808,13 @@ function initTopicDetailViews() {
               description: description,
               location: newTopicGeo,
               submitterId: currentUserId,
-              deadline: newTopicDeadline
+              deadline: newTopicDeadline,
+              duplicate_review: duplicateReview
             })
           });
           const out = await res.json().catch(() => ({}));
           if (!res.ok || !out.success) {
+            if (out.similar_issues) showSimilarIssues(out.similar_issues.matches, out.similar_issues.coverage, out.similar_issues.title_conflicts);
             throw new Error(out.error || "The server could not create the issue.");
           }
 
@@ -5822,7 +5824,7 @@ function initTopicDetailViews() {
         } catch(err) {
           console.error("Create failed:", err);
           alert(`Create issue error: ${err.message}`);
-          submitBtn.removeAttribute('disabled');
+          updateCreateAvailability();
           submitBtn.textContent = "Create";
         }
       });
@@ -6102,8 +6104,27 @@ function initTopicDetailViews() {
           loadingPopup.style.padding = '12px';
           loadingPopup.style.textAlign = 'center';
           loadingPopup.style.color = 'var(--text-muted)';
-          loadingPopup.textContent = 'Loading ad-hoc public...';
+          const pendingMembers = uids.map(uid => ({
+            uid,
+            score: Number((disc && disc.isr_scores || {})[uid] ?? -1)
+          })).sort((a, b) => b.score - a.score);
+          const renderPendingNames = () => {
+            loadingPopup.textContent = '';
+            pendingMembers.forEach(member => {
+              const row = document.createElement('div');
+              row.className = 'reaction-user-item';
+              const name = window.userCache[member.uid] || ('User ' + member.uid);
+              const score = member.score >= 0 ? member.score.toFixed(2) : 'N/A';
+              row.textContent = `${name} (id: ${member.uid}) - ${score}`;
+              loadingPopup.appendChild(row);
+            });
+          };
+          renderPendingNames();
           itemEl.appendChild(loadingPopup);
+          const namesReady = resolveUserNames(uids);
+          namesReady.then(() => {
+            if (loadingPopup.isConnected) renderPendingNames();
+          });
 
           const db = typeof firebase !== 'undefined' ? firebase.firestore() : null;
           let issueData = null;
@@ -6162,11 +6183,14 @@ function initTopicDetailViews() {
             if (fallbackTax) mcValues = mapTaxonomyToUserValues(fallbackTax);
           }
 
+          // Keep a dismissed or replaced popup closed when background reads finish.
+          if (!loadingPopup.isConnected) return;
           // Remove the temporary loading popup
           const tempLoading = itemEl.querySelector('.loading-popup-temp');
+          await namesReady;
+          if (!loadingPopup.isConnected) return;
           if (tempLoading) tempLoading.remove();
-
-          await resolveUserNames(uids);
+          if (!itemEl.isConnected) return;
           
           // Map to objects containing score and metadata for sorting
           const memberList = uids.map(uid => {
@@ -6486,8 +6510,7 @@ function initTopicDetailViews() {
     if (!currentUserId) return;
     
     const db = firebase.firestore();
-    const isMock = topicId.startsWith('task-');
-    const docRef = isMock ? null : db.collection("issues").doc(topicId);
+    const docRef = db.collection("issues").doc(topicId);
 
     // 1. Task status checkbox change
     modalBody.querySelectorAll('.task-status-checkbox').forEach(chk => {
@@ -6504,20 +6527,7 @@ function initTopicDetailViews() {
           return;
         }
 
-        if (isMock) {
-          task.status = task.status === 'done' ? 'pending' : 'done';
-          if (task.status === 'done') {
-            task.results = "Mock task execution completed.";
-          } else {
-            delete task.results;
-          }
-          console.log("Mock task status updated in memory.");
-          if (typeof window.triggerTasksListRender === 'function') {
-            window.triggerTasksListRender();
-          }
-          renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-          return;
-        }
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -6594,15 +6604,7 @@ function initTopicDetailViews() {
           return;
         }
 
-        if (isMock) {
-          task.status = 'canceled';
-          console.log("Mock task canceled.");
-          if (typeof window.triggerTasksListRender === 'function') {
-            window.triggerTasksListRender();
-          }
-          renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-          return;
-        }
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -6636,15 +6638,7 @@ function initTopicDetailViews() {
           return;
         }
 
-        if (isMock) {
-          task.status = 'pending';
-          console.log("Mock task restored.");
-          if (typeof window.triggerTasksListRender === 'function') {
-            window.triggerTasksListRender();
-          }
-          renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-          return;
-        }
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -6686,12 +6680,7 @@ function initTopicDetailViews() {
           return;
         }
 
-        if (isMock) {
-          subtask.status = subtask.status === 'done' ? 'pending' : 'done';
-          console.log("Mock subtask status updated in memory.");
-          renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-          return;
-        }
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -6727,12 +6716,7 @@ function initTopicDetailViews() {
           return;
         }
 
-        if (isMock) {
-          task.subtasks.splice(subtaskIdx, 1);
-          console.log("Mock subtask removed in memory.");
-          renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-          return;
-        }
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -6791,16 +6775,7 @@ function initTopicDetailViews() {
           deadline: deadline
         };
 
-        if (isMock) {
-          if (!task.subtasks) task.subtasks = [];
-          task.subtasks.push(newSubtask);
-          inputEl.value = '';
-          const breakdownForm = modalBody.querySelector(`#task-breakdown-form-${taskIdx}`);
-          if (breakdownForm) breakdownForm.style.display = 'none';
-          console.log("Mock subtask added successfully.");
-          renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-          return;
-        }
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -6854,19 +6829,7 @@ function initTopicDetailViews() {
            timestamp: formatDateWithSetting(new Date()) // e.g. "06.06.2026"
         };
 
-        if (isMock) {
-          const tasks = issue.tasks || [];
-          if (tasks[taskIdx]) {
-            if (!tasks[taskIdx].comments) tasks[taskIdx].comments = [];
-            tasks[taskIdx].comments.push(newComment);
-            inputEl.value = '';
-            const commentForm = modalBody.querySelector(`#task-comment-form-${taskIdx}`);
-            if (commentForm) commentForm.style.display = 'none';
-            console.log("Mock task comment added in memory.");
-            renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-          }
-          return;
-        }
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -6940,21 +6903,7 @@ function initTopicDetailViews() {
              parent_id: parentId
           };
 
-          if (isMock) {
-            const tasks = issue.tasks || [];
-            if (tasks[taskIdx]) {
-              const subtasks = tasks[taskIdx].subtasks || [];
-              if (subtasks[subtaskIdx]) {
-                if (!subtasks[subtaskIdx].comments) subtasks[subtaskIdx].comments = [];
-                subtasks[subtaskIdx].comments.push(newReply);
-                inputEl.value = '';
-                replyForm.style.display = 'none';
-                console.log("Mock subtask reply added successfully.");
-                renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-              }
-            }
-            return;
-          }
+
 
           try {
             await db.runTransaction(async (transaction) => {
@@ -6988,18 +6937,7 @@ function initTopicDetailViews() {
              parent_id: parentId
           };
 
-          if (isMock) {
-            const tasks = issue.tasks || [];
-            if (tasks[taskIdx]) {
-              if (!tasks[taskIdx].comments) tasks[taskIdx].comments = [];
-              tasks[taskIdx].comments.push(newReply);
-              inputEl.value = '';
-              replyForm.style.display = 'none';
-              console.log("Mock task reply added successfully.");
-              renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-            }
-            return;
-          }
+
 
           try {
             await db.runTransaction(async (transaction) => {
@@ -7057,16 +6995,7 @@ function initTopicDetailViews() {
         if (!textarea) return;
         const resultsText = textarea.value.trim();
 
-        if (isMock) {
-          const tasks = issue.tasks || [];
-          if (tasks[taskIdx]) {
-            tasks[taskIdx].results = resultsText;
-            console.log("Mock task results saved in memory.");
-            alert("Task results saved successfully.");
-            renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-          }
-          return;
-        }
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -7143,20 +7072,7 @@ function initTopicDetailViews() {
           timestamp: formatDateWithSetting(new Date())
         };
 
-        if (isMock) {
-          const tasks = issue.tasks || [];
-          if (tasks[taskIdx]) {
-            const subtasks = tasks[taskIdx].subtasks || [];
-            if (subtasks[subtaskIdx]) {
-              if (!subtasks[subtaskIdx].comments) subtasks[subtaskIdx].comments = [];
-              subtasks[subtaskIdx].comments.push(newComment);
-              inputEl.value = '';
-              console.log("Mock subtask comment added in memory.");
-              renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-            }
-          }
-          return;
-        }
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -7220,16 +7136,7 @@ function initTopicDetailViews() {
         if (!textarea) return;
         const resultsText = textarea.value.trim();
 
-        if (isMock) {
-          const tasks = issue.tasks || [];
-          if (tasks[taskIdx] && tasks[taskIdx].subtasks && tasks[taskIdx].subtasks[subtaskIdx]) {
-            tasks[taskIdx].subtasks[subtaskIdx].results = resultsText;
-            console.log("Mock subtask results saved in memory.");
-            alert("Subtask results saved successfully.");
-            renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-          }
-          return;
-        }
+
 
         try {
           await db.runTransaction(async (transaction) => {
@@ -7254,114 +7161,7 @@ function initTopicDetailViews() {
     });
 
     async function toggleTaskOrCommentReaction(msgId, reactionType) {
-      if (isMock) {
-        if (msgId.startsWith('task_')) {
-          const taskIdx = parseInt(msgId.substring(5), 10);
-          const tasks = issue.tasks || [];
-          if (tasks[taskIdx]) {
-            let marks = tasks[taskIdx].marks || [];
-            const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
-            const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
-            const existingIndex = userMarkTypes.indexOf(reactionType);
 
-            if (existingIndex >= 0) {
-              marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
-            } else {
-              if (userMarkTypes.length >= 2) {
-                alert("You can only leave up to 2 different reactions per task.");
-                return;
-              }
-              marks.push({
-                uid: currentUserId,
-                type: reactionType,
-                reaction: reactionType
-              });
-            }
-            tasks[taskIdx].marks = marks;
-            console.log("Mock task reaction updated in memory.");
-            renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-          }
-        } else if (msgId.startsWith('taskcomment_')) {
-          if (msgId.startsWith('taskcomment_subtaskcomment_')) {
-            const parts = msgId.split('_');
-            const taskIdx = parseInt(parts[2], 10);
-            const subtaskIdx = parseInt(parts[3], 10);
-            const commentId = parts.slice(4).join('_');
-
-            const tasks = issue.tasks || [];
-            if (tasks[taskIdx]) {
-              const subtasks = tasks[taskIdx].subtasks || [];
-              if (subtasks[subtaskIdx]) {
-                let comments = subtasks[subtaskIdx].comments || [];
-                comments = comments.map(c => {
-                  if (c.id === commentId) {
-                    let marks = c.marks || [];
-                    const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
-                    const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
-                    const existingIndex = userMarkTypes.indexOf(reactionType);
-
-                    if (existingIndex >= 0) {
-                      marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
-                    } else {
-                      if (userMarkTypes.length >= 2) {
-                        alert("You can only leave up to 2 different reactions per comment.");
-                        return c;
-                      }
-                      marks.push({
-                        uid: currentUserId,
-                        type: reactionType,
-                        reaction: reactionType
-                      });
-                    }
-                    return { ...c, marks: marks };
-                  }
-                  return c;
-                });
-                subtasks[subtaskIdx].comments = comments;
-                console.log("Mock subtask comment reaction updated in memory.");
-                renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-              }
-            }
-          } else {
-            const parts = msgId.split('_');
-            const taskIdx = parseInt(parts[1], 10);
-            const commentId = parts.slice(2).join('_');
-
-            const tasks = issue.tasks || [];
-            if (tasks[taskIdx]) {
-              let comments = tasks[taskIdx].comments || [];
-              comments = comments.map(c => {
-                if (c.id === commentId) {
-                  let marks = c.marks || [];
-                  const userMarks = marks.filter(m => (m.uid || '').toString() === currentUserId.toString());
-                  const userMarkTypes = userMarks.map(m => (m.type || m.reaction || '').toLowerCase().trim());
-                  const existingIndex = userMarkTypes.indexOf(reactionType);
-
-                  if (existingIndex >= 0) {
-                    marks = marks.filter(m => !((m.uid || '').toString() === currentUserId.toString() && (m.type || m.reaction || '').toLowerCase().trim() === reactionType));
-                  } else {
-                    if (userMarkTypes.length >= 2) {
-                      alert("You can only leave up to 2 different reactions per comment.");
-                      return c;
-                    }
-                    marks.push({
-                      uid: currentUserId,
-                      type: reactionType,
-                      reaction: reactionType
-                    });
-                  }
-                  return { ...c, marks: marks };
-                }
-                return c;
-              });
-              tasks[taskIdx].comments = comments;
-              console.log("Mock task comment reaction updated in memory.");
-              renderTopicDetail('tasks', topicId, modalBody.__sourceViewHtml, modalBody.getAttribute('data-topic-source-title'));
-            }
-          }
-        }
-        return;
-      }
 
       if (msgId.startsWith('task_')) {
         const taskIdx = parseInt(msgId.substring(5), 10);
@@ -8083,6 +7883,21 @@ function initRealTimeDashboardSync(db, storedUid) {
 
   // Discussions state variables
   let cachedChatDocs = [];
+  const archivedDiscussionIds = new Set();
+  const archivedIssueIds = new Set();
+  window.isTopicArchived = id => archivedDiscussionIds.has(id) || archivedIssueIds.has(id);
+  let allDiscussionDocs = [];
+  let relevantDiscussionIds = new Set();
+  function visibleChatDocs() {
+    return allDiscussionDocs.filter(doc => {
+      if (!relevantDiscussionIds.has(doc.id) || window.isTopicArchived(doc.id)) return false;
+      const data = doc.data();
+      const issueDoc = memberIssueDocs.get(doc.id);
+      const phase = Lifecycle.phaseOf(data, issueDoc ? issueDoc.data() : null);
+      return phase === 'chat' || (phase === 'inactive' && data.previous_status === 'discussion');
+    });
+  }
+
   let chatSortMode = 'new';
   const healedTopicIds = new Set();
 
@@ -8384,11 +8199,16 @@ function initRealTimeDashboardSync(db, storedUid) {
                   senderName = `User ${senderUid}`;
                 }
               }
-              db.collection("discussions").doc(topicId).update({
-                last_message_text: lastMsg.text || "",
-                last_message_sender_uid: senderUid.toString(),
-                last_message_sender_name: senderName,
-                last_message_timestamp: lastMsg.timestamp || new Date().toISOString()
+              const repairRef = db.collection("discussions").doc(topicId);
+              db.runTransaction(async tx => {
+                const current = await tx.get(repairRef);
+                if (!current.exists || current.data().status === 'archived' || window.isTopicArchived(topicId)) return;
+                tx.update(repairRef, {
+                  last_message_text: lastMsg.text || "",
+                  last_message_sender_uid: senderUid.toString(),
+                  last_message_sender_name: senderName,
+                  last_message_timestamp: lastMsg.timestamp || new Date().toISOString()
+                });
               }).catch(err => console.error("Error healing discussion document:", err));
             }
           }).catch(err => console.error("Error fetching last message for healing:", err));
@@ -8780,28 +8600,15 @@ function initRealTimeDashboardSync(db, storedUid) {
 
   // 1. Discussions Sync (Chat)
   db.collection("discussions").orderBy("created_at", "desc").onSnapshot(async snapshot => {
+    archivedDiscussionIds.clear();
+    snapshot.forEach(doc => { if (doc.data().status === 'archived') archivedDiscussionIds.add(doc.id); });
     const relevantIds = await getRelevantDiscussionIds(db, storedUid);
+    archivedDiscussionIds.forEach(id => relevantIds.delete(id));
+    allDiscussionDocs = snapshot.docs;
+    relevantDiscussionIds = relevantIds;
     subscribeMemberIssues(relevantIds); // U2: the Voting and ToDo lists read these issues
     
-    const filteredDocs = [];
-    snapshot.forEach(doc => {
-      const data = doc.data();
-      const topicId = doc.id;
-      
-      // L1: an expired chat stays listed ("Deadline passed") until the server's daily deadline run moves it.
-      if (data.status === 'inactive') {
-        if (data.previous_status !== 'discussion') {
-          return;
-        }
-      } else if (data.status === 'Voting') {
-        // closed as discussion (exclude from chat list)
-        return;
-      }
-      
-      if (relevantIds.has(topicId)) {
-        filteredDocs.push(doc);
-      }
-    });
+    const filteredDocs = visibleChatDocs();
 
     cachedChatDocs = filteredDocs;
     discussionsCount = filteredDocs.length;
@@ -8833,6 +8640,7 @@ function initRealTimeDashboardSync(db, storedUid) {
     }
     
     renderChatList();
+    applyMemberIssues();
   }, err => console.error("Sync discussions failed:", err));
 
   // 2. Issues Sync (Voting & Tasks)
@@ -8864,6 +8672,8 @@ function initRealTimeDashboardSync(db, storedUid) {
         .where(firebase.firestore.FieldPath.documentId(), "in", chunk)
         .onSnapshot(snapshot => {
           snapshot.docChanges().forEach(change => {
+            if (change.type !== 'removed' && change.doc.data().status === 'archived') archivedIssueIds.add(change.doc.id);
+            else archivedIssueIds.delete(change.doc.id);
             if (change.type === 'removed') memberIssueDocs.delete(change.doc.id);
             else memberIssueDocs.set(change.doc.id, change.doc);
           });
@@ -8889,11 +8699,19 @@ function initRealTimeDashboardSync(db, storedUid) {
   };
 
   function applyMemberIssues() {
+    const oldChatKey = cachedChatDocs.map(doc => doc.id).join('|');
+    cachedChatDocs = visibleChatDocs();
+    if (oldChatKey !== cachedChatDocs.map(doc => doc.id).join('|')) {
+      discussionsCount = cachedChatDocs.length;
+      updateSummaryStrip();
+      renderChatList();
+    }
     const votingDocs = [];
     const taskDocs = [];
     
     Array.from(memberIssueDocs.values()).sort(compareCreatedDesc).forEach(doc => {
       const data = doc.data();
+      if (data.status === 'archived' || archivedDiscussionIds.has(doc.id)) return;
       if (data.status === 'in_process' || (data.status === 'inactive' && data.previous_status === 'in_process')) {
         votingDocs.push(doc);
       }
