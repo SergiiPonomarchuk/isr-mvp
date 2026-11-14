@@ -24,7 +24,7 @@ Author authorized the existing main key loader in memory on 2026-11-14. No secre
 
 Actual Check transport: 15 text requests with 140,377 reported tokens and 15 embedding texts (about 869 registration-text tokens by character estimate; not provider-reported embedding usage). Two total Nominatim calls: one reverse and one forward. No more Check/place calls under this ceiling. The first local HTTP 404 dispatched zero provider calls and remains in the attempt/recovery journal. Aggregate evidence, snapshot file hashes and exact results are in `specs/demo/run-evidence.json`; baseline/current journals are separate. Browser proof is `C:\isr-mvp\scratch\d1-joined-browser.png`.
 
-Emulator AC1-AC4 are satisfied, subject to green CI on the final documentation head. Live AC5 remains pending. PR #34 can leave draft after final CI; it is stacked on #33. Merge #33 first, then reconcile/recheck #34. No production mutation, rules change or deploy.
+Emulator AC1-AC4 are satisfied, subject to green CI on the final documentation head. Live AC5 remains pending. PR #34 is ready for review. Plan #33 merged as `2048912` on explicit author instruction; #34 targets main and incorporates that merge without conflicts or application/data changes. Reconciled-head checks precede its separate merge authorization. No production mutation, rules change or deploy.
 
 ## Historical mocked checks and pre-authorization checkpoints
 

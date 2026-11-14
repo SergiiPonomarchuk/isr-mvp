@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-14 - D1 plan merged and implementation reconciled
+
+Merged plan PR #33 on explicit author instruction (`2048912`). Retargeted implementation PR #34 onto main and incorporated the plan merge without conflicts or application/data changes. Preserved the accepted emulator and frozen snapshots. Required suites and final-head CI checked before presenting #34 for its separate merge authorization; live AC5 remains pending.
+
 ## 2026-11-14 - D1 emulator acceptance and restored demo
 
 Recorded author acceptance of the winning tasks and completed disposable separate-creation UI checks with stored AI replay (zero additional provider calls). Restored and independently checked the accepted demo: 606 members, zero differences, no disposable test issues. Preserved a named completed snapshot with hashes. Emulator AC1-AC4 complete; live AC5 pending. Documentation/evidence only; no application changes, merge, deployment or production write.
