@@ -385,5 +385,23 @@
     "existing_management_support_count": 0,
     "production_writes": 0,
     "provider_calls": 0
+  },
+  "coalition_helper": {
+    "merge": "a64cb087ca7b759ff991d0f43988a5ad9003a14a",
+    "start_preview": {
+      "apply": false,
+      "combined_isr": 31.142,
+      "documents_proposed": 1,
+      "operation": "start-support",
+      "option": "Emergency Locksmith Service",
+      "phase": "chat",
+      "pool": 101.00199999999998,
+      "status": "ready",
+      "synthetic_isr": 30.142,
+      "synthetic_profiles": 27,
+      "writes": 0
+    },
+    "live_apply": "pending author",
+    "agent_production_writes": 0
   }
 }

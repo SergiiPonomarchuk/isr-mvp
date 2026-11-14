@@ -102,6 +102,8 @@ The roadmap estimates 4-6 developer-days.
 
 ## 8. Status log
 
+- 2026-11-15 coalition follow-up: author approved preparation of a bounded helper for the other synthetic profiles, retaining creator final Start Voting/option vote/Finish Voting in UI. Focused [contract](D1-coalition-helper.md) and [staged runbook](../D1-COALITION-RUNBOOK.md) added. Exact CLI/actual creator transaction code completed the isolated copied case through canonical 28-vote winner/three tasks; required suites pass. Helper requires separate merge and every live apply remains author-only. Live AC5 pending; no new provider call or agent production write.
+
 - 2026-11-14 live discussion/options: author added comparison message and both reviewed options; exact cost/funding/resources and all six creator-assigned steps verified read-only. Pool 101.002 ISR; threshold 30.3006; creator + 27-member coalition 31.142 ISR. No management supports yet. Author choice requested for manual profile switching versus preparation of a bounded author-run synthetic coalition helper with final creator UI actions. No new Checks/provider calls or agent production writes; AC5 remains pending.
 
 - 2026-11-14 live Join checkpoint: U11 hosting verified and numeric adoption accepted; author explicitly joined as reviewed synthetic nonmember, public 100 -> 101. Read-only audit: one event, unique participants/coherent maps. Independent checker: 606 members, zero differences. Fourteen successful Check pairs accounted of fifteen; discussion/options and vote/task cycle require no further Checks. Live AC5 remains in progress.

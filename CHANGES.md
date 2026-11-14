@@ -1,5 +1,13 @@
 # CHANGES
 
+## 2026-11-15 - Coalition helper merged and saved plan revalidated
+
+Merged PR #37 as `a64cb08` on explicit author instruction; refreshed clean wt-main and revalidated the existing live plan read-only (27 synthetic actors, one proposed document, zero writes). Reconciled draft acceptance #35 with main, preserving both histories; no additional runtime/frontend/rules changes or agent live mutation. Next step is the author's guarded start-support apply.
+
+## 2026-11-15 - D1 bounded author-run coalition helper
+
+Added dry-run-first frozen-plan support/vote preparation for up to 27 other synthetic members, preserving the creator's decisive UI actions. Transactional drift/conflict checks, idempotent stages, durable receipts and explicit targets protect the rehearsal. Exact Python CLI plus actual creator transaction code on an isolated copy completed 28 votes to canonical winner/three creator tasks. Required Node/Python suites pass; no agent production write, model call, deployment, runtime/rules or dependency change.
+
 ## 2026-11-14 - D1 live options verified and coalition prepared read-only
 
 Verified author discussion message, two reviewed repair options and six creator-assigned steps. Calculated the synthetic management coalition from current stored weights: 31.142 of 101.002 ISR, with creator's final support needed to cross 30%. Requested author choice of rehearsal method before any support/vote/phase writes. Documentation only; no additional AI request or agent production mutation.
