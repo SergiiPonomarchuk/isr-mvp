@@ -102,7 +102,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U5-esc-and-geotag](tasks/U5-esc-and-geotag.md) | DONE on live 2026-11-10 (PR 15); the issue location from the Analyzer follows after A4 | UI |
 | [U6-issue-location](tasks/U6-issue-location.md) | merged PR #21 on 2026-11-12; AC2-AC5 passed and saved; combined Node 88 / Python 105 (one skip); live pending author | UI, 07 (Analyzer), 03 (G) |
 | [U7-page-cache](tasks/U7-page-cache.md) | DONE on live 2026-11-11 (PR 17): every hosting response is sent with `no-cache` | UI, 13 (hosting) |
-| [D1-demo-scenarios](tasks/D1-demo-scenarios.md) | Original decisions approved; U10-aware archive/standby refinement proposed (section 9) | Demo data, lifecycle, UI |
+| [D1-demo-scenarios](tasks/D1-demo-scenarios.md) | Section 9 approved; tooling/mocked-emulator checks pass; real-data acceptance pending | Demo data, lifecycle, UI |
 | [U10-similar-active-issues](tasks/U10-similar-active-issues.md) | IMPLEMENTED; author emulator/live Check acceptance recorded | Analyzer, UI, membership |
 | [U9-member-preview-popup](tasks/U9-member-preview-popup.md) | Count labeling and immediate member popup rendering implemented, deployment pending | UI, Analyzer |
 | [U8-map-tiles](tasks/U8-map-tiles.md) | merged PR #22 on 2026-11-12; AC1/AC2 passed and saved; combined Node 91 / Python 105 (one skip); live AC3 pending author | UI |

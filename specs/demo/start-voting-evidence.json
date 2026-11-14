@@ -1,0 +1,14 @@
+{
+  "members": 606,
+  "problems": [],
+  "scenarios": 11,
+  "tolerance": 0.00100001,
+  "visible_scenarios_before_flagship": 10,
+  "stage": "voting",
+  "deadline": "2026-11-21",
+  "options": 2,
+  "option_votes": 0,
+  "threshold_confirmation_percent": 30.8,
+  "proof": "C:/isr-mvp/scratch/d1-voting-ready.png",
+  "no_additional_model_requests": true
+}

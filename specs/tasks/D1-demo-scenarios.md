@@ -1,7 +1,7 @@
 # SPEC D1: Demo scenarios and clean demo data (roadmap stage 3)
 
 Status: APPROVED 2026-11-10 (author: "Five decisions: ok"; the homes and property first, as P2). The work starts after P2 is applied and A4 and U6 are live, because the demo data must come from the final pipeline and the final population (roadmap section 4).
-Current refinement branch: `codex/d1-spec-refresh`, based on deployed main `8466b13`. Original approved plan preserved from `d1-demo-data` (`af72ad0`). The refinement in section 9 needs author review before implementation.
+Current refinement branch: `codex/d1-spec-refresh`, based on deployed main `8466b13`. Original approved plan preserved from `d1-demo-data` (`af72ad0`). Section 9 approved by the author on 2026-11-14; implementation in `codex/d1-guided-demo`.
 Roadmap: stage 3, "Clean demo data". Its result: a dataset whose every number can be reproduced from stored inputs, plus a written demo script. With stages 1 and 2 it reaches the **D1 guided demo**: one issue goes through the whole cycle on screen (description, AI parameters, ad-hoc public, discussion and options, ISR-weighted vote, stored result, task), and every number can be explained.
 
 ## 1. Historical facts that shaped the scenarios (emulator, 2026-11-10)
@@ -102,12 +102,24 @@ The roadmap estimates 4-6 developer-days.
 
 ## 8. Status log
 
+- 2026-11-14 integration: author instructed `merge PR 33`; approved plan merged as `2048912`. Implementation PR #34 retargeted/reconciled onto main without conflicts or application/data changes. Required suites and CI checked on the resulting head. Emulator AC1-AC4 accepted; live AC5 pending. Next author instruction: `merge PR 34`; no deploy/live apply authorized.
+
+- 2026-11-14 acceptance closeout: author accepted the final winner/tasks ("looks good - proceed"). Disposable full-copy UI rehearsal passed exact-active-title blocking, distinct-title/explanation/single-Create and text/point invalidation. Real Create returned 200; stored AI replay added zero provider calls. Browser URL verification prevented the final screenshot; HTTP evidence is retained. Disposable records discarded; accepted normal demo restored (93 issues/205 discussions), both test ids absent; independent checker: 606 members, zero differences. Frozen accepted snapshot and file hashes recorded. Emulator AC1-AC4 satisfied; final-head CI checked before PR readiness; live AC5 pending. See `../demo/separate-creation-evidence.json` and `../demo/full-cycle-evidence.json`. Merge #33 then reconcile #34; no automatic merge/deploy/live apply.
+
+- Full-cycle update (2026-11-14): 28 counted option votes, no exclusions; locksmith won with 31.117 ISR. After canonical subthreshold support preparation (to avoid further heavy profile reloads), the final normal Finish Voting UI/desktop confirmation crossed 30.9%. Server created three pending tasks assigned to Christine (uid 2); To Do was verified. Independent checker: 606 members, zero differences. No additional AI calls. Evidence: `specs/demo/full-cycle-evidence.json`; proof: `C:\isr-mvp\scratch\d1-winning-tasks.png`. Next human step is final result/task review. Disposable separate-creation rehearsal and live acceptance remain pending; PR #34 stays draft. Earlier pending-cycle checkpoints below are historical.
+
+- 2026-11-14 human-guided rehearsal: author created message/two options and supported Start Voting. Agent supplied synthetic coalition support through normal UI; threshold confirmation 30.8%; issue/discussion now Voting with deadline 21.11.2026 and zero option votes. Independent verifier: 606 members, zero differences. Voting geo/domain display now uses canonical issue metadata, verified 40m/30m in browser. Option vote/result/task cycle remains pending; no extra model requests or live writes.
+
+- 2026-11-14 actual run: generated/reviewed ten scenarios, seeded/check/rerun on final P2/A4 population (505 members, zero differences; zero rerun writes/requests); named snapshot exported/imported and independently checked. Browser normal flagship, hidden standby exclusion, exact-title block, paraphrase/Open and explicit 101st-member Join passed. Corrected canonical chat geo/domain display. Post-Join independent check: 606 members, zero differences. Actual usage: 10 content requests / 6,694 reported tokens; 15 Check text requests / 140,377 reported tokens; 15 embedding texts; two total Nominatim calls. Check/place ceiling reached; no further calls without a new author decision. Human full cycle/disposable separate creation and live AC5 remain pending. See [current evidence](D1-emulator-report.md).
+
+- 2026-11-14 real-run checkpoint: author "run D1 please" authorized the existing loader in memory. Ten scenarios generated/reviewed (10 text requests, 6,694 reported total tokens, one reverse lookup); editorial corrections recorded without more calls. Full-population dry plan proposes archiving 276 topic roots. Initial Check reached an unloaded function, with zero transport ledger requests. Installed lockfile dependencies on A (Firebase discovery drops NODE_PATH) and added a tested emulator-only in-memory secret adapter; no secret file copied/read by the adapter. Node 109 passed/two optional skips; Python 119 run/two existing skips. Resume same journal after the saved emulator checkpoint; no production writes.
+
 - 2026-11-10: plan drafted (agent) from the roadmap and a read-only look at the emulator's population; waits for decisions 5.1-5.5.
 - 2026-11-10: the author approved decisions 5.1-5.5 as recommended ("Five decisions: ok"). The author also asked for homes split into real buildings with realistic spacing, and for property entries; this is spec P2, which D1 now waits for.
 
 ## 9. Proposed implementation refinement after U10 (2026-11-14)
 
-**Status: proposed for author review.** Decisions 5.1-5.5 remain approved. This section resolves the archive/standby mechanics left open in the approved development plan and adds U10 acceptance without replacing any of the ten scenarios. No seeding, generated content, model requests or application changes are made by this refinement.
+**Status: APPROVED by the author, 2026-11-14 ("approved").** Decisions 5.1-5.5 remain approved. This section resolves the archive/standby mechanics left open in the approved development plan and adds U10 acceptance without replacing any of the ten scenarios. No seeding, generated content, model requests or application changes are made by this refinement.
 
 ### 9.1 Current prerequisites and scenario identity
 
@@ -145,6 +157,12 @@ For the first complete seed/rehearsal: at most 15 Check pairs (one text request 
 
 AC1-AC5 additionally require archive invisibility/nonmutation across all relevant paths, hidden standby not matching at Check, safe explicit fallback promotion, exactly one visible flagship, duplicate/Open/Join/unique-title UI acceptance, canonical post-Join scores and retry-safe manifest recovery. The author performs live seed/activation and live writes; the agent uses the emulator and read-only live verification. Browser automation remains unavailable, so arrange a concrete manual walkthrough if it is still unavailable at acceptance time.
 
-**Author choice needed:** approve the hidden archived standby with explicit promotion, the archive behavior above and this bounded first-pass plan, or specify a different fallback/visibility policy. Implementation and data changes wait for this decision. PR merge remains separately authorized by `merge PR N`.
+**Author decision:** hidden archived standby with explicit promotion, archive exclusion and the bounded first-pass plan approved on 2026-11-14. PR merge remains separately authorized by `merge PR N`.
 
 - 2026-11-14: Imported the original approved D1 plan from `af72ad0` onto current main and prepared this U10-aware refinement. Historical facts are labeled, original ten subjects/decisions preserved. No code, data, key access or model calls.
+
+- 2026-11-14 implementation checkpoint: author approved section 9. Archive lifecycle/UI exclusions, atomic tally adapter and guarded seed/check tooling are being implemented on `codex/d1-guided-demo`. Read-only inventory counts are recorded in the handoff. No real seed, generated content or paid calls yet; acceptance remains pending.
+
+- 2026-11-14 implementation evidence: real-handler mocked-AI seed/recovery/standby race checks pass; full Node/Python suites and U10 transactional regression pass at the checkpoint in [D1 emulator report](D1-emulator-report.md). Added registration-time/text preservation through phase moves, history fingerprints and single-writer journals. Presenter/runtime commands are concrete but require the project's key-loader authorization before real generation. AC2-AC5 are not marked complete: final P2 population, real content, snapshot and manual whole-cycle acceptance remain.
+
+- Final pre-key checkpoint (2026-11-14): Node 110 cases, 108 passed and two optional emulator skips; Python 119 run, two existing skips. Explicit real-handler D1 emulator test passed in 38.5 seconds, including normal flagship auto-registration, refusal to reseed after presentation, legacy text/registration-time preservation, history/numeric drift, lost-response recovery and concurrent standby/Create. U10 regression passed in 15.3 seconds, including 102-member joins and atomic creation. Request-ledger SDK transport and loader tests use dummy values; actual D1 paid requests/embedding texts/Nominatim lookups remain zero. Frontend CRLF/final-CR and whitespace checks passed. Final-population generated content, real seed/rerun, named snapshot/import and manual full-cycle acceptance are pending. Existing root Gemini loader has not been invoked for this worktree; author authorization is the next gate.

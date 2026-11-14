@@ -35,6 +35,9 @@
     {"args": ["2026-11-01", "2026-11-09"], "expected": "2026-12-09"}
   ],
   "phase_of": [
+    {"disc": {"status": "archived"}, "issue": {"status": "in_process"}, "expected": "archived"},
+    {"disc": {"status": "Voting"}, "issue": {"status": "archived"}, "expected": "archived"},
+    {"disc": {"status": "archived"}, "issue": null, "expected": "archived"},
     {"disc": {"status": null}, "issue": null, "expected": "chat"},
     {"disc": {}, "issue": {"status": "open"}, "expected": "chat"},
     {"disc": {"status": "discussion"}, "issue": {"status": "discussion"}, "expected": "chat"},

@@ -1,5 +1,37 @@
 # CHANGES
 
+## 2026-11-14 - D1 plan merged and implementation reconciled
+
+Merged plan PR #33 on explicit author instruction (`2048912`). Retargeted implementation PR #34 onto main and incorporated the plan merge without conflicts or application/data changes. Preserved the accepted emulator and frozen snapshots. Required suites and final-head CI checked before presenting #34 for its separate merge authorization; live AC5 remains pending.
+
+## 2026-11-14 - D1 emulator acceptance and restored demo
+
+Recorded author acceptance of the winning tasks and completed disposable separate-creation UI checks with stored AI replay (zero additional provider calls). Restored and independently checked the accepted demo: 606 members, zero differences, no disposable test issues. Preserved a named completed snapshot with hashes. Emulator AC1-AC4 complete; live AC5 pending. Documentation/evidence only; no application changes, merge, deployment or production write.
+
+## 2026-11-14 - D1 weighted vote to winning tasks
+
+Completed the guided emulator cycle: author/synthetic option votes, canonical subthreshold Finish Voting fixture preparation, final normal UI confirmation, server tally and three tasks assigned to Christine. Locksmith won with 31.117 ISR; 28 counted votes, no exclusions. Independent checker: 606 members, zero differences. No source/formula changes, extra AI calls or production mutations. Final human task review and remaining acceptance cases are pending.
+
+## 2026-11-14 - D1 guided Start Voting rehearsal
+
+Author added both decision options and discussion message. Synthetic coalition support through the normal UI crossed 30% and moved the flagship into Voting with deadline 21.11.2026. Zero option votes cast; independent checker still reports 606 members and zero differences. Extended canonical geographic/domain metadata rendering to Voting/To Do and metadata popups; browser verified 40m/30m. Required Node/Python suites pass. No AI requests, production writes or deploys.
+
+## 2026-11-14 - D1 real seed, snapshot and browser verification
+
+Seeded ten reviewed scenarios on final P2/A4 emulator data, archived 276 old topic roots without deleting history, and independently validated 505 members with zero differences. Completed rerun wrote/spent zero; named snapshot imported and checked independently. Browser created a normal flagship and verified exact-title blocking, paraphrase/Open, and nonmember Join from 100 to 101; post-Join checker validated 606 members with zero differences. Corrected chat geographic/domain display to use canonical issue fields, plus runtime/CLI response-contract fixes. Actual budgets reached: 15 Check pairs and two place lookups; ten content requests used. Human full-cycle acceptance remains pending; draft PR #34, no live writes/deploy/secret copying.
+
+## 2026-11-14 - D1 real generation and runtime repair
+
+Author authorized the existing key loader in memory. Generated and reviewed all ten scenarios with ten text requests (6,694 reported total tokens) and one reverse street lookup; recorded editorial corrections without extra requests. Emulator dry plan preserved 276 legacy topic roots. Initial Check hit an unloaded local function (zero model dispatches); fixed Firebase discovery dependency setup and added an emulator-only memory-secret bridge that refuses unknown secrets. Node 109 passed/two optional skips; Python 119 run/two existing skips. Full real seed, snapshot and manual acceptance remain in progress. No production mutation or secret file copying.
+
+## 2026-11-14 - D1 seed/presenter tooling and guarded emulator verification
+
+Added one-time stored content preparation, durable single-writer seed/check journals, original-history fingerprints, current-state transactional tally, race-safe standby promotion and normal flagship registration. Retired task mocks and fixed phase/cache exclusions, preserving original registration time/text through voting transitions. Added actual SDK request-ceiling transport tests, dummy private-loader tests, and complete mocked-AI real-handler emulator seed/recovery/race checks. Node 108 passed/two optional skips; Python 119 run/two existing skips; explicit D1/U10 emulator scenarios passed. Real content, final-population seed, snapshot and manual cycle remain pending key-loader authorization. No paid calls or live data changes.
+
+## 2026-11-14 - D1 implementation in progress
+
+Added explicit archived lifecycle exclusions, retired hard-coded task mocks, and implemented current-state transactional tally plus guarded demo seed/check foundations. Author approved D1 refinement; inventory is read-only. Emulator integration and complete D1 acceptance are still in progress; no paid generation or production mutation.
+
 ## 2026-11-14 - U10 live acceptance and D1 refinement
 
 Recorded author deployment/live Check acceptance and independent read-only hosting/endpoint checks. Imported the original approved D1 scenario plan and proposed archive/standby, U10 rehearsal, durable retry manifest and first-pass usage refinements for review. Original ten subjects and decisions retained; no application code, data mutation or API generation.

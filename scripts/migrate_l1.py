@@ -91,6 +91,8 @@ def today_in(tz=TIME_ZONE):
 def phase_of(disc, issue):
     ds = (disc or {}).get("status")
     st = (issue or {}).get("status")
+    if st == "archived" or ds == "archived":
+        return "archived"
     if st == "in_process" or ds == "Voting":
         return "voting"
     if st in ("approved", "tasks") or ds == "approved":
