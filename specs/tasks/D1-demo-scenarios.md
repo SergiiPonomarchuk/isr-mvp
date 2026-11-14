@@ -102,6 +102,8 @@ The roadmap estimates 4-6 developer-days.
 
 ## 8. Status log
 
+- 2026-11-15 coalition follow-up: author approved preparation of a bounded helper for the other synthetic profiles, retaining creator final Start Voting/option vote/Finish Voting in UI. Focused [contract](D1-coalition-helper.md) and [staged runbook](../D1-COALITION-RUNBOOK.md) added. Exact CLI/actual creator transaction code completed the isolated copied case through canonical 28-vote winner/three tasks; required suites pass. Helper requires separate merge and every live apply remains author-only. Live AC5 pending; no new provider call or agent production write.
+
 - 2026-11-14 live preparation: PR #34 merged as `9b9ce79`; main CI passed. Read-only production inventory and separate preliminary dry plan passed (276 archive roots, ten scenarios, zero writes/requests; creator fingerprints valid). Added [author live runbook](../D1-LIVE-ROLLOUT.md) and aggregate `../demo/live-preflight-evidence.json`. Recovery PR #28 reconciled and independently retested; explicit merge, proposed new live budget, fresh author backup/recovery and deployment/seed/AC5 remain gates. No production mutations or extra provider calls.
 
 - 2026-11-14 integration: author instructed `merge PR 33`; approved plan merged as `2048912`. Implementation PR #34 retargeted/reconciled onto main without conflicts or application/data changes. Required suites and CI checked on the resulting head. Emulator AC1-AC4 accepted; live AC5 pending. Next author instruction: `merge PR 34`; no deploy/live apply authorized.

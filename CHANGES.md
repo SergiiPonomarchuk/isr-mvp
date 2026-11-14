@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-15 - D1 bounded author-run coalition helper
+
+Added dry-run-first frozen-plan support/vote preparation for up to 27 other synthetic members, preserving the creator's decisive UI actions. Transactional drift/conflict checks, idempotent stages, durable receipts and explicit targets protect the rehearsal. Exact Python CLI plus actual creator transaction code on an isolated copy completed 28 votes to canonical winner/three creator tasks. Required Node/Python suites pass; no agent production write, model call, deployment, runtime/rules or dependency change.
+
 ## 2026-11-14 - U11 exact-ID and full-name profile search
 
 Fixed profile adoption search discarding exact numeric IDs through its name filter and omitting specific full names after common-first-name query limits. Added bounded full-name prefixes, numeric/string uid lookup and a clearer field placeholder while retaining other filters and adoption behavior. Actual-handler regressions and masked emulator queries pass; Node 119 passed/three optional skips, Python 120 run/two optional skips. Main.js CRLF/final CR retained. No agent deployment, production write or provider call.

@@ -1,0 +1,50 @@
+{
+  "date": "2026-11-15",
+  "approval": "Author approved helper preparation on 2026-11-14",
+  "operations": {
+    "start-support": [
+      "discussions.deadline_votes"
+    ],
+    "option-votes": [
+      "issues.votes"
+    ],
+    "finish-support": [
+      "discussions.deadline_votes",
+      "issues.deadline_votes"
+    ]
+  },
+  "limits": {
+    "max_other_synthetic_profiles": 27,
+    "creator_written": false,
+    "phase_date_score_option_task_writes": false
+  },
+  "isolated_copy": {
+    "project": "demo-d1-coalition",
+    "host": "127.0.0.1:8187",
+    "root_records": 3,
+    "member_weight_rows": 101,
+    "profiles_copied": 0,
+    "credential_fields_copied": 0,
+    "exact_python_cli_tested": true,
+    "creator_transactions": "Actual frontend management/option transaction code, compat-shaped VM/SDK adapter; no visual-browser acceptance claim",
+    "counted_votes": 28,
+    "winner_index": 0,
+    "creator_tasks": 3,
+    "registration_nanoseconds_preserved": true,
+    "members_public_unrelated_preserved": true,
+    "dedicated_ports_closed": true,
+    "dry_run_no_writes": true,
+    "repeated_apply_no_writes": true,
+    "conflicts_and_weight_drift_refused": true,
+    "committed_synthetic_fixture_reproducible": true
+  },
+  "tests": {
+    "node_passed": 129,
+    "node_optional_skips": 4,
+    "python_run": 127,
+    "python_optional_skips": 2
+  },
+  "production_writes": 0,
+  "provider_calls": 0,
+  "live_ac5": "pending author helper applies and final UI actions"
+}
