@@ -4,7 +4,19 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: D1 merged; live rollout preparation and recovery PR #28, 2026-11-14
+## Current checkpoint: D1 deployed and seeded live; flagship accepted, 2026-11-14
+
+- Author explicitly merged recovery PR #28 as `236e7d3` after D1 plan #33 (`2048912`) and implementation #34 (`9b9ce79`). Main CI passed. Clean deploy checkout is `A:/BackUp/isr-mvp/worktrees/wt-main`, detached at `236e7d3`.
+- Author created fresh private backup `A:/ISR/mvp/dbbackup/d1-20261114-123138`: 25,000 documents/13 entries. Agent restored and independently verified all 25,000 on isolated `demo-isr-recovery`/8185 with binary signed-zero writes; dedicated ports closed, no export. Private JSONL contents were not printed or copied into the repo.
+- Author approved a new live allowance of 15 Check pairs plus two place lookups, no content regeneration/profile re-embedding, and confirmed Paid billing/sufficient budget. Agent made no paid/model/place calls. Preserve this approval; do not reset ceilings.
+- Author deployed functions/hosting. Read-only verification matched all 54 tracked source files in each of six active Node 22 deployed function archives, and all 14 Hosting files exactly with no-cache. No rules change. Evidence: `specs/demo/live-acceptance-evidence.json`.
+- Author seeded ten live scenarios: nine visible plus hidden standby, 505 members; independent checker zero differences; completed rerun zero writes/requests. Journal records ten seed Check pairs and 93,417 reported text tokens; logs show one place request. Historical content-generation count is provenance, not new live generation.
+- Author created the normal flagship as the reviewed synthetic creator (D1-01), then accepted its 100-member list. Agent recorded the issue using `demo_presenter.py --record-flagship auto` (only local-journal write). Post-creation independent checker: 11 records including standby, ten visible cases, 605 members, zero differences. Successful Checks accounted: 10 seed + 1 browser = 11 of 15; transport retry counts are not independently measured by this journal.
+- **Next human step:** on the live site, as the same creator, repeat the exact title/description at Check once. Expected: registered issue offered with Open/member status, same active title blocks Create. Do not create a second issue. Then prepare a deterministic nonmember for the paraphrase/explicit Join check; inspect actual membership before choosing. Full live discussion/options -> management -> weighted vote -> winner/tasks remains pending. Live AC5 is not complete.
+- Live journal/report folder: `A:/BackUp/isr-mvp/rollouts/d1-20261114-123138`; keep `live-manifest.json` and successful drafts. It is presentation-started: do not seed again or overwrite it with committed emulator manifests. No further content generation or profile embeddings. Existing local guide on 5002 is emulator-only and must not be used as live identity/coalition links.
+- Normal emulator and both accepted frozen snapshots remain intact. Optional unused worktree `wt-d1-live-rollout` was retained after automatic cleanup review rejected removal; it serves no runtime. PR #29 remains separate. Documentation acceptance branch: `codex/d1-live-acceptance`; keep its PR draft while live AC5 remains pending. No merge/deploy/live apply follows automatically.
+
+## Previous checkpoint (historical): D1 merged; live rollout preparation and recovery PR #28, 2026-11-14
 
 - Author instructed `merge PR 33` and `merge PR 34`; both are merged as `2048912` and `9b9ce79`. Main CI passes. Clean detached deploy checkout `wt-main` is at `9b9ce79`; live still serves U10 `8466b13`.
 - D1 emulator AC1-AC4 and the author's winning-task review are accepted. Restored normal preview has 93 issues/205 discussions, 606 validated members and zero differences; disposable test issues are absent. Guide: http://127.0.0.1:5002/d1-guide. Both named seed-start and completed accepted snapshots remain untouched. No new Check/place calls are approved.
