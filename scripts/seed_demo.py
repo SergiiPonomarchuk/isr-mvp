@@ -17,6 +17,10 @@ from demo_common import (ROOT,archive_inventory,assert_known_topics,call,digest,
 PHASES={1:'standby',2:'chat',3:'voting',4:'todo',5:'voting',6:'chat',7:'todo',8:'voting',9:'chat',10:'todo'}
 USER_FIELDS=['uid','displayName','birthDate','geography','skills','socialRelations']
 
+def checked_ai_source(result):
+    # The public Check response is flat; richer provenance lives on its draft.
+    return result.get('ai_source') or (result.get('ai') or {}).get('source')
+
 def make_plan(db,content,run_id,project,creators=None):
     if not run_id or not all(c.isalnum() or c in '-_' for c in run_id):raise ValueError('Use a simple nonempty run id')
     if content.get('version')!='d1-content-v1' or len(content.get('scenarios',{}))!=10:raise ValueError('Ten stored content scenarios are required')
@@ -96,13 +100,17 @@ def run_seed(db,plan,target_info,save,apply=False,request=call,phase_writer=arra
             # Params/location are the server's answer, never a hand-entered score/weight.
             entry.update(draft_id=checked['draftId'],check_result=checked,stage='checked')
             entry['create_input']={**entry['input'],'location':checked['location']}
-            log_id=(checked.get('ai') or {}).get('log_id')
+            entry['embedding_estimated_tokens']=(len(entry['input']['title'])+len(entry['input']['description'])+3)//4
+            save(plan)
+        if not plan.get('test_fixture') and checked_ai_source(entry.get('check_result',{}))!='model':raise ValueError('Real seed requires a model result; inspect the saved fallback instead of creating')
+        if 'ai' not in entry:
+            draft=db.collection('issue_drafts').document(entry['draft_id']).get()
+            entry['ai']=(draft.to_dict() or {}).get('ai') if draft.exists else None
+            log_id=(entry['ai'] or {}).get('log_id')
             if log_id:
                 log=db.collection('analyzer_logs').document(log_id).get()
                 if log.exists:entry['analyzer_usage']=log.to_dict().get('usage')
-            entry['embedding_estimated_tokens']=(len(entry['input']['title'])+len(entry['input']['description'])+3)//4
             save(plan)
-        if not plan.get('test_fixture') and (entry.get('check_result',{}).get('ai') or {}).get('source')!='model':raise ValueError('Real seed requires a model result; inspect the saved fallback instead of creating')
         if not plan.get('test_fixture') and key=='D1-02' and entry.get('check_result',{}).get('location_source')!='named_place':raise ValueError('Pothole must resolve the approved named place before creation')
         if not plan.get('test_fixture') and key=='D1-05' and entry['check_result'].get('location_source')!='work':raise ValueError('Shift scenario must resolve the creator workplace')
         if not plan.get('test_fixture') and key in ('D1-01','D1-05') and any(abs(a-b)>1e-7 for a,b in zip(entry['check_result']['location'],entry['creator']['location'])):raise ValueError('Resolved point differs from the approved home/work creator anchor')

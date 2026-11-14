@@ -19,6 +19,12 @@ def content(number=1):
             'resources_needed':['A volunteer'],'steps':['Coordinate the agreed work.']} for i in (1,2)]}
 
 class DemoGuards(unittest.TestCase):
+    def test_real_check_metadata_uses_flat_public_contract_and_rejects_fallback(self):
+        from seed_demo import checked_ai_source
+        self.assertEqual(checked_ai_source({'ai_source':'model','ai_model':'fixture'}),'model')
+        self.assertNotEqual(checked_ai_source({'ai_source':'fallback'}),'model')
+        self.assertIsNone(checked_ai_source({}))
+
     def test_target_never_silently_switches_between_live_and_emulator(self):
         with patch.dict(os.environ,{'FIRESTORE_EMULATOR_HOST':'127.0.0.1:8285'}):
             self.assertEqual(C.target('demo-d1')['emulator'],'127.0.0.1:8285')
