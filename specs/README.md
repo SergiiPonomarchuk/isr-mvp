@@ -104,6 +104,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U7-page-cache](tasks/U7-page-cache.md) | DONE on live 2026-11-11 (PR 17): every hosting response is sent with `no-cache` | UI, 13 (hosting) |
 | [D1-demo-scenarios](tasks/D1-demo-scenarios.md) | IMPLEMENTED; emulator AC1-AC4 and core live AC5 rehearsal verified; [live report](tasks/D1-live-report.md) | Demo data, lifecycle, UI |
 | [D1-coalition-helper](tasks/D1-coalition-helper.md) | IMPLEMENTED; #37 merged, all author stages and decisive creator UI completed; canonical server result verified | D1 rehearsal, CLI |
+| [M3-analyzer-guardrails](tasks/M3-analyzer-guardrails.md) | PROPOSED; baseline audit complete, type/range/failure policy decisions pending; no implementation | Analyzer, draft/Create boundary, UI |
 | [U10-similar-active-issues](tasks/U10-similar-active-issues.md) | IMPLEMENTED; author emulator/live Check acceptance recorded | Analyzer, UI, membership |
 | [U11-profile-search](tasks/U11-profile-search.md) | IMPLEMENTED; merged/author-hosted; numeric adoption accepted live | Profile adoption, UI |
 | [U9-member-preview-popup](tasks/U9-member-preview-popup.md) | Count labeling and immediate member popup rendering implemented, deployment pending | UI, Analyzer |

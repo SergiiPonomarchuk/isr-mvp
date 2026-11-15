@@ -4,7 +4,17 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: D1 live whole-cycle verified, 2026-11-15
+## Current checkpoint: M3 Analyzer proposal ready for policy review, 2026-11-15
+
+- Author explicitly instructed merge PR #35; merged as `3c25ef7` after green checks. D1 core live whole-cycle acceptance is recorded; no deployment is needed for those documentation changes. Live backend/Hosting/helper identities and private evidence remain as recorded below.
+- Author said go for M3 audit/spec preparation. [Guardrail proposal](tasks/M3-analyzer-guardrails.md) audits current code, preserves A4/A5/U6/U10 and specifies proposed type/range/context/server-draft/UI/logging behavior. No implementation, provider calls, database writes or docs/ edits.
+- Offline reference audit: 100 examples have 100 different exact categories; no category has five anchors. Three categories differ from the protocol taxonomy table. Exact-category nearest-five cannot be implemented without a policy decision. [Audit evidence](tasks/M3-analyzer-audit.json).
+- Next attention gate: author reviews proposal D1-D5 (curated type table, k=5 within type/strict ranges, publication blocked on invalid/fallback analysis, at most two text stages, reviewed offline calibration artifact before code). Approval permits the offline mapping/conflict report; concrete mappings and implementation plan require approval before runtime changes. No fresh paid evaluation budget or deployment authorized.
+- Existing D1 live journal, backup, snapshots and accepted outcomes remain intact. PR #29 remains separate. M3 worktree `A:/BackUp/isr-mvp/worktrees/wt-m3-analyzer-spec`, branch `codex/m3-analyzer-spec`.
+
+## D1 verified checkpoint (historical; acceptance PR #35 merged)
+
+## D1 live whole-cycle verified, 2026-11-15
 
 - Author completed final Finish Voting and returned the requested To Do screenshot: Emergency Locksmith Service, three unchecked tasks assigned to Christine. Read-only server audit: issue/discussion approved, 28 counted votes, zero exclusions, 31.142 ISR, stored tally matching canonical computation and all three tasks in_process. Management maps cleared.
 - Final independent checker: 11 scenario records including hidden standby, ten visible cases, 606 members, zero problems (tolerance 0.00100001). Frozen-plan recheck is phase_advanced_no_write, zero writes; original registration/options/member/cache guards remain valid.
