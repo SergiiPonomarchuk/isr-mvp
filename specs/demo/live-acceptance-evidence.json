@@ -504,6 +504,33 @@
       "synthetic_isr": 30.142,
       "synthetic_profiles": 27,
       "writes": 0
+    },
+    "finish_support_author_apply": {
+      "apply": true,
+      "combined_isr": 31.142,
+      "documents_proposed": 2,
+      "operation": "finish-support",
+      "option": "Emergency Locksmith Service",
+      "phase": "voting",
+      "pool": 101.00199999999998,
+      "status": "prepared",
+      "synthetic_isr": 30.142,
+      "synthetic_profiles": 27,
+      "writes": 2
+    },
+    "finish_support_verified": {
+      "phase": "voting",
+      "supporters": 27,
+      "creator_support_present": false,
+      "management_copies_equal": true,
+      "support_isr": 30.142000000000003,
+      "support_share": 0.29842973406467205,
+      "with_creator_isr": 31.142000000000003,
+      "with_creator_share": 0.3083305281083544,
+      "quorum_passed": true,
+      "expected_ui_action": "finish_voting",
+      "agent_production_writes": 0,
+      "provider_calls": 0
     }
   }
 }

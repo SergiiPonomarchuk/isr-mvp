@@ -41,3 +41,5 @@ Implement a dry-run-first Python CLI and Node transaction adapter, using the exi
 - 2026-11-15 author option preparation: one issue document, 27 votes for option 0. Read-only canonical audit: 27 counted/zero excluded, creator absent, 30.142 ISR (29.843%); idempotent preview writes zero. Creator's normal UI vote is next; expected quorum 31.142 ISR/28 votes. No agent production write/provider call.
 
 - 2026-11-15 creator UI option vote accepted. Canonical read-only tally: 28 counted/zero excluded, 31.142 ISR (30.833%), quorum passed and computed winner index 0; final stored result/tasks await Finish Voting. Finish-support preview ready: two proposed documents, zero writes. Author apply is next.
+
+- 2026-11-15 author Finish preparation: two documents, 27 selected finish_voting supports, identical management maps, creator absent, phase still Voting. Read-only repeat preview writes zero; canonical predictor requires creator final support to cross 30%. Final creator UI Finish Voting, server result/tasks and independent/human verification remain pending.
