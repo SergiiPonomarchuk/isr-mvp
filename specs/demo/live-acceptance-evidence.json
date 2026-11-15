@@ -1,0 +1,612 @@
+{
+  "date": "2026-11-15",
+  "release": "236e7d3b443d8e8db2795e363f7aafbeff11f361",
+  "backup": "A:/ISR/mvp/dbbackup/d1-20261114-123138",
+  "recovery": {
+    "backup": "A:/ISR/mvp/dbbackup/d1-20261114-123138",
+    "project": "project-a3d59130-5adf-4677-9e2",
+    "backup_finished_utc": "2026-11-14T10:38:44.013175+00:00",
+    "documents": 25000,
+    "manifest_entries": 13,
+    "restored_and_verified": 25000,
+    "recovery_project": "demo-isr-recovery",
+    "recovery_host": "127.0.0.1:8185",
+    "dedicated_ports_closed": true,
+    "completed_utc": "2026-11-14T11:50:16.712176+00:00",
+    "source_release": "236e7d3b443d8e8db2795e363f7aafbeff11f361",
+    "live_budget": {
+      "approved": true,
+      "check_pairs": 15,
+      "place_lookups": 2,
+      "content_generation": 0,
+      "profile_reembedding": 0,
+      "billing_confirmed_by_author": true
+    },
+    "production_writes": 0,
+    "provider_requests": 0,
+    "exports": 0
+  },
+  "deployment": {
+    "status": "verified",
+    "release": "236e7d3b443d8e8db2795e363f7aafbeff11f361",
+    "evidence": "deployment-evidence.json"
+  },
+  "deployment_verification": {
+    "verified_utc": "2026-11-14T13:27:33.403698+00:00",
+    "release": "236e7d3b443d8e8db2795e363f7aafbeff11f361",
+    "functions": [
+      {
+        "id": "closeExpiredTopics",
+        "region": "europe-central2",
+        "state": "ACTIVE",
+        "runtime": "nodejs22",
+        "source_generation": "1794661487975075",
+        "tracked_files_verified": 54,
+        "exact_source_match": true,
+        "deployed_code_hash": "41fbdaade22bb0b3052c894a81920c783e900eca"
+      },
+      {
+        "id": "onIssueStatusChange",
+        "region": "europe-central2",
+        "state": "ACTIVE",
+        "runtime": "nodejs22",
+        "source_generation": "1794661447887849",
+        "tracked_files_verified": 54,
+        "exact_source_match": true,
+        "deployed_code_hash": "41fbdaade22bb0b3052c894a81920c783e900eca"
+      },
+      {
+        "id": "analyzeIssue",
+        "region": "us-central1",
+        "state": "ACTIVE",
+        "runtime": "nodejs22",
+        "source_generation": "1794661447631930",
+        "tracked_files_verified": 54,
+        "exact_source_match": true,
+        "deployed_code_hash": "d047838e2bb0b89cdbed2a403e319ef26da35923"
+      },
+      {
+        "id": "checkIssue",
+        "region": "us-central1",
+        "state": "ACTIVE",
+        "runtime": "nodejs22",
+        "source_generation": "1794661502733564",
+        "tracked_files_verified": 54,
+        "exact_source_match": true,
+        "deployed_code_hash": "d047838e2bb0b89cdbed2a403e319ef26da35923"
+      },
+      {
+        "id": "createIssue",
+        "region": "us-central1",
+        "state": "ACTIVE",
+        "runtime": "nodejs22",
+        "source_generation": "1794661447658303",
+        "tracked_files_verified": 54,
+        "exact_source_match": true,
+        "deployed_code_hash": "d047838e2bb0b89cdbed2a403e319ef26da35923"
+      },
+      {
+        "id": "joinIssue",
+        "region": "us-central1",
+        "state": "ACTIVE",
+        "runtime": "nodejs22",
+        "source_generation": "1794661502702163",
+        "tracked_files_verified": 54,
+        "exact_source_match": true,
+        "deployed_code_hash": "41fbdaade22bb0b3052c894a81920c783e900eca"
+      }
+    ],
+    "hosting": [
+      {
+        "path": "firebase-config.js",
+        "sha256": "f66a94718daf11dff8955d64aa34006ad2db5ab5714b9c7d44a511f7da22fe5a",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "index.html",
+        "sha256": "65d3b66d107d321b338935d13eff0867161f33f5736a8dcad8b87f4815729f03",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "isr-logo.png",
+        "sha256": "a3253b03b9dbae3975947e947a8e2db6a6b889067a41b7b5ec9bfd1f2493dafb",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/esc-order.js",
+        "sha256": "80448a8690ca9c1339fc4016f78b08e82b8ac0fab0b4cc25d042a27afeef6f5b",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/isr.js",
+        "sha256": "0f0db88cee6683a28d58cb87bd88cfee305ecfc1d54390419b41d61d831f4f16",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/lifecycle.js",
+        "sha256": "2dec0fa7b10efdedb71f08caa717837301fc6e7ab824bc486a290cd4cf9fb79b",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/main.js",
+        "sha256": "840165f57016954715b260447869bfec8d4daebe44b8123ef5df65c0dc7053b8",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/modals.js",
+        "sha256": "4585e3e3aeda577e7a2bb1671f0f58544d8508367c3ad81c69c054213cc3add4",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/options.js",
+        "sha256": "8bac2218c1f9a41d2a23d619865bd5ccc70cd254922a26b4cd08ce76d9b04643",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/relevance.js",
+        "sha256": "4bddb224a53d4f4c949a9b726effbb172fc82c754d4a6fa1753c266ffd4c508f",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/values.js",
+        "sha256": "e82490ffdc0eae5608ef66e2bea7769a0fd9ac5ff4c71356d8d1fc6ad77dbc7c",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "relevance_evaluator.js",
+        "sha256": "ddba80096bddba929595ad919c24d643f85cb8a02090d084abaafa0005aca149",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "styles.css",
+        "sha256": "1c8c80c9e75f5b139af70a02a642d0f2c8eec8db3cf0920de0a080f3a093bc04",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "values-guide.html",
+        "sha256": "1ae776f7575b335692dcd8e74570f61dd1223938f013797b189037d6e7472b7e",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      }
+    ],
+    "production_writes": 0,
+    "provider_calls": 0
+  },
+  "seed": {
+    "status": "verified",
+    "check": {
+      "members": 505,
+      "problems": [],
+      "scenarios": 10,
+      "tolerance": 0.00100001,
+      "visible_scenarios_before_flagship": 9
+    },
+    "usage": {
+      "completed_check_pairs": 10,
+      "reported_text_tokens": 93417,
+      "new_content_generation_requests": 0,
+      "profile_reembedding_requests": 0,
+      "note": "content_text_requests in the seed journal is provenance of the previously generated content; no new content generation in this live seed. Completed Check count is journal-level, not an independent transport-retry counter.",
+      "logged_place_requests_since_preflight": 1
+    },
+    "rerun": {
+      "complete": true,
+      "requests": 0,
+      "writes": 0
+    }
+  },
+  "flagship": {
+    "status": "created and member list accepted by author",
+    "initial_members": 100,
+    "verification": {
+      "members": 605,
+      "problems": [],
+      "scenarios": 11,
+      "tolerance": 0.00100001,
+      "visible_scenarios_before_flagship": 10
+    },
+    "journal_recorded": true,
+    "successful_browser_check_pairs": 1
+  },
+  "successful_check_pairs_accounted": 14,
+  "approved_check_pair_ceiling": 15,
+  "live_journal": "A:/BackUp/isr-mvp/rollouts/d1-20261114-123138/live-manifest.json",
+  "live_ac5": "Core whole-cycle live rehearsal verified; requested final To Do screenshot received",
+  "agent_production_writes": 0,
+  "agent_provider_calls": 0,
+  "identity_policy": "Only aggregate live results copied here; browser identity is the reviewed synthetic D1-01 creator. Full execution journal stays outside the repository.",
+  "duplicate_ui": {
+    "fixed_synthetic_candidate_exists": true,
+    "fixed_candidate_is_nonmember": true,
+    "current_members": 100,
+    "exact_active_title_ui": "passed; author screenshot",
+    "paraphrase_same_place_ui": "passed; author screenshot",
+    "successful_check_pairs_accounted": 13,
+    "approved_check_pair_ceiling": 15,
+    "agent_production_writes": 0,
+    "agent_provider_calls": 0
+  },
+  "login_numeric_id_search": {
+    "status": "bug reproduced from source and author screenshot",
+    "reason": "numeric lookup result is incorrectly passed through substring name filter",
+    "workaround": "Use reviewed synthetic full name; nonmember verified",
+    "check_pairs_consumed": 0,
+    "fixed": true,
+    "fix_merge": "db26dbaaf0af5dc0f8662700979948bf18196a97",
+    "live_fix_deployment": "verified exact Hosting; numeric search/adoption and Join accepted"
+  },
+  "join": {
+    "status": "accepted by author",
+    "audit": {
+      "members": 101,
+      "explicit_join_events": 1,
+      "membership_source": "explicit_join",
+      "participants_unique": true,
+      "score_map_entries": 101,
+      "joining_member_scores": {
+        "membership_source": "explicit_join",
+        "expertise_score": 12.692,
+        "relevance_score": 0.327,
+        "isr_score": 0.599
+      },
+      "successful_check_pairs_accounted": 14,
+      "approved_check_pair_ceiling": 15,
+      "u11_numeric_search_and_adoption": "accepted by author; subsequent issue Check/Join screenshot",
+      "agent_production_writes": 0,
+      "agent_provider_calls": 0
+    },
+    "independent_check": {
+      "members": 606,
+      "problems": [],
+      "scenarios": 11,
+      "tolerance": 0.00100001,
+      "visible_scenarios_before_flagship": 10
+    }
+  },
+  "u11_hosting": {
+    "release": "db26dbaaf0af5dc0f8662700979948bf18196a97",
+    "verified_utc": "2026-11-14T20:49:45.936851+00:00",
+    "hosting": [
+      {
+        "path": "firebase-config.js",
+        "sha256": "f66a94718daf11dff8955d64aa34006ad2db5ab5714b9c7d44a511f7da22fe5a",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "index.html",
+        "sha256": "6c7f4eeb4c5b3aa6b620097b36852e5e2cb48c323ddcf2f52622e47beb9b4e84",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "isr-logo.png",
+        "sha256": "a3253b03b9dbae3975947e947a8e2db6a6b889067a41b7b5ec9bfd1f2493dafb",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/esc-order.js",
+        "sha256": "80448a8690ca9c1339fc4016f78b08e82b8ac0fab0b4cc25d042a27afeef6f5b",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/isr.js",
+        "sha256": "0f0db88cee6683a28d58cb87bd88cfee305ecfc1d54390419b41d61d831f4f16",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/lifecycle.js",
+        "sha256": "2dec0fa7b10efdedb71f08caa717837301fc6e7ab824bc486a290cd4cf9fb79b",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/main.js",
+        "sha256": "ffa9fe173691be2d5ed1f0b32bf09327441646ed328a55ed794d180fdc492a3c",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/modals.js",
+        "sha256": "4585e3e3aeda577e7a2bb1671f0f58544d8508367c3ad81c69c054213cc3add4",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/options.js",
+        "sha256": "8bac2218c1f9a41d2a23d619865bd5ccc70cd254922a26b4cd08ce76d9b04643",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/relevance.js",
+        "sha256": "4bddb224a53d4f4c949a9b726effbb172fc82c754d4a6fa1753c266ffd4c508f",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "js/values.js",
+        "sha256": "e82490ffdc0eae5608ef66e2bea7769a0fd9ac5ff4c71356d8d1fc6ad77dbc7c",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "relevance_evaluator.js",
+        "sha256": "ddba80096bddba929595ad919c24d643f85cb8a02090d084abaafa0005aca149",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "styles.css",
+        "sha256": "1c8c80c9e75f5b139af70a02a642d0f2c8eec8db3cf0920de0a080f3a093bc04",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      },
+      {
+        "path": "values-guide.html",
+        "sha256": "1ae776f7575b335692dcd8e74570f61dd1223938f013797b189037d6e7472b7e",
+        "exact_match": true,
+        "cache_control": "no-cache"
+      }
+    ],
+    "deployment": "author hosting-only",
+    "production_writes": 0,
+    "provider_calls": 0,
+    "live_ui_acceptance": "pending author profile adoption"
+  },
+  "discussion_options": {
+    "options": 2,
+    "implementation_steps": 6,
+    "all_steps_assigned_to_creator": true,
+    "message_count": 2,
+    "phase": "discussion",
+    "isr_pool": 101.00199999999997,
+    "management_threshold_isr": 30.30059999999999,
+    "creator_support_isr": 1.0,
+    "coalition_size_including_creator": 28,
+    "coalition_support_isr": 31.142,
+    "coalition_share": 0.3083305281083544,
+    "existing_management_support_count": 0,
+    "production_writes": 0,
+    "provider_calls": 0
+  },
+  "coalition_helper": {
+    "merge": "a64cb087ca7b759ff991d0f43988a5ad9003a14a",
+    "start_preview": {
+      "apply": false,
+      "combined_isr": 31.142,
+      "documents_proposed": 1,
+      "operation": "start-support",
+      "option": "Emergency Locksmith Service",
+      "phase": "chat",
+      "pool": 101.00199999999998,
+      "status": "ready",
+      "synthetic_isr": 30.142,
+      "synthetic_profiles": 27,
+      "writes": 0
+    },
+    "live_apply": "All three stages applied by author; all decisive creator UI actions complete; canonical stored winner/tasks verified",
+    "agent_production_writes": 0,
+    "start_support_author_apply": {
+      "apply": true,
+      "combined_isr": 31.142,
+      "documents_proposed": 1,
+      "operation": "start-support",
+      "option": "Emergency Locksmith Service",
+      "phase": "chat",
+      "pool": 101.00199999999998,
+      "status": "prepared",
+      "synthetic_isr": 30.142,
+      "synthetic_profiles": 27,
+      "writes": 1
+    },
+    "start_support_verified": {
+      "operation": "start-support",
+      "verified": true,
+      "phase": "chat",
+      "supporters": 27,
+      "creator_support_present": false,
+      "support_isr": 30.142,
+      "support_share": 0.2984297340646721,
+      "with_creator_isr": 31.142,
+      "with_creator_share": 0.3083305281083544,
+      "agent_production_writes": 0,
+      "provider_calls": 0
+    },
+    "creator_start_voting": {
+      "creator_ui_start_voting": "passed",
+      "issue_status": "in_process",
+      "discussion_status": "Voting",
+      "ends": "2026-11-21",
+      "option_votes": 0,
+      "management_maps_cleared": true,
+      "frozen_plan_revalidated": true,
+      "option_preview": {
+        "apply": false,
+        "combined_isr": 31.142,
+        "documents_proposed": 1,
+        "operation": "option-votes",
+        "option": "Emergency Locksmith Service",
+        "phase": "voting",
+        "pool": 101.00199999999998,
+        "status": "ready",
+        "synthetic_isr": 30.142,
+        "synthetic_profiles": 27,
+        "writes": 0
+      },
+      "agent_production_writes": 0,
+      "provider_calls": 0
+    },
+    "option_votes_author_apply": {
+      "apply": true,
+      "combined_isr": 31.142,
+      "documents_proposed": 1,
+      "operation": "option-votes",
+      "option": "Emergency Locksmith Service",
+      "phase": "voting",
+      "pool": 101.00199999999998,
+      "status": "prepared",
+      "synthetic_isr": 30.142,
+      "synthetic_profiles": 27,
+      "writes": 1
+    },
+    "option_votes_verified": {
+      "phase": "voting",
+      "counted_votes": 27,
+      "excluded_votes": 0,
+      "creator_vote_present": false,
+      "voted_isr": 30.142,
+      "voted_share": 0.29842973406467205,
+      "with_creator_isr": 31.142,
+      "with_creator_share": 0.3083305281083543,
+      "expected_winner_index": 0,
+      "agent_production_writes": 0,
+      "provider_calls": 0
+    },
+    "creator_option_vote": {
+      "creator_ui_option_vote": "passed",
+      "phase": "voting",
+      "counted_votes": 28,
+      "excluded_votes": 0,
+      "voted_isr": 31.142,
+      "voted_share": 0.3083305281083543,
+      "quorum_passed": true,
+      "computed_winner_index": 0,
+      "stored_final_result": "pending Finish Voting",
+      "agent_production_writes": 0,
+      "provider_calls": 0
+    },
+    "finish_support_preview": {
+      "apply": false,
+      "combined_isr": 31.142,
+      "documents_proposed": 2,
+      "operation": "finish-support",
+      "option": "Emergency Locksmith Service",
+      "phase": "voting",
+      "pool": 101.00199999999998,
+      "status": "ready",
+      "synthetic_isr": 30.142,
+      "synthetic_profiles": 27,
+      "writes": 0
+    },
+    "finish_support_author_apply": {
+      "apply": true,
+      "combined_isr": 31.142,
+      "documents_proposed": 2,
+      "operation": "finish-support",
+      "option": "Emergency Locksmith Service",
+      "phase": "voting",
+      "pool": 101.00199999999998,
+      "status": "prepared",
+      "synthetic_isr": 30.142,
+      "synthetic_profiles": 27,
+      "writes": 2
+    },
+    "finish_support_verified": {
+      "phase": "voting",
+      "supporters": 27,
+      "creator_support_present": false,
+      "management_copies_equal": true,
+      "support_isr": 30.142000000000003,
+      "support_share": 0.29842973406467205,
+      "with_creator_isr": 31.142000000000003,
+      "with_creator_share": 0.3083305281083544,
+      "quorum_passed": true,
+      "expected_ui_action": "finish_voting",
+      "agent_production_writes": 0,
+      "provider_calls": 0
+    },
+    "creator_finish_voting": "Complete; see final_result"
+  },
+  "final_evidence": "live-full-cycle-evidence.json",
+  "final_result": {
+    "date": "2026-11-15",
+    "issue_status": "approved",
+    "discussion_status": "approved",
+    "members": 101,
+    "winner_index": 0,
+    "winner": "Emergency Locksmith Service",
+    "option_scores": [
+      31.142,
+      0
+    ],
+    "counted_votes": 28,
+    "excluded_votes": 0,
+    "voted_isr": 31.142,
+    "pool_isr": 101.00199999999998,
+    "voted_share": 0.3083305281083543,
+    "stored_tally_matches_canonical": true,
+    "tally_source": "microcommunity_members.isr_score",
+    "server_tally_present": true,
+    "tasks": [
+      {
+        "step": "Contact local locksmith service",
+        "assigned_to_creator": true,
+        "status": "in_process"
+      },
+      {
+        "step": "Authorize emergency call-out",
+        "assigned_to_creator": true,
+        "status": "in_process"
+      },
+      {
+        "step": "Verify installation and test keys",
+        "assigned_to_creator": true,
+        "status": "in_process"
+      }
+    ],
+    "management_maps_cleared": true,
+    "method": "Author-run bounded synthetic helper for 27 other profiles; creator final Start Voting, option vote and Finish Voting through normal UI; existing deployed server tally stored winner/tasks.",
+    "human_evidence": "Author returned requested live To Do screenshot, showing winner and three creator-assigned tasks.",
+    "agent_production_writes": 0,
+    "agent_provider_calls": 0
+  },
+  "final_independent_check": {
+    "members": 606,
+    "problems": [],
+    "scenarios": 11,
+    "tolerance": 0.00100001,
+    "visible_scenarios_before_flagship": 10
+  },
+  "final_usage": {
+    "successful_check_logs": 14,
+    "reported_text_tokens": 131139,
+    "logs_with_reported_usage": 14,
+    "successful_issue_embedding_texts": 14,
+    "text_models": [
+      "gemini-3.1-flash-lite"
+    ],
+    "embedding_models": [
+      "gemini-embedding-001"
+    ],
+    "embedding_dimensions": [
+      768
+    ],
+    "new_content_generation_requests": 0,
+    "profile_reembedding_requests": 0,
+    "helper_provider_calls": 0,
+    "approved_check_pair_ceiling": 15,
+    "approved_place_lookup_ceiling": 2,
+    "sdk_transport_attempts": "Not independently recorded; successful Analyzer log count is not a transport-retry counter.",
+    "agent_provider_calls": 0,
+    "source": "Only field-masked Analyzer usage/embedding metadata since the first seeded live Check; no input/output/profile fields read.",
+    "logged_place_requests": 1
+  },
+  "stage_evidence_policy": "Nested preview/support/phase records below are historical stage snapshots; final_result and final_independent_check describe current accepted state."
+}

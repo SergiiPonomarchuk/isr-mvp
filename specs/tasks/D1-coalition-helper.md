@@ -24,6 +24,8 @@ Implement a dry-run-first Python CLI and Node transaction adapter, using the exi
 
 ## Status log
 
+- 2026-11-15 final live closeout: requested author To Do screenshot received; stored canonical winner Emergency Locksmith Service, 28 counted votes/zero exclusions/31.142 ISR and three creator-assigned in_process tasks verified read-only. Final checker: 606 members, no problems; frozen-plan replay zero writes. Author-run 27-profile helper plus decisive creator UI actions disclosed as synthetic rehearsal. Core AC5 verified; full narrated nine-case tour not separately recorded. See [final live report](D1-live-report.md). No agent production write/provider call.
+
 - 2026-11-14: Author approved helper preparation. Current read-only live preflight: two options/six creator-assigned steps; 101.002 ISR pool; 30.3006 threshold; creator + 27 selected members hold 31.142 ISR. No supports written. Existing 14/15 Check allocation is unchanged; helper uses zero AI calls.
 
 - 2026-11-15 implementation: added frozen-plan Python CLI and Node transaction adapter. All three operations prepare only noncreator inputs; normal creator UI transactions remain decisive and canonical server tally creates the result/tasks. Registration timestamp is checked at nanosecond precision, including the manifest's string representation. Guard/preview/refusal/idempotent cases pass; wrapper tests cover durable plan/receipts, unchanged execution manifest, target acknowledgements and unused-key stripping.
@@ -31,3 +33,15 @@ Implement a dry-run-first Python CLI and Node transaction adapter, using the exi
 - 2026-11-15 required suites: Node 129 passed/four optional integration skips; Python 127 run/two optional skips. Canonical runtime/frontend/rules unchanged. Final-head CI checked before requesting separate PR merge. Every live apply and remaining creator UI action remains the author's step; live AC5 is pending. No agent production write or provider request.
 
 - 2026-11-15 read-only live preflight: saved separate durable author-coalition-v1.json, then previewed start-support against the frozen real flagship. Selected 27 profiles, synthetic ISR 30.142, creator 1.000, combined 31.142; one proposed document and zero writes. Source provenance recorded in the local plan. PR #37 is prepared; explicit merge and every author apply remain pending.
+
+- 2026-11-15 merge: author instructed `merge PR 37`; merged as `a64cb08`. Clean wt-main refreshed and saved-plan start-support preview revalidated with zero writes, one proposed document and 27 synthetic profiles. Actual author start-support apply remains pending; no deployment required or agent production mutation.
+
+- 2026-11-15 first live apply: author prepared start-support (one document). Agent read-only audit confirms the 27 selected supports, no creator support, still discussion; saved-plan repeat preview writes zero. Christine's final UI Start Voting is next. No agent production write/provider call.
+
+- 2026-11-15: author creator UI Start Voting completed. Live pair is in_process/Voting, deadline 2026-11-21, zero option votes and cleared management maps. Saved-plan option-votes preview ready: one proposed document, zero writes. Author option-votes apply is next; no agent production write/provider call.
+
+- 2026-11-15 author option preparation: one issue document, 27 votes for option 0. Read-only canonical audit: 27 counted/zero excluded, creator absent, 30.142 ISR (29.843%); idempotent preview writes zero. Creator's normal UI vote is next; expected quorum 31.142 ISR/28 votes. No agent production write/provider call.
+
+- 2026-11-15 creator UI option vote accepted. Canonical read-only tally: 28 counted/zero excluded, 31.142 ISR (30.833%), quorum passed and computed winner index 0; final stored result/tasks await Finish Voting. Finish-support preview ready: two proposed documents, zero writes. Author apply is next.
+
+- 2026-11-15 author Finish preparation: two documents, 27 selected finish_voting supports, identical management maps, creator absent, phase still Voting. Read-only repeat preview writes zero; canonical predictor requires creator final support to cross 30%. Final creator UI Finish Voting, server result/tasks and independent/human verification remain pending.

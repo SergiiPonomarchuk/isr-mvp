@@ -1,6 +1,6 @@
 # D1 generated artefacts and local journal
 
-Status: actual generated content, final-population seed, zero-change rerun, named snapshot/import and browser creation/duplicate/Join checks completed. Human full-cycle and disposable separate-creation acceptance are complete; live AC5 remains pending. See `run-evidence.json` and the D1 emulator report.
+Status: actual generated content, final-population seed, zero-change rerun, named snapshot/import and browser creation/duplicate/Join checks completed. Human full-cycle and disposable separate-creation acceptance are complete; core live AC5 is now verified; see [final live report](../tasks/D1-live-report.md) and `live-full-cycle-evidence.json`. See `run-evidence.json` and the D1 emulator report.
 
 The approved contract is [D1 section 9](../tasks/D1-demo-scenarios.md#9-proposed-implementation-refinement-after-u10-2026-11-14). This folder will hold `content.json` (generated once, creator bindings, prompt/model/usage metadata), `manifest.json` (metadata inventory, exact drafts/results, phase/record ids and progress), and `network-ledger.json` (actual emulator request reservations only; no headers, bodies, queries or keys).
 
@@ -60,4 +60,4 @@ The Check/place ceilings are exhausted (15 text + 15 embedding Check calls, two 
 
 Seed-start snapshot: `A:/BackUp/isr-mvp/emulator-snapshots/2026-11-14-d1-1a242df` with matching `seed-manifest.json`. Completed accepted snapshot: `A:/BackUp/isr-mvp/emulator-snapshots/2026-11-14-d1-author-accepted-7259ca3`, matching current `manifest.json`. File hashes are recorded in the acceptance evidence. Neither is a reset instruction; a presentation-started manifest refuses silent reseeding.
 
-AC1-AC4 emulator acceptance is complete, subject to final-head CI. AC5 live remains pending. Plan #33 merged as `2048912`; implementation #34 targets main and is reconciled without application/data changes. After green checks, its separate author merge instruction is `merge PR 34`. Deployment and live apply remain author-only after fresh backup/recovery and separate live budget/runbook review.
+AC1-AC4 emulator acceptance and core live AC5 rehearsal are verified. Plan #33, implementation #34, U11 #36 and helper #37 are merged. Final acceptance PR #35 is documentation only and requires its own explicit author merge instruction after green CI. All live applies/deployments remain author-only; existing live journal and emulator snapshots stay separate.

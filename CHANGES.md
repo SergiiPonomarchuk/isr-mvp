@@ -1,12 +1,60 @@
 # CHANGES
 
+## 2026-11-15 - D1 live whole-cycle verified
+
+Recorded the requested final To Do screenshot and read-only canonical server result: 28 counted votes, zero exclusions, 31.142 ISR and three creator-assigned tasks. Final independent checker validates 606 member records with no problems; frozen-plan replay writes zero. Disclosed author-run 27-profile helper plus decisive creator UI method, actual usage metadata and component deployment identities. Updated acceptance evidence, presenter status and next M3 specification gate. Documentation only; no agent production write, deployment or provider call.
+
+## 2026-11-15 - Author Finish support verified
+
+Verified the author's final helper preparation: 27 Finish supporters mirrored across two documents, creator absent, phase unchanged, valid option quorum and zero-write replay. Creator's UI closure/server result/task review is next. Documentation only; no agent production write or AI request.
+
+## 2026-11-15 - Live creator option vote and quorum verified
+
+Verified the creator's UI vote: 28 counted, zero excluded, 31.142 ISR and passing quorum. Finish-support preview passed with zero writes/two proposed documents; final stored winner/tasks remain pending. Documentation only; no agent production write or AI request.
+
+## 2026-11-15 - Author option votes prepared and verified
+
+Verified the author's 27 synthetic option votes using canonical tally: zero exclusions, 30.142 ISR, creator absent, still below quorum. Saved-plan repeat preview writes zero. Creator's normal UI vote is next. Documentation only; no agent production write or AI request.
+
+## 2026-11-15 - Live creator Start Voting accepted
+
+Recorded creator's normal UI phase transition; verified Voting pair/deadline, cleared management maps and zero option votes. Saved-plan option-votes preview passed with zero writes. Author option-vote preparation is next; no agent live mutation or AI request.
+
+## 2026-11-15 - Author Start Voting support prepared and verified
+
+Recorded author's first coalition apply and read-only verification: 27 selected supports/30.142 ISR, creator absent, phase unchanged; repeat preview writes zero. Creator's normal UI action is next. Documentation only; no agent production write or model request.
+
+## 2026-11-15 - Coalition helper merged and saved plan revalidated
+
+Merged PR #37 as `a64cb08` on explicit author instruction; refreshed clean wt-main and revalidated the existing live plan read-only (27 synthetic actors, one proposed document, zero writes). Reconciled draft acceptance #35 with main, preserving both histories; no additional runtime/frontend/rules changes or agent live mutation. Next step is the author's guarded start-support apply.
+
 ## 2026-11-15 - D1 bounded author-run coalition helper
 
 Added dry-run-first frozen-plan support/vote preparation for up to 27 other synthetic members, preserving the creator's decisive UI actions. Transactional drift/conflict checks, idempotent stages, durable receipts and explicit targets protect the rehearsal. Exact Python CLI plus actual creator transaction code on an isolated copy completed 28 votes to canonical winner/three creator tasks. Required Node/Python suites pass; no agent production write, model call, deployment, runtime/rules or dependency change.
 
+## 2026-11-14 - D1 live options verified and coalition prepared read-only
+
+Verified author discussion message, two reviewed repair options and six creator-assigned steps. Calculated the synthetic management coalition from current stored weights: 31.142 of 101.002 ISR, with creator's final support needed to cross 30%. Requested author choice of rehearsal method before any support/vote/phase writes. Documentation only; no additional AI request or agent production mutation.
+
+## 2026-11-14 - U11 deployment and D1 live Join accepted
+
+Verified author hosting-only U11 deployment against all 14 files; author numeric-profile adoption and explicit Join succeeded. Public grew to 101 with one Join event and coherent maps; independent post-Join verification covers 606 members with zero differences. Recorded remaining live discussion/options/vote/task gate; no additional AI request is needed for that cycle. Documentation only; no agent production writes or deployments.
+
+## 2026-11-14 - U11 merged; D1 acceptance documentation reconciled
+
+Author explicitly instructed merge PR #36; profile-search fix merged as `db26dba`. Reconciled draft live-acceptance PR #35 with main; only CHANGES/HANDOFF conflicted and both histories are retained. Runtime matches the reviewed fix; no additional code/data changes or model requests. Clean `wt-main` is ready for the author's hosting-only deploy; live Join remains paused until that deployment is verified.
+
 ## 2026-11-14 - U11 exact-ID and full-name profile search
 
 Fixed profile adoption search discarding exact numeric IDs through its name filter and omitting specific full names after common-first-name query limits. Added bounded full-name prefixes, numeric/string uid lookup and a clearer field placeholder while retaining other filters and adoption behavior. Actual-handler regressions and masked emulator queries pass; Node 119 passed/three optional skips, Python 120 run/two optional skips. Main.js CRLF/final CR retained. No agent deployment, production write or provider call.
+
+## 2026-11-14 - D1 live duplicate acceptance
+
+Recorded author acceptance of exact-title blocking/Open/member status and genuine paraphrase matching on live. Verified a fixed synthetic nonmember read-only for the next explicit Join test. Thirteen successful Check pairs accounted of fifteen approved; live AC5 remains in progress. Documentation only; no agent production write or provider call.
+
+## 2026-11-14 - D1 live seed and flagship checkpoint
+
+Recorded author deployment/live seed and normal flagship creation/member-list acceptance. Fresh backup recovery verified all 25,000 documents; deployed source/Hosting matched exactly. Seed: ten scenarios/505 members, zero differences, zero-change rerun. Post-flagship checker: 605 members, zero differences. Live duplicate/Join and full vote/task cycle remain pending. Documentation/aggregate evidence only; no agent production write or provider call.
 
 ## 2026-11-14 - Recovery fix reconciled for D1 rollout
 
