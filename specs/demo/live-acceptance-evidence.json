@@ -478,6 +478,32 @@
       "expected_winner_index": 0,
       "agent_production_writes": 0,
       "provider_calls": 0
+    },
+    "creator_option_vote": {
+      "creator_ui_option_vote": "passed",
+      "phase": "voting",
+      "counted_votes": 28,
+      "excluded_votes": 0,
+      "voted_isr": 31.142,
+      "voted_share": 0.3083305281083543,
+      "quorum_passed": true,
+      "computed_winner_index": 0,
+      "stored_final_result": "pending Finish Voting",
+      "agent_production_writes": 0,
+      "provider_calls": 0
+    },
+    "finish_support_preview": {
+      "apply": false,
+      "combined_isr": 31.142,
+      "documents_proposed": 2,
+      "operation": "finish-support",
+      "option": "Emergency Locksmith Service",
+      "phase": "voting",
+      "pool": 101.00199999999998,
+      "status": "ready",
+      "synthetic_isr": 30.142,
+      "synthetic_profiles": 27,
+      "writes": 0
     }
   }
 }

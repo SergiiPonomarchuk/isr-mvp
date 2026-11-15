@@ -35,3 +35,5 @@ Author applied start-support (one discussion document). Read-only plan/audit con
 - 2026-11-15: author creator UI Start Voting completed. Live pair is in_process/Voting, deadline 2026-11-21, zero option votes and cleared management maps. Saved-plan option-votes preview ready: one proposed document, zero writes. Author option-votes apply is next; no agent production write/provider call.
 
 - 2026-11-15 author option preparation: one issue document, 27 votes for option 0. Read-only canonical audit: 27 counted/zero excluded, creator absent, 30.142 ISR (29.843%); idempotent preview writes zero. Creator's normal UI vote is next; expected quorum 31.142 ISR/28 votes. No agent production write/provider call.
+
+- 2026-11-15 creator UI option vote accepted. Canonical read-only tally: 28 counted/zero excluded, 31.142 ISR (30.833%), quorum passed and computed winner index 0; final stored result/tasks await Finish Voting. Finish-support preview ready: two proposed documents, zero writes. Author apply is next.
