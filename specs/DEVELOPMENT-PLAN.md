@@ -20,6 +20,12 @@ The next useful result is a **credible guided demonstration** of issue-specific 
 
 This follows [PD-6](decisions/PD-6-mvp-status-and-paper.md): a design proposal and partial synthetic prototype can support the paper. Completing every pilot feature is not a prerequisite for that paper or the guided demo.
 
+## Execution checkpoint, 2026-11-15
+
+M0/M1 rollout and the D1 core live whole-cycle rehearsal are complete; [final live report](tasks/D1-live-report.md) records 28 votes, 31.142 ISR, three creator tasks and 606 independently checked member records with no problems. The synthetic helper/creator UI method is disclosed; a full narrated nine-case tour is not separately recorded. Acceptance PR #35 is documentation only and awaits explicit merge after green CI.
+
+Next: M3 starts with an audit of existing A4/A5 validation and a focused guardrail policy/spec proposal. Typical ranges/k policy, consistency and clarification/retry decisions require author approval before implementation. No new runtime feature, live mutation, deployment, model change or AI budget is authorized by this checkpoint. D2 access controls follow separately. The dated tables/estimates below retain the original planning baseline; use HANDOFF and task status logs for current execution state.
+
 ## 2. Current position: finished versus remaining
 
 **M0 complete, 2026-11-12.** [Integrated release evidence](tasks/INTEGRATED-release-2026-11-12.md) records main `47e835a`, its passing CI, 98 Node tests, Python 105 run with one optional skip, full vector/canonical-score checks, locality replay, browser recheck and the named snapshot. [The concrete live runbook](LIVE-ROLLOUT.md) covers the next milestone.
@@ -33,7 +39,7 @@ This follows [PD-6](decisions/PD-6-mvp-status-and-paper.md): a design proposal a
 | U8 | PR #22 merged; fresh release map recheck passed. | Author hosting deployment and AC3. |
 | A5 | PR #24 merged as `47e835a`; captured replay and saved p4 endpoint acceptance pass. | Include in coordinated live deployment. |
 | ISR/lifecycle | A1/L1 already implemented; canonical migrated-public scores remain verified. | Full D1 demonstration and later protected write boundary. |
-| D1 | Ten scenarios and decisions approved; not implemented. | Start after P2 applied and A4/U6 live. |
+| D1 | Implemented; emulator AC1-AC4 and core live AC5 rehearsal verified. | Merge documentation PR #35 on explicit instruction; narrated tour remains a presenter exercise. |
 | Plan/runbook docs | Approved plan updated with the integrated checkpoint in PR #26. | Separate explicit merge instruction for #26. |
 
 **M1 preparation:** the restore-to-copy rehearsal verified all 24,783 documents in the November 7 archive. The author selects the live window, confirms billing/budget, takes a fresh backup and rehearses that specific archive before live apply. See [recovery evidence](tasks/M1-firestore-recovery.md).

@@ -24,6 +24,8 @@ Implement a dry-run-first Python CLI and Node transaction adapter, using the exi
 
 ## Status log
 
+- 2026-11-15 final live closeout: requested author To Do screenshot received; stored canonical winner Emergency Locksmith Service, 28 counted votes/zero exclusions/31.142 ISR and three creator-assigned in_process tasks verified read-only. Final checker: 606 members, no problems; frozen-plan replay zero writes. Author-run 27-profile helper plus decisive creator UI actions disclosed as synthetic rehearsal. Core AC5 verified; full narrated nine-case tour not separately recorded. See [final live report](D1-live-report.md). No agent production write/provider call.
+
 - 2026-11-14: Author approved helper preparation. Current read-only live preflight: two options/six creator-assigned steps; 101.002 ISR pool; 30.3006 threshold; creator + 27 selected members hold 31.142 ISR. No supports written. Existing 14/15 Check allocation is unchanged; helper uses zero AI calls.
 
 - 2026-11-15 implementation: added frozen-plan Python CLI and Node transaction adapter. All three operations prepare only noncreator inputs; normal creator UI transactions remain decisive and canonical server tally creates the result/tasks. Registration timestamp is checked at nanosecond precision, including the manifest's string representation. Guard/preview/refusal/idempotent cases pass; wrapper tests cover durable plan/receipts, unchanged execution manifest, target acknowledgements and unused-key stripping.

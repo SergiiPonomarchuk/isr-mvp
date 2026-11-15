@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-15 - D1 live whole-cycle verified
+
+Recorded the requested final To Do screenshot and read-only canonical server result: 28 counted votes, zero exclusions, 31.142 ISR and three creator-assigned tasks. Final independent checker validates 606 member records with no problems; frozen-plan replay writes zero. Disclosed author-run 27-profile helper plus decisive creator UI method, actual usage metadata and component deployment identities. Updated acceptance evidence, presenter status and next M3 specification gate. Documentation only; no agent production write, deployment or provider call.
+
 ## 2026-11-15 - Author Finish support verified
 
 Verified the author's final helper preparation: 27 Finish supporters mirrored across two documents, creator absent, phase unchanged, valid option quorum and zero-write replay. Creator's UI closure/server result/task review is next. Documentation only; no agent production write or AI request.

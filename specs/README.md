@@ -102,8 +102,8 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U5-esc-and-geotag](tasks/U5-esc-and-geotag.md) | DONE on live 2026-11-10 (PR 15); the issue location from the Analyzer follows after A4 | UI |
 | [U6-issue-location](tasks/U6-issue-location.md) | merged PR #21 on 2026-11-12; AC2-AC5 passed and saved; combined Node 88 / Python 105 (one skip); live pending author | UI, 07 (Analyzer), 03 (G) |
 | [U7-page-cache](tasks/U7-page-cache.md) | DONE on live 2026-11-11 (PR 17): every hosting response is sent with `no-cache` | UI, 13 (hosting) |
-| [D1-demo-scenarios](tasks/D1-demo-scenarios.md) | Emulator accepted; live seed/Join/options verified; live vote/task cycle pending | Demo data, lifecycle, UI |
-| [D1-coalition-helper](tasks/D1-coalition-helper.md) | Author-approved bounded synthetic input helper; isolated-copy/CLI tests pass; merge/apply pending | D1 rehearsal, CLI |
+| [D1-demo-scenarios](tasks/D1-demo-scenarios.md) | IMPLEMENTED; emulator AC1-AC4 and core live AC5 rehearsal verified; [live report](tasks/D1-live-report.md) | Demo data, lifecycle, UI |
+| [D1-coalition-helper](tasks/D1-coalition-helper.md) | IMPLEMENTED; #37 merged, all author stages and decisive creator UI completed; canonical server result verified | D1 rehearsal, CLI |
 | [U10-similar-active-issues](tasks/U10-similar-active-issues.md) | IMPLEMENTED; author emulator/live Check acceptance recorded | Analyzer, UI, membership |
 | [U11-profile-search](tasks/U11-profile-search.md) | IMPLEMENTED; merged/author-hosted; numeric adoption accepted live | Profile adoption, UI |
 | [U9-member-preview-popup](tasks/U9-member-preview-popup.md) | Count labeling and immediate member popup rendering implemented, deployment pending | UI, Analyzer |
