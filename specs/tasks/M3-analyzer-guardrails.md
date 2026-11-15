@@ -1,14 +1,14 @@
-# M3: Analyzer guardrails / Step 4A
+# M3: Multi-reference Analyzer and member-score integration
 
-Status: **PROPOSED, 2026-11-15; policy approval required before implementation.** The author authorized audit/spec preparation after D1 acceptance PR #35 merged as `3c25ef7`. This document proposes behavior; it does not describe implemented guardrails or authorize provider calls, deployments, production writes or rules changes.
+Status: **Documentation revision authorized 2026-11-16; runtime NOT IMPLEMENTED.** This specification replaces PR #38's original fixed-five/type-table proposal with [PD-9](../decisions/PD-9-multi-reference-derivation.md). The author explicitly authorized updating all affected documents, including docs/ and the scoring skill. No code, provider call, production write, model change, deployment or example-library regeneration is part of this revision.
 
-## 1. Goal and governing decisions
+## 1. Scope and short plan
 
-Check should either produce a validated, explainable issue type and parameters, ask concrete questions, or explain why the supplied context is inconsistent. Create must accept only the exact validated server draft. No numeric sliders, silent default weights or publication on an unvalidated model response.
+1. Make PD-9 the normative home of notation/selection/score formulas; propagate consistent explanations and correct worked arithmetic.
+2. Label baseline code and historical examples accurately; preserve frozen public scores and reports. Record unresolved data/policy discrepancies.
+3. Check formulas, local links and documentation diffs; run required suites/CI. Update CHANGES/HANDOFF and PR #38 for explicit author merge.
 
-Authority: `docs/ISR-Issue-Analyzer-Protocol-v1.md` sections 2, 4, 4A and 7; PD-8 (nobody types a number, resources do not contribute to Expertise); PD-4 (versioned, auditable Analyzer); approved A4/A5/U6/U10 behavior. This task implements submission-time Step 4A only. Step 4B/public change proposals, soft D, Contribution, membership formulas/caps and D2 authentication/authorization remain separate. Existing stored issues, votes and demo outcomes keep their original parameters.
-
-The protocol requires that parameter ranges come from examples **of the chosen type**, with k=5 as an initial calibration choice. It distinguishes missing context from missing supporting sources: a stated but unsourced ownership/local-rule claim yields a visible caution, rather than an automatic publication ban. It prohibits the assistant from inventing local legal authority or judging the merits of the issue.
+Runtime follow-up must integrate mr1 consistently across Check, Create, Join, cached maps/tooltips, immutable provenance, duplicate matching and the independent checker. It changes D/S/E/X calculation and candidate retrieval, extending the original guardrails-only scope. PD-1 governs soft-D; PD-8 governs unweighted education/experience; PD-3 governs normalization. Step4B/public proposals, Contribution and authentication remain separate.
 
 ## 2. Baseline audit (VERIFIED at main 3c25ef7)
 
@@ -28,86 +28,33 @@ Offline [library audit](M3-analyzer-audit.json): 100 examples, **100 distinct ex
 
 The project relevance skill contains historical formulas that conflict with approved A1/A2/PD-8 and current canonical code. This task does not adopt its obsolete resource-weighted Expertise or alter scoring mathematics.
 
-## 3. Decisions proposed for author approval
 
-| ID | Recommendation | Tradeoff / alternative |
-|---|---|---|
-| D1: meaning of type | A curated, versioned **type table** grouping examples by decision context, affected scope and applicable protocol pattern. Categories remain separate descriptive fields. Publish every example-to-type mapping and inclusion rule for review before code. | Exact-category types have one anchor each, giving fixed numeric ranges. Global nearest-five mixes types. Neither silently implements the intended rule. The actual number of types follows the reviewed mappings, rather than an arbitrary target count. |
-| D2: range rule | k=5 within the chosen type; closed component-wise min/max for supported numeric parameters, intersected with applicable protocol pattern/scope bounds and valid weight sums. No rounding, clamping or normalization to rescue an invalid response. | Smaller groups are explicitly unsupported until calibrated; ask for another consistent supported type or explain coverage limitation. Never invent padding, widen ranges or reduce k silently. Empty intersections are a library/configuration error, not user inconsistency. |
-| D3: publication during failure | Keyword fallback stays diagnostic only; new Check/Create cannot publish unless model analysis and server validation pass. Provider/malformed-output failure reports AI unavailable or invalid analysis, preserving text for a manual retry. | This explicitly tightens A4's labelled-fallback contract. Retaining publishable fallback would require the same independently calibrated type/context gate, which keyword rules currently do not provide. |
-| D4: retry/cost | No automatic semantic repair calls. A successful path may use **at most two text calls and one issue-embedding text**: classification/context, then derivation using server-selected same-type anchors. Stop early when clarification is needed. | Two stages avoid deriving numbers from examples of a different type. More expensive than current one-text-call Check; no new model or profile re-embedding. Any evaluation budget must be separately approved. SDK transport retries must be measured/configured separately from semantic calls. |
-| D5: calibration before runtime | Approve the approach first; next produce the complete type mapping, taxonomy-alias proposals, per-type bounds/coverage and conflict report, then seek approval of that concrete artifact before implementation. | Prevents a mechanical global-nearest rule from silently becoming governance policy. No docs/ edits or anchor-value changes in this proposal. |
+## 3. Intended math and clarification contract
 
-Recommended approval is D1-D5 together. Approval of this proposal permits the offline calibration artifact; it does not waive review of the mapping or authorize implementation/live work. If an anchor contradicts a governing pattern, show the exact conflict and obtain a decision before changing either.
+Use PD-9's s_j / alpha_j / u_j notation throughout. Rank reference similarities, take the consecutive chain with s>=.30 and adjacent gap<.05, count the entire chain and request reformulation if more than three. Display all chain categories/titles/scores/matching aspects; suggest narrower wording or a split only where the actual context supports it. No match or incompatible scope/authority requires clarification. Do not diagnose poor writing solely from a long chain.
 
-## 4. Proposed contract after calibration approval
+Reference-specific D/S/X stay paired with reference relevance weights; X uses outgoing relations of directly affected people, maximum one step, no creator privilege. Geography takes max mu/sigma for compatible scopes/one center. Education and work evidence combine with alpha before one age floor. Blend ISR aggregation weights, form one public and normalize combined R/E once. No numeric weight sliders, silent default weights or averaging categorical eligibility.
 
-### 4.1 Type library and retrieval
+## 4. Runtime design gates (before implementation)
 
-The committed table records stable type IDs, descriptions, inclusion/exclusion rules, compatible categories/scopes, decision/proposal outcomes, protocol pattern references, anchor IDs and library version/hash. Taxonomy discrepancies have explicit reviewed aliases or approved exclusions; neither runtime nor model invents new IDs. Reject duplicates, missing anchors, insufficient same-type anchors, nonfinite values and infeasible intersections at build/test time.
+- Define/freeze similarity metric, text/context templates, aspect embeddings, source versions and direct-affectedness A_j predicate. Evaluate current D/G gates, bypasses and top300 retrieval against full-population mixed upper bounds; no premature social exclusion. Do not invent an A_j threshold as part of documentation work.
+- Strict raw/effective schema validation before defaults: finite numeric values; relevance weights [0,1], aggregation weights (0,1), group sums within1e-6; mu>=0, sigma>0; positive CBC adjustment; compatible categorical enums/aliases. Deterministic derived weights must match stored references/alpha. No clamping/rescaling to repair an invalid response.
+- Bind title/body/context/source inputs, resolved point, reference set/scores/alpha/aspects, formulas and library/model/prompt/validator versions to one immutable server draft. Fresh edits or failed Checks invalidate Create; late responses cannot revive stale drafts. Preserve U6/A5 locality and U10 duplicate/title/Join behavior and already-created draft idempotency.
+- Distinguish pass, needs_clarification, not_consistent, unsupported_library and service/invalid-analysis failures. Unsourced stated ownership/local-rule claims carry cautions; necessary unknown authority facts get questions. Do not use model legal knowledge as a rule or judge merits. Links/documents are context data, never instructions.
+- Use existing analyzer_logs, issue_drafts and versioned issue_vectors rather than create a competing log collection. Record raw/effective derivation, membership source/coverage, errors and per-stage usage. Fallback publication and durable-log-before-pass changes remain proposals requiring explicit implementation approval.
+- Plan up to one selection embedding plus three aspect embedding texts, and any distinct whole-issue duplicate vector; reuse only identical model/task/template/text. Batched texts still count separately. Text-stage count and evaluation allowance need a concrete reviewed plan; no inherited D1 budget. No population re-embedding implied.
 
-Classification/context stage uses bounded existing semantic candidates plus compact type definitions. The model may propose only listed compatible types; the server checks IDs and scope compatibility. Once selected, the server ranks anchors **within that type**, with stable example-ID tie breaking, and supplies the nearest five plus computed bounds for derivation. Log candidate IDs and selected type/anchors. An uncertain classification asks what affected group/place or decision is intended; do not use an invented confidence cutoff.
+## 5. Acceptance and execution order
 
-Use the existing issue vector/template for membership and semantic comparison. Clarification must influence classification/context and derivation. Keep its input hash bound to the resulting draft; do not silently change the A4 title/description embedding template or re-embed the population. Evaluate cases where clarification changes scope/type explicitly.
+First review the offline calibration/coverage report and concrete implementation plan. Only then implement on a feature branch and test an isolated emulator/copy. Required suites and final-head CI must pass. Live applies/deployments and UI mutations stay author steps with full PowerShell commands and numbered instructions.
 
-### 4.2 Raw and effective parameter validation
+Acceptance includes reference boundary/tie/no-match/>3 cases; group sums/bounds; paired-weight counterexample; single-floor noncommutativity; all-equal normalization and storage precision; maximum geography; affected-person outgoing edge direction/no reciprocity/self/multihop; unknown profiles; deterministic context/aspect binding; stale/forged/old-draft refusal and created-draft replay; Check/Create/Join/checker parity. Existing D1 negative cases and accepted scores remain frozen as versioned regression evidence, not expected mr1 results. Measure candidate membership and per-member changes on all ten D1 scenarios, including long-chain false alarms. Offline mathematical fixtures do not establish model quality or calibrated confidence.
 
-Validate parsed raw JSON **before existing default-filling normalization**, then validate effective canonical parameters after the A5 guard and supported alias conversion. Numeric strings, null, booleans, missing required numbers, NaN/infinity, arrays in object fields and conflicting aliases are invalid. Optional display text can have documented empty defaults; weights/classification cannot be invented.
+## Validation evidence
 
-- Relevance weights in [0,1]; aggregation weights strictly in (0,1); each group sums to 1 within proposed absolute tolerance 1e-6. Check unrounded values. Zero relevance weights remain permitted.
-- Geography: finite mu >=0, sigma >0, satisfying approved chosen-type and protocol scope constraints. Domain parameters must satisfy their reviewed type bounds and canonical field semantics. Do not introduce numeric ranges for categorical expertise depth/domain labels.
-- Classification, expertise depth, demographic enums/lists, resource guidance and aliases follow one explicit supported schema. Cross-check minAge/maxAge order, scope/point requirements and existing location validation. Ignore client-supplied numeric derivations as today.
-- No automatic rescaling/clamping. A server-invalid response is `invalid_analysis` (retry available), not `not_consistent` about the user's issue. Missing calibration is `unsupported_type`; library inconsistency is a configuration error.
-- Resources remain option guidance; no weight for money/property/resources. No change to canonical D/G/S/X, E, C or ISR computation.
-
-The offline calibration artifact must enumerate every numerical field covered and all categorical allowed values. Bounds cannot be declared operational until that artifact and protocol conflicts are approved.
-
-### 4.3 Context outcomes and user flow
-
-| Outcome | UI and publication behavior |
-|---|---|
-| pass | Show type, derived parameters, decision/proposal addressee where applicable, rules/examples and cautions; enable Create only for the validated fresh draft and existing duplicate rules. |
-| needs_clarification | Preserve title/body/pin, ask up to three concrete questions about missing group/place/decision context; expose one text answer and Check again; no publishable draft or invented score preview. |
-| not_consistent | Cite the rule/anchor conflict and explain what reformulation is needed; no Create. Used only for context with no consistent supported type, not a provider or validator failure. |
-| unavailable / invalid_analysis / unsupported_type | Preserve inputs, show a specific reason and manual retry/reformulation route; no Create or silently substituted weights. |
-
-A stated ownership/local-rule claim without a source gets a visible caution. Unknown facts necessary to distinguish decision from proposal get a question. Stated authority-reserved decisions become proposals to the named addressee only through a calibrated matching proposal type; do not fabricate a 2000m radius from the protocol's illustrative example. No external legal research or automatic URL fetching. Attached sources are user assertions/references, never instructions to the model or server.
-
-Sources/context are plain bounded text/links in this package; document upload/OCR is separate. Display text escaped. A consistent alternative may be proposed, but picking its ID is a request to recheck context, never a numeric override. Do not add a redundant Continue button: existing Check and Create remain the actions.
-
-### 4.4 Drafts, Create and compatibility
-
-Every publishable draft binds exact title, description, clarification/context/source inputs, effective point, submitter, validated parameters, type/library/validator/prompt versions and input hash. Changes invalidate checked status immediately. A failed Check clears the browser's previous usable draft. Responses arriving after text/pin/context edits cannot revive Create.
-
-Create rechecks the stored validation receipt/version, canonical parameter constraints and bound inputs, then applies existing U10 duplicate/title/transaction rules. No provider call at Create. Drafts predating the guardrail receipt require a new Check; existing created issues are unchanged. Preserve idempotent creation_result replay for already-created drafts without rebuilding a public or requesting another model call; explicitly test its ordering with new receipt checks.
-
-Do not move runtime validation into browser-only code. Preserve U6 pin/reference handling, A5 guard, duplicate/Open/Join and the single Create action. This task does not make session-stored identity secure; D2 handles that boundary.
-
-### 4.5 Audit and reproducibility
-
-Extend the existing analyzer_logs/draft path, rather than creating a competing analyzer_runs collection. Store stage/outcome, input hash, rules applied, selected/alternative type IDs, candidate/anchor IDs, computed ranges, exact library/validator/model/prompt versions, raw versus effective parameters, validation errors, cautions and per-stage usage. No keys, profiles or retrieved page bodies.
-
-A pass requires durable server validation provenance. If the required log/receipt cannot be stored, do not issue a publishable draft; show a retryable service error. Log failure must not be mislabeled as missing user context. Define atomic receipt/draft linkage during implementation and retain existing approved issue-text logging policy. This changes current best-effort logging and must be covered by failure tests.
-
-Fixed recorded responses verify deterministic validation, not fresh-model reproducibility. A separately budgeted test/retest evaluation must report outcome/type/anchor/range stability, parameter differences, question quality, tokens and provider attempts; temperature zero is not a guarantee of identical model output.
-
-## 5. Execution and acceptance gates
-
-1. Author approves or amends D1-D5. Offline audit/spec phase has zero provider calls and zero database writes.
-2. Produce full reviewed mapping/bounds/coverage artifact, explain all protocol/example conflicts, ensure every D1 case has supported context and proposal/decision handling. Author approves this artifact and a short implementation plan before code.
-3. Implement pure schema/type/range/context validators and staged analyzer integration on a new feature branch; mock provider outputs in tests. Extend server drafts/Create and current UI/logging. Preserve frontend CRLF/final CR.
-4. Required Node/Python suites and focused failure/integration checks pass. Use an isolated emulator/copy; verify its host before writes; keep accepted live/emulator demo state intact.
-5. Present emulator behavior to author using full links and numbered instructions. Fresh paid calls require a concrete budget/ceiling approval; existing D1 allowance is not reused. Open implementation PR after evidence/status/CHANGES; separate explicit merge. Author deploys, agent verifies live read-only, author performs agreed live smoke checks.
-
-Acceptance must cover:
-
-- Each approved type/anchor/bound reproducible from versioned data; one/fewer-than-five anchors, unknown type, taxonomy conflict, empty intersection and wrong embedding metadata refuse safely.
-- Valid response passes unchanged; missing/wrong/nonfinite/out-of-bounds fields and invalid sums fail before draft/public creation; near-boundary tolerance and zero-relevance/positive-aggregation cases covered.
-- Missing facts, contradictory context, authority proposal, unsourced caution and unsupported coverage produce distinct outcomes; no model merits judgment or invented legal rule.
-- Failed Check followed by Create, old draft, altered clarification/source/pin, stale async response, forged pass/client weights and log-storage failure cannot publish; successful Create retry remains idempotent.
-- A4 missing embedding, A5 residential locality, U6 point handling, U10 title/duplicate/Open/Join and canonical stored values continue to pass. No historical rescore/reseed.
-- Approved representative D1 cases plus vague, adversarial and inconsistent examples are evaluated with recorded fixtures; no provider calls in CI. Runtime validation tolerances do not replace D1's separate score-check tolerance.
+[Documentation validation](M3-documentation-validation.json): 10,000 formula cases, seven chain boundaries, directed one-step social fixture, 12 corrected Expertise examples, 100 unchanged parsed reference cases and no broken relative links. Required suites: Node129 passed/four optional skips; Python127 run/two optional skips. These checks establish arithmetic/document consistency, not model quality or live mr1 acceptance.
 
 ## 6. Status log
 
-- 2026-11-15: audited main 3c25ef7 after merged D1 acceptance #35. Drafted proposed Step 4A contract and identified the same-type calibration gap, three taxonomy discrepancies and publishable fallback/logging policy changes. Documentation/aggregate offline evidence only; zero provider calls/tokens, zero database writes, no deployment/rules changes. Waiting for D1-D5 policy decisions; no guardrail implementation claimed.
+- 2026-11-16: author authorized all reviewed documentation changes. Replaced fixed-five proposal with PD-9 and affected-person X, corrected expertise math/examples and current-vs-intended labels. No app implementation or live/provider operations.
+- 2026-11-15: original baseline audit at3c25ef7 and proposed fixed-five/type-table policy; superseded in this revision. The committed library audit remains valid historical evidence.

@@ -1,5 +1,7 @@
 # ISR Relevance Engine: MVP Implementation Specification v1.0
 
+**2026-11-16 intended-model revision:** [PD-9 multi-reference derivation](../specs/decisions/PD-9-multi-reference-derivation.md) governs reference selection, notation and member-score combination. Runtime at3c25ef7 still uses the earlier single-vector model. Sections explicitly marked historical are not implementation instructions for mr1.
+
 ## Overview
 
 The ISR Relevance Engine calculates which users are meaningfully affected by each civic issue using four independent dimensions:
@@ -11,41 +13,27 @@ The ISR Relevance Engine calculates which users are meaningfully affected by eac
 | **Semantic (S)** | In-memory cosine similarity (768-dim) | 0.0-1.0 |
 | **Social (X)** | Social graph step function | 0.0-1.0 |
 
-**Final Score [0.0-1.0]**: $\text{Relevance}_i = w_D \cdot D_i + w_G \cdot G_i + w_S \cdot S_i + w_X \cdot X_i$
+**Final score [0,1]:** use the PD-9 paired sum across references. A four-component display uses effective components and weights W_d, so its displayed products reconstruct exactly the same total.
 
 The ad-hoc public is formed from the issue's parameters, and the parameters follow from the issue type and the context. Nobody types a number. After publication the public can change the text, the options, the issue type and the context until voting opens (Part 10), and the parameters are derived again. Relevance is absolute, so adding a member does not change anyone else's relevance score.
 
 ---
 
-## Relevance Processing Pipeline (At Scale)
+## Relevance processing order for mr1
 
-To scale the Relevance Engine to dozens of millions of users without performing expensive vector similarity or social graph calculations on the entire database, the evaluation must follow a strict, sequential pipeline running in Firebase Cloud Functions:
+1. Freeze actual context, compatible reference chain, alpha, aspect vectors/rules and one geographical center/max-mu/max-sigma curve.
+2. Retrieve candidates across D/G/S channels and determine directly affected people per reference without X. The direct-affectedness predicate must be explicit and reviewed; final public membership is not its definition.
+3. Expand one social step using affected people's recorded outgoing links. Do not prefilter these candidates to residents or people already scoring above the formation threshold.
+4. Compute paired D/G/S/X contributions, with the upper bound sum_j alpha_j*(w_Dj*D_ij+w_Gj*G_i+w_Sj*1+w_Xj*X_ij) when S remains unknown. Prune only with a proven bound that preserves all channels. Current top300 approximations/cutoff bypasses require a full-population comparison before adoption.
+5. Form the public under the separately versioned threshold/cap/creator/Join policy; compute combined Expertise and one-public normalized ISR. E and ISR aggregation weights do not determine automatic membership.
 
-1. **Phase 1: Demographic Filtering (D)**
-   * **Action**: Apply local logical filtering on demographic criteria (e.g., age, employment, family status) from user metadata stored in Firestore.
-   * **Outcome**: Excludes unqualified users immediately. For a large population $N$, this reduces the candidate pool to a subset $N_{demo}$ (typically 1-5% of the total).
-
-2. **Phase 2: Geospatial Filtering (G)**
-   * **Action**: Calculate geographic Haversine distances from the issue epicenter *only* for the survivors of Phase 1. Apply a hard distance threshold (e.g., $d \le \mu + 3\sigma$, beyond which $G(d) \approx 0.01$).
-   * **Outcome**: Filters the pool down to $N_{geo}$ candidates who are geographically affected (typically hundreds to a few thousand).
-
-3. **Phase 3: Mathematical Pruning & Semantic Similarity (S)**
-   * **Action**: For the candidates surviving Phase 2, calculate an upper-bound max score assuming a perfect semantic similarity ($S = 1.0$). If the upper bound `w_D * D + w_G * G + w_S * 1.0 + w_X * X` is less than or equal to the relevance threshold (0.15), prune the candidate immediately. For the remaining top candidates (up to 300), fetch their 768-dimensional interest vectors from the `user_vectors` collection in Firestore and calculate the actual cosine similarity against the issue vector.
-   * **Outcome**: Minimizes database reads and avoids downloading millions of high-dimensional vectors, performing semantic calculations only for the top candidates.
-
-4. **Phase 4: Social Connections (X)**
-   * **Action**: Resolve direct social network relations to the issue submitter *only* for the candidates who have high scores in the previous steps.
-   * **Outcome**: Applies social proximity adjustments (spouse/family/friend) to finalize the relevance score.
-
-This sequential pipeline and mathematical pruning ensure maximum processing efficiency, reduce database reads/computational cost, and make the system viable for NoSQL scaling.
-
----
+The earlier demographic-first, geography-first, creator-network pipeline is superseded in the intended model. Runtime integration is pending; no scaling percentages or coverage guarantees are established by this document.
 
 ## Part 1: Relevance Taxonomy & Issue Classification
 
 ### 1.1 Relevance Definition
 
-Relevance is a **continuous probability score (0.0-1.0)** measuring how much an issue and its solution will **directly affect a specific person**.
+Relevance is a **continuous affectedness score (0.0-1.0)** measuring how much an issue and its solution will **directly affect a specific person**.
 
 **What Relevance answers**: "Will this problem/solution impact ME directly?"
 
@@ -113,8 +101,8 @@ Where:
 - **σ** = Decay steepness parameter (meters)
 
 **Parameters** (set per issue):
-- **μ (mu)**: Derived from the issue type and context, inside the typical range of the type
-- **σ (sigma)**: Derived from the issue type and context, inside the typical range of the type
+- **μ (mu)**: Maximum across compatible selected references, using the actual issue center (PD-9)
+- **σ (sigma)**: Maximum across compatible selected references, using the actual issue center (PD-9)
 
 **Interpretation**:
 - d ≤ μ: Fully affected (G = 1.0)
@@ -159,67 +147,13 @@ Where:
 
 #### **Dimension 4: Social Graph Relevance (X)**
 
-**Question**: "Are people I care about directly affected by this issue?"
+### Affected-person social relevance
 
-**Processing**: For each candidate user i, take i's own social relations (depth-1, no traversal) and how directly each relative j is affected, $R^0_j$ (the Relevance of j from D, G and S alone). The tie weight $t_{ij}$ is a step function of the connection type and an optional tie strength.
+For reference j, determine directly affected people A_j from actual context and D/G/S evidence without X. Read each affected person k's recorded outgoing socialRelations toward evaluated person i. X_ij=max({t_ki:k in A_j,k!=i} union {0}); use the explicit finite [0,1] tie, else the documented family mapping. No creator privilege, inferred reciprocity, self-links, summation or friends-of-friends expansion. The direct-affectedness predicate and data coverage must be specified before implementation; do not substitute final public membership or add an arbitrary threshold.
 
-**Function**:
-$$t_{ij} = \begin{cases}
-\text{tie} & \text{if } \text{tie attribute exists (not null)} \\
-0.3 & \text{if } \text{connection\_type} \in \{\text{spouse, partner}\} \\
-0.2 & \text{if } \text{connection\_type} \in \{\text{parent, child, sibling}\} \\
-0.1 & \text{if } \text{connection\_type} \in \{\text{grandparent, grandchild, close friend}\} \\
-0.0 & \text{otherwise (excluded)}
-\end{cases}$$
+Example: affected resident k records spouse i with no explicit tie, giving X_ij=.3. Another affected person records i with tie=.6, giving combined X_ij=.6. An outgoing relation recorded only by i does not establish either link. A person recruited through X does not seed another social step.
 
-$$R^0_j = \frac{w_D D_j + w_G G_j + w_S S_j}{w_D + w_G + w_S}, \qquad X_i = \max_j \; t_{ij} \cdot R^0_j$$
-
-The maximum (not the sum) keeps a large family from inflating Relevance. $R^0_j$ does not use X, so there is no circularity. A user with no relation to an affected person has $X_i = 0$.
-
-**Data Structure** (from user profile):
-```json
-{
-  "socialRelations": [
-    {
-      "id": 1,
-      "type": "father",           // Connection type
-      "tie": null,                // Custom relevance (optional)
-      "relative": 2785            // Related user ID
-    },
-    {
-      "id": 4,
-      "type": "close friend",
-      "tie": 0.6,                 // Custom override: 0.6
-      "relative": 1515
-    }
-  ]
-}
-```
-
-**Processing Rules**:
-1. Compute D, G and S, and from them $R^0$, for the candidate users
-2. For each user, read the user's own social relations (depth-1, no traversal)
-3. For each relation to a relative j:
-   - If `tie` field exists and not null → $t_{ij}$ = `tie` value
-   - Else if `type` matches predefined categories → $t_{ij}$ = category score
-   - Else → exclude entirely
-4. $X_i = \max_j \; t_{ij} \cdot R^0_j$ ($X_i = 0$ when no relative has $R^0_j > 0$)
-5. If a relative needs additional data (age, location), fetch from the relative's profile
-
-**Included Connection Types**:
-- **0.3**: spouse, partner, wife, husband
-- **0.2**: parent, father, mother, child, son, daughter, sibling, sister, brother
-- **0.1**: grandparent, grandfather, grandmother, grandchild, grandson, granddaughter, close friend
-- **0.0 (excluded)**: all others (e.g., niece, cousin, aunt, uncle, colleague, acquaintance)
-
-**Example (Broken lock at the entrance of a building)**:
-- Directly affected: the residents B (user 2785, the father of user 100) and C (user 1515, a close friend of user 100), with $R^0$ = 0.9 and 0.8
-- User 100 lives in another city (D, G and S near 0) and has the relations of the data structure above
-- Father (type=parent, tie=null): 0.2 × 0.9 = 0.18
-- Close friend (type=close friend, tie=0.6): 0.6 × 0.8 = 0.48
-- $X_{100}$ = max(0.18, 0.48) = 0.48; a user with no relation to an affected person has X = 0.0
-
----
+See PD-9 for paired relevance weights, one-step processing and how references with different affected sets combine. The previous candidate-outgoing tie-times-R0 sketch and deployed creator-based shortcut are superseded in the intended model.
 
 ### 1.3 Issue Analysis & Weight Assignment
 
@@ -232,7 +166,7 @@ The maximum (not the sum) keeps a large family from inflating Relevance. $R^0_j$
 
 > [!IMPORTANT]
 > **No fallback weights.** If the description and the context are too vague to choose an issue type, the result is `needs_clarification` (Analyzer protocol, Step 4A); if no consistent type is found, it is `not_consistent`.
-> For every published issue the weights are derived from the chosen type and the context, and stay inside the typical range of that type.
+> For every published issue the weights are derived from the chosen type and the context, and follow PD-9.
 
 **Weight Assignment Examples** (For reference, detailed in benchmark files):
 
@@ -250,79 +184,11 @@ The Analyzer derives the parameters from a published table of typical issues, fo
 
 ## Part 2: Demographic Relevance Calculation
 
-### 2.1 JSON-Based Binary Filtering
+### 2.1 Per-reference affectedness
 
-Demographic relevance is calculated in Firebase Cloud Functions by evaluating logical JSON-based conditions against the user profile.
+Evaluate D_ij for each person's actual-context rules under reference j. Do not average categorical ages/statuses/features/places or pre-exclude a person because one rule returns0. PD-9 combines paired demographic contributions with other channels. A3 named place/property behavior and A5 residential guard remain baseline constraints to revalidate per reference; the exact soft-D rule and candidate retrieval must be specified before runtime implementation.
 
-**Purpose**: First-stage filter to exclude clearly unaffected users before expensive geospatial/semantic calculations.
-
-**Process**:
-
-1. **AI analyzes issue** during submission and generates demographic criteria rules (e.g., employmentStatus, familyStatus, minAge, maxAge).
-2. **Apply criteria rules** to user documents fetched from Firestore `user_packs` (metadata packs) to filter users into discrete relevance tiers.
-3. **Return D_score**: Discrete value (0.0, 0.2, 0.5, 1.0) based on target criteria matching. If a user receives a `0.0` demographic score and `w_D > 0`, they are excluded from the candidate pool immediately.
-
-### 2.2 Implementation Pattern
-
-**Example: Demographic Evaluation in Cloud Function JavaScript**
-
-```javascript
-function evaluateDemographics(user, criteria) {
-  if (!criteria) return 1.0;
-
-  // 1. Age check
-  if (user.birthDate) {
-    const birthYear = parseInt(user.birthDate.split("-")[0]);
-    if (!isNaN(birthYear)) {
-      const age = new Date().getFullYear() - birthYear;
-      if (criteria.minAge !== undefined && age < criteria.minAge) return 0.0;
-      if (criteria.maxAge !== undefined && age > criteria.maxAge) return 0.0;
-    }
-  }
-
-  // 2. Employment check
-  if (criteria.employmentStatus && criteria.employmentStatus !== "any") {
-    const isEmployed = Array.isArray(user.post) && user.post.length > 0;
-    if (criteria.employmentStatus === "employed" && !isEmployed) return 0.0;
-    if (criteria.employmentStatus === "unemployed" && isEmployed) return 0.0;
-  }
-
-  // 3. Family status check
-  if (criteria.familyStatus && criteria.familyStatus !== "any") {
-    const relations = user.socialRelations || [];
-    const hasChildren = relations.some((r) =>
-      ["child", "son", "daughter"].includes(r.type ? r.type.toLowerCase() : "")
-    );
-    const hasGrandchildren = relations.some((r) =>
-      ["grandchild", "grandson", "granddaughter"].includes(r.type ? r.type.toLowerCase() : "")
-    );
-
-    if (criteria.familyStatus === "parent" && !hasChildren) return 0.0;
-    if (criteria.familyStatus === "grandparent" && !hasGrandchildren) return 0.0;
-  }
-
-  return 1.0;
-}
-```
-
-### 2.3 Demographic Conditions by Issue Type
-
-**The AI generates criteria based on issue category. Examples:**
-
-| Issue Category | D_score = 1.0 | D_score = 0.5 | D_score = 0.0 (Excluded if w_D > 0) |
-|---|---|---|---|
-| **Childcare** | Has children aged 0-12 | Grandparent | No children |
-| **Workplace** | Employed | Student/Freelancer | Retired/Unemployed |
-| **School** | Has children in school | Works in school | No school connection |
-| **Parking** | Has car | Uses public transit | No vehicle |
-| **Healthcare** | Has chronic condition OR age 65+ | Age 50-64 | Healthy & young |
-| **Housing** | Rents/owns in area | Works in area | Doesn't live/work there |
-| **Public space** | Lives nearby | Works nearby | Neither |
-| **Retirement** | Age 55+ | Age 45-54 | Under 45 |
-| **Pet services** | Has pets | Friends with pets | No pets |
-| **Disability access** | Has mobility limitation | Cares for disabled | No limitation |
-
----
+The older binary early-exclusion sketches are superseded by PD-1/PD-9. This document does not claim that current code has removed its gates.
 
 ## Part 3: Geospatial Relevance Calculation
 
@@ -350,7 +216,7 @@ e^{-\frac{(d - \mu)^2}{2\sigma^2}} & \text{if } d > \mu
 | District / Social Club Event (e.g. Chess club) | 500-2000 | 200-4000 |
 | City-wide (transit, budget) | 2000-10000 | 500-2000 |
 
-**Nobody types μ or σ.** If the derived values look wrong, the topic starter clarifies the context (for example, "it is very popular and draws people from the whole neighbourhood") and the assistant derives them again, always inside the typical range of the type. The table can contain as many types as needed; new types are added by protocol-level decisions.
+**Nobody types μ or σ.** If the derived values look wrong, the topic starter clarifies the context (for example, "it is very popular and draws people from the whole neighbourhood") and the assistant derives them again, using the PD-9 compatible-reference maximum rule. The table can contain as many types as needed; new types are added by protocol-level decisions.
 
 ### 3.3 JavaScript Implementation (Haversine & Gaussian Decay)
 
@@ -391,148 +257,33 @@ function evaluateGeographics(user, issueLocation, muVal, sigmaVal) {
 
 ## Part 4: Semantic Relevance Calculation
 
-### 4.1 Cosine Similarity
+### 4.1 Per-aspect semantic relevance
 
-**Formula**:
-$$S_i = \max(0, \cos(u_i, V_q))$$
-
-### 4.2 Vector Sources
-
-**User Interest Vector**:
-- Concatenate: tags + values + professional field + activity history
-- Vectorize during profile creation/update
-- Store in: `user_vectors` Firestore collection, document ID = user UID, field `profile_vector` (768-dim array)
-
-**Issue Vector**:
-- Vectorize issue description using Google AI Studio
-- Store in: `issues` collection, document ID = issue ID, field `issue_vector` (768-dim array)
-- Created during issue submission
-
-### 4.3 JavaScript Implementation (In-Memory Cosine Similarity)
-
-```javascript
-function cosineSimilarity(vecA, vecB) {
-  if (!vecA || !vecB || vecA.length !== vecB.length) return 0.0;
-  let dotProduct = 0.0;
-  let normA = 0.0;
-  let normB = 0.0;
-  for (let i = 0; i < vecA.length; i++) {
-    dotProduct += vecA[i] * vecB[i];
-    normA += vecA[i] * vecA[i];
-    normB += vecB[i] * vecB[i];
-  }
-  if (normA === 0 || normB === 0) return 0.0;
-  return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
-}
-
-// Calculate Semantic score (S)
-let sScore = 0.0;
-if (w_S > 0) {
-  sScore = Math.max(0.0, cosineSimilarity(issueVector, userVector));
-}
-```
-
----
+S_ij=max(0,cos(p_i,u_j)), where p_i is the existing person profile vector and u_j represents an evidenced aspect of the actual submitted issue associated with reference j. Reference retrieval score s_j is a different quantity. Never replace u_j with a reference example's topic vector. PD-9 defines the effective S display and paired semantic contribution; vectors/templates/coverage must be versioned and consistent with skill embeddings.
 
 ## Part 5: Social Graph Relevance Calculation
 
-### 5.1 Connection Type Mapping
+### Affected-person social relevance
 
-**Explicit Tie Attribute** (if specified in profile):
-- Use tie value directly
-- Range: 0.0-1.0
+For reference j, determine directly affected people A_j from actual context and D/G/S evidence without X. Read each affected person k's recorded outgoing socialRelations toward evaluated person i. X_ij=max({t_ki:k in A_j,k!=i} union {0}); use the explicit finite [0,1] tie, else the documented family mapping. No creator privilege, inferred reciprocity, self-links, summation or friends-of-friends expansion. The direct-affectedness predicate and data coverage must be specified before implementation; do not substitute final public membership or add an arbitrary threshold.
 
-**Predefined Type Mapping** (if tie is null):
-- **spouse/partner** → 0.3
-- **parent/father/mother** → 0.2
-- **child/son/daughter** → 0.2
-- **sibling/sister/brother** → 0.2
-- **grandparent/grandfather/grandmother** → 0.1
-- **grandchild/grandson/granddaughter** → 0.1
-- **close friend** → 0.1
-- **All others** → 0.0 (excluded)
+Example: affected resident k records spouse i with no explicit tie, giving X_ij=.3. Another affected person records i with tie=.6, giving combined X_ij=.6. An outgoing relation recorded only by i does not establish either link. A person recruited through X does not seed another social step.
 
-### 5.2 Processing Rules
-
-1. **Compute D, G and S, and $R^0$**, for the candidate users
-2. **Read the user's own social relations** from the user profile (`socialRelations` field)
-3. **For each relation** to a relative j:
-   - If `tie` attribute exists and not null → $t_{ij}$ = that
-   - Else if `type` in mapping → $t_{ij}$ = mapped value
-   - Else → exclude (0.0)
-4. **X = max over relatives of $t_{ij} \cdot R^0_j$**; no relation to an affected person gives X = 0.0
-5. **If relative profile data needed** (e.g., age for eligibility):
-   - Fetch from relative's user profile record
-   - Apply filter conditions if necessary
-
-### 5.3 Example: Building Maintenance Issue
-
-**Issue**: broken lock at the entrance of an apartment building. Directly affected residents: user 2785 ($R^0$ = 0.9) and user 3685 ($R^0$ = 0.9), who live in the building; user 1515 ($R^0$ = 0.8) also lives there.
-
-**User 100** lives in another city (D, G and S near 0). **Their social relations**:
-```json
-{
-  "socialRelations": [
-    {"id": 1, "type": "father", "tie": null, "relative": 2785},
-    {"id": 2, "type": "husband", "relative": 3685},
-    {"id": 3, "type": "daughter", "tie": 0.8, "relative": 7761},
-    {"id": 4, "type": "friend", "tie": 0.6, "relative": 1515},
-    {"id": 5, "type": "niece", "tie": null, "relative": 4200}
-  ]
-}
-```
-
-**Results** ($t_{ij} \cdot R^0_j$):
-- Father (type=parent, tie=null): 0.2 × 0.9 = 0.18
-- Husband (type=spouse, tie=null): 0.3 × 0.9 = 0.27
-- Daughter (type=child, tie=0.8; she lives elsewhere, $R^0$ = 0.05): 0.8 × 0.05 = 0.04
-- Friend (type=friend, tie=0.6): 0.6 × 0.8 = 0.48
-- Niece (type=niece, tie=null): excluded (not in type map)
-- $X_{100}$ = max = 0.48
-
-### 5.4 JavaScript Implementation
-
-```javascript
-// R0 = Map of the direct relevance (D, G, S only) of the candidate users, computed first
-let xScore = 0.0;
-for (const r of user.socialRelations || []) {
-  let tie = 0.0;
-  if (r.tie !== undefined && r.tie !== null) {
-    tie = parseFloat(r.tie) || 0.0;
-  } else {
-    const type = r.type ? r.type.toLowerCase() : "";
-    if (["spouse", "partner", "wife", "husband"].includes(type)) tie = 0.3;
-    else if (["parent", "father", "mother", "child", "son", "daughter", "sibling", "sister", "brother"].includes(type)) tie = 0.2;
-    else if (["grandparent", "grandfather", "grandmother", "grandchild", "grandson", "granddaughter", "close friend"].includes(type)) tie = 0.1;
-  }
-  const r0 = R0.get(r.relative) || 0.0;      // a relative outside the candidate pool counts as 0
-  xScore = Math.max(xScore, tie * r0);
-}
-```
-
----
+See PD-9 for paired relevance weights, one-step processing and how references with different affected sets combine. The previous candidate-outgoing tie-times-R0 sketch and deployed creator-based shortcut are superseded in the intended model.
 
 ## Part 6: Combined Relevance Score
 
-### 6.1 Weighted Sum
+### 6.1 Paired multi-reference Relevance
 
-$$\text{Relevance}_i = w_D \cdot D_i + w_G \cdot G_i + w_S \cdot S_i + w_X \cdot X_i$$
+R_i=sum_j alpha_j*(w_Dj*D_ij+w_Gj*G_i+w_Sj*S_ij+w_Xj*X_ij). PD-9 defines W_d and effective component scores so a four-component display reconstructs this exact value. Multiplying separately averaged weights and scores is a different model. All validated inputs lie in[0,1], weight groups sum to1, hence R lies in[0,1].
 
-**Constraints**:
-- $w_D + w_G + w_S + w_X = 1.0$ (normalized)
-- Each weight ∈ [0.0, 1.0]
-- All D, G, S, X scores ∈ [0.0, 1.0]
-- **Result**: Relevance ∈ [0.0, 1.0] (absolute probability)
+### 6.2 Interpretation
 
-### 6.2 Absolute Probability Interpretation
-
-- **0.9-1.0**: Critical relevance (directly affected)
-- **0.6-0.9**: High relevance (noticeably affected)
-- **0.3-0.6**: Moderate relevance (somewhat affected)
-- **0.1-0.3**: Low relevance (peripherally affected)
-- **0.0-0.1**: Minimal relevance (affected but very indirectly)
+R and reference similarities are scores, not calibrated probabilities. R determines automatic membership using the separately versioned formation policy, while E and ISR aggregation weights do not determine inclusion.
 
 ### 6.3 Ad-hoc Public Formation & Scaling Pruning
+
+**Legacy single-vector sketch:** pending mr1 integration; PD-9 governs changed formulas, candidate safety and aspect/reference storage. Any early demographic/geographical gate here must not erase direct or social channels.
 
 To form the **ad-hoc public** (all users with Relevance > 0.15 threshold), we perform in-memory evaluation with mathematical pruning inside Firebase Cloud Functions to scale efficiently without scanning the entire vector database:
 
@@ -572,6 +323,8 @@ The same procedure (Phases 1 to 5) is run again after a change of text, options,
 ---
 
 ## Part 7: Database Schema (Firebase Firestore NoSQL)
+
+**Legacy single-vector sketch:** pending mr1 integration; PD-9 governs changed formulas, candidate safety and aspect/reference storage. Any early demographic/geographical gate here must not erase direct or social channels.
 
 
 ### 7.1 issues Collection
@@ -749,6 +502,8 @@ Every request is logged and can be analysed (for example, to see where the compu
 
 ## Part 8: Vectorization Protocols
 
+**Legacy single-vector sketch:** pending mr1 integration; PD-9 governs changed formulas, candidate safety and aspect/reference storage. Any early demographic/geographical gate here must not erase direct or social channels.
+
 ### 8.1 User Profile Vectorization
 
 **When user profile created/updated:**
@@ -781,6 +536,8 @@ const vector = embedResult.embedding.values; // 768-dimensional array
 ---
 
 ## Part 9: Issue Submission Workflow
+
+**Legacy single-vector sketch:** pending mr1 integration; PD-9 governs changed formulas, candidate safety and aspect/reference storage. Any early demographic/geographical gate here must not erase direct or social channels.
 
 ```
 User submits issue (title + description + location + context)

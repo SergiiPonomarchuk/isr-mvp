@@ -1,5 +1,7 @@
 # ISR Expertise Assessment: Complete Implementation Specification v1.0
 
+**2026-11-16 intended-model revision:** [PD-9 multi-reference derivation](../specs/decisions/PD-9-multi-reference-derivation.md) governs reference selection, notation and member-score combination. Runtime at3c25ef7 still uses the earlier single-vector model. Sections explicitly marked historical are not implementation instructions for mr1.
+
 ## Overview
 
 Expertise measures **ability to influence the outcome** of an issue through domain knowledge and proven experience. Unlike Relevance (which is issue-specific and normalized [0.0-1.0]), Expertise is **absolute and unbounded [0.0+]**, reflecting that some specialists' opinions are significantly more valuable than baseline competence.
@@ -27,33 +29,33 @@ Expertise measures **ability to influence the outcome** of an issue through doma
 
 ## Part 2: Expertise Scoring Formula
 
-### 2.1 Core Formula
+### 2.1 Single-reference reduction (mr1 with one aspect)
 
-$$E_{i,q} = E_{i,q,\text{education}} + E_{i,q,\text{experience}}$$
+$$E_i = E_{i,\text{education}} + E_{i,\text{experience}}$$
 
 Where:
-- **$E_{i,q}$** = Total Expertise of user i regarding issue q
-- **$E_{i,q,education}$** = User i education expertise regarding issue q
-- **$E_{i,q,experience}$** = User i experience expertise regarding issue q
+- **$E_i$** = Total Expertise of user i for the actual issue
+- **$E_{i,education}$** = User i floor-adjusted education expertise
+- **$E_{i,experience}$** = User i work-experience expertise
 
-The two components are added **without weights**. The context of the issue acts through the similarity of each record to the issue ($\vec{V}_q$) and through the domain parameters (CBC adjustment factor, recency decay).
+The two components are added **without weights**. The context of the issue acts through the similarity of each record to the issue ($u_1$) and through the CBC adjustment factor. Recency decay remains a documented extension, not implemented current behavior. Multi-reference evidence combines before one age floor under PD-9.
 
 ---
 
-### 2.2 Education Expertise
+### 2.2 Single-reference education expertise
 
-$$E_{i,q,\text{education}} = \max\left( \frac{\min(age_i, 30)}{30},\ \sum_{\text{education}} \cos(\vec{v}_{i,\text{education}}, \vec{V}_q) ^ {\text{CBC}} \times P_{i,\text{education}}\right)$$
+$$E_{i,\text{education}} = \max\left( \frac{\min(age_i, 30)}{30},\ \sum_{\text{education}} [\max(0,\cos(\vec{v}_{i,\text{education}}, u_1))] ^ {\text{CBC}\,a} \times P_{i,\text{education}}\right)$$
 
 Where:
 - **$v_{i,education}$** = Vectorized education records (semantic embedding)
-- **$V_q$** = Issue q vector representation
+- **$u_1$** = Actual-issue aspect vector u_1 for this single-reference reduction
 - **$CBC$** = Credential Broadcast Coefficient
 - **$P_{i,education}$** = Education Power scalar (education time in years)
 - **Cosine similarity with CBC exponent** = Semantic relevance of credential to issue, adjusted by broadcast capability [0.0-1.0]
 - **Power scalar** = Education time in years [0.5+]
 - **$\min(age_i, 30)/30$** = Common-knowledge floor: 1.0 from age 30 on, age/30 below 30. It never exceeds 1.0 and never falls with age. The age is taken at the moment the issue is registered and is not stored.
 
-**Credential Broadcast Coefficient Table**:
+**Intended credential table (mapping discrepancies below are unresolved):**
 
 | Education Type | CBC | Education Time |
 |---|---|---|
@@ -63,15 +65,17 @@ Where:
 | **Vocational** | 2.0 | 2 years |
 | **Course/Cert** | 3.0 | 0.5 years |
 
+**Current runtime mapping:** PhD(.5,10), Master(.8,6), Bachelor(1,4), College(1.5,3), Vocational/training(2,2), unknown(1,4). The intended certificate row is not implemented and runtime College is absent from the older table. Resolve explicitly before changing mappings. a is the positive per-issue/aspect CBC adjustment, multiplied into the exponent; cosine is clipped at0 before exponentiation. For mr1 use PD-9: blend raw education evidence, apply one age floor, then add blended work evidence.
+
 **CBC Interpretation (Broadcast Mechanism)**:
 - **CBC < 1.0 (PhD, Master's)**: Exponent < 1 → **amplifies cosine similarity** (broadcasts to distant domains)
-  - `cos(0.5)^0.5 = 0.707` (even weak relevance gets boosted)
-  - `cos(0.3)^0.5 = 0.548` (distant domains still register)
+  - `0.5^0.5 = 0.707` (even weak relevance gets boosted)
+  - `0.3^0.5 = 0.548` (distant domains still register)
 - **CBC = 1.0 (Bachelor's)**: Linear application of cosine (baseline behavior)
-  - `cos(0.5)^1.0 = 0.5` (neutral relevance)
+  - `0.5^1.0 = 0.5` (neutral relevance)
 - **CBC > 1.0 (Vocational, Cert)**: Exponent > 1 → **suppresses cosine similarity** (focused on primary domain)
-  - `cos(0.5)^2.0 = 0.25` (requires stronger relevance to register)
-  - `cos(0.8)^2.0 = 0.64` (strong relevance in primary domain)
+  - `0.5^2.0 = 0.25` (requires stronger relevance to register)
+  - `0.8^2.0 = 0.64` (strong relevance in primary domain)
 
 **Examples**:
 
@@ -79,16 +83,16 @@ Where:
 ```
 cos_similarity = 0.3 (distant domain)
 CBC = 0.5 (PhD amplifies)
-CBC_adjusted = cos(0.3)^0.5 = 0.548
+CBC_adjusted = 0.3^0.5 = 0.547723 (rounded)
 P_education = 10 years (PhD time)
-E_education = 0.548 × 10 = 5.48
+E_education = 10 × 0.3^0.5 = 5.477226 (full intermediate precision)
 ```
 
 **Vocational Locksmith addressing street parking issue**:
 ```
 cos_similarity = 0.2 (very distant domain)
 CBC = 2.0 (Vocational suppresses)
-CBC_adjusted = cos(0.2)^2.0 = 0.04
+CBC_adjusted = 0.2^2.0 = 0.04
 P_education = 2 years (vocational training)
 Σ education = 0.04 × 2 = 0.08
 E_education = max(1.0, 0.08) = 1.0 (member aged 30+: the floor applies)
@@ -98,28 +102,30 @@ E_education = max(1.0, 0.08) = 1.0 (member aged 30+: the floor applies)
 ```
 cos_similarity = 0.75 (related domain)
 CBC = 0.8 (Master's amplifies moderately)
-CBC_adjusted = cos(0.75)^0.8 = 0.766
+CBC_adjusted = 0.75^0.8 = 0.794418 (rounded)
 P_education = 6 years (Master's time)
-E_education = 0.766 × 6 = 4.60
+E_education = 6 × 0.75^0.8 = 4.766507 (unrounded intermediate)
 ```
 
 ---
 
-### 2.3 Experience Expertise
+### 2.3 Single-reference experience expertise
 
-$$E_{i,q,\text{experience}} = \sum_{\text{experience}} \cos(\vec{v}_{i,\text{experience}}, \vec{V}_q) \times P_{i,\text{experience}}$$
+$$E_{i,\text{experience}} = \sum_{\text{experience}} \max(0,\cos(\vec{v}_{i,\text{experience}}, u_1)) \times P_{i,\text{experience}}$$
 
 Where:
 - **v_{i,experience}** = Vectorized experience records (semantic embedding)
-- **V_q** = Issue q vector representation
+- **u_1** = Actual-issue aspect vector u_1 for this single-reference reduction
 - **P_{i,experience}** = Experience Power scalar (duration in years)
 - **Cosine similarity** = Semantic relevance of experience to issue [0.0-1.0]
 - **Power scalar** = Duration of active experience in years [0.0+]
 
-**Experience Time Calculation**:
+**Intended recency extension, not applied by current code:**
+
+Current work evidence uses stored work-experience duration; no decay is applied. The future effective-years formula must be nonnegative and use a fixed registration date, not current wall-clock time. The following historical sketch is not an operational mr1 rule:
 - For current positions: `years = current_year - start_year`
 - For past positions: Apply recency decay based on domain context
-  - Formula: `years_effective = years × (1 - decay_rate × years_since_end)`
+  - Formula: `years_effective = years × max(0, 1 - decay_rate × years_since_end)`
   - Decay rate determined contextually by LLM (0.01-0.08 per year)
 
 **Examples**:
@@ -163,8 +169,8 @@ When an issue is submitted, **LLM determines** contextual parameters:
 
 3. **CBC Adjustment Factor** [multiplier for Credential Broadcast Coefficient]:
    - 1.0 = Use base CBC values (default)
-   - 0.8 = Reduce CBC power (make domain more focused, less broadcasting)
-   - 1.2 = Increase CBC power (make domain more broad, more broadcasting)
+   - 0.8 = Lower the positive exponent (broader transfer to less-similar domains)
+   - 1.2 = Raise the positive exponent (narrower transfer to less-similar domains)
 
 ### 3.2 Example Domain Contexts
 
@@ -172,7 +178,7 @@ When an issue is submitted, **LLM determines** contextual parameters:
 ```
 Domain: locksmith.security
 Recency decay: 0.02/year (skills decay slowly)
-CBC adjustment: 0.9 (reduce broadcasting slightly)
+CBC adjustment: 0.9 (broaden transfer slightly)
 → Master Locksmith dominates; Engineer has lower relevance
 ```
 
@@ -180,7 +186,7 @@ CBC adjustment: 0.9 (reduce broadcasting slightly)
 ```
 Domain: social.event.cultural
 Recency decay: 0.03/year
-CBC adjustment: 1.1 (increase broadcasting for org skills)
+CBC adjustment: 1.1 (narrow transfer for organisational skills)
 → Dancer + Event organizer + Business person all relevant
 ```
 
@@ -195,6 +201,8 @@ CBC adjustment: 1.0 (neutral, balanced)
 ---
 
 ## Part 4: Database Schema & Vectorization
+
+**Historical design sketch, not current runtime evidence.** Current mapping/storage and mr1 overrides are in specs/04-expertise.md and PD-9. No automatic recency, re-embedding, migration or cost allowance is approved by these sketches.
 
 ### 4.1 user_expertise_profiles Collection
 
@@ -329,537 +337,67 @@ Each document in this collection tracks the calculated expertise components for 
 
 ---
 
-## Part 5: Expertise Calculation Pipeline
+## Part 5: Expertise calculation pipeline
 
-### 5.1 Pre-Computation: User Profile Vectorization
+Authoritative current code is functions/isr.js (Python arithmetic via scripts/isr_core.py), using users.skills and user_vectors.experience_vectors. Do not create competing user_expertise_profiles or microcommunity_expertise_scores collections from the historical schema above. Current members store education_expertise, experience_expertise and expertise_score; normalized_experience is normalized total E.
 
-**When user profile created/updated:**
+For mr1 follow PD-9: actual-issue aspect vectors u_j, per-reference CBC adjustment a_j, raw H_ij/T_ij, normalized alpha, blended H_i/T_i, then E_i=max(A_i,H_i)+T_i. Evaluate powers before blending. The common age floor applies once after education evidence combines. Do not average exponents, floor each reference first, introduce Education/Experience preferences, or normalize expertise separately for each reference. Normalize the combined score once over the final public.
 
-```javascript
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const admin = require("firebase-admin");
-const db = admin.firestore();
+Current code skips missing vectors, includes records typed education/work experience without a graduation-status filter, ignores activities and does not apply recency decay. Missing birthDate fallback and unknown-level mappings are known implementation discrepancies. They are not new policy choices approved by mr1.
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const embedModel = genAI.getGenerativeModel({ model: "text-embedding-004" });
+The actual-issue aspect texts/vectors, CBC adjustment, fixed registration time, library/reference weights and storage precision must be reproducible across Check/Create/Join/checker. Existing three-decimal storage-before-normalization must be preserved or explicitly versioned. Historical source-schema and performance/cost sketches are not current implementation evidence.
 
-async function embedText(text) {
-  const result = await embedModel.embedContent(text);
-  return result.embedding.values; // 768-dimensional float array
-}
+## Part 7: Corrected worked arithmetic
 
-async function vectorizeUserExpertiseProfile(userId) {
-  const userDoc = await db.collection("users").doc(userId).get();
-  if (!userDoc.exists) return;
-  const userData = userDoc.data();
-  
-  // 1. Vectorize education records
-  const educationVectors = [];
-  for (const edu of (userData.education_records || [])) {
-    const text = `${edu.degree_type} in ${edu.specialization} from ${edu.institution}`;
-    const vector = await embedText(text);
-    educationVectors.push(vector);
-  }
-  
-  // 2. Vectorize experience records
-  const experienceVectors = [];
-  for (const exp of (userData.experience_records || [])) {
-    const text = `${exp.years_active} years as ${exp.job_title} in ${exp.specialization}`;
-    const vector = await embedText(text);
-    experienceVectors.push(vector);
-  }
-  
-  // 3. Store in database
-  await db.collection("user_expertise_profiles").doc(userId).set({
-    uid: userId,
-    education_records: userData.education_records || [],
-    education_vectors: educationVectors,
-    experience_records: userData.experience_records || [],
-    experience_vectors: experienceVectors,
-    vectors_computed_at: admin.firestore.FieldValue.serverTimestamp()
-  });
-  
-  // 4. Trigger recalculation for active ad-hoc publics
-  await recalculateExpertiseForUserAllActiveIssues(userId);
-}
-```
+These are single-reference arithmetic examples with explicitly stated nominal power assumptions, not outputs from live synthetic profiles or evidence of calibrated embeddings. Ages35 are illustrative adult assumptions where the old example did not specify age; Lisa32 and coordinator24 retain their stated ages. No decay is used. Some historical powers (course P1, diploma P2, Master P2) differ from runtime level mappings: retain them only as explicit hypothetical inputs, not inferred runtime parameters. Every expression below uses full intermediate precision; displayed totals round to6 decimals.
 
-### 5.2 On-Demand: Expertise Calculation for Issue
+### Door lock repair — CBC adjustment a=0.9
 
-**When an ad-hoc public is formed for an issue:**
+| Person | Age | Education inputs (similarity, CBC, power) | Work inputs (similarity, years) | Raw H | Floor-adjusted education | Work T | Total E |
+|---|---:|---|---|---:|---:|---:|---:|
+| John | 35 | [(0.95, 2, 2)] | [(0.98, 30)] | 1.823612 | 1.823612 | 29.400000 | 31.223612 |
+| Sarah | 35 | [(0.4, 1, 4)] | [(0.35, 33)] | 1.753533 | 1.753533 | 11.550000 | 13.303533 |
+| Lisa | 32 | [(0.05, 1, 4)] | [(0.02, 8)] | 0.269857 | 1.000000 | 0.160000 | 1.160000 |
 
-```javascript
-function cosineSimilarity(a, b) {
-  let dotProduct = 0.0;
-  let normA = 0.0;
-  let normB = 0.0;
-  for (let i = 0; i < a.length; i++) {
-    dotProduct += a[i] * b[i];
-    normA += a[i] * a[i];
-    normB += b[i] * b[i];
-  }
-  return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
-}
+Sum of the illustrated members' raw Expertise: 45.687145. This total alone does not establish sufficient group expertise or automatically justify inviting an external expert.
 
-async function calculateExpertiseForIssue(issueId, microcommunityId) {
-  const issueDoc = await db.collection("issues").doc(issueId).get();
-  if (!issueDoc.exists) return;
-  const issueData = issueDoc.data();
-  const issueVector = issueData.issue_vector; // 768-dimensional array
-  
-  // LLM determines domain context (Google AI Studio call)
-  const domainContext = await analyzeIssueDomain(issueData);
-  
-  const membersSnap = await db.collection("microcommunity_members")
-    .where("microcommunity_id", "==", microcommunityId)
-    .get();
-    
-  for (const doc of membersSnap.docs) {
-    const member = doc.data();
-    const userId = member.user_id;
-    
-    const profileDoc = await db.collection("user_expertise_profiles").doc(String(userId)).get();
-    if (!profileDoc.exists) continue;
-    const profile = profileDoc.data();
-    
-    // COMPONENT 1: EDUCATION EXPERTISE
-    let educationExpertise = 0.0;
-    const eduRecords = profile.education_records || [];
-    const eduVectors = profile.education_vectors || [];
-    for (let i = 0; i < eduRecords.length; i++) {
-      const edu = eduRecords[i];
-      const eduVector = eduVectors[i];
-      const cosSim = cosineSimilarity(eduVector, issueVector);
-      const cbc = edu.cbc;
-      
-      let cosAdjusted = Math.pow(Math.max(0, cosSim), cbc);
-      cosAdjusted = Math.pow(cosAdjusted, domainContext.cbc_adjustment_factor);
-      
-      const timeYears = edu.years_of_study || 0.5;
-      educationExpertise += cosAdjusted * timeYears;
-    }
+### Salsa evening — CBC adjustment a=1.1
 
-    // Common-knowledge floor (Section 2.2): min(age, 30) / 30
-    const userDoc = await db.collection("users").doc(String(userId)).get();
-    const age = ageInYears(userDoc.data()?.birthDate, issueData.created_at);   // age at issue registration
-    const ageFloor = Math.min(age, 30) / 30;
-    educationExpertise = Math.max(ageFloor, educationExpertise);
-    
-    // COMPONENT 2: EXPERIENCE EXPERTISE
-    let experienceExpertise = 0.0;
-    const expRecords = profile.experience_records || [];
-    const expVectors = profile.experience_vectors || [];
-    for (let i = 0; i < expRecords.length; i++) {
-      const exp = expRecords[i];
-      const expVector = expVectors[i];
-      const cosSim = cosineSimilarity(expVector, issueVector);
-      
-      let yearsActive = exp.years_active || 0;
-      if (!exp.is_current) {
-        const currentYear = new Date().getFullYear();
-        const yearsSinceEnd = currentYear - (exp.end_year || currentYear);
-        const decay = domainContext.recency_decay_rate * yearsSinceEnd;
-        yearsActive = Math.max(0, yearsActive * (1 - decay));
-      }
-      experienceExpertise += Math.max(0, cosSim) * yearsActive;
-    }
-    
-    // TOTAL EXPERTISE SCORE
-    const totalExpertise = educationExpertise + experienceExpertise;
-    
-    await db.collection("microcommunity_expertise_scores").doc(`${microcommunityId}_${userId}`).set({
-      microcommunity_id: microcommunityId,
-      user_id: userId,
-      education_expertise: educationExpertise,
-      education_component_count: eduRecords.length,
-      experience_expertise: experienceExpertise,
-      experience_component_count: expRecords.length,
-      expertise_score: totalExpertise,
-      calculated_at: admin.firestore.FieldValue.serverTimestamp()
-    });
-  }
-}
-```
+| Person | Age | Education inputs (similarity, CBC, power) | Work inputs (similarity, years) | Raw H | Floor-adjusted education | Work T | Total E |
+|---|---:|---|---|---:|---:|---:|---:|
+| Maria | 35 | [(0.95, 1, 4), (0.92, 1, 1)] | [(0.98, 8), (0.92, 6)] | 4.692919 | 4.692919 | 13.360000 | 18.052919 |
+| David | 35 | [(0.6, 1, 4)] | [(0.75, 20)] | 2.280481 | 2.280481 | 15.000000 | 17.280481 |
+| Alex | 35 | [(0.85, 1, 2)] | [(0.88, 15)] | 1.672595 | 1.672595 | 13.200000 | 14.872595 |
 
-### 5.3 JavaScript/Firestore Implementation
+Sum of the illustrated members' raw Expertise: 50.205995. This total alone does not establish sufficient group expertise or automatically justify inviting an external expert.
 
-```javascript
-// Fetch and rank members by expertise
-async function queryExpertiseScores(microcommunityId) {
-  const snapshot = await db.collection("microcommunity_expertise_scores")
-    .where("microcommunity_id", "==", microcommunityId)
-    .orderBy("expertise_score", "desc")
-    .get();
-    
-  return snapshot.docs.map((doc, idx) => {
-    const data = doc.data();
-    let level = "Novice";
-    if (data.expertise_score >= 10.0) level = "Expert";
-    else if (data.expertise_score >= 3.0) level = "Practitioner";
-    else if (data.expertise_score >= 1.0) level = "Informed";
-    
-    return {
-      user_id: data.user_id,
-      education: Number(data.education_expertise.toFixed(2)),
-      experience: Number(data.experience_expertise.toFixed(2)),
-      total_expertise: Number(data.expertise_score.toFixed(2)),
-      expertise_rank: idx + 1,
-      expertise_level: level
-    };
-  });
-}
-```
+### Parking proposal — CBC adjustment a=1.0
 
----
+| Person | Age | Education inputs (similarity, CBC, power) | Work inputs (similarity, years) | Raw H | Floor-adjusted education | Work T | Total E |
+|---|---:|---|---|---:|---:|---:|---:|
+| Urban planner | 35 | [(0.95, 0.8, 2)] | [(0.9, 12)] | 1.919592 | 1.919592 | 10.800000 | 12.719592 |
+| Accountant | 35 | [(0.7, 1, 4)] | [(0.85, 15)] | 2.800000 | 2.800000 | 12.750000 | 15.550000 |
+| Builder | 35 | [(0.8, 2, 2)] | [(0.85, 20)] | 1.280000 | 1.280000 | 17.000000 | 18.280000 |
 
-## Part 7: Complete Worked Examples
+Sum of the illustrated members' raw Expertise: 46.549592. This total alone does not establish sufficient group expertise or automatically justify inviting an external expert.
 
-### Example 1: Door Lock Repair Issue
+### Crisis allocation — CBC adjustment a=1.2
 
-**Issue**: "The entrance door to our house (12 Oak Street) works badly. Let's fix the lock before it blocks us in!"
+| Person | Age | Education inputs (similarity, CBC, power) | Work inputs (similarity, years) | Raw H | Floor-adjusted education | Work T | Total E |
+|---|---:|---|---|---:|---:|---:|---:|
+| Co-founder | 35 | none | [(0.9, 2.5)] | 0.000000 | 1.000000 | 2.250000 | 3.250000 |
+| Operations manager | 35 | [(0.65, 1, 4)] | [(0.8, 1.5)] | 2.385371 | 2.385371 | 1.200000 | 3.585371 |
+| Volunteer coordinator | 24 | [(0.7, 3, 0.5)] | [(0.75, 0.5)] | 0.138460 | 0.800000 | 0.375000 | 1.175000 |
 
-**Domain Context (LLM determined)**:
-```
-Domain: locksmith.security
-Recency decay: 0.02/year (skills decay slowly)
-CBC adjustment: 0.9 (reduce broadcasting)
-```
+Sum of the illustrated members' raw Expertise: 8.010371. This total alone does not establish sufficient group expertise or automatically justify inviting an external expert.
 
-**Member 1: John (Master Locksmith)**
+### Multi-reference floor and contribution checks
 
-Education:
-- Vocational Locksmith Diploma (2 years, 1995)
-- CBC = 2.0
-- cos_similarity = 0.95 (primary domain)
-- cos_adjusted = (0.95)^2.0 = 0.9025
-- cos_adjusted_cbc = (0.9025)^0.9 = 0.912
-- E_education = 0.912 × 2 = **1.824**
-
-Experience:
-- Master Locksmith (30 years active, 1995-2025)
-- cos_similarity = 0.98 (primary domain)
-- years = 30 (current, no decay)
-- E_experience = 0.98 × 30 = **29.4**
-
-**Total Expertise: 1.824 + 29.4 = 31.224**
-
----
-
-**Member 2: Sarah (Engineer)**
-
-Education:
-- Bachelor's in Civil Engineering (4 years, 1992)
-- CBC = 1.0
-- cos_similarity = 0.4 (distant domain)
-- cos_adjusted = (0.4)^1.0 = 0.4
-- cos_adjusted_cbc = (0.4)^0.9 = 0.427
-- E_education = 0.427 × 4 = **1.708**
-
-Experience:
-- Structural Engineer (33 years active, 1992-2025)
-- cos_similarity = 0.35 (general building knowledge)
-- years = 33 (current)
-- E_experience = 0.35 × 33 = **11.55**
-
-**Total Expertise: 1.708 + 11.55 = 13.258**
-
----
-
-**Member 3: Lisa (Office Manager)**
-
-Education:
-- Bachelor's in Business (4 years, 2016)
-- CBC = 1.0
-- cos_similarity = 0.05 (completely unrelated)
-- cos_adjusted = (0.05)^1.0 = 0.05
-- cos_adjusted_cbc = (0.05)^0.9 = 0.054
-- Σ education = 0.054 × 4 = 0.216; age 32, floor 1.0
-- E_education = max(1.0, 0.216) = **1.0**
-
-Experience:
-- Office Manager (8 years, 2017-2025)
-- cos_similarity = 0.02 (no locksmith relevance)
-- years = 8
-- E_experience = 0.02 × 8 = **0.16**
-
-**Total Expertise: 1.0 + 0.16 = 1.16**
-
----
-
-**Summary**:
-```
-John (Master Locksmith):      31.22  ← Expert (>10)
-Sarah (Engineer):             13.26  ← Expert (>10)
-Lisa (Office Manager):         1.16  ← Informed (1-3)
-
-Total expertise: 45.64
-→ Strong expertise in the ad-hoc public; no external expert needed
-```
-
----
-
-### Example 2: Salsa Evening Organization
-
-**Issue**: "Establish regular salsa evenings in our district. Can someone suggest a place or join?"
-
-**Domain Context**:
-```
-Domain: social.event.cultural
-Recency decay: 0.03/year
-CBC adjustment: 1.1 (increase broadcasting for org skills)
-```
-
-**Member 1: Maria (Salsa Dancer & Choreographer)**
-
-Education:
-- Dance School Certificate (4 years, 2016)
-- CBC = 1.0
-- cos_similarity = 0.95 (primary domain)
-- cos_adjusted = (0.95)^1.0 = 0.95
-- cos_adjusted_cbc = (0.95)^1.1 = 0.945
-- E_education = 0.945 × 4 = **3.78**
-
-Education:
-- Choreography course (1 year, 2015)
-- CBC = 1.0
-- cos_similarity = 0.92
-- cos_adjusted_cbc = (0.92)^1.1 = 0.916
-- E_education_2 = 0.916 × 1 = **0.916**
-
-Experience:
-- Professional Salsa Dancer (8 years, 2017-2025)
-- cos_similarity = 0.98
-- years = 8
-- E_experience_1 = 0.98 × 8 = **7.84**
-
-Experience:
-- Choreographer/Instructor (6 years, 2019-2025)
-- cos_similarity = 0.92 (event organization aspect)
-- years = 6
-- E_experience_2 = 0.92 × 6 = **5.52**
-
-**Total Expertise: 3.78 + 0.916 + 7.84 + 5.52 = 18.056**
-
----
-
-**Member 2: David (Real Estate Broker)**
-
-Education:
-- Bachelor's in Business (4 years, 2001)
-- CBC = 1.0
-- cos_similarity = 0.6 (business org applies)
-- cos_adjusted = (0.6)^1.0 = 0.6
-- cos_adjusted_cbc = (0.6)^1.1 = 0.593
-- E_education = 0.593 × 4 = **2.372**
-
-Experience:
-- Real Estate Broker (20 years, 2005-2025)
-- cos_similarity = 0.75 (venue identification)
-- years = 20
-- E_experience = 0.75 × 20 = **15.0**
-
-**Total Expertise: 2.372 + 15.0 = 17.372**
-
----
-
-**Member 3: Alex (Event Planner)**
-
-Education:
-- Diploma in Event Management (2 years, 2010)
-- CBC = 1.0
-- cos_similarity = 0.85 (direct application)
-- cos_adjusted = (0.85)^1.0 = 0.85
-- cos_adjusted_cbc = (0.85)^1.1 = 0.844
-- E_education = 0.844 × 2 = **1.688**
-
-Experience:
-- Event Coordinator (15 years, 2010-2025)
-- cos_similarity = 0.88 (event organization)
-- years = 15
-- E_experience = 0.88 × 15 = **13.2**
-
-**Total Expertise: 1.688 + 13.2 = 14.888**
-
----
-
-**Summary**:
-```
-Maria (Salsa Dancer):        18.06  ← Expert (>10)
-David (Real Estate Broker):  17.37  ← Expert (>10)
-Alex (Event Planner):        14.89  ← Expert (>10)
-
-Total expertise: 50.32
-→ Strong diverse expertise; no external expert needed
-```
-
----
-
-### Example 3: Parking Structure Proposal
-
-**Issue**: "Build parking structure using park space + budget allocation strategy"
-
-**Domain Context**:
-```
-Domain: urban_planning.infrastructure.governance
-Recency decay: 0.04/year
-CBC adjustment: 1.0 (neutral)
-```
-
-**Member 1: Urban Planner (Master's, 12 years active)**
-
-Education:
-- Master's in Urban Planning (2 years)
-- CBC = 0.8
-- cos_similarity = 0.95 (primary domain)
-- cos_adjusted = (0.95)^0.8 = 0.953
-- cos_adjusted_cbc = (0.953)^1.0 = 0.953
-- E_education = 0.953 × 2 = **1.906**
-
-Experience:
-- Urban Planner (12 years active)
-- cos_similarity = 0.9
-- years = 12
-- E_experience = 0.9 × 12 = **10.8**
-
-**Total: 1.906 + 10.8 = 12.706**
-
----
-
-**Member 2: Accountant/Finance (Bachelor's, 15 years)**
-
-Education:
-- Bachelor's in Finance (4 years)
-- CBC = 1.0
-- cos_similarity = 0.7 (budget aspect)
-- cos_adjusted = (0.7)^1.0 = 0.7
-- cos_adjusted_cbc = (0.7)^1.0 = 0.7
-- E_education = 0.7 × 4 = **2.8**
-
-Experience:
-- Finance Manager (15 years)
-- cos_similarity = 0.85 (budget planning)
-- years = 15
-- E_experience = 0.85 × 15 = **12.75**
-
-**Total: 2.8 + 12.75 = 15.55**
-
----
-
-**Member 3: Builder (Vocational, 20 years)**
-
-Education:
-- Vocational Training (2 years)
-- CBC = 2.0
-- cos_similarity = 0.8 (construction aspect)
-- cos_adjusted = (0.8)^2.0 = 0.64
-- cos_adjusted_cbc = (0.64)^1.0 = 0.64
-- E_education = 0.64 × 2 = **1.28**
-
-Experience:
-- Construction/Building (20 years active)
-- cos_similarity = 0.85 (building feasibility)
-- years = 20
-- E_experience = 0.85 × 20 = **17.0**
-
-**Total: 1.28 + 17.0 = 18.28**
-
----
-
-**Summary**:
-```
-Builder:           18.28   ← Expert (>10)
-Accountant:        15.55  ← Expert (>10)
-Urban Planner:     12.71  ← Expert (>10)
-
-Total expertise: 46.54
-→ Balanced expertise; no external expert needed
-```
-
----
-
-### Example 4: Fund Allocation During Crisis
-
-**Issue**: "Allocate $65K & 200 volunteer hours: immediate aid (95%) vs. infrastructure (70/30)?"
-
-**Domain Context**:
-```
-Domain: governance.nonprofit.emergency_response
-Recency decay: 0.03/year
-CBC adjustment: 1.2 (increase broadcasting for governance)
-```
-
-**Member 1: Co-founder (2.5 years direct experience)**
-
-Education:
-- None formal (self-taught)
-- E_education = max(1.0, 0.0) = 1.0 (aged 30+, floor)
-
-Experience:
-- Emergency Response Coordinator (2.5 years, active)
-- cos_similarity = 0.9 (crisis management)
-- years = 2.5
-- E_experience = 0.9 × 2.5 = **2.25**
-
-**Total: 1.0 + 2.25 = 3.25**
-
----
-
-**Member 2: Operations Manager (1.5 years)**
-
-Education:
-- Bachelor's in Business (4 years)
-- CBC = 1.0
-- cos_similarity = 0.65 (operations/efficiency)
-- cos_adjusted = (0.65)^1.0 = 0.65
-- cos_adjusted_cbc = (0.65)^1.2 = 0.635
-- E_education = 0.635 × 4 = **2.54**
-
-Experience:
-- Operations Manager (1.5 years, active)
-- cos_similarity = 0.8 (logistics/efficiency)
-- years = 1.5
-- E_experience = 0.8 × 1.5 = **1.2**
-
-**Total: 2.54 + 1.2 = 3.74**
-
----
-
-**Member 3: Volunteer Coordinator (6 months)**
-
-Education:
-- Course in Community Organization (0.5 years)
-- CBC = 3.0
-- cos_similarity = 0.7
-- cos_adjusted = (0.7)^3.0 = 0.343
-- cos_adjusted_cbc = (0.343)^1.2 = 0.321
-- Σ education = 0.321 × 0.5 = 0.161
-- age/30 = 24 / 30 = 0.8
-- E_education = max(0.8, 0.161) = **0.8** (age 24)
-
-Experience:
-- Volunteer Coordinator (0.5 years, active)
-- cos_similarity = 0.75
-- years = 0.5
-- E_experience = 0.75 × 0.5 = **0.375**
-
-**Total: 0.8 + 0.375 = 1.175**
-
----
-
-**Summary**:
-```
-Operations Manager:  3.74  ← Practitioner (3-10)
-Co-founder:          3.25  ← Practitioner (3-10)
-Volunteer Coord:     1.18  ← Informed (1-3)
-
-Total expertise: 8.17
-→ Low expertise for governance decision; RECOMMEND EXTERNAL EXPERT
-   Suggest: Finance expert, Emergency management specialist, Nonprofit board member
-```
-
----
+Age floor1, raw education[0,2], alpha[.5,.5], no work: E=max(1,.5*0+.5*2)=1. Flooring each reference first gives1.5 and is a different model. For reference scores [.57,.55,.51] and R aggregation weights [.3,.4,.7], B_R=.748/1.63=.458895706, not .748/3. PD-9 defines the complete paired R/one-public ISR calculation and affected-person X.
 
 ## Part 8: Recalculation & Caching
+
+**Historical design sketch, not current runtime evidence.** Current mapping/storage and mr1 overrides are in specs/04-expertise.md and PD-9. No automatic recency, re-embedding, migration or cost allowance is approved by these sketches.
 
 ### 8.1 Profile Update Triggers Recalculation
 
@@ -935,6 +473,8 @@ async function freezeExpertiseScores(microcommunityId) {
 
 ## Part 9: Implementation Checklist (MVP)
 
+**Historical design sketch, not current runtime evidence.** Current mapping/storage and mr1 overrides are in specs/04-expertise.md and PD-9. No automatic recency, re-embedding, migration or cost allowance is approved by these sketches.
+
 ### Week 1: Schema & Vectorization Infrastructure
 - [ ] Create `user_expertise_profiles` collection in Firestore
 - [ ] Create `microcommunity_expertise_scores` collection in Firestore
@@ -965,6 +505,8 @@ async function freezeExpertiseScores(microcommunityId) {
 
 ## Part 10: Performance Targets
 
+**Historical design sketch, not current runtime evidence.** Current mapping/storage and mr1 overrides are in specs/04-expertise.md and PD-9. No automatic recency, re-embedding, migration or cost allowance is approved by these sketches.
+
 | Operation | Target | Notes |
 |-----------|--------|-------|
 | User profile vectorization | 500ms | Batch Google AI Studio call |
@@ -976,6 +518,8 @@ async function freezeExpertiseScores(microcommunityId) {
 ---
 
 ## Part 11: Cost Breakdown
+
+**Historical design sketch, not current runtime evidence.** Current mapping/storage and mr1 overrides are in specs/04-expertise.md and PD-9. No automatic recency, re-embedding, migration or cost allowance is approved by these sketches.
 
 | Component | Cost | Notes |
 |-----------|------|-------|

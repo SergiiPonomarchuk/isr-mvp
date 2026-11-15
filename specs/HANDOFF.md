@@ -4,13 +4,13 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: M3 Analyzer proposal ready for policy review, 2026-11-15
+## Current checkpoint: multi-reference documentation revised, 2026-11-16
 
-- Author explicitly instructed merge PR #35; merged as `3c25ef7` after green checks. D1 core live whole-cycle acceptance is recorded; no deployment is needed for those documentation changes. Live backend/Hosting/helper identities and private evidence remain as recorded below.
-- Author said go for M3 audit/spec preparation. [Guardrail proposal](tasks/M3-analyzer-guardrails.md) audits current code, preserves A4/A5/U6/U10 and specifies proposed type/range/context/server-draft/UI/logging behavior. No implementation, provider calls, database writes or docs/ edits.
-- Offline reference audit: 100 examples have 100 different exact categories; no category has five anchors. Three categories differ from the protocol taxonomy table. Exact-category nearest-five cannot be implemented without a policy decision. [Audit evidence](tasks/M3-analyzer-audit.json).
-- Next attention gate: author reviews proposal D1-D5 (curated type table, k=5 within type/strict ranges, publication blocked on invalid/fallback analysis, at most two text stages, reviewed offline calibration artifact before code). Approval permits the offline mapping/conflict report; concrete mappings and implementation plan require approval before runtime changes. No fresh paid evaluation budget or deployment authorized.
-- Existing D1 live journal, backup, snapshots and accepted outcomes remain intact. PR #29 remains separate. M3 worktree `A:/BackUp/isr-mvp/worktrees/wt-m3-analyzer-spec`, branch `codex/m3-analyzer-spec`.
+- Author authorized all reviewed math/logic corrections across documents, including docs/ and skill guidance. [PD-9](decisions/PD-9-multi-reference-derivation.md) is the intended mr1 source: reference score>=.30, consecutive gap<.05, >3 clarification, normalized alpha, paired D/S/X, max compatible geography, combined education before one age floor and one-public ISR. X uses affected people's recorded outgoing relations, maximum one step; creator has no privileged role.
+- PR #38 is revised in place; original fixed-five/type-table proposal is superseded. [M3 task](tasks/M3-analyzer-guardrails.md) explicitly scopes documents/skill only for this revision. Main baseline remains3c25ef7; no runtime behavior, data, providers, model or rules changes. Accepted D1 scores/journal remain frozen and versioned.
+- Corrected Expertise exponent explanation and regenerated all worked Part7 arithmetic with explicit hypothetical inputs; current code vs intended certificate/College/decay discrepancies remain documented, not silently resolved. [04 Expertise](04-expertise.md), references and local math evidence are updated.
+- Next: review documentation PR #38 with green required checks; merge only on explicit author instruction. Then produce calibration/coverage and a concrete implementation plan. Exact reference metric/template/aspects, direct-affectedness predicate, candidate/cutoff safety and cost allowance must be decided before runtime implementation; initial .30/.05 thresholds need calibration. D2/access and unrelated prototype work stay separate.
+- Drive A reconnected; active worktree remains `A:/BackUp/isr-mvp/worktrees/wt-m3-analyzer-spec`. A temporary untouched C scratch worktree was created during disconnection and is not used for edits. Do not prune or remove unrelated worktrees. No production reset/reseed or deployment is needed for this documentation PR.
 
 ## D1 verified checkpoint (historical; acceptance PR #35 merged)
 

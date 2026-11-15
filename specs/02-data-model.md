@@ -1,4 +1,6 @@
 # 02 Data model
+
+**Current intended-model update, 2026-11-16:** [PD-9](decisions/PD-9-multi-reference-derivation.md) governs mr1 selection, paired D/S/X contributions, max geography, single-floor Expertise and one-public ISR/provenance. X follows affected people's recorded outgoing relationships. This is specified, not implemented. Dated as-built tables below remain historical; they must not be read as the current deployed release. Runtime baseline and integration gaps are in [M3](tasks/M3-analyzer-guardrails.md) and [04 Expertise](04-expertise.md).
 Status: PARTIAL   Verified against: commit `0620f27` (PD-6); data as exported 2026-10-12
 Owns contradictions: C-44, C-45 (shared with 14), C-28 and C-32 (collection parts) (see [README](README.md#contradiction-map))
 

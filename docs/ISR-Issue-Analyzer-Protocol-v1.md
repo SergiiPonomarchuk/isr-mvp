@@ -1,5 +1,7 @@
 # ISR Issue Analyzer Protocol (v2, Firebase / NoSQL)
 
+**2026-11-16 intended-model revision:** [PD-9 multi-reference derivation](../specs/decisions/PD-9-multi-reference-derivation.md) governs reference selection, notation and member-score combination. Runtime at3c25ef7 still uses the earlier single-vector model. Sections explicitly marked historical are not implementation instructions for mr1.
+
 This protocol specifies how the AI **Issue Analyzer** processes a newly submitted ISR issue
 and outputs **all starting parameters** needed for Relevance, Expertise, and ISR-score aggregation.
 
@@ -548,14 +550,12 @@ complete and consistent with the rules (scope and competence), and tells the top
 a number.** The assistant is a rule-based gatekeeper. It does not judge the merits of the issue. It may refuse a type or
 context that is not consistent with the rules, and it must say which rule or example it applied.
 
-**Typical range.** For each parameter the typical range is taken from the k nearest examples of the chosen type (Section 7;
-start with k = 5). Derived values always stay inside this range. The k and the library version are published and
-versioned like the rest of this protocol; the initial value of k is a placeholder to be calibrated.
+**Reference derivation.** Apply PD-9: rank reference similarities, require s>=.30, extend while each adjacent score gap is<.05, and ask for reformulation when the full chain contains more than three references. These are versioned experimental settings, not probabilities. With one to three compatible references, normalize their similarities and compute the numeric blends, paired member scores and max geography exactly as PD-9 specifies. No fixed-five requirement or separate same-type table is required. Categories explain references; they are not probabilities or freely adjustable numeric profiles.
 
 **Procedure.**
 
-1. Find the nearest typical issue types (Section 7). Propose a type, and list the other types that are consistent with the rules.
-2. Derive the parameters from the table for the type and the context (Steps 1 to 4). They stay inside the typical range of the type.
+1. Select the full reference chain (Section7/PD-9). Show titles/categories, scores and actual-context matches. No match, incompatible context or more than three references returns needs_clarification. Suggest clearer wording or splitting only when supported; the user chooses any reformulation or initial planning issue.
+2. Derive parameters using normalized reference weights. Instantiate categorical rules and aspect texts from actual context; never average ages, ownership or eligibility labels. Preserve paired weights/results and compute member X from affected people, as PD-9 specifies.
 3. Scope and competence check. Does the context show that a local rule gives the decision to an authority, an owner or another
    body (a public street, a school, a utility, a private courtyard)? Such facts are tied to the location and to the local law and
    are part of the **context**. If the context does not say, the assistant asks, advises the topic starter to check public
@@ -563,9 +563,7 @@ versioned like the rest of this protocol; the initial value of k is a placeholde
    knowledge as a rule: it uses what the context states and the protocol rules (for example: stake is not ownership, residents
    of a street are not its exclusive owners).
 4. If a local rule reserves the decision for an authority, the outcome kind is `proposal` and the addressee is that authority.
-   The type is changed to the matching proposal type, and the parameters widen as the table says (for example a distance of
-   2000 m and criteria that include people who work in the area and owners and staff of organisations and businesses, each
-   counted as a person with the same formula, not as a representative).
+   Select compatible proposal references and recheck context; do not invent a 2000m radius from an illustrative example. The actual affected workers/owners/staff are evaluated as people by the same formulas, not as representatives.
 5. If the topic starter disagrees with the result, he clarifies the context or picks another type from those the assistant lists
    as consistent. He cannot edit a number. A significant deviation from the listed types needs a significant reformulation of the
    text and the context; the assistant returns a request that only renames the type. The assistant keeps asking until the context
@@ -576,7 +574,7 @@ versioned like the rest of this protocol; the initial value of k is a placeholde
 7. Result: `pass` (publish with the type, the derived parameters and the notes), `needs_clarification`, or `not_consistent`
    (no consistent type was found; the topic starter must reformulate the issue).
 
-**Limits on the assistant.** It must not set a number outside the table, must not judge the merits of the issue, and must not
+**Limits on the assistant.** It must apply the recorded reference equations without invented numeric overrides, must not judge the merits of the issue, and must not
 decide who is a member. It may only propose, ask, caution, or refuse a type or context that is not consistent with the rules,
 citing the rule or example. Every run is logged.
 
@@ -590,8 +588,10 @@ citing the rule or example. Every run is logged.
     "proposed": "street.traffic_limitation",
     "consistent_alternatives": ["street.traffic_limitation.proposal_to_authority"],
     "library_version": "1.0",
-    "nearest_examples": ["ex-017", "ex-044", "ex-063"],
-    "k": 5
+    "reference_ids": [17, 44, 63],
+    "selection_version": "mr1",
+    "similarities": [0.57, 0.55, 0.51],
+    "alpha": [0.3496932515, 0.3374233129, 0.3128834356]
   },
   "scope": {
     "outcome_kind": "proposal",
@@ -751,65 +751,19 @@ Three top-level fields are added to the combined output:
 
 ---
 
-## 6. Firestore / NoSQL Implementation Notes
+## 6. Storage and computation contract
 
-### 6.1 Collections and documents
+Use the actual app paths issue_drafts, analyzer_logs, issue_vectors, users.skills, user_vectors and microcommunity_members. Version old issues separately; do not migrate their scores implicitly. PD-9 sections5-8 define the one-public R/E/ISR pipeline, precision and immutable reference/aspect/member provenance. Keep whole-issue duplicate vectors distinct from scoring aspect vectors. Check, Create, Join, caches and the independent checker must reproduce the same parameters and scores.
 
-- `issues/{issueId}`: stores all Analyzer output fields flat plus the nested objects
-- `users/{userId}`: `roles`, `building_id`, `user_location`, `education_records`, `experience_records` (registered property is kept with the user's places and is used by Relevance only)
-- `microcommunity_relevance_scores/{issueId_userId}`: D, G, S, X, and combined Relevance
-- `microcommunity_expertise_scores/{issueId_userId}`: Education, Experience, and total Expertise
-- `issues/{issueId}` also stores `issue_type`, `outcome_kind` (decision or proposal), `addressee`, `parameters_version`, `parameters_frozen` (set when voting opens), `voting_opened_at` and `context_notes` (array of notes)
-- `issues/{issueId}/changes/{changeId}`: one document per proposed change of text, options, type or context (see `ISR-Relevance-Implementation.md`, Part 7.6)
-- `analyzer_runs/{runId}`: one log document per call (Steps 1 to 4B): inputs, outputs, model identifier, prompt version, library version, time
+The single-reference JSON in section5 remains a legacy compatibility projection, not a sufficient mr1 schema. The new draft binds reference IDs/scores/alpha, selection/formula/library/model/template versions, actual-context source hash, per-reference demographic rules, actual-issue aspect texts/vectors and CBC adjustments, common location/max geography, direct-affectedness rule/version and affected-person outgoing relation provenance. Member data must reproduce per-reference D/S/X and education/work contributions and effective displayed components. Context outcomes/cautions attach to the issue. Step4B changes/governance remain a separate implementation task.
 
-### 6.2 Relevance computation worker (Cloud Function sketch)
+## 7. How the Issue Analyzer Uses the reference library
 
-```javascript
-const mu = issue.geographic_parameters.mu_distance_meters;
-const sigma = issue.geographic_parameters.sigma_distance_meters;
+PD-9 is the normative mathematical definition. Selection uses one recorded similarity metric/text/context/vector version, the consecutive .30/.05 chain and >3 clarification. Do not compare scores from different metrics or silently choose only the first three. One-reference input reduces to its scoring specification; no extra type-group calibration is required merely to get five examples.
 
-const R = relevance_weights.w_demographic * D
-        + relevance_weights.w_geographic  * G
-        + relevance_weights.w_semantic    * S
-        + relevance_weights.w_social      * X;
-```
+Blend numeric relevance and ISR weight groups with alpha. Use the widest compatible mu/sigma around the actual issue location. Derive D/S/E/X for actual people from context-instantiated rules, actual-issue aspect vectors and affected-person relations. Apply one age floor after combined education, then normalize combined R/E over one final public. Scope/authority conflicts require clarification; model/service failures are distinct from user inconsistency. External documents are context data, not model instructions.
 
-### 6.3 ISR-score aggregation formula
-
-```javascript
-const ISR = aggregation_weights.w_relevance    * R_normalized
-          + aggregation_weights.w_expertise    * E_normalized
-          + aggregation_weights.w_contribution * C_normalized;
-```
-
-Where R and E are divided by their mean over the members of the ad-hoc public, and C by the public's mean absolute Contribution plus one reference unit (Contribution protocol, Section 8.5).
-
----
-
-## 7. How the Issue Analyzer Uses ISR-Issue-Analyzer-100-Examples.md
-
-For every new issue, the Analyzer must:
-
-1. **Find nearest examples** by:
-   - Semantic similarity of the title + description to example titles
-   - Matching or similar `issue_category` and `scope_type`
-
-2. Use nearest examples as **priors** for all numeric parameters
-
-3. **Adjust priors** based on specific details:
-   - Slightly more local or more global scope
-   - More or less technically complex
-   - More or less safety-critical or rights-critical
-   - Resource and money needs of the issue (they shape the options, not anyone's weight)
-
-4. The nearest examples found here also define the **type** and its **typical range**, used by the context check (Step 4A). Derived values
-   never leave the range. The library version used is recorded in every run.
-
-The 100-examples file is the **only external companion document** needed.
-This protocol document is self-contained for all schema, taxonomy, and rule definitions.
-
----
+Raw references and every derived value remain auditable; no free LLM weight adjustment after the deterministic blend. Pattern/scope tables are reference guidance; an apparent conflict with these or categorical authority rules requires a recorded resolution rather than silently clipping the blend.
 
 ## 8. Summary of Analyzer Responsibilities
 

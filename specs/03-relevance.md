@@ -1,4 +1,6 @@
 # 03 Relevance
+
+**Current intended-model update, 2026-11-16:** [PD-9](decisions/PD-9-multi-reference-derivation.md) governs mr1 selection, paired D/S/X contributions, max geography, single-floor Expertise and one-public ISR/provenance. X follows affected people's recorded outgoing relationships. This is specified, not implemented. Dated as-built tables below remain historical; they must not be read as the current deployed release. Runtime baseline and integration gaps are in [M3](tasks/M3-analyzer-guardrails.md) and [04 Expertise](04-expertise.md).
 Status: PARTIAL   Verified against: historical audit `0620f27` (PD-6); A5 input guard verified at `a817694` (not a re-audit of legacy statements below)
 Owns contradictions: C-06 to C-15, C-18; shares C-16 with 12 (see [README](README.md#contradiction-map))
 
@@ -12,7 +14,7 @@ Relevance R measures how directly an issue and its resolution affect a user. It 
   - The overridden doc text: Relevance doc pipeline phase 1 (l.22-24) and §2.1 (l.243-253); Analyzer §2.2.1 (l.358-377).
 - **G, geospatial:** a threshold Gaussian. G = 1 when d ≤ μ, and exp(−(d−μ)²/2σ²) otherwise, where d is the Haversine distance to the user's anchor. Sources: Relevance doc §1.2 (l.96-130) and Part 3 (l.317-375); Analyzer §2.3 (l.407-436). Suggestion tables: Relevance doc §3.2 (l.333-341), Analyzer §2.3.1 (l.419-426), Request Guide step 3 (l.86-122).
 - **S, semantic:** S = max(0, cos(profile vector, issue vector)), using 768-d embeddings. Sources: Relevance doc §1.2 (l.134-154) and Part 4 (l.379-420); vectors in 12-embeddings.
-- **X, social:** depth-1 relations of the issue submitter. X = `tie` if set; otherwise 0.3 for spouse/partner, 0.2 for parent/child/sibling, 0.1 for grand-relations and close friends, and 0 for everyone else. Sources: Relevance doc §1.2 (l.158-211) and Part 5 (l.424-493).
+- **X, social (historical baseline, superseded by PD-9 in intended mr1):** depth-1 relations of the issue submitter. X = `tie` if set; otherwise 0.3 for spouse/partner, 0.2 for parent/child/sibling, 0.1 for grand-relations and close friends, and 0 for everyone else. Sources: Relevance doc §1.2 (l.158-211) and Part 5 (l.424-493).
 - **Pipeline and membership:**
   - Upper-bound pruning at S = 1 against 0.15, then S for the top 300 candidates (Relevance doc l.18-38, §6.3 l.517-548, Part 9 l.694-727).
   - PD-1 instead requires candidate retrieval over several channels (G, D, X, S) followed by scoring, and that all affected members take part. w_R does not affect inclusion.
@@ -114,7 +116,7 @@ Path C duplicates the relevance logic in the browser and is used only when the C
 1. Does PD-1 ("never hard-excluded") forbid the hard cutoff at μ + 3σ in G, and the 0.15 pruning?
 2. What is the intended threshold sign (≥ or >), and may the submitter change the threshold (C-06, C-07)?
 3. Which μ/σ table is normative (C-14)? What should σ mean in the UI (C-15)?
-4. Should X consider only the submitter's relations (as now), or also relations of affected users (PD-1 lists X as a retrieval channel)?
+4. Resolved for intended mr1 by PD-9: affected-person outgoing relations, maximum one step; implementation and exact direct-affectedness predicate still pending.
 5. Is the top-100 cap compatible with PD-1 ("all affected members take part")?
 
 ## Change history

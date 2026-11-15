@@ -1,5 +1,7 @@
 # D1 guided demonstration - accepted core rehearsal
 
+**2026-11-16:** The accepted D1 rehearsal uses the deployed single-vector/creator-X model. [PD-9](decisions/PD-9-multi-reference-derivation.md) is a later intended model, not an explanation of those frozen results. Do not present mr1 scores as deployed or rescore/reseed the accepted presentation implicitly.
+
 Status: emulator acceptance and live core whole-cycle rehearsal are verified. Live final result: 101 flagship members, 28 counted votes, 31.142 ISR and three creator-assigned tasks; final independent checker validates 606 member records with no problems. See [live report](tasks/D1-live-report.md). A full narrated nine-case tour is not separately recorded. The guide/commands below describe an emulator presentation, not live profile links; live journal and commands remain in [the D1 runbook](D1-LIVE-ROLLOUT.md).
 
 1. Complete the local seed and read-only checker, confirm nine visible seeded cases and one hidden standby, and keep the emulator/export and preview running.

@@ -1,4 +1,6 @@
 # 06 Aggregation and voting
+
+**Current intended-model update, 2026-11-16:** [PD-9](decisions/PD-9-multi-reference-derivation.md) governs mr1 selection, paired D/S/X contributions, max geography, single-floor Expertise and one-public ISR/provenance. X follows affected people's recorded outgoing relationships. This is specified, not implemented. Dated as-built tables below remain historical; they must not be read as the current deployed release. Runtime baseline and integration gaps are in [M3](tasks/M3-analyzer-guardrails.md) and [04 Expertise](04-expertise.md).
 Status: PARTIAL   Verified against: commit `0620f27` (PD-6)
 Owns contradictions: C-21, C-33, C-34, C-35 (see [README](README.md#contradiction-map))
 
@@ -76,7 +78,7 @@ The vote tally and the chat list use the second one (IF l.101-102).
 - A1 would add: AC1 (reproduce `isr_score`, `normalized_relevance` and `normalized_experience` within 0.001 for 20 publics); AC3 (edge cases); AC4 (scale invariance); AC7 (count of members whose tally weight changes).
 
 ## Open questions
-1. What should happen with a zero or negative mean (PD-3 open; A1 open question 1)?
+1. Resolved for current R/E by A1: all equal, including all zero, normalize to1; unequal nonpositive mean errors. See PD-9 for one-public mixed-score application.
 2. Should the tally use the stored member ISR, as A1 R8 proposes, and should voters without an ISR be excluded with a visible note (A1 R6)?
 3. Should the tally and the winning option be persisted, and by whom (client or Cloud Function)?
 4. Until Contribution exists, is C̃ = 1.0 the intended placeholder (A1 R4)?

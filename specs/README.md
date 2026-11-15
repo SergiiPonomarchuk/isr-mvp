@@ -53,7 +53,7 @@ Created by task S0 (`tasks/S0-restructure-specs.md`). Every component file state
 | 01-architecture.md | Architecture, implementation paths | planned | S0 batch 2 |
 | [02-data-model.md](02-data-model.md) | Collections, fields, invariants | PARTIAL | S0 batch 1 |
 | [03-relevance.md](03-relevance.md) | Relevance R = D, G, S, X | PARTIAL | S0 batch 1 |
-| 04-expertise.md | Expertise E | planned | S0 batch 2 |
+| [04-expertise.md](04-expertise.md) | Expertise E, canonical baseline and intended mr1 | PARTIAL; mr1 specified, not implemented | M3 |
 | 05-contribution.md | Contribution C | planned | S0 batch 2 |
 | [06-aggregation-and-voting.md](06-aggregation-and-voting.md) | Normalisation, member ISR, vote tally, options | PARTIAL | S0 batch 1 |
 | 07-analyzer.md | Issue Analyzer | planned | S0 batch 2 |
@@ -77,6 +77,7 @@ Created by task S0 (`tasks/S0-restructure-specs.md`). Every component file state
 | [PD-6](decisions/PD-6-mvp-status-and-paper.md) | MVP status and the paper (paper D-011, D-012) | all |
 | [PD-7](decisions/PD-7-terminology.md) | Terminology (paper D-008) | 14 |
 | [PD-8](decisions/PD-8-resources-option-level.md) | Resources and money option-level; E = education + experience with age floor | 02, 04, 06, 07, 10 |
+| [PD-9](decisions/PD-9-multi-reference-derivation.md) | Intended mr1 reference-chain, paired scores, affected-person X and single-floor E; implementation pending | 02, 03, 04, 06, 07, 12 |
 | [S0-D1](decisions/S0-D1-manifesto-is-vision.md) | The manifesto is vision only | 00, README |
 | [S0-D2](decisions/S0-D2-mvp-html-overview.md) | `docs/mvp.html` is a non-normative overview | 00, 09, 10 |
 | [S0-D3](decisions/S0-D3-if-gisr-aauth-correction.md) | Correction of IF l.87 and l.127 | 09 |
@@ -104,7 +105,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [U7-page-cache](tasks/U7-page-cache.md) | DONE on live 2026-11-11 (PR 17): every hosting response is sent with `no-cache` | UI, 13 (hosting) |
 | [D1-demo-scenarios](tasks/D1-demo-scenarios.md) | IMPLEMENTED; emulator AC1-AC4 and core live AC5 rehearsal verified; [live report](tasks/D1-live-report.md) | Demo data, lifecycle, UI |
 | [D1-coalition-helper](tasks/D1-coalition-helper.md) | IMPLEMENTED; #37 merged, all author stages and decisive creator UI completed; canonical server result verified | D1 rehearsal, CLI |
-| [M3-analyzer-guardrails](tasks/M3-analyzer-guardrails.md) | PROPOSED; baseline audit complete, type/range/failure policy decisions pending; no implementation | Analyzer, draft/Create boundary, UI |
+| [M3-analyzer-guardrails](tasks/M3-analyzer-guardrails.md) | Documentation authorized/revised to PD-9; runtime and calibration pending | Analyzer, scoring, drafts, UI |
 | [U10-similar-active-issues](tasks/U10-similar-active-issues.md) | IMPLEMENTED; author emulator/live Check acceptance recorded | Analyzer, UI, membership |
 | [U11-profile-search](tasks/U11-profile-search.md) | IMPLEMENTED; merged/author-hosted; numeric adoption accepted live | Profile adoption, UI |
 | [U9-member-preview-popup](tasks/U9-member-preview-popup.md) | Count labeling and immediate member popup rendering implemented, deployment pending | UI, Analyzer |
@@ -161,7 +162,7 @@ The ids come from `tasks/S0-inventory-report.md` §3, where each contradiction i
 | C-22 | Weighted vs unweighted expertise | 04 | open |
 | C-23 | Expertise baseline 1.0 vs 0 | 04 | decided (PD-8: education floor min(age, 30)/30, no baseline term); implemented by A2 |
 | C-24 | CBC table | 04 | open |
-| C-25 | CBC adjustment factor | 04 | open |
+| C-25 | CBC adjustment factor | 04 | Exponent direction corrected in docs; credential mapping/recency gaps explicit in04 |
 | C-26 | Cosine clamp in education | 04 | open |
 | C-27 | Decay, age penalty, contemporary importance | 04 | partly decided (PD-8: no age penalty, no contemporary importance; recency decay kept, not applied as built) |
 | C-28 | Expertise data sources and collections | 04 / 02 | decided (PD-8: education and experience only; resources and money are option-level) |

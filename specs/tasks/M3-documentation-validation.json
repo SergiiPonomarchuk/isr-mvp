@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-16",
+  "scope": "Documentation equations/links and preserved reference payloads only; no model-quality, runtime or live acceptance claim",
+  "randomized_formula_cases": 10000,
+  "selection_boundary_cases": 7,
+  "expertise_example_rows": 12,
+  "directed_social_fixture": "max/no reciprocal/no self/no second step passed",
+  "parsed_reference_examples_unchanged": 100,
+  "new_broken_relative_links": [],
+  "relative_links_checked": 160,
+  "existing_historical_missing_links": [],
+  "node_suite": {
+    "passed": 129,
+    "optional_skips": 4
+  },
+  "python_suite": {
+    "run": 127,
+    "optional_skips": 2
+  },
+  "provider_calls": 0,
+  "database_writes": 0
+}
