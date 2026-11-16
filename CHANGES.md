@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-16 - Versioned multi-reference Check/Create/Join integration
+
+New Checks perform strict actual-context review and full-population A/B scoring, binding frozen references/aspects and input/day/population fingerprints to a checked draft. Create reuses that model without AI calls, verifies drift and atomically publishes the uncapped public after document/request capacity checks. Versioned Join uses frozen A sources; legacy issues/replays retain legacy behavior. The form accepts clarification answers, rejects stale results and shows actual member counts/scores. Full-public values and Python audits follow the same version. Node153 passed/five optional skips; Python136 run/two skips; isolated mr1/U10/D1 HTTP rehearsals passed. Human visual review and new-model quality evaluation remain pending. No production/provider/rules/docs/ changes. See specs/tasks/M3-app-integration.md.
+
 ## 2026-11-16 - Two-phase A/B public formation
 
 Implemented author-defined inclusive direct-affectedness cohort A and unconditional eligible-relative cohort B in the isolated JS/Python core. A receives no X; B receives the largest full addition that does not exceed its source A direct relevance, with equality accepted and no partial cap. All A/B are retained without top100 truncation; B never propagates. Updated normative docs and boundary/cross-language tests. App wiring, live data and provider usage unchanged.

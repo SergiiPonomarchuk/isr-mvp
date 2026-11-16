@@ -11,6 +11,8 @@ Created by task S0 (`tasks/S0-restructure-specs.md`). Every component file state
 
 ---
 
+Current implementation checkpoint: [M3 application integration](tasks/M3-app-integration.md) on feature branch, automated emulator/math checks passed; [local visual review](M3-LOCAL-REVIEW.md) and separately authorized real-model evaluation remain pending. Published historical issues retain their stored scoring version.
+
 ## Status legend
 
 | Label | Used for | Meaning |

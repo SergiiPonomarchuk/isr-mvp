@@ -7,10 +7,7 @@ test('D1 archived seed, retry recovery, canonical phases and hidden standby', {s
  const v=Array(768).fill(0);v[0]=1;let checks=0;
  helper.embedIssue=async(title,description)=>({ok:true,vector:v,model:AI.EMBED_MODEL,dims:768,task_type:AI.TASK_TYPE_ISSUE,
   template_version:AI.EMBED_TEMPLATE_VERSION,text_sha256:crypto.createHash('sha256').update(`${title}. ${description}`).digest('hex')});
- helper.checkIssueParams=async()=>{checks++;return {params:{weights:{w_D:0,w_G:1,w_S:0,w_X:0},
-  geographic_parameters:{mu_distance_meters:40,sigma_decay_meters:20},aggregation_weights:{w_relevance:0.7,w_expertise:0.1,w_contribution:0.2},
-  demographics:{employmentStatus:'any',familyStatus:'any'},classification:{scope_type:'building'},location_reference:{anchor:'home',place:''}},
-  meta:{ai_source:'fixture',model:AI.TEXT_MODEL,prompt_version:'d1-fixture',examples_used:[]}}};
+ require('./mr1-fixture')(helper,AI,v,{sigma:20,onReview:()=>{checks++;}});
  const handlers=require('../index'),admin=require('firebase-admin'),db=admin.firestore();
  assert.equal((await db.listCollections()).length,0,'requires fresh disposable emulator');
  let batch=db.batch();
