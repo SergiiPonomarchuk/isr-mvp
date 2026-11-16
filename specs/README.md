@@ -189,3 +189,5 @@ The ids come from `tasks/S0-inventory-report.md` §3, where each contradiction i
 | C-45 | snake_case rule vs camelCase fields | 02 / 14 | open |
 | C-47 | Similar registered active issues at Check | [U10](tasks/U10-similar-active-issues.md) | implemented; emulator and live Check accepted |
 | C-46 | AAuth, logging, encryption described but absent | 09 | partly decided (PD-5 defines gISR and AAuth). R0: rules stay open until 2027-06-30 except `issue_drafts` (server only); real access rules are roadmap stage 5 |
+
+Current M3 result: [technical continuation report and grounding-correction proposal](tasks/M3-technical-continuation-report.md). Schema admission succeeded; semantic validation stopped the pilot.

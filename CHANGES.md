@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 — Approved technical continuation and grounded-output stop
+
+Added cumulative 20-attempt continuation preserving all prior reservations and receipts. Diagnosed provider schema state complexity, simplified provider-only constraints while retaining strict validation, and obtained model output. The model copied a reference title as an aspect; strict input grounding rejected it. Four cumulative reviews, zero embeddings, US$0.055576 reserved. No further semantic prompt work or provider request; concrete next proposal in specs/tasks/M3-technical-continuation-report.md. No production/deployment/scoring changes.
+
 ## 2026-11-17 - Corrected pilot HTTP400 receipt and safe provider diagnostics
 
 The authorized corrected run stopped on its first HTTP400, retaining both attempts andUS$0.027255 cumulative reservations with zero embeddings/database writes. Detailed provider error text was not retained; fixed that diagnostic gap offline with redacted bounded messages/field paths. Replaced the recorded null enum member with an anyOf null branch as a documented-subset compatibility candidate, without claiming confirmed cause or provider admission. Prepared bounded technical-continuation proposal under the originalUS$0.50; no third request is authorized. No model/math/threshold/production/deployment change. See specs/tasks/M3-corrected-pilot-report.md.

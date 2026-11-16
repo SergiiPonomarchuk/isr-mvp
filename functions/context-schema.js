@@ -28,6 +28,13 @@ function responseSchema() {
       demographic_evidence: { type: "array", maxItems: 64, items: object({ field: { type: "string", enum: [...DEMOGRAPHIC_FIELDS] }, value: { type: "string", description: "String form of the exact non-default criterion value." }, quote: { type: "string", description: "Exact input quote stating the affected-person attribute; never just issue-topic words." } }) }
     }) }
   });
+  // Keep the provider grammar small; strict bounds remain enforced by the server.
+  function compact(value) {
+    if (!value || typeof value !== "object") return;
+    delete value.maxItems; delete value.minimum; delete value.maximum;
+    Object.values(value).forEach(compact);
+  }
+  compact(schema);
   return schema;
 }
 module.exports = { PROMPT_VERSION, SCOPES, DEMOGRAPHIC_FIELDS, responseSchema };
