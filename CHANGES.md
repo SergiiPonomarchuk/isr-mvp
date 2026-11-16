@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Corrected pilot HTTP400 receipt and safe provider diagnostics
+
+The authorized corrected run stopped on its first HTTP400, retaining both attempts andUS$0.027255 cumulative reservations with zero embeddings/database writes. Detailed provider error text was not retained; fixed that diagnostic gap offline with redacted bounded messages/field paths. Replaced the recorded null enum member with an anyOf null branch as a documented-subset compatibility candidate, without claiming confirmed cause or provider admission. Prepared bounded technical-continuation proposal under the originalUS$0.50; no third request is authorized. No model/math/threshold/production/deployment change. See specs/tasks/M3-corrected-pilot-report.md.
+
 ## 2026-11-17 - Grounded context schema and cumulative corrected-pilot guard
 
 Author approved the context correction and one controlled rerun. Added shared structured enums, literal criterion provenance and U6 home/work/property guidance under a separate prompt/schema version; current unfinished drafts require the corrected contract while frozen completed replay/scoring stays unchanged. The corrected pilot carries the original receipt/reservation into its15-review/45-text/17-POST cumulative guard under the sameUS$0.50 total, with schema bytes included. Node168 passed/five optional skips; Python140 run/two skips; actual Check/Create/Join emulator parity passed before paid execution. No model/math/threshold/rules/deployment or historical-data change.

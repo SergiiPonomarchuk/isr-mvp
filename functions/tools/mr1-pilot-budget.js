@@ -28,6 +28,33 @@ function usageOf(response) {
   return Object.keys(result).length ? result : null;
 }
 
+function redactProviderText(value,apiKey){
+  let text=String(value==null?"":value);
+  if(apiKey)text=text.split(apiKey).join("[credential redacted]");
+  return text.replace(/https?:\/\/[^\s"']+/gi,"[URL redacted]")
+    .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi,"[email redacted]")
+    .replace(/Bearer\s+[A-Za-z0-9._~+\/-]+/gi,"Bearer [redacted]")
+    .replace(/AIza[A-Za-z0-9_-]{20,}/g,"[credential redacted]").slice(0,2000);
+}
+async function providerError(response,apiKey){
+  const safe={http_status:response.status};
+  try{
+    const parsed=await response.clone().json(),error=parsed.error||{};
+    safe.code=typeof error.code==="number"?error.code:null;
+    safe.status=typeof error.status==="string"?redactProviderText(error.status,apiKey):null;
+    safe.message=redactProviderText(error.message||"Provider returned an error without a message.",apiKey);
+    const violations=[];
+    for(const detail of Array.isArray(error.details)?error.details:[]){
+      for(const v of Array.isArray(detail.fieldViolations)?detail.fieldViolations:[]){
+        if(violations.length===20)break;
+        violations.push({field:typeof v.field==="string" && /^[A-Za-z0-9_.[\]\/-]{1,200}$/.test(v.field)?v.field:"[field path unavailable]",description:redactProviderText(v.description,apiKey)});
+      }
+    }
+    if(violations.length)safe.field_violations=violations;
+  }catch(_){safe.message="Provider error body was unavailable or was not JSON; no raw body saved.";}
+  return safe;
+}
+
 class Ledger {
   constructor(folder, pins, authorization, parentReceipt = null) {
     let inherited=null;
@@ -138,7 +165,13 @@ function guardedClient(ledger, { apiKey, fetchFn = globalThis.fetch, beforeReque
     if (JSON.stringify(actual) !== JSON.stringify(a.text_sha256)) fail("SDK transport text differs from its reservation.");
     if(a.kind==="review" && Review.hash(body.generationConfig && body.generationConfig.responseJsonSchema)!==a.schema_sha256)fail("SDK transport schema differs from the reservation.");
     ledger.transport(a); // Durable reservation and one-HTTP fuse, before the network.
-    return fetchFn(new Request(request, { redirect: "error" }));
+    const response=await fetchFn(new Request(request,{redirect:"error"}));
+    if(!response.ok){
+      a.provider_error=await providerError(response,apiKey);
+      ledger.persist();
+      save(path.join(ledger.folder,`attempt-${a.id}-provider-error.json`),a.provider_error);
+    }
+    return response;
   };
   const sdk = new GoogleGenAI({ apiKey, httpOptions: { retryOptions: { attempts: 1 }, timeout: 120000, fetch: transport } });
   let context;
@@ -160,4 +193,4 @@ function guardedClient(ledger, { apiKey, fetchFn = globalThis.fetch, beforeReque
   };
   return { setContext: value => { context = value; }, models: { generateContent: args => invoke("review", args), embedContent: args => invoke("embedding", args) } };
 }
-module.exports = { Ledger, LIMITS, CUMULATIVE_LIMITS, guardedClient, save, sha };
+module.exports = { Ledger, LIMITS, CUMULATIVE_LIMITS, guardedClient, save, sha, providerError };

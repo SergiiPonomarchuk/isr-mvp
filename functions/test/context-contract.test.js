@@ -38,3 +38,8 @@ test('actual review helper sends the shared structured schema and logs its hash'
  let sent;helper._setClientForTests({models:{generateContent:async args=>{sent=args;return {text:JSON.stringify(corrected())};}}});
  const response=await helper.reviewContext(input,ranked,library);assert.deepEqual(sent.config.responseJsonSchema,R.responseSchema());assert.equal(response.meta.prompt_version,R.PROMPT_VERSION);assert.equal(response.meta.schema_sha256,R.schemaHash());assert.equal(buildAnalyzerLog({meta:response.meta}).schema_sha256,R.schemaHash());
 });
+
+test('nullable scope uses a null branch rather than an unsupported null enum member',()=>{
+ const scope=R.responseSchema().properties.scope;assert.ok(scope.anyOf.some(x=>x.type==='null'));assert.ok(scope.anyOf.some(x=>x.type==='string' && !x.enum.includes(null)));
+ const walk=v=>{if(!v || typeof v!=='object')return;if(Array.isArray(v.enum))assert.ok(v.enum.every(x=>typeof x==='string'||typeof x==='number'));Object.values(v).forEach(walk);};walk(R.responseSchema());
+});

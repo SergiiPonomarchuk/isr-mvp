@@ -1,0 +1,13 @@
+{
+  "version": "m3-provider-compatibility-audit-1",
+  "recorded_http_status": 400,
+  "provider_explanation_retained": false,
+  "recorded_nullable_enum_paths": [
+    "/properties/scope"
+  ],
+  "candidate_correction": "Use anyOf string-enum and null branches; semantics unchanged",
+  "actual_cause_confirmed": false,
+  "subsequent_provider_calls": 0,
+  "original_and_corrected_receipts_immutable": true,
+  "public_contract_source": "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+}

@@ -51,3 +51,9 @@ test('a changed parent receipt blocks transport before another reservation or HT
  const l=new Ledger(path.join(temp,'child'),{},'Synthetic corrected approval',{file,sha256:hash});let calls=0;const c=guardedClient(l,{apiKey:'unit-test-not-a-real-key',fetchFn:async()=>{calls++;return json({});}});
  try{fs.appendFileSync(file,' ');c.setContext({caseId:'x',stage:'review'});await assert.rejects(c.models.generateContent(reviewArgs()),/receipt changed/);assert.equal(calls,0);assert.equal(l.currentTotals().reviews,0);}finally{l.close();}
 });
+
+test('HTTP error diagnostics preserve schema field messages while redacting credentials, URLs and emails',async()=>{
+ const l=receipt(),secret='unit-test-not-a-real-key';let calls=0;
+ const c=guardedClient(l,{apiKey:secret,fetchFn:async()=>{calls++;return json({error:{code:400,status:'INVALID_ARGUMENT',message:'Schema failed; '+secret+' owner@example.test https://example.test/?key='+secret,details:[{fieldViolations:[{field:'generationConfig.responseJsonSchema.properties.scope',description:'Null enum rejected '+secret}]}]}},400);}});
+ try{c.setContext({caseId:'x',stage:'review'});await assert.rejects(c.models.generateContent(reviewArgs()),/no retry/);assert.equal(calls,1);const text=fs.readFileSync(path.join(l.folder,'attempt-1-provider-error.json'),'utf8');assert.match(text,/generationConfig.responseJsonSchema.properties.scope/);assert.match(text,/Null enum rejected/);assert.ok(!text.includes(secret));assert.ok(!text.includes('owner@example.test'));assert.ok(!text.includes('https://'));}finally{l.close();}
+});

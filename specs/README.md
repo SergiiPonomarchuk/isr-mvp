@@ -11,7 +11,7 @@ Created by task S0 (`tasks/S0-restructure-specs.md`). Every component file state
 
 ---
 
-Current checkpoint: [M3 application integration](tasks/M3-app-integration.md) merged through PR41 and mocked local UI accepted. [Approved real-model pilot](tasks/M3-pilot-report.md) stopped after its first schema failure; [context-contract correction and a controlled cumulative rerun](tasks/M3-context-contract-fix-proposal.md) require a new author decision. No further paid call/runtime fix is authorized yet. Full-population capacity/performance and deployment remain gated; historical public scores are unchanged.
+Current checkpoint: [M3 context correction](tasks/M3-context-contract-fix-proposal.md) implemented and offline/emulator checks passed; [corrected real pilot](tasks/M3-corrected-pilot-report.md) stopped onHTTP400 before a valid model result. [Bounded technical continuation](tasks/M3-provider-compatibility-continuation.md) needs author approval; no third actual request is authorized. Full-population publication capacity/performance and deployment remain gated; historical public scoring is unchanged.
 
 ## Status legend
 

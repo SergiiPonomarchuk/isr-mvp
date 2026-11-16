@@ -19,7 +19,7 @@ function responseSchema() {
     result: { type: "string", enum: ["pass", "needs_clarification", "not_consistent"] },
     message: text,
     questions: { type: "array", items: text, maxItems: 3 },
-    scope: { type: ["string", "null"], enum: [...SCOPES, null] },
+    scope: { anyOf: [{ type: "string", enum: [...SCOPES] }, { type: "null" }] },
     location_reference: { ...object({ anchor: { type: "string", enum: [...ANCHORS] }, place: text }), type: ["object", "null"] },
     accepted: { type: "array", items: object({ id: text, aspect_id: text, evidence: text }) },
     excluded: { type: "object", additionalProperties: text },
