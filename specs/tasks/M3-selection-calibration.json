@@ -1,4 +1,6 @@
 {
+  "tested_selection_policy": "original mr1 automatic cardinality; historical selection_outcome, no semantic context review performed",
+  "current_policy": "mr1-context-review-1: >3 raw candidates triggers context review; accepted reference set not computed",
   "date": "2026-11-16",
   "baseline": "89fb6bc",
   "environment": "offline committed input vectors extracted from accepted snapshot; isolated emulator attempt timed out and was stopped without export",

@@ -14,7 +14,9 @@ A streaming RecordIO/protobuf reader then selected issue_vectors keys matching t
 
 Metric tested: max(0,cos(saved actual-issue RETRIEVAL_QUERY vector, committed reference RETRIEVAL_DOCUMENT vector)). Saved t1 title/description vectors contain no new clarification/context embeddings. Threshold findings apply only to this metric/library. [Inputs](M3-calibration/inputs.json), [reproducer](M3-calibration/reproduce.py) and [full ranks/sensitivity](M3-selection-calibration.json) make this experiment repeatable without an emulator, credentials or network.
 
-## Results
+## Results under the original automatic-cardinality policy
+
+The recorded selection_outcome fields are historical outputs of the tested automatic >3 rule, not current semantic/context decisions. The approved mr1-context-review-1 amendment maps long raw chains to context_review_required. No context model has reviewed these cases; no unchanged-issue pass, user-clarification need or final reviewed set is claimed.
 
 | Scenario | Top reference / score | Chain count | Selection outcome |
 |---|---|---:|---|
@@ -75,7 +77,7 @@ At the unchanged .05 rule, nine of ten inputs chain through100 references, inclu
 
 Reducing the gap to .02 is insufficient: two vague cases and the lock/software compound then select only one reference, and the school/budget compound selects three. Cardinality-pass is not semantic/context-pass. Thus the successful singleton results on the original D1 cases cannot justify simply lowering the gap and shipping it.
 
-**Recommendation for the author's next policy decision:** retain .30/.05 as recorded until amended, but treat this evidence as a gate against runtime deployment. Design an explicit context/affected-group/scope/authority/compound-issue check before deciding whether reformulation is needed. Review whether >3 remains a mandatory user-reformulation rule or becomes a reference-ambiguity diagnostic. Compatibility exclusion must have recorded substantive reasons, not silently drop references to get below3. A change to selection ordering/cardinality requires an explicit PD-9 amendment. No such rule change is made in this PR.
+**Approved policy amendment (author: "approved", 2026-11-16):** PD-9 now uses mr1-context-review-1. More than three raw references triggers internal context review, not mandatory user reformulation. Every case still needs semantic/context validation. The review may pass a clear issue unchanged, ask for missing facts, or suggest a user-chosen split for multiple incompatible decisions. Raw-chain/cardinality metrics remain evidence, not a diagnosis of poor wording. .30/.05 are unchanged. A reviewed compatible set J needs explicit inclusion/exclusion reasons; do not drop candidates simply to reach3 or blend all100. Define bounded aspect/review resources and direct-affectedness before implementation.
 
 No further provider calls are approved or needed to inspect these results. Next work can draft the context-check contract and direct-affectedness fixtures offline; runtime integration and real-profile score changes remain gated on author policy decisions and a concrete implementation plan.
 
@@ -91,6 +93,8 @@ python specs/tasks/M3-calibration/reproduce.py
 This reads committed vectors/library/manifest and replaces only the calibration JSON report. It has no network or database API and needs no key. Snapshot extraction and provider calls need not be repeated; the reproducer replays both recorded vector experiments offline.
 
 ## Status log
+
+- 2026-11-16 approved context amendment: long raw chain -> internal review. Original rank/cardinality evidence is retained under the tested historical policy. Runtime context evaluation, reviewed reference sets and member-score comparison are still pending; no new calls.
 
 - 2026-11-16 follow-up: author approved proceeding with the prepared ten-text allowance. One embedding request/ten texts completed, no retries; estimated484 tokens, provider usage unavailable. Nine100-chains and one singleton at.05; .02 still admits vague/compound cardinality passes. No threshold/runtime change or final-member-score claim. Context/cardinality policy is now the next decision gate.
 

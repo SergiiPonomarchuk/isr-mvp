@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-16 - Long reference chains trigger context review
+
+Applied author-approved PD-9 amendment: >3 raw references triggers internal context review, with clarification/splitting only when substantive findings require it. Clear issues may pass unchanged. Defined raw chain vs reviewed set J and alpha normalization; prohibited arbitrary truncation or100-way automatic blends. Updated protocol/guide/spec/skill and labelled measured cardinality results as historical. Runtime and .30/.05 settings unchanged; no new provider calls.
+
 ## 2026-11-16 - Bounded ten-text embedding experiment
 
 On author proceed, embedded the ten reviewed inputs once: one request/ten texts, no retries, estimated484 input tokens and no provider usage count. The .05 chain gives nine100-chains including clear zoning/workplace inputs; lowering to.02 still admits vague/compound cardinality passes. Added recorded vectors/receipt/offline replay and the resulting context-policy gate. No threshold, runtime or database changes.

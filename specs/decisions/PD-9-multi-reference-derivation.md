@@ -2,17 +2,17 @@
 
 Status: **Intended model adopted for documentation by the author, 2026-11-16** ("Fix all the math and logic changes in all documents"). Runtime implementation and threshold calibration are pending. This decision supersedes fixed-five/chosen-type min-max derivation in Analyzer Step4A and the previous creator/candidate-based X definitions. PD-8's unweighted Education + Experience, PD-3's additive ISR, and versioned historical results remain authoritative.
 
-The selection settings .30 minimum similarity, .05 adjacent gap and maximum three references are initial experimental settings. Similarity is not a probability or confidence. A reference is a worked analogy; category labels do not require a separate same-type group. All equations below are the intended version mr1, not a claim about deployed behavior. Runtime changes require an implementation spec/plan; no paid evaluation, migration, deploy or rules change is authorized here.
+The selection settings .30 minimum similarity and .05 adjacent gap are experimental. A raw chain longer than three triggers context review, not automatic reformulation (author-approved amendment, 2026-11-16). Similarity is not a probability or confidence. A reference is a worked analogy; category labels do not require a separate same-type group. The amended selection/review policy is mr1-context-review-1; all scoring equations retain mr1 arithmetic. These are intended specifications, not a claim about deployed behavior. Runtime changes require an implementation spec/plan; no paid evaluation, migration, deploy or rules change is authorized here.
 
 ## 1. Consistent notation
 
 | Symbol | Meaning |
 |---|---|
 | i | Person being evaluated |
-| j | Reference example selected for this issue |
+| j | Reference example in the reviewed compatible set J (raw candidates retained separately) |
 | k | Education record; l = work-experience record; h = directly affected person |
 | s_j | Similarity of the actual issue/context to reference j; finite scalar in [0,1] |
-| alpha_j | s_j / sum(selected s); nonnegative, sums to one |
+| alpha_j | s_j / sum_(k in J) s_k; nonnegative, sums to one over J after context passes |
 | z | Vector used to retrieve reference examples for the actual submitted issue/context |
 | r_j | Stored reference-example retrieval vector |
 | u_j | Vector of an evidenced aspect of the actual issue associated with j |
@@ -64,15 +64,16 @@ Sources: functions/isr.js:36,53,63,92,108; functions/index.js:352-382; functions
 1. Verify the reference library/model/template/version and rank all valid references by unrounded s descending, stable ID tie break.
 2. If s_1 < .30, no reference qualifies: ask for context or explain absent library coverage.
 3. Starting at j=1, include the next reference only while s_j >= .30 AND s_(j-1)-s_j < .05. Stop at the first failed condition; do not resume at a lower cluster.
-4. Count the entire chain before any cap. If m>3, return needs_clarification. Do not retain just the first three or hide a conflicting fourth reference.
-5. If 1<=m<=3, check substantive compatibility with the actual issue: affected people, place/scope, decision/authority and supported aspects. A conflict requires clarification even with only two references. Do not silently drop candidates to get under the cap.
-6. Set alpha_j=s_j/sum_k s_k.
+4. Count the entire raw chain before any cap. If m>3, return the internal state context_review_required. This is neither a user clarification request nor a failure. Do not retain just the first three, hide a conflicting fourth reference, or classify clear input as poorly written from cardinality alone.
+5. Every chain, including one to three references, must pass substantive context validation: affected people, place/scope, requested decision, authority and evidenced aspects. For a long chain, explicitly distinguish overlapping library analogies from missing context or multiple unrelated decisions. Review returns pass, needs_clarification, not_consistent, or an analysis/service error. Ask the user only for missing/inconsistent facts; suggest splitting only for substantively distinct decisions supported by the input. An internal/context-service failure must not be blamed on the user.
+6. Record the reviewed compatible reference set J and the reason/evidence for each retained or excluded candidate. Retain the raw ranking/chain separately. Do not discard references merely to reach three. The number of references alone does not decide publication; do not automatically blend all100 raw candidates either. A bounded reviewed-set/aspect resource policy is an implementation gate, not an implicit permission for100 aspect embeddings.
+7. Only after context passes, set alpha_j=s_j/sum_(k in J) s_k for j in J and derive parameters from that reviewed set. With no supported set, ask for context or report library coverage limitations; never invent default parameters. In all subsequent scoring formulas j ranges over J. Context review may pass an unchanged clear issue despite a long raw chain.
 
 Boundary: a score exactly .30 qualifies; a gap exactly .05 breaks the chain. Exact score ties remain tied, including ties across the third/fourth boundary. Calculations use raw values with a documented machine-precision equality policy; displayed percentages are rounded separately. No probabilistic interpretation is claimed.
 
-Examples: [.57,.55,.51] -> three; alpha=[.349693,.337423,.312883]. [.57,.53,.49,.45] -> four -> clarification. [.57,.51,.49] -> only the first, because the first gap breaks the chain.
+Examples: [.57,.55,.51] -> three; alpha=[.349693,.337423,.312883]. [.57,.53,.49,.45] -> four -> internal context review; user clarification depends on its findings. [.57,.51,.49] -> only the first, because the first gap breaks the chain.
 
-Near scores do not establish uncertainty or complexity. Four redundant references can describe a very clear issue. The >3 rule is the requested operational clarification rule, whose false alarms must be evaluated. Show all chain titles/categories, scores and matching aspects. Suggest narrower wording or a split only when supported by the input; an initial planning issue must itself pass the same rules. Library duplicates/coverage are protocol maintenance questions, not reasons to blame the submitter.
+Near scores do not establish uncertainty or complexity. Four redundant references can describe a clear issue. Show the raw chain titles/categories, scores and matching aspects in review evidence. Context review must explain why reformulation is needed, if it is needed. Library duplicates/coverage are protocol maintenance questions. Clear input may pass unchanged; missing facts get questions; unrelated decisions may receive user-chosen split or initial-planning suggestions. This amendment supersedes the original automatic >3 user-reformulation rule; arithmetic, .30/.05 thresholds and existing live behavior are unchanged.
 
 ## 4. Context instantiation and geography
 
@@ -165,12 +166,12 @@ Precision: current Create/Join round stored raw R/E and parts to three decimals 
 
 Store reference IDs/scores/alpha, exact library and selection versions, input/context hash, supporting aspect texts, vector metadata/hash, per-reference contextual demographic rules/domain/CBC adjustment, common location/envelope and derivation reasons. Store member per-reference D/S/education/work contributions or enough immutable inputs to reproduce them; expose totals consistent with the formulas. The same contract must drive Check preview, Create, explicit Join, member tooltips and independent JS/Python checking.
 
-Reference vectors r_j and actual-issue aspect vectors u_j are not interchangeable. A new aspect embedding step means PR #38's proposed one-embedding-text ceiling is no longer reliable: plan for selection plus up to three aspect texts, possibly retaining a separate whole-issue vector for U10 duplicate matching. Batching several texts still consumes several embedding texts. Reuse only when exact text/model/task/template identities match. Do not re-embed the population solely for this change if compatible existing vectors can be retained. No provider budget is approved by this decision.
+Reference vectors r_j and actual-issue aspect vectors u_j are not interchangeable. A new aspect embedding step means PR #38's proposed one-embedding-text ceiling is no longer reliable: plan for selection plus the approved bounded reviewed-set aspect texts, possibly retaining a separate whole-issue vector for U10 duplicate matching. Batching several texts still consumes several embedding texts. Reuse only when exact text/model/task/template identities match. Do not re-embed the population solely for this change if compatible existing vectors can be retained. No provider budget is approved by this decision.
 
 
 ## Implementation gates and remaining choices
 
-- Pin the retrieval metric/text/context template and score version; calibrate .30/.05 and >3 false alarms on all D1 cases and negative cases. Thresholds cannot be transplanted across different metrics or libraries.
+- Pin the retrieval metric/text/context template and score version; calibrate .30/.05, long-chain context review and false user-clarification requests on all D1 cases and negative cases. Thresholds cannot be transplanted across different metrics or libraries.
 - Specify actual-issue aspect extraction/vector templates and the direct-affectedness predicate A_j, including data coverage and relation direction tests. Do not copy the examples' people, owners or places.
 - Resolve candidate cutoff/bypass and top300 approximation changes so direct and social channels remain reachable. The present automatic top100 formation policy and explicit discussion Join remain separately versioned; this decision does not remove the cap.
 - Preserve or explicitly version three-decimal storage before normalization, exact replay, Join recalculation and voting freeze. Formula examples use unrounded values unless stated otherwise.
@@ -179,5 +180,7 @@ Reference vectors r_j and actual-issue aspect vectors u_j are not interchangeabl
 - Scope includes docs/, specifications and the scoring skill documentation only. Existing app code, test fixtures, example numeric anchors/vectors and historical reports are not rewritten as if mr1 had run.
 
 ## Status log
+
+- 2026-11-16 amendment: author approved context review before deciding reformulation. Raw >3 becomes context_review_required; reviewed compatible set J has evidence/reasons, no arbitrary truncation or automatic100-way blend. User clarification/splitting follows semantic findings. No runtime implementation or additional provider allowance.
 
 - 2026-11-16: author authorized the reviewed multi-reference documentation corrections, including X from affected people's relationships. Recorded selection, paired relevance, max geography, single education floor, one-public ISR, versioning and implementation gates. Corrected companion documents and examples; runtime unchanged.

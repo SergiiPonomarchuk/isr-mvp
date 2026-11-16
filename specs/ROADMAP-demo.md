@@ -1,6 +1,6 @@
 # Roadmap to a demonstration stage
 
-**2026-11-16 current checkpoint:** This roadmap's original gap tables/estimates are historical. D1 live core cycle is verified. Stage4/M3 now follows [PD-9](decisions/PD-9-multi-reference-derivation.md), including .30/.05 chain selection, >3 reformulation, paired D/S/X, affected-person relations, max geography and single-floor Expertise. Its scope includes member-score integration; old fixed-five/range-only descriptions below are superseded, not pending instructions.
+**2026-11-16 current checkpoint:** This roadmap's original gap tables/estimates are historical. D1 live core cycle is verified. Stage4/M3 now follows [PD-9](decisions/PD-9-multi-reference-derivation.md), including .30/.05 chain selection, >3 internal context review before any user reformulation, paired D/S/X, affected-person relations, max geography and single-floor Expertise. Its scope includes member-score integration; old fixed-five/range-only descriptions below are superseded, not pending instructions.
 
 Prepared 2026-11-07 against branch `a3-options-and-g-anchors` (A2 and A3 implemented, not merged; live data not migrated). Evidence: `claude_export/IMPLEMENTATION_FACTS.md` (IF), the component files in this folder, and the code at the cited lines.
 

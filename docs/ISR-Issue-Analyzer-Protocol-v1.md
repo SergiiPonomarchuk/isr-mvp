@@ -550,11 +550,11 @@ complete and consistent with the rules (scope and competence), and tells the top
 a number.** The assistant is a rule-based gatekeeper. It does not judge the merits of the issue. It may refuse a type or
 context that is not consistent with the rules, and it must say which rule or example it applied.
 
-**Reference derivation.** Apply PD-9: rank reference similarities, require s>=.30, extend while each adjacent score gap is<.05, and ask for reformulation when the full chain contains more than three references. These are versioned experimental settings, not probabilities. With one to three compatible references, normalize their similarities and compute the numeric blends, paired member scores and max geography exactly as PD-9 specifies. No fixed-five requirement or separate same-type table is required. Categories explain references; they are not probabilities or freely adjustable numeric profiles.
+**Reference derivation.** Apply PD-9: rank reference similarities, require s>=.30, extend while each adjacent score gap is<.05, and trigger internal context review when the full raw chain contains more than three references. These are versioned experimental settings, not probabilities. After context passes, record a bounded reviewed compatible reference set J with inclusion/exclusion evidence, then normalize its similarities and compute the numeric blends, paired member scores and max geography exactly as PD-9 specifies. No fixed-five requirement or separate same-type table is required. Categories explain references; they are not probabilities or freely adjustable numeric profiles.
 
 **Procedure.**
 
-1. Select the full reference chain (Section7/PD-9). Show titles/categories, scores and actual-context matches. No match, incompatible context or more than three references returns needs_clarification. Suggest clearer wording or splitting only when supported; the user chooses any reformulation or initial planning issue.
+1. Select the full reference chain (Section7/PD-9). Show titles/categories, scores and actual-context matches. Every chain needs context validation. More than three references means context_review_required internally; a clear issue may pass unchanged. Missing facts or incompatible context can return needs_clarification, while library/service failures have their own outcomes. Suggest clearer wording or splitting only when supported; the user chooses any reformulation or initial planning issue.
 2. Derive parameters using normalized reference weights. Instantiate categorical rules and aspect texts from actual context; never average ages, ownership or eligibility labels. Preserve paired weights/results and compute member X from affected people, as PD-9 specifies.
 3. Scope and competence check. Does the context show that a local rule gives the decision to an authority, an owner or another
    body (a public street, a school, a utility, a private courtyard)? Such facts are tied to the location and to the local law and
@@ -589,7 +589,7 @@ citing the rule or example. Every run is logged.
     "consistent_alternatives": ["street.traffic_limitation.proposal_to_authority"],
     "library_version": "1.0",
     "reference_ids": [17, 44, 63],
-    "selection_version": "mr1",
+    "selection_version": "mr1-context-review-1",
     "similarities": [0.57, 0.55, 0.51],
     "alpha": [0.3496932515, 0.3374233129, 0.3128834356]
   },
@@ -759,7 +759,7 @@ The single-reference JSON in section5 remains a legacy compatibility projection,
 
 ## 7. How the Issue Analyzer Uses the reference library
 
-PD-9 is the normative mathematical definition. Selection uses one recorded similarity metric/text/context/vector version, the consecutive .30/.05 chain and >3 clarification. Do not compare scores from different metrics or silently choose only the first three. One-reference input reduces to its scoring specification; no extra type-group calibration is required merely to get five examples.
+PD-9 is the normative mathematical definition. Selection uses one recorded similarity metric/text/context/vector version, the consecutive .30/.05 raw chain and >3 internal context review. Review may accept an unchanged issue or ask concrete questions/suggest splitting based on actual context. Retain raw-chain evidence and reviewed set J separately, normalize alpha over J, and never truncate to three or automatically blend every raw match. Do not compare scores from different metrics or silently choose only the first three. One-reference input reduces to its scoring specification; no extra type-group calibration is required merely to get five examples.
 
 Blend numeric relevance and ISR weight groups with alpha. Use the widest compatible mu/sigma around the actual issue location. Derive D/S/E/X for actual people from context-instantiated rules, actual-issue aspect vectors and affected-person relations. Apply one age floor after combined education, then normalize combined R/E over one final public. Scope/authority conflicts require clarification; model/service failures are distinct from user inconsistency. External documents are context data, not model instructions.
 

@@ -92,7 +92,7 @@ The system will suggest from these categories:
 
 The full-effect distance is mu; sigma controls how relevance fades beyond it. The displayed fade distance is3*sigma. For compatible reference cases around the same actual place, the system takes the largest mu and largest sigma. These can come from different references. Digital/nonlocal scope cannot silently enlarge a building issue.
 
-You do not type these values. If they look wrong, clarify who is affected and where, then Check again. Reference scores are similarities, not probabilities. The initial rule includes matches scoring at least .30 while consecutive gaps remain below .05. More than three selected cases triggers a display of their titles/categories/similarities and suggested clearer wording or a split. You choose the reformulation; an initial planning issue must also be clear enough to check.
+You do not type these values. If they look wrong, clarify who is affected and where, then Check again. Reference scores are similarities, not probabilities. The initial rule includes matches scoring at least .30 while consecutive gaps remain below .05. More than three raw matching cases triggers a context review, with their titles/categories/similarities available as evidence. A clear issue can proceed unchanged. The system asks for missing facts, or suggests clearer wording/a split only when the review identifies that need. You choose any reformulation; an initial planning issue must also be clear enough to check.
 
 ### Local Rules and Ownership
 

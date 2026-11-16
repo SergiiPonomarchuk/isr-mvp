@@ -1,5 +1,6 @@
 {
-  "scope": "Selection geometry only; no context LLM or final member-score computation",
+  "scope": "Historical original-mr1 cardinality; no semantic context review or final member-score computation",
+  "current_policy": "mr1-context-review-1: long raw chains require internal context review, not automatic user reformulation",
   "cases": [
     {
       "id": "zoning-authority",
