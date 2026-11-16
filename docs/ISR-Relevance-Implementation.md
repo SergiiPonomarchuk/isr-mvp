@@ -22,10 +22,10 @@ The ad-hoc public is formed from the issue's parameters, and the parameters foll
 ## Relevance processing order for mr1
 
 1. Freeze actual context, compatible reference chain, alpha, aspect vectors/rules and one geographical center/max-mu/max-sigma curve.
-2. Retrieve candidates across D/G/S channels and determine directly affected people per reference without X. The direct-affectedness predicate must be explicit and reviewed; final public membership is not its definition.
+2. Retrieve candidates across D/G/S channels and compute blended direct r0 without X. A is exactly r0>=Theta; no separate seed predicate or old top100 cap applies to the new formation policy.
 3. Expand one social step using affected people's recorded outgoing links. Do not prefilter these candidates to residents or people already scoring above the formation threshold.
 4. Compute paired D/G/S/X contributions, with the upper bound sum_j alpha_j*(w_Dj*D_ij+w_Gj*G_i+w_Sj*1+w_Xj*X_ij) when S remains unknown. Prune only with a proven bound that preserves all channels. Current top300 approximations/cutoff bypasses require a full-population comparison before adoption.
-5. Form the public under the separately versioned threshold/cap/creator/Join policy; compute combined Expertise and one-public normalized ISR. E and ISR aggregation weights do not determine automatic membership.
+5. Form A union B under the new versioned inclusive/direct-threshold and automatic-relative policy; compute combined Expertise and one-public normalized ISR. E and ISR aggregation weights do not determine automatic membership.
 
 The earlier demographic-first, geography-first, creator-network pipeline is superseded in the intended model. Runtime integration is pending; no scaling percentages or coverage guarantees are established by this document.
 
@@ -149,11 +149,7 @@ Where:
 
 ### Affected-person social relevance
 
-For reference j, determine directly affected people A_j from actual context and D/G/S evidence without X. Read each affected person k's recorded outgoing socialRelations toward evaluated person i. X_ij=max({t_ki:k in A_j,k!=i} union {0}); use the explicit finite [0,1] tie, else the documented family mapping. No creator privilege, inferred reciprocity, self-links, summation or friends-of-friends expansion. The direct-affectedness predicate and data coverage must be specified before implementation; do not substitute final public membership or add an arbitrary threshold.
-
-Example: affected resident k records spouse i with no explicit tie, giving X_ij=.3. Another affected person records i with tie=.6, giving combined X_ij=.6. An outgoing relation recorded only by i does not establish either link. A person recruited through X does not seed another social step.
-
-See PD-9 for paired relevance weights, one-step processing and how references with different affected sets combine. The previous candidate-outgoing tie-times-R0 sketch and deployed creator-based shortcut are superseded in the intended model.
+Use PD-9's two-phase rule: blended weighted D/G/S>=Theta forms A, with no X bonus. One-step eligible outgoing relatives belowTheta form B regardless of final R. For each supplying A, accept the full weighted tie addition only if r0_B+W_X*t_AB<=r0_A; otherwise reject that addition. Choose the maximum eligible addition across sources, or0 if none. Do not partially cap the addition, require B to crossTheta, recruit through B or silently truncate membership.
 
 ### 1.3 Issue Analysis & Weight Assignment
 
@@ -265,11 +261,7 @@ S_ij=max(0,cos(p_i,u_j)), where p_i is the existing person profile vector and u_
 
 ### Affected-person social relevance
 
-For reference j, determine directly affected people A_j from actual context and D/G/S evidence without X. Read each affected person k's recorded outgoing socialRelations toward evaluated person i. X_ij=max({t_ki:k in A_j,k!=i} union {0}); use the explicit finite [0,1] tie, else the documented family mapping. No creator privilege, inferred reciprocity, self-links, summation or friends-of-friends expansion. The direct-affectedness predicate and data coverage must be specified before implementation; do not substitute final public membership or add an arbitrary threshold.
-
-Example: affected resident k records spouse i with no explicit tie, giving X_ij=.3. Another affected person records i with tie=.6, giving combined X_ij=.6. An outgoing relation recorded only by i does not establish either link. A person recruited through X does not seed another social step.
-
-See PD-9 for paired relevance weights, one-step processing and how references with different affected sets combine. The previous candidate-outgoing tie-times-R0 sketch and deployed creator-based shortcut are superseded in the intended model.
+PD-9's two-phase A/B membership and social-limit section is normative. A is determined by the weighted direct score>=Theta; B comprises eligible outgoing relatives of A outside A regardless of score. Source ceilings are checked individually before maximizing. Equality is accepted; an overflowing full addition is rejected, with no partial cap. Related B members remain members even with0 accepted X or0 total R. A and B do not generate further social hops.
 
 ## Part 6: Combined Relevance Score
 

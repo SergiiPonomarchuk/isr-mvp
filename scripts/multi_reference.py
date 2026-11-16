@@ -119,3 +119,42 @@ def directed_ties(affected_ids, outgoing, candidate):
         if h != candidate and candidate in outgoing[h]:
             result.append({"affectedId": h, "tie": number(outgoing[h][candidate], "tie", 0, 1)})
     return result
+
+
+def cohorts(model, people, outgoing, threshold=.15):
+    """A: inclusive direct threshold. B: outgoing A relatives, regardless final R."""
+    number(threshold, "threshold", 0, 1)
+    population, direct, indirect = {}, {}, {}
+    for p in people:
+        key = identifier(p["uid"])
+        if key in population:
+            raise ValueError("Duplicate person")
+        if any(p["aspects"].get(ref["id"], {}).get("X") != 0 for ref in model["refs"]):
+            raise ValueError("Direct phase requires X=0")
+        score = member(model, p["age"], p["aspects"])
+        row = dict(score, uid=key, direct_relevance=score["R"], social_addition=0, social_source=None, social_tie=0)
+        population[key] = row
+        if row["R"] >= threshold:
+            direct[key] = dict(row, cohort="A")
+    for source, a in direct.items():
+        if source not in outgoing or not isinstance(outgoing[source], dict):
+            raise ValueError("Affected relation data unavailable")
+        for target, value in outgoing[source].items():
+            identifier(target)
+            tie = number(value, "tie", 0, 1)
+            if target == source or target in direct:
+                continue
+            if target not in population:
+                raise ValueError("Related person data unavailable")
+            person = population[target]
+            if target not in indirect:
+                indirect[target] = dict(person, cohort="B", contributions=dict(person["contributions"]), effective=dict(person["effective"]))
+            b = indirect[target]
+            addition = model["relevance"]["X"] * tie
+            eligible = person["direct_relevance"] + addition <= a["direct_relevance"] + EPS
+            better = addition > b["social_addition"] or (addition == b["social_addition"] and addition > 0 and (b["social_source"] is None or source < b["social_source"]))
+            if eligible and better:
+                b.update(social_addition=addition, social_source=source, social_tie=tie, R=person["direct_relevance"]+addition)
+                b["contributions"]["X"] = addition
+                b["effective"]["X"] = addition/model["relevance"]["X"] if model["relevance"]["X"]>0 else 0
+    return dict(threshold=threshold, A=list(direct.values()), B=list(indirect.values()), members=list(direct.values())+list(indirect.values()))

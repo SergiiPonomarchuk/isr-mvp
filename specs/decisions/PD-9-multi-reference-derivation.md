@@ -98,13 +98,7 @@ For each person and reference, compute D_ij in [0,1] from that reference's conte
 
     S_ij = max(0,cos(p_i,u_j))
 
-Social relevance uses relationships recorded by directly affected people. For each reference j, A_j is the set of people directly affected by its interpretation of the actual context, established without X. For person i:
-
-    X_ij = max({t_hi : h in A_j, h != i, h records a relation to i} union {0})
-
-t_hi is the finite [0,1] tie recorded by affected person h toward i; if no explicit tie exists, use spouse/partner .3, parent/child/sibling .2, grand-relations/close-friend .1, otherwise0, with the documented family aliases. Do not assume reciprocity or read the creator's relations as a special source. Do not read i's outgoing relationships as substitutes for h's recorded links. Affectedness and outgoing edges are frozen inputs for one issue analysis. Maximum prevents family-size accumulation. No self-links, transitive expansion or repeated X feedback.
-
-The exact direct-affectedness predicate must be recorded and reviewed before implementation: it uses actual context and D/G/S evidence, not E, final membership, or X. This decision does not invent a numeric seed threshold. Missing profiles/links are unknown/missing data to report, not invented zero evidence when the data should be available. The X correction changes current creator-based runtime and also supersedes the older docs' candidate-outgoing, tie-times-R0 variant.
+Social relevance and automatic membership use the two-phase A/B policy below. The directly affected set is global A from the blended weighted D/G/S sum, not a categorical affected-group predicate or per-reference seed set A_j. All A have X_ij=0. Only related people outside A form B; their X is the largest full addition that passes the supplying A's relevance ceiling.
 
 G_i is the common enlarged curve above. The combined R is:
 
@@ -123,7 +117,30 @@ For the existing four-component display, use:
 
 Here c_ijD=D_ij, c_ijS=S_ij, c_ijG=G_i, c_ijX=X_ij. Sum_d W_d=1 and each effective component lies in [0,1]; hence R_i in [0,1]. S_eff and D_eff require conditional reference weights alpha_j*w_dj/W_d, not an additional multiplication by alpha after summing.
 
-Do not pre-exclude on any single failed demographic reference or on combined D=0; other channels can still produce R. Candidate retrieval/pruning must preserve the mixed upper bound, using S_ij<=1, and all applicable channels. Current top-300 semantic approximation must be evaluated or replaced explicitly; an offline full-population comparison can reveal missing members. This decision does not approve removing the initial automatic 100-member cap, changing R>.15, or broadening voting-phase Join. Retain creator/explicit-Join exceptions as documented, and decide candidate-filter changes separately.
+## Two-phase A/B membership and social limit (author decision, 2026-11-16)
+
+For every evaluated person, compute weighted direct affectedness, without renormalizing away the social weight:
+
+    r0_i = sum_(j in J) alpha_j*(w_Dj*D_ij+w_Gj*G_i+w_Sj*S_ij)
+    W_X = sum_(j in J) alpha_j*w_Xj
+    Theta = 0.15
+    A = {i: r0_i >= Theta}
+
+This is an inclusive direct threshold. All A join automatically with R_i=r0_i and X=0; social weight is not redistributed to D/G/S. The old automatic top100 cap is superseded for this new formation policy. D/G/S are scoring steps, not independent hard-exclusion gates that could remove someone whose total reaches Theta.
+
+Read the recorded outgoing eligible social relationships of A only. Let H_i={h in A: h records an eligible relationship to i, h!=i}. Then:
+
+    B = {i not in A: H_i is nonempty}
+    delta_hi = W_X*t_hi
+    eligible_hi = (r0_i + delta_hi <= r0_h)
+    x_i = max({delta_hi: h in H_i and eligible_hi} union {0})
+    R_i = r0_i + x_i              for i in B
+
+B membership is independent of R and whether X is accepted. If every addition exceeds its source's direct score, reject every full addition and retain r0_i; do not cap or partially add it. Equality is allowed. Compare each source separately before choosing the largest eligible addition. A stronger tie may be rejected while a weaker tie from another A is eligible. A known eligible relationship with tie0 (or W_X=0) still establishes B membership; unknown/unsupported relationship eligibility must be handled explicitly by the profile adapter, not guessed from arbitrary links. All recorded tie values must be finite[0,1]. Missing relationship/profile data required for scoring is an incomplete-data error, not evidence that a person is absent or a silent zero.
+
+The supplying A and its tie are the same actual-issue source across references, hence delta=W_X*t and X_ij equals the chosen tie for B (0 if all are rejected). This supersedes per-reference affected seed sets A_j. Effective social score is x_i/W_X when W_X>0, otherwise0. Other paired relevance terms and the one-age-floor Expertise formula are unchanged. Normalize R/E once over A union B (plus any separately authorized explicit joins), so B affects public means and the ISR pool even with low/zero R. Do not give A an X bonus, infer reciprocity, add self-links or expand from B. This ceiling concerns raw Relevance, not mean-normalized Relevance or final ISR; Expertise may still give B a larger ISR than an A member.
+
+Implementation compares the source-score ceiling with1e-12 floating tolerance for equality. Direct threshold is evaluated on unrounded r0 with >=Theta; storage rounding happens afterward under the separately versioned contract. The broad cap removal and cohort>=threshold behavior are intended new policy, not a claim about live code or a migration of historical issues. Full-population candidate coverage and data/write capacity must be verified before integration; service limits must not silently truncate A/B.
 
 ## 6. Expertise: combine evidence before one age floor
 
@@ -150,7 +167,7 @@ Blend issue-level ISR weights:
 
     B_c = sum_j alpha_j*b_cj, c in {R,E,C}; sum_c B_c=1
 
-Select the automatic public using final R and the explicitly retained membership policy, plus creator and authorized explicit joins. E and B_R do not determine membership. On the one final public M:
+Form the automatic public as A union B using the two-phase rule. B is not filtered by final R. E and B_R do not determine membership. Historical creator/explicit-Join exceptions are separate compatibility policies; they must not be smuggled into A or become social seeds. On the one final public M:
 
     Rhat_i = R_i / mean_M(R)
     Ehat_i = E_i / mean_M(E)
@@ -172,14 +189,16 @@ Reference vectors r_j and actual-issue aspect vectors u_j are not interchangeabl
 ## Implementation gates and remaining choices
 
 - Pin the retrieval metric/text/context template and score version; calibrate .30/.05, long-chain context review and false user-clarification requests on all D1 cases and negative cases. Thresholds cannot be transplanted across different metrics or libraries.
-- Specify actual-issue aspect extraction/vector templates and the direct-affectedness predicate A_j, including data coverage and relation direction tests. Do not copy the examples' people, owners or places.
-- Resolve candidate cutoff/bypass and top300 approximation changes so direct and social channels remain reachable. The present automatic top100 formation policy and explicit discussion Join remain separately versioned; this decision does not remove the cap.
+- Specify actual-issue aspect extraction/vector templates and profile relationship eligibility/coverage. A is now defined by inclusive blended direct affectedness r0>=Theta; no extra categorical seed predicate or newly invented threshold is needed. Do not copy examples' people/owners/places.
+- Resolve candidate cutoff/bypass and top300 approximation changes so direct and social channels remain reachable. The latest A/B decision removes the automatic top100 cap for new-policy formation. Explicit discussion Join remains separately versioned; existing issues keep their old version.
 - Preserve or explicitly version three-decimal storage before normalization, exact replay, Join recalculation and voting freeze. Formula examples use unrounded values unless stated otherwise.
 - Certificate/College mapping, missing birthDate behavior, in-progress education and recency decay remain declared discrepancies, not implicit changes. No Education-versus-Experience weights or new Contribution formula.
 - New log-failure publication gate and fallback publication policy from the original M3 proposal remain implementation proposals until explicitly approved. They are not necessary assumptions in these equations.
 - Scope includes docs/, specifications and the scoring skill documentation only. Existing app code, test fixtures, example numeric anchors/vectors and historical reports are not rewritten as if mr1 had run.
 
 ## Status log
+
+- 2026-11-16 A/B decision: author defines A by weighted direct D/G/S>=Theta and B by one-step relationships of A irrespective of score. A gets no X; B receives only a full addition whose result is<=the source A direct score, otherwise baseline only. Core implemented and tested; app integration pending. This supersedes the earlier direct-scope-predicate and strict-vs-cap questions.
 
 - 2026-11-16 amendment: author approved context review before deciding reformulation. Raw >3 becomes context_review_required; reviewed compatible set J has evidence/reasons, no arbitrary truncation or automatic100-way blend. User clarification/splitting follows semantic findings. No runtime implementation or additional provider allowance.
 

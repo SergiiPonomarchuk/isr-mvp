@@ -50,3 +50,24 @@ class MultiReference(unittest.TestCase):
         self.assertEqual(m.directed_ties(["a","b"],edges,"y"),[])
         self.assertEqual(m.directed_ties(["a","b"],edges,"z"),[])
         with self.assertRaises(ValueError):m.directed_ties(["missing"],edges,"x")
+
+    def test_two_cohorts_match_js(self):
+        raw=[{"id":"a","score":.5}]
+        refs=[{"id":"a","evidence":"actual context","relevance":{"D":.5,"G":.2,"S":.1,"X":.2},"aggregation":{"R":.6,"E":.2,"C":.2},"mu":40,"sigma":30}]
+        people=[{"uid":key,"age":30,"aspects":{"a":{"D":d,"G":0,"S":0,"X":0,"education":0,"experience":0}}} for key,d in [("a",.3),("b",.5),("relative",.2),("equal",.1),("over",.12),("zero",0),("friend",0)]]
+        outgoing={"a":{"relative":1,"equal":.5,"over":.5,"zero":0},"b":{"relative":.5},"relative":{"friend":1}}
+        py=m.cohorts(m.reviewed(raw,refs),people,outgoing)
+        code='const m=require("./functions/multi-reference"),v=JSON.parse(process.argv[1]);process.stdout.write(JSON.stringify(m.cohorts(m.reviewed(v.raw,v.refs),v.people,v.outgoing)));'
+        js=json.loads(subprocess.check_output(["node","-e",code,json.dumps(dict(raw=raw,refs=refs,people=people,outgoing=outgoing))],cwd=ROOT))
+        self.assertEqual(py,js)
+        self.assertEqual([p["uid"] for p in py["A"]],["a","b"])
+        self.assertNotIn("friend",[p["uid"] for p in py["members"]])
+        self.assertEqual(next(p for p in py["B"] if p["uid"]=="relative")["social_source"],"b")
+        self.assertEqual(next(p for p in py["B"] if p["uid"]=="over")["R"],.06)
+
+    def test_cohort_failures_and_no_cap(self):
+        model={"refs":[{"id":"a","alpha":1,"relevance":{"D":.5,"G":.2,"S":.1,"X":.2}}],"relevance":{"D":.5,"G":.2,"S":.1,"X":.2}}
+        people=[{"uid":str(i),"age":30,"aspects":{"a":{"D":.5,"G":0,"S":0,"X":0,"education":0,"experience":0}}} for i in range(101)]
+        self.assertEqual(len(m.cohorts(model,people,{p["uid"]:{} for p in people})["A"]),101)
+        with self.assertRaises(ValueError):m.cohorts(model,people,{})
+        with self.assertRaises(ValueError):m.cohorts(model,people,{p["uid"]:{"missing":.5} for p in people})

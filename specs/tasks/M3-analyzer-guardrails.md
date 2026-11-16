@@ -1,5 +1,7 @@
 # M3: Multi-reference Analyzer and member-score integration
 
+**Latest A/B decision, 2026-11-16:** PD-9 now defines A by weighted direct D/G/S>=Theta and B by eligible outgoing relations of A, regardless of score. Full B X additions are accepted only when result<=source A direct score; no partial cap or second hop. New formation is uncapped. The earlier explicit direct-scope seed proposal is superseded. Core implemented/tested in M3-scoring-core; app integration remains pending.
+
 Status: **Documentation revision authorized 2026-11-16; runtime NOT IMPLEMENTED.** This specification replaces PR #38's original fixed-five/type-table proposal with [PD-9](../decisions/PD-9-multi-reference-derivation.md). The author explicitly authorized updating all affected documents, including docs/ and the scoring skill. No code, provider call, production write, model change, deployment or example-library regeneration is part of this revision.
 
 ## 1. Scope and short plan

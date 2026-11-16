@@ -72,4 +72,37 @@ function directedTies(affectedIds, outgoing, candidate) {
   }
   return result;
 }
-module.exports={select,reviewed,member,publicScores,directedTies};
+// Two-phase membership: the input population must cover direct and related candidates.
+function cohorts(model, people, outgoing, threshold=.15) {
+  number(threshold,"threshold",0,1);
+  const population=new Map(), direct=new Map(), indirect=new Map();
+  for(const p of people) {
+    id(p.uid); if(population.has(p.uid)) throw new Error("Duplicate person");
+    for(const ref of model.refs) if(!p.aspects[ref.id] || p.aspects[ref.id].X!==0) throw new Error("Direct phase requires X=0");
+    const score=member(model,p.age,p.aspects);
+    const row={uid:p.uid,...score,direct_relevance:score.R,social_addition:0,social_source:null,social_tie:0};
+    population.set(p.uid,row);
+    if(row.R>=threshold) direct.set(p.uid,{...row,cohort:"A"});
+  }
+  for(const [source,a] of direct) {
+    if(!Object.prototype.hasOwnProperty.call(outgoing,source) || !outgoing[source] || Array.isArray(outgoing[source]) || typeof outgoing[source]!=="object") throw new Error("Affected relation data unavailable");
+    for(const [target,value] of Object.entries(outgoing[source])) {
+      id(target); const tie=number(value,"tie",0,1);
+      if(target===source || direct.has(target)) continue;
+      const person=population.get(target);
+      if(!person) throw new Error("Related person data unavailable");
+      if(!indirect.has(target)) indirect.set(target,{...person,cohort:"B",contributions:{...person.contributions},effective:{...person.effective}});
+      const b=indirect.get(target), addition=model.relevance.X*tie;
+      // Evaluate each source first: the largest tie may fail while a weaker one passes.
+      const eligible=person.direct_relevance+addition<=a.direct_relevance+EPS;
+      const better=addition>b.social_addition || (addition===b.social_addition && addition>0 && (b.social_source===null || source<b.social_source));
+      if(eligible && better) {
+        b.social_addition=addition;b.social_source=source;b.social_tie=tie;
+        b.R=person.direct_relevance+addition;
+        b.contributions.X=addition;b.effective.X=model.relevance.X>0?addition/model.relevance.X:0;
+      }
+    }
+  }
+  return {threshold,A:[...direct.values()],B:[...indirect.values()],members:[...direct.values(),...indirect.values()]};
+}
+module.exports={select,reviewed,member,publicScores,directedTies,cohorts};

@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-16 - Two-phase A/B public formation
+
+Implemented author-defined inclusive direct-affectedness cohort A and unconditional eligible-relative cohort B in the isolated JS/Python core. A receives no X; B receives the largest full addition that does not exceed its source A direct relevance, with equality accepted and no partial cap. All A/B are retained without top100 truncation; B never propagates. Updated normative docs and boundary/cross-language tests. App wiring, live data and provider usage unchanged.
+
 ## 2026-11-16 - Pure multi-reference math core
 
 Implemented isolated JS/Python PD-9 arithmetic and source-preserving directed relationship inputs, with cross-language ranking/member/public tests. Reviewed references require evidence and exclusion reasons; paired scores, max geography and one education floor preserve the adopted math. Node137 passed/four skips; Python131 run/two skips. Final X boundary is pending the author's strict-reject vs capped-gap clarification; no app integration, provider call or data change.
