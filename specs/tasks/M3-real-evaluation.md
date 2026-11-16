@@ -1,6 +1,6 @@
 # M3 real-model and population evaluation
 
-Status: preparation authorized by the author's "what now?" after PR41 merged as `7ee49eafdfb49808cee08968ce06d89c26744a4e`. Offline preparation is in scope. Provider calls, profile restoration and paid execution remain unapproved. This proposal does not authorize deployment, production writes, rules changes, accepted-snapshot changes, reference-library regeneration or profile re-embedding.
+Status: preparation authorized by the author's "what now?" after PR41 merged as `7ee49eafdfb49808cee08968ce06d89c26744a4e`. Offline preparation is in scope. The author approved the bounded paid pilot and existing-loader reuse on 2026-11-17, confirming Paid status and budget. The 14-review/45-text/US$0.50 scope is authorized; profile restoration remains separately gated by memory and this approval does not authorize deployment or production access. This proposal does not authorize deployment, production writes, rules changes, accepted-snapshot changes, reference-library regeneration or profile re-embedding.
 
 ## Plan
 
@@ -83,3 +83,5 @@ python scripts/mr1_export_census.py --snapshot 'A:\BackUp\isr-mvp\emulator-snaps
 These commands replace only aggregate evidence files in the feature worktree. They make no provider or database requests and do not modify the snapshot. No paid-run command is given because the bounded provider adapter/ledger must be implemented and verified after the author approves the scope; that preparation must precede the first paid call.
 
 - Free-preparation verification: Node153 passed/five optional skips; Python140 run/two skips, including four synthetic key-census safety cases. Exact-cache and structural-capacity reproducer passed with no provider/database requests. Runtime application code/models, accepted snapshot and live data are unchanged.
+
+- 2026-11-17 author approval: "Approve the M3 pilot up to $0.50, using the existing credential loader; Paid status and budget confirmed". Implementing/testing a durable single-attempt guard before the first paid request. No calls made yet.
