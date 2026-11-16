@@ -9,8 +9,9 @@
     "Threshold experiment on existing vectors; no confidence calibration or final member-score comparison.",
     "Library leave-one-out is DOCUMENT-to-DOCUMENT geometry diagnostic, not the runtime query metric."
   ],
-  "calibration_inputs_sha256": "8e193d6c87b6a9ac8c3b785ad43ea0cf7dbc6f0d3cc2536a5fc20bae90caa306",
-  "source_library_sha256": "153baac827ea806aba7394ed8a61b79208555a96e4adc1afd0aaf91424b08be3",
+  "hash_encoding": "UTF8 text with universal-newline LF normalization",
+  "calibration_inputs_sha256": "c21f0ec4000d519fbb86848fbec0e99d2038aacc345be6e02a8181d16efb6917",
+  "source_library_sha256": "5092e25ca8e69b8e4882243e67fd1dea83ffdf444ce54355f341b366d191459b",
   "scenarios": [
     {
       "scenario": "D1-01",
