@@ -8,18 +8,14 @@ test('U10 real Check/Create/Join transactions on isolated Firestore', {skip:proc
   const helper=require('../ai-helper');
   const v=Array(768).fill(0);v[0]=1;
   helper.embedIssue=async (title,desc)=>({ok:true,vector:v,model:AI.EMBED_MODEL,dims:768,task_type:AI.TASK_TYPE_ISSUE,template_version:AI.EMBED_TEMPLATE_VERSION,text_sha256:crypto.createHash('sha256').update(`${title}. ${desc}`).digest('hex')});
-  helper.checkIssueParams=async()=>({params:{weights:{w_D:0,w_G:1,w_S:0,w_X:0},
-    geographic_parameters:{mu_distance_meters:40,sigma_decay_meters:30},
-    aggregation_weights:{w_relevance:0.7,w_expertise:0.1,w_contribution:0.2},
-    demographics:{employmentStatus:'any',familyStatus:'any'},classification:{scope_type:'building'},
-    location_reference:{anchor:'home',place:''}},meta:{ai_source:'model',model:AI.TEXT_MODEL,prompt_version:'fixture',examples_used:[]}});
+  require('./mr1-fixture')(helper,AI,v,{semantic:true});
   const handlers=require('../index');
   const admin=require('firebase-admin'),db=admin.firestore();
   assert.equal((await db.listCollections()).length,0,'start with a new disposable emulator');
   const batch=db.batch();
   for(let uid=1;uid<=105;uid++){
     batch.set(db.collection('users').doc(String(uid)),{uid,displayName:`Synthetic ${uid}`,birthDate:'1990-01-01',skills:[],post:[],socialRelations:[],features:[],geography:[{type:'home',geo:[47.590114,7.611201]}]});
-    batch.set(db.collection('user_vectors').doc(String(uid)),{uid,profile_vector:v,experience_vectors:{},embedding_model:AI.EMBED_MODEL,embedding_dims:768,embedding_template:AI.EMBED_TEMPLATE_VERSION});
+    batch.set(db.collection('user_vectors').doc(String(uid)),{uid,profile_vector:uid<=100?v:v.map((_,i)=>i===1?1:0),experience_vectors:{},embedding_model:AI.EMBED_MODEL,embedding_dims:768,embedding_template:AI.EMBED_TEMPLATE_VERSION});
   }
   await batch.commit();
   const app=express();app.use(express.json());

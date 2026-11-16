@@ -83,11 +83,16 @@ def check_plan(db,plan):
         if not iv.exists:problems.append(key+': issue vector missing');continue
         issue_vector=vec(iv.to_dict().get('vector'))
         if len(issue_vector)!=768 or not all(isinstance(x,(int,float)) and math.isfinite(x) for x in issue_vector):problems.append(key+': bad vector');continue
+        mr1=issue.get('scoring_version')=='mr1-context-review-1'
+        if mr1:
+            from mr1_check import audit_db
+            problems.extend(key+': '+p for p in audit_db(db,ident)['problems'])
         expected_isr=ISR.isr_for_public([{'uid':m['user_id'],'R':m['relevance_score'],'E':m['expertise_score']} for m in rows],issue)
         for m,b in zip(rows,expected_isr):
             uid=str(m['user_id'])
             if not users[uid] or not vectors[uid]:problems.append(key+': profile/vector missing '+uid);continue
-            problems.extend(f'{key}/{uid}: {field}' for field in compare_member(users[uid],vectors[uid],m,issue,issue_vector,users.get(entry['creator']['uid'])))
+            if not mr1:
+                problems.extend(f'{key}/{uid}: {field}' for field in compare_member(users[uid],vectors[uid],m,issue,issue_vector,users.get(entry['creator']['uid'])))
             for stored,recomputed in [('normalized_relevance','R_norm'),('normalized_experience','E_norm'),('normalized_contribution','C_norm'),('isr_score','isr')]:
                 if abs(m.get(stored,float('inf'))-b[recomputed])>TOL:problems.append(f'{key}/{uid}: {stored}')
             for topic in (issue,disc):

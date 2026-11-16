@@ -1,0 +1,20 @@
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const source=fs.readFileSync(path.join(__dirname,'../../prototype/js/main.js'),'utf8');
+const count=source.slice(source.indexOf('  function checkedPublicSize('),source.indexOf('  function renderChatCreateView('));
+const check=source.slice(source.indexOf("      checkBtn.addEventListener('click', async () => {"),source.indexOf('    // 6. Create button database submission handler')).trim().replace(/\}\s*$/,'');
+function element(value=''){return {value,textContent:'',disabled:true,style:{},children:[],handlers:{},addEventListener(k,fn){this.handlers[k]=fn;},removeAttribute(k){if(k==='disabled')this.disabled=false;},appendChild(x){this.children.push(x);}};}
+function harness(){
+ const c={console:{error(){},warn(){}},alert(){},currentUserId:'1',functionsBaseUrl:'http://mock',pendingClarification:'',suggestedParams:null,checkedPointMoves:null,similarIssues:[],titleConflicts:[],duplicateReview:null,calculatedMembers:[],calculatedPublicSize:0,microcommunityPreviewValues:null,formatRelevanceWeights:()=>'',formatIsrWeights:()=>'',escapeHtml:s=>s.replaceAll('<','&lt;'),calculateMicrocommunityValuesFromMembers:async()=>null,showSimilarIssues(){},showIssuePointLabel(){},
+ window:{issuePointMoves:0,newTopicGeo:[47,7],newTopicGeoSource:'creator',setIssuePoint(){}},document:{getElementById:()=>null,createElement:()=>element()},modalBody:{querySelector:()=>null},requests:[],response:null};
+ for(const key of ['titleInput','descTextarea','contextInput','contextStatus','checkBtn','submitBtn','valMicrocommunity','valRelevance','valIsr','valExpertise','tinyRelevance','tinyIsr','membersBlock','membersList'])c[key]=element();
+ c.titleInput.value='Repair';c.descTextarea.value='A broken lock';
+ c.fetch=async(_,opts)=>{c.requests.push(JSON.parse(opts.body));return {ok:true,json:async()=>c.response};};
+ c.updateCreateAvailability=()=>{c.submitBtn.disabled=!c.suggestedParams;};
+ c.invalidateDuplicateCheck=()=>{c.suggestedParams=null;c.submitBtn.disabled=true;};
+ vm.createContext(c);vm.runInContext(count+check,c);return c;
+}
+function pass(){return {success:true,scoring_version:'mr1-context-review-1',draftId:'d',clarification:'At entrance A',members_count:109,members:[{uid:'1',name:'<unsafe>',score:.8}],viewer_member:{relevance_score:.8,isr_score:1.23},weights:{w_D:0,w_G:0,w_S:.8,w_X:.2},aggregation_weights:{w_relevance:.6,w_expertise:.2,w_contribution:.2},mu:40,sigma:30,expertise_domain:'locks'};}
+test('mr1 form uses uncapped totals, real viewer scores, safe names and supplied context',async()=>{const c=harness();c.contextInput.value='At entrance A';c.response=pass();await c.checkBtn.handlers.click();assert.equal(c.calculatedPublicSize,109);assert.equal(c.valRelevance.textContent,'80%');assert.equal(c.valIsr.textContent,'1.23');assert.equal(c.submitBtn.disabled,false);assert.equal(c.requests[0].clarification,'At entrance A');assert.ok(c.membersList.children[0].innerHTML.includes('&lt;unsafe>'));});
+test('clarification outcome leaves Create unavailable and shows concrete questions',async()=>{const c=harness();c.response={success:false,context_result:'needs_clarification',message:'Missing place.',questions:['Which entrance?']};await c.checkBtn.handlers.click();assert.equal(c.submitBtn.disabled,true);assert.equal(c.suggestedParams,null);assert.match(c.contextStatus.textContent,/Which entrance/);});
+test('text or context edited while Check is pending cannot enable Create',async()=>{for(const key of ['titleInput','descTextarea','contextInput']){const c=harness();let finish;c.fetch=()=>new Promise(r=>{finish=r;});const pending=c.checkBtn.handlers.click();c[key].value+=' changed';finish({ok:true,json:async()=>pass()});await pending;assert.equal(c.suggestedParams,null,key);assert.equal(c.submitBtn.disabled,true,key);}});
+test('nonmember preview has no invented relevance or ISR',async()=>{const c=harness();c.response={...pass(),viewer_member:null};await c.checkBtn.handlers.click();assert.equal(c.valIsr.textContent,'Not a member');assert.equal(c.valRelevance.textContent,'Not a member');});

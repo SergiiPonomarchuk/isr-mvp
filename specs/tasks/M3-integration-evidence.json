@@ -1,0 +1,40 @@
+{
+  "version": "m3-integration-evidence-1",
+  "date": "2026-11-16",
+  "base": "319f428",
+  "scoring_version": "mr1-context-review-1",
+  "node": {
+    "passed": 153,
+    "optional_skipped": 5
+  },
+  "python": {
+    "run": 136,
+    "optional_skipped": 2
+  },
+  "mr1_emulator": {
+    "project": "demo-mr1",
+    "port": 8189,
+    "population": 111,
+    "automatic_A": 105,
+    "automatic_B": 4,
+    "automatic_members": 109,
+    "after_explicit_join": 110,
+    "independent_python_problems": 0,
+    "corruption_detection": true,
+    "concurrent_create_join": true,
+    "legacy_join_replay": true,
+    "capacity_rejection": true
+  },
+  "optional_u10": "passed",
+  "optional_d1": "passed",
+  "ui_handler_vm": "passed",
+  "visual_acceptance": "author reported completing and accepting all requested local-review steps, 2026-11-16",
+  "real_model_quality": "not evaluated; separate allowance required",
+  "provider_requests": 0,
+  "provider_texts": 0,
+  "provider_tokens": 0,
+  "production_writes": 0,
+  "deployments": 0,
+  "visual_acceptance_source": "User: ok, all of it is done. what next?",
+  "full_population_performance_capacity": "not evaluated on the 9,150-profile dataset"
+}

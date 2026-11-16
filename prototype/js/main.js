@@ -2621,7 +2621,7 @@ function initTopicDetailViews() {
         '<div id="create-ai-source" style="display: none; margin-top: 10px; font-size: 0.82rem; color: var(--text-muted);"></div>' +
 
         '<div class="topic-detail-block" id="create-results-members-block" style="display: none; margin-top: 16px;">' +
-          '<div class="topic-detail-block-title">Suggested Ad-hoc Public Members (Relevance > 0.15)</div>' +
+          '<div class="topic-detail-block-title">Public preview: directly affected people and eligible relatives</div>' +
           '<div id="create-mc-values-diagram" style="display: none; padding: 0 4px;"></div>' +
           '<div class="create-members-list" id="create-members-list" style="display: flex; flex-direction: column; gap: 4px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); max-height: 200px; overflow-y: auto; text-align: left; font-size: 0.88rem; color: var(--text-muted);"></div>' +
         '</div>' +
@@ -4871,7 +4871,7 @@ function initTopicDetailViews() {
   function checkedPublicSize(data) {
     const count = data.public_members_count ?? data.members_count;
     return Number.isInteger(count) && count >= 0
-      ? Math.min(count, 100)
+      ? (data.scoring_version === "mr1-context-review-1" ? count : Math.min(count, 100))
       : (Array.isArray(data.members) ? data.members.length : 0);
   }
 
@@ -4890,6 +4890,20 @@ function initTopicDetailViews() {
     const submitBtn = modalBody.querySelector('#create-submit-btn');
     const titleInput = modalBody.querySelector('.topic-new-title-input');
     const descTextarea = modalBody.querySelector('.topic-form-textarea');
+    const contextBox = document.createElement('div');
+    const contextLabel = document.createElement('label');
+    contextLabel.textContent = 'Additional context or answers';
+    contextLabel.htmlFor = 'create-context-answer';
+    const contextInput = document.createElement('textarea');
+    contextInput.id = 'create-context-answer';
+    contextInput.className = 'topic-form-textarea';
+    contextInput.maxLength = 2000;
+    contextInput.placeholder = 'Who is affected, where, and what decision is needed?';
+    const contextStatus = document.createElement('p');
+    contextStatus.setAttribute('role', 'status');
+    contextBox.append(contextLabel, contextInput, contextStatus);
+    descTextarea.parentElement.insertAdjacentElement('afterend', contextBox);
+
 
     const valMicrocommunity = modalBody.querySelector('#create-val-microcommunity');
     const valRelevance = modalBody.querySelector('#create-val-relevance');
@@ -5031,6 +5045,7 @@ function initTopicDetailViews() {
     }
     titleInput.addEventListener('input', invalidateDuplicateCheck);
     descTextarea.addEventListener('input', invalidateDuplicateCheck);
+    contextInput.addEventListener('input', invalidateDuplicateCheck);
 
     // 1. Deadline absolute popup picker
     const deadlineBtn = modalBody.querySelector('#create-meta-deadline');
@@ -5288,7 +5303,7 @@ function initTopicDetailViews() {
             item.className = 'reaction-user-item';
             item.style.display = 'flex';
             item.style.justifyContent = 'space-between';
-            item.innerHTML = `<span>${m.name}</span> <span style="font-weight:600; color:var(--primary);">Rel: ${m.score.toFixed(3)}</span>`;
+            item.innerHTML = `<span>${escapeHtml(m.name)}</span> <span style="font-weight:600; color:var(--primary);">Rel: ${m.score.toFixed(3)}</span>`;
             popup.appendChild(item);
           });
         }
@@ -5364,6 +5379,7 @@ function initTopicDetailViews() {
     // "Derive again": send the clarification to the server with the same text inputs.
     function rederiveWithClarification(text) {
       pendingClarification = (text || "").trim();
+      contextInput.value = pendingClarification;
       if (checkBtn) checkBtn.click();
     }
 
@@ -5618,6 +5634,10 @@ function initTopicDetailViews() {
           return;
         }
 
+        const contextAtCheck = contextInput.value.trim();
+        pendingClarification = contextAtCheck;
+        invalidateDuplicateCheck();
+        contextStatus.textContent = '';
         checkBtn.disabled = true;
         checkBtn.textContent = "Calculating...";
 
@@ -5654,8 +5674,13 @@ function initTopicDetailViews() {
             serverError = err && err.message;
           }
 
-          if (titleInput.value.trim() !== title || descTextarea.value.trim() !== description) {
+          if (titleInput.value.trim() !== title || descTextarea.value.trim() !== description || contextInput.value.trim() !== contextAtCheck) {
             throw new Error('The text changed during Check. Please check again.');
+          }
+          if (data && !data.success && data.context_result) {
+            const questions = Array.isArray(data.questions) ? data.questions : [];
+            contextStatus.textContent = [data.message || 'Please clarify the context.', ...questions].join(' ');
+            return;
           }
           if (data && data.success) {
             suggestedParams = {
@@ -5713,7 +5738,9 @@ function initTopicDetailViews() {
           }
 
           // Calculate aggregated values preview
-          if (calculatedMembers && calculatedMembers.length > 0) {
+          if (data.scoring_version === "mr1-context-review-1") {
+            microcommunityPreviewValues = data.public_values_taxonomy ? mapTaxonomyToUserValues(data.public_values_taxonomy) : null;
+          } else if (calculatedMembers && calculatedMembers.length > 0) {
             try {
               const rawTaxonomy = await calculateMicrocommunityValuesFromMembers(calculatedMembers);
               if (rawTaxonomy) {
@@ -5735,7 +5762,7 @@ function initTopicDetailViews() {
             w_social: dataWeights.w_X
           };
           tinyRelevance.innerHTML = formatRelevanceWeights(wRelevanceObj);
-          valRelevance.textContent = `100%`;
+          valRelevance.textContent = data.viewer_member ? `${Math.round(data.viewer_member.relevance_score * 100)}%` : 'Not a member';
 
           const wIsrObj = {
             w_relevance: suggestedParams.w_relevance,
@@ -5743,7 +5770,7 @@ function initTopicDetailViews() {
             w_contribution: suggestedParams.w_contribution
           };
           tinyIsr.innerHTML = formatIsrWeights(wIsrObj);
-          valIsr.textContent = `1.50`;
+          valIsr.textContent = data.viewer_member ? data.viewer_member.isr_score.toFixed(2) : 'Not a member';
 
           const domainVal = suggestedParams.expertise_domain || "General Maintenance";
           const depthVal = suggestedParams.expertise_depth || "None";
@@ -5760,7 +5787,7 @@ function initTopicDetailViews() {
               row.style.padding = '4px 0';
               row.style.borderBottom = '1px solid var(--border-soft)';
               row.innerHTML = `
-                <span>${m.name}</span>
+                <span>${escapeHtml(m.name)}</span>
                 <span style="font-weight:600; color:var(--primary);">Rel: ${m.score.toFixed(3)}</span>
               `;
               membersList.appendChild(row);
@@ -5787,6 +5814,8 @@ function initTopicDetailViews() {
 
         } catch(err) {
           console.error("Check failed:", err);
+          invalidateDuplicateCheck();
+          contextStatus.textContent = err.message;
           alert(`Check calculations error: ${err.message}`);
         } finally {
           checkBtn.removeAttribute('disabled');
@@ -5801,6 +5830,11 @@ function initTopicDetailViews() {
         const title = titleInput.value.trim();
         const description = descTextarea.value.trim();
         if (!title || !description || !suggestedParams || titleConflicts.length > 0 || (similarIssues.length && !duplicateReview)) return;
+        if (contextInput.value.trim() !== suggestedParams.clarification) {
+          invalidateDuplicateCheck();
+          contextStatus.textContent = 'The context changed after Check. Please check again.';
+          return;
+        }
         if (window.issuePointMoves !== checkedPointMoves) {
           alert('The point moved after the check: press Check again.'); // U6 (R6)
           return;
@@ -5817,6 +5851,7 @@ function initTopicDetailViews() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               draftId: suggestedParams.draftId,
+              clarification: suggestedParams.clarification,
               title: title,
               description: description,
               location: newTopicGeo,

@@ -6,6 +6,7 @@ const { evaluateDemographics } = require("./demographics");
 const { nearestAnchor, gScore } = require("./geo");
 const { vector, currentVector } = require("./similar-issues");
 const { aggregateValues } = require("./public-values");
+const MR1Review=require("./context-review"), MR1Engine=require("./mr1-engine"), MR1Service=require("./mr1-service");
 const r3 = x => Math.round(Number(x) * 1000) / 1000;
 function fail(message, status = 409) { throw Object.assign(new Error(message), { status }); }
 function socialScore(relations, uid) {
@@ -61,33 +62,49 @@ async function joinIssue(db, input, timestamp) {
     const userSnap = await tx.get(db.collection("users").doc(uid));
     const vectorsSnap = await tx.get(db.collection("user_vectors").doc(uid));
     const issueVectorSnap = await tx.get(db.collection("issue_vectors").doc(issueId));
-    const creator = await tx.get(db.collection("users").doc(String(issue.submitter_id || disc.creator_uid)));
+    const mr1 = issue.scoring_version === MR1Review.VERSION;
+    if (issue.scoring_version && !mr1) fail("This issue uses an unsupported scoring version.");
+    if (mr1 && MR1Review.hash(issue.mr1_model) !== issue.mr1_model_hash) fail("The issue scoring model changed.");
+    const creator = mr1 ? null : await tx.get(db.collection("users").doc(String(issue.submitter_id || disc.creator_uid)));
     if (!userSnap.exists || !issueVectorSnap.exists) fail("The profile or issue vector is unavailable.");
     const embedding = issueVectorSnap.data();
     if (!currentVector(embedding, issue)) fail("This issue needs a current issue vector before joining.");
-    const member = joiningMember(userSnap.data(), vectorsSnap.exists ? vectorsSnap.data() : null, issue, vector(embedding.vector), creator.exists ? creator.data() : {});
+    const member = mr1 ? MR1Engine.joining(userSnap.data(), vectorsSnap.exists ? vectorsSnap.data() : null, issue, issue.mr1_model, existing)
+      : joiningMember(userSnap.data(), vectorsSnap.exists ? vectorsSnap.data() : null, issue, vector(embedding.vector), creator.exists ? creator.data() : {});
     const ref = db.collection("microcommunity_members").doc(`${mc.id}_${uid}`);
     const members = [...existing, { ref, data: member }];
     const userRefs = members.map(m => db.collection("users").doc(String(m.data.user_id)));
     const users = await tx.getAll(...userRefs, { fieldMask: ["uid", "values_taxonomy"] });
     const breakdown = ISR.isrForPublic(members.map(m => ({ uid: String(m.data.user_id), R: m.data.relevance_score, E: m.data.expertise_score })), issue);
     const relevance = {}, isr = {};
+    const staged=[];
     members.forEach((m, i) => {
       const b = breakdown[i];
       const fields = { normalized_relevance: r3(b.R_norm), normalized_experience: r3(b.E_norm),
-        normalized_contribution: r3(b.C_norm), contribution_source: b.contribution_source, isr_score: r3(b.isr), calculated_at: timestamp };
+        normalized_contribution: r3(b.C_norm), contribution_source: b.contribution_source, isr_score: r3(b.isr), calculated_at: mr1 ? new Date() : timestamp };
       relevance[String(m.data.user_id)] = r3(m.data.relevance_score);
       isr[String(m.data.user_id)] = fields.isr_score;
-      if (m === members[members.length - 1]) tx.create(m.ref, { ...member, ...fields, microcommunity_id: mc.id });
-      else tx.update(m.ref, fields);
+      if (m === members[members.length - 1]) staged.push([m.ref, { ...member, ...fields, microcommunity_id: mc.id },true]);
+      else staged.push([m.ref, fields,false]);
     });
+    const taxonomies = users.filter(s => s.exists && s.data().values_taxonomy).map(s => ({ relevance: relevance[s.id], taxonomy: s.data().values_taxonomy }));
+    const mcUpdate = { member_count: members.length, values_taxonomy: aggregateValues(taxonomies) };
+    const eventRef = db.collection("membership_events").doc(`${issueId}_${uid}`);
+    const event = { issue_id: issueId, microcommunity_id: mc.id, user_id: uid, type: "explicit_join", created_at: mr1 ? new Date() : timestamp };
+    if (mr1) {
+      const previous = new Map(existing.map(m => [m.ref.path, m.data]));
+      MR1Service.capacity(db, [
+        ...staged.map(([ref, fields, created]) => [ref, created ? fields : {...previous.get(ref.path), ...fields}]),
+        [issueRef, {...issue, relevance_scores: relevance, isr_scores: isr}],
+        [discussionRef, {...disc, relevance_scores: relevance, isr_scores: isr, participants: Object.keys(isr)}],
+        [mc.ref, {...mc.data(), ...mcUpdate}], [eventRef, event]
+      ]);
+    }
+    for (const [ref, data, created] of staged) { if (created) tx.create(ref, data); else tx.update(ref, data); }
     tx.update(issueRef, { relevance_scores: relevance, isr_scores: isr });
     tx.update(discussionRef, { relevance_scores: relevance, isr_scores: isr, participants: Object.keys(isr) });
-    const taxonomies = users.filter(s => s.exists && s.data().values_taxonomy).map(s => ({ relevance: relevance[s.id], taxonomy: s.data().values_taxonomy }));
-    tx.update(mc.ref, { member_count: members.length, values_taxonomy: aggregateValues(taxonomies) });
-    tx.create(db.collection("membership_events").doc(`${issueId}_${uid}`), {
-      issue_id: issueId, microcommunity_id: mc.id, user_id: uid, type: "explicit_join", created_at: timestamp
-    });
+    tx.update(mc.ref, mcUpdate);
+    tx.create(eventRef, event);
     return { success: true, issue_id: issueId, already_member: false, members_count: members.length };
   });
 }

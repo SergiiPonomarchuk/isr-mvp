@@ -150,8 +150,10 @@ test("rules and endpoints: analyzer_logs server-only; the key is a secret of the
   const index = fs.readFileSync(path.join(__dirname, "..", "index.js"), "utf8");
   assert.equal((index.match(/secrets: \[GEMINI_API_KEY\]/g) || []).length, 3);
   assert.ok(!/vectorizeText/.test(index));
-  assert.match(index, /collection\("issue_vectors"\)\.doc\(issueId\)/);
-  assert.match(index, /status\(503\)\.json\(\{ error: AI_UNAVAILABLE/);
+  const service = fs.readFileSync(path.join(__dirname, "..", "mr1-service.js"), "utf8");
+  assert.match(service, /collection\("issue_vectors"\)\.doc\(issueRef.id\)/);
+  assert.match(service, /Engine.error\("AI unavailable[^"\n]+",503\)/);
+  assert.match(index, /await MR1.check/);
 });
 
 // Task U6 (R1): the Analyzer says where the issue is; the server turns it into a point.
