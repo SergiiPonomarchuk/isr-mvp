@@ -31,7 +31,7 @@ async function main(){
   const ranked=examples.map(e=>({id:String(e.id),score:.7}));
   const title='Synthetic structural capacity fixture',description='One synthetic aspect. Another synthetic aspect. A third synthetic aspect.';
   const parts=['One synthetic aspect.','Another synthetic aspect.','A third synthetic aspect.'];
-  const raw={result:'pass',message:'Synthetic structure only; no semantic quality claim.',scope:'building',location_reference:{anchor:'home',place:''},accepted:examples.map((e,i)=>({id:String(e.id),aspect_id:'a'+i,evidence:parts[i]})),excluded:{},aspects:examples.map((e,i)=>({id:'a'+i,text:parts[i],demographics:{}}))};
+  const raw={result:'pass',message:'Synthetic structure only; no semantic quality claim.',scope:'building',location_reference:{anchor:'home',place:''},accepted:examples.map((e,i)=>({id:String(e.id),aspect_id:'a'+i,evidence:parts[i]})),excluded:{},aspects:examples.map((e,i)=>({id:'a'+i,text:parts[i],demographics:{},demographic_evidence:[]}))};
   const review=Review.validate(raw,{title,description},ranked,{...library,examples});
   const bundle={version:Review.VERSION,scope:'building',model:review.model,aspects:Object.fromEntries(Object.entries(review.aspects).map(([id,a])=>[id,{...a,vector:basis}]))};
   const makeUser=n=>({uid:n,displayName:'Synthetic '+n,birthDate:'1990-01-01',skills:[],geography:[{type:'home',geo:[47.59,7.61]}],features:[],post:[],socialRelations:Array.from({length:5},(_,j)=>({relative:(n+j)%9150+1,type:'sibling',tie:.2}))});

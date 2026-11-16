@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Grounded context schema and cumulative corrected-pilot guard
+
+Author approved the context correction and one controlled rerun. Added shared structured enums, literal criterion provenance and U6 home/work/property guidance under a separate prompt/schema version; current unfinished drafts require the corrected contract while frozen completed replay/scoring stays unchanged. The corrected pilot carries the original receipt/reservation into its15-review/45-text/17-POST cumulative guard under the sameUS$0.50 total, with schema bytes included. Node168 passed/five optional skips; Python140 run/two skips; actual Check/Create/Join emulator parity passed before paid execution. No model/math/threshold/rules/deployment or historical-data change.
+
 ## 2026-11-17 - Bounded M3 pilot guard and first real-model result
 
 Added and verified an exact-case, single-attempt provider adapter with durable request/text/cost reservations, source pins and private existing-loader launcher. Author approved theUS$0.50 pilot. Its first actual review failed strict property-kind validation and the run stopped without retries or embeddings. Reported497 input/285 output tokens imply approximatelyUS$0.000552;US$0.013081 remains reserved. Offline replay identifies additional home-anchor/topic-demographic issues. Prepared a concrete correction/cumulative-rerun proposal; no runtime fix or further paid call is authorized. Node161 passed/five optional skips; Python140 run/two skips. No app/model/math/rules/production change or deployment. See specs/tasks/M3-pilot-report.md.

@@ -1,9 +1,12 @@
 "use strict";
 // Replay the recorded failure against pure validators/resolvers only. No provider or DB client.
-const fs=require('node:fs'),path=require('node:path'),R=require('../context-review');
+const fs=require('node:fs'),path=require('node:path');
 const {evaluateDemographics}=require('../demographics');
 const {resolveIssueLocation,keywordLocationReference}=require('../location');
 const root=path.resolve(__dirname,'../..'),folder=path.join(root,'specs/tasks/M3-evaluation/pilot-20261117');
+const source=require('node:child_process').execFileSync('git',['show','d660079:functions/context-review.js'],{cwd:root,encoding:'utf8'});
+const moduleCopy={exports:{}};require('node:vm').runInNewContext(source,{require:require('node:module').createRequire(path.join(root,'functions/context-review.js')),module:moduleCopy});
+const R=moduleCopy.exports;
 const read=file=>JSON.parse(fs.readFileSync(path.join(root,file),'utf8'));
 async function main(){
  const plan=read('specs/tasks/M3-evaluation/cases.json'),c=plan.cases[0],library=read('functions/data/analyzer_examples.json');

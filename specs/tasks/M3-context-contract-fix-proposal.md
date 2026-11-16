@@ -1,6 +1,6 @@
 # M3 context contract correction and controlled rerun proposal
 
-Status: **proposal only** after the approved pilot stopped. No runtime prompt/schema correction or second paid attempt is authorized by this document. Original pilot artifacts and allowance remain preserved. No model/math/threshold/public-cap/storage/deployment change is proposed here.
+Status: **author approved** the correction and one controlled cumulative rerun on2026-11-17 with "Approved". Implement the written scope, verify offline/emulator checks, then execute the corrected single-attempt pilot. Original pilot artifacts and allowance remain preserved. No model/math/threshold/public-cap/storage/deployment change is proposed here.
 
 ## Recorded result
 
@@ -37,3 +37,7 @@ The corrected run again stops on the first provider/schema/diagnostic failure; n
 ## Decision needed
 
 Approve the prompt/schema/criterion-provenance correction and one controlled rerun under the **sameUS$0.50 cumulative cap**, allowing **15 total review attempts**, while retaining **45 embedding texts /17 embedding POSTs**. This decision changes the original no-retry/14-attempt plan in a precise, bounded way; no further paid call will be made without it.
+
+- 2026-11-17: author approved the exact correction and cumulative rerun scope; original receipt remains counted and immutable. Implementation started; no corrected paid request yet.
+
+- 2026-11-17 offline verification: shared structured schema, source evidence, U6 guidance and prompt/schema metadata implemented as mr1-context-prompt-2 with unchanged scoring version. Node168 passed/five optional skips; Python140 run/two skips; actual demo-mr1 Check/Create/Join emulator test passed including stale unfinished-contract rejection and completed replay. Corrected approval pins original receipt and cumulative15/45/17/US$0.50 limits. All14 prompt+schema envelopes fit (maximum23,509 bytes). No corrected provider request made before this checkpoint.

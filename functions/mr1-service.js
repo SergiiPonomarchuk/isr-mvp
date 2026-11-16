@@ -35,7 +35,7 @@ async function check(db,body,helper,geocode,log){
  const unique=[...new Set(Object.values(aspects).map(a=>a.text))];
  const vectors=await helper.embedTexts(unique,AI.TASK_TYPE_ISSUE);
  unique.forEach((text,i)=>Object.values(aspects).filter(a=>a.text===text).forEach(a=>Object.assign(a,{vector:vectors[i],model:AI.EMBED_MODEL,dims:AI.EMBED_DIMS,task_type:AI.TASK_TYPE_ISSUE,template_version:"mr1-aspect1",text_sha256:Review.hash(text)})));
- const bundle={version:Review.VERSION,scope:review.scope,model:review.model,aspects,library_hash:review.library_hash,exclusions:review.exclusions,raw_chain:review.raw_chain};
+ const bundle={version:Review.VERSION,prompt_version:Review.PROMPT_VERSION,schema_sha256:Review.schemaHash(),scope:review.scope,model:review.model,aspects,library_hash:review.library_hash,exclusions:review.exclusions,raw_chain:review.raw_chain};
  // Read only the creator's places; relationships are supplied by A, never by this lookup.
  const creatorSnap=await db.collection("users").doc(String(input.submitterId)).get({fieldMask:["geography"]});
  const loc=await resolveIssueLocation({reference:review.location_reference,geography:creatorSnap.exists?creatorSnap.data().geography||[]:[],requested:input.location,requestedSource:input.locationSource,geocode});
@@ -45,7 +45,7 @@ async function check(db,body,helper,geocode,log){
  const ref=db.collection("issue_drafts").doc();
  const logId=await log({endpoint:"checkIssue",at:now,draftId:ref.id,submitterUid:input.submitterId,input,meta,normalized:raw,shown:data,embedding});
  const {ok,error,...storedEmbedding}=embedding;
- const draft={...makeDraft(input,data,now,loc),scoring_version:Review.VERSION,mr1_model:bundle,mr1_model_hash:Review.hash(bundle),input_hash:inputHash(input),scoring_day:now.slice(0,10),population_hash:population.population_hash,population_count:population.population_count,relationship_diagnostics:population.relationship_diagnostics,issue_embedding:storedEmbedding,ai:{source:meta.ai_source,model:meta.model,prompt_version:meta.prompt_version,log_id:logId},duplicate_check:duplicate};
+ const draft={...makeDraft(input,data,now,loc),scoring_version:Review.VERSION,mr1_model:bundle,mr1_model_hash:Review.hash(bundle),input_hash:inputHash(input),scoring_day:now.slice(0,10),population_hash:population.population_hash,population_count:population.population_count,relationship_diagnostics:population.relationship_diagnostics,issue_embedding:storedEmbedding,ai:{source:meta.ai_source,model:meta.model,prompt_version:meta.prompt_version,schema_sha256:meta.schema_sha256,log_id:logId},duplicate_check:duplicate};
  const public_values_taxonomy=await publicValues(db,population.members);
  const preview=population.members.slice(0,25);
  const viewer=population.members.find(m=>m.user_id===String(input.submitterId));
@@ -75,10 +75,14 @@ function capacity(db,writes){
  }
  if(commit.encode({database,writes:encoded}).finish().length>10*1024*1024-32768)Engine.error("This public exceeds atomic publication capacity; nothing was published.",413);
 }
+function requireCurrentDraft(draft){
+ if(!draft.ai || draft.ai.prompt_version!==Review.PROMPT_VERSION || draft.ai.schema_sha256!==Review.schemaHash() || !draft.mr1_model || draft.mr1_model.prompt_version!==Review.PROMPT_VERSION || draft.mr1_model.schema_sha256!==Review.schemaHash())Engine.error("The context contract changed; run Check again.");
+}
 async function create(db,body,draft){
  const input=readTextInputs(body);paramsForCreate(body,draft);
  if(inputHash(input)!==draft.input_hash || Review.hash(draft.mr1_model)!==draft.mr1_model_hash)Engine.error("The checked context changed; run Check again.");
  if(draft.creation_result)return draft.creation_result;
+ requireCurrentDraft(draft);
  const registeredAt=new Date();if(registeredAt.toISOString().slice(0,10)!==draft.scoring_day)Engine.error("The checked date changed; run Check again.");
  const bundle=draft.mr1_model,params=draft.params,point=draft.location;
  const population=await Engine.population(db,bundle,point,registeredAt.toISOString());
@@ -104,6 +108,7 @@ async function create(db,body,draft){
   const current=fresh.data();paramsForCreate(body,current);
   if(current.input_hash!==draft.input_hash || current.mr1_model_hash!==draft.mr1_model_hash || current.population_hash!==draft.population_hash)Engine.error("Checked draft changed; run Check again.");
   if(current.creation_result)return current.creation_result;
+  requireCurrentDraft(current);
   issue.duplicate_review=Similar.requireReview(await Similar.findSimilar(db,query,input.submitterId,tx),body.duplicate_review);issue.matching_version=Similar.VERSION;
   const response={success:true,issue_id:issueRef.id,microcommunity_id:mcRef.id,members_count:members.length,cohort_counts:{A:population.A,B:population.B},members:members.map(m=>({uid:m.user_id,name:m.displayName,score:m.relevance_score.toFixed(3)}))};
   capacity(db,[...writes,[ref,{...current,creation_result:response}]]);

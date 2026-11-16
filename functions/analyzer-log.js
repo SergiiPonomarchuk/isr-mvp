@@ -39,6 +39,7 @@ function buildAnalyzerLog(a) {
     model: meta.model || null,
     prompt_version: meta.prompt_version || null,
     prompt_sha256: meta.prompt_sha256 || null,
+    ...(meta.schema_sha256 ? {schema_sha256:meta.schema_sha256} : {}),
     temperature: meta.temperature !== undefined ? meta.temperature : null,
     seed: meta.seed !== undefined ? meta.seed : null,
     examples_used: Array.isArray(meta.examples_used) ? meta.examples_used : [],

@@ -8,7 +8,7 @@ const helper = require("../ai-helper");
 const { Ledger, guardedClient, save, sha } = require("./mr1-pilot-budget");
 const ROOT = path.resolve(__dirname, "../..");
 const PLAN = "specs/tasks/M3-evaluation/cases.json";
-const PINNED = [PLAN, "functions/data/analyzer_examples.json", "functions/ai-config.js", "functions/ai-helper.js", "functions/context-review.js", "functions/multi-reference.js", "functions/tools/mr1-pilot.js", "functions/tools/mr1-pilot-budget.js"];
+const PINNED = [PLAN, "functions/data/analyzer_examples.json", "functions/ai-config.js", "functions/ai-helper.js", "functions/context-review.js", "functions/context-schema.js", "functions/demographics.js", "functions/location.js", "functions/multi-reference.js", "functions/tools/mr1-pilot.js", "functions/tools/mr1-pilot-budget.js"];
 const read = (root, name) => JSON.parse(fs.readFileSync(path.join(root, name), "utf8"));
 function preflight(root, expectedPlanHash) {
   const pins = Object.fromEntries(PINNED.map(name => [name, sha(fs.readFileSync(path.join(root, name)))]));
@@ -35,12 +35,13 @@ function assertPins(root, pins) {
 }
 function summary(ledger) {
   const t = ledger.totals(), tokens = {}, rows = Object.entries(ledger.data.cases).map(([id, c]) => ({ id, state: c.state, outcome: c.review && c.review.result, retained: c.review && c.review.model ? c.review.model.refs.map(r => r.id) : [], questions: c.review ? c.review.questions || [] : [], message: c.review ? c.review.context_message || c.review.message : null }));
+  for(const [name,value] of Object.entries(ledger.data.parent_receipt?ledger.data.parent_receipt.reported_usage:{}))tokens[name]=(tokens[name]||0)+value;
   for (const a of ledger.data.attempts) for (const [name, value] of Object.entries(a.usage || {})) tokens[name] = (tokens[name] || 0) + value;
-  return { version: "m3-pilot-summary-1", status: ledger.data.status, stop_reason: ledger.data.stop_reason || null, totals: t, conservative_reserved_usd: t.reserved_usd_micros / 1e6, reported_token_totals: tokens, reported_cost_usd: ledger.data.attempts.reduce((s, a) => s + (a.reported_cost_usd_micros || 0), 0) / 1e6, usage_complete: ledger.data.attempts.every(a => a.status === "succeeded" && a.usage != null), cases: rows, production_writes: 0, firestore_rpcs: 0, geocode_calls: 0, profile_embedding_texts: 0, full_population: "not run; memory and publication-capacity gates remain", deployment_ready: false };
+  return { version: "m3-pilot-summary-1", status: ledger.data.status, stop_reason: ledger.data.stop_reason || null, totals: t, conservative_reserved_usd: t.reserved_usd_micros / 1e6, reported_token_totals: tokens, current_run_totals:ledger.currentTotals(),reported_cost_usd: ((ledger.data.parent_receipt && ledger.data.parent_receipt.reported_cost_usd_micros)||0)/1e6+ledger.data.attempts.reduce((s, a) => s + (a.reported_cost_usd_micros || 0), 0) / 1e6, usage_complete: ledger.data.attempts.every(a => a.status === "succeeded" && a.usage != null), cases: rows, production_writes: 0, firestore_rpcs: 0, geocode_calls: 0, profile_embedding_texts: 0, full_population: "not run; memory and publication-capacity gates remain", deployment_ready: false };
 }
-async function runPilot({ root = ROOT, folder, expectedPlanHash, apiKey, fetchFn, authorization, onStatus = () => {} }) {
+async function runPilot({ root = ROOT, folder, expectedPlanHash, apiKey, fetchFn, authorization, parentReceipt=null, onStatus = () => {} }) {
   const checked = preflight(root, expectedPlanHash);
-  const ledger = new Ledger(folder, checked.pins, authorization);
+  const ledger = new Ledger(folder, checked.pins, authorization,parentReceipt);
   const client = guardedClient(ledger, { apiKey, fetchFn, beforeRequest: () => assertPins(root, checked.pins) });
   const embeddingCache = {};
   const getVectors = async (c, texts, template, stage) => {
@@ -79,7 +80,7 @@ async function runPilot({ root = ROOT, folder, expectedPlanHash, apiKey, fetchFn
       if (response.result.result === "pass") {
         const aspects = Object.values(response.result.aspects);
         const vectors = await getVectors(c, aspects.map(a => a.text), "mr1-aspect1", "aspects");
-        state.bundle = { version: Review.VERSION, scope: response.result.scope, model: response.result.model, aspects: Object.fromEntries(aspects.map((a, i) => [a.id, { ...a, vector: vectors[i], model: AI.EMBED_MODEL, dims: 768, task_type: AI.TASK_TYPE_ISSUE, template_version: "mr1-aspect1", text_sha256: Review.hash(a.text) }])), library_hash: response.result.library_hash, exclusions: response.result.exclusions, raw_chain: response.result.raw_chain };
+        state.bundle = { version: Review.VERSION,prompt_version:Review.PROMPT_VERSION,schema_sha256:Review.schemaHash(), scope: response.result.scope, model: response.result.model, aspects: Object.fromEntries(aspects.map((a, i) => [a.id, { ...a, vector: vectors[i], model: AI.EMBED_MODEL, dims: 768, task_type: AI.TASK_TYPE_ISSUE, template_version: "mr1-aspect1", text_sha256: Review.hash(a.text) }])), library_hash: response.result.library_hash, exclusions: response.result.exclusions, raw_chain: response.result.raw_chain };
       }
       state.state = "complete"; save(path.join(folder, c.id + ".json"), state); ledger.persist();
       onStatus({ case: c.id, outcome: response.result.result, retained: response.result.model ? response.result.model.refs.length : 0, totals: ledger.totals() });
@@ -101,10 +102,13 @@ async function runPilot({ root = ROOT, folder, expectedPlanHash, apiKey, fetchFn
 async function cli() {
   const expected = sha(fs.readFileSync(path.join(ROOT, PLAN)));
   if (!process.argv.includes("--apply")) { preflight(ROOT, expected); console.log(JSON.stringify({ dry_run: true, verified_cases: 14, plan_sha256: expected, provider_calls: 0 })); return; }
-  const approvalFile = path.join(ROOT, "specs/tasks/M3-evaluation/approval.json"), approval = JSON.parse(fs.readFileSync(approvalFile, "utf8"));
+  const corrected=process.argv.includes("--corrected");
+  const approvalFile = path.join(ROOT, corrected?"specs/tasks/M3-evaluation/corrected-approval.json":"specs/tasks/M3-evaluation/approval.json"), approval = JSON.parse(fs.readFileSync(approvalFile, "utf8"));
   if (approval.plan_sha256 !== expected || process.env.M3_PILOT_AUTHORIZATION_SHA256 !== sha(fs.readFileSync(approvalFile)) || !process.env.GEMINI_API_KEY) throw new Error("Approved launcher binding is missing; no request permitted.");
-  const folder = path.join(ROOT, "specs/tasks/M3-evaluation/pilot-20261117");
-  const result = await runPilot({ folder, expectedPlanHash: expected, apiKey: process.env.GEMINI_API_KEY, authorization: approval, onStatus: value => console.log(JSON.stringify(value)) });
+  const folder = path.join(ROOT, corrected?"specs/tasks/M3-evaluation/pilot-20261117-corrected":"specs/tasks/M3-evaluation/pilot-20261117");
+  const parentReceipt=corrected?{file:path.join(ROOT,"specs/tasks/M3-evaluation/pilot-20261117/ledger.json"),sha256:approval.parent_receipt_sha256}:null;
+  if(corrected && (approval.prompt_version!==Review.PROMPT_VERSION || approval.schema_sha256!==Review.schemaHash() || approval.max_cumulative_reviews!==15 || approval.max_embedding_texts!==45 || approval.max_embedding_posts!==17 || approval.cumulative_cost_ceiling_usd!==.5))throw new Error("Corrected cumulative approval differs.");
+  const result = await runPilot({ folder, expectedPlanHash: expected, apiKey: process.env.GEMINI_API_KEY, authorization: approval,parentReceipt, onStatus: value => console.log(JSON.stringify(value)) });
   console.log(JSON.stringify({ status: result.status, stop_reason: result.stop_reason, totals: result.totals, conservative_reserved_usd: result.conservative_reserved_usd, reported_token_totals: result.reported_token_totals }));
   if (result.status === "stopped_no_retry") process.exitCode = 1;
 }

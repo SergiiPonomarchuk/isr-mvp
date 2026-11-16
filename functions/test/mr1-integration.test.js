@@ -9,7 +9,7 @@ test("mr1 actual Check/Create/Join on isolated Firestore",{skip:process.env.MR1_
  let reviews=0,embeddings=0,mode="pass";
  helper.embedIssue=async(title,description)=>{embeddings++;return {ok:true,vector:V(),model:AI.EMBED_MODEL,dims:768,task_type:AI.TASK_TYPE_ISSUE,template_version:AI.EMBED_TEMPLATE_VERSION,text_sha256:crypto.createHash('sha256').update(`${title}. ${description}`).digest('hex')};};
  helper.embedTexts=async texts=>{embeddings+=texts.length;return texts.map(()=>V());};
- helper.reviewContext=async(input,ranked,library)=>{reviews++;const raw=mode==="clarify"?{result:"needs_clarification",message:"Which place?",questions:["Which entrance needs repair?"]}:{result:"pass",message:"A clear building repair.",scope:"building",location_reference:{anchor:"home",place:""},accepted:[{id:"1",aspect_id:"a",evidence:input.description}],excluded:{"2":"Different actual context","3":"Different decision","4":"Different scope"},aspects:[{id:"a",text:input.description,demographics:{}}]};return {result:Review.validate(raw,input,ranked,library),raw,meta:{ai_source:"model",model:AI.TEXT_MODEL,prompt_version:Review.VERSION,examples_used:[1,2,3,4]}};};
+ helper.reviewContext=async(input,ranked,library)=>{reviews++;const raw=mode==="clarify"?{result:"needs_clarification",message:"Which place?",questions:["Which entrance needs repair?"]}:{result:"pass",message:"A clear building repair.",scope:"building",location_reference:{anchor:"home",place:""},accepted:[{id:"1",aspect_id:"a",evidence:input.description}],excluded:{"2":"Different actual context","3":"Different decision","4":"Different scope"},aspects:[{id:"a",text:input.description,demographics:{},demographic_evidence:[]}]};return {result:Review.validate(raw,input,ranked,library),raw,meta:{ai_source:"model",model:AI.TEXT_MODEL,prompt_version:Review.PROMPT_VERSION,schema_sha256:Review.schemaHash(),examples_used:[1,2,3,4]}};};
  const handlers=require("../index"),admin=require("firebase-admin"),db=admin.firestore(),express=require("express"),app=express();app.use(express.json());
  assert.equal((await db.listCollections()).length,0,"needs a fresh disposable database");
  const batch=db.batch();
@@ -30,9 +30,14 @@ test("mr1 actual Check/Create/Join on isolated Firestore",{skip:process.env.MR1_
   assert.equal(checked.data.members[0].score,.8);assert.equal(checked.data.public_values_taxonomy.domains[0],5,"aggregate includes members outside the display preview");
   assert.equal(typeof checked.data.viewer_member.isr_score,"number");
   const make={...body,draftId:checked.data.draftId};
+  const draftRef=db.collection("issue_drafts").doc(checked.data.draftId),draft=(await draftRef.get()).data();
+  assert.equal(draft.ai.prompt_version,Review.PROMPT_VERSION);assert.equal(draft.ai.schema_sha256,Review.schemaHash());assert.deepEqual(draft.mr1_model.aspects.a.demographic_evidence,[]);
+  await draftRef.update({"ai.prompt_version":Review.VERSION});assert.equal((await call("createIssue",make)).status,409);assert.equal((await db.collection("issues").get()).size,0);await draftRef.update({"ai.prompt_version":Review.PROMPT_VERSION});
+
   for(const edit of [{location:[47.7,7.7]},{title:"changed title"}])assert.equal((await call("createIssue",{...make,...edit})).status,409);
   const stale=await call("createIssue",{...make,clarification:"changed"});assert.equal(stale.status,409);assert.equal((await db.collection("issues").get()).size,0);
   const counts=[reviews,embeddings];const concurrent=await Promise.all([call("createIssue",make),call("createIssue",make)]);assert.equal(concurrent[0].data.issue_id,concurrent[1].data.issue_id);const created=concurrent[0];assert.equal(created.status,200,JSON.stringify(created.data));assert.equal(created.data.members_count,109);assert.equal((await db.collection("microcommunities").doc(created.data.microcommunity_id).get()).data().values_taxonomy.domains[0],5);assert.deepEqual([reviews,embeddings],counts);
+  await draftRef.update({"ai.prompt_version":Review.VERSION});
   const replay=await call("createIssue",make);assert.equal(replay.data.issue_id,created.data.issue_id);assert.equal((await db.collection("issues").get()).size,1);
   const member=(id)=>db.collection("microcommunity_members").doc(`${created.data.microcommunity_id}_${id}`).get();
   assert.equal((await member(106)).data().social_addition,0);assert.equal((await member(106)).data().cohort,"B");assert.ok(Math.abs((await member(107)).data().social_addition-.07)<1e-12);assert.equal((await member(108)).data().relevance_score,0);assert.equal((await member(111)).exists,false);assert.equal((await member(105)).data().X_score,0);

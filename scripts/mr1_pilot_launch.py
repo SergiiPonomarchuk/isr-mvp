@@ -18,18 +18,24 @@ MAIN=Path('C:/isr-mvp')
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--apply',action='store_true')
+    parser.add_argument('--corrected',action='store_true')
     args=parser.parse_args()
     command=['node',str(ROOT/'functions/tools/mr1-pilot.js')]
+    if args.corrected:command.append('--corrected')
     env=os.environ.copy()
     env['NODE_PATH']=str(MAIN/'functions/node_modules')
     if not args.apply:
         return subprocess.run(command,env=env).returncode
-    approval_path=ROOT/'specs/tasks/M3-evaluation/approval.json'
+    approval_path=ROOT/('specs/tasks/M3-evaluation/corrected-approval.json' if args.corrected else 'specs/tasks/M3-evaluation/approval.json')
     approval=json.loads(approval_path.read_text(encoding='utf8'))
     plan=(ROOT/'specs/tasks/M3-evaluation/cases.json').read_bytes()
     if approval['plan_sha256']!=hashlib.sha256(plan).hexdigest():
         raise ValueError('Approved case plan changed; no request made')
-    folder=ROOT/'specs/tasks/M3-evaluation/pilot-20261117'
+    folder=ROOT/('specs/tasks/M3-evaluation/pilot-20261117-corrected' if args.corrected else 'specs/tasks/M3-evaluation/pilot-20261117')
+    if args.corrected:
+        parent=(ROOT/'specs/tasks/M3-evaluation/pilot-20261117/ledger.json').read_bytes()
+        if hashlib.sha256(parent).hexdigest()!=approval['parent_receipt_sha256']:
+            raise ValueError('Original receipt changed; no request made')
     if (folder/'ledger.json').exists() or (folder/'pilot.lock').exists():
         raise ValueError('Pilot receipt/lock exists; no automatic rerun or credential loading')
     # The author explicitly approved this existing loader for this pilot.

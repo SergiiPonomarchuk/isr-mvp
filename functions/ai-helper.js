@@ -1138,10 +1138,10 @@ async function reviewContext(input, ranked, library) {
   const c=getClient();if(!c)throw Object.assign(new Error("AI unavailable: context review could not run."),{status:503});
   try {
     const response=await c.models.generateContent({model:AI.TEXT_MODEL,contents:prompt,
-      config:{temperature:AI.TEMPERATURE,seed:AI.SEED,responseMimeType:"application/json",maxOutputTokens:8192}});
+      config:{temperature:AI.TEMPERATURE,seed:AI.SEED,responseMimeType:"application/json",maxOutputTokens:8192,responseJsonSchema:Review.responseSchema()}});
     const raw=JSON.parse(response.text);
     const result=Review.validate(raw,input,ranked,library);
-    return {result,raw,meta:{ai_source:"model",model:AI.TEXT_MODEL,prompt_version:Review.VERSION,
+    return {result,raw,meta:{ai_source:"model",model:AI.TEXT_MODEL,prompt_version:Review.PROMPT_VERSION,schema_sha256:Review.schemaHash(),
       prompt_sha256:sha256(prompt),temperature:AI.TEMPERATURE,seed:AI.SEED,
       examples_used:ranked.map(r=>r.id),raw_output:response.text,usage:response.usageMetadata||null,error:null}};
   } catch(error) { throw Object.assign(new Error(error.status?error.message:"AI returned an invalid context review; please retry."),{status:error.status||503}); }

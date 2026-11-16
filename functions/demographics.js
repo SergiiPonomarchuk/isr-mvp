@@ -16,6 +16,8 @@
  * checked against tests/fixtures/a3_d_g_cases.json.
  */
 
+const EMPLOYMENT_STATUSES = ["any", "employed", "unemployed"];
+const FAMILY_STATUSES = ["any", "parent", "grandparent"];
 const PROPERTY_KINDS = ["flat", "house", "land", "garage", "commercial", "other"];
 const MAX_LIST = 20;
 const MAX_NAME = 120;
@@ -128,6 +130,8 @@ function evaluateDemographics(user, criteria, nowYear = new Date().getFullYear()
 
 module.exports = {
   PROPERTY_KINDS,
+  EMPLOYMENT_STATUSES,
+  FAMILY_STATUSES,
   sanitizeDemographicRules,
   placeMatch,
   featureMatch,
