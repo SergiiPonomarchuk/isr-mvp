@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 — Grounding prompt v3 and two actual pilot passes
+
+Author-approved input quotation clarification passed the lock/pothole cases. Playground response was rejected for neighborhood versus street_segment reference scope. Seven cumulative reviews, three embedding texts, US$0.098801 reserved; no further call or live write. Completed free prompt/validator contract audit and prepared bounded alignment/completion proposal; see specs/tasks/M3-grounding-pilot-report.md. Models, math and validation unchanged.
+
 ## 2026-11-17 — Approved technical continuation and grounded-output stop
 
 Added cumulative 20-attempt continuation preserving all prior reservations and receipts. Diagnosed provider schema state complexity, simplified provider-only constraints while retaining strict validation, and obtained model output. The model copied a reference title as an aspect; strict input grounding rejected it. Four cumulative reviews, zero embeddings, US$0.055576 reserved. No further semantic prompt work or provider request; concrete next proposal in specs/tasks/M3-technical-continuation-report.md. No production/deployment/scoring changes.

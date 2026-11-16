@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"pass\",\n  \"message\": \"The request to repair a hazardous pothole on a specific street has been identified and matched to the relevant infrastructure category.\",\n  \"questions\": [],\n  \"scope\": \"street_segment\",\n  \"location_reference\": {\n    \"anchor\": \"named_place\",\n    \"place\": \"Hauptstraße, Weil am Rhein, Deutschland\"\n  },\n  \"accepted\": [\n    {\n      \"id\": \"21\",\n      \"aspect_id\": \"1\",\n      \"evidence\": \"A deep, widening pothole has formed on Hauptstraße, Weil am Rhein\"\n    }\n  ],\n  \"excluded\": {},\n  \"aspects\": [\n    {\n      \"id\": \"1\",\n      \"text\": \"A deep, widening pothole has formed on Hauptstraße, Weil am Rhein\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"any\",\n        \"familyStatus\": \"any\",\n        \"features\": [],\n        \"places\": [],\n        \"property_kinds\": []\n      },\n      \"demographic_evidence\": []\n    }\n  ]\n}",
+  "usage": {
+    "promptTokenCount": 1038,
+    "candidatesTokenCount": 273,
+    "totalTokenCount": 1311
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "edaabb49e73e1e334b51bfe61c50428c7118032e23c7595fcb808764aa9cd733"
+}

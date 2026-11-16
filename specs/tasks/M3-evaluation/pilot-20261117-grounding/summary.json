@@ -1,0 +1,139 @@
+{
+  "version": "m3-pilot-summary-1",
+  "status": "stopped_no_retry",
+  "stop_reason": "Incompatible reference scope",
+  "totals": {
+    "reviews": 7,
+    "embeddingTexts": 3,
+    "embeddingPosts": 3,
+    "reserved_usd_micros": 98801,
+    "transport_attempts": 10
+  },
+  "conservative_reserved_usd": 0.098801,
+  "reported_token_totals": {
+    "promptTokenCount": 4391,
+    "candidatesTokenCount": 1362,
+    "totalTokenCount": 5753
+  },
+  "current_run_totals": {
+    "reviews": 3,
+    "embeddingTexts": 3,
+    "embeddingPosts": 3,
+    "reserved_usd_micros": 43225,
+    "transport_attempts": 6
+  },
+  "reported_cost_usd": 0.003142,
+  "usage_complete": false,
+  "cases": [
+    {
+      "id": "D1-01-live",
+      "state": "complete",
+      "outcome": "pass",
+      "retained": [
+        "1"
+      ],
+      "questions": [],
+      "message": "The issue regarding the broken main entrance lock at the specified building has been identified and matched to the relevant category."
+    },
+    {
+      "id": "D1-02",
+      "state": "complete",
+      "outcome": "pass",
+      "retained": [
+        "21"
+      ],
+      "questions": [],
+      "message": "The request to repair a hazardous pothole on a specific street has been identified and matched to the relevant infrastructure category."
+    },
+    {
+      "id": "D1-03",
+      "state": "stopped",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-04",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-05",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-06",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-07",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-08",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-09",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-10",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "vague-help",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "compound-lock-software",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "vague-help-clarified",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "compound-lock-software-clarified",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    }
+  ],
+  "production_writes": 0,
+  "firestore_rpcs": 0,
+  "geocode_calls": 0,
+  "profile_embedding_texts": 0,
+  "full_population": "not run; memory and publication-capacity gates remain",
+  "deployment_ready": false
+}

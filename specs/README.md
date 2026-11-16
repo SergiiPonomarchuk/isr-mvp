@@ -191,3 +191,5 @@ The ids come from `tasks/S0-inventory-report.md` §3, where each contradiction i
 | C-46 | AAuth, logging, encryption described but absent | 09 | partly decided (PD-5 defines gISR and AAuth). R0: rules stay open until 2027-06-30 except `issue_drafts` (server only); real access rules are roadmap stage 5 |
 
 Current M3 result: [technical continuation report and grounding-correction proposal](tasks/M3-technical-continuation-report.md). Schema admission succeeded; semantic validation stopped the pilot.
+
+Latest M3: [grounding pilot result and contract-alignment proposal](tasks/M3-grounding-pilot-report.md). Two cases passed; scope mismatch stopped the remaining cases.

@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"pass\",\n  \"message\": \"The issue regarding the broken main entrance lock at the specified building has been identified and matched to the relevant category.\",\n  \"questions\": [],\n  \"scope\": \"building\",\n  \"location_reference\": {\n    \"anchor\": \"home\",\n    \"place\": \"\"\n  },\n  \"accepted\": [\n    {\n      \"id\": \"1\",\n      \"aspect_id\": \"aspect_0\",\n      \"evidence\": \"The main entrance lock at my home building osbb 2, h12 is jammed\"\n    }\n  ],\n  \"excluded\": {},\n  \"aspects\": [\n    {\n      \"id\": \"aspect_0\",\n      \"text\": \"The main entrance lock at my home building osbb 2, h12 is jammed\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"any\",\n        \"familyStatus\": \"any\",\n        \"features\": [],\n        \"places\": [],\n        \"property_kinds\": []\n      },\n      \"demographic_evidence\": []\n    }\n  ]\n}",
+  "usage": {
+    "promptTokenCount": 999,
+    "candidatesTokenCount": 268,
+    "totalTokenCount": 1267
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "0100dac9f8ca1e9acedb106eaeb07bc8b93e8e12b9c0e0b65ad52105e8212d35"
+}
