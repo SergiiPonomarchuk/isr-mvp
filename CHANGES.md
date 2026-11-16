@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-16 - Bounded ten-text embedding experiment
+
+On author proceed, embedded the ten reviewed inputs once: one request/ten texts, no retries, estimated484 input tokens and no provider usage count. The .05 chain gives nine100-chains including clear zoning/workplace inputs; lowering to.02 still admits vague/compound cardinality passes. Added recorded vectors/receipt/offline replay and the resulting context-policy gate. No threshold, runtime or database changes.
+
 ## 2026-11-16 - Offline reference-selection calibration
 
 Evaluated the unchanged .30/.05 chain on ten saved D1 cases plus standby: nine singleton chains and zoning100-chain. Added reproducible offline vectors/ranks/sensitivity, explicit coverage limitations, direct-affectedness proposal and runtime integration plan. Prepared ten follow-up texts without embedding them. Provider calls/texts and production writes remain zero; accepted data/code unchanged.

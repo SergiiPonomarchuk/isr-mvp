@@ -56,6 +56,8 @@ Acceptance includes reference boundary/tie/no-match/>3 cases; group sums/bounds;
 
 ## 6. Status log
 
+- 2026-11-16 bounded follow-up: author proceed authorized the prepared ten embedding texts. One request completed; .05 gives nine100-chains, while .02 still passes vague/compound cardinality. Full evidence in the calibration report. Context/ref-selection policy decision precedes runtime changes; no additional calls authorized.
+
 - 2026-11-16 offline follow-up: [saved-vector calibration](M3-offline-calibration.md) completed for ten D1 cases plus standby; nine singleton chains and zoning100-chain. Prepared direct-scope proposal, staged implementation plan and ten proposed fresh input texts. No runtime/threshold change, provider call or member-score acceptance claimed.
 
 - 2026-11-16: author authorized all reviewed documentation changes. Replaced fixed-five proposal with PD-9 and affected-person X, corrected expertise math/examples and current-vs-intended labels. No app implementation or live/provider operations.

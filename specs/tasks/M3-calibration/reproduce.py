@@ -42,3 +42,26 @@ for e in lib['examples']:
 out={'date':'2026-11-16','baseline':'89fb6bc','environment':'offline committed input vectors extracted from accepted snapshot; isolated emulator attempt timed out and was stopped without export','snapshot':'A:/BackUp/isr-mvp/emulator-snapshots/2026-11-14-d1-author-accepted-7259ca3','metric':'max(0,cos(actual saved title-description RETRIEVAL_QUERY vector, committed RETRIEVAL_DOCUMENT reference vector))','scope_limits':['No new title/context/vague/compound/aspect embeddings created.','Threshold experiment on existing vectors; no confidence calibration or final member-score comparison.','Library leave-one-out is DOCUMENT-to-DOCUMENT geometry diagnostic, not the runtime query metric.'],'hash_encoding':'UTF8 text with universal-newline LF normalization','calibration_inputs_sha256':hashlib.sha256((R/'specs/tasks/M3-calibration/inputs.json').read_text(encoding='utf-8').encode('utf-8')).hexdigest(),'source_library_sha256':hashlib.sha256((R/'functions/data/analyzer_examples.json').read_text(encoding='utf-8').encode('utf-8')).hexdigest(),'scenarios':rows,'library_leave_one_out':loo,'summary':{'visible_scenarios':10,'saved_vectors_including_standby':len(rows),'scenarios':len(rows),'clarification_count':sum(x['outcome']=='needs_clarification' for x in rows),'selected_min':min(x['selected_count'] for x in rows),'selected_max':max(x['selected_count'] for x in rows),'query_top_scores':[x['ranking'][0]['score'] for x in rows],'loo_selected_median':statistics.median(x['selected_count'] for x in loo)},'provider_calls':0,'database_mutations':0}
 (R/'specs/tasks/M3-selection-calibration.json').write_text(json.dumps(out,indent=2)+'\n',encoding='utf-8')
 print(json.dumps(out['summary'],indent=2))
+
+# Optional already-recorded ten-text experiment: offline replay, never a provider call.
+evaluation_path=R/'specs/tasks/M3-calibration/evaluation-vectors.json'
+if evaluation_path.exists():
+    bundle=json.loads(evaluation_path.read_text(encoding='utf-8'))
+    cases=json.loads((R/'specs/tasks/M3-calibration/proposed-inputs.json').read_text(encoding='utf-8'))['texts']
+    assert bundle['model']==lib['embedding_model'] and bundle['dimensions']==768
+    assert bundle['task_type']=='RETRIEVAL_QUERY' and bundle['template_version']=='t1'
+    evaluation=[]
+    for case in cases:
+        saved=bundle['records'][case['id']]
+        expected=hashlib.sha256((case['title'].strip()+'. '+case['description'].strip()).encode('utf-8')).hexdigest()
+        assert saved['text_sha256']==expected
+        v=saved['vector']
+        assert len(v)==768 and all(math.isfinite(x) for x in v)
+        rr=ranking(v); selected=chain(rr)
+        evaluation.append({'id':case['id'],'purpose':case['purpose'],'selected_count':len(selected),
+            'selection_outcome':'needs_clarification' if len(selected)>3 else 'no_match' if not selected else 'candidate_pass_pending_context',
+            'ranking':rr,'sensitivity':[{'gap':gap,'count':len(chain(rr,.3,gap))} for gap in [.05,.02,.01]]})
+    (R/'specs/tasks/M3-calibration/evaluation-results.json').write_text(json.dumps({
+        'scope':'Selection geometry only; no context LLM or final member-score computation',
+        'cases':evaluation},indent=2)+'\n',encoding='utf-8')
+    print('Replayed recorded ten-text experiment without network or database access.')

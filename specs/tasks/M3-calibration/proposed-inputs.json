@@ -1,5 +1,5 @@
 {
-  "status": "PROPOSED; no embeddings or provider calls made",
+  "status": "Executed once after author proceed; see embedding-receipt.json. Input text is unchanged.",
   "texts": [
     {
       "id": "zoning-authority",

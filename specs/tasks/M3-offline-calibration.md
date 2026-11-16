@@ -1,6 +1,6 @@
 # M3 offline calibration and implementation plan
 
-Status: **Offline selection experiment complete, 2026-11-16; runtime not implemented.** Author approved the offline stage with "ok, go" after PR #38 merged as89fb6bc. This task authorizes read-only snapshot/vector analysis, reproducible evidence and implementation planning; no new provider calls, production writes, deployment, rules changes or model change.
+Status: **Offline selection experiment complete, 2026-11-16; runtime not implemented.** Author approved the offline stage with "ok, go" after PR #38 merged as89fb6bc. The first stage authorized read-only snapshot/vector analysis and implementation planning. The author subsequently wrote "proceed" after the concrete ten-text/zero-generation/zero-database allowance was presented, authorizing that bounded experiment. No production writes, deployment, rules changes or model change.
 
 ## Scope and approved plan
 
@@ -37,7 +37,7 @@ Sensitivity: keeping floor .30 but reducing gap to .02 selects one reference in 
 
 ## Limits and member-score comparison
 
-No saved vectors exist for the proposed vague/compound/reformulated inputs, and no contextual aspect vectors or approved direct-affectedness predicate exist for mr1. Therefore no real-profile before/after R/E/ISR or changed-membership claim is made. Reusing whole-issue vectors as every aspect, copying example places/roles into D, or choosing an arbitrary social seed threshold would invent assumptions. Selection outcomes are reproducible; full scoring calibration remains gated on those definitions. The twelve Expertise arithmetic fixtures and PD-9 formula checks remain valid arithmetic evidence, not population evaluation.
+At the first stage no saved vague/compound/reformulated vectors existed. The subsequent bounded experiment adds those ten whole-input vectors; contextual aspect vectors and an approved direct-affectedness predicate still do not exist for mr1. Therefore no real-profile before/after R/E/ISR or changed-membership claim is made. Reusing whole-issue vectors as every aspect, copying example places/roles into D, or choosing an arbitrary social seed threshold would invent assumptions. Selection outcomes are reproducible; full scoring calibration remains gated on those definitions. The twelve Expertise arithmetic fixtures and PD-9 formula checks remain valid arithmetic evidence, not population evaluation.
 
 ## Direct-affectedness proposal for review
 
@@ -54,9 +54,30 @@ Evaluate direct-scope positives/negatives on hypothetical fixtures first (reside
 5. **Consistency:** wire the same derivation into Create/Join/member caches/tooltips and independent checker; preserve current storage rounding or explicitly version changes. Keep whole-issue duplicate vectors separate from aspect scoring. Binding changes invalidate Create, including late responses and context/pin edits. Old publics retain their original version; no reseed/re-embedding/migration implied.
 6. **Acceptance:** required suites/CI, isolated-copy end-to-end cases, full-population membership and per-member comparison, followed by author browser review with exact local link/steps. Open a runtime PR only after the calibration/policy gate and implementation plan are approved. Explicit author merge, then author deploy/live smoke steps.
 
-## Proposed bounded follow-up evaluation (not run)
+## Completed bounded ten-text follow-up
 
-[Ten exact input texts](M3-calibration/proposed-inputs.json) cover three zoning reformulations, three vague cases, two compound cases and two targeted-context cases. Proposal: embed these ten texts once with the existing embedding model/dimensions/task; **at most10 embedding texts, zero text-generation calls, zero geocoding, zero Firestore writes**. Record actual requests/tokens and any SDK transport retries separately; do not silently retry/spend extra texts. Vague text should be recognized as missing context by future context validation even if embedding geometry assigns high scores; similarities alone cannot judge that. This is a requested new allowance, not covered by the old D1 budget. No dollar estimate is asserted without current pricing.
+Author wrote "proceed" after the exact ten-text embedding-only experiment was prepared. Executed **one REST batch request, ten embedding texts, zero retries**, using existing gemini-embedding-001/768/RETRIEVAL_QUERY/t1. No text generation, geocoding or database writes. The existing main-checkout loader handled the key privately; no key was copied into this worktree. [Receipt](M3-calibration/embedding-receipt.json), [exact texts](M3-calibration/proposed-inputs.json), [vectors](M3-calibration/evaluation-vectors.json) and [results](M3-calibration/evaluation-results.json) are recorded. Character-based input-token estimate484; API-reported usage unavailable. No dollar cost is asserted from this estimate.
+
+| Input | Chain .05 | Chain .02 | First reference / similarity |
+|---|---:|---:|---|
+| zoning-authority | 100 | 2 | 98 / 0.6868 |
+| zoning-effects | 100 | 100 | 77 / 0.6294 |
+| zoning-planning | 100 | 100 | 98 / 0.6435 |
+| vague-help | 100 | 1 | 51 / 0.6735 |
+| vague-fix | 100 | 100 | 47 / 0.6695 |
+| vague-improve | 100 | 1 | 47 / 0.6838 |
+| compound-lock-software | 100 | 1 | 1 / 0.7270 |
+| compound-school-budget | 100 | 3 | 97 / 0.6940 |
+| context-lock | 1 | 1 | 1 / 0.7976 |
+| context-work | 100 | 1 | 86 / 0.6842 |
+
+At the unchanged .05 rule, nine of ten inputs chain through100 references, including all three zoning reformulations and the explicit workplace case; only the building-lock clarification gives one. The three vague and two deliberately compound cases also request clarification, but cardinality alone does not explain whether wording is missing, cases are incompatible or the library geometry is dense. This small authored set is a diagnostic, not a labelled blind evaluation or a general accuracy estimate.
+
+Reducing the gap to .02 is insufficient: two vague cases and the lock/software compound then select only one reference, and the school/budget compound selects three. Cardinality-pass is not semantic/context-pass. Thus the successful singleton results on the original D1 cases cannot justify simply lowering the gap and shipping it.
+
+**Recommendation for the author's next policy decision:** retain .30/.05 as recorded until amended, but treat this evidence as a gate against runtime deployment. Design an explicit context/affected-group/scope/authority/compound-issue check before deciding whether reformulation is needed. Review whether >3 remains a mandatory user-reformulation rule or becomes a reference-ambiguity diagnostic. Compatibility exclusion must have recorded substantive reasons, not silently drop references to get below3. A change to selection ordering/cardinality requires an explicit PD-9 amendment. No such rule change is made in this PR.
+
+No further provider calls are approved or needed to inspect these results. Next work can draft the context-check contract and direct-affectedness fixtures offline; runtime integration and real-profile score changes remain gated on author policy decisions and a concrete implementation plan.
 
 ## Reproduce the completed offline analysis
 
@@ -67,8 +88,10 @@ Set-Location A:\BackUp\isr-mvp\worktrees\wt-m3-calibration
 python specs/tasks/M3-calibration/reproduce.py
 ```
 
-This reads committed vectors/library/manifest and replaces only the calibration JSON report. It has no network or database API and needs no key. Snapshot extraction need not be repeated.
+This reads committed vectors/library/manifest and replaces only the calibration JSON report. It has no network or database API and needs no key. Snapshot extraction and provider calls need not be repeated; the reproducer replays both recorded vector experiments offline.
 
 ## Status log
+
+- 2026-11-16 follow-up: author approved proceeding with the prepared ten-text allowance. One embedding request/ten texts completed, no retries; estimated484 tokens, provider usage unavailable. Nine100-chains and one singleton at.05; .02 still admits vague/compound cardinality passes. No threshold/runtime change or final-member-score claim. Context/cardinality policy is now the next decision gate.
 
 - 2026-11-16: completed saved-vector selection for ten scenarios plus standby, full ranks/threshold sensitivity and separate library geometry diagnostic. Observed nine singleton chains and zoning100-chain. Prepared explicit coverage limits, direct-scope proposal, runtime implementation sequence and exact ten-text follow-up. Provider calls0, charged texts0, production writes0; no accepted-data changes. Required tests/CI checked before handoff.
