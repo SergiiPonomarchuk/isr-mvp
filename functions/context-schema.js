@@ -1,7 +1,7 @@
 "use strict";
 const { PROPERTY_KINDS, EMPLOYMENT_STATUSES, FAMILY_STATUSES } = require("./demographics");
 const { ANCHORS } = require("./location");
-const PROMPT_VERSION = "mr1-context-prompt-2";
+const PROMPT_VERSION = "mr1-context-prompt-3";
 const SCOPES = ["unit", "building", "street_segment", "neighborhood", "district", "city", "region", "global_digital"];
 const DEMOGRAPHIC_FIELDS = ["minAge", "maxAge", "employmentStatus", "familyStatus", "features", "places", "property_kinds"];
 function responseSchema() {
@@ -24,7 +24,7 @@ function responseSchema() {
     accepted: { type: "array", items: object({ id: text, aspect_id: text, evidence: text }) },
     excluded: { type: "object", additionalProperties: text },
     aspects: { type: "array", maxItems: 3, items: object({
-      id: text, text, demographics,
+      id: text, text: { type: "string", description: "Copy one exact contiguous substring from INPUT_JSON title, description or clarification. Never copy a REFERENCE_JSON title or paraphrase the input." }, demographics,
       demographic_evidence: { type: "array", maxItems: 64, items: object({ field: { type: "string", enum: [...DEMOGRAPHIC_FIELDS] }, value: { type: "string", description: "String form of the exact non-default criterion value." }, quote: { type: "string", description: "Exact input quote stating the affected-person attribute; never just issue-topic words." } }) }
     }) }
   });

@@ -21,3 +21,5 @@ The correction should give aspect.text its own schema description requiring an e
 The separate full-population memory and publication-capacity gates remain unresolved. Sol Medium and the existing application models remain sufficient for this focused correction.
 
 Final verification: Node 172 passed, five optional skips; Python 140 run, two optional skips. Captured-response regression verifies copied-reference rejection, genuine input acceptance and retained server age limits. CI is checked on the pushed final head.
+
+- 2026-11-17: Author approved grounding correction and resumption. Added exact-input schema description and explicit reference-title prohibition with a synthetic quote example under prompt version 3. Strict validator, models, scoring and original cumulative limits unchanged. Four immutable receipts are counted before resumption.
