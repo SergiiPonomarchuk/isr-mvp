@@ -107,6 +107,7 @@ Source of the PD pages: `tasks/S0-decisions-to-import.md`.
 | [D1-coalition-helper](tasks/D1-coalition-helper.md) | IMPLEMENTED; #37 merged, all author stages and decisive creator UI completed; canonical server result verified | D1 rehearsal, CLI |
 | [M3-analyzer-guardrails](tasks/M3-analyzer-guardrails.md) | Documentation authorized/revised to PD-9; runtime and calibration pending | Analyzer, scoring, drafts, UI |
 | [M3-offline-calibration](tasks/M3-offline-calibration.md) | Saved-vector selection complete; zoning100-chain/coverage and next policy/budget gate recorded; runtime pending | Calibration, implementation planning |
+| [M3-scoring-core](tasks/M3-scoring-core.md) | Pure JS/Python arithmetic and A/B formation implemented/tested; application integration pending | Scoring, independent checker |
 | [U10-similar-active-issues](tasks/U10-similar-active-issues.md) | IMPLEMENTED; author emulator/live Check acceptance recorded | Analyzer, UI, membership |
 | [U11-profile-search](tasks/U11-profile-search.md) | IMPLEMENTED; merged/author-hosted; numeric adoption accepted live | Profile adoption, UI |
 | [U9-member-preview-popup](tasks/U9-member-preview-popup.md) | Count labeling and immediate member popup rendering implemented, deployment pending | UI, Analyzer |

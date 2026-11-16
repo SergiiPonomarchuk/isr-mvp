@@ -1,5 +1,7 @@
 # ISR Issue Analyzer Protocol (v2, Firebase / NoSQL)
 
+**2026-11-16 A/B amendment:** [PD-9](../specs/decisions/PD-9-multi-reference-derivation.md) now forms A from weighted direct D/G/S>=Theta (.15), then adds eligible relatives belowTheta as B regardless of score. A receives no X. B receives the full weighted tie only when its resulting R<=the supplying A direct score, otherwise baseline only; equality allowed, no partial cap or second hop. New-policy formation has no top100 cap. Core implemented; application integration pending. Older single-stage threshold/cap descriptions below describe historical behavior only.
+
 **2026-11-16 intended-model revision:** [PD-9 multi-reference derivation](../specs/decisions/PD-9-multi-reference-derivation.md) governs reference selection, notation and member-score combination. Runtime at3c25ef7 still uses the earlier single-vector model. Sections explicitly marked historical are not implementation instructions for mr1.
 
 This protocol specifies how the AI **Issue Analyzer** processes a newly submitted ISR issue
