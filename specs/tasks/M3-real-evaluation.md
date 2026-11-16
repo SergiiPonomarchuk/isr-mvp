@@ -54,7 +54,7 @@ An offline capacity fixture may clone the shape of a committed synthetic member/
 
 ## Attention gate
 
-After offline preparation, ask the author to approve the exact14-review/45-text/US$0.50 allowance and reuse of the existing main-checkout loader, and confirm Paid status/budget. Only then build/run the bounded paid harness. Full-population import has a separate local-memory prerequisite. Human semantic review and author-only deployment remain later gates.
+Original pilot approval/loader reuse and Paid status were explicitly confirmed on2026-11-17. The bounded run has now stopped after its first schema failure. See [pilot report](M3-pilot-report.md) and [correction/rerun proposal](M3-context-contract-fix-proposal.md); no further provider call or runtime fix is approved yet. Full-population import retains its separate memory prerequisite; human semantic review and deployment remain later gates.
 
 ## Status log
 
@@ -85,3 +85,5 @@ These commands replace only aggregate evidence files in the feature worktree. Th
 - Free-preparation verification: Node153 passed/five optional skips; Python140 run/two skips, including four synthetic key-census safety cases. Exact-cache and structural-capacity reproducer passed with no provider/database requests. Runtime application code/models, accepted snapshot and live data are unchanged.
 
 - 2026-11-17 author approval: "Approve the M3 pilot up to $0.50, using the existing credential loader; Paid status and budget confirmed". Implementing/testing a durable single-attempt guard before the first paid request. No calls made yet.
+
+- 2026-11-17 execution: tested guard/harness passed161 Node tests/five optional skips and Python140 run/two skips; source pushed asd660079 before loading the authorized credential privately. One actual review returned invalid property kind building; stopped before embeddings/second request.497 input +285 output tokens, estimatedUS$0.000552;US$0.013081 reservation retained. [Full result and next approval gate](M3-pilot-report.md). No app/model/math/rules/data/deployment change or automatic retry.

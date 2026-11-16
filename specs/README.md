@@ -11,7 +11,7 @@ Created by task S0 (`tasks/S0-restructure-specs.md`). Every component file state
 
 ---
 
-Current checkpoint: [M3 application integration](tasks/M3-app-integration.md) merged through PR41; local visual review accepted. [Bounded real-model evaluation proposal and free capacity findings](tasks/M3-real-evaluation.md) are prepared on a feature branch. Paid execution is unapproved, full-population capacity/performance remains unresolved, and deployment is not ready. Published historical issues retain their stored scoring version.
+Current checkpoint: [M3 application integration](tasks/M3-app-integration.md) merged through PR41 and mocked local UI accepted. [Approved real-model pilot](tasks/M3-pilot-report.md) stopped after its first schema failure; [context-contract correction and a controlled cumulative rerun](tasks/M3-context-contract-fix-proposal.md) require a new author decision. No further paid call/runtime fix is authorized yet. Full-population capacity/performance and deployment remain gated; historical public scores are unchanged.
 
 ## Status legend
 

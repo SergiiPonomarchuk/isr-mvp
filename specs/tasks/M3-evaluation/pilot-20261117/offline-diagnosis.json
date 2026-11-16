@@ -1,0 +1,38 @@
+{
+  "version": "m3-pilot-diagnosis-1",
+  "case": "D1-01-live",
+  "actual_recorded_response": true,
+  "original_validation": {
+    "accepted": false,
+    "reason": "Invalid property kind"
+  },
+  "enum_only_alteration": {
+    "offline_hypothesis_not_provider_result": true,
+    "accepted": true,
+    "retained_refs": [
+      "1"
+    ],
+    "demographic_features": [
+      "security",
+      "lock"
+    ]
+  },
+  "synthetic_D_fixture": {
+    "is_actual_profile": false,
+    "topic_features_score": 0,
+    "without_topic_features_score": 1,
+    "note": "D component only; no final relevance or public exclusion is inferred."
+  },
+  "synthetic_location_fixture": {
+    "is_actual_profile": false,
+    "model_anchor": "property",
+    "canonical_U6_keyword_anchor": "home",
+    "model_resolution_source": "property",
+    "U6_resolution_source": "home",
+    "resolved_different_points": true,
+    "note": "Keyword logic is an offline comparison only; no fallback publication was added."
+  },
+  "provider_calls": 0,
+  "database_rpcs": 0,
+  "geocode_calls": 0
+}

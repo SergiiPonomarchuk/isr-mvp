@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"pass\",\n  \"message\": \"The input describes a building-level security issue regarding a main entrance lock, which aligns with the provided reference.\",\n  \"questions\": [],\n  \"scope\": \"building\",\n  \"location_reference\": {\n    \"anchor\": \"property\",\n    \"place\": \"osbb 2, h12\"\n  },\n  \"accepted\": [\n    {\n      \"id\": \"1\",\n      \"aspect_id\": \"1\",\n      \"evidence\": \"The main entrance lock at my home building osbb 2, h12 is jammed\"\n    }\n  ],\n  \"excluded\": {},\n  \"aspects\": [\n    {\n      \"id\": \"1\",\n      \"text\": \"main entrance lock\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"any\",\n        \"familyStatus\": \"any\",\n        \"features\": [\n          \"security\",\n          \"lock\"\n        ],\n        \"places\": [\n          \"osbb 2, h12\"\n        ],\n        \"property_kinds\": [\n          \"building\"\n        ]\n      }\n    }\n  ]\n}",
+  "usage": {
+    "promptTokenCount": 497,
+    "candidatesTokenCount": 285,
+    "totalTokenCount": 782
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "7ea9c7bdeff52c5d32e1afc81bef6b84345b4c90e8fcdf3a2a757248d04a748a"
+}

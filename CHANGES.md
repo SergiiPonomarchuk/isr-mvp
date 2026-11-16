@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Bounded M3 pilot guard and first real-model result
+
+Added and verified an exact-case, single-attempt provider adapter with durable request/text/cost reservations, source pins and private existing-loader launcher. Author approved theUS$0.50 pilot. Its first actual review failed strict property-kind validation and the run stopped without retries or embeddings. Reported497 input/285 output tokens imply approximatelyUS$0.000552;US$0.013081 remains reserved. Offline replay identifies additional home-anchor/topic-demographic issues. Prepared a concrete correction/cumulative-rerun proposal; no runtime fix or further paid call is authorized. Node161 passed/five optional skips; Python140 run/two skips. No app/model/math/rules/production change or deployment. See specs/tasks/M3-pilot-report.md.
+
 ## 2026-11-17 - M3 real-model evaluation proposal and free capacity preflight
 
 Recorded PR41's explicit merge/main CI and prepared a pinned14-review/45-new-text pilot capped by a proposedUS$0.50 local reservation envelope; execution/credential-loader reuse still need approval. Verified exact cached input vectors and counted9,150 profile/vector keys without decoding profile properties. A real-SDK structural fixture exposed the single-request capacity limit for a three-reference9,150-member public; deployment remains gated on actual-population validation and a scoped storage solution. No provider/database request, profile import, app/model/math/rules change or deployment. See specs/tasks/M3-real-evaluation.md.
