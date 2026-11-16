@@ -29,3 +29,5 @@ Authorize completing the same pinned pilot with **at most 20 cumulative review a
 ## Next author decision
 
 Approve **bounded technical continuation** under 20 cumulative review attempts,45 new embedding texts/17 POSTs and the **original total US$0.50**, so technical HTTP 400/schema compatibility fixes do not require a new permission question after each rejection. Semantic/policy decisions and all live actions still require author attention. Until approved, no third actual provider attempt will be made.
+
+- 2026-11-17: Author explicitly approved bounded M3 technical continuation. Implemented a 20-attempt cumulative guard importing each prior receipt's own attempts once, retaining reservations and rechecking immutable hashes before every request. Offline verification precedes execution; SDK retries remain disabled.

@@ -58,7 +58,17 @@ async function providerError(response,apiKey){
 class Ledger {
   constructor(folder, pins, authorization, parentReceipt = null) {
     let inherited=null;
-    if(parentReceipt){
+    if(parentReceipt && parentReceipt.receipts){
+      const receipts=parentReceipt.receipts;
+      if(receipts.length<2 || new Set(receipts.map(p=>p.file)).size!==receipts.length)fail("Invalid cumulative receipt set");
+      const totals={reviews:0,embeddingTexts:0,embeddingPosts:0,reserved_usd_micros:0,transport_attempts:0},usage={};let cost=0;
+      for(const receipt of receipts){
+        const bytes=fs.readFileSync(receipt.file);if(sha(bytes)!==receipt.sha256)fail("Continuation receipt changed");
+        const data=JSON.parse(bytes);if(data.status!=="stopped_no_retry")fail("Only stopped receipts may continue");
+        for(const a of data.attempts){if(a.http_attempts!==1 || !Number.isSafeInteger(a.reserved_usd_micros) || a.reserved_usd_micros<0)fail("Invalid inherited attempt");totals.reviews+=a.kind==="review"?1:0;totals.embeddingPosts+=a.kind==="embedding"?1:0;totals.embeddingTexts+=a.embedding_texts;totals.reserved_usd_micros+=a.reserved_usd_micros;totals.transport_attempts+=a.http_attempts;for(const [k,v] of Object.entries(a.usage||{}))usage[k]=(usage[k]||0)+v;cost+=a.reported_cost_usd_micros||0;}
+      }
+      inherited={receipts,totals,reported_usage:usage,reported_cost_usd_micros:cost};
+    }else if(parentReceipt){
       const bytes=fs.readFileSync(parentReceipt.file);
       if(sha(bytes)!==parentReceipt.sha256)fail("Original receipt hash changed.");
       const parent=JSON.parse(bytes);
@@ -71,7 +81,7 @@ class Ledger {
     if (fs.existsSync(this.file)) fail("A pilot receipt already exists; replay it offline, never repeat requests automatically.");
     this.lockFile = path.join(folder, "pilot.lock");
     this.lock = fs.openSync(this.lockFile, "wx");
-    this.data = { version: "m3-pilot-ledger-2", authorization, pins, limits: inherited?CUMULATIVE_LIMITS:LIMITS, parent_receipt:inherited, status: "ready", attempts: [], cases: {}, created_at: new Date().toISOString() };
+    this.data = { version: "m3-pilot-ledger-2", authorization, pins, limits: parentReceipt && parentReceipt.receipts?{...LIMITS,reviews:20}:inherited?CUMULATIVE_LIMITS:LIMITS, parent_receipt:inherited, status: "ready", attempts: [], cases: {}, created_at: new Date().toISOString() };
     this.persist();
   }
   persist() { save(this.file, this.data); }
@@ -85,6 +95,7 @@ class Ledger {
   }
   assertParent() {
     const p=this.data.parent_receipt;
+    if(p && p.receipts){for(const receipt of p.receipts)if(sha(fs.readFileSync(receipt.file))!==receipt.sha256)fail("Continuation receipt changed during execution");return;}
     if(p && sha(fs.readFileSync(p.file))!==p.sha256)fail("Original receipt changed during the corrected run.");
   }
   reserve(kind, args, context) {

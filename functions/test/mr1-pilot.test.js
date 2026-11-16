@@ -57,3 +57,16 @@ test('HTTP error diagnostics preserve schema field messages while redacting cred
  const c=guardedClient(l,{apiKey:secret,fetchFn:async()=>{calls++;return json({error:{code:400,status:'INVALID_ARGUMENT',message:'Schema failed; '+secret+' owner@example.test https://example.test/?key='+secret,details:[{fieldViolations:[{field:'generationConfig.responseJsonSchema.properties.scope',description:'Null enum rejected '+secret}]}]}},400);}});
  try{c.setContext({caseId:'x',stage:'review'});await assert.rejects(c.models.generateContent(reviewArgs()),/no retry/);assert.equal(calls,1);const text=fs.readFileSync(path.join(l.folder,'attempt-1-provider-error.json'),'utf8');assert.match(text,/generationConfig.responseJsonSchema.properties.scope/);assert.match(text,/Null enum rejected/);assert.ok(!text.includes(secret));assert.ok(!text.includes('owner@example.test'));assert.ok(!text.includes('https://'));}finally{l.close();}
 });
+
+test('continuation sums only current attempts from both immutable receipts, enforces twenty and detects drift',()=>{
+ const {sha}=require('../tools/mr1-pilot-budget');
+ const temp=fs.mkdtempSync(path.join(os.tmpdir(),'mr1-continuation-'));
+ const receipts=['pilot-20261117','pilot-20261117-corrected'].map((folder,i)=>{const file=path.join(temp,i+'.json');fs.copyFileSync(path.resolve(__dirname,'../../specs/tasks/M3-evaluation',folder,'ledger.json'),file);return {file,sha256:sha(fs.readFileSync(file))};});
+ const l=new Ledger(path.join(temp,'child'),{},'Approved synthetic test',{receipts});
+ try{assert.equal(l.totals().reviews,2);assert.equal(l.totals().reserved_usd_micros,27255);assert.equal(l.data.limits.reviews,20);
+ for(let i=0;i<18;i++){l.reserve('review',reviewArgs(),{caseId:'c'+i,stage:'review'});l.active=null;}
+ assert.equal(l.totals().reviews,20);assert.throws(()=>l.reserve('review',reviewArgs(),{caseId:'overflow',stage:'review'}),/exhausted/);
+ fs.appendFileSync(receipts[1].file,' ');assert.throws(()=>l.assertParent(),/receipt changed/);
+ }finally{l.close();}
+ assert.throws(()=>new Ledger(path.join(temp,'duplicate'),{},'',{receipts:[receipts[0],receipts[0]]}),/receipt set/);
+});
