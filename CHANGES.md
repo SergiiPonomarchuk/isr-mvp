@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - M3 real-model evaluation proposal and free capacity preflight
+
+Recorded PR41's explicit merge/main CI and prepared a pinned14-review/45-new-text pilot capped by a proposedUS$0.50 local reservation envelope; execution/credential-loader reuse still need approval. Verified exact cached input vectors and counted9,150 profile/vector keys without decoding profile properties. A real-SDK structural fixture exposed the single-request capacity limit for a three-reference9,150-member public; deployment remains gated on actual-population validation and a scoped storage solution. No provider/database request, profile import, app/model/math/rules change or deployment. See specs/tasks/M3-real-evaluation.md.
+
 ## 2026-11-16 - Versioned multi-reference Check/Create/Join integration
 
 New Checks perform strict actual-context review and full-population A/B scoring, binding frozen references/aspects and input/day/population fingerprints to a checked draft. Create reuses that model without AI calls, verifies drift and atomically publishes the uncapped public after document/request capacity checks. Versioned Join uses frozen A sources; legacy issues/replays retain legacy behavior. The form accepts clarification answers, rejects stale results and shows actual member counts/scores. Full-public values and Python audits follow the same version. Node153 passed/five optional skips; Python136 run/two skips; isolated mr1/U10/D1 HTTP rehearsals passed. The author accepted the mocked local visual flow on 2026-11-16. Real-model quality and full-population performance/capacity validation remain pending before deployment. No production/provider/rules/docs/ changes. See specs/tasks/M3-app-integration.md.

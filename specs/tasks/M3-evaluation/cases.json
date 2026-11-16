@@ -1,0 +1,281 @@
+{
+  "version": "m3-evaluation-plan-1",
+  "status": "PROPOSED; NO PAID CALL AUTHORIZATION",
+  "base_commit": "7ee49eafdfb49808cee08968ce06d89c26744a4e",
+  "cases": [
+    {
+      "id": "D1-01-live",
+      "purpose": "visible D1 case",
+      "input": {
+        "description": "The main entrance lock at my home building osbb 2, h12 is jammed, preventing residents from entering or securing the building properly.",
+        "location": [
+          47.593671,
+          7.621699
+        ],
+        "submitterId": "2",
+        "title": "Repair of broken main entrance lock"
+      },
+      "cache_file": "specs/tasks/M3-calibration/inputs.json",
+      "cache_record": "D1-01-live",
+      "expected_review": "Defensible actual-context pass or questions tied to genuinely missing facts; chain length alone never forces a split.",
+      "whole_issue_sha256": "b918df42d6ffcc0229943790db1270b5c9ad328e5c837dd73cc43918a70fcb11",
+      "input_sha256": "7601e6d8b5258a624facf10cb0274907ab2c544af3fb864b5704fb970e548d0a"
+    },
+    {
+      "id": "D1-02",
+      "purpose": "visible D1 case",
+      "input": {
+        "clarification": "The complete named street reference is Hauptstra\u00dfe, Weil am Rhein, Deutschland. Include the city and country as part of the named place to distinguish streets with the same name; this is not the home address.",
+        "description": "A deep, widening pothole has formed on Hauptstra\u00dfe, Weil am Rhein, posing a significant risk to cyclists and vehicles near my home.",
+        "location": [
+          47.593912,
+          7.627325
+        ],
+        "submitterId": "5",
+        "title": "Repair hazardous pothole on Hauptstra\u00dfe"
+      },
+      "cache_file": "specs/tasks/M3-calibration/inputs.json",
+      "cache_record": "D1-02",
+      "expected_review": "Defensible actual-context pass or questions tied to genuinely missing facts; chain length alone never forces a split.",
+      "whole_issue_sha256": "69ba3f077588efb6ac96f0e38f9181678df851be901b6653b5d52d6d011ff2e1",
+      "input_sha256": "93997289fd54c9da7cb1f53ae5395c17a964aab4f37568aa75948073ae54cb8e",
+      "new_selection_sha256": "25de668de3f4d7c143e1a81296e1b509fc424786f75c1a19496a28a8832f4f99"
+    },
+    {
+      "id": "D1-03",
+      "purpose": "visible D1 case",
+      "input": {
+        "description": "The slide at the playground near my home building osbb 1, h6 has a jagged metal edge that poses a safety risk to children.",
+        "location": [
+          47.590114,
+          7.612
+        ],
+        "submitterId": "4",
+        "title": "Repair of damaged playground equipment"
+      },
+      "cache_file": "specs/tasks/M3-calibration/inputs.json",
+      "cache_record": "D1-03",
+      "expected_review": "Defensible actual-context pass or questions tied to genuinely missing facts; chain length alone never forces a split.",
+      "whole_issue_sha256": "e2ab21f78cb4a79693ba42201bb67accd69454a03fc6e05bdf3aa91e010152a6",
+      "input_sha256": "eee7140690c5e0499df80e3c1aed9cccf54413fe675d743e6f15256520e40cfc"
+    },
+    {
+      "id": "D1-04",
+      "purpose": "visible D1 case",
+      "input": {
+        "description": "Residents at my home building osbb 1, h2 are seeking to organize a volunteer-led respite service for elderly neighbors to provide caregivers with short-term relief.",
+        "location": [
+          47.590743,
+          7.612
+        ],
+        "submitterId": "3",
+        "title": "Establishment of a Neighbourhood Respite Care Hub"
+      },
+      "cache_file": "specs/tasks/M3-calibration/inputs.json",
+      "cache_record": "D1-04",
+      "expected_review": "Defensible actual-context pass or questions tied to genuinely missing facts; chain length alone never forces a split.",
+      "whole_issue_sha256": "9011e13284c5c050d24af39e2dbc2eebd9dfcaac25c47e6f5bd2fbe15848e628",
+      "input_sha256": "bff58c4e8129641f517fe6949beebcdef3c317251f9d83b0cccba4add47b19a4"
+    },
+    {
+      "id": "D1-05",
+      "purpose": "visible D1 case",
+      "input": {
+        "description": "At my workplace Argo Industry, the proposed on-site shift rotation would move a production team from fixed morning shifts to alternating morning and evening shifts. Workers need to agree on a predictable schedule that maintains safe staffing and accommodates commuting and caring responsibilities.",
+        "location": [
+          47.601,
+          7.618
+        ],
+        "submitterId": "1",
+        "title": "Adjustment of On-site Shift Scheduling at Argo Industry"
+      },
+      "cache_file": "specs/tasks/M3-calibration/inputs.json",
+      "cache_record": "D1-05",
+      "expected_review": "Defensible actual-context pass or questions tied to genuinely missing facts; chain length alone never forces a split.",
+      "whole_issue_sha256": "9bd322856b0d74bd19d342dded11611852dab6c44528c546bb39b9380082828b",
+      "input_sha256": "e5fbe1aed23a450705051130a3fee054ee91afae6f5c5e6057709dc5bc9752e3"
+    },
+    {
+      "id": "D1-06",
+      "purpose": "visible D1 case",
+      "input": {
+        "description": "Our neighbourhood arts group has outgrown the local community center. We are seeking a larger, accessible space near my home building townhouse 1, house 1557 to host our weekly rehearsals and upcoming winter concert.",
+        "location": [
+          47.589888,
+          7.624981
+        ],
+        "submitterId": "10",
+        "title": "Community Choir Rehearsal Space Shortage"
+      },
+      "cache_file": "specs/tasks/M3-calibration/inputs.json",
+      "cache_record": "D1-06",
+      "expected_review": "Defensible actual-context pass or questions tied to genuinely missing facts; chain length alone never forces a split.",
+      "whole_issue_sha256": "dd210fe83e432e4c1975811e54950cef0d7ba2b93472f4bdad3f8fe52db87bcc",
+      "input_sha256": "05fbbd3e3923e3fcaa948c2b1eaa29556dbb65e9276f7d6cca21a938f3221ad3"
+    },
+    {
+      "id": "D1-07",
+      "purpose": "visible D1 case",
+      "input": {
+        "description": "The project roadmap requires synchronization across global time zones to ensure consistent feature delivery for our open-source software suite. We need to establish a unified development cadence to prevent integration bottlenecks.",
+        "location": [
+          47.555461,
+          7.606584
+        ],
+        "submitterId": "21",
+        "title": "Global Digital Roadmap Alignment for Open-Source Project"
+      },
+      "cache_file": "specs/tasks/M3-calibration/inputs.json",
+      "cache_record": "D1-07",
+      "expected_review": "Defensible actual-context pass or questions tied to genuinely missing facts; chain length alone never forces a split.",
+      "whole_issue_sha256": "43fbdb0f493b9242e03e102999e5407ebbfa027941f26f799d449f2a52d31206",
+      "input_sha256": "26c3a038dd3bcd4020fbb25213f918fdae9769923160355c5b86f2f83c9dee77"
+    },
+    {
+      "id": "D1-08",
+      "purpose": "visible D1 case",
+      "input": {
+        "description": "I am seeking a zoning variance to convert a portion of my residential property at my home building Quill Lane 1 into a small-scale home office studio. The current district zoning code restricts commercial activity, but this modification is necessary to support my independent software development work.",
+        "location": [
+          47.555466,
+          7.605061
+        ],
+        "submitterId": "1",
+        "title": "Zoning Variance Request for Quill Lane 1"
+      },
+      "cache_file": "specs/tasks/M3-calibration/inputs.json",
+      "cache_record": "D1-08",
+      "expected_review": "Defensible actual-context pass or questions tied to genuinely missing facts; chain length alone never forces a split.",
+      "whole_issue_sha256": "1c6aed0de14fc2b93f0e922dfd05e614fdc6c05d15d62658eff61aaeda830c5a",
+      "input_sha256": "951d6a0979da55160e34f48be50ea350b4083cd95d79a1089341c0eb6195ad25"
+    },
+    {
+      "id": "D1-09",
+      "purpose": "visible D1 case",
+      "input": {
+        "description": "Due to a sudden family emergency, I need to relocate several heavy household items from my residence to a storage unit. I am currently unable to manage the physical labor alone and require assistance to clear the space.",
+        "location": [
+          47.594929,
+          7.6209
+        ],
+        "submitterId": "222",
+        "title": "Urgent assistance needed for family relocation"
+      },
+      "cache_file": "specs/tasks/M3-calibration/inputs.json",
+      "cache_record": "D1-09",
+      "expected_review": "Defensible actual-context pass or questions tied to genuinely missing facts; chain length alone never forces a split.",
+      "whole_issue_sha256": "826c6ba6e96d70dfb5b77415db13a6b1536dead7dce3cc2886554dfc2abc3243",
+      "input_sha256": "f39ac6590380c3cdfff8e577ec3ac8d87c4fa0cf9359a80ac629f271a8291f78"
+    },
+    {
+      "id": "D1-10",
+      "purpose": "visible D1 case",
+      "input": {
+        "description": "Residents across the city need to choose how a shared city improvement budget should support accessible public green spaces and safer pedestrian routes. Compare projects by their city-wide benefit, cost, funding source and delivery steps, rather than prioritizing only the area near my home.",
+        "location": [
+          47.555466,
+          7.605061
+        ],
+        "submitterId": "1",
+        "title": "Participatory allocation of the city improvement budget"
+      },
+      "cache_file": "specs/tasks/M3-calibration/inputs.json",
+      "cache_record": "D1-10",
+      "expected_review": "Defensible actual-context pass or questions tied to genuinely missing facts; chain length alone never forces a split.",
+      "whole_issue_sha256": "67a343df124177dd19c3c640f26f58589742316bf4bbe243a3a68399d65d41ac",
+      "input_sha256": "a3c04591ad24d853e315fc222ac9aefffdb030cf1b8e8d72f8cf5854cf383512"
+    },
+    {
+      "id": "vague-help",
+      "purpose": "vague",
+      "input": {
+        "title": "Help us",
+        "description": "We need help. Something should be done.",
+        "clarification": "",
+        "submitterId": "2",
+        "location": [
+          47.5937,
+          7.6217
+        ],
+        "location_source": "creator"
+      },
+      "cache_file": "specs/tasks/M3-calibration/evaluation-vectors.json",
+      "cache_record": "vague-help",
+      "expected_review": "Ask concrete questions; do not invent affected people/place/decision.",
+      "whole_issue_sha256": "e8e8114d3c96b81f03cdea60840db016ea57355f26a5ec20ed05b1562be547bd",
+      "input_sha256": "8e763153841d0e60af1fb8725d6251becfcad4ed95147045abca72c477270a9e"
+    },
+    {
+      "id": "compound-lock-software",
+      "purpose": "compound",
+      "input": {
+        "title": "Repair the entrance lock and choose an open-source roadmap",
+        "description": "Repair our apartment entrance lock at osbb 2, h12, and in the same decision choose the worldwide open-source software project roadmap for the next year.",
+        "clarification": "",
+        "submitterId": "2",
+        "location": [
+          47.5937,
+          7.6217
+        ],
+        "location_source": "creator"
+      },
+      "cache_file": "specs/tasks/M3-calibration/evaluation-vectors.json",
+      "cache_record": "compound-lock-software",
+      "expected_review": "Ask the user to choose/separate unrelated decisions; do not silently blend the building repair and worldwide software roadmap.",
+      "whole_issue_sha256": "4060717f2ca9526bfa82960bad312dfe9fe397f230a15bb8761db90c09773f46",
+      "input_sha256": "2071cb2184e561932702112626fd54d1c12334cc3026f5cab8efc1c84288e86d"
+    },
+    {
+      "id": "vague-help-clarified",
+      "purpose": "conditional context answer",
+      "input": {
+        "title": "Help us",
+        "description": "We need help. Something should be done.",
+        "clarification": "This concerns only the jammed entrance lock at osbb 2, h12. Residents of that building need to choose a repair service. It does not concern other buildings.",
+        "submitterId": "2",
+        "location": [
+          47.5937,
+          7.6217
+        ],
+        "location_source": "creator"
+      },
+      "cache_file": "specs/tasks/M3-calibration/evaluation-vectors.json",
+      "cache_record": "vague-help",
+      "expected_review": "Resolve the stated lock-repair decision using the explicit clarification; no unrelated scope or invented facts.",
+      "conditional_on": "vague-help",
+      "whole_issue_sha256": "e8e8114d3c96b81f03cdea60840db016ea57355f26a5ec20ed05b1562be547bd",
+      "input_sha256": "e498166f831100684a6f40a63900c72d8086ea8e4455e0cc8aa768ff27834e30",
+      "new_selection_sha256": "0a426a9576e4fd985c531dcd2c8b20bc9da906b565b4ccfd24ddfe50dc71e4ae"
+    },
+    {
+      "id": "compound-lock-software-clarified",
+      "purpose": "conditional context answer",
+      "input": {
+        "title": "Repair the entrance lock and choose an open-source roadmap",
+        "description": "Repair our apartment entrance lock at osbb 2, h12, and in the same decision choose the worldwide open-source software project roadmap for the next year.",
+        "clarification": "For this issue, decide only how to repair the entrance lock at osbb 2, h12. The software-roadmap decision will be registered separately and is outside this issue.",
+        "submitterId": "2",
+        "location": [
+          47.5937,
+          7.6217
+        ],
+        "location_source": "creator"
+      },
+      "cache_file": "specs/tasks/M3-calibration/evaluation-vectors.json",
+      "cache_record": "compound-lock-software",
+      "expected_review": "Resolve the stated lock-repair decision using the explicit clarification; no unrelated scope or invented facts.",
+      "conditional_on": "compound-lock-software",
+      "whole_issue_sha256": "4060717f2ca9526bfa82960bad312dfe9fe397f230a15bb8761db90c09773f46",
+      "input_sha256": "85c4e0f44dbc457614d1a8ac211c67dc06ce5b2695bf45f7d9ec7743a77d853f",
+      "new_selection_sha256": "5ec37c24ed23fcc8cb7298fd481888d5f9ca5e71487f0a8d786ec3f0fe5d63cf"
+    }
+  ],
+  "allowance_proposed": {
+    "text_review_attempts": 14,
+    "embedding_texts": 45,
+    "embedding_post_attempts": 17,
+    "automatic_retries": 0,
+    "output_tokens_per_review": 8192,
+    "estimated_charge_ceiling_usd": 0.5
+  }
+}

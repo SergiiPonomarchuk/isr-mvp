@@ -11,7 +11,7 @@ Created by task S0 (`tasks/S0-restructure-specs.md`). Every component file state
 
 ---
 
-Current implementation checkpoint: [M3 application integration](tasks/M3-app-integration.md) on feature branch, automated emulator/math checks passed; [local visual review](M3-LOCAL-REVIEW.md) accepted by the author; separately authorized real-model evaluation and full-population performance/capacity checks remain pending. Published historical issues retain their stored scoring version.
+Current checkpoint: [M3 application integration](tasks/M3-app-integration.md) merged through PR41; local visual review accepted. [Bounded real-model evaluation proposal and free capacity findings](tasks/M3-real-evaluation.md) are prepared on a feature branch. Paid execution is unapproved, full-population capacity/performance remains unresolved, and deployment is not ready. Published historical issues retain their stored scoring version.
 
 ## Status legend
 
