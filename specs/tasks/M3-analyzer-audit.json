@@ -1,0 +1,38 @@
+{
+  "baseline": "3c25ef7c273f38a5fc97abd9835766e775d91428",
+  "method": "Offline inspection of committed example JSON: count exact classification.issue_category; sum each raw weight group with tolerance 1e-6. No model, database or network calls.",
+  "example_count": 100,
+  "distinct_exact_categories": 100,
+  "exact_categories_with_at_least_five_examples": 0,
+  "source_sha256": "b1bd3d3074220e38c282c3ad4f4add590f2cb3d5f51804959600a8d1dd9fa7e8",
+  "all_vectors_present": true,
+  "weight_groups": {
+    "relevance_weights": {
+      "invalid_sums": [],
+      "nonpositive_components": [
+        25,
+        27,
+        51
+      ]
+    },
+    "aggregation_weights": {
+      "invalid_sums": [],
+      "nonpositive_components": []
+    }
+  },
+  "taxonomy_table_discrepancies": [
+    {
+      "id": 12,
+      "category": "housing.policy.pets"
+    },
+    {
+      "id": 15,
+      "category": "housing.policy.storage"
+    },
+    {
+      "id": 47,
+      "category": "infrastructure.accessibility.general"
+    }
+  ],
+  "taxonomy_method": "Exact category strings compared with backtick category entries in protocol section 1.2; discrepancies require review, not automatic aliases."
+}

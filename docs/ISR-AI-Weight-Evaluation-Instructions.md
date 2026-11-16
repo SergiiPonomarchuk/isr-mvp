@@ -1,5 +1,7 @@
 # ISR Weight Evaluation Instructions for AI (Relevance & Aggregation)
 
+**2026-11-16 intended-model revision:** [PD-9 multi-reference derivation](../specs/decisions/PD-9-multi-reference-derivation.md) governs reference selection, notation and member-score combination. Runtime at3c25ef7 still uses the earlier single-vector model. Sections explicitly marked historical are not implementation instructions for mr1.
+
 This document defines **instructions for an AI model** on how to evaluate:
 
 1. **Relevance component weights** for an issue:
@@ -13,7 +15,7 @@ This document defines **instructions for an AI model** on how to evaluate:
    - `w_Expertise` – Weight of Expertise
    - `w_Contribution` – Weight of Contribution
 
-The AI derives these weights from the issue description and its context, using the **100 example issues** in ISR-Issue-Analyzer-100-Examples.md (the first version of the table of typical issues). ISR-Issue-Analyzer-Protocol-v1.md is the governing protocol and prevails where the two differ. **Nobody types a number**: the weights are derived, stay inside the typical range of the chosen issue type, and change only when the context is clarified or the public adopts a change (Analyzer protocol, Steps 4A and 4B).
+The AI derives these weights from the issue description and its context, using the **100 example issues** in ISR-Issue-Analyzer-100-Examples.md (the first version of the table of typical issues). ISR-Issue-Analyzer-Protocol-v1.md is the governing protocol and prevails where the two differ. **Nobody types a number**: the weights are derived, follow the deterministic PD-9 reference blend, and change only when the context is clarified or the public adopts a change (Analyzer protocol, Steps 4A and 4B).
 
 These examples provide patterns and anchors; the AI must **generalize** to new issues by following the principles below.
 
@@ -102,19 +104,9 @@ Use the 100 examples as concrete anchors for similar patterns. For example:
 - Childcare services → D primary, G secondary, S and X very low.
 - Open-source roadmap → S and D primary, G minor, X secondary.
 
-#### Step 3: Translate classifications into numeric weights
+#### Step 3: Compute relevance weights
 
-1. Assign a preliminary weight band to each dimension based on its role:
-   - Primary: start in [0.35, 0.60]
-   - Secondary: start in [0.15, 0.30]
-   - Minor: in [0.05, 0.15]
-   - Irrelevant: 0.00 or up to 0.05
-
-2. Adjust so that:
-   - At least one dimension is clearly dominant or co-dominant (unless the issue is deliberately balanced).
-   - The total sums to 1.0.
-
-3. Compare the result with the **k nearest examples** of the chosen type (Analyzer protocol, Step 4A; k = 5 to start) and keep every weight inside their range. If the issue seems genuinely different, do not leave the range: ask for clarification of the context or propose another type.
+Apply PD-9 chain selection and alpha. For each component d, W_d=sum_j alpha_j*w_dj. The qualitative primary/secondary/minor descriptions above explain which references match; they are not instructions to generate or adjust a second weight group. Validate original groups and the resulting sum1. Member D/S/X results remain paired with each source weight; use effective components for the four-component display.
 
 #### Step 4: Produce a short reasoning
 
@@ -209,19 +201,9 @@ Use the 100 examples as anchors. For instance:
 - Mutual aid rules → Relevance and Contribution strong; Expertise smaller.
 - Platform rules → Relevance moderate, Expertise and Contribution both important.
 
-#### Step 3: Translate into numeric weights
+#### Step 3: Compute ISR aggregation weights
 
-1. Start from typical patterns:
-   - **Local, low-tech problem**: `Relevance` ~0.65–0.75, `Expertise` ~0.10–0.20, `Contribution` ~0.15–0.25.
-   - **Policy/technical decision**: `Relevance` ~0.40–0.55, `Expertise` ~0.25–0.40, `Contribution` ~0.15–0.25.
-   - **Governance / recurring coordination**: `Relevance` ~0.45–0.60, `Expertise` ~0.15–0.30, `Contribution` ~0.20–0.35.
-
-2. Adjust up or down based on:
-   - How crucial it is that *directly affected* people decide.
-   - How severe consequences are if **non-experts** dominate.
-   - How much the system should reward **sustained constructive behavior** for this type of decision.
-
-3. Compare with the k nearest examples of the chosen type and keep every value inside their range (Analyzer protocol, Step 4A). Values never leave the range.
+For c in R/E/C, B_c=sum_j alpha_j*b_cj. Use the same reference alpha, no free up/down adjustments. Valid positive source groups yield a positive sum-one blend. Education and Experience have no separate component weights. Form one public from final R, then normalize combined R/E over that public before the additive ISR calculation.
 
 #### Step 4: Produce a short reasoning
 
@@ -255,8 +237,8 @@ The exact structure can be adapted, but the meaning of fields must be preserved.
 The AI should treat the 100-issue file as a **library of patterns**:
 
 - For each new issue, find the **closest analogues** by category and description.
-- Use those examples as **priors** for both Relevance weights `(w_D, w_G, w_S, w_X)` and Aggregation weights `(w_Relevance, w_Expertise, w_Contribution)`.
-- Then adjust, inside the typical range of the type, based on specific details in the new description (stronger local impact, more digital/remote, more technical, more identity-sensitive, etc.).
+- Use those examples as the numeric inputs for both Relevance weights `(w_D, w_G, w_S, w_X)` and Aggregation weights `(w_Relevance, w_Expertise, w_Contribution)`.
+- Use actual context to validate references and instantiate demographic/aspect/authority rules. No numeric adjustment after the recorded blend; mu and sigma use maxima among compatible references.
 
 In practice:
 
@@ -325,9 +307,9 @@ The precise serialization can vary (JSON, structured text, etc.), but **all four
 
 ### 6.1 Vague or ambiguous issues
 - There is no fallback weight profile. If the description and the context are too vague to choose an issue type, the result is `needs_clarification` (Analyzer protocol, Step 4A): the assistant asks the topic starter to clarify the context. If no consistent type is found, the result is `not_consistent`.
-- For every published issue the weights are derived from the chosen type and the context, and stay inside the typical range of that type.
+- For every published issue the weights are derived from the chosen type and the context, and follow PD-9.
 
-When in doubt, within the typical range of the type:
+When reference applicability is uncertain, request clarification. The following qualitative guidance explains reference interpretation, not permission to alter the computed blend:
 - Default to **higher Relevance** in local, lived-experience issues.
 - Default to **higher Expertise** when decisions are technical, legal, or safety-critical.
 - Default to **higher Contribution** when the issue is about **ongoing governance, coordination, or community norms** where reliability matters over time.

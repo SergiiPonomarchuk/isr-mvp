@@ -3,37 +3,10 @@ name: "Calculate ISR Relevance"
 description: "Triggers when working with relevance, expertise, contribution, ISR scoring mathematics, or user weights."
 ---
 
-# Calculate ISR Relevance & Scoring
+# Calculate ISR Relevance and scoring
 
-When working with user scores, voting weights, and relevance, you must use these exact formulas and definitions. Do not invent new scoring mechanisms.
+Read specs/README.md and the task spec. The governing formulas live in specs/decisions/PD-8-resources-option-level.md (Expertise, no Education/Experience/resource weights), specs/decisions/PD-9-multi-reference-derivation.md (intended mr1), specs/03-relevance.md, specs/04-expertise.md and specs/06-aggregation-and-voting.md. Link to these rather than maintain different formulas here.
 
-## 1. ISR Score Aggregation
-The ISR score is computed per-issue and determines a user's **voting weight**.
-```text
-ISR_Score = w_Relevance · Relevance_i + w_Expertise · Expertise_i + w_Contribution · Contribution_i
-```
-- The sum of `w_Relevance`, `w_Expertise`, and `w_Contribution` is always `1.0`.
-- Per-issue weights (`w_*`) are set by the AI Issue Analyzer at creation time.
+Distinguish intended model from implemented code. At3c25ef7, functions/isr.js and scripts/isr_core.py are canonical, with one issue vector, an education age floor, public-mean normalized R/E and normalized Contribution constant1. The current app still gates D/geography and uses creator-based X; PD-9's multi-reference/affected-person changes are not implemented. Automatic threshold is strictly R>.15 with existing creator/Join exceptions; do not substitute >=.15. Resources and property give no Expertise weight.
 
-## 2. Relevance
-Relevance measures how directly an issue affects a specific user (0.0–1.0).
-```text
-Relevance_i = w_D·D_i + w_G·G_i + w_S·S_i + w_X·X_i
-```
-- **D (Demographic)**
-- **G (Geospatial)**
-- **S (Semantic)**
-- **X (Social)**
-- **Threshold**: The default Relevance Threshold hardcoded in the engine is `0.15`. Users with `Relevance >= Threshold` are automatically added to the issue's ad-hoc public.
-
-## 3. Expertise
-Expertise measures domain knowledge and capability.
-```text
-Expertise = w_Education·Education + w_Experience·Experience + w_Resources·Resources
-```
-
-## 4. Contribution & Vector of Values (VoV)
-- **Contribution** measures the quality and value-alignment of actions taken.
-- **Action Vector**: Structured representation of a specific real-world action, scored -100 to +100 per dimension.
-- **Vector of Values (VoV)**: A 145-dimensional vector (0-100 per dimension), based on Shalom Schwartz's taxonomy.
-- Contribution calculation: `Action Force × cosine_similarity(Action Vector, Vector of Values)`
+For intended mr1, use one consistent s_j/alpha_j/u_j notation and PD-9's paired relevance, max geography, education-evidence-before-single-floor and one-public ISR. X uses directly affected people's recorded outgoing relationships, not the creator's. No reciprocal or transitive links inferred. Do not implement runtime policy or change historical scores merely because a document specifies intended behavior. Follow task approval, tests, versioning and live-write guardrails.

@@ -1,5 +1,7 @@
 # PD-8 Resources and money are option-level; Expertise is education and experience
 
+**2026-11-16 companion decision:** [PD-9](PD-9-multi-reference-derivation.md) defines intended mr1. Preserve this decision's governing principle; multi-reference implementation is pending. PD-9 combines raw education before one floor, paired relevance scores and one-public normalization; affected-person social expansion is nonrecursive. Current all-equal R/E values (including allzero) normalize to1; unequal nonpositive mean errors under A1. Exact direct-affectedness and candidate-filter contracts remain an implementation gate.
+
 Status: accepted (author). Recorded: 2026-11-04. Supersedes PD-2.
 Type: intended design.
 

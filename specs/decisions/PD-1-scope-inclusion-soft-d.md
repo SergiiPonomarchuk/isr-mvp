@@ -1,5 +1,7 @@
 # PD-1 Scope, inclusion floor, soft D
 
+**2026-11-16 companion decision:** [PD-9](PD-9-multi-reference-derivation.md) defines intended mr1. Preserve this decision's governing principle; multi-reference implementation is pending. PD-9 combines raw education before one floor, paired relevance scores and one-public normalization; affected-person social expansion is nonrecursive. Current all-equal R/E values (including allzero) normalize to1; unequal nonpositive mean errors under A1. Exact direct-affectedness and candidate-filter contracts remain an implementation gate.
+
 Paper id: D-001. Status: accepted (author). Recorded: 2026-10-12, from `specs/tasks/S0-decisions-to-import.md`.
 Type: intended design. This page says nothing about what the code does today; see the component files.
 

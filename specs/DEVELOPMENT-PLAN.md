@@ -1,5 +1,7 @@
 # ISR MVP: overall and detailed development plan
 
+**2026-11-16 checkpoint:** D1 acceptance #35 is merged. [PD-9](decisions/PD-9-multi-reference-derivation.md) and [M3](tasks/M3-analyzer-guardrails.md) now specify multi-reference derivation and affected-person X; runtime remains pending. The next deliverable is calibration/coverage plus an explicit implementation plan for scoring integration, candidate safety and provenance, not the superseded fixed-five/type-table proposal. No migration/deploy/provider allowance is implied.
+
 Prepared: **2026-11-12**, Europe/Kyiv. Current baseline: main `47e835a`, all P1/P2/A4/U6/U8/A5 implementation PRs merged; the emulator preview now runs this release. Tag: `isr-mvp-rc-2026-11-12`.
 
 **Status: APPROVED 2026-11-12 (author: "Approved.").** Existing approved task specs and decisions remain authoritative. This document organizes their remaining work and proposes the order for later stages; it does not authorize merges, live writes, deploys, new formulas or new features. Model recommendations are advisory. Estimates are planning ranges, not delivery commitments.

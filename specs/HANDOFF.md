@@ -4,7 +4,17 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: D1 live whole-cycle verified, 2026-11-15
+## Current checkpoint: multi-reference documentation revised, 2026-11-16
+
+- Author authorized all reviewed math/logic corrections across documents, including docs/ and skill guidance. [PD-9](decisions/PD-9-multi-reference-derivation.md) is the intended mr1 source: reference score>=.30, consecutive gap<.05, >3 clarification, normalized alpha, paired D/S/X, max compatible geography, combined education before one age floor and one-public ISR. X uses affected people's recorded outgoing relations, maximum one step; creator has no privileged role.
+- PR #38 is revised in place; original fixed-five/type-table proposal is superseded. [M3 task](tasks/M3-analyzer-guardrails.md) explicitly scopes documents/skill only for this revision. Main baseline remains3c25ef7; no runtime behavior, data, providers, model or rules changes. Accepted D1 scores/journal remain frozen and versioned.
+- Corrected Expertise exponent explanation and regenerated all worked Part7 arithmetic with explicit hypothetical inputs; current code vs intended certificate/College/decay discrepancies remain documented, not silently resolved. [04 Expertise](04-expertise.md), references and local math evidence are updated.
+- Next: review documentation PR #38 with green required checks; merge only on explicit author instruction. Then produce calibration/coverage and a concrete implementation plan. Exact reference metric/template/aspects, direct-affectedness predicate, candidate/cutoff safety and cost allowance must be decided before runtime implementation; initial .30/.05 thresholds need calibration. D2/access and unrelated prototype work stay separate.
+- Drive A reconnected; active worktree remains `A:/BackUp/isr-mvp/worktrees/wt-m3-analyzer-spec`. A temporary untouched C scratch worktree was created during disconnection and is not used for edits. Do not prune or remove unrelated worktrees. No production reset/reseed or deployment is needed for this documentation PR.
+
+## D1 verified checkpoint (historical; acceptance PR #35 merged)
+
+## D1 live whole-cycle verified, 2026-11-15
 
 - Author completed final Finish Voting and returned the requested To Do screenshot: Emergency Locksmith Service, three unchecked tasks assigned to Christine. Read-only server audit: issue/discussion approved, 28 counted votes, zero exclusions, 31.142 ISR, stored tally matching canonical computation and all three tasks in_process. Management maps cleared.
 - Final independent checker: 11 scenario records including hidden standby, ten visible cases, 606 members, zero problems (tolerance 0.00100001). Frozen-plan recheck is phase_advanced_no_write, zero writes; original registration/options/member/cache guards remain valid.

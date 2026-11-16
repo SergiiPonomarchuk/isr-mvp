@@ -1,5 +1,13 @@
 # CHANGES
 
+## 2026-11-16 - Multi-reference math and affected-person social relevance
+
+Replaced the fixed-five proposal with PD-9's reference chain, normalized similarities, paired D/S/X, maximum geography, education evidence before one floor and one-public ISR. Social relevance follows affected people's recorded outgoing relations without recursion. Updated the Analyzer, relevance, expertise, user guide, component specs, roadmap and skill; corrected CBC exponent direction and worked arithmetic with explicit intended/runtime distinctions. Runtime code, example numeric anchors/vectors, data and historical acceptance results are unchanged. Implementation/calibration and unresolved mappings remain explicit gates.
+
+## 2026-11-15 - M3 Analyzer audit and guardrail proposal
+
+After D1 acceptance #35 merged as 3c25ef7, audited existing retrieval, normalization, fallback, server drafts and logging. Proposed Step 4A type/range/context validation and publication gates. Offline evidence identifies 100 distinct categories across 100 anchors and three taxonomy discrepancies. Curated type mapping, strict ranges, failure behavior and staged-call policy await author approval; no runtime implementation, database write or provider request.
+
 ## 2026-11-15 - D1 live whole-cycle verified
 
 Recorded the requested final To Do screenshot and read-only canonical server result: 28 counted votes, zero exclusions, 31.142 ISR and three creator-assigned tasks. Final independent checker validates 606 member records with no problems; frozen-plan replay writes zero. Disclosed author-run 27-profile helper plus decisive creator UI method, actual usage metadata and component deployment identities. Updated acceptance evidence, presenter status and next M3 specification gate. Documentation only; no agent production write, deployment or provider call.

@@ -1,5 +1,7 @@
 # ISR Combined Issue Parameters (100‑Examples Anchored)
 
+**2026-11-16 reference-library notice:** Numeric anchors and embedded-source content are preserved. [PD-9](../specs/decisions/PD-9-multi-reference-derivation.md) replaces fixed-five derivation with similarity-chain selection and weighted member-score rules. Cases are analogies, not actual affected people or places. Existing embedded JSON still records its original source hash: this documentation notice does not authorize regeneration/re-embedding. Any future source hash migration must compare canonical parsed numeric/text payloads and version the library; three category/taxonomy discrepancies remain recorded in M3's audit.
+
 This document combines the parameters of four earlier example sets (relevance weights, geographic components, expertise components and aggregation weights), which are no longer kept as separate files.
 
 It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-v1.md` Section 5.

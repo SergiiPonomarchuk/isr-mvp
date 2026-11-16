@@ -1,5 +1,7 @@
 # ISR Issue Request Guide: User-Facing Template
 
+**2026-11-16 intended-model revision:** [PD-9 multi-reference derivation](../specs/decisions/PD-9-multi-reference-derivation.md) governs reference selection, notation and member-score combination. Runtime at3c25ef7 still uses the earlier single-vector model. Sections explicitly marked historical are not implementation instructions for mr1.
+
 ## For Issue Submitters: How to Create a Proper Issue Request
 
 ---
@@ -86,45 +88,11 @@ The system will suggest from these categories:
 
 ---
 
-## Step 3: System Derives: Impact Radius (Sigma)
+## Step 3: Review geographical distance and fade
 
-### What is Sigma?
+The full-effect distance is mu; sigma controls how relevance fades beyond it. The displayed fade distance is3*sigma. For compatible reference cases around the same actual place, the system takes the largest mu and largest sigma. These can come from different references. Digital/nonlocal scope cannot silently enlarge a building issue.
 
-**Sigma (σ)** = the geographic distance from issue location where it meaningfully affects people.
-
-The system calculates: **"How far from the problem does it still matter?"**
-
-### How the System Derives It
-
-```
-Your Description:
-"Water leak in apartment building at 457 Main St"
-
-System derives:
-📍 Impact Radius: 50 meters
-   (affects residents of building + adjacent properties)
-   Based on the typical issue type "building.maintenance.water"
-
-💭 Does this look right? [Yes] [No, let me clarify the context]
-```
-
-You do not type a radius. If the result looks wrong, **clarify the context**: say who is affected and where, and the system derives the radius again. The derived value always stays inside the typical range of the issue type.
-
-### When the Radius Looks Wrong: Clarify the Context
-
-| Issue Type | Derived σ | If it looks wrong, add to the context |
-|-----------|----------|-----------------|
-| **Lock issue (personal)** | 10-20m | "It affects the whole block" → larger radius |
-| **Building maintenance** | 30-80m | "Only my unit is affected" → smaller radius |
-| **Street noise** | 100-300m | "It is much louder than normal" → larger radius |
-| **Park event** | 500-2000m | "People only come from nearby" → smaller radius |
-
-**Example**:
-```
-System derives: 500m for "dance event"
-You add to the context: "It is very popular and draws people from the whole neighborhood"
-System derives again: 2000m (the context supports the top of the range for this type)
-```
+You do not type these values. If they look wrong, clarify who is affected and where, then Check again. Reference scores are similarities, not probabilities. The initial rule includes matches scoring at least .30 while consecutive gaps remain below .05. More than three selected cases triggers a display of their titles/categories/similarities and suggested clearer wording or a split. You choose the reformulation; an initial planning issue must also be clear enough to check.
 
 ### Local Rules and Ownership
 
@@ -177,7 +145,7 @@ You do not type weights. Say in the context what makes one factor more important
 | "Professional conference on AI" | "Open to people who work with AI" | S rises |
 | "Emergency in my family" | "It affects my relatives and close friends" | X rises |
 
-The derived values always stay inside the typical range of the issue type. The table has as many issue types as needed, and new types are added by protocol-level decisions, so an unusual case is not forced into an ill-fitting type. If no listed type fits, the assistant tells you; reformulate the issue or choose the nearest type it lists. The system checks internally that the weights sum to 100%; you never see an error about this.
+The numeric weights are the normalized similarity-weighted blend of the compatible selected references. The system validates each group sums to100%. It asks for context when no reference fits or the selected cases conflict; it never asks you to repair weights numerically.
 
 ---
 
