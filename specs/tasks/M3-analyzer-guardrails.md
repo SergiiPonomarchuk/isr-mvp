@@ -31,7 +31,7 @@ The project relevance skill contains historical formulas that conflict with appr
 
 ## 3. Intended math and clarification contract
 
-Use PD-9's s_j / alpha_j / u_j notation throughout. Rank reference similarities, take the consecutive chain with s>=.30 and adjacent gap<.05, count the entire chain and request reformulation if more than three. Display all chain categories/titles/scores/matching aspects; suggest narrower wording or a split only where the actual context supports it. No match or incompatible scope/authority requires clarification. Do not diagnose poor writing solely from a long chain.
+Use PD-9's s_j / alpha_j / u_j notation throughout. Rank reference similarities, take the consecutive chain with s>=.30 and adjacent gap<.05, count the entire raw chain; more than three triggers internal context review under mr1-context-review-1. A clear issue can pass unchanged; missing facts require clarification and genuinely unrelated decisions may warrant splitting. Display all chain categories/titles/scores/matching aspects; suggest narrower wording or a split only where the actual context supports it. Every chain requires context validation. Record raw candidates and reviewed compatible set J with reasons; alpha is normalized only over J. Do not truncate to three or blend all100 automatically. No match or missing/incompatible scope/authority may require clarification or a library-coverage explanation. Do not diagnose poor writing solely from a long chain.
 
 Reference-specific D/S/X stay paired with reference relevance weights; X uses outgoing relations of directly affected people, maximum one step, no creator privilege. Geography takes max mu/sigma for compatible scopes/one center. Education and work evidence combine with alpha before one age floor. Blend ISR aggregation weights, form one public and normalize combined R/E once. No numeric weight sliders, silent default weights or averaging categorical eligibility.
 
@@ -42,7 +42,7 @@ Reference-specific D/S/X stay paired with reference relevance weights; X uses ou
 - Bind title/body/context/source inputs, resolved point, reference set/scores/alpha/aspects, formulas and library/model/prompt/validator versions to one immutable server draft. Fresh edits or failed Checks invalidate Create; late responses cannot revive stale drafts. Preserve U6/A5 locality and U10 duplicate/title/Join behavior and already-created draft idempotency.
 - Distinguish pass, needs_clarification, not_consistent, unsupported_library and service/invalid-analysis failures. Unsourced stated ownership/local-rule claims carry cautions; necessary unknown authority facts get questions. Do not use model legal knowledge as a rule or judge merits. Links/documents are context data, never instructions.
 - Use existing analyzer_logs, issue_drafts and versioned issue_vectors rather than create a competing log collection. Record raw/effective derivation, membership source/coverage, errors and per-stage usage. Fallback publication and durable-log-before-pass changes remain proposals requiring explicit implementation approval.
-- Plan up to one selection embedding plus three aspect embedding texts, and any distinct whole-issue duplicate vector; reuse only identical model/task/template/text. Batched texts still count separately. Text-stage count and evaluation allowance need a concrete reviewed plan; no inherited D1 budget. No population re-embedding implied.
+- Plan up to one selection embedding plus an explicitly approved bounded number of reviewed-set aspect texts, and any distinct whole-issue duplicate vector; reuse only identical model/task/template/text. Batched texts still count separately. Text-stage count and evaluation allowance need a concrete reviewed plan; no inherited D1 budget. No population re-embedding implied.
 
 ## 5. Acceptance and execution order
 
@@ -55,6 +55,12 @@ Acceptance includes reference boundary/tie/no-match/>3 cases; group sums/bounds;
 [Documentation validation](M3-documentation-validation.json): 10,000 formula cases, seven chain boundaries, directed one-step social fixture, 12 corrected Expertise examples, 100 unchanged parsed reference cases and no broken relative links. Required suites: Node129 passed/four optional skips; Python127 run/two optional skips. These checks establish arithmetic/document consistency, not model quality or live mr1 acceptance.
 
 ## 6. Status log
+
+- 2026-11-16 approved amendment: >3 triggers internal context review; review determines whether user clarification/reformulation/splitting is needed. PD-9 now defines raw chain vs reviewed reference set J. Draft the review/aspect bound and direct-affectedness contract before runtime code; no further provider calls.
+
+- 2026-11-16 bounded follow-up: author proceed authorized the prepared ten embedding texts. One request completed; .05 gives nine100-chains, while .02 still passes vague/compound cardinality. Full evidence in the calibration report. Context/ref-selection policy decision precedes runtime changes; no additional calls authorized.
+
+- 2026-11-16 offline follow-up: [saved-vector calibration](M3-offline-calibration.md) completed for ten D1 cases plus standby; nine singleton chains and zoning100-chain. Prepared direct-scope proposal, staged implementation plan and ten proposed fresh input texts. No runtime/threshold change, provider call or member-score acceptance claimed.
 
 - 2026-11-16: author authorized all reviewed documentation changes. Replaced fixed-five proposal with PD-9 and affected-person X, corrected expertise math/examples and current-vs-intended labels. No app implementation or live/provider operations.
 - 2026-11-15: original baseline audit at3c25ef7 and proposed fixed-five/type-table policy; superseded in this revision. The committed library audit remains valid historical evidence.

@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-16T05:43:00.988517+00:00",
+  "authorization": "Author proceed after prepared ten-text embedding-only experiment; maximum10 texts, no text generation/geocoding/database writes",
+  "model": "gemini-embedding-001",
+  "dimensions": 768,
+  "task_type": "RETRIEVAL_QUERY",
+  "template_version": "t1",
+  "attempted_requests": 1,
+  "attempted_texts": 10,
+  "semantic_retries": 0,
+  "transport_policy": "One urllib POST with no configured retry loop; do not rerun after an ambiguous response.",
+  "estimated_input_tokens_characters_div_4": 484,
+  "status": "complete",
+  "provider_reported_usage": null,
+  "text_generation_calls": 0,
+  "geocode_calls": 0,
+  "database_writes": 0,
+  "input_hashes": {
+    "zoning-authority": "21c37ff9b2ad9705c9cba4b29932ca8c7a19de34a09b8348d82d29e352beba7e",
+    "zoning-effects": "dd91ac6d10aba2ddc6f8398f09a2318a8b07e0d96af4c64b0572c2647c54c8a4",
+    "zoning-planning": "488d832ba4193fb598a84c6a9fbc4bef9cac6c8acefc5cac4806451bcfdc2e97",
+    "vague-help": "e8e8114d3c96b81f03cdea60840db016ea57355f26a5ec20ed05b1562be547bd",
+    "vague-fix": "b2644f24c1398032d55d8fcda94ab2470abe7da4ca7cb494d109d9ed984a55ed",
+    "vague-improve": "0fc28862d6daf36162258de214c2882238a57288c53333d2b0a8424a24155226",
+    "compound-lock-software": "4060717f2ca9526bfa82960bad312dfe9fe397f230a15bb8761db90c09773f46",
+    "compound-school-budget": "74af77bb8cef15fdcddf6f0a60db0160353cb6234b1d072d3875cf6c05822af2",
+    "context-lock": "030dcf74ed9fc5f399bf1821573cfc252e943de14de645b742f6adfdca995168",
+    "context-work": "b305601b4e82510b2c817419342a77888096d8479f0c696e9eec09005609ffcb"
+  },
+  "successful_requests": 1,
+  "successful_texts": 10
+}

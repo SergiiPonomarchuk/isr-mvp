@@ -1,5 +1,17 @@
 # CHANGES
 
+## 2026-11-16 - Long reference chains trigger context review
+
+Applied author-approved PD-9 amendment: >3 raw references triggers internal context review, with clarification/splitting only when substantive findings require it. Clear issues may pass unchanged. Defined raw chain vs reviewed set J and alpha normalization; prohibited arbitrary truncation or100-way automatic blends. Updated protocol/guide/spec/skill and labelled measured cardinality results as historical. Runtime and .30/.05 settings unchanged; no new provider calls.
+
+## 2026-11-16 - Bounded ten-text embedding experiment
+
+On author proceed, embedded the ten reviewed inputs once: one request/ten texts, no retries, estimated484 input tokens and no provider usage count. The .05 chain gives nine100-chains including clear zoning/workplace inputs; lowering to.02 still admits vague/compound cardinality passes. Added recorded vectors/receipt/offline replay and the resulting context-policy gate. No threshold, runtime or database changes.
+
+## 2026-11-16 - Offline reference-selection calibration
+
+Evaluated the unchanged .30/.05 chain on ten saved D1 cases plus standby: nine singleton chains and zoning100-chain. Added reproducible offline vectors/ranks/sensitivity, explicit coverage limitations, direct-affectedness proposal and runtime integration plan. Prepared ten follow-up texts without embedding them. Provider calls/texts and production writes remain zero; accepted data/code unchanged.
+
 ## 2026-11-16 - Multi-reference math and affected-person social relevance
 
 Replaced the fixed-five proposal with PD-9's reference chain, normalized similarities, paired D/S/X, maximum geography, education evidence before one floor and one-public ISR. Social relevance follows affected people's recorded outgoing relations without recursion. Updated the Analyzer, relevance, expertise, user guide, component specs, roadmap and skill; corrected CBC exponent direction and worked arithmetic with explicit intended/runtime distinctions. Runtime code, example numeric anchors/vectors, data and historical acceptance results are unchanged. Implementation/calibration and unresolved mappings remain explicit gates.

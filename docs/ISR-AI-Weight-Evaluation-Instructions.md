@@ -106,7 +106,7 @@ Use the 100 examples as concrete anchors for similar patterns. For example:
 
 #### Step 3: Compute relevance weights
 
-Apply PD-9 chain selection and alpha. For each component d, W_d=sum_j alpha_j*w_dj. The qualitative primary/secondary/minor descriptions above explain which references match; they are not instructions to generate or adjust a second weight group. Validate original groups and the resulting sum1. Member D/S/X results remain paired with each source weight; use effective components for the four-component display.
+Apply PD-9 raw-chain selection, context review and alpha over the recorded reviewed set J. More than three raw references triggers review; it does not alone ask the user to reformulate. For each component d, W_d=sum_j alpha_j*w_dj. The qualitative primary/secondary/minor descriptions above explain which references match; they are not instructions to generate or adjust a second weight group. Validate original groups and the resulting sum1. Member D/S/X results remain paired with each source weight; use effective components for the four-component display.
 
 #### Step 4: Produce a short reasoning
 

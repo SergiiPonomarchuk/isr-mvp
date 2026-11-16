@@ -1,0 +1,6661 @@
+{
+  "tested_selection_policy": "original mr1 automatic cardinality; historical selection_outcome, no semantic context review performed",
+  "current_policy": "mr1-context-review-1: >3 raw candidates triggers context review; accepted reference set not computed",
+  "date": "2026-11-16",
+  "baseline": "89fb6bc",
+  "environment": "offline committed input vectors extracted from accepted snapshot; isolated emulator attempt timed out and was stopped without export",
+  "snapshot": "A:/BackUp/isr-mvp/emulator-snapshots/2026-11-14-d1-author-accepted-7259ca3",
+  "metric": "max(0,cos(actual saved title-description RETRIEVAL_QUERY vector, committed RETRIEVAL_DOCUMENT reference vector))",
+  "scope_limits": [
+    "No new title/context/vague/compound/aspect embeddings created.",
+    "Threshold experiment on existing vectors; no confidence calibration or final member-score comparison.",
+    "Library leave-one-out is DOCUMENT-to-DOCUMENT geometry diagnostic, not the runtime query metric."
+  ],
+  "hash_encoding": "UTF8 text with universal-newline LF normalization",
+  "calibration_inputs_sha256": "c21f0ec4000d519fbb86848fbec0e99d2038aacc345be6e02a8181d16efb6917",
+  "source_library_sha256": "5092e25ca8e69b8e4882243e67fd1dea83ffdf444ce54355f341b366d191459b",
+  "scenarios": [
+    {
+      "scenario": "D1-01",
+      "title": "Repair of broken main entrance lock",
+      "issue_text_sha256": "b918df42d6ffcc0229943790db1270b5c9ad328e5c837dd73cc43918a70fcb11",
+      "model": "gemini-embedding-001",
+      "dims": 768,
+      "task_type": "RETRIEVAL_QUERY",
+      "template_version": "t1",
+      "ranking": [
+        {
+          "id": 1,
+          "title": "House entrance lock broken (shared front door)",
+          "score": 0.7842495579948031
+        },
+        {
+          "id": 2,
+          "title": "Elevator outage in apartment building",
+          "score": 0.6774999912300388
+        },
+        {
+          "id": 6,
+          "title": "Stairwell lighting outage",
+          "score": 0.6766376095239361
+        },
+        {
+          "id": 3,
+          "title": "Heating failure in entire building",
+          "score": 0.6616033082192432
+        },
+        {
+          "id": 7,
+          "title": "Trash overflow in shared bins",
+          "score": 0.6597756538957441
+        },
+        {
+          "id": 5,
+          "title": "Mold in stairwells and corridors",
+          "score": 0.6504297234573502
+        },
+        {
+          "id": 10,
+          "title": "Scheduling noisy renovations in flats",
+          "score": 0.6419234177530942
+        },
+        {
+          "id": 4,
+          "title": "Water leak in shared basement",
+          "score": 0.6415517862690423
+        },
+        {
+          "id": 32,
+          "title": "Broken playground equipment in square",
+          "score": 0.6279695526961675
+        },
+        {
+          "id": 26,
+          "title": "Street lighting outage on segment",
+          "score": 0.6157592450447643
+        },
+        {
+          "id": 17,
+          "title": "Guest access policy (intercom/keys)",
+          "score": 0.6121865665768961
+        },
+        {
+          "id": 47,
+          "title": "Local disability access improvements (ramps, lifts)",
+          "score": 0.6120991213650561
+        },
+        {
+          "id": 15,
+          "title": "Storage lockers allocation / pricing",
+          "score": 0.6102933216413764
+        },
+        {
+          "id": 35,
+          "title": "Public toilet installation / closure",
+          "score": 0.6089840483389913
+        },
+        {
+          "id": 13,
+          "title": "Rooftop access and safety rules",
+          "score": 0.6087084342968252
+        },
+        {
+          "id": 9,
+          "title": "Internal noise from neighbor at night",
+          "score": 0.6049351054796215
+        },
+        {
+          "id": 14,
+          "title": "Shared laundry room usage rules",
+          "score": 0.603637571428525
+        },
+        {
+          "id": 30,
+          "title": "Repeated electricity outages neighborhood",
+          "score": 0.6018018665193509
+        },
+        {
+          "id": 36,
+          "title": "Bridge or underpass safety (lighting, CCTV)",
+          "score": 0.6012853647732568
+        },
+        {
+          "id": 51,
+          "title": "Family emergency affecting submitter\u0432\u0402\u2122s close relatives",
+          "score": 0.595843590879967
+        },
+        {
+          "id": 77,
+          "title": "Religious service schedule/facility change",
+          "score": 0.5944935461650221
+        },
+        {
+          "id": 18,
+          "title": "Balcony safety and renovation rules",
+          "score": 0.5908580897930629
+        },
+        {
+          "id": 16,
+          "title": "Moving rules (elevator booking, hours)",
+          "score": 0.5896870644375161
+        },
+        {
+          "id": 11,
+          "title": "Tenant\u0432\u0402\u201clandlord policy change (late fees)",
+          "score": 0.5869823883615726
+        },
+        {
+          "id": 19,
+          "title": "Smoking policy in shared areas",
+          "score": 0.58594522049986
+        },
+        {
+          "id": 12,
+          "title": "Building pet rules (allow/restrict pets)",
+          "score": 0.5859410247676397
+        },
+        {
+          "id": 20,
+          "title": "Emergency evacuation plan for building",
+          "score": 0.585630648480585
+        },
+        {
+          "id": 75,
+          "title": "Public art installation/mural",
+          "score": 0.5846374372190154
+        },
+        {
+          "id": 56,
+          "title": "School safety incident requiring parental decision",
+          "score": 0.5821198357246942
+        },
+        {
+          "id": 39,
+          "title": "New pedestrian zone design",
+          "score": 0.5807764594141087
+        },
+        {
+          "id": 31,
+          "title": "Internet outage for local ISP segment",
+          "score": 0.5797063854132535
+        },
+        {
+          "id": 74,
+          "title": "Neighborhood watch group formation",
+          "score": 0.5778214138358035
+        },
+        {
+          "id": 29,
+          "title": "Water supply disruption in blocks",
+          "score": 0.576802611596233
+        },
+        {
+          "id": 21,
+          "title": "Pothole on local street",
+          "score": 0.5754762895733074
+        },
+        {
+          "id": 8,
+          "title": "Residential parking allocation in building lot",
+          "score": 0.5739454682067485
+        },
+        {
+          "id": 45,
+          "title": "Pharmacy medication stock/outage",
+          "score": 0.5738863464501758
+        },
+        {
+          "id": 25,
+          "title": "Sidewalk snow/ice removal",
+          "score": 0.5725669090698039
+        },
+        {
+          "id": 24,
+          "title": "Bus route change / stop removal",
+          "score": 0.5677500689165866
+        },
+        {
+          "id": 98,
+          "title": "Zoning / building permit for new development",
+          "score": 0.5664248889496049
+        },
+        {
+          "id": 78,
+          "title": "Religious noise/visibility regulation in district",
+          "score": 0.5660992346307203
+        },
+        {
+          "id": 67,
+          "title": "Vocational training center opening/closure",
+          "score": 0.5652998968716615
+        },
+        {
+          "id": 87,
+          "title": "Remote work policy change (mandatory office days)",
+          "score": 0.563580298742382
+        },
+        {
+          "id": 50,
+          "title": "Neighborhood support network for emergencies",
+          "score": 0.5622101153110223
+        },
+        {
+          "id": 94,
+          "title": "Neighborhood digital platform onboarding/invite rules",
+          "score": 0.5614159642315366
+        },
+        {
+          "id": 33,
+          "title": "Speed limit / traffic calming on street",
+          "score": 0.5604640319682351
+        },
+        {
+          "id": 52,
+          "title": "Neighborhood mutual aid group rules",
+          "score": 0.5603561579442106
+        },
+        {
+          "id": 86,
+          "title": "On\u0432\u0402\u2018site shift scheduling change (offline workers)",
+          "score": 0.5602675490662012
+        },
+        {
+          "id": 41,
+          "title": "Local clinic opening hours",
+          "score": 0.5598215630244452
+        },
+        {
+          "id": 34,
+          "title": "Parking regulation on busy street",
+          "score": 0.5589597935609775
+        },
+        {
+          "id": 84,
+          "title": "Local cultural heritage preservation initiative",
+          "score": 0.5588532316248479
+        },
+        {
+          "id": 81,
+          "title": "NGO volunteer onboarding rules",
+          "score": 0.557972228376197
+        },
+        {
+          "id": 82,
+          "title": "Community choir / arts group organization",
+          "score": 0.5577613007571486
+        },
+        {
+          "id": 40,
+          "title": "Local waste collection schedule changes",
+          "score": 0.5571355462787999
+        },
+        {
+          "id": 95,
+          "title": "Local election procedure (polling places, voter roll)",
+          "score": 0.5570450904681153
+        },
+        {
+          "id": 58,
+          "title": "School grading policy change",
+          "score": 0.5569608810864733
+        },
+        {
+          "id": 27,
+          "title": "Construction noise from roadworks",
+          "score": 0.5549106585203063
+        },
+        {
+          "id": 28,
+          "title": "Illegal dumping / roadside trash spot",
+          "score": 0.5534166277405742
+        },
+        {
+          "id": 54,
+          "title": "Heatwave emergency plan for vulnerable residents",
+          "score": 0.5526972524392979
+        },
+        {
+          "id": 100,
+          "title": "Online fraud / scam warning system settings for local community",
+          "score": 0.5520469618392498
+        },
+        {
+          "id": 69,
+          "title": "Youth sports league safety rules",
+          "score": 0.5520407557622328
+        },
+        {
+          "id": 64,
+          "title": "Scholarship allocation criteria at local school",
+          "score": 0.5511466703485385
+        },
+        {
+          "id": 70,
+          "title": "Local library youth section rules/events",
+          "score": 0.5511291509994432
+        },
+        {
+          "id": 59,
+          "title": "School cafeteria menu and nutrition",
+          "score": 0.5509046768733206
+        },
+        {
+          "id": 99,
+          "title": "Data privacy policy of a widely used local app",
+          "score": 0.5505726365918473
+        },
+        {
+          "id": 53,
+          "title": "Local addiction support program (AA/NA)",
+          "score": 0.5505512909145783
+        },
+        {
+          "id": 72,
+          "title": "Local amateur sports league",
+          "score": 0.5497124466256288
+        },
+        {
+          "id": 49,
+          "title": "Homeless shelter capacity and admission rules",
+          "score": 0.5492988607782802
+        },
+        {
+          "id": 60,
+          "title": "School bus route and stop changes",
+          "score": 0.5483651923842654
+        },
+        {
+          "id": 42,
+          "title": "Vaccination / screening campaign",
+          "score": 0.5477811997500824
+        },
+        {
+          "id": 63,
+          "title": "Local youth club hours and activities",
+          "score": 0.5463514690832668
+        },
+        {
+          "id": 23,
+          "title": "New bike lane on major street",
+          "score": 0.5451697471753012
+        },
+        {
+          "id": 22,
+          "title": "Crosswalk / traffic light timing",
+          "score": 0.544961095349584
+        },
+        {
+          "id": 92,
+          "title": "Local online community group moderation rules",
+          "score": 0.5426442555615226
+        },
+        {
+          "id": 48,
+          "title": "Food bank operating days and rules",
+          "score": 0.5423287374017856
+        },
+        {
+          "id": 73,
+          "title": "Cultural workshop for children",
+          "score": 0.5418159091327147
+        },
+        {
+          "id": 90,
+          "title": "Open\u0432\u0402\u2018source project roadmap / features",
+          "score": 0.5411532000962171
+        },
+        {
+          "id": 89,
+          "title": "Open\u0432\u0402\u2018source project contribution rules",
+          "score": 0.540894574417966
+        },
+        {
+          "id": 43,
+          "title": "Childcare services availability (slots/hours)",
+          "score": 0.5395624398167366
+        },
+        {
+          "id": 71,
+          "title": "Neighborhood community festival",
+          "score": 0.5392300709891066
+        },
+        {
+          "id": 83,
+          "title": "Local LGBTQ+ support group rules",
+          "score": 0.5392166023572201
+        },
+        {
+          "id": 97,
+          "title": "City budget participatory allocation",
+          "score": 0.5386467101567161
+        },
+        {
+          "id": 79,
+          "title": "Local charity food drive",
+          "score": 0.5377507174530215
+        },
+        {
+          "id": 46,
+          "title": "Mental health drop\u0432\u0402\u2018in center hours",
+          "score": 0.5377095472178214
+        },
+        {
+          "id": 88,
+          "title": "Gig platform local minimum rate policy",
+          "score": 0.5373387727231417
+        },
+        {
+          "id": 65,
+          "title": "University course curriculum change",
+          "score": 0.536339074133815
+        },
+        {
+          "id": 68,
+          "title": "Local internship placement program rules",
+          "score": 0.5357806819591814
+        },
+        {
+          "id": 62,
+          "title": "Teacher\u0432\u0402\u201cparent communication platform rules",
+          "score": 0.5352708286119668
+        },
+        {
+          "id": 76,
+          "title": "Local street market/bazaar",
+          "score": 0.5343799540546278
+        },
+        {
+          "id": 37,
+          "title": "Bike parking racks near station",
+          "score": 0.5340776343638305
+        },
+        {
+          "id": 44,
+          "title": "Elderly day\u0432\u0402\u2018care / respite services",
+          "score": 0.5339153311701252
+        },
+        {
+          "id": 96,
+          "title": "Local policy debate (e.g., nightlife regulation)",
+          "score": 0.5326702152327629
+        },
+        {
+          "id": 66,
+          "title": "University exam schedule and format",
+          "score": 0.532217570141476
+        },
+        {
+          "id": 93,
+          "title": "Online political discussion space rules",
+          "score": 0.5297770858794825
+        },
+        {
+          "id": 55,
+          "title": "Pandemic local restrictions (mask rules in district)",
+          "score": 0.5285893306275788
+        },
+        {
+          "id": 57,
+          "title": "School timetable / homework load",
+          "score": 0.52847963370974
+        },
+        {
+          "id": 38,
+          "title": "Car\u0432\u0402\u2018free day on city center streets",
+          "score": 0.525647940726594
+        },
+        {
+          "id": 61,
+          "title": "After\u0432\u0402\u2018school program availability",
+          "score": 0.5169242355737113
+        },
+        {
+          "id": 91,
+          "title": "Platform rules for ISR\u0432\u0402\u2018enabled digital community",
+          "score": 0.5138650226819753
+        },
+        {
+          "id": 85,
+          "title": "City\u0432\u0402\u2018wide cultural festival governance (who participates)",
+          "score": 0.5102594724471468
+        },
+        {
+          "id": 80,
+          "title": "Online donation campaign rules (global)",
+          "score": 0.5098413299669305
+        }
+      ],
+      "selected_count": 1,
+      "outcome": "candidate_pass_pending_context",
+      "largest_internal_gap": 0,
+      "sensitivity": [
+        {
+          "gap": 0.05,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.02,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.01,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.005,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.002,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.001,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.5,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.7,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "scenario": "D1-01-live",
+      "title": "Repair of broken main entrance lock",
+      "issue_text_sha256": "b918df42d6ffcc0229943790db1270b5c9ad328e5c837dd73cc43918a70fcb11",
+      "model": "gemini-embedding-001",
+      "dims": 768,
+      "task_type": "RETRIEVAL_QUERY",
+      "template_version": "t1",
+      "ranking": [
+        {
+          "id": 1,
+          "title": "House entrance lock broken (shared front door)",
+          "score": 0.7842495579948031
+        },
+        {
+          "id": 2,
+          "title": "Elevator outage in apartment building",
+          "score": 0.6774999912300388
+        },
+        {
+          "id": 6,
+          "title": "Stairwell lighting outage",
+          "score": 0.6766376095239361
+        },
+        {
+          "id": 3,
+          "title": "Heating failure in entire building",
+          "score": 0.6616033082192432
+        },
+        {
+          "id": 7,
+          "title": "Trash overflow in shared bins",
+          "score": 0.6597756538957441
+        },
+        {
+          "id": 5,
+          "title": "Mold in stairwells and corridors",
+          "score": 0.6504297234573502
+        },
+        {
+          "id": 10,
+          "title": "Scheduling noisy renovations in flats",
+          "score": 0.6419234177530942
+        },
+        {
+          "id": 4,
+          "title": "Water leak in shared basement",
+          "score": 0.6415517862690423
+        },
+        {
+          "id": 32,
+          "title": "Broken playground equipment in square",
+          "score": 0.6279695526961675
+        },
+        {
+          "id": 26,
+          "title": "Street lighting outage on segment",
+          "score": 0.6157592450447643
+        },
+        {
+          "id": 17,
+          "title": "Guest access policy (intercom/keys)",
+          "score": 0.6121865665768961
+        },
+        {
+          "id": 47,
+          "title": "Local disability access improvements (ramps, lifts)",
+          "score": 0.6120991213650561
+        },
+        {
+          "id": 15,
+          "title": "Storage lockers allocation / pricing",
+          "score": 0.6102933216413764
+        },
+        {
+          "id": 35,
+          "title": "Public toilet installation / closure",
+          "score": 0.6089840483389913
+        },
+        {
+          "id": 13,
+          "title": "Rooftop access and safety rules",
+          "score": 0.6087084342968252
+        },
+        {
+          "id": 9,
+          "title": "Internal noise from neighbor at night",
+          "score": 0.6049351054796215
+        },
+        {
+          "id": 14,
+          "title": "Shared laundry room usage rules",
+          "score": 0.603637571428525
+        },
+        {
+          "id": 30,
+          "title": "Repeated electricity outages neighborhood",
+          "score": 0.6018018665193509
+        },
+        {
+          "id": 36,
+          "title": "Bridge or underpass safety (lighting, CCTV)",
+          "score": 0.6012853647732568
+        },
+        {
+          "id": 51,
+          "title": "Family emergency affecting submitter\u0432\u0402\u2122s close relatives",
+          "score": 0.595843590879967
+        },
+        {
+          "id": 77,
+          "title": "Religious service schedule/facility change",
+          "score": 0.5944935461650221
+        },
+        {
+          "id": 18,
+          "title": "Balcony safety and renovation rules",
+          "score": 0.5908580897930629
+        },
+        {
+          "id": 16,
+          "title": "Moving rules (elevator booking, hours)",
+          "score": 0.5896870644375161
+        },
+        {
+          "id": 11,
+          "title": "Tenant\u0432\u0402\u201clandlord policy change (late fees)",
+          "score": 0.5869823883615726
+        },
+        {
+          "id": 19,
+          "title": "Smoking policy in shared areas",
+          "score": 0.58594522049986
+        },
+        {
+          "id": 12,
+          "title": "Building pet rules (allow/restrict pets)",
+          "score": 0.5859410247676397
+        },
+        {
+          "id": 20,
+          "title": "Emergency evacuation plan for building",
+          "score": 0.585630648480585
+        },
+        {
+          "id": 75,
+          "title": "Public art installation/mural",
+          "score": 0.5846374372190154
+        },
+        {
+          "id": 56,
+          "title": "School safety incident requiring parental decision",
+          "score": 0.5821198357246942
+        },
+        {
+          "id": 39,
+          "title": "New pedestrian zone design",
+          "score": 0.5807764594141087
+        },
+        {
+          "id": 31,
+          "title": "Internet outage for local ISP segment",
+          "score": 0.5797063854132535
+        },
+        {
+          "id": 74,
+          "title": "Neighborhood watch group formation",
+          "score": 0.5778214138358035
+        },
+        {
+          "id": 29,
+          "title": "Water supply disruption in blocks",
+          "score": 0.576802611596233
+        },
+        {
+          "id": 21,
+          "title": "Pothole on local street",
+          "score": 0.5754762895733074
+        },
+        {
+          "id": 8,
+          "title": "Residential parking allocation in building lot",
+          "score": 0.5739454682067485
+        },
+        {
+          "id": 45,
+          "title": "Pharmacy medication stock/outage",
+          "score": 0.5738863464501758
+        },
+        {
+          "id": 25,
+          "title": "Sidewalk snow/ice removal",
+          "score": 0.5725669090698039
+        },
+        {
+          "id": 24,
+          "title": "Bus route change / stop removal",
+          "score": 0.5677500689165866
+        },
+        {
+          "id": 98,
+          "title": "Zoning / building permit for new development",
+          "score": 0.5664248889496049
+        },
+        {
+          "id": 78,
+          "title": "Religious noise/visibility regulation in district",
+          "score": 0.5660992346307203
+        },
+        {
+          "id": 67,
+          "title": "Vocational training center opening/closure",
+          "score": 0.5652998968716615
+        },
+        {
+          "id": 87,
+          "title": "Remote work policy change (mandatory office days)",
+          "score": 0.563580298742382
+        },
+        {
+          "id": 50,
+          "title": "Neighborhood support network for emergencies",
+          "score": 0.5622101153110223
+        },
+        {
+          "id": 94,
+          "title": "Neighborhood digital platform onboarding/invite rules",
+          "score": 0.5614159642315366
+        },
+        {
+          "id": 33,
+          "title": "Speed limit / traffic calming on street",
+          "score": 0.5604640319682351
+        },
+        {
+          "id": 52,
+          "title": "Neighborhood mutual aid group rules",
+          "score": 0.5603561579442106
+        },
+        {
+          "id": 86,
+          "title": "On\u0432\u0402\u2018site shift scheduling change (offline workers)",
+          "score": 0.5602675490662012
+        },
+        {
+          "id": 41,
+          "title": "Local clinic opening hours",
+          "score": 0.5598215630244452
+        },
+        {
+          "id": 34,
+          "title": "Parking regulation on busy street",
+          "score": 0.5589597935609775
+        },
+        {
+          "id": 84,
+          "title": "Local cultural heritage preservation initiative",
+          "score": 0.5588532316248479
+        },
+        {
+          "id": 81,
+          "title": "NGO volunteer onboarding rules",
+          "score": 0.557972228376197
+        },
+        {
+          "id": 82,
+          "title": "Community choir / arts group organization",
+          "score": 0.5577613007571486
+        },
+        {
+          "id": 40,
+          "title": "Local waste collection schedule changes",
+          "score": 0.5571355462787999
+        },
+        {
+          "id": 95,
+          "title": "Local election procedure (polling places, voter roll)",
+          "score": 0.5570450904681153
+        },
+        {
+          "id": 58,
+          "title": "School grading policy change",
+          "score": 0.5569608810864733
+        },
+        {
+          "id": 27,
+          "title": "Construction noise from roadworks",
+          "score": 0.5549106585203063
+        },
+        {
+          "id": 28,
+          "title": "Illegal dumping / roadside trash spot",
+          "score": 0.5534166277405742
+        },
+        {
+          "id": 54,
+          "title": "Heatwave emergency plan for vulnerable residents",
+          "score": 0.5526972524392979
+        },
+        {
+          "id": 100,
+          "title": "Online fraud / scam warning system settings for local community",
+          "score": 0.5520469618392498
+        },
+        {
+          "id": 69,
+          "title": "Youth sports league safety rules",
+          "score": 0.5520407557622328
+        },
+        {
+          "id": 64,
+          "title": "Scholarship allocation criteria at local school",
+          "score": 0.5511466703485385
+        },
+        {
+          "id": 70,
+          "title": "Local library youth section rules/events",
+          "score": 0.5511291509994432
+        },
+        {
+          "id": 59,
+          "title": "School cafeteria menu and nutrition",
+          "score": 0.5509046768733206
+        },
+        {
+          "id": 99,
+          "title": "Data privacy policy of a widely used local app",
+          "score": 0.5505726365918473
+        },
+        {
+          "id": 53,
+          "title": "Local addiction support program (AA/NA)",
+          "score": 0.5505512909145783
+        },
+        {
+          "id": 72,
+          "title": "Local amateur sports league",
+          "score": 0.5497124466256288
+        },
+        {
+          "id": 49,
+          "title": "Homeless shelter capacity and admission rules",
+          "score": 0.5492988607782802
+        },
+        {
+          "id": 60,
+          "title": "School bus route and stop changes",
+          "score": 0.5483651923842654
+        },
+        {
+          "id": 42,
+          "title": "Vaccination / screening campaign",
+          "score": 0.5477811997500824
+        },
+        {
+          "id": 63,
+          "title": "Local youth club hours and activities",
+          "score": 0.5463514690832668
+        },
+        {
+          "id": 23,
+          "title": "New bike lane on major street",
+          "score": 0.5451697471753012
+        },
+        {
+          "id": 22,
+          "title": "Crosswalk / traffic light timing",
+          "score": 0.544961095349584
+        },
+        {
+          "id": 92,
+          "title": "Local online community group moderation rules",
+          "score": 0.5426442555615226
+        },
+        {
+          "id": 48,
+          "title": "Food bank operating days and rules",
+          "score": 0.5423287374017856
+        },
+        {
+          "id": 73,
+          "title": "Cultural workshop for children",
+          "score": 0.5418159091327147
+        },
+        {
+          "id": 90,
+          "title": "Open\u0432\u0402\u2018source project roadmap / features",
+          "score": 0.5411532000962171
+        },
+        {
+          "id": 89,
+          "title": "Open\u0432\u0402\u2018source project contribution rules",
+          "score": 0.540894574417966
+        },
+        {
+          "id": 43,
+          "title": "Childcare services availability (slots/hours)",
+          "score": 0.5395624398167366
+        },
+        {
+          "id": 71,
+          "title": "Neighborhood community festival",
+          "score": 0.5392300709891066
+        },
+        {
+          "id": 83,
+          "title": "Local LGBTQ+ support group rules",
+          "score": 0.5392166023572201
+        },
+        {
+          "id": 97,
+          "title": "City budget participatory allocation",
+          "score": 0.5386467101567161
+        },
+        {
+          "id": 79,
+          "title": "Local charity food drive",
+          "score": 0.5377507174530215
+        },
+        {
+          "id": 46,
+          "title": "Mental health drop\u0432\u0402\u2018in center hours",
+          "score": 0.5377095472178214
+        },
+        {
+          "id": 88,
+          "title": "Gig platform local minimum rate policy",
+          "score": 0.5373387727231417
+        },
+        {
+          "id": 65,
+          "title": "University course curriculum change",
+          "score": 0.536339074133815
+        },
+        {
+          "id": 68,
+          "title": "Local internship placement program rules",
+          "score": 0.5357806819591814
+        },
+        {
+          "id": 62,
+          "title": "Teacher\u0432\u0402\u201cparent communication platform rules",
+          "score": 0.5352708286119668
+        },
+        {
+          "id": 76,
+          "title": "Local street market/bazaar",
+          "score": 0.5343799540546278
+        },
+        {
+          "id": 37,
+          "title": "Bike parking racks near station",
+          "score": 0.5340776343638305
+        },
+        {
+          "id": 44,
+          "title": "Elderly day\u0432\u0402\u2018care / respite services",
+          "score": 0.5339153311701252
+        },
+        {
+          "id": 96,
+          "title": "Local policy debate (e.g., nightlife regulation)",
+          "score": 0.5326702152327629
+        },
+        {
+          "id": 66,
+          "title": "University exam schedule and format",
+          "score": 0.532217570141476
+        },
+        {
+          "id": 93,
+          "title": "Online political discussion space rules",
+          "score": 0.5297770858794825
+        },
+        {
+          "id": 55,
+          "title": "Pandemic local restrictions (mask rules in district)",
+          "score": 0.5285893306275788
+        },
+        {
+          "id": 57,
+          "title": "School timetable / homework load",
+          "score": 0.52847963370974
+        },
+        {
+          "id": 38,
+          "title": "Car\u0432\u0402\u2018free day on city center streets",
+          "score": 0.525647940726594
+        },
+        {
+          "id": 61,
+          "title": "After\u0432\u0402\u2018school program availability",
+          "score": 0.5169242355737113
+        },
+        {
+          "id": 91,
+          "title": "Platform rules for ISR\u0432\u0402\u2018enabled digital community",
+          "score": 0.5138650226819753
+        },
+        {
+          "id": 85,
+          "title": "City\u0432\u0402\u2018wide cultural festival governance (who participates)",
+          "score": 0.5102594724471468
+        },
+        {
+          "id": 80,
+          "title": "Online donation campaign rules (global)",
+          "score": 0.5098413299669305
+        }
+      ],
+      "selected_count": 1,
+      "outcome": "candidate_pass_pending_context",
+      "largest_internal_gap": 0,
+      "sensitivity": [
+        {
+          "gap": 0.05,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.02,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.01,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.005,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.002,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.001,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.5,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.7,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "scenario": "D1-02",
+      "title": "Repair hazardous pothole on Hauptstra\u00dfe",
+      "issue_text_sha256": "69ba3f077588efb6ac96f0e38f9181678df851be901b6653b5d52d6d011ff2e1",
+      "model": "gemini-embedding-001",
+      "dims": 768,
+      "task_type": "RETRIEVAL_QUERY",
+      "template_version": "t1",
+      "ranking": [
+        {
+          "id": 21,
+          "title": "Pothole on local street",
+          "score": 0.7016582499776206
+        },
+        {
+          "id": 36,
+          "title": "Bridge or underpass safety (lighting, CCTV)",
+          "score": 0.6431140664630259
+        },
+        {
+          "id": 33,
+          "title": "Speed limit / traffic calming on street",
+          "score": 0.6339945374439424
+        },
+        {
+          "id": 26,
+          "title": "Street lighting outage on segment",
+          "score": 0.6316881214731375
+        },
+        {
+          "id": 32,
+          "title": "Broken playground equipment in square",
+          "score": 0.6280508096756852
+        },
+        {
+          "id": 23,
+          "title": "New bike lane on major street",
+          "score": 0.6179031744512552
+        },
+        {
+          "id": 30,
+          "title": "Repeated electricity outages neighborhood",
+          "score": 0.615666374977648
+        },
+        {
+          "id": 28,
+          "title": "Illegal dumping / roadside trash spot",
+          "score": 0.615553481405114
+        },
+        {
+          "id": 39,
+          "title": "New pedestrian zone design",
+          "score": 0.6128496882988351
+        },
+        {
+          "id": 35,
+          "title": "Public toilet installation / closure",
+          "score": 0.6100131363414617
+        },
+        {
+          "id": 47,
+          "title": "Local disability access improvements (ramps, lifts)",
+          "score": 0.6047466935045328
+        },
+        {
+          "id": 51,
+          "title": "Family emergency affecting submitter\u0432\u0402\u2122s close relatives",
+          "score": 0.6041926585794627
+        },
+        {
+          "id": 24,
+          "title": "Bus route change / stop removal",
+          "score": 0.6028429978247078
+        },
+        {
+          "id": 54,
+          "title": "Heatwave emergency plan for vulnerable residents",
+          "score": 0.5916364660893465
+        },
+        {
+          "id": 27,
+          "title": "Construction noise from roadworks",
+          "score": 0.591421136582752
+        },
+        {
+          "id": 7,
+          "title": "Trash overflow in shared bins",
+          "score": 0.5905677735069076
+        },
+        {
+          "id": 6,
+          "title": "Stairwell lighting outage",
+          "score": 0.5904525936977187
+        },
+        {
+          "id": 34,
+          "title": "Parking regulation on busy street",
+          "score": 0.5899864178111192
+        },
+        {
+          "id": 75,
+          "title": "Public art installation/mural",
+          "score": 0.5867458227799863
+        },
+        {
+          "id": 1,
+          "title": "House entrance lock broken (shared front door)",
+          "score": 0.5846684828446193
+        },
+        {
+          "id": 74,
+          "title": "Neighborhood watch group formation",
+          "score": 0.5845539106099595
+        },
+        {
+          "id": 100,
+          "title": "Online fraud / scam warning system settings for local community",
+          "score": 0.5837359307685331
+        },
+        {
+          "id": 25,
+          "title": "Sidewalk snow/ice removal",
+          "score": 0.5818433935891475
+        },
+        {
+          "id": 40,
+          "title": "Local waste collection schedule changes",
+          "score": 0.5802246284361163
+        },
+        {
+          "id": 99,
+          "title": "Data privacy policy of a widely used local app",
+          "score": 0.579990732051702
+        },
+        {
+          "id": 22,
+          "title": "Crosswalk / traffic light timing",
+          "score": 0.5774766578982915
+        },
+        {
+          "id": 4,
+          "title": "Water leak in shared basement",
+          "score": 0.5773426464043191
+        },
+        {
+          "id": 2,
+          "title": "Elevator outage in apartment building",
+          "score": 0.5722005495595046
+        },
+        {
+          "id": 77,
+          "title": "Religious service schedule/facility change",
+          "score": 0.5683898350966281
+        },
+        {
+          "id": 42,
+          "title": "Vaccination / screening campaign",
+          "score": 0.566056658433902
+        },
+        {
+          "id": 56,
+          "title": "School safety incident requiring parental decision",
+          "score": 0.5660062434251433
+        },
+        {
+          "id": 38,
+          "title": "Car\u0432\u0402\u2018free day on city center streets",
+          "score": 0.5659740569031595
+        },
+        {
+          "id": 3,
+          "title": "Heating failure in entire building",
+          "score": 0.5654754462663676
+        },
+        {
+          "id": 96,
+          "title": "Local policy debate (e.g., nightlife regulation)",
+          "score": 0.5648657892176839
+        },
+        {
+          "id": 88,
+          "title": "Gig platform local minimum rate policy",
+          "score": 0.5645069888912703
+        },
+        {
+          "id": 31,
+          "title": "Internet outage for local ISP segment",
+          "score": 0.564136417176482
+        },
+        {
+          "id": 29,
+          "title": "Water supply disruption in blocks",
+          "score": 0.5639553460779595
+        },
+        {
+          "id": 10,
+          "title": "Scheduling noisy renovations in flats",
+          "score": 0.5618406719799377
+        },
+        {
+          "id": 37,
+          "title": "Bike parking racks near station",
+          "score": 0.5614397068724537
+        },
+        {
+          "id": 58,
+          "title": "School grading policy change",
+          "score": 0.5608852676427727
+        },
+        {
+          "id": 84,
+          "title": "Local cultural heritage preservation initiative",
+          "score": 0.5603155639450063
+        },
+        {
+          "id": 95,
+          "title": "Local election procedure (polling places, voter roll)",
+          "score": 0.5602270560148727
+        },
+        {
+          "id": 78,
+          "title": "Religious noise/visibility regulation in district",
+          "score": 0.5600340735404635
+        },
+        {
+          "id": 60,
+          "title": "School bus route and stop changes",
+          "score": 0.5600205453470919
+        },
+        {
+          "id": 50,
+          "title": "Neighborhood support network for emergencies",
+          "score": 0.5585889219688289
+        },
+        {
+          "id": 72,
+          "title": "Local amateur sports league",
+          "score": 0.5577996110533467
+        },
+        {
+          "id": 55,
+          "title": "Pandemic local restrictions (mask rules in district)",
+          "score": 0.55707721777767
+        },
+        {
+          "id": 67,
+          "title": "Vocational training center opening/closure",
+          "score": 0.5558721137831266
+        },
+        {
+          "id": 87,
+          "title": "Remote work policy change (mandatory office days)",
+          "score": 0.5546710985559801
+        },
+        {
+          "id": 45,
+          "title": "Pharmacy medication stock/outage",
+          "score": 0.5543897524943735
+        },
+        {
+          "id": 98,
+          "title": "Zoning / building permit for new development",
+          "score": 0.5543622705512323
+        },
+        {
+          "id": 76,
+          "title": "Local street market/bazaar",
+          "score": 0.5535397447545592
+        },
+        {
+          "id": 97,
+          "title": "City budget participatory allocation",
+          "score": 0.5532323601413391
+        },
+        {
+          "id": 5,
+          "title": "Mold in stairwells and corridors",
+          "score": 0.5521831385146218
+        },
+        {
+          "id": 11,
+          "title": "Tenant\u0432\u0402\u201clandlord policy change (late fees)",
+          "score": 0.5516748157319576
+        },
+        {
+          "id": 69,
+          "title": "Youth sports league safety rules",
+          "score": 0.5511641975422977
+        },
+        {
+          "id": 79,
+          "title": "Local charity food drive",
+          "score": 0.5497394619035001
+        },
+        {
+          "id": 93,
+          "title": "Online political discussion space rules",
+          "score": 0.5488935644355729
+        },
+        {
+          "id": 82,
+          "title": "Community choir / arts group organization",
+          "score": 0.5484269008000693
+        },
+        {
+          "id": 13,
+          "title": "Rooftop access and safety rules",
+          "score": 0.5469567950728474
+        },
+        {
+          "id": 94,
+          "title": "Neighborhood digital platform onboarding/invite rules",
+          "score": 0.5468423135831005
+        },
+        {
+          "id": 92,
+          "title": "Local online community group moderation rules",
+          "score": 0.5466775356723366
+        },
+        {
+          "id": 90,
+          "title": "Open\u0432\u0402\u2018source project roadmap / features",
+          "score": 0.5457946218549707
+        },
+        {
+          "id": 86,
+          "title": "On\u0432\u0402\u2018site shift scheduling change (offline workers)",
+          "score": 0.541290474953565
+        },
+        {
+          "id": 18,
+          "title": "Balcony safety and renovation rules",
+          "score": 0.5405451814418017
+        },
+        {
+          "id": 73,
+          "title": "Cultural workshop for children",
+          "score": 0.5403442332155176
+        },
+        {
+          "id": 53,
+          "title": "Local addiction support program (AA/NA)",
+          "score": 0.5399008765360462
+        },
+        {
+          "id": 71,
+          "title": "Neighborhood community festival",
+          "score": 0.5398872060639689
+        },
+        {
+          "id": 15,
+          "title": "Storage lockers allocation / pricing",
+          "score": 0.5377115542612827
+        },
+        {
+          "id": 81,
+          "title": "NGO volunteer onboarding rules",
+          "score": 0.5370228072939147
+        },
+        {
+          "id": 52,
+          "title": "Neighborhood mutual aid group rules",
+          "score": 0.5368585790362534
+        },
+        {
+          "id": 64,
+          "title": "Scholarship allocation criteria at local school",
+          "score": 0.5360822383445137
+        },
+        {
+          "id": 41,
+          "title": "Local clinic opening hours",
+          "score": 0.5350122331650998
+        },
+        {
+          "id": 70,
+          "title": "Local library youth section rules/events",
+          "score": 0.5340453621440066
+        },
+        {
+          "id": 63,
+          "title": "Local youth club hours and activities",
+          "score": 0.5329340256761171
+        },
+        {
+          "id": 62,
+          "title": "Teacher\u0432\u0402\u201cparent communication platform rules",
+          "score": 0.5319261204976199
+        },
+        {
+          "id": 12,
+          "title": "Building pet rules (allow/restrict pets)",
+          "score": 0.5318993333348186
+        },
+        {
+          "id": 20,
+          "title": "Emergency evacuation plan for building",
+          "score": 0.5312645214826244
+        },
+        {
+          "id": 8,
+          "title": "Residential parking allocation in building lot",
+          "score": 0.5310670135213235
+        },
+        {
+          "id": 57,
+          "title": "School timetable / homework load",
+          "score": 0.5296602558730341
+        },
+        {
+          "id": 91,
+          "title": "Platform rules for ISR\u0432\u0402\u2018enabled digital community",
+          "score": 0.5280365121021412
+        },
+        {
+          "id": 44,
+          "title": "Elderly day\u0432\u0402\u2018care / respite services",
+          "score": 0.5274456719790706
+        },
+        {
+          "id": 49,
+          "title": "Homeless shelter capacity and admission rules",
+          "score": 0.5265535786388369
+        },
+        {
+          "id": 83,
+          "title": "Local LGBTQ+ support group rules",
+          "score": 0.5262781806322332
+        },
+        {
+          "id": 59,
+          "title": "School cafeteria menu and nutrition",
+          "score": 0.5262314417983341
+        },
+        {
+          "id": 43,
+          "title": "Childcare services availability (slots/hours)",
+          "score": 0.5257368950496036
+        },
+        {
+          "id": 68,
+          "title": "Local internship placement program rules",
+          "score": 0.5254726407665972
+        },
+        {
+          "id": 19,
+          "title": "Smoking policy in shared areas",
+          "score": 0.5241491024004171
+        },
+        {
+          "id": 65,
+          "title": "University course curriculum change",
+          "score": 0.5240017771647855
+        },
+        {
+          "id": 16,
+          "title": "Moving rules (elevator booking, hours)",
+          "score": 0.5222429194568673
+        },
+        {
+          "id": 9,
+          "title": "Internal noise from neighbor at night",
+          "score": 0.5214292746723888
+        },
+        {
+          "id": 48,
+          "title": "Food bank operating days and rules",
+          "score": 0.5205794193583351
+        },
+        {
+          "id": 14,
+          "title": "Shared laundry room usage rules",
+          "score": 0.5171468376553622
+        },
+        {
+          "id": 89,
+          "title": "Open\u0432\u0402\u2018source project contribution rules",
+          "score": 0.5143351177014261
+        },
+        {
+          "id": 85,
+          "title": "City\u0432\u0402\u2018wide cultural festival governance (who participates)",
+          "score": 0.5142092343008386
+        },
+        {
+          "id": 61,
+          "title": "After\u0432\u0402\u2018school program availability",
+          "score": 0.5107660699403028
+        },
+        {
+          "id": 46,
+          "title": "Mental health drop\u0432\u0402\u2018in center hours",
+          "score": 0.5099102302231026
+        },
+        {
+          "id": 80,
+          "title": "Online donation campaign rules (global)",
+          "score": 0.5040523754499506
+        },
+        {
+          "id": 66,
+          "title": "University exam schedule and format",
+          "score": 0.5008628755700144
+        },
+        {
+          "id": 17,
+          "title": "Guest access policy (intercom/keys)",
+          "score": 0.49504983520831347
+        }
+      ],
+      "selected_count": 1,
+      "outcome": "candidate_pass_pending_context",
+      "largest_internal_gap": 0,
+      "sensitivity": [
+        {
+          "gap": 0.05,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.02,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.01,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.005,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.002,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.001,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.5,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.7,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "scenario": "D1-03",
+      "title": "Repair of damaged playground equipment",
+      "issue_text_sha256": "e2ab21f78cb4a79693ba42201bb67accd69454a03fc6e05bdf3aa91e010152a6",
+      "model": "gemini-embedding-001",
+      "dims": 768,
+      "task_type": "RETRIEVAL_QUERY",
+      "template_version": "t1",
+      "ranking": [
+        {
+          "id": 32,
+          "title": "Broken playground equipment in square",
+          "score": 0.7286179213361244
+        },
+        {
+          "id": 7,
+          "title": "Trash overflow in shared bins",
+          "score": 0.6230279931791661
+        },
+        {
+          "id": 1,
+          "title": "House entrance lock broken (shared front door)",
+          "score": 0.6080320617774585
+        },
+        {
+          "id": 47,
+          "title": "Local disability access improvements (ramps, lifts)",
+          "score": 0.6033098429907281
+        },
+        {
+          "id": 36,
+          "title": "Bridge or underpass safety (lighting, CCTV)",
+          "score": 0.6031984649127993
+        },
+        {
+          "id": 35,
+          "title": "Public toilet installation / closure",
+          "score": 0.6030899509603079
+        },
+        {
+          "id": 6,
+          "title": "Stairwell lighting outage",
+          "score": 0.6014642475249897
+        },
+        {
+          "id": 69,
+          "title": "Youth sports league safety rules",
+          "score": 0.6012193017376918
+        },
+        {
+          "id": 26,
+          "title": "Street lighting outage on segment",
+          "score": 0.5991372167849446
+        },
+        {
+          "id": 75,
+          "title": "Public art installation/mural",
+          "score": 0.5957125284548301
+        },
+        {
+          "id": 25,
+          "title": "Sidewalk snow/ice removal",
+          "score": 0.5954110316503861
+        },
+        {
+          "id": 2,
+          "title": "Elevator outage in apartment building",
+          "score": 0.5944645262364763
+        },
+        {
+          "id": 56,
+          "title": "School safety incident requiring parental decision",
+          "score": 0.5922263459349908
+        },
+        {
+          "id": 5,
+          "title": "Mold in stairwells and corridors",
+          "score": 0.5884885860701614
+        },
+        {
+          "id": 3,
+          "title": "Heating failure in entire building",
+          "score": 0.5867954213179147
+        },
+        {
+          "id": 39,
+          "title": "New pedestrian zone design",
+          "score": 0.5865339088834827
+        },
+        {
+          "id": 4,
+          "title": "Water leak in shared basement",
+          "score": 0.5856496438509156
+        },
+        {
+          "id": 10,
+          "title": "Scheduling noisy renovations in flats",
+          "score": 0.584895229799821
+        },
+        {
+          "id": 21,
+          "title": "Pothole on local street",
+          "score": 0.5828766790249226
+        },
+        {
+          "id": 54,
+          "title": "Heatwave emergency plan for vulnerable residents",
+          "score": 0.5825350582644754
+        },
+        {
+          "id": 28,
+          "title": "Illegal dumping / roadside trash spot",
+          "score": 0.5814459613781157
+        },
+        {
+          "id": 70,
+          "title": "Local library youth section rules/events",
+          "score": 0.5814051930621046
+        },
+        {
+          "id": 24,
+          "title": "Bus route change / stop removal",
+          "score": 0.5793151220240585
+        },
+        {
+          "id": 77,
+          "title": "Religious service schedule/facility change",
+          "score": 0.5784391469671901
+        },
+        {
+          "id": 13,
+          "title": "Rooftop access and safety rules",
+          "score": 0.5772402684150695
+        },
+        {
+          "id": 18,
+          "title": "Balcony safety and renovation rules",
+          "score": 0.5757337475841824
+        },
+        {
+          "id": 30,
+          "title": "Repeated electricity outages neighborhood",
+          "score": 0.5739137907134497
+        },
+        {
+          "id": 33,
+          "title": "Speed limit / traffic calming on street",
+          "score": 0.5729440693733577
+        },
+        {
+          "id": 51,
+          "title": "Family emergency affecting submitter\u0432\u0402\u2122s close relatives",
+          "score": 0.5725511039474735
+        },
+        {
+          "id": 60,
+          "title": "School bus route and stop changes",
+          "score": 0.5724000213157671
+        },
+        {
+          "id": 72,
+          "title": "Local amateur sports league",
+          "score": 0.57111711241656
+        },
+        {
+          "id": 43,
+          "title": "Childcare services availability (slots/hours)",
+          "score": 0.5696923337693819
+        },
+        {
+          "id": 58,
+          "title": "School grading policy change",
+          "score": 0.5688959122993092
+        },
+        {
+          "id": 73,
+          "title": "Cultural workshop for children",
+          "score": 0.568292195868095
+        },
+        {
+          "id": 42,
+          "title": "Vaccination / screening campaign",
+          "score": 0.5648053515292133
+        },
+        {
+          "id": 40,
+          "title": "Local waste collection schedule changes",
+          "score": 0.5643912157709935
+        },
+        {
+          "id": 59,
+          "title": "School cafeteria menu and nutrition",
+          "score": 0.5643305537210556
+        },
+        {
+          "id": 74,
+          "title": "Neighborhood watch group formation",
+          "score": 0.5634862351553579
+        },
+        {
+          "id": 78,
+          "title": "Religious noise/visibility regulation in district",
+          "score": 0.5618073608125117
+        },
+        {
+          "id": 81,
+          "title": "NGO volunteer onboarding rules",
+          "score": 0.5577887026375069
+        },
+        {
+          "id": 100,
+          "title": "Online fraud / scam warning system settings for local community",
+          "score": 0.5544162486462176
+        },
+        {
+          "id": 12,
+          "title": "Building pet rules (allow/restrict pets)",
+          "score": 0.554208363826786
+        },
+        {
+          "id": 20,
+          "title": "Emergency evacuation plan for building",
+          "score": 0.5515331769985706
+        },
+        {
+          "id": 63,
+          "title": "Local youth club hours and activities",
+          "score": 0.5514102822994899
+        },
+        {
+          "id": 27,
+          "title": "Construction noise from roadworks",
+          "score": 0.5509676507668788
+        },
+        {
+          "id": 67,
+          "title": "Vocational training center opening/closure",
+          "score": 0.5509412011862669
+        },
+        {
+          "id": 29,
+          "title": "Water supply disruption in blocks",
+          "score": 0.5507042074033428
+        },
+        {
+          "id": 62,
+          "title": "Teacher\u0432\u0402\u201cparent communication platform rules",
+          "score": 0.5506368874790701
+        },
+        {
+          "id": 98,
+          "title": "Zoning / building permit for new development",
+          "score": 0.5498713406236261
+        },
+        {
+          "id": 99,
+          "title": "Data privacy policy of a widely used local app",
+          "score": 0.5482684111492748
+        },
+        {
+          "id": 84,
+          "title": "Local cultural heritage preservation initiative",
+          "score": 0.5478491689527375
+        },
+        {
+          "id": 97,
+          "title": "City budget participatory allocation",
+          "score": 0.5469694988126196
+        },
+        {
+          "id": 92,
+          "title": "Local online community group moderation rules",
+          "score": 0.5462733650211317
+        },
+        {
+          "id": 23,
+          "title": "New bike lane on major street",
+          "score": 0.545511918405235
+        },
+        {
+          "id": 50,
+          "title": "Neighborhood support network for emergencies",
+          "score": 0.5451995511398184
+        },
+        {
+          "id": 86,
+          "title": "On\u0432\u0402\u2018site shift scheduling change (offline workers)",
+          "score": 0.545006204796653
+        },
+        {
+          "id": 14,
+          "title": "Shared laundry room usage rules",
+          "score": 0.5448328073117616
+        },
+        {
+          "id": 22,
+          "title": "Crosswalk / traffic light timing",
+          "score": 0.5429969819362721
+        },
+        {
+          "id": 34,
+          "title": "Parking regulation on busy street",
+          "score": 0.5428130772130553
+        },
+        {
+          "id": 87,
+          "title": "Remote work policy change (mandatory office days)",
+          "score": 0.5427616095735964
+        },
+        {
+          "id": 9,
+          "title": "Internal noise from neighbor at night",
+          "score": 0.5425898934090616
+        },
+        {
+          "id": 94,
+          "title": "Neighborhood digital platform onboarding/invite rules",
+          "score": 0.5424342626599967
+        },
+        {
+          "id": 52,
+          "title": "Neighborhood mutual aid group rules",
+          "score": 0.5417639053318282
+        },
+        {
+          "id": 49,
+          "title": "Homeless shelter capacity and admission rules",
+          "score": 0.541556999486093
+        },
+        {
+          "id": 61,
+          "title": "After\u0432\u0402\u2018school program availability",
+          "score": 0.5411841623766878
+        },
+        {
+          "id": 15,
+          "title": "Storage lockers allocation / pricing",
+          "score": 0.5402745361268461
+        },
+        {
+          "id": 55,
+          "title": "Pandemic local restrictions (mask rules in district)",
+          "score": 0.5395805932853251
+        },
+        {
+          "id": 31,
+          "title": "Internet outage for local ISP segment",
+          "score": 0.5392069597194403
+        },
+        {
+          "id": 45,
+          "title": "Pharmacy medication stock/outage",
+          "score": 0.5378893323580343
+        },
+        {
+          "id": 96,
+          "title": "Local policy debate (e.g., nightlife regulation)",
+          "score": 0.5374121113987969
+        },
+        {
+          "id": 83,
+          "title": "Local LGBTQ+ support group rules",
+          "score": 0.5372829606812082
+        },
+        {
+          "id": 11,
+          "title": "Tenant\u0432\u0402\u201clandlord policy change (late fees)",
+          "score": 0.5366822626740617
+        },
+        {
+          "id": 16,
+          "title": "Moving rules (elevator booking, hours)",
+          "score": 0.5358131347765852
+        },
+        {
+          "id": 19,
+          "title": "Smoking policy in shared areas",
+          "score": 0.5355736128625659
+        },
+        {
+          "id": 64,
+          "title": "Scholarship allocation criteria at local school",
+          "score": 0.5352443757457541
+        },
+        {
+          "id": 37,
+          "title": "Bike parking racks near station",
+          "score": 0.5350625983491337
+        },
+        {
+          "id": 44,
+          "title": "Elderly day\u0432\u0402\u2018care / respite services",
+          "score": 0.5349565331718826
+        },
+        {
+          "id": 57,
+          "title": "School timetable / homework load",
+          "score": 0.5344400851864458
+        },
+        {
+          "id": 71,
+          "title": "Neighborhood community festival",
+          "score": 0.5344188467993533
+        },
+        {
+          "id": 88,
+          "title": "Gig platform local minimum rate policy",
+          "score": 0.5332569871173751
+        },
+        {
+          "id": 65,
+          "title": "University course curriculum change",
+          "score": 0.5325914189481604
+        },
+        {
+          "id": 41,
+          "title": "Local clinic opening hours",
+          "score": 0.5320761023411797
+        },
+        {
+          "id": 68,
+          "title": "Local internship placement program rules",
+          "score": 0.5315870669040752
+        },
+        {
+          "id": 76,
+          "title": "Local street market/bazaar",
+          "score": 0.5308379966647104
+        },
+        {
+          "id": 95,
+          "title": "Local election procedure (polling places, voter roll)",
+          "score": 0.530622830486361
+        },
+        {
+          "id": 93,
+          "title": "Online political discussion space rules",
+          "score": 0.5289233471437006
+        },
+        {
+          "id": 82,
+          "title": "Community choir / arts group organization",
+          "score": 0.5284853298981037
+        },
+        {
+          "id": 48,
+          "title": "Food bank operating days and rules",
+          "score": 0.5279102566888321
+        },
+        {
+          "id": 79,
+          "title": "Local charity food drive",
+          "score": 0.5245117292888928
+        },
+        {
+          "id": 90,
+          "title": "Open\u0432\u0402\u2018source project roadmap / features",
+          "score": 0.522355037851534
+        },
+        {
+          "id": 8,
+          "title": "Residential parking allocation in building lot",
+          "score": 0.5215528323671346
+        },
+        {
+          "id": 17,
+          "title": "Guest access policy (intercom/keys)",
+          "score": 0.5210637394015527
+        },
+        {
+          "id": 53,
+          "title": "Local addiction support program (AA/NA)",
+          "score": 0.5207456857046315
+        },
+        {
+          "id": 89,
+          "title": "Open\u0432\u0402\u2018source project contribution rules",
+          "score": 0.5198442608811984
+        },
+        {
+          "id": 46,
+          "title": "Mental health drop\u0432\u0402\u2018in center hours",
+          "score": 0.5189175350908541
+        },
+        {
+          "id": 91,
+          "title": "Platform rules for ISR\u0432\u0402\u2018enabled digital community",
+          "score": 0.5166539387257568
+        },
+        {
+          "id": 38,
+          "title": "Car\u0432\u0402\u2018free day on city center streets",
+          "score": 0.5165947475378367
+        },
+        {
+          "id": 80,
+          "title": "Online donation campaign rules (global)",
+          "score": 0.514321712234921
+        },
+        {
+          "id": 66,
+          "title": "University exam schedule and format",
+          "score": 0.5101225739938835
+        },
+        {
+          "id": 85,
+          "title": "City\u0432\u0402\u2018wide cultural festival governance (who participates)",
+          "score": 0.5069384074220756
+        }
+      ],
+      "selected_count": 1,
+      "outcome": "candidate_pass_pending_context",
+      "largest_internal_gap": 0,
+      "sensitivity": [
+        {
+          "gap": 0.05,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.02,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.01,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.005,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.002,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.001,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.5,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.7,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "scenario": "D1-04",
+      "title": "Establishment of a Neighbourhood Respite Care Hub",
+      "issue_text_sha256": "9011e13284c5c050d24af39e2dbc2eebd9dfcaac25c47e6f5bd2fbe15848e628",
+      "model": "gemini-embedding-001",
+      "dims": 768,
+      "task_type": "RETRIEVAL_QUERY",
+      "template_version": "t1",
+      "ranking": [
+        {
+          "id": 44,
+          "title": "Elderly day\u0432\u0402\u2018care / respite services",
+          "score": 0.7324204956036919
+        },
+        {
+          "id": 77,
+          "title": "Religious service schedule/facility change",
+          "score": 0.6777193709018727
+        },
+        {
+          "id": 50,
+          "title": "Neighborhood support network for emergencies",
+          "score": 0.6743577725844266
+        },
+        {
+          "id": 52,
+          "title": "Neighborhood mutual aid group rules",
+          "score": 0.6584723696021411
+        },
+        {
+          "id": 81,
+          "title": "NGO volunteer onboarding rules",
+          "score": 0.6565305770401768
+        },
+        {
+          "id": 74,
+          "title": "Neighborhood watch group formation",
+          "score": 0.6508382640115749
+        },
+        {
+          "id": 47,
+          "title": "Local disability access improvements (ramps, lifts)",
+          "score": 0.649499750967801
+        },
+        {
+          "id": 54,
+          "title": "Heatwave emergency plan for vulnerable residents",
+          "score": 0.6461522337426536
+        },
+        {
+          "id": 39,
+          "title": "New pedestrian zone design",
+          "score": 0.6427719009612344
+        },
+        {
+          "id": 79,
+          "title": "Local charity food drive",
+          "score": 0.6416577448655574
+        },
+        {
+          "id": 84,
+          "title": "Local cultural heritage preservation initiative",
+          "score": 0.6415939985273468
+        },
+        {
+          "id": 10,
+          "title": "Scheduling noisy renovations in flats",
+          "score": 0.641396381431008
+        },
+        {
+          "id": 43,
+          "title": "Childcare services availability (slots/hours)",
+          "score": 0.64027696392842
+        },
+        {
+          "id": 82,
+          "title": "Community choir / arts group organization",
+          "score": 0.6401000730438853
+        },
+        {
+          "id": 46,
+          "title": "Mental health drop\u0432\u0402\u2018in center hours",
+          "score": 0.6398053999452774
+        },
+        {
+          "id": 51,
+          "title": "Family emergency affecting submitter\u0432\u0402\u2122s close relatives",
+          "score": 0.6383053021718844
+        },
+        {
+          "id": 48,
+          "title": "Food bank operating days and rules",
+          "score": 0.6303491374290442
+        },
+        {
+          "id": 53,
+          "title": "Local addiction support program (AA/NA)",
+          "score": 0.6294246815075926
+        },
+        {
+          "id": 63,
+          "title": "Local youth club hours and activities",
+          "score": 0.6272370712105485
+        },
+        {
+          "id": 70,
+          "title": "Local library youth section rules/events",
+          "score": 0.6268763768951194
+        },
+        {
+          "id": 72,
+          "title": "Local amateur sports league",
+          "score": 0.6254964581165294
+        },
+        {
+          "id": 98,
+          "title": "Zoning / building permit for new development",
+          "score": 0.6252729036613728
+        },
+        {
+          "id": 49,
+          "title": "Homeless shelter capacity and admission rules",
+          "score": 0.6231123123480796
+        },
+        {
+          "id": 35,
+          "title": "Public toilet installation / closure",
+          "score": 0.6219342421954109
+        },
+        {
+          "id": 71,
+          "title": "Neighborhood community festival",
+          "score": 0.6213403589016286
+        },
+        {
+          "id": 14,
+          "title": "Shared laundry room usage rules",
+          "score": 0.620672346263585
+        },
+        {
+          "id": 83,
+          "title": "Local LGBTQ+ support group rules",
+          "score": 0.6175193640454296
+        },
+        {
+          "id": 69,
+          "title": "Youth sports league safety rules",
+          "score": 0.6166394896436349
+        },
+        {
+          "id": 94,
+          "title": "Neighborhood digital platform onboarding/invite rules",
+          "score": 0.6147453609776397
+        },
+        {
+          "id": 73,
+          "title": "Cultural workshop for children",
+          "score": 0.6146484204858655
+        },
+        {
+          "id": 86,
+          "title": "On\u0432\u0402\u2018site shift scheduling change (offline workers)",
+          "score": 0.6140797250297085
+        },
+        {
+          "id": 67,
+          "title": "Vocational training center opening/closure",
+          "score": 0.6135912762008048
+        },
+        {
+          "id": 11,
+          "title": "Tenant\u0432\u0402\u201clandlord policy change (late fees)",
+          "score": 0.6115013579921748
+        },
+        {
+          "id": 15,
+          "title": "Storage lockers allocation / pricing",
+          "score": 0.6113965463728918
+        },
+        {
+          "id": 75,
+          "title": "Public art installation/mural",
+          "score": 0.6109722009408831
+        },
+        {
+          "id": 12,
+          "title": "Building pet rules (allow/restrict pets)",
+          "score": 0.610592102945348
+        },
+        {
+          "id": 58,
+          "title": "School grading policy change",
+          "score": 0.6075989749799721
+        },
+        {
+          "id": 78,
+          "title": "Religious noise/visibility regulation in district",
+          "score": 0.6062874822961287
+        },
+        {
+          "id": 41,
+          "title": "Local clinic opening hours",
+          "score": 0.6059332059314559
+        },
+        {
+          "id": 42,
+          "title": "Vaccination / screening campaign",
+          "score": 0.6042390681129877
+        },
+        {
+          "id": 40,
+          "title": "Local waste collection schedule changes",
+          "score": 0.6041416465301098
+        },
+        {
+          "id": 60,
+          "title": "School bus route and stop changes",
+          "score": 0.6032832001330647
+        },
+        {
+          "id": 87,
+          "title": "Remote work policy change (mandatory office days)",
+          "score": 0.6029521919732749
+        },
+        {
+          "id": 96,
+          "title": "Local policy debate (e.g., nightlife regulation)",
+          "score": 0.6029009048390075
+        },
+        {
+          "id": 18,
+          "title": "Balcony safety and renovation rules",
+          "score": 0.6022359901183056
+        },
+        {
+          "id": 24,
+          "title": "Bus route change / stop removal",
+          "score": 0.6012097601328044
+        },
+        {
+          "id": 92,
+          "title": "Local online community group moderation rules",
+          "score": 0.5999143867110258
+        },
+        {
+          "id": 33,
+          "title": "Speed limit / traffic calming on street",
+          "score": 0.5988561965798437
+        },
+        {
+          "id": 59,
+          "title": "School cafeteria menu and nutrition",
+          "score": 0.5985049515400767
+        },
+        {
+          "id": 61,
+          "title": "After\u0432\u0402\u2018school program availability",
+          "score": 0.5969132805949269
+        },
+        {
+          "id": 20,
+          "title": "Emergency evacuation plan for building",
+          "score": 0.5962394576832238
+        },
+        {
+          "id": 8,
+          "title": "Residential parking allocation in building lot",
+          "score": 0.5961711184369096
+        },
+        {
+          "id": 88,
+          "title": "Gig platform local minimum rate policy",
+          "score": 0.5952802465094429
+        },
+        {
+          "id": 56,
+          "title": "School safety incident requiring parental decision",
+          "score": 0.595029226570836
+        },
+        {
+          "id": 13,
+          "title": "Rooftop access and safety rules",
+          "score": 0.5943749958853908
+        },
+        {
+          "id": 76,
+          "title": "Local street market/bazaar",
+          "score": 0.5934150740324846
+        },
+        {
+          "id": 64,
+          "title": "Scholarship allocation criteria at local school",
+          "score": 0.5933610458974289
+        },
+        {
+          "id": 95,
+          "title": "Local election procedure (polling places, voter roll)",
+          "score": 0.5929489901786166
+        },
+        {
+          "id": 2,
+          "title": "Elevator outage in apartment building",
+          "score": 0.5922754016710147
+        },
+        {
+          "id": 99,
+          "title": "Data privacy policy of a widely used local app",
+          "score": 0.5916662834227006
+        },
+        {
+          "id": 55,
+          "title": "Pandemic local restrictions (mask rules in district)",
+          "score": 0.5909090284029885
+        },
+        {
+          "id": 19,
+          "title": "Smoking policy in shared areas",
+          "score": 0.590653626900339
+        },
+        {
+          "id": 38,
+          "title": "Car\u0432\u0402\u2018free day on city center streets",
+          "score": 0.5898409643596927
+        },
+        {
+          "id": 34,
+          "title": "Parking regulation on busy street",
+          "score": 0.5896714269392401
+        },
+        {
+          "id": 100,
+          "title": "Online fraud / scam warning system settings for local community",
+          "score": 0.5893658890122138
+        },
+        {
+          "id": 57,
+          "title": "School timetable / homework load",
+          "score": 0.5886820110003943
+        },
+        {
+          "id": 17,
+          "title": "Guest access policy (intercom/keys)",
+          "score": 0.5877931364333419
+        },
+        {
+          "id": 36,
+          "title": "Bridge or underpass safety (lighting, CCTV)",
+          "score": 0.5869836790660778
+        },
+        {
+          "id": 16,
+          "title": "Moving rules (elevator booking, hours)",
+          "score": 0.586158087643617
+        },
+        {
+          "id": 90,
+          "title": "Open\u0432\u0402\u2018source project roadmap / features",
+          "score": 0.5844911291549527
+        },
+        {
+          "id": 30,
+          "title": "Repeated electricity outages neighborhood",
+          "score": 0.5841003064463425
+        },
+        {
+          "id": 9,
+          "title": "Internal noise from neighbor at night",
+          "score": 0.5836063229011452
+        },
+        {
+          "id": 7,
+          "title": "Trash overflow in shared bins",
+          "score": 0.5823806193642327
+        },
+        {
+          "id": 4,
+          "title": "Water leak in shared basement",
+          "score": 0.5816496838619378
+        },
+        {
+          "id": 23,
+          "title": "New bike lane on major street",
+          "score": 0.5815653421346356
+        },
+        {
+          "id": 97,
+          "title": "City budget participatory allocation",
+          "score": 0.5810644860199193
+        },
+        {
+          "id": 68,
+          "title": "Local internship placement program rules",
+          "score": 0.580225905773993
+        },
+        {
+          "id": 45,
+          "title": "Pharmacy medication stock/outage",
+          "score": 0.5802077208310352
+        },
+        {
+          "id": 80,
+          "title": "Online donation campaign rules (global)",
+          "score": 0.5800290788460873
+        },
+        {
+          "id": 29,
+          "title": "Water supply disruption in blocks",
+          "score": 0.5761800930129107
+        },
+        {
+          "id": 1,
+          "title": "House entrance lock broken (shared front door)",
+          "score": 0.5759974475963725
+        },
+        {
+          "id": 62,
+          "title": "Teacher\u0432\u0402\u201cparent communication platform rules",
+          "score": 0.5742659345866247
+        },
+        {
+          "id": 93,
+          "title": "Online political discussion space rules",
+          "score": 0.5728309067421125
+        },
+        {
+          "id": 85,
+          "title": "City\u0432\u0402\u2018wide cultural festival governance (who participates)",
+          "score": 0.5709386553208237
+        },
+        {
+          "id": 22,
+          "title": "Crosswalk / traffic light timing",
+          "score": 0.5708666744343737
+        },
+        {
+          "id": 89,
+          "title": "Open\u0432\u0402\u2018source project contribution rules",
+          "score": 0.5707399288418238
+        },
+        {
+          "id": 3,
+          "title": "Heating failure in entire building",
+          "score": 0.5668470530439188
+        },
+        {
+          "id": 65,
+          "title": "University course curriculum change",
+          "score": 0.5644749571755386
+        },
+        {
+          "id": 5,
+          "title": "Mold in stairwells and corridors",
+          "score": 0.5640480206867095
+        },
+        {
+          "id": 31,
+          "title": "Internet outage for local ISP segment",
+          "score": 0.5610077370798268
+        },
+        {
+          "id": 25,
+          "title": "Sidewalk snow/ice removal",
+          "score": 0.5573855619373694
+        },
+        {
+          "id": 27,
+          "title": "Construction noise from roadworks",
+          "score": 0.5559476293781527
+        },
+        {
+          "id": 6,
+          "title": "Stairwell lighting outage",
+          "score": 0.555580360058307
+        },
+        {
+          "id": 91,
+          "title": "Platform rules for ISR\u0432\u0402\u2018enabled digital community",
+          "score": 0.5540635048291728
+        },
+        {
+          "id": 37,
+          "title": "Bike parking racks near station",
+          "score": 0.5514407633455184
+        },
+        {
+          "id": 32,
+          "title": "Broken playground equipment in square",
+          "score": 0.5472651389439902
+        },
+        {
+          "id": 26,
+          "title": "Street lighting outage on segment",
+          "score": 0.5416728371967475
+        },
+        {
+          "id": 66,
+          "title": "University exam schedule and format",
+          "score": 0.5373633871134273
+        },
+        {
+          "id": 28,
+          "title": "Illegal dumping / roadside trash spot",
+          "score": 0.5313002436872679
+        },
+        {
+          "id": 21,
+          "title": "Pothole on local street",
+          "score": 0.5294396305931102
+        }
+      ],
+      "selected_count": 1,
+      "outcome": "candidate_pass_pending_context",
+      "largest_internal_gap": 0,
+      "sensitivity": [
+        {
+          "gap": 0.05,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.02,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.01,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.005,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.002,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.001,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.5,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.7,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "scenario": "D1-05",
+      "title": "Adjustment of On-site Shift Scheduling at Argo Industry",
+      "issue_text_sha256": "9bd322856b0d74bd19d342dded11611852dab6c44528c546bb39b9380082828b",
+      "model": "gemini-embedding-001",
+      "dims": 768,
+      "task_type": "RETRIEVAL_QUERY",
+      "template_version": "t1",
+      "ranking": [
+        {
+          "id": 86,
+          "title": "On\u0432\u0402\u2018site shift scheduling change (offline workers)",
+          "score": 0.7384250805278509
+        },
+        {
+          "id": 77,
+          "title": "Religious service schedule/facility change",
+          "score": 0.6810381362816541
+        },
+        {
+          "id": 87,
+          "title": "Remote work policy change (mandatory office days)",
+          "score": 0.6559466077889505
+        },
+        {
+          "id": 10,
+          "title": "Scheduling noisy renovations in flats",
+          "score": 0.6493838401816067
+        },
+        {
+          "id": 88,
+          "title": "Gig platform local minimum rate policy",
+          "score": 0.6425142218493589
+        },
+        {
+          "id": 60,
+          "title": "School bus route and stop changes",
+          "score": 0.6373898073732528
+        },
+        {
+          "id": 58,
+          "title": "School grading policy change",
+          "score": 0.6274165452049849
+        },
+        {
+          "id": 96,
+          "title": "Local policy debate (e.g., nightlife regulation)",
+          "score": 0.6265018085868493
+        },
+        {
+          "id": 57,
+          "title": "School timetable / homework load",
+          "score": 0.6259367369419907
+        },
+        {
+          "id": 11,
+          "title": "Tenant\u0432\u0402\u201clandlord policy change (late fees)",
+          "score": 0.6248644189560546
+        },
+        {
+          "id": 56,
+          "title": "School safety incident requiring parental decision",
+          "score": 0.6205599194104718
+        },
+        {
+          "id": 92,
+          "title": "Local online community group moderation rules",
+          "score": 0.6147793307215675
+        },
+        {
+          "id": 52,
+          "title": "Neighborhood mutual aid group rules",
+          "score": 0.6132927190153944
+        },
+        {
+          "id": 68,
+          "title": "Local internship placement program rules",
+          "score": 0.6115602173205164
+        },
+        {
+          "id": 40,
+          "title": "Local waste collection schedule changes",
+          "score": 0.6112702154306978
+        },
+        {
+          "id": 67,
+          "title": "Vocational training center opening/closure",
+          "score": 0.6109607126649176
+        },
+        {
+          "id": 74,
+          "title": "Neighborhood watch group formation",
+          "score": 0.6102810084459177
+        },
+        {
+          "id": 14,
+          "title": "Shared laundry room usage rules",
+          "score": 0.6092418754003737
+        },
+        {
+          "id": 64,
+          "title": "Scholarship allocation criteria at local school",
+          "score": 0.6088094487003534
+        },
+        {
+          "id": 62,
+          "title": "Teacher\u0432\u0402\u201cparent communication platform rules",
+          "score": 0.6085366527242443
+        },
+        {
+          "id": 83,
+          "title": "Local LGBTQ+ support group rules",
+          "score": 0.6078375827506287
+        },
+        {
+          "id": 24,
+          "title": "Bus route change / stop removal",
+          "score": 0.6074004956298272
+        },
+        {
+          "id": 51,
+          "title": "Family emergency affecting submitter\u0432\u0402\u2122s close relatives",
+          "score": 0.6068982116461371
+        },
+        {
+          "id": 81,
+          "title": "NGO volunteer onboarding rules",
+          "score": 0.6063178935900005
+        },
+        {
+          "id": 65,
+          "title": "University course curriculum change",
+          "score": 0.6038533431086301
+        },
+        {
+          "id": 47,
+          "title": "Local disability access improvements (ramps, lifts)",
+          "score": 0.6021269790413435
+        },
+        {
+          "id": 9,
+          "title": "Internal noise from neighbor at night",
+          "score": 0.6003109661232398
+        },
+        {
+          "id": 95,
+          "title": "Local election procedure (polling places, voter roll)",
+          "score": 0.5995052786054936
+        },
+        {
+          "id": 78,
+          "title": "Religious noise/visibility regulation in district",
+          "score": 0.5985640904363159
+        },
+        {
+          "id": 93,
+          "title": "Online political discussion space rules",
+          "score": 0.5963104980062116
+        },
+        {
+          "id": 99,
+          "title": "Data privacy policy of a widely used local app",
+          "score": 0.5953166773341144
+        },
+        {
+          "id": 20,
+          "title": "Emergency evacuation plan for building",
+          "score": 0.5952406982903046
+        },
+        {
+          "id": 35,
+          "title": "Public toilet installation / closure",
+          "score": 0.5951323851379725
+        },
+        {
+          "id": 16,
+          "title": "Moving rules (elevator booking, hours)",
+          "score": 0.5941610932501151
+        },
+        {
+          "id": 54,
+          "title": "Heatwave emergency plan for vulnerable residents",
+          "score": 0.5940885228615457
+        },
+        {
+          "id": 22,
+          "title": "Crosswalk / traffic light timing",
+          "score": 0.5938982524409657
+        },
+        {
+          "id": 39,
+          "title": "New pedestrian zone design",
+          "score": 0.5938079730862383
+        },
+        {
+          "id": 82,
+          "title": "Community choir / arts group organization",
+          "score": 0.5937035651837053
+        },
+        {
+          "id": 97,
+          "title": "City budget participatory allocation",
+          "score": 0.5934031151792302
+        },
+        {
+          "id": 15,
+          "title": "Storage lockers allocation / pricing",
+          "score": 0.5933293832362118
+        },
+        {
+          "id": 36,
+          "title": "Bridge or underpass safety (lighting, CCTV)",
+          "score": 0.592898436813972
+        },
+        {
+          "id": 46,
+          "title": "Mental health drop\u0432\u0402\u2018in center hours",
+          "score": 0.5920564638039398
+        },
+        {
+          "id": 50,
+          "title": "Neighborhood support network for emergencies",
+          "score": 0.5904864322148435
+        },
+        {
+          "id": 41,
+          "title": "Local clinic opening hours",
+          "score": 0.5896363579288099
+        },
+        {
+          "id": 63,
+          "title": "Local youth club hours and activities",
+          "score": 0.5895945685934793
+        },
+        {
+          "id": 49,
+          "title": "Homeless shelter capacity and admission rules",
+          "score": 0.5895316800623448
+        },
+        {
+          "id": 4,
+          "title": "Water leak in shared basement",
+          "score": 0.5890483978231165
+        },
+        {
+          "id": 98,
+          "title": "Zoning / building permit for new development",
+          "score": 0.5888926765155663
+        },
+        {
+          "id": 94,
+          "title": "Neighborhood digital platform onboarding/invite rules",
+          "score": 0.5882853910159018
+        },
+        {
+          "id": 90,
+          "title": "Open\u0432\u0402\u2018source project roadmap / features",
+          "score": 0.5872933378593386
+        },
+        {
+          "id": 84,
+          "title": "Local cultural heritage preservation initiative",
+          "score": 0.5868096309782191
+        },
+        {
+          "id": 59,
+          "title": "School cafeteria menu and nutrition",
+          "score": 0.5859579593873234
+        },
+        {
+          "id": 69,
+          "title": "Youth sports league safety rules",
+          "score": 0.5849886174656932
+        },
+        {
+          "id": 33,
+          "title": "Speed limit / traffic calming on street",
+          "score": 0.5849202505682201
+        },
+        {
+          "id": 12,
+          "title": "Building pet rules (allow/restrict pets)",
+          "score": 0.5845173955736914
+        },
+        {
+          "id": 48,
+          "title": "Food bank operating days and rules",
+          "score": 0.581546040474011
+        },
+        {
+          "id": 23,
+          "title": "New bike lane on major street",
+          "score": 0.5814539808746738
+        },
+        {
+          "id": 8,
+          "title": "Residential parking allocation in building lot",
+          "score": 0.5807110889184434
+        },
+        {
+          "id": 43,
+          "title": "Childcare services availability (slots/hours)",
+          "score": 0.5792385983243736
+        },
+        {
+          "id": 66,
+          "title": "University exam schedule and format",
+          "score": 0.578710355653705
+        },
+        {
+          "id": 89,
+          "title": "Open\u0432\u0402\u2018source project contribution rules",
+          "score": 0.5782819883669416
+        },
+        {
+          "id": 100,
+          "title": "Online fraud / scam warning system settings for local community",
+          "score": 0.5778524831204493
+        },
+        {
+          "id": 91,
+          "title": "Platform rules for ISR\u0432\u0402\u2018enabled digital community",
+          "score": 0.5771486903307339
+        },
+        {
+          "id": 70,
+          "title": "Local library youth section rules/events",
+          "score": 0.5767087104148477
+        },
+        {
+          "id": 55,
+          "title": "Pandemic local restrictions (mask rules in district)",
+          "score": 0.5765905560228219
+        },
+        {
+          "id": 75,
+          "title": "Public art installation/mural",
+          "score": 0.5761037552430942
+        },
+        {
+          "id": 71,
+          "title": "Neighborhood community festival",
+          "score": 0.5759191218744082
+        },
+        {
+          "id": 29,
+          "title": "Water supply disruption in blocks",
+          "score": 0.5756494171484519
+        },
+        {
+          "id": 73,
+          "title": "Cultural workshop for children",
+          "score": 0.5755880182753714
+        },
+        {
+          "id": 53,
+          "title": "Local addiction support program (AA/NA)",
+          "score": 0.5740351948115067
+        },
+        {
+          "id": 2,
+          "title": "Elevator outage in apartment building",
+          "score": 0.5738534389707148
+        },
+        {
+          "id": 13,
+          "title": "Rooftop access and safety rules",
+          "score": 0.5738277752760562
+        },
+        {
+          "id": 1,
+          "title": "House entrance lock broken (shared front door)",
+          "score": 0.5733896477228128
+        },
+        {
+          "id": 34,
+          "title": "Parking regulation on busy street",
+          "score": 0.5727152443080988
+        },
+        {
+          "id": 19,
+          "title": "Smoking policy in shared areas",
+          "score": 0.571079495124859
+        },
+        {
+          "id": 30,
+          "title": "Repeated electricity outages neighborhood",
+          "score": 0.5696914761126048
+        },
+        {
+          "id": 42,
+          "title": "Vaccination / screening campaign",
+          "score": 0.5695441522857024
+        },
+        {
+          "id": 44,
+          "title": "Elderly day\u0432\u0402\u2018care / respite services",
+          "score": 0.5684757034262734
+        },
+        {
+          "id": 85,
+          "title": "City\u0432\u0402\u2018wide cultural festival governance (who participates)",
+          "score": 0.5683468870932007
+        },
+        {
+          "id": 5,
+          "title": "Mold in stairwells and corridors",
+          "score": 0.568259293037309
+        },
+        {
+          "id": 6,
+          "title": "Stairwell lighting outage",
+          "score": 0.5681110593005363
+        },
+        {
+          "id": 7,
+          "title": "Trash overflow in shared bins",
+          "score": 0.5674220149595548
+        },
+        {
+          "id": 72,
+          "title": "Local amateur sports league",
+          "score": 0.5667282182807974
+        },
+        {
+          "id": 27,
+          "title": "Construction noise from roadworks",
+          "score": 0.5664474404351532
+        },
+        {
+          "id": 45,
+          "title": "Pharmacy medication stock/outage",
+          "score": 0.5664407905076662
+        },
+        {
+          "id": 79,
+          "title": "Local charity food drive",
+          "score": 0.5660068773478089
+        },
+        {
+          "id": 61,
+          "title": "After\u0432\u0402\u2018school program availability",
+          "score": 0.5653923259232851
+        },
+        {
+          "id": 17,
+          "title": "Guest access policy (intercom/keys)",
+          "score": 0.565022109393873
+        },
+        {
+          "id": 3,
+          "title": "Heating failure in entire building",
+          "score": 0.5625634247424297
+        },
+        {
+          "id": 76,
+          "title": "Local street market/bazaar",
+          "score": 0.5597536068482001
+        },
+        {
+          "id": 31,
+          "title": "Internet outage for local ISP segment",
+          "score": 0.5545425475667459
+        },
+        {
+          "id": 38,
+          "title": "Car\u0432\u0402\u2018free day on city center streets",
+          "score": 0.5520381476877074
+        },
+        {
+          "id": 25,
+          "title": "Sidewalk snow/ice removal",
+          "score": 0.549941977084855
+        },
+        {
+          "id": 80,
+          "title": "Online donation campaign rules (global)",
+          "score": 0.5474066548619476
+        },
+        {
+          "id": 37,
+          "title": "Bike parking racks near station",
+          "score": 0.5411140894391397
+        },
+        {
+          "id": 18,
+          "title": "Balcony safety and renovation rules",
+          "score": 0.5358713583270337
+        },
+        {
+          "id": 26,
+          "title": "Street lighting outage on segment",
+          "score": 0.5319894120005776
+        },
+        {
+          "id": 21,
+          "title": "Pothole on local street",
+          "score": 0.5126406127193183
+        },
+        {
+          "id": 32,
+          "title": "Broken playground equipment in square",
+          "score": 0.507351779729875
+        },
+        {
+          "id": 28,
+          "title": "Illegal dumping / roadside trash spot",
+          "score": 0.4853375897768145
+        }
+      ],
+      "selected_count": 1,
+      "outcome": "candidate_pass_pending_context",
+      "largest_internal_gap": 0,
+      "sensitivity": [
+        {
+          "gap": 0.05,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.02,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.01,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.005,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.002,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.001,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.5,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.7,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "scenario": "D1-06",
+      "title": "Community Choir Rehearsal Space Shortage",
+      "issue_text_sha256": "dd210fe83e432e4c1975811e54950cef0d7ba2b93472f4bdad3f8fe52db87bcc",
+      "model": "gemini-embedding-001",
+      "dims": 768,
+      "task_type": "RETRIEVAL_QUERY",
+      "template_version": "t1",
+      "ranking": [
+        {
+          "id": 82,
+          "title": "Community choir / arts group organization",
+          "score": 0.7382615118901524
+        },
+        {
+          "id": 77,
+          "title": "Religious service schedule/facility change",
+          "score": 0.6782496634965282
+        },
+        {
+          "id": 10,
+          "title": "Scheduling noisy renovations in flats",
+          "score": 0.6405742477729539
+        },
+        {
+          "id": 51,
+          "title": "Family emergency affecting submitter\u0432\u0402\u2122s close relatives",
+          "score": 0.6375077741458517
+        },
+        {
+          "id": 78,
+          "title": "Religious noise/visibility regulation in district",
+          "score": 0.6352300266414358
+        },
+        {
+          "id": 71,
+          "title": "Neighborhood community festival",
+          "score": 0.6345619457858142
+        },
+        {
+          "id": 75,
+          "title": "Public art installation/mural",
+          "score": 0.631547011042466
+        },
+        {
+          "id": 47,
+          "title": "Local disability access improvements (ramps, lifts)",
+          "score": 0.6281895784922156
+        },
+        {
+          "id": 74,
+          "title": "Neighborhood watch group formation",
+          "score": 0.6275503283791891
+        },
+        {
+          "id": 73,
+          "title": "Cultural workshop for children",
+          "score": 0.6266962255539261
+        },
+        {
+          "id": 96,
+          "title": "Local policy debate (e.g., nightlife regulation)",
+          "score": 0.6261835560918629
+        },
+        {
+          "id": 98,
+          "title": "Zoning / building permit for new development",
+          "score": 0.625336854476755
+        },
+        {
+          "id": 15,
+          "title": "Storage lockers allocation / pricing",
+          "score": 0.622709046503267
+        },
+        {
+          "id": 43,
+          "title": "Childcare services availability (slots/hours)",
+          "score": 0.6213176086970827
+        },
+        {
+          "id": 24,
+          "title": "Bus route change / stop removal",
+          "score": 0.6186752535536336
+        },
+        {
+          "id": 79,
+          "title": "Local charity food drive",
+          "score": 0.6175551265839495
+        },
+        {
+          "id": 35,
+          "title": "Public toilet installation / closure",
+          "score": 0.6174081564423126
+        },
+        {
+          "id": 61,
+          "title": "After\u0432\u0402\u2018school program availability",
+          "score": 0.6158863318120568
+        },
+        {
+          "id": 63,
+          "title": "Local youth club hours and activities",
+          "score": 0.6155259415691117
+        },
+        {
+          "id": 11,
+          "title": "Tenant\u0432\u0402\u201clandlord policy change (late fees)",
+          "score": 0.6148958958255399
+        },
+        {
+          "id": 30,
+          "title": "Repeated electricity outages neighborhood",
+          "score": 0.6129333311461169
+        },
+        {
+          "id": 70,
+          "title": "Local library youth section rules/events",
+          "score": 0.611563151739674
+        },
+        {
+          "id": 84,
+          "title": "Local cultural heritage preservation initiative",
+          "score": 0.6103119395008523
+        },
+        {
+          "id": 39,
+          "title": "New pedestrian zone design",
+          "score": 0.6091800121941501
+        },
+        {
+          "id": 50,
+          "title": "Neighborhood support network for emergencies",
+          "score": 0.6091191138415153
+        },
+        {
+          "id": 64,
+          "title": "Scholarship allocation criteria at local school",
+          "score": 0.6082252486043956
+        },
+        {
+          "id": 52,
+          "title": "Neighborhood mutual aid group rules",
+          "score": 0.6077896678780411
+        },
+        {
+          "id": 54,
+          "title": "Heatwave emergency plan for vulnerable residents",
+          "score": 0.6074841603207011
+        },
+        {
+          "id": 45,
+          "title": "Pharmacy medication stock/outage",
+          "score": 0.6074016104390932
+        },
+        {
+          "id": 53,
+          "title": "Local addiction support program (AA/NA)",
+          "score": 0.6071150333562978
+        },
+        {
+          "id": 44,
+          "title": "Elderly day\u0432\u0402\u2018care / respite services",
+          "score": 0.6063820328831596
+        },
+        {
+          "id": 9,
+          "title": "Internal noise from neighbor at night",
+          "score": 0.6063259131722936
+        },
+        {
+          "id": 41,
+          "title": "Local clinic opening hours",
+          "score": 0.6051090495765853
+        },
+        {
+          "id": 46,
+          "title": "Mental health drop\u0432\u0402\u2018in center hours",
+          "score": 0.604389371660608
+        },
+        {
+          "id": 67,
+          "title": "Vocational training center opening/closure",
+          "score": 0.6040928018094497
+        },
+        {
+          "id": 48,
+          "title": "Food bank operating days and rules",
+          "score": 0.6040897479999031
+        },
+        {
+          "id": 49,
+          "title": "Homeless shelter capacity and admission rules",
+          "score": 0.6040108406548393
+        },
+        {
+          "id": 56,
+          "title": "School safety incident requiring parental decision",
+          "score": 0.6029172402142946
+        },
+        {
+          "id": 86,
+          "title": "On\u0432\u0402\u2018site shift scheduling change (offline workers)",
+          "score": 0.6025404428315059
+        },
+        {
+          "id": 3,
+          "title": "Heating failure in entire building",
+          "score": 0.602539724533376
+        },
+        {
+          "id": 7,
+          "title": "Trash overflow in shared bins",
+          "score": 0.6006680991986671
+        },
+        {
+          "id": 34,
+          "title": "Parking regulation on busy street",
+          "score": 0.5996784898138894
+        },
+        {
+          "id": 72,
+          "title": "Local amateur sports league",
+          "score": 0.5994611973424645
+        },
+        {
+          "id": 60,
+          "title": "School bus route and stop changes",
+          "score": 0.599354596622933
+        },
+        {
+          "id": 8,
+          "title": "Residential parking allocation in building lot",
+          "score": 0.5992206457146171
+        },
+        {
+          "id": 83,
+          "title": "Local LGBTQ+ support group rules",
+          "score": 0.5991727769663215
+        },
+        {
+          "id": 58,
+          "title": "School grading policy change",
+          "score": 0.599058212760766
+        },
+        {
+          "id": 85,
+          "title": "City\u0432\u0402\u2018wide cultural festival governance (who participates)",
+          "score": 0.5990550414972051
+        },
+        {
+          "id": 36,
+          "title": "Bridge or underpass safety (lighting, CCTV)",
+          "score": 0.5983551428981517
+        },
+        {
+          "id": 92,
+          "title": "Local online community group moderation rules",
+          "score": 0.5980248202762561
+        },
+        {
+          "id": 81,
+          "title": "NGO volunteer onboarding rules",
+          "score": 0.5975770728707025
+        },
+        {
+          "id": 87,
+          "title": "Remote work policy change (mandatory office days)",
+          "score": 0.5973178484855579
+        },
+        {
+          "id": 4,
+          "title": "Water leak in shared basement",
+          "score": 0.5962501524139564
+        },
+        {
+          "id": 76,
+          "title": "Local street market/bazaar",
+          "score": 0.5957670564464267
+        },
+        {
+          "id": 40,
+          "title": "Local waste collection schedule changes",
+          "score": 0.5951388036534069
+        },
+        {
+          "id": 12,
+          "title": "Building pet rules (allow/restrict pets)",
+          "score": 0.593523171117551
+        },
+        {
+          "id": 33,
+          "title": "Speed limit / traffic calming on street",
+          "score": 0.5925356879608781
+        },
+        {
+          "id": 69,
+          "title": "Youth sports league safety rules",
+          "score": 0.5918305880886296
+        },
+        {
+          "id": 94,
+          "title": "Neighborhood digital platform onboarding/invite rules",
+          "score": 0.5917854355160095
+        },
+        {
+          "id": 88,
+          "title": "Gig platform local minimum rate policy",
+          "score": 0.5890619568537973
+        },
+        {
+          "id": 97,
+          "title": "City budget participatory allocation",
+          "score": 0.5882413580383056
+        },
+        {
+          "id": 20,
+          "title": "Emergency evacuation plan for building",
+          "score": 0.5882369157115981
+        },
+        {
+          "id": 57,
+          "title": "School timetable / homework load",
+          "score": 0.5881538385068705
+        },
+        {
+          "id": 29,
+          "title": "Water supply disruption in blocks",
+          "score": 0.5877620473788288
+        },
+        {
+          "id": 100,
+          "title": "Online fraud / scam warning system settings for local community",
+          "score": 0.5876905695245767
+        },
+        {
+          "id": 6,
+          "title": "Stairwell lighting outage",
+          "score": 0.5867762144184768
+        },
+        {
+          "id": 99,
+          "title": "Data privacy policy of a widely used local app",
+          "score": 0.5862334855821987
+        },
+        {
+          "id": 95,
+          "title": "Local election procedure (polling places, voter roll)",
+          "score": 0.5860658336356258
+        },
+        {
+          "id": 5,
+          "title": "Mold in stairwells and corridors",
+          "score": 0.5851247332743531
+        },
+        {
+          "id": 93,
+          "title": "Online political discussion space rules",
+          "score": 0.5842313181014018
+        },
+        {
+          "id": 27,
+          "title": "Construction noise from roadworks",
+          "score": 0.5835637668635243
+        },
+        {
+          "id": 23,
+          "title": "New bike lane on major street",
+          "score": 0.5831178835317331
+        },
+        {
+          "id": 55,
+          "title": "Pandemic local restrictions (mask rules in district)",
+          "score": 0.5818657291649271
+        },
+        {
+          "id": 42,
+          "title": "Vaccination / screening campaign",
+          "score": 0.5816415731798672
+        },
+        {
+          "id": 14,
+          "title": "Shared laundry room usage rules",
+          "score": 0.5785760587123814
+        },
+        {
+          "id": 1,
+          "title": "House entrance lock broken (shared front door)",
+          "score": 0.5780840355042839
+        },
+        {
+          "id": 59,
+          "title": "School cafeteria menu and nutrition",
+          "score": 0.5774298447756608
+        },
+        {
+          "id": 19,
+          "title": "Smoking policy in shared areas",
+          "score": 0.5765735701560015
+        },
+        {
+          "id": 26,
+          "title": "Street lighting outage on segment",
+          "score": 0.5756120530549149
+        },
+        {
+          "id": 13,
+          "title": "Rooftop access and safety rules",
+          "score": 0.5754734245760222
+        },
+        {
+          "id": 2,
+          "title": "Elevator outage in apartment building",
+          "score": 0.5751278083302712
+        },
+        {
+          "id": 90,
+          "title": "Open\u0432\u0402\u2018source project roadmap / features",
+          "score": 0.5745168193594198
+        },
+        {
+          "id": 31,
+          "title": "Internet outage for local ISP segment",
+          "score": 0.5724757697584321
+        },
+        {
+          "id": 17,
+          "title": "Guest access policy (intercom/keys)",
+          "score": 0.5690135701133446
+        },
+        {
+          "id": 62,
+          "title": "Teacher\u0432\u0402\u201cparent communication platform rules",
+          "score": 0.567701367961427
+        },
+        {
+          "id": 38,
+          "title": "Car\u0432\u0402\u2018free day on city center streets",
+          "score": 0.5676400815553473
+        },
+        {
+          "id": 68,
+          "title": "Local internship placement program rules",
+          "score": 0.567269262685454
+        },
+        {
+          "id": 16,
+          "title": "Moving rules (elevator booking, hours)",
+          "score": 0.5661849300643358
+        },
+        {
+          "id": 37,
+          "title": "Bike parking racks near station",
+          "score": 0.5621245627727032
+        },
+        {
+          "id": 22,
+          "title": "Crosswalk / traffic light timing",
+          "score": 0.5608973699619041
+        },
+        {
+          "id": 21,
+          "title": "Pothole on local street",
+          "score": 0.5592880734875978
+        },
+        {
+          "id": 65,
+          "title": "University course curriculum change",
+          "score": 0.5573079721675624
+        },
+        {
+          "id": 25,
+          "title": "Sidewalk snow/ice removal",
+          "score": 0.5570958877245227
+        },
+        {
+          "id": 32,
+          "title": "Broken playground equipment in square",
+          "score": 0.5545449385108624
+        },
+        {
+          "id": 80,
+          "title": "Online donation campaign rules (global)",
+          "score": 0.5468957304715379
+        },
+        {
+          "id": 28,
+          "title": "Illegal dumping / roadside trash spot",
+          "score": 0.5467323933678595
+        },
+        {
+          "id": 89,
+          "title": "Open\u0432\u0402\u2018source project contribution rules",
+          "score": 0.5451833418952933
+        },
+        {
+          "id": 91,
+          "title": "Platform rules for ISR\u0432\u0402\u2018enabled digital community",
+          "score": 0.5429026113592412
+        },
+        {
+          "id": 66,
+          "title": "University exam schedule and format",
+          "score": 0.5310834507276253
+        },
+        {
+          "id": 18,
+          "title": "Balcony safety and renovation rules",
+          "score": 0.5262731275031405
+        }
+      ],
+      "selected_count": 1,
+      "outcome": "candidate_pass_pending_context",
+      "largest_internal_gap": 0,
+      "sensitivity": [
+        {
+          "gap": 0.05,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.02,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.01,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.005,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.002,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.001,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.5,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.7,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "scenario": "D1-07",
+      "title": "Global Digital Roadmap Alignment for Open-Source Project",
+      "issue_text_sha256": "43fbdb0f493b9242e03e102999e5407ebbfa027941f26f799d449f2a52d31206",
+      "model": "gemini-embedding-001",
+      "dims": 768,
+      "task_type": "RETRIEVAL_QUERY",
+      "template_version": "t1",
+      "ranking": [
+        {
+          "id": 90,
+          "title": "Open\u0432\u0402\u2018source project roadmap / features",
+          "score": 0.7639473893065513
+        },
+        {
+          "id": 89,
+          "title": "Open\u0432\u0402\u2018source project contribution rules",
+          "score": 0.6805950917533768
+        },
+        {
+          "id": 91,
+          "title": "Platform rules for ISR\u0432\u0402\u2018enabled digital community",
+          "score": 0.632549840112835
+        },
+        {
+          "id": 93,
+          "title": "Online political discussion space rules",
+          "score": 0.6174860414544364
+        },
+        {
+          "id": 80,
+          "title": "Online donation campaign rules (global)",
+          "score": 0.6159405204160798
+        },
+        {
+          "id": 10,
+          "title": "Scheduling noisy renovations in flats",
+          "score": 0.613449072030616
+        },
+        {
+          "id": 99,
+          "title": "Data privacy policy of a widely used local app",
+          "score": 0.6084146546427753
+        },
+        {
+          "id": 82,
+          "title": "Community choir / arts group organization",
+          "score": 0.6054174179044902
+        },
+        {
+          "id": 81,
+          "title": "NGO volunteer onboarding rules",
+          "score": 0.6004984461090529
+        },
+        {
+          "id": 22,
+          "title": "Crosswalk / traffic light timing",
+          "score": 0.599721418558249
+        },
+        {
+          "id": 77,
+          "title": "Religious service schedule/facility change",
+          "score": 0.5994185597467114
+        },
+        {
+          "id": 54,
+          "title": "Heatwave emergency plan for vulnerable residents",
+          "score": 0.5959475205456649
+        },
+        {
+          "id": 92,
+          "title": "Local online community group moderation rules",
+          "score": 0.5955414129225205
+        },
+        {
+          "id": 86,
+          "title": "On\u0432\u0402\u2018site shift scheduling change (offline workers)",
+          "score": 0.5918427773787224
+        },
+        {
+          "id": 60,
+          "title": "School bus route and stop changes",
+          "score": 0.590757057473608
+        },
+        {
+          "id": 83,
+          "title": "Local LGBTQ+ support group rules",
+          "score": 0.5890732985009823
+        },
+        {
+          "id": 94,
+          "title": "Neighborhood digital platform onboarding/invite rules",
+          "score": 0.5876235175139892
+        },
+        {
+          "id": 39,
+          "title": "New pedestrian zone design",
+          "score": 0.587594696621065
+        },
+        {
+          "id": 100,
+          "title": "Online fraud / scam warning system settings for local community",
+          "score": 0.5869462242203807
+        },
+        {
+          "id": 62,
+          "title": "Teacher\u0432\u0402\u201cparent communication platform rules",
+          "score": 0.5866376756109154
+        },
+        {
+          "id": 88,
+          "title": "Gig platform local minimum rate policy",
+          "score": 0.5838845835164916
+        },
+        {
+          "id": 87,
+          "title": "Remote work policy change (mandatory office days)",
+          "score": 0.5830150571170482
+        },
+        {
+          "id": 76,
+          "title": "Local street market/bazaar",
+          "score": 0.5809442735598347
+        },
+        {
+          "id": 70,
+          "title": "Local library youth section rules/events",
+          "score": 0.5793693970336227
+        },
+        {
+          "id": 85,
+          "title": "City\u0432\u0402\u2018wide cultural festival governance (who participates)",
+          "score": 0.5790731169463101
+        },
+        {
+          "id": 84,
+          "title": "Local cultural heritage preservation initiative",
+          "score": 0.5787799441274304
+        },
+        {
+          "id": 74,
+          "title": "Neighborhood watch group formation",
+          "score": 0.5787707041892951
+        },
+        {
+          "id": 52,
+          "title": "Neighborhood mutual aid group rules",
+          "score": 0.5783066031577647
+        },
+        {
+          "id": 50,
+          "title": "Neighborhood support network for emergencies",
+          "score": 0.578265575035417
+        },
+        {
+          "id": 67,
+          "title": "Vocational training center opening/closure",
+          "score": 0.5780054653772542
+        },
+        {
+          "id": 97,
+          "title": "City budget participatory allocation",
+          "score": 0.5760514578148874
+        },
+        {
+          "id": 57,
+          "title": "School timetable / homework load",
+          "score": 0.5749583693227753
+        },
+        {
+          "id": 98,
+          "title": "Zoning / building permit for new development",
+          "score": 0.5745960376970783
+        },
+        {
+          "id": 71,
+          "title": "Neighborhood community festival",
+          "score": 0.5732096560579438
+        },
+        {
+          "id": 48,
+          "title": "Food bank operating days and rules",
+          "score": 0.5718179282893429
+        },
+        {
+          "id": 47,
+          "title": "Local disability access improvements (ramps, lifts)",
+          "score": 0.5698890536989736
+        },
+        {
+          "id": 78,
+          "title": "Religious noise/visibility regulation in district",
+          "score": 0.5685842210904614
+        },
+        {
+          "id": 43,
+          "title": "Childcare services availability (slots/hours)",
+          "score": 0.5684021625197011
+        },
+        {
+          "id": 23,
+          "title": "New bike lane on major street",
+          "score": 0.5669992972340296
+        },
+        {
+          "id": 96,
+          "title": "Local policy debate (e.g., nightlife regulation)",
+          "score": 0.5662897087615005
+        },
+        {
+          "id": 41,
+          "title": "Local clinic opening hours",
+          "score": 0.5661972846397322
+        },
+        {
+          "id": 65,
+          "title": "University course curriculum change",
+          "score": 0.565795230307529
+        },
+        {
+          "id": 63,
+          "title": "Local youth club hours and activities",
+          "score": 0.5649726448472674
+        },
+        {
+          "id": 79,
+          "title": "Local charity food drive",
+          "score": 0.5649616079348136
+        },
+        {
+          "id": 66,
+          "title": "University exam schedule and format",
+          "score": 0.5646658301582234
+        },
+        {
+          "id": 20,
+          "title": "Emergency evacuation plan for building",
+          "score": 0.5638002233069485
+        },
+        {
+          "id": 35,
+          "title": "Public toilet installation / closure",
+          "score": 0.5633250444102083
+        },
+        {
+          "id": 40,
+          "title": "Local waste collection schedule changes",
+          "score": 0.5632374146233696
+        },
+        {
+          "id": 53,
+          "title": "Local addiction support program (AA/NA)",
+          "score": 0.5629243916846276
+        },
+        {
+          "id": 33,
+          "title": "Speed limit / traffic calming on street",
+          "score": 0.5625884300480979
+        },
+        {
+          "id": 16,
+          "title": "Moving rules (elevator booking, hours)",
+          "score": 0.5618038060543465
+        },
+        {
+          "id": 73,
+          "title": "Cultural workshop for children",
+          "score": 0.5611041344165917
+        },
+        {
+          "id": 75,
+          "title": "Public art installation/mural",
+          "score": 0.5606501222811183
+        },
+        {
+          "id": 72,
+          "title": "Local amateur sports league",
+          "score": 0.5600240425382144
+        },
+        {
+          "id": 46,
+          "title": "Mental health drop\u0432\u0402\u2018in center hours",
+          "score": 0.5597979784438111
+        },
+        {
+          "id": 15,
+          "title": "Storage lockers allocation / pricing",
+          "score": 0.5592404789705757
+        },
+        {
+          "id": 68,
+          "title": "Local internship placement program rules",
+          "score": 0.5579882187473238
+        },
+        {
+          "id": 24,
+          "title": "Bus route change / stop removal",
+          "score": 0.5576977275403638
+        },
+        {
+          "id": 95,
+          "title": "Local election procedure (polling places, voter roll)",
+          "score": 0.557564191571724
+        },
+        {
+          "id": 55,
+          "title": "Pandemic local restrictions (mask rules in district)",
+          "score": 0.5573237489936087
+        },
+        {
+          "id": 29,
+          "title": "Water supply disruption in blocks",
+          "score": 0.5568372888374993
+        },
+        {
+          "id": 42,
+          "title": "Vaccination / screening campaign",
+          "score": 0.5555309915184792
+        },
+        {
+          "id": 26,
+          "title": "Street lighting outage on segment",
+          "score": 0.5545168102416201
+        },
+        {
+          "id": 69,
+          "title": "Youth sports league safety rules",
+          "score": 0.554412138120305
+        },
+        {
+          "id": 51,
+          "title": "Family emergency affecting submitter\u0432\u0402\u2122s close relatives",
+          "score": 0.5541850859843304
+        },
+        {
+          "id": 49,
+          "title": "Homeless shelter capacity and admission rules",
+          "score": 0.5541386489489373
+        },
+        {
+          "id": 13,
+          "title": "Rooftop access and safety rules",
+          "score": 0.5520035587464744
+        },
+        {
+          "id": 38,
+          "title": "Car\u0432\u0402\u2018free day on city center streets",
+          "score": 0.5510895468104047
+        },
+        {
+          "id": 36,
+          "title": "Bridge or underpass safety (lighting, CCTV)",
+          "score": 0.5509845616691851
+        },
+        {
+          "id": 31,
+          "title": "Internet outage for local ISP segment",
+          "score": 0.5499051296862917
+        },
+        {
+          "id": 30,
+          "title": "Repeated electricity outages neighborhood",
+          "score": 0.5488882097138968
+        },
+        {
+          "id": 27,
+          "title": "Construction noise from roadworks",
+          "score": 0.5486291234369555
+        },
+        {
+          "id": 3,
+          "title": "Heating failure in entire building",
+          "score": 0.5481634406206336
+        },
+        {
+          "id": 25,
+          "title": "Sidewalk snow/ice removal",
+          "score": 0.5480885634742221
+        },
+        {
+          "id": 58,
+          "title": "School grading policy change",
+          "score": 0.5474694714158798
+        },
+        {
+          "id": 59,
+          "title": "School cafeteria menu and nutrition",
+          "score": 0.546933044263382
+        },
+        {
+          "id": 56,
+          "title": "School safety incident requiring parental decision",
+          "score": 0.5431298349545918
+        },
+        {
+          "id": 12,
+          "title": "Building pet rules (allow/restrict pets)",
+          "score": 0.5421687983602506
+        },
+        {
+          "id": 21,
+          "title": "Pothole on local street",
+          "score": 0.5417667158724093
+        },
+        {
+          "id": 14,
+          "title": "Shared laundry room usage rules",
+          "score": 0.5414782963017317
+        },
+        {
+          "id": 7,
+          "title": "Trash overflow in shared bins",
+          "score": 0.5411677007422386
+        },
+        {
+          "id": 11,
+          "title": "Tenant\u0432\u0402\u201clandlord policy change (late fees)",
+          "score": 0.5395088448482869
+        },
+        {
+          "id": 4,
+          "title": "Water leak in shared basement",
+          "score": 0.5366536328616462
+        },
+        {
+          "id": 64,
+          "title": "Scholarship allocation criteria at local school",
+          "score": 0.5361944396119468
+        },
+        {
+          "id": 45,
+          "title": "Pharmacy medication stock/outage",
+          "score": 0.5350739573032436
+        },
+        {
+          "id": 61,
+          "title": "After\u0432\u0402\u2018school program availability",
+          "score": 0.5346962400297655
+        },
+        {
+          "id": 34,
+          "title": "Parking regulation on busy street",
+          "score": 0.5334812852828626
+        },
+        {
+          "id": 19,
+          "title": "Smoking policy in shared areas",
+          "score": 0.5317688709854442
+        },
+        {
+          "id": 8,
+          "title": "Residential parking allocation in building lot",
+          "score": 0.5301997503423624
+        },
+        {
+          "id": 1,
+          "title": "House entrance lock broken (shared front door)",
+          "score": 0.5294854434875774
+        },
+        {
+          "id": 17,
+          "title": "Guest access policy (intercom/keys)",
+          "score": 0.5283291234070937
+        },
+        {
+          "id": 44,
+          "title": "Elderly day\u0432\u0402\u2018care / respite services",
+          "score": 0.5244829606472184
+        },
+        {
+          "id": 2,
+          "title": "Elevator outage in apartment building",
+          "score": 0.5227135898831208
+        },
+        {
+          "id": 28,
+          "title": "Illegal dumping / roadside trash spot",
+          "score": 0.5208321881409252
+        },
+        {
+          "id": 5,
+          "title": "Mold in stairwells and corridors",
+          "score": 0.5206119546823574
+        },
+        {
+          "id": 32,
+          "title": "Broken playground equipment in square",
+          "score": 0.52011105225151
+        },
+        {
+          "id": 9,
+          "title": "Internal noise from neighbor at night",
+          "score": 0.5167561747340246
+        },
+        {
+          "id": 37,
+          "title": "Bike parking racks near station",
+          "score": 0.5146462611594057
+        },
+        {
+          "id": 18,
+          "title": "Balcony safety and renovation rules",
+          "score": 0.5125129088810974
+        },
+        {
+          "id": 6,
+          "title": "Stairwell lighting outage",
+          "score": 0.5111856264001352
+        }
+      ],
+      "selected_count": 1,
+      "outcome": "candidate_pass_pending_context",
+      "largest_internal_gap": 0,
+      "sensitivity": [
+        {
+          "gap": 0.05,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.02,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.01,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.005,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.002,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.001,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.5,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.7,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "scenario": "D1-08",
+      "title": "Zoning Variance Request for Quill Lane 1",
+      "issue_text_sha256": "1c6aed0de14fc2b93f0e922dfd05e614fdc6c05d15d62658eff61aaeda830c5a",
+      "model": "gemini-embedding-001",
+      "dims": 768,
+      "task_type": "RETRIEVAL_QUERY",
+      "template_version": "t1",
+      "ranking": [
+        {
+          "id": 98,
+          "title": "Zoning / building permit for new development",
+          "score": 0.6472981539133847
+        },
+        {
+          "id": 77,
+          "title": "Religious service schedule/facility change",
+          "score": 0.6209464528720955
+        },
+        {
+          "id": 39,
+          "title": "New pedestrian zone design",
+          "score": 0.606962143098666
+        },
+        {
+          "id": 87,
+          "title": "Remote work policy change (mandatory office days)",
+          "score": 0.5969995758976991
+        },
+        {
+          "id": 47,
+          "title": "Local disability access improvements (ramps, lifts)",
+          "score": 0.5960085960605433
+        },
+        {
+          "id": 67,
+          "title": "Vocational training center opening/closure",
+          "score": 0.5914663487451888
+        },
+        {
+          "id": 86,
+          "title": "On\u0432\u0402\u2018site shift scheduling change (offline workers)",
+          "score": 0.5913677882434396
+        },
+        {
+          "id": 10,
+          "title": "Scheduling noisy renovations in flats",
+          "score": 0.590089422802231
+        },
+        {
+          "id": 58,
+          "title": "School grading policy change",
+          "score": 0.5872874291219627
+        },
+        {
+          "id": 60,
+          "title": "School bus route and stop changes",
+          "score": 0.5851141897152511
+        },
+        {
+          "id": 23,
+          "title": "New bike lane on major street",
+          "score": 0.583101897204264
+        },
+        {
+          "id": 33,
+          "title": "Speed limit / traffic calming on street",
+          "score": 0.5796297900437754
+        },
+        {
+          "id": 78,
+          "title": "Religious noise/visibility regulation in district",
+          "score": 0.5789568368757431
+        },
+        {
+          "id": 11,
+          "title": "Tenant\u0432\u0402\u201clandlord policy change (late fees)",
+          "score": 0.578226805736592
+        },
+        {
+          "id": 24,
+          "title": "Bus route change / stop removal",
+          "score": 0.5780364213040557
+        },
+        {
+          "id": 51,
+          "title": "Family emergency affecting submitter\u0432\u0402\u2122s close relatives",
+          "score": 0.5732513729756702
+        },
+        {
+          "id": 65,
+          "title": "University course curriculum change",
+          "score": 0.5688036226304456
+        },
+        {
+          "id": 75,
+          "title": "Public art installation/mural",
+          "score": 0.5685063288380413
+        },
+        {
+          "id": 40,
+          "title": "Local waste collection schedule changes",
+          "score": 0.5683684279689863
+        },
+        {
+          "id": 84,
+          "title": "Local cultural heritage preservation initiative",
+          "score": 0.5679502879344286
+        },
+        {
+          "id": 82,
+          "title": "Community choir / arts group organization",
+          "score": 0.5677498037286508
+        },
+        {
+          "id": 12,
+          "title": "Building pet rules (allow/restrict pets)",
+          "score": 0.5672054473705501
+        },
+        {
+          "id": 96,
+          "title": "Local policy debate (e.g., nightlife regulation)",
+          "score": 0.564787435689675
+        },
+        {
+          "id": 70,
+          "title": "Local library youth section rules/events",
+          "score": 0.5646118760307511
+        },
+        {
+          "id": 34,
+          "title": "Parking regulation on busy street",
+          "score": 0.5645739255991116
+        },
+        {
+          "id": 64,
+          "title": "Scholarship allocation criteria at local school",
+          "score": 0.5622213492047848
+        },
+        {
+          "id": 90,
+          "title": "Open\u0432\u0402\u2018source project roadmap / features",
+          "score": 0.5616365147069088
+        },
+        {
+          "id": 54,
+          "title": "Heatwave emergency plan for vulnerable residents",
+          "score": 0.5616181272490532
+        },
+        {
+          "id": 94,
+          "title": "Neighborhood digital platform onboarding/invite rules",
+          "score": 0.5596507815460249
+        },
+        {
+          "id": 50,
+          "title": "Neighborhood support network for emergencies",
+          "score": 0.5582061104960452
+        },
+        {
+          "id": 8,
+          "title": "Residential parking allocation in building lot",
+          "score": 0.5581394333940914
+        },
+        {
+          "id": 15,
+          "title": "Storage lockers allocation / pricing",
+          "score": 0.5578270897981044
+        },
+        {
+          "id": 57,
+          "title": "School timetable / homework load",
+          "score": 0.5561581297073105
+        },
+        {
+          "id": 55,
+          "title": "Pandemic local restrictions (mask rules in district)",
+          "score": 0.5558724981455857
+        },
+        {
+          "id": 35,
+          "title": "Public toilet installation / closure",
+          "score": 0.5555922785767711
+        },
+        {
+          "id": 30,
+          "title": "Repeated electricity outages neighborhood",
+          "score": 0.5555309008066628
+        },
+        {
+          "id": 88,
+          "title": "Gig platform local minimum rate policy",
+          "score": 0.5548879529526312
+        },
+        {
+          "id": 4,
+          "title": "Water leak in shared basement",
+          "score": 0.5546988966628768
+        },
+        {
+          "id": 92,
+          "title": "Local online community group moderation rules",
+          "score": 0.554465300526371
+        },
+        {
+          "id": 56,
+          "title": "School safety incident requiring parental decision",
+          "score": 0.5538526013201351
+        },
+        {
+          "id": 72,
+          "title": "Local amateur sports league",
+          "score": 0.5525565483699313
+        },
+        {
+          "id": 73,
+          "title": "Cultural workshop for children",
+          "score": 0.5520101512233886
+        },
+        {
+          "id": 74,
+          "title": "Neighborhood watch group formation",
+          "score": 0.5514083924217401
+        },
+        {
+          "id": 83,
+          "title": "Local LGBTQ+ support group rules",
+          "score": 0.5512468762603632
+        },
+        {
+          "id": 52,
+          "title": "Neighborhood mutual aid group rules",
+          "score": 0.5510038558267362
+        },
+        {
+          "id": 49,
+          "title": "Homeless shelter capacity and admission rules",
+          "score": 0.5502489396559237
+        },
+        {
+          "id": 27,
+          "title": "Construction noise from roadworks",
+          "score": 0.5500795462164286
+        },
+        {
+          "id": 76,
+          "title": "Local street market/bazaar",
+          "score": 0.5485670090370458
+        },
+        {
+          "id": 63,
+          "title": "Local youth club hours and activities",
+          "score": 0.5485398109252914
+        },
+        {
+          "id": 29,
+          "title": "Water supply disruption in blocks",
+          "score": 0.5484494802301337
+        },
+        {
+          "id": 20,
+          "title": "Emergency evacuation plan for building",
+          "score": 0.5479174510294897
+        },
+        {
+          "id": 81,
+          "title": "NGO volunteer onboarding rules",
+          "score": 0.5476569835513126
+        },
+        {
+          "id": 99,
+          "title": "Data privacy policy of a widely used local app",
+          "score": 0.5466779057328546
+        },
+        {
+          "id": 71,
+          "title": "Neighborhood community festival",
+          "score": 0.5465897846899757
+        },
+        {
+          "id": 62,
+          "title": "Teacher\u0432\u0402\u201cparent communication platform rules",
+          "score": 0.5458504400363952
+        },
+        {
+          "id": 13,
+          "title": "Rooftop access and safety rules",
+          "score": 0.5450378462376879
+        },
+        {
+          "id": 79,
+          "title": "Local charity food drive",
+          "score": 0.5450350028238766
+        },
+        {
+          "id": 43,
+          "title": "Childcare services availability (slots/hours)",
+          "score": 0.5444736218634427
+        },
+        {
+          "id": 36,
+          "title": "Bridge or underpass safety (lighting, CCTV)",
+          "score": 0.5440472997485023
+        },
+        {
+          "id": 9,
+          "title": "Internal noise from neighbor at night",
+          "score": 0.5438588693048287
+        },
+        {
+          "id": 100,
+          "title": "Online fraud / scam warning system settings for local community",
+          "score": 0.5435168258441319
+        },
+        {
+          "id": 95,
+          "title": "Local election procedure (polling places, voter roll)",
+          "score": 0.5414760752186694
+        },
+        {
+          "id": 93,
+          "title": "Online political discussion space rules",
+          "score": 0.5411710504946072
+        },
+        {
+          "id": 68,
+          "title": "Local internship placement program rules",
+          "score": 0.539701652387665
+        },
+        {
+          "id": 1,
+          "title": "House entrance lock broken (shared front door)",
+          "score": 0.539652008474811
+        },
+        {
+          "id": 69,
+          "title": "Youth sports league safety rules",
+          "score": 0.5389551589173988
+        },
+        {
+          "id": 14,
+          "title": "Shared laundry room usage rules",
+          "score": 0.5380140062996887
+        },
+        {
+          "id": 61,
+          "title": "After\u0432\u0402\u2018school program availability",
+          "score": 0.5379220513604389
+        },
+        {
+          "id": 7,
+          "title": "Trash overflow in shared bins",
+          "score": 0.5378060830473763
+        },
+        {
+          "id": 89,
+          "title": "Open\u0432\u0402\u2018source project contribution rules",
+          "score": 0.5370508211720225
+        },
+        {
+          "id": 53,
+          "title": "Local addiction support program (AA/NA)",
+          "score": 0.5364135288699429
+        },
+        {
+          "id": 31,
+          "title": "Internet outage for local ISP segment",
+          "score": 0.5360694104215862
+        },
+        {
+          "id": 3,
+          "title": "Heating failure in entire building",
+          "score": 0.5353693879652446
+        },
+        {
+          "id": 38,
+          "title": "Car\u0432\u0402\u2018free day on city center streets",
+          "score": 0.5353098761472111
+        },
+        {
+          "id": 42,
+          "title": "Vaccination / screening campaign",
+          "score": 0.5352328904327205
+        },
+        {
+          "id": 66,
+          "title": "University exam schedule and format",
+          "score": 0.5351350756585543
+        },
+        {
+          "id": 46,
+          "title": "Mental health drop\u0432\u0402\u2018in center hours",
+          "score": 0.534811908684189
+        },
+        {
+          "id": 2,
+          "title": "Elevator outage in apartment building",
+          "score": 0.5346612443429922
+        },
+        {
+          "id": 19,
+          "title": "Smoking policy in shared areas",
+          "score": 0.5326150512842454
+        },
+        {
+          "id": 59,
+          "title": "School cafeteria menu and nutrition",
+          "score": 0.5325097274274406
+        },
+        {
+          "id": 21,
+          "title": "Pothole on local street",
+          "score": 0.5312820137636263
+        },
+        {
+          "id": 26,
+          "title": "Street lighting outage on segment",
+          "score": 0.5308625550838538
+        },
+        {
+          "id": 25,
+          "title": "Sidewalk snow/ice removal",
+          "score": 0.5308052814682588
+        },
+        {
+          "id": 48,
+          "title": "Food bank operating days and rules",
+          "score": 0.5304073720787532
+        },
+        {
+          "id": 97,
+          "title": "City budget participatory allocation",
+          "score": 0.5280455200118543
+        },
+        {
+          "id": 6,
+          "title": "Stairwell lighting outage",
+          "score": 0.5269890564886963
+        },
+        {
+          "id": 18,
+          "title": "Balcony safety and renovation rules",
+          "score": 0.5250549307419995
+        },
+        {
+          "id": 22,
+          "title": "Crosswalk / traffic light timing",
+          "score": 0.5249021711382791
+        },
+        {
+          "id": 5,
+          "title": "Mold in stairwells and corridors",
+          "score": 0.5245840892767372
+        },
+        {
+          "id": 17,
+          "title": "Guest access policy (intercom/keys)",
+          "score": 0.5243166820578736
+        },
+        {
+          "id": 44,
+          "title": "Elderly day\u0432\u0402\u2018care / respite services",
+          "score": 0.5235251713937815
+        },
+        {
+          "id": 41,
+          "title": "Local clinic opening hours",
+          "score": 0.5221482680284871
+        },
+        {
+          "id": 16,
+          "title": "Moving rules (elevator booking, hours)",
+          "score": 0.5172271930470753
+        },
+        {
+          "id": 85,
+          "title": "City\u0432\u0402\u2018wide cultural festival governance (who participates)",
+          "score": 0.5122480595888675
+        },
+        {
+          "id": 28,
+          "title": "Illegal dumping / roadside trash spot",
+          "score": 0.5120116995378676
+        },
+        {
+          "id": 32,
+          "title": "Broken playground equipment in square",
+          "score": 0.5114571588325165
+        },
+        {
+          "id": 80,
+          "title": "Online donation campaign rules (global)",
+          "score": 0.5079426260834591
+        },
+        {
+          "id": 45,
+          "title": "Pharmacy medication stock/outage",
+          "score": 0.5056164593668584
+        },
+        {
+          "id": 37,
+          "title": "Bike parking racks near station",
+          "score": 0.5036944427343807
+        },
+        {
+          "id": 91,
+          "title": "Platform rules for ISR\u0432\u0402\u2018enabled digital community",
+          "score": 0.500231006961769
+        }
+      ],
+      "selected_count": 100,
+      "outcome": "needs_clarification",
+      "largest_internal_gap": 0.026351701041289255,
+      "sensitivity": [
+        {
+          "gap": 0.05,
+          "floor": 0.3,
+          "count": 100
+        },
+        {
+          "gap": 0.02,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.01,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.005,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.002,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.001,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.5,
+          "count": 100
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.7,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "scenario": "D1-09",
+      "title": "Urgent assistance needed for family relocation",
+      "issue_text_sha256": "826c6ba6e96d70dfb5b77415db13a6b1536dead7dce3cc2886554dfc2abc3243",
+      "model": "gemini-embedding-001",
+      "dims": 768,
+      "task_type": "RETRIEVAL_QUERY",
+      "template_version": "t1",
+      "ranking": [
+        {
+          "id": 51,
+          "title": "Family emergency affecting submitter\u0432\u0402\u2122s close relatives",
+          "score": 0.6990576838449019
+        },
+        {
+          "id": 79,
+          "title": "Local charity food drive",
+          "score": 0.6186854446207308
+        },
+        {
+          "id": 15,
+          "title": "Storage lockers allocation / pricing",
+          "score": 0.612661829833782
+        },
+        {
+          "id": 77,
+          "title": "Religious service schedule/facility change",
+          "score": 0.6080089905855577
+        },
+        {
+          "id": 50,
+          "title": "Neighborhood support network for emergencies",
+          "score": 0.602084557310358
+        },
+        {
+          "id": 52,
+          "title": "Neighborhood mutual aid group rules",
+          "score": 0.5924863175185162
+        },
+        {
+          "id": 86,
+          "title": "On\u0432\u0402\u2018site shift scheduling change (offline workers)",
+          "score": 0.590135807527942
+        },
+        {
+          "id": 1,
+          "title": "House entrance lock broken (shared front door)",
+          "score": 0.5833274554634235
+        },
+        {
+          "id": 16,
+          "title": "Moving rules (elevator booking, hours)",
+          "score": 0.5831484541294542
+        },
+        {
+          "id": 44,
+          "title": "Elderly day\u0432\u0402\u2018care / respite services",
+          "score": 0.582015869660984
+        },
+        {
+          "id": 56,
+          "title": "School safety incident requiring parental decision",
+          "score": 0.579988263568211
+        },
+        {
+          "id": 47,
+          "title": "Local disability access improvements (ramps, lifts)",
+          "score": 0.5748085030216715
+        },
+        {
+          "id": 53,
+          "title": "Local addiction support program (AA/NA)",
+          "score": 0.5711592335876313
+        },
+        {
+          "id": 46,
+          "title": "Mental health drop\u0432\u0402\u2018in center hours",
+          "score": 0.5698406201086523
+        },
+        {
+          "id": 4,
+          "title": "Water leak in shared basement",
+          "score": 0.5697130349179403
+        },
+        {
+          "id": 6,
+          "title": "Stairwell lighting outage",
+          "score": 0.5691274911119166
+        },
+        {
+          "id": 54,
+          "title": "Heatwave emergency plan for vulnerable residents",
+          "score": 0.5689837161314505
+        },
+        {
+          "id": 74,
+          "title": "Neighborhood watch group formation",
+          "score": 0.5687857771102913
+        },
+        {
+          "id": 2,
+          "title": "Elevator outage in apartment building",
+          "score": 0.5684068422349136
+        },
+        {
+          "id": 88,
+          "title": "Gig platform local minimum rate policy",
+          "score": 0.56688923949748
+        },
+        {
+          "id": 7,
+          "title": "Trash overflow in shared bins",
+          "score": 0.5659702898808118
+        },
+        {
+          "id": 48,
+          "title": "Food bank operating days and rules",
+          "score": 0.5658206718245704
+        },
+        {
+          "id": 10,
+          "title": "Scheduling noisy renovations in flats",
+          "score": 0.5648404098219426
+        },
+        {
+          "id": 49,
+          "title": "Homeless shelter capacity and admission rules",
+          "score": 0.5647232836458742
+        },
+        {
+          "id": 81,
+          "title": "NGO volunteer onboarding rules",
+          "score": 0.5639506627045446
+        },
+        {
+          "id": 20,
+          "title": "Emergency evacuation plan for building",
+          "score": 0.5638270774196835
+        },
+        {
+          "id": 36,
+          "title": "Bridge or underpass safety (lighting, CCTV)",
+          "score": 0.5619868096658766
+        },
+        {
+          "id": 57,
+          "title": "School timetable / homework load",
+          "score": 0.5619307579894519
+        },
+        {
+          "id": 11,
+          "title": "Tenant\u0432\u0402\u201clandlord policy change (late fees)",
+          "score": 0.5591045716249314
+        },
+        {
+          "id": 30,
+          "title": "Repeated electricity outages neighborhood",
+          "score": 0.5566401133588892
+        },
+        {
+          "id": 35,
+          "title": "Public toilet installation / closure",
+          "score": 0.5549131997323683
+        },
+        {
+          "id": 40,
+          "title": "Local waste collection schedule changes",
+          "score": 0.554565237953795
+        },
+        {
+          "id": 69,
+          "title": "Youth sports league safety rules",
+          "score": 0.5525226437529006
+        },
+        {
+          "id": 43,
+          "title": "Childcare services availability (slots/hours)",
+          "score": 0.5518080982511265
+        },
+        {
+          "id": 82,
+          "title": "Community choir / arts group organization",
+          "score": 0.5504613881467181
+        },
+        {
+          "id": 5,
+          "title": "Mold in stairwells and corridors",
+          "score": 0.5479358232414908
+        },
+        {
+          "id": 24,
+          "title": "Bus route change / stop removal",
+          "score": 0.5472232556476989
+        },
+        {
+          "id": 31,
+          "title": "Internet outage for local ISP segment",
+          "score": 0.54583170110863
+        },
+        {
+          "id": 63,
+          "title": "Local youth club hours and activities",
+          "score": 0.5439044266906636
+        },
+        {
+          "id": 3,
+          "title": "Heating failure in entire building",
+          "score": 0.5426348072850227
+        },
+        {
+          "id": 45,
+          "title": "Pharmacy medication stock/outage",
+          "score": 0.5419454532304244
+        },
+        {
+          "id": 75,
+          "title": "Public art installation/mural",
+          "score": 0.5418630891838363
+        },
+        {
+          "id": 87,
+          "title": "Remote work policy change (mandatory office days)",
+          "score": 0.5413249734507396
+        },
+        {
+          "id": 98,
+          "title": "Zoning / building permit for new development",
+          "score": 0.5408869784467107
+        },
+        {
+          "id": 29,
+          "title": "Water supply disruption in blocks",
+          "score": 0.5400691739817822
+        },
+        {
+          "id": 72,
+          "title": "Local amateur sports league",
+          "score": 0.5391958901197477
+        },
+        {
+          "id": 84,
+          "title": "Local cultural heritage preservation initiative",
+          "score": 0.5387717045610197
+        },
+        {
+          "id": 33,
+          "title": "Speed limit / traffic calming on street",
+          "score": 0.537744975927836
+        },
+        {
+          "id": 14,
+          "title": "Shared laundry room usage rules",
+          "score": 0.5374403899165403
+        },
+        {
+          "id": 60,
+          "title": "School bus route and stop changes",
+          "score": 0.5365520634881151
+        },
+        {
+          "id": 23,
+          "title": "New bike lane on major street",
+          "score": 0.5361043034784709
+        },
+        {
+          "id": 13,
+          "title": "Rooftop access and safety rules",
+          "score": 0.5347014883797636
+        },
+        {
+          "id": 34,
+          "title": "Parking regulation on busy street",
+          "score": 0.5344521918814522
+        },
+        {
+          "id": 76,
+          "title": "Local street market/bazaar",
+          "score": 0.5335206245141483
+        },
+        {
+          "id": 42,
+          "title": "Vaccination / screening campaign",
+          "score": 0.532074253439541
+        },
+        {
+          "id": 26,
+          "title": "Street lighting outage on segment",
+          "score": 0.5319254669120416
+        },
+        {
+          "id": 73,
+          "title": "Cultural workshop for children",
+          "score": 0.5313341571107107
+        },
+        {
+          "id": 25,
+          "title": "Sidewalk snow/ice removal",
+          "score": 0.5313127551373898
+        },
+        {
+          "id": 9,
+          "title": "Internal noise from neighbor at night",
+          "score": 0.5312121254022985
+        },
+        {
+          "id": 71,
+          "title": "Neighborhood community festival",
+          "score": 0.5310677597715008
+        },
+        {
+          "id": 70,
+          "title": "Local library youth section rules/events",
+          "score": 0.5307825152991543
+        },
+        {
+          "id": 55,
+          "title": "Pandemic local restrictions (mask rules in district)",
+          "score": 0.5306956748211882
+        },
+        {
+          "id": 64,
+          "title": "Scholarship allocation criteria at local school",
+          "score": 0.5297339336295304
+        },
+        {
+          "id": 100,
+          "title": "Online fraud / scam warning system settings for local community",
+          "score": 0.5282842434229037
+        },
+        {
+          "id": 83,
+          "title": "Local LGBTQ+ support group rules",
+          "score": 0.5280678927433449
+        },
+        {
+          "id": 39,
+          "title": "New pedestrian zone design",
+          "score": 0.5279822796815073
+        },
+        {
+          "id": 12,
+          "title": "Building pet rules (allow/restrict pets)",
+          "score": 0.5272987510548802
+        },
+        {
+          "id": 28,
+          "title": "Illegal dumping / roadside trash spot",
+          "score": 0.5272329391901879
+        },
+        {
+          "id": 41,
+          "title": "Local clinic opening hours",
+          "score": 0.5271487080779735
+        },
+        {
+          "id": 58,
+          "title": "School grading policy change",
+          "score": 0.5268241062217002
+        },
+        {
+          "id": 78,
+          "title": "Religious noise/visibility regulation in district",
+          "score": 0.5260042502641759
+        },
+        {
+          "id": 18,
+          "title": "Balcony safety and renovation rules",
+          "score": 0.5257862538221751
+        },
+        {
+          "id": 99,
+          "title": "Data privacy policy of a widely used local app",
+          "score": 0.5253577869110051
+        },
+        {
+          "id": 68,
+          "title": "Local internship placement program rules",
+          "score": 0.5247133963506586
+        },
+        {
+          "id": 67,
+          "title": "Vocational training center opening/closure",
+          "score": 0.5240133821374059
+        },
+        {
+          "id": 8,
+          "title": "Residential parking allocation in building lot",
+          "score": 0.5235420199816444
+        },
+        {
+          "id": 80,
+          "title": "Online donation campaign rules (global)",
+          "score": 0.522490762688858
+        },
+        {
+          "id": 32,
+          "title": "Broken playground equipment in square",
+          "score": 0.5212974425826448
+        },
+        {
+          "id": 22,
+          "title": "Crosswalk / traffic light timing",
+          "score": 0.5212564936676398
+        },
+        {
+          "id": 17,
+          "title": "Guest access policy (intercom/keys)",
+          "score": 0.5210770831577246
+        },
+        {
+          "id": 37,
+          "title": "Bike parking racks near station",
+          "score": 0.5208448989329371
+        },
+        {
+          "id": 21,
+          "title": "Pothole on local street",
+          "score": 0.5186231661042348
+        },
+        {
+          "id": 19,
+          "title": "Smoking policy in shared areas",
+          "score": 0.5183697979997831
+        },
+        {
+          "id": 38,
+          "title": "Car\u0432\u0402\u2018free day on city center streets",
+          "score": 0.5177600702511868
+        },
+        {
+          "id": 96,
+          "title": "Local policy debate (e.g., nightlife regulation)",
+          "score": 0.5147729799626318
+        },
+        {
+          "id": 62,
+          "title": "Teacher\u0432\u0402\u201cparent communication platform rules",
+          "score": 0.5140227310552761
+        },
+        {
+          "id": 94,
+          "title": "Neighborhood digital platform onboarding/invite rules",
+          "score": 0.5138301344811417
+        },
+        {
+          "id": 61,
+          "title": "After\u0432\u0402\u2018school program availability",
+          "score": 0.5134793608501714
+        },
+        {
+          "id": 59,
+          "title": "School cafeteria menu and nutrition",
+          "score": 0.5114587170552126
+        },
+        {
+          "id": 93,
+          "title": "Online political discussion space rules",
+          "score": 0.5094261488332631
+        },
+        {
+          "id": 65,
+          "title": "University course curriculum change",
+          "score": 0.5073711336318124
+        },
+        {
+          "id": 92,
+          "title": "Local online community group moderation rules",
+          "score": 0.5052876985990528
+        },
+        {
+          "id": 27,
+          "title": "Construction noise from roadworks",
+          "score": 0.5008824506209633
+        },
+        {
+          "id": 95,
+          "title": "Local election procedure (polling places, voter roll)",
+          "score": 0.5001258439937246
+        },
+        {
+          "id": 91,
+          "title": "Platform rules for ISR\u0432\u0402\u2018enabled digital community",
+          "score": 0.4976414970112973
+        },
+        {
+          "id": 89,
+          "title": "Open\u0432\u0402\u2018source project contribution rules",
+          "score": 0.49594530522361435
+        },
+        {
+          "id": 97,
+          "title": "City budget participatory allocation",
+          "score": 0.4959118268665712
+        },
+        {
+          "id": 90,
+          "title": "Open\u0432\u0402\u2018source project roadmap / features",
+          "score": 0.4935460312376672
+        },
+        {
+          "id": 85,
+          "title": "City\u0432\u0402\u2018wide cultural festival governance (who participates)",
+          "score": 0.4806896615306566
+        },
+        {
+          "id": 66,
+          "title": "University exam schedule and format",
+          "score": 0.4720431319663971
+        }
+      ],
+      "selected_count": 1,
+      "outcome": "candidate_pass_pending_context",
+      "largest_internal_gap": 0,
+      "sensitivity": [
+        {
+          "gap": 0.05,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.02,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.01,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.005,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.002,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.001,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.5,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.7,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "scenario": "D1-10",
+      "title": "Participatory allocation of the city improvement budget",
+      "issue_text_sha256": "67a343df124177dd19c3c640f26f58589742316bf4bbe243a3a68399d65d41ac",
+      "model": "gemini-embedding-001",
+      "dims": 768,
+      "task_type": "RETRIEVAL_QUERY",
+      "template_version": "t1",
+      "ranking": [
+        {
+          "id": 97,
+          "title": "City budget participatory allocation",
+          "score": 0.7765540517365249
+        },
+        {
+          "id": 39,
+          "title": "New pedestrian zone design",
+          "score": 0.688618471133209
+        },
+        {
+          "id": 47,
+          "title": "Local disability access improvements (ramps, lifts)",
+          "score": 0.6778544091403961
+        },
+        {
+          "id": 35,
+          "title": "Public toilet installation / closure",
+          "score": 0.6638444131612189
+        },
+        {
+          "id": 94,
+          "title": "Neighborhood digital platform onboarding/invite rules",
+          "score": 0.661491818668448
+        },
+        {
+          "id": 10,
+          "title": "Scheduling noisy renovations in flats",
+          "score": 0.659145852598651
+        },
+        {
+          "id": 23,
+          "title": "New bike lane on major street",
+          "score": 0.6547758143638699
+        },
+        {
+          "id": 85,
+          "title": "City\u0432\u0402\u2018wide cultural festival governance (who participates)",
+          "score": 0.6465521306763773
+        },
+        {
+          "id": 96,
+          "title": "Local policy debate (e.g., nightlife regulation)",
+          "score": 0.6448253908387922
+        },
+        {
+          "id": 98,
+          "title": "Zoning / building permit for new development",
+          "score": 0.64468365867778
+        },
+        {
+          "id": 95,
+          "title": "Local election procedure (polling places, voter roll)",
+          "score": 0.6371908799836096
+        },
+        {
+          "id": 64,
+          "title": "Scholarship allocation criteria at local school",
+          "score": 0.636044029764119
+        },
+        {
+          "id": 24,
+          "title": "Bus route change / stop removal",
+          "score": 0.635149458382215
+        },
+        {
+          "id": 22,
+          "title": "Crosswalk / traffic light timing",
+          "score": 0.6343333763392254
+        },
+        {
+          "id": 33,
+          "title": "Speed limit / traffic calming on street",
+          "score": 0.6342508686996342
+        },
+        {
+          "id": 36,
+          "title": "Bridge or underpass safety (lighting, CCTV)",
+          "score": 0.6339899344735392
+        },
+        {
+          "id": 8,
+          "title": "Residential parking allocation in building lot",
+          "score": 0.6332338890111734
+        },
+        {
+          "id": 90,
+          "title": "Open\u0432\u0402\u2018source project roadmap / features",
+          "score": 0.6330364585690271
+        },
+        {
+          "id": 55,
+          "title": "Pandemic local restrictions (mask rules in district)",
+          "score": 0.6330196147646205
+        },
+        {
+          "id": 38,
+          "title": "Car\u0432\u0402\u2018free day on city center streets",
+          "score": 0.6307411019901388
+        },
+        {
+          "id": 34,
+          "title": "Parking regulation on busy street",
+          "score": 0.6300540453775708
+        },
+        {
+          "id": 32,
+          "title": "Broken playground equipment in square",
+          "score": 0.6294642160865179
+        },
+        {
+          "id": 60,
+          "title": "School bus route and stop changes",
+          "score": 0.629335925626039
+        },
+        {
+          "id": 40,
+          "title": "Local waste collection schedule changes",
+          "score": 0.6280581442978407
+        },
+        {
+          "id": 88,
+          "title": "Gig platform local minimum rate policy",
+          "score": 0.6246684257145964
+        },
+        {
+          "id": 71,
+          "title": "Neighborhood community festival",
+          "score": 0.6227217171675328
+        },
+        {
+          "id": 29,
+          "title": "Water supply disruption in blocks",
+          "score": 0.6207781418350046
+        },
+        {
+          "id": 15,
+          "title": "Storage lockers allocation / pricing",
+          "score": 0.6202505339634564
+        },
+        {
+          "id": 100,
+          "title": "Online fraud / scam warning system settings for local community",
+          "score": 0.6184571664523922
+        },
+        {
+          "id": 77,
+          "title": "Religious service schedule/facility change",
+          "score": 0.6175780353670549
+        },
+        {
+          "id": 84,
+          "title": "Local cultural heritage preservation initiative",
+          "score": 0.617130518366987
+        },
+        {
+          "id": 67,
+          "title": "Vocational training center opening/closure",
+          "score": 0.6168663749109888
+        },
+        {
+          "id": 75,
+          "title": "Public art installation/mural",
+          "score": 0.61676058831812
+        },
+        {
+          "id": 12,
+          "title": "Building pet rules (allow/restrict pets)",
+          "score": 0.6166401447429508
+        },
+        {
+          "id": 54,
+          "title": "Heatwave emergency plan for vulnerable residents",
+          "score": 0.6161830725641543
+        },
+        {
+          "id": 25,
+          "title": "Sidewalk snow/ice removal",
+          "score": 0.6149026972087674
+        },
+        {
+          "id": 49,
+          "title": "Homeless shelter capacity and admission rules",
+          "score": 0.6126719927461336
+        },
+        {
+          "id": 92,
+          "title": "Local online community group moderation rules",
+          "score": 0.6121265942258691
+        },
+        {
+          "id": 99,
+          "title": "Data privacy policy of a widely used local app",
+          "score": 0.6120675425403381
+        },
+        {
+          "id": 37,
+          "title": "Bike parking racks near station",
+          "score": 0.6118334395108521
+        },
+        {
+          "id": 59,
+          "title": "School cafeteria menu and nutrition",
+          "score": 0.6107611712858658
+        },
+        {
+          "id": 7,
+          "title": "Trash overflow in shared bins",
+          "score": 0.6106976604519608
+        },
+        {
+          "id": 76,
+          "title": "Local street market/bazaar",
+          "score": 0.6099110222041381
+        },
+        {
+          "id": 78,
+          "title": "Religious noise/visibility regulation in district",
+          "score": 0.6093656346677893
+        },
+        {
+          "id": 21,
+          "title": "Pothole on local street",
+          "score": 0.6093109328700906
+        },
+        {
+          "id": 27,
+          "title": "Construction noise from roadworks",
+          "score": 0.6092978944287161
+        },
+        {
+          "id": 30,
+          "title": "Repeated electricity outages neighborhood",
+          "score": 0.6078520469228956
+        },
+        {
+          "id": 11,
+          "title": "Tenant\u0432\u0402\u201clandlord policy change (late fees)",
+          "score": 0.6069991751594458
+        },
+        {
+          "id": 43,
+          "title": "Childcare services availability (slots/hours)",
+          "score": 0.6067668300512871
+        },
+        {
+          "id": 93,
+          "title": "Online political discussion space rules",
+          "score": 0.6063487433507739
+        },
+        {
+          "id": 74,
+          "title": "Neighborhood watch group formation",
+          "score": 0.606203184625418
+        },
+        {
+          "id": 26,
+          "title": "Street lighting outage on segment",
+          "score": 0.6056498664539658
+        },
+        {
+          "id": 83,
+          "title": "Local LGBTQ+ support group rules",
+          "score": 0.6038326623547943
+        },
+        {
+          "id": 81,
+          "title": "NGO volunteer onboarding rules",
+          "score": 0.6037696267731915
+        },
+        {
+          "id": 72,
+          "title": "Local amateur sports league",
+          "score": 0.6029673207940539
+        },
+        {
+          "id": 42,
+          "title": "Vaccination / screening campaign",
+          "score": 0.6028514966470612
+        },
+        {
+          "id": 82,
+          "title": "Community choir / arts group organization",
+          "score": 0.6005135500046305
+        },
+        {
+          "id": 56,
+          "title": "School safety incident requiring parental decision",
+          "score": 0.5995756174522048
+        },
+        {
+          "id": 52,
+          "title": "Neighborhood mutual aid group rules",
+          "score": 0.5990011207363035
+        },
+        {
+          "id": 91,
+          "title": "Platform rules for ISR\u0432\u0402\u2018enabled digital community",
+          "score": 0.598013637990693
+        },
+        {
+          "id": 89,
+          "title": "Open\u0432\u0402\u2018source project contribution rules",
+          "score": 0.5976601013321964
+        },
+        {
+          "id": 51,
+          "title": "Family emergency affecting submitter\u0432\u0402\u2122s close relatives",
+          "score": 0.5967468078935008
+        },
+        {
+          "id": 70,
+          "title": "Local library youth section rules/events",
+          "score": 0.5959778407903823
+        },
+        {
+          "id": 65,
+          "title": "University course curriculum change",
+          "score": 0.5957416327161416
+        },
+        {
+          "id": 58,
+          "title": "School grading policy change",
+          "score": 0.5939265718462059
+        },
+        {
+          "id": 62,
+          "title": "Teacher\u0432\u0402\u201cparent communication platform rules",
+          "score": 0.5929413362126074
+        },
+        {
+          "id": 50,
+          "title": "Neighborhood support network for emergencies",
+          "score": 0.5912570294817144
+        },
+        {
+          "id": 28,
+          "title": "Illegal dumping / roadside trash spot",
+          "score": 0.5887631722840775
+        },
+        {
+          "id": 4,
+          "title": "Water leak in shared basement",
+          "score": 0.5880054858478373
+        },
+        {
+          "id": 41,
+          "title": "Local clinic opening hours",
+          "score": 0.5872688751419413
+        },
+        {
+          "id": 73,
+          "title": "Cultural workshop for children",
+          "score": 0.5868178521296735
+        },
+        {
+          "id": 48,
+          "title": "Food bank operating days and rules",
+          "score": 0.5861185054374545
+        },
+        {
+          "id": 80,
+          "title": "Online donation campaign rules (global)",
+          "score": 0.5858873464810466
+        },
+        {
+          "id": 2,
+          "title": "Elevator outage in apartment building",
+          "score": 0.5855913394067223
+        },
+        {
+          "id": 16,
+          "title": "Moving rules (elevator booking, hours)",
+          "score": 0.5842634527575853
+        },
+        {
+          "id": 19,
+          "title": "Smoking policy in shared areas",
+          "score": 0.5842059336320454
+        },
+        {
+          "id": 79,
+          "title": "Local charity food drive",
+          "score": 0.5837932283364842
+        },
+        {
+          "id": 13,
+          "title": "Rooftop access and safety rules",
+          "score": 0.5835209493444594
+        },
+        {
+          "id": 69,
+          "title": "Youth sports league safety rules",
+          "score": 0.5815089666930467
+        },
+        {
+          "id": 57,
+          "title": "School timetable / homework load",
+          "score": 0.5813530303210478
+        },
+        {
+          "id": 68,
+          "title": "Local internship placement program rules",
+          "score": 0.5805070400514265
+        },
+        {
+          "id": 61,
+          "title": "After\u0432\u0402\u2018school program availability",
+          "score": 0.5798731206023003
+        },
+        {
+          "id": 87,
+          "title": "Remote work policy change (mandatory office days)",
+          "score": 0.5774642315863656
+        },
+        {
+          "id": 86,
+          "title": "On\u0432\u0402\u2018site shift scheduling change (offline workers)",
+          "score": 0.5757390915647677
+        },
+        {
+          "id": 14,
+          "title": "Shared laundry room usage rules",
+          "score": 0.5745340118454328
+        },
+        {
+          "id": 3,
+          "title": "Heating failure in entire building",
+          "score": 0.5712243456319831
+        },
+        {
+          "id": 66,
+          "title": "University exam schedule and format",
+          "score": 0.5705149038706673
+        },
+        {
+          "id": 5,
+          "title": "Mold in stairwells and corridors",
+          "score": 0.5684747328518966
+        },
+        {
+          "id": 53,
+          "title": "Local addiction support program (AA/NA)",
+          "score": 0.5676870934629853
+        },
+        {
+          "id": 1,
+          "title": "House entrance lock broken (shared front door)",
+          "score": 0.5663235004017318
+        },
+        {
+          "id": 31,
+          "title": "Internet outage for local ISP segment",
+          "score": 0.5627557324818095
+        },
+        {
+          "id": 20,
+          "title": "Emergency evacuation plan for building",
+          "score": 0.5625826443278005
+        },
+        {
+          "id": 17,
+          "title": "Guest access policy (intercom/keys)",
+          "score": 0.5624754987590715
+        },
+        {
+          "id": 18,
+          "title": "Balcony safety and renovation rules",
+          "score": 0.5614015043345691
+        },
+        {
+          "id": 63,
+          "title": "Local youth club hours and activities",
+          "score": 0.561265618130543
+        },
+        {
+          "id": 45,
+          "title": "Pharmacy medication stock/outage",
+          "score": 0.5608451232614724
+        },
+        {
+          "id": 44,
+          "title": "Elderly day\u0432\u0402\u2018care / respite services",
+          "score": 0.5598280581976999
+        },
+        {
+          "id": 46,
+          "title": "Mental health drop\u0432\u0402\u2018in center hours",
+          "score": 0.559547778712526
+        },
+        {
+          "id": 6,
+          "title": "Stairwell lighting outage",
+          "score": 0.5502733865675199
+        },
+        {
+          "id": 9,
+          "title": "Internal noise from neighbor at night",
+          "score": 0.5480747737536739
+        }
+      ],
+      "selected_count": 1,
+      "outcome": "candidate_pass_pending_context",
+      "largest_internal_gap": 0,
+      "sensitivity": [
+        {
+          "gap": 0.05,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.02,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.01,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.005,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.002,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.001,
+          "floor": 0.3,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.5,
+          "count": 1
+        },
+        {
+          "gap": 0.05,
+          "floor": 0.7,
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "library_leave_one_out": [
+    {
+      "reference_id": 1,
+      "top_score": 0.8436212747900486,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 2,
+      "top_score": 0.8859698059970587,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 3,
+      "top_score": 0.8859698059970587,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 4,
+      "top_score": 0.8526669897593568,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 5,
+      "top_score": 0.8617454084858731,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 6,
+      "top_score": 0.8931578475233962,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 7,
+      "top_score": 0.8574363706997559,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 8,
+      "top_score": 0.878541568291998,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 9,
+      "top_score": 0.846481114128688,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 10,
+      "top_score": 0.855689282485923,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 11,
+      "top_score": 0.8593102657555606,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 12,
+      "top_score": 0.8611047728771868,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 13,
+      "top_score": 0.8744222257145042,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 14,
+      "top_score": 0.8528144403749673,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 15,
+      "top_score": 0.8597789096619873,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 16,
+      "top_score": 0.8605189551714412,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 17,
+      "top_score": 0.8744222257145042,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 18,
+      "top_score": 0.8637144539571059,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 19,
+      "top_score": 0.8611047728771868,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 20,
+      "top_score": 0.8608053728852096,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 21,
+      "top_score": 0.8738432879193312,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 22,
+      "top_score": 0.8660354951637609,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 23,
+      "top_score": 0.8921746427291668,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 24,
+      "top_score": 0.9027603324070254,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 25,
+      "top_score": 0.8430579462487842,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 26,
+      "top_score": 0.8931578475233962,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 27,
+      "top_score": 0.8607622814284343,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 28,
+      "top_score": 0.8692652742781092,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 29,
+      "top_score": 0.8588303302680673,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 30,
+      "top_score": 0.8657849793419437,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 31,
+      "top_score": 0.8588303302680673,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 32,
+      "top_score": 0.8738432879193312,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 33,
+      "top_score": 0.8804497598934558,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 34,
+      "top_score": 0.8804497598934558,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 35,
+      "top_score": 0.8489672672808977,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 36,
+      "top_score": 0.8470487062956952,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 37,
+      "top_score": 0.8829913160383822,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 38,
+      "top_score": 0.8699724472974825,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 39,
+      "top_score": 0.8921746427291668,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 40,
+      "top_score": 0.8612956669365965,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 41,
+      "top_score": 0.8783959026584303,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 42,
+      "top_score": 0.8267348681268474,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 43,
+      "top_score": 0.8732605627853913,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 44,
+      "top_score": 0.8698610533957756,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 45,
+      "top_score": 0.8368225075710513,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 46,
+      "top_score": 0.8783959026584303,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 47,
+      "top_score": 0.8528999391735227,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 48,
+      "top_score": 0.8813160109618549,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 49,
+      "top_score": 0.8662981091894886,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 50,
+      "top_score": 0.9017408638318708,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 51,
+      "top_score": 0.8474800094665542,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 52,
+      "top_score": 0.9017408638318708,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 53,
+      "top_score": 0.8640540322317201,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 54,
+      "top_score": 0.841446037550214,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 55,
+      "top_score": 0.84683163588216,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 56,
+      "top_score": 0.8591044920238412,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 57,
+      "top_score": 0.8584720754439594,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 58,
+      "top_score": 0.8691126163036736,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 59,
+      "top_score": 0.8621039587873313,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 60,
+      "top_score": 0.9027603324070254,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 61,
+      "top_score": 0.8713139279124167,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 62,
+      "top_score": 0.8449839747147416,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 63,
+      "top_score": 0.8997356049946105,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 64,
+      "top_score": 0.8691126163036736,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 65,
+      "top_score": 0.861952350188339,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 66,
+      "top_score": 0.8600878524989293,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 67,
+      "top_score": 0.8403509270892255,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 68,
+      "top_score": 0.8421958996354496,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 69,
+      "top_score": 0.8705125867659232,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 70,
+      "top_score": 0.8997356049946105,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 71,
+      "top_score": 0.8880719250429344,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 72,
+      "top_score": 0.8708250409514501,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 73,
+      "top_score": 0.8563489784498868,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 74,
+      "top_score": 0.8692810923464086,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 75,
+      "top_score": 0.8525699807972474,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 76,
+      "top_score": 0.8880719250429344,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 77,
+      "top_score": 0.8698326407737541,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 78,
+      "top_score": 0.8749012958823698,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 79,
+      "top_score": 0.8813160109618549,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 80,
+      "top_score": 0.8642011722044852,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 81,
+      "top_score": 0.8642011722044852,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 82,
+      "top_score": 0.8683089031203556,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 83,
+      "top_score": 0.8677155576799116,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 84,
+      "top_score": 0.8478773422565024,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 85,
+      "top_score": 0.8715120731821523,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 86,
+      "top_score": 0.8375107045284802,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 87,
+      "top_score": 0.83356203202642,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 88,
+      "top_score": 0.8454993088036519,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 89,
+      "top_score": 0.8924002427838708,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 90,
+      "top_score": 0.8924002427838708,
+      "selected_count": 1
+    },
+    {
+      "reference_id": 91,
+      "top_score": 0.8823112116000419,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 92,
+      "top_score": 0.8923981215512002,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 93,
+      "top_score": 0.8923981215512002,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 94,
+      "top_score": 0.8452967883113035,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 95,
+      "top_score": 0.8563381985642866,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 96,
+      "top_score": 0.8749012958823698,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 97,
+      "top_score": 0.8510027381614541,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 98,
+      "top_score": 0.864713194378998,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 99,
+      "top_score": 0.830811359033056,
+      "selected_count": 99
+    },
+    {
+      "reference_id": 100,
+      "top_score": 0.826428691863007,
+      "selected_count": 99
+    }
+  ],
+  "summary": {
+    "visible_scenarios": 10,
+    "saved_vectors_including_standby": 11,
+    "scenarios": 11,
+    "clarification_count": 1,
+    "selected_min": 1,
+    "selected_max": 100,
+    "query_top_scores": [
+      0.7842495579948031,
+      0.7842495579948031,
+      0.7016582499776206,
+      0.7286179213361244,
+      0.7324204956036919,
+      0.7384250805278509,
+      0.7382615118901524,
+      0.7639473893065513,
+      0.6472981539133847,
+      0.6990576838449019,
+      0.7765540517365249
+    ],
+    "loo_selected_median": 99.0
+  },
+  "provider_calls": 0,
+  "database_mutations": 0
+}
