@@ -28,11 +28,13 @@
   "optional_u10": "passed",
   "optional_d1": "passed",
   "ui_handler_vm": "passed",
-  "visual_acceptance": "pending; Windows automation could not verify URL",
-  "real_model_quality": "not evaluated",
+  "visual_acceptance": "author reported completing and accepting all requested local-review steps, 2026-11-16",
+  "real_model_quality": "not evaluated; separate allowance required",
   "provider_requests": 0,
   "provider_texts": 0,
   "provider_tokens": 0,
   "production_writes": 0,
-  "deployments": 0
+  "deployments": 0,
+  "visual_acceptance_source": "User: ok, all of it is done. what next?",
+  "full_population_performance_capacity": "not evaluated on the 9,150-profile dataset"
 }
