@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-16 - Pure multi-reference math core
+
+Implemented isolated JS/Python PD-9 arithmetic and source-preserving directed relationship inputs, with cross-language ranking/member/public tests. Reviewed references require evidence and exclusion reasons; paired scores, max geography and one education floor preserve the adopted math. Node137 passed/four skips; Python131 run/two skips. Final X boundary is pending the author's strict-reject vs capped-gap clarification; no app integration, provider call or data change.
+
 ## 2026-11-16 - Long reference chains trigger context review
 
 Applied author-approved PD-9 amendment: >3 raw references triggers internal context review, with clarification/splitting only when substantive findings require it. Clear issues may pass unchanged. Defined raw chain vs reviewed set J and alpha normalization; prohibited arbitrary truncation or100-way automatic blends. Updated protocol/guide/spec/skill and labelled measured cardinality results as historical. Runtime and .30/.05 settings unchanged; no new provider calls.
