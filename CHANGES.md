@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-16 - Offline reference-selection calibration
+
+Evaluated the unchanged .30/.05 chain on ten saved D1 cases plus standby: nine singleton chains and zoning100-chain. Added reproducible offline vectors/ranks/sensitivity, explicit coverage limitations, direct-affectedness proposal and runtime integration plan. Prepared ten follow-up texts without embedding them. Provider calls/texts and production writes remain zero; accepted data/code unchanged.
+
 ## 2026-11-16 - Multi-reference math and affected-person social relevance
 
 Replaced the fixed-five proposal with PD-9's reference chain, normalized similarities, paired D/S/X, maximum geography, education evidence before one floor and one-public ISR. Social relevance follows affected people's recorded outgoing relations without recursion. Updated the Analyzer, relevance, expertise, user guide, component specs, roadmap and skill; corrected CBC exponent direction and worked arithmetic with explicit intended/runtime distinctions. Runtime code, example numeric anchors/vectors, data and historical acceptance results are unchanged. Implementation/calibration and unresolved mappings remain explicit gates.

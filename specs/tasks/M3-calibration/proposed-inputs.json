@@ -1,0 +1,79 @@
+{
+  "status": "PROPOSED; no embeddings or provider calls made",
+  "texts": [
+    {
+      "id": "zoning-authority",
+      "purpose": "zoning reformulation",
+      "title": "Request review of a home-office zoning variance",
+      "description": "Please prepare a request to the municipal planning authority to review a zoning variance for a small home-office studio at Quill Lane 1. This issue concerns the requested permission and its effects on nearby residents; it does not decide the permit or plan the studio construction.",
+      "template": "{title}. {description}"
+    },
+    {
+      "id": "zoning-effects",
+      "purpose": "zoning reformulation",
+      "title": "Discuss neighbour concerns about the Quill Lane 1 home office",
+      "description": "Before submitting my proposed home-office variance at Quill Lane 1, I want neighbouring residents to identify possible noise and visitor concerns. This issue gathers those concerns; the municipal authority will review permission separately.",
+      "template": "{title}. {description}"
+    },
+    {
+      "id": "zoning-planning",
+      "purpose": "initial planning reformulation",
+      "title": "Plan the steps for a home-office variance request",
+      "description": "Create a plan for gathering information, consulting neighbours and preparing a municipal variance request for a small home office at Quill Lane 1. The outcome is a sequence of tasks, not a permit decision.",
+      "template": "{title}. {description}"
+    },
+    {
+      "id": "vague-help",
+      "purpose": "vague",
+      "title": "Help us",
+      "description": "We need help. Something should be done.",
+      "template": "{title}. {description}"
+    },
+    {
+      "id": "vague-fix",
+      "purpose": "vague",
+      "title": "Fix things",
+      "description": "There are problems and we should fix them.",
+      "template": "{title}. {description}"
+    },
+    {
+      "id": "vague-improve",
+      "purpose": "vague",
+      "title": "Improve our neighbourhood",
+      "description": "Our neighbourhood should be better. Let us improve it.",
+      "template": "{title}. {description}"
+    },
+    {
+      "id": "compound-lock-software",
+      "purpose": "compound",
+      "title": "Repair the entrance lock and choose an open-source roadmap",
+      "description": "Repair our apartment entrance lock at osbb 2, h12, and in the same decision choose the worldwide open-source software project roadmap for the next year.",
+      "template": "{title}. {description}"
+    },
+    {
+      "id": "compound-school-budget",
+      "purpose": "compound",
+      "title": "Change school lunches and allocate the city budget",
+      "description": "Change the menu for pupils at one local school and decide how the entire city improvement budget is divided across transport, parks and public buildings.",
+      "template": "{title}. {description}"
+    },
+    {
+      "id": "context-lock",
+      "purpose": "targeted context",
+      "title": "Repair our building entrance lock",
+      "description": "The entrance lock at osbb 2, h12 is jammed. Residents of this building need to choose a repair service. It concerns this entrance and these residents.",
+      "template": "{title}. {description}"
+    },
+    {
+      "id": "context-work",
+      "purpose": "targeted context",
+      "title": "Review Argo Industry on-site shift times",
+      "description": "Employees working on site at Argo Industry need to compare alternative shift start times. This concerns their working schedule at that workplace and does not change other employers or remote-work policy.",
+      "template": "{title}. {description}"
+    }
+  ],
+  "max_embedding_texts": 10,
+  "text_generation_calls": 0,
+  "place_calls": 0,
+  "firestore_writes": 0
+}

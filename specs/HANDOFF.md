@@ -4,13 +4,13 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: multi-reference documentation revised, 2026-11-16
+## Current checkpoint: M3 offline selection calibrated on saved D1 vectors, 2026-11-16
 
-- Author authorized all reviewed math/logic corrections across documents, including docs/ and skill guidance. [PD-9](decisions/PD-9-multi-reference-derivation.md) is the intended mr1 source: reference score>=.30, consecutive gap<.05, >3 clarification, normalized alpha, paired D/S/X, max compatible geography, combined education before one age floor and one-public ISR. X uses affected people's recorded outgoing relations, maximum one step; creator has no privileged role.
-- PR #38 is revised in place; original fixed-five/type-table proposal is superseded. [M3 task](tasks/M3-analyzer-guardrails.md) explicitly scopes documents/skill only for this revision. Main baseline remains3c25ef7; no runtime behavior, data, providers, model or rules changes. Accepted D1 scores/journal remain frozen and versioned.
-- Corrected Expertise exponent explanation and regenerated all worked Part7 arithmetic with explicit hypothetical inputs; current code vs intended certificate/College/decay discrepancies remain documented, not silently resolved. [04 Expertise](04-expertise.md), references and local math evidence are updated.
-- Next: review documentation PR #38 with green required checks; merge only on explicit author instruction. Then produce calibration/coverage and a concrete implementation plan. Exact reference metric/template/aspects, direct-affectedness predicate, candidate/cutoff safety and cost allowance must be decided before runtime implementation; initial .30/.05 thresholds need calibration. D2/access and unrelated prototype work stay separate.
-- Drive A reconnected; active worktree remains `A:/BackUp/isr-mvp/worktrees/wt-m3-analyzer-spec`. A temporary untouched C scratch worktree was created during disconnection and is not used for edits. Do not prune or remove unrelated worktrees. No production reset/reseed or deployment is needed for this documentation PR.
+- Author explicitly merged #38 as89fb6bc, then approved offline calibration/implementation planning. New branch codex/m3-offline-calibration in A:/BackUp/isr-mvp/worktrees/wt-m3-calibration. No runtime, live/provider or model changes.
+- [Calibration report](tasks/M3-offline-calibration.md): ten D1 scenarios plus standby recovered by streaming filtered issue-vector extraction from accepted snapshot. An isolated Firestore import attempt timed out; its process was stopped and ports closed, no export. Committed vector inputs/reproducer need no emulator, key or network.
+- Existing QUERY-to-DOCUMENT cosine: nine scenarios select one reference; zoning D1-08 selects100 and requests clarification. All ten top references match editorial source bindings (not independent accuracy). .30 floor excludes no reference in these ranks; gap.02 yields one reference per scenario but remains an unadopted sensitivity experiment. No genuine vague/compound embeddings or final member-score comparisons exist yet.
+- Next attention gate: review results and proposed direct_scope_rule, then approve a concrete follow-up/implementation plan. Ten exact proposed texts and a bounded optional allowance (10 embedding texts,0 text-generation,0 place calls,0 database writes) are prepared but NOT authorized/run. Keep existing .30/.05 rule until a separate decision. Do not invent affectedness thresholds or use reference vectors as actual-issue aspects.
+- Accepted D1 live journal/snapshots and results remain frozen. No deploy/reset/reseed or new profile embedding. Explicit merge instruction required for the forthcoming calibration PR; runtime integration remains a later approved stage.
 
 ## D1 verified checkpoint (historical; acceptance PR #35 merged)
 
