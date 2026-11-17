@@ -13,3 +13,5 @@ Plan: edit only staged quotation instructions and bump staged prompt version; ve
 - Offline tests prove contract consistency and refusal, not real-model compliance. No API call, private loader, database, browser repeat, deploy or rules change. Fresh real-model validation remains gated by its own explicit bounded allowance; prior four-call pilot allowance is consumed.
 
 - Draft fix PR #45 is stacked on #44. Runtime commit 25689de passed GitHub Node/Python checks. No merge is authorized by offline-fix approval; final documentation-head CI is checked before handoff.
+
+- Author explicitly authorized merge PR #44, then #45. #44 merged as 137f7b4517775d75a9efdb37c21151c2b02bf630; #45 retargeted to main. Its merge preview matched tested tree 0b3d90803ff99d3fd6a31795e497e7a2b0069e59 before this documentation-only checkpoint. Final-head CI/merge receipt are verified through GitHub. No new paid call, deploy, rescore or production operation is authorized.

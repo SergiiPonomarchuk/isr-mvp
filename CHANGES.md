@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Ordered pilot-evidence and quotation-fix merges authorized
+
+Author authorized #44 followed by #45. #44 merged as 137f7b4; #45 now targets main with an identical conflict-free tested tree. Final CI/merge receipt are verified through GitHub. Real-model compliance of the new quotation prompt remains unverified; no new spending or deployment is authorized.
+
 ## 2026-11-17 - Align staged quotation instructions with effective source
 
 Staged prompt v2 names EFFECTIVE_JSON consistently in schema descriptions and quotation instructions, distinguishing source quotes from reference titles. Wire shape, exact validator and scoring math stay unchanged. Actual copied-title output remains rejected; historical artifact hashes match. Node 231 passed/six skips, Python 140 run/two skips. No paid retest, loader access or deployment; see specs/tasks/M3-quotation-contract.md.
