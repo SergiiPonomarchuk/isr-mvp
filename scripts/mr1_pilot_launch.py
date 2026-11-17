@@ -26,8 +26,9 @@ def main():
     parser.add_argument('--two-case',action='store_true')
     parser.add_argument('--prototype-check',action='store_true')
     parser.add_argument('--staged-check',action='store_true')
+    parser.add_argument('--cheapest-low',action='store_true')
     args=parser.parse_args()
-    command=['node',str(ROOT/('functions/tools/staged-review-check.js' if args.staged_check else 'functions/tools/candidate-prototype-check.js' if args.prototype_check else 'functions/tools/mr1-pilot.js'))]
+    command=['node',str(ROOT/('functions/tools/cheapest-low-check.js' if args.cheapest_low else 'functions/tools/staged-review-check.js' if args.staged_check else 'functions/tools/candidate-prototype-check.js' if args.prototype_check else 'functions/tools/mr1-pilot.js'))]
     if args.corrected:command.append('--corrected')
     if args.continuation:command.append('--continuation')
     if args.epoch2:command.append('--epoch2')
@@ -38,13 +39,13 @@ def main():
     env['NODE_PATH']=str(MAIN/'functions/node_modules')
     if not args.apply:
         return subprocess.run(command,env=env).returncode
-    approval_path=ROOT/('specs/tasks/M3-evaluation/staged-check-approval.json' if args.staged_check else 'specs/tasks/M3-evaluation/prototype-check-approval.json' if args.prototype_check else 'specs/tasks/M3-evaluation/two-case-approval.json' if args.two_case else 'specs/tasks/M3-evaluation/aligned-approval.json' if args.aligned else 'specs/tasks/M3-evaluation/grounding-approval.json' if args.grounding else 'specs/tasks/M3-evaluation/technical-repair-approval.json' if args.epoch2 else 'specs/tasks/M3-evaluation/continuation-approval.json' if args.continuation else 'specs/tasks/M3-evaluation/corrected-approval.json' if args.corrected else 'specs/tasks/M3-evaluation/approval.json')
+    approval_path=ROOT/('specs/tasks/M3-evaluation/cheapest-low-approval.json' if args.cheapest_low else 'specs/tasks/M3-evaluation/staged-check-approval.json' if args.staged_check else 'specs/tasks/M3-evaluation/prototype-check-approval.json' if args.prototype_check else 'specs/tasks/M3-evaluation/two-case-approval.json' if args.two_case else 'specs/tasks/M3-evaluation/aligned-approval.json' if args.aligned else 'specs/tasks/M3-evaluation/grounding-approval.json' if args.grounding else 'specs/tasks/M3-evaluation/technical-repair-approval.json' if args.epoch2 else 'specs/tasks/M3-evaluation/continuation-approval.json' if args.continuation else 'specs/tasks/M3-evaluation/corrected-approval.json' if args.corrected else 'specs/tasks/M3-evaluation/approval.json')
     approval=json.loads(approval_path.read_text(encoding='utf8'))
     plan=(ROOT/'specs/tasks/M3-evaluation/cases.json').read_bytes()
     if approval['plan_sha256']!=hashlib.sha256(plan).hexdigest():
         raise ValueError('Approved case plan changed; no request made')
-    folder=ROOT/('specs/tasks/M3-evaluation/pilot-20261117-staged-check' if args.staged_check else 'specs/tasks/M3-evaluation/pilot-20261117-prototype-check' if args.prototype_check else 'specs/tasks/M3-evaluation/pilot-20261117-two-case' if args.two_case else 'specs/tasks/M3-evaluation/pilot-20261117-aligned' if args.aligned else 'specs/tasks/M3-evaluation/pilot-20261117-grounding' if args.grounding else 'specs/tasks/M3-evaluation/pilot-20261117-technical-repair' if args.epoch2 else 'specs/tasks/M3-evaluation/pilot-20261117-continuation' if args.continuation else 'specs/tasks/M3-evaluation/pilot-20261117-corrected' if args.corrected else 'specs/tasks/M3-evaluation/pilot-20261117')
-    if args.prototype_check or args.staged_check:
+    folder=ROOT/('specs/tasks/M3-evaluation/pilot-20261117-cheapest-low' if args.cheapest_low else 'specs/tasks/M3-evaluation/pilot-20261117-staged-check' if args.staged_check else 'specs/tasks/M3-evaluation/pilot-20261117-prototype-check' if args.prototype_check else 'specs/tasks/M3-evaluation/pilot-20261117-two-case' if args.two_case else 'specs/tasks/M3-evaluation/pilot-20261117-aligned' if args.aligned else 'specs/tasks/M3-evaluation/pilot-20261117-grounding' if args.grounding else 'specs/tasks/M3-evaluation/pilot-20261117-technical-repair' if args.epoch2 else 'specs/tasks/M3-evaluation/pilot-20261117-continuation' if args.continuation else 'specs/tasks/M3-evaluation/pilot-20261117-corrected' if args.corrected else 'specs/tasks/M3-evaluation/pilot-20261117')
+    if args.prototype_check or args.staged_check or args.cheapest_low:
         for receipt in approval['receipts']:
             if hashlib.sha256((ROOT/receipt).read_bytes()).hexdigest()!=approval['pins'][receipt]:
                 raise ValueError('Prototype parent receipt changed; no request made')
