@@ -1,6 +1,6 @@
 # M3 staged runtime: mocked integration evidence, 2026-11-17
 
-Status: implementation and automated mocked acceptance completed on `codex/m3-staged-runtime`; local Create/member-list continuation verified; merge instruction pending. Draft implementation [PR #43](https://github.com/SergiiPonomarchuk/isr-mvp/pull/43) targets the separate parent evaluation PR #42. Runtime commit `e1acc5d` passed Node/Python CI. No deployment readiness claim.
+Status: implementation and automated mocked acceptance completed on `codex/m3-staged-runtime`; local Create/member-list continuation verified; ordered merges #42/#43 authorized. Draft implementation [PR #43](https://github.com/SergiiPonomarchuk/isr-mvp/pull/43) targets the separate parent evaluation PR #42. Runtime commit `e1acc5d` passed Node/Python CI. No deployment readiness claim.
 
 VERIFIED code entry points: `functions/ai-helper.js:1150`, `functions/staged-context.js:13`, `functions/staged-context.js:27`, `functions/staged-context.js:46`, `functions/staged-context.js:66`, `functions/mr1-service.js:22`, `functions/mr1-service.js:82`, `functions/mr1-service.js:86`, and `functions/analyzer-log.js:25`. These describe the feature branch, not the deployed release.
 
@@ -45,4 +45,6 @@ The author's continuation and agent browser check establish this mocked flow. Th
 
 ## Remaining gates
 
-An explicit merge instruction and a separately authorized real-model pilot remain necessary. This task demonstrates contracts and integration with mocks; it cannot prove model judgments/extraction are true. Full-population 9,150-person atomic storage and memory failures remain hard gates. No import, rescore, migration, production write, rules change, deployment or additional paid allowance is authorized by this evidence. Sol Medium remains sufficient.
+The author explicitly authorized the ordered #42/#43 merges. A separately authorized real-model pilot remains necessary before real-model acceptance. This task demonstrates contracts and integration with mocks; it cannot prove model judgments/extraction are true. Full-population 9,150-person atomic storage and memory failures remain hard gates. No import, rescore, migration, production write, rules change, deployment or additional paid allowance is authorized by this evidence. Sol Medium remains sufficient.
+
+Merge closeout: #42 merged as `e19bfc02920fdc04b1134878b050afff4124449b`; #43 now targets main. `git merge-tree --write-tree origin/main HEAD` matched the tested head tree `ba9306bc85bde880efe8b2d567425ef97b3cbe00` before this documentation update. No source conflict or behavior change was introduced; final-head CI and merge receipt are verified through GitHub.

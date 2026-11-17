@@ -1,6 +1,6 @@
 # M3 emulator-only staged Analyzer integration
 
-Status: **author approved 2026-11-17; implemented on codex/m3-staged-runtime, mocked emulator and local Create/member-list checks passed; merge instruction pending**. Stacked on draft PR #42. No deployment or paid calls. Model comparison is retired.
+Status: **author approved 2026-11-17; implemented on codex/m3-staged-runtime, mocked emulator and local Create/member-list checks passed; author authorized ordered merges #42 then #43**. Stacked on draft PR #42. No deployment or paid calls. Model comparison is retired.
 
 ## Resulting behavior and contract
 
@@ -37,3 +37,5 @@ The local mocked Check resolves explicit narrowing once, personal help has no in
 - 2026-11-17: opened draft implementation [PR #43](https://github.com/SergiiPonomarchuk/isr-mvp/pull/43), stacked on #42. Runtime commit `e1acc5d` passed Node/Python CI. Human mock-preview acceptance remains next; no merge/deploy is authorized.
 
 - 2026-11-17 browser continuation: author said `ok, go`; creation was already complete when reopened. Agent verified the opened 20-member list and independently checked stored narrowing/source receipts and public scores. Screenshot and read-only audit are recorded in M3-staged-runtime-report.md. No further paid/live action or merge is authorized.
+
+- 2026-11-17 merge authorization: author explicitly requested #42 then #43. #42 merged as `e19bfc02920fdc04b1134878b050afff4124449b`; #43 retargeted to main with a conflict-free identical code-tree preview. Final-head CI/merge receipt are checked through GitHub. No deployment or additional paid allowance follows from these merges.

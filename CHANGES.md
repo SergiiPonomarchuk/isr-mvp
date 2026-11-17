@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Staged Analyzer local acceptance and ordered merge authorization
+
+The local created public/member list and independent 20-member score audit pass. Author explicitly authorized PR #42 followed by #43. #42 merged as e19bfc0; #43 now targets main with an identical conflict-free tested code tree. Final-head CI/merge receipt are verified through GitHub. Deployment, new paid calls and full-population acceptance remain gated.
+
 ## 2026-11-17 - Emulator-only staged Analyzer integration
 
 Implemented the approved two-stage LOW context contract with server-bound source facts, unchanged scope proofs, typed domain judgments, full receipts/provenance and unfinished-draft recheck. Check/Create/Join and location/clarification/storage scenarios pass on isolated Firestore with fake SDK/vectors/places. Old model records, completed replay and scoring math remain intact. Human preview review is pending; no paid call, deploy or production mutation. See specs/tasks/M3-staged-runtime-report.md.
