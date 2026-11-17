@@ -1,0 +1,9 @@
+{
+  "status": "completed_pending_semantic_review",
+  "calls_reserved": 2,
+  "http_attempts": 2,
+  "reserved_micros": 258048,
+  "embedding_texts": 0,
+  "firestore_rpcs": 0,
+  "production_writes": 0
+}

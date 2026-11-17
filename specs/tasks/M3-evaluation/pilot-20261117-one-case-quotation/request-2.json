@@ -1,0 +1,910 @@
+{
+  "model": "gemini-3.1-flash-lite",
+  "contents": "DEMOGRAPHICS: criteria are stated attributes of affected people, not the subject or desired outcome of the issue. features match profile features/interests: do not turn problem words like lock/security/repair into feature requirements. Do not invent an interest, occupation or family/age restriction from a problem's topic. Residence alone is not a feature tag. Use defaults minAge/maxAge=null, employmentStatus/familyStatus=\"any\", lists=[] when no supported filter is stated. For a home entrance lock with no person-attribute restriction, features and property_kinds stay empty. For unit/building, do not recruit all owners elsewhere. places may identify a stated employer/property group; never copy reference-example people or places.\nAllowed property_kinds are ONLY flat, house, land, garage, commercial, other; \"building\" is not a property kind. Employment: any, employed, unemployed. Family: any, parent, grandparent. Do not use \"other\" to disguise an unsupported criterion.\nFor EACH non-default demographic scalar or list item, add one demographic_evidence entry {field,value,quote}. value is the string form of the exact criterion value; quote is an exact input substring supporting the affected-person attribute. No evidence for null/any/empty defaults. For features and places, the literal value must occur in the quote, ignoring case/whitespace; do not paraphrase a feature tag. Empty criteria use demographic_evidence=[]. A quote merely naming the broken object is not evidence that affected people have an interest in it. If a proposed filter lacks factual support, leave it unconstrained or ask for the needed fact.\n\nASPECT QUOTATION: Every aspect.text is a verbatim contiguous substring of a quote in EFFECTIVE_JSON decision, scope_evidence, affected_place or affected_group. Keep original spelling and punctuation. Do not generate an aspect label, paraphrase, or copy a REFERENCE_JSON title unless the identical text also occurs in one of those source quotes. Check aspect.text and every acceptance/demographic evidence quote independently: valid accepted evidence cannot excuse an unsupported aspect.text. Keep 1-3 genuinely source-backed aspects; do not force one aspect or omit compatible references to satisfy quotation.\nTYPED DOMAIN CONTRACT mr1-staged-prompts-2: EFFECTIVE_JSON is already settled factual data; do not ask the answered choice again. All supplied references have passed exact scope compatibility. Scope/location are server-owned and absent from this output. Review topic/affected-group/context only, never emit scope assertions. The typed reviews object replaces legacy accepted/excluded. Every supplied ID must appear. accept requires reason_code=none, known aspect_id, exact effective-source evidence. exclude requires empty aspect_id, exact effective-source evidence and different_decision/different_affected_group/different_context. Different affected group requires stated group facts. No free explanatory field exists. These codes are model judgments, not certified truths. defer is only for non-pass, with missing_fact and empty aspect/evidence; questions must identify genuine missing facts, not repeat settled ones. Pass uses 1-3 aspects with exact effective-source text/demographic evidence and existing defaults/enums; no invented interests or personal-help prohibition. Non-pass has no aspects/accept verdicts. Never trim IDs or invent a verdict for missing facts. PLAN_HASH=31775f5e9f2736ad54ee24555b950864b57138b00f8f4db44bf95ab68e833117\nEFFECTIVE_JSON={\"decision\":{\"field\":\"clarification\",\"quote\":\"For this issue, decide only how to repair the entrance lock at osbb 2, h12.\"},\"scope\":\"building\",\"scope_evidence\":{\"field\":\"clarification\",\"quote\":\"repair the entrance lock at osbb 2, h12\"},\"affected_place\":{\"field\":\"clarification\",\"quote\":\"osbb 2, h12\"},\"affected_group\":null}\nREFERENCE_JSON=[{\"id\":\"1\",\"title\":\"House entrance lock broken (shared front door)\",\"category\":\"building.security.locks\",\"roles\":[\"tenant\",\"visitor\"],\"score\":0.7409257415371802},{\"id\":\"10\",\"title\":\"Scheduling noisy renovations in flats\",\"category\":\"building.maintenance.renovation\",\"roles\":[\"tenant\"],\"score\":0.6960398080294413},{\"id\":\"15\",\"title\":\"Storage lockers allocation / pricing\",\"category\":\"housing.policy.storage\",\"roles\":[\"tenant\",\"visitor\"],\"score\":0.6602509755328074},{\"id\":\"4\",\"title\":\"Water leak in shared basement\",\"category\":\"building.maintenance.water\",\"roles\":[\"tenant\"],\"score\":0.659234499530471},{\"id\":\"2\",\"title\":\"Elevator outage in apartment building\",\"category\":\"building.maintenance.elevator\",\"roles\":[\"tenant\"],\"score\":0.6571216486004865},{\"id\":\"7\",\"title\":\"Trash overflow in shared bins\",\"category\":\"building.maintenance.waste\",\"roles\":[\"tenant\"],\"score\":0.6480074627825242},{\"id\":\"14\",\"title\":\"Shared laundry room usage rules\",\"category\":\"building.maintenance.laundry\",\"roles\":[\"tenant\"],\"score\":0.6463903411093745},{\"id\":\"3\",\"title\":\"Heating failure in entire building\",\"category\":\"building.maintenance.heating\",\"roles\":[\"tenant\"],\"score\":0.6450557588248088},{\"id\":\"12\",\"title\":\"Building pet rules (allow/restrict pets)\",\"category\":\"housing.policy.pets\",\"roles\":[\"tenant\",\"pet_owner\"],\"score\":0.6425166201806272},{\"id\":\"13\",\"title\":\"Rooftop access and safety rules\",\"category\":\"building.safety.rooftop\",\"roles\":[\"tenant\"],\"score\":0.6388852006990635},{\"id\":\"5\",\"title\":\"Mold in stairwells and corridors\",\"category\":\"building.health.mold\",\"roles\":[\"tenant\"],\"score\":0.6374550089599414},{\"id\":\"17\",\"title\":\"Guest access policy (intercom/keys)\",\"category\":\"building.security.guest_access\",\"roles\":[\"tenant\",\"visitor\"],\"score\":0.6350091512464318},{\"id\":\"16\",\"title\":\"Moving rules (elevator booking, hours)\",\"category\":\"building.policy.moving\",\"roles\":[\"tenant\"],\"score\":0.6333260202239157},{\"id\":\"6\",\"title\":\"Stairwell lighting outage\",\"category\":\"building.security.lighting\",\"roles\":[\"tenant\"],\"score\":0.6297644677053461},{\"id\":\"19\",\"title\":\"Smoking policy in shared areas\",\"category\":\"building.health.smoking\",\"roles\":[\"tenant\"],\"score\":0.6290993939448023},{\"id\":\"8\",\"title\":\"Residential parking allocation in building lot\",\"category\":\"building.transport.parking\",\"roles\":[\"tenant\",\"driver\"],\"score\":0.6201078127514728},{\"id\":\"18\",\"title\":\"Balcony safety and renovation rules\",\"category\":\"building.safety.balcony\",\"roles\":[\"tenant\"],\"score\":0.6165294216030098},{\"id\":\"20\",\"title\":\"Emergency evacuation plan for building\",\"category\":\"building.safety.evacuation\",\"roles\":[\"tenant\"],\"score\":0.6154547967688181},{\"id\":\"9\",\"title\":\"Internal noise from neighbor at night\",\"category\":\"building.noise.internal\",\"roles\":[\"tenant\"],\"score\":0.6085308937879818}]",
+  "config": {
+    "temperature": 0,
+    "seed": 20261110,
+    "maxOutputTokens": 8192,
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "needs_clarification",
+            "not_consistent"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "aspects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string",
+                "description": "Copy one exact contiguous substring from a quote in EFFECTIVE_JSON decision, scope_evidence, affected_place or affected_group. This is source text, not an aspect label or reference title. A REFERENCE_JSON title is allowed only if the identical text occurs in one of those source quotes."
+              },
+              "demographics": {
+                "type": "object",
+                "properties": {
+                  "minAge": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "maxAge": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "employmentStatus": {
+                    "type": "string",
+                    "enum": [
+                      "any",
+                      "employed",
+                      "unemployed"
+                    ]
+                  },
+                  "familyStatus": {
+                    "type": "string",
+                    "enum": [
+                      "any",
+                      "parent",
+                      "grandparent"
+                    ]
+                  },
+                  "features": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "places": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "property_kinds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "flat",
+                        "house",
+                        "land",
+                        "garage",
+                        "commercial",
+                        "other"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "minAge",
+                  "maxAge",
+                  "employmentStatus",
+                  "familyStatus",
+                  "features",
+                  "places",
+                  "property_kinds"
+                ],
+                "additionalProperties": false
+              },
+              "demographic_evidence": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "enum": [
+                        "minAge",
+                        "maxAge",
+                        "employmentStatus",
+                        "familyStatus",
+                        "features",
+                        "places",
+                        "property_kinds"
+                      ]
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "String form of the exact non-default criterion value."
+                    },
+                    "quote": {
+                      "type": "string",
+                      "description": "Copy an exact contiguous substring of a settled EFFECTIVE_JSON source quote supporting the affected-person attribute; REFERENCE_JSON metadata is not source evidence."
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "value",
+                    "quote"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "id",
+              "text",
+              "demographics",
+              "demographic_evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "plan_hash": {
+          "type": "string",
+          "enum": [
+            "31775f5e9f2736ad54ee24555b950864b57138b00f8f4db44bf95ab68e833117"
+          ]
+        },
+        "reviews": {
+          "type": "object",
+          "properties": {
+            "1": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "2": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "3": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "4": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "5": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "6": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "7": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "8": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "9": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "10": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "12": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "13": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "14": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "15": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "16": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "17": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "18": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "19": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            },
+            "20": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accept",
+                    "exclude",
+                    "defer"
+                  ]
+                },
+                "aspect_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "For accept/exclude copy an exact contiguous substring from a settled EFFECTIVE_JSON source quote. Valid evidence does not validate a different aspect.text. For defer use an empty string."
+                },
+                "reason_code": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "different_decision",
+                    "different_affected_group",
+                    "different_context",
+                    "missing_fact"
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "aspect_id",
+                "evidence",
+                "reason_code"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "1",
+            "10",
+            "15",
+            "4",
+            "2",
+            "7",
+            "14",
+            "3",
+            "12",
+            "13",
+            "5",
+            "17",
+            "16",
+            "6",
+            "19",
+            "8",
+            "18",
+            "20",
+            "9"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "result",
+        "message",
+        "questions",
+        "aspects",
+        "plan_hash",
+        "reviews"
+      ],
+      "additionalProperties": false
+    },
+    "thinkingConfig": {
+      "thinkingLevel": "LOW"
+    },
+    "httpOptions": {
+      "retryOptions": {
+        "attempts": 1
+      }
+    }
+  }
+}

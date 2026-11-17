@@ -1,0 +1,72 @@
+{
+  "version": "two-stage-pilot-run-1",
+  "approval": {
+    "approved": true,
+    "plan_hash": "19f97dd1188f56cfc7ae4d9e4b92b82406732f3f74a8c09d96ad055f35bfc4a1",
+    "cap_micros": 270000,
+    "calls": 2,
+    "author_reply": "Approve the one-case quotation retest up to $0.27 additional, using the existing credential loader.",
+    "date": "2026-11-17",
+    "existing_loader_authorized": true,
+    "new_embedding_texts": 0,
+    "production_writes_authorized": false,
+    "deployments_authorized": false
+  },
+  "status": "completed_pending_semantic_review",
+  "records": [
+    {
+      "case_id": "compound-lock-software-clarified",
+      "stage": "effective_decision",
+      "request_hash": "80984378106e65a009837ef4ab3330b4c57d866c52bf46d8931c1ac6dfdf0063",
+      "schema_hash": "89a12b00f7caf18e15ea183c1e550536f78094c335839064b71d025055d73b5d",
+      "reserved_micros": 129024,
+      "http_attempts": 1,
+      "status": "validated",
+      "raw_output": "{\n  \"result\": \"pass\",\n  \"message\": \"The request has been clarified to focus solely on the repair of the entrance lock at the specified location, removing the unrelated software roadmap task.\",\n  \"questions\": [],\n  \"decision\": {\n    \"field\": \"clarification\",\n    \"quote\": \"For this issue, decide only how to repair the entrance lock at osbb 2, h12.\"\n  },\n  \"scope\": \"building\",\n  \"scope_evidence\": {\n    \"field\": \"clarification\",\n    \"quote\": \"repair the entrance lock at osbb 2, h12\"\n  },\n  \"affected_place\": {\n    \"field\": \"clarification\",\n    \"quote\": \"osbb 2, h12\"\n  },\n  \"affected_group\": null,\n  \"location_reference\": {\n    \"anchor\": \"home\",\n    \"place\": \"\"\n  },\n  \"location_evidence\": {\n    \"field\": \"clarification\",\n    \"quote\": \"repair the entrance lock at osbb 2, h12\"\n  },\n  \"unresolved_facts\": [],\n  \"contradictions\": []\n}",
+      "model_version": "gemini-3.1-flash-lite",
+      "usage": {
+        "promptTokenCount": 413,
+        "candidatesTokenCount": 269,
+        "totalTokenCount": 809,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 413
+          }
+        ],
+        "thoughtsTokenCount": 127,
+        "serviceTier": "standard"
+      },
+      "finish_reason": "STOP",
+      "reported_cost_micros": 698
+    },
+    {
+      "case_id": "compound-lock-software-clarified",
+      "stage": "domain_review",
+      "request_hash": "2eb8e713bbab36a703487065d7daeb3c4b527d4a3864fea23a5662564c36a332",
+      "schema_hash": "0bd4a522e1a5d7175f2cc1086a447143177e4a99b97c2806a535b8e3f36c459f",
+      "reserved_micros": 129024,
+      "http_attempts": 1,
+      "status": "validated",
+      "raw_output": "{\n  \"result\": \"pass\",\n  \"message\": \"The issue is clearly defined as a request to repair an entrance lock at a specific location.\",\n  \"questions\": [],\n  \"aspects\": [\n    {\n      \"id\": \"1\",\n      \"text\": \"repair the entrance lock\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"any\",\n        \"familyStatus\": \"any\",\n        \"features\": [],\n        \"places\": [],\n        \"property_kinds\": []\n      },\n      \"demographic_evidence\": []\n    }\n  ],\n  \"plan_hash\": \"31775f5e9f2736ad54ee24555b950864b57138b00f8f4db44bf95ab68e833117\",\n  \"reviews\": {\n    \"1\": {\n      \"verdict\": \"accept\",\n      \"aspect_id\": \"1\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"none\"\n    },\n    \"2\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"3\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"4\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"5\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"6\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"7\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"8\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"9\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"10\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"12\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"13\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"14\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"15\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"16\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"17\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"18\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"19\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    },\n    \"20\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock\",\n      \"reason_code\": \"different_decision\"\n    }\n  }\n}",
+      "model_version": "gemini-3.1-flash-lite",
+      "usage": {
+        "promptTokenCount": 1770,
+        "candidatesTokenCount": 1167,
+        "totalTokenCount": 3062,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1770
+          }
+        ],
+        "thoughtsTokenCount": 125,
+        "serviceTier": "standard"
+      },
+      "finish_reason": "STOP",
+      "reported_cost_micros": 2381
+    }
+  ],
+  "index": 1,
+  "stage": "done"
+}

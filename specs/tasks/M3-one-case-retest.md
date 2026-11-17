@@ -1,6 +1,6 @@
 # M3 one-case quotation retest preparation
 
-Author approved offline preparation with “ok, go” following the one-case/two-call proposal. This does not authorize paid execution or credential-loader use.
+Author approved offline preparation with “ok, go” following the one-case/two-call proposal. That initial preparation made no paid calls. Subsequent explicit paid/loader approval and execution are recorded below.
 
 Plan: prepare a new immutable manifest for compound-lock-software-clarified only, with the merged mr1-staged-prompts-2 contract, saved original input/ranking/library bindings and unchanged cheap-model LOW settings. Add a distinct exact two-call authorization profile to the tested durable runner; retain the old four-call profile without relaxing its limits. Test both profiles with fake SDK HTTP only, including restart, missing approval, mutated case/count/cap and source drift refusals. No app prompt/math/library change, paid calls, loader, embeddings, geocoding, Firestore writes or deployment. Run required suites and open a feature PR.
 
@@ -17,3 +17,7 @@ No paid runner invocation in this task. CLI is offline-only and refuses --apply.
 - Offline verification: six focused one-/two-case SDK tests pass, including exact two sends and zero sends on invalid authorization/source/profile. Full Node: 235 passed / six optional skips (241 total); Python: 140 run / two optional skips. Historical artifact Git blobs match their original SHA-256 manifest. No API call, loader invocation or production mutation.
 
 - Draft preparation PR #46 opened against main. Runtime 8057fb1 passed Node/Python CI. Final documentation-head checks are verified before handoff. Preparation approval does not authorize paid execution or merge.
+
+- Author explicitly approved the one-case quotation retest up to US$0.27 additional using the existing loader. Executed once: two real requests, both valid, source-backed aspect text and full 100-candidate coverage. Reviewed pass is limited to this input/run. Reported-token estimate US$0.003079; new reserved US$0.258048. Raw evidence preserved; no retry/score/public/deploy. See M3-one-case-retest-result.md.
+
+- Post-run verification: Node 236 passed / six optional skips (242 total); Python 140 run / two optional skips. Actual-result regression verifies literal quotation, no repeated questions, home/building and complete provenance. Artifact hashes recorded before staging. No further API request.
