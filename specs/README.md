@@ -197,3 +197,5 @@ Latest M3: [grounding pilot result and contract-alignment proposal](tasks/M3-gro
 Latest M3: [aligned pilot closeout and semantic attention gate](tasks/M3-aligned-pilot-report.md). All outcomes completed within allowance; semantic acceptance remains withheld.
 
 Latest M3: [confirmed interpretation rules and offline v5 verification](tasks/M3-confirmed-context-rules.md). Actual two-case verification awaits the precise 21-review cumulative allowance decision; no additional US$0.50 is proposed.
+
+Latest M3: [two-case actual closeout](tasks/M3-two-case-report.md) and [offline candidate-review proposal](tasks/M3-candidate-review-proposal.md). The 21-review allowance is exhausted; current semantic coverage is not accepted.

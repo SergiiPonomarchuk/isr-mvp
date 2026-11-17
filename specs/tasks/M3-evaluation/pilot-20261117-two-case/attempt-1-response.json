@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"not_consistent\",\n  \"message\": \"The submitted issue concerns a request for physical assistance with moving household items, which does not align with the scope or purpose of the available reference regarding family emergency support services.\",\n  \"questions\": [],\n  \"scope\": null,\n  \"location_reference\": {\n    \"anchor\": \"home\",\n    \"place\": \"\"\n  },\n  \"accepted\": [],\n  \"excluded\": {\n    \"51\": \"The reference pertains to social support services for family emergencies, whereas the request is for physical labor assistance with moving household items.\"\n  },\n  \"aspects\": []\n}",
+  "usage": {
+    "promptTokenCount": 1610,
+    "candidatesTokenCount": 143,
+    "totalTokenCount": 1753
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "25ae080151e99c758e75580d73f650913c28f072c9d94f817d14e34adf8875cc"
+}

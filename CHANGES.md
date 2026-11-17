@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Focused v5 check reached review ceiling; raw-chain coverage rejected
+
+Executed the approved two cases once each at 21 cumulative reviews under original US$0.50. Blanket personal-help exclusion and repeated lock choice disappeared, but the lock response omitted decisions for 98 of 100 candidates and was correctly rejected. Fourteen embedding texts/POSTs, US$0.331466 reserved; no further calls or live changes. Preserved all outputs/receipts and prepared offline candidate-review protocol proposal. See specs/tasks/M3-two-case-report.md.
+
 ## 2026-11-17 - Confirmed clarification precedence and personal-help eligibility
 
 Author confirmed both interpretation rules. Prompt v5 respects explicit narrowing and prohibits invented public-policy-only exclusion while preserving genuine scope/reference limits. Added offline regressions and retained literal failed outputs. Node 178 passed/five optional skips; Python 140 run/two skips. No new API calls or allowance/live changes. Proposed targeted two-case actual check needs one extra cumulative review slot (21 instead of 20) within the SAME US$0.50; see specs/tasks/M3-confirmed-context-rules.md.

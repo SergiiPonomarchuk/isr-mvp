@@ -27,3 +27,5 @@ The request is for one additional review slot, not more money. Even worst-case t
 - Next author decision: approve the proposed two-case actual check at 21 cumulative reviews under the SAME US$0.50 / 45-text / 17-POST limits. This one-slot increase is not yet authorized. The execution guard remains at 20 until that decision; existing approval files will also refuse the changed prompt/source bindings rather than accidentally replay an old run.
 
 - 2026-11-17: Author approved two-case check at 21 cumulative reviews and the same US.50. Implemented a separately bound focused guard accepting the completed pilot receipt, fixed target IDs and no other case. Offline checks precede actual execution; old limits remain unchanged for historical launch modes.
+
+- 2026-11-17 actual check completed both requests, stopped on missing raw-candidate decisions for clarified lock. Review allowance exhausted at 21, 14 embedding texts/POSTs, US$0.331466 reserved. No retry or more paid calls. See M3-two-case-report.md and offline protocol proposal.

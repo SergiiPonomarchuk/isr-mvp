@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"pass\",\n  \"message\": \"The issue is resolved by focusing on the entrance lock repair at the specified building, as clarified by the user.\",\n  \"questions\": [],\n  \"scope\": \"building\",\n  \"location_reference\": {\n    \"anchor\": \"home\",\n    \"place\": \"\"\n  },\n  \"accepted\": [\n    {\n      \"id\": \"1\",\n      \"aspect_id\": \"lock_repair\",\n      \"evidence\": \"Repair our apartment entrance lock at osbb 2, h12\"\n    }\n  ],\n  \"excluded\": {\n    \"90\": \"The open-source software roadmap decision is explicitly excluded by the user's clarification.\"\n  },\n  \"aspects\": [\n    {\n      \"id\": \"lock_repair\",\n      \"text\": \"Repair our apartment entrance lock at osbb 2, h12\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"any\",\n        \"familyStatus\": \"any\",\n        \"features\": [],\n        \"places\": [],\n        \"property_kinds\": [\n          \"flat\"\n        ]\n      },\n      \"demographic_evidence\": [\n        {\n          \"field\": \"property_kinds\",\n          \"value\": \"flat\",\n          \"quote\": \"Repair our apartment entrance lock\"\n        }\n      ]\n    }\n  ]\n}",
+  "usage": {
+    "promptTokenCount": 6474,
+    "candidatesTokenCount": 334,
+    "totalTokenCount": 6808
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "b0750e27eaa26616026dede7ecb87547889bef15bf89cec86abcd8d99ddd6f49"
+}

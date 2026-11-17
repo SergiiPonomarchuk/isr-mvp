@@ -1,0 +1,50 @@
+{
+  "version": "m3-pilot-summary-1",
+  "status": "stopped_no_retry",
+  "stop_reason": "Reviewed reference validation failed",
+  "totals": {
+    "reviews": 21,
+    "embeddingTexts": 14,
+    "embeddingPosts": 14,
+    "reserved_usd_micros": 331466,
+    "transport_attempts": 35
+  },
+  "conservative_reserved_usd": 0.331466,
+  "reported_token_totals": {
+    "promptTokenCount": 52565,
+    "candidatesTokenCount": 8266,
+    "totalTokenCount": 60831
+  },
+  "current_run_totals": {
+    "reviews": 2,
+    "embeddingTexts": 1,
+    "embeddingPosts": 1,
+    "reserved_usd_micros": 34549,
+    "transport_attempts": 3
+  },
+  "reported_cost_usd": 0.025547,
+  "usage_complete": false,
+  "cases": [
+    {
+      "id": "D1-09",
+      "state": "complete",
+      "outcome": "not_consistent",
+      "retained": [],
+      "questions": [],
+      "message": "The submitted issue concerns a request for physical assistance with moving household items, which does not align with the scope or purpose of the available reference regarding family emergency support services."
+    },
+    {
+      "id": "compound-lock-software-clarified",
+      "state": "stopped",
+      "retained": [],
+      "questions": [],
+      "message": null
+    }
+  ],
+  "production_writes": 0,
+  "firestore_rpcs": 0,
+  "geocode_calls": 0,
+  "profile_embedding_texts": 0,
+  "full_population": "not run; memory and publication-capacity gates remain",
+  "deployment_ready": false
+}
