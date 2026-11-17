@@ -1,0 +1,180 @@
+{
+  "version": "m3-pilot-summary-1",
+  "status": "completed_pending_semantic_review",
+  "stop_reason": null,
+  "totals": {
+    "reviews": 19,
+    "embeddingTexts": 13,
+    "embeddingPosts": 13,
+    "reserved_usd_micros": 296917,
+    "transport_attempts": 32
+  },
+  "conservative_reserved_usd": 0.296917,
+  "reported_token_totals": {
+    "promptTokenCount": 44481,
+    "candidatesTokenCount": 7789,
+    "totalTokenCount": 52270
+  },
+  "current_run_totals": {
+    "reviews": 12,
+    "embeddingTexts": 10,
+    "embeddingPosts": 10,
+    "reserved_usd_micros": 198116,
+    "transport_attempts": 22
+  },
+  "reported_cost_usd": 0.02281,
+  "usage_complete": false,
+  "cases": [
+    {
+      "id": "D1-01-live",
+      "state": "complete",
+      "outcome": "pass",
+      "retained": [
+        "1"
+      ],
+      "questions": [],
+      "message": "The issue regarding the broken main entrance lock at the specified building has been identified and matched to the relevant category."
+    },
+    {
+      "id": "D1-02",
+      "state": "complete",
+      "outcome": "pass",
+      "retained": [
+        "21"
+      ],
+      "questions": [],
+      "message": "The request to repair a hazardous pothole on a specific street has been identified and matched to the relevant infrastructure category."
+    },
+    {
+      "id": "D1-03",
+      "state": "complete",
+      "outcome": "pass",
+      "retained": [
+        "32"
+      ],
+      "questions": [],
+      "message": "The reported issue regarding damaged playground equipment at the specified location is covered by the available reference."
+    },
+    {
+      "id": "D1-04",
+      "state": "complete",
+      "outcome": "pass",
+      "retained": [
+        "44"
+      ],
+      "questions": [],
+      "message": "The request to establish a respite care hub for elderly neighbors at the specified building is compatible with the available neighborhood-level service reference."
+    },
+    {
+      "id": "D1-05",
+      "state": "complete",
+      "outcome": "pass",
+      "retained": [
+        "86"
+      ],
+      "questions": [],
+      "message": "The request regarding shift scheduling at Argo Industry is compatible with the provided reference for offline worker shift scheduling."
+    },
+    {
+      "id": "D1-06",
+      "state": "complete",
+      "outcome": "pass",
+      "retained": [
+        "82"
+      ],
+      "questions": [],
+      "message": "The request for a larger, accessible space for the community choir is compatible with the neighborhood-level arts group support reference."
+    },
+    {
+      "id": "D1-07",
+      "state": "complete",
+      "outcome": "pass",
+      "retained": [
+        "90"
+      ],
+      "questions": [],
+      "message": "The request aligns with the open-source project roadmap synchronization scope."
+    },
+    {
+      "id": "D1-08",
+      "state": "complete",
+      "outcome": "pass",
+      "retained": [
+        "98"
+      ],
+      "questions": [],
+      "message": "The request for a zoning variance to allow a home office studio is a matter of local zoning governance."
+    },
+    {
+      "id": "D1-09",
+      "state": "complete",
+      "outcome": "not_consistent",
+      "retained": [],
+      "questions": [
+        "Are you seeking assistance from a specific municipal social service department or a private moving service?",
+        "Is there a specific city program you are inquiring about regarding emergency relocation support?"
+      ],
+      "message": "The submitted request for assistance with moving heavy household items does not align with the scope of the available reference, which pertains to city-wide social support for family emergencies. The request is for a private, localized service task rather than a public policy or community-level issue."
+    },
+    {
+      "id": "D1-10",
+      "state": "complete",
+      "outcome": "pass",
+      "retained": [
+        "97"
+      ],
+      "questions": [],
+      "message": "The request aligns with the city-wide participatory budget allocation process."
+    },
+    {
+      "id": "vague-help",
+      "state": "complete",
+      "outcome": "needs_clarification",
+      "retained": [],
+      "questions": [
+        "What specific issue or problem are you seeking help with?",
+        "Where is this issue located (e.g., a specific building, street, or neighborhood)?",
+        "Who is affected by this situation?"
+      ],
+      "message": "The request is too vague to identify a specific issue or location. Please provide details about the problem you are experiencing, the location it concerns, and who is affected."
+    },
+    {
+      "id": "compound-lock-software",
+      "state": "complete",
+      "outcome": "needs_clarification",
+      "retained": [],
+      "questions": [
+        "Would you like to proceed with the building entrance lock repair or the open-source software project roadmap?",
+        "If you choose the building repair, please confirm the address or building name if 'osbb 2, h12' is not sufficient for your local service provider."
+      ],
+      "message": "The request combines two distinct issues with different scopes: a physical building maintenance issue (entrance lock) and a global digital governance issue (open-source roadmap). These cannot be processed as a single decision. Please submit them as separate requests or choose one to proceed with."
+    },
+    {
+      "id": "vague-help-clarified",
+      "state": "complete",
+      "outcome": "pass",
+      "retained": [
+        "1"
+      ],
+      "questions": [],
+      "message": "The issue concerns a jammed entrance lock at a specific building, which is covered by the reference for shared building entrance locks."
+    },
+    {
+      "id": "compound-lock-software-clarified",
+      "state": "complete",
+      "outcome": "needs_clarification",
+      "retained": [],
+      "questions": [
+        "Do you want to proceed with the building entrance lock repair as the primary issue?",
+        "Would you like to submit the open-source software roadmap as a separate, independent request?"
+      ],
+      "message": "The input contains two distinct, unrelated decisions: a local building maintenance issue and a global digital software project roadmap. These require separate handling. Please confirm if you would like to proceed with the building entrance lock repair, or if you wish to submit the software roadmap decision separately."
+    }
+  ],
+  "production_writes": 0,
+  "firestore_rpcs": 0,
+  "geocode_calls": 0,
+  "profile_embedding_texts": 0,
+  "full_population": "not run; memory and publication-capacity gates remain",
+  "deployment_ready": false
+}

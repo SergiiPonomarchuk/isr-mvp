@@ -1,0 +1,48 @@
+{
+  "checked": "2026-11-17 Europe/Kyiv",
+  "primary_only": true,
+  "items": [
+    {
+      "url": "https://aistudio.google.com/docs/pricing",
+      "facts": {
+        "gemini-3.1-flash-lite": {
+          "input_per_million_usd": 0.25,
+          "output_including_thinking_per_million_usd": 1.5
+        },
+        "gemini-3.5-flash-lite": {
+          "input_per_million_usd": 0.3,
+          "output_including_thinking_per_million_usd": 2.5
+        }
+      },
+      "tier": "standard paid text, no caching/batch/tools"
+    },
+    {
+      "url": "https://aistudio.google.com/docs/models/gemini-3.5-flash-lite",
+      "facts": "Stable model code; structured output and thinking supported. Project-specific access not checked."
+    },
+    {
+      "url": "https://aistudio.google.com/docs/models/gemini-3.1-flash-lite",
+      "facts": "Baseline model code and 65536 output-token model limit listed; no actual model-list call."
+    },
+    {
+      "url": "https://aistudio.google.com/docs/thinking",
+      "facts": "Current default minimal for both Flash-Lite models; minimal/low/medium/high supported. Output/thinking pricing discussed; documented cap section uses Interactions API field names."
+    },
+    {
+      "url": "https://aistudio.google.com/api-reference/generate-content",
+      "facts": "generateContent thinkingConfig/thinkingLevel and usage counters documented; maxOutputTokens description refers to response candidate and does not by itself settle the combined-thinking accounting question."
+    },
+    {
+      "url": "https://aistudio.google.com/docs/structured-output",
+      "facts": "Schema-valid outputs can be semantically incorrect; application value validation and schema complexity limits remain."
+    },
+    {
+      "url": "https://aistudio.google.com/docs/models",
+      "facts": "Current model catalog. No latest alias selected; other families do not establish ISR task quality."
+    },
+    {
+      "url": "https://developers.googleblog.com/en/cost-per-task-using-cheap-classifiers-to-route-across-gemini-models-and-thinking-levels/",
+      "facts": "Provider experiments motivate measuring quality and thinking cost; their benchmark is not evidence of ISR accuracy."
+    }
+  ]
+}

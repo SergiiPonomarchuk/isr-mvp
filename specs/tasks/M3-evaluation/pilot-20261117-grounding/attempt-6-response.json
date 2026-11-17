@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"pass\",\n  \"message\": \"The request identifies a safety issue with playground equipment near the user's home, which is actionable.\",\n  \"questions\": [],\n  \"scope\": \"neighborhood\",\n  \"location_reference\": {\n    \"anchor\": \"home\",\n    \"place\": \"\"\n  },\n  \"accepted\": [\n    {\n      \"id\": \"32\",\n      \"aspect_id\": \"1\",\n      \"evidence\": \"The slide at the playground near my home building osbb 1, h6 has a jagged metal edge that poses a safety risk to children.\"\n    }\n  ],\n  \"excluded\": {},\n  \"aspects\": [\n    {\n      \"id\": \"1\",\n      \"text\": \"The slide at the playground near my home building osbb 1, h6 has a jagged metal edge that poses a safety risk to children.\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"any\",\n        \"familyStatus\": \"any\",\n        \"features\": [],\n        \"places\": [],\n        \"property_kinds\": []\n      },\n      \"demographic_evidence\": []\n    }\n  ]\n}",
+  "usage": {
+    "promptTokenCount": 997,
+    "candidatesTokenCount": 283,
+    "totalTokenCount": 1280
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "ce6c70c50fa19f940f7452bf8fce74d7020f72e733f99e62369d41a96c60c4b3"
+}

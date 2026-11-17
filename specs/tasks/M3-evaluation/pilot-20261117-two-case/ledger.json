@@ -1,0 +1,1587 @@
+{
+  "version": "m3-pilot-ledger-2",
+  "authorization": {
+    "version": "m3-two-case-approval-1",
+    "author_reply": "Approve two-case check: 21 total reviews, same $0.50",
+    "date": "2026-11-17",
+    "plan_sha256": "a8243689de12c5768d2f6be0c6100d60966f18a107ecd5725301f7d52120f343",
+    "receipts": [
+      {
+        "file": "specs/tasks/M3-evaluation/pilot-20261117/ledger.json",
+        "sha256": "17268de8f0637f2215d646235b6e108a9d951424fb0c76c5d6b0b4d6e9e7a7fa"
+      },
+      {
+        "file": "specs/tasks/M3-evaluation/pilot-20261117-corrected/ledger.json",
+        "sha256": "977418cbf0df3ef72030d5e4a99d11b60e87c79006ab50fc9eb78af0781f719a"
+      },
+      {
+        "file": "specs/tasks/M3-evaluation/pilot-20261117-continuation/ledger.json",
+        "sha256": "3574d46debc9093d07f37bf3fb7a2b55c226ea5d414f452241894ee1602e50f5"
+      },
+      {
+        "file": "specs/tasks/M3-evaluation/pilot-20261117-technical-repair/ledger.json",
+        "sha256": "0865f32990bba086bb1a15a0c62a8ccc5c0b31dcdaee113c55146876fa34f259"
+      },
+      {
+        "file": "specs/tasks/M3-evaluation/pilot-20261117-grounding/ledger.json",
+        "sha256": "ee5f9a07498de4eac170ec45b3f34960d0169fd873623cd30cd6785b2b214c77"
+      },
+      {
+        "file": "specs/tasks/M3-evaluation/pilot-20261117-aligned/ledger.json",
+        "sha256": "7ce430829e7d5ca79c3ed7f5ef9f1e36ab6b9f1a8290d3ca1e1e184771a0e51e"
+      }
+    ],
+    "max_cumulative_reviews": 21,
+    "max_embedding_texts": 45,
+    "max_embedding_posts": 17,
+    "cumulative_cost_ceiling_usd": 0.5,
+    "automatic_retries": 0,
+    "production_writes_authorized": false,
+    "repair": "One attempt per confirmed case, no other inputs, same money/text/POST ceilings",
+    "prompt_version": "mr1-context-prompt-5",
+    "target_cases": [
+      "D1-09",
+      "compound-lock-software-clarified"
+    ],
+    "schema_sha256": "8c383deb989e7ae166ef02d55c5688558ae90069eec83293cdeef263d66ddf2c"
+  },
+  "pins": {
+    "specs/tasks/M3-evaluation/cases.json": "a8243689de12c5768d2f6be0c6100d60966f18a107ecd5725301f7d52120f343",
+    "functions/data/analyzer_examples.json": "153baac827ea806aba7394ed8a61b79208555a96e4adc1afd0aaf91424b08be3",
+    "functions/ai-config.js": "593e86b7d8efbdecc3c19b7a17d186c18cf72e4adfd00c7171f85f925b12b6f0",
+    "functions/ai-helper.js": "c265f659316241318d6ff79411db18aaf683f494741aba92fd37e8e67ba531b1",
+    "functions/context-review.js": "fe84970412cdf2505cf25b960577fcbbb6c4f3f3fa641ca92c1df17e6daeef79",
+    "functions/context-schema.js": "5c338c29757dd74a5585fc508ba754ddc8461f8b0c7a10f93749fb5f4ae92beb",
+    "functions/demographics.js": "ba1bf10c28067af5f4490d2f12e12e1ccc5106a6a0c735e5a9936435b23e987c",
+    "functions/location.js": "003139fad07b0e8d95ff0304968650437acd9f4c94e14d8c627003277650ecca",
+    "functions/multi-reference.js": "cad5c25433bfd2aec56bf589bbd072d3dc49fa84c0095db2a6e675736cb45d13",
+    "functions/tools/mr1-pilot.js": "201131d8e2db3d942608e500abd78a1b0d385e30bc6a31e10c4d7e49eb73742c",
+    "functions/tools/mr1-pilot-budget.js": "80bddd7344794ca4309c33aeb8471263e466feeea98cf343cc6bdc752d5becc2",
+    "specs/tasks/M3-calibration/inputs.json": "8e193d6c87b6a9ac8c3b785ad43ea0cf7dbc6f0d3cc2536a5fc20bae90caa306",
+    "specs/tasks/M3-calibration/evaluation-vectors.json": "3526d6d99b59b9eb89a85d69688122af4ec016d1e0263350780fa78e403e4f27"
+  },
+  "limits": {
+    "reviews": 21,
+    "embeddingTexts": 45,
+    "embeddingPosts": 17,
+    "usdMicros": 500000
+  },
+  "parent_receipt": {
+    "receipts": [
+      {
+        "file": "A:\\BackUp\\isr-mvp\\worktrees\\wt-m3-evaluation\\specs\\tasks\\M3-evaluation\\pilot-20261117\\ledger.json",
+        "sha256": "17268de8f0637f2215d646235b6e108a9d951424fb0c76c5d6b0b4d6e9e7a7fa"
+      },
+      {
+        "file": "A:\\BackUp\\isr-mvp\\worktrees\\wt-m3-evaluation\\specs\\tasks\\M3-evaluation\\pilot-20261117-corrected\\ledger.json",
+        "sha256": "977418cbf0df3ef72030d5e4a99d11b60e87c79006ab50fc9eb78af0781f719a"
+      },
+      {
+        "file": "A:\\BackUp\\isr-mvp\\worktrees\\wt-m3-evaluation\\specs\\tasks\\M3-evaluation\\pilot-20261117-continuation\\ledger.json",
+        "sha256": "3574d46debc9093d07f37bf3fb7a2b55c226ea5d414f452241894ee1602e50f5"
+      },
+      {
+        "file": "A:\\BackUp\\isr-mvp\\worktrees\\wt-m3-evaluation\\specs\\tasks\\M3-evaluation\\pilot-20261117-technical-repair\\ledger.json",
+        "sha256": "0865f32990bba086bb1a15a0c62a8ccc5c0b31dcdaee113c55146876fa34f259"
+      },
+      {
+        "file": "A:\\BackUp\\isr-mvp\\worktrees\\wt-m3-evaluation\\specs\\tasks\\M3-evaluation\\pilot-20261117-grounding\\ledger.json",
+        "sha256": "ee5f9a07498de4eac170ec45b3f34960d0169fd873623cd30cd6785b2b214c77"
+      },
+      {
+        "file": "A:\\BackUp\\isr-mvp\\worktrees\\wt-m3-evaluation\\specs\\tasks\\M3-evaluation\\pilot-20261117-aligned\\ledger.json",
+        "sha256": "7ce430829e7d5ca79c3ed7f5ef9f1e36ab6b9f1a8290d3ca1e1e184771a0e51e"
+      }
+    ],
+    "totals": {
+      "reviews": 19,
+      "embeddingTexts": 13,
+      "embeddingPosts": 13,
+      "reserved_usd_micros": 296917,
+      "transport_attempts": 32
+    },
+    "reported_usage": {
+      "promptTokenCount": 44481,
+      "candidatesTokenCount": 7789,
+      "totalTokenCount": 52270
+    },
+    "reported_cost_usd_micros": 22810
+  },
+  "status": "stopped_no_retry",
+  "attempts": [
+    {
+      "id": 1,
+      "request_key": "D1-09:review",
+      "case_id": "D1-09",
+      "stage": "review",
+      "template": "mr1-context-review-1",
+      "kind": "review",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "25ae080151e99c758e75580d73f650913c28f072c9d94f817d14e34adf8875cc",
+      "schema_sha256": "8c383deb989e7ae166ef02d55c5688558ae90069eec83293cdeef263d66ddf2c",
+      "text_sha256": [
+        "14516b1437e5cf62b7cdb6e1567e5fb8fc676c9c9441ec48981b0ff1a7f183f9"
+      ],
+      "estimated_input_tokens_bytes": 11384,
+      "embedding_texts": 0,
+      "reserved_usd_micros": 15134,
+      "http_attempts": 1,
+      "status": "succeeded",
+      "reserved_at": "2026-11-17T07:52:13.640Z",
+      "usage": {
+        "promptTokenCount": 1610,
+        "candidatesTokenCount": 143,
+        "totalTokenCount": 1753
+      },
+      "finished_at": "2026-11-17T07:52:16.878Z",
+      "reported_cost_usd_micros": 617
+    },
+    {
+      "id": 2,
+      "request_key": "compound-lock-software-clarified:selection",
+      "case_id": "compound-lock-software-clarified",
+      "stage": "selection",
+      "template": "mr1-selection1",
+      "kind": "embedding",
+      "model": "gemini-embedding-001",
+      "request_sha256": "b7a942f565741b98a328e0c798062ea0cec7857dc99fc8f248a752366239cb6d",
+      "schema_sha256": null,
+      "text_sha256": [
+        "5ec37c24ed23fcc8cb7298fd481888d5f9ca5e71487f0a8d786ec3f0fe5d63cf"
+      ],
+      "estimated_input_tokens_bytes": 416,
+      "embedding_texts": 1,
+      "reserved_usd_micros": 63,
+      "http_attempts": 1,
+      "status": "succeeded",
+      "reserved_at": "2026-11-17T07:52:17.274Z",
+      "usage": null,
+      "finished_at": "2026-11-17T07:52:18.025Z"
+    },
+    {
+      "id": 3,
+      "request_key": "compound-lock-software-clarified:review",
+      "case_id": "compound-lock-software-clarified",
+      "stage": "review",
+      "template": "mr1-context-review-1",
+      "kind": "review",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "b0750e27eaa26616026dede7ecb87547889bef15bf89cec86abcd8d99ddd6f49",
+      "schema_sha256": "8c383deb989e7ae166ef02d55c5688558ae90069eec83293cdeef263d66ddf2c",
+      "text_sha256": [
+        "25f97c14667c703a433c8593bd90324baf81186f82a64b0a90a22b3507da6ee5"
+      ],
+      "estimated_input_tokens_bytes": 28254,
+      "embedding_texts": 0,
+      "reserved_usd_micros": 19352,
+      "http_attempts": 1,
+      "status": "succeeded",
+      "reserved_at": "2026-11-17T07:52:18.225Z",
+      "usage": {
+        "promptTokenCount": 6474,
+        "candidatesTokenCount": 334,
+        "totalTokenCount": 6808
+      },
+      "finished_at": "2026-11-17T07:52:20.644Z",
+      "reported_cost_usd_micros": 2120
+    }
+  ],
+  "cases": {
+    "D1-09": {
+      "state": "complete",
+      "input": {
+        "description": "Due to a sudden family emergency, I need to relocate several heavy household items from my residence to a storage unit. I am currently unable to manage the physical labor alone and require assistance to clear the space.",
+        "location": [
+          47.594929,
+          7.6209
+        ],
+        "submitterId": "222",
+        "title": "Urgent assistance needed for family relocation"
+      },
+      "input_sha256": "f39ac6590380c3cdfff8e577ec3ac8d87c4fa0cf9359a80ac629f271a8291f78",
+      "whole_issue_sha256": "826c6ba6e96d70dfb5b77415db13a6b1536dead7dce3cc2886554dfc2abc3243",
+      "raw_chain": {
+        "ranked": [
+          {
+            "id": "51",
+            "score": 0.6990576838449019
+          },
+          {
+            "id": "79",
+            "score": 0.6186854446207308
+          },
+          {
+            "id": "15",
+            "score": 0.612661829833782
+          },
+          {
+            "id": "77",
+            "score": 0.6080089905855577
+          },
+          {
+            "id": "50",
+            "score": 0.602084557310358
+          },
+          {
+            "id": "52",
+            "score": 0.5924863175185162
+          },
+          {
+            "id": "86",
+            "score": 0.590135807527942
+          },
+          {
+            "id": "1",
+            "score": 0.5833274554634235
+          },
+          {
+            "id": "16",
+            "score": 0.5831484541294542
+          },
+          {
+            "id": "44",
+            "score": 0.582015869660984
+          },
+          {
+            "id": "56",
+            "score": 0.579988263568211
+          },
+          {
+            "id": "47",
+            "score": 0.5748085030216715
+          },
+          {
+            "id": "53",
+            "score": 0.5711592335876313
+          },
+          {
+            "id": "46",
+            "score": 0.5698406201086523
+          },
+          {
+            "id": "4",
+            "score": 0.5697130349179403
+          },
+          {
+            "id": "6",
+            "score": 0.5691274911119166
+          },
+          {
+            "id": "54",
+            "score": 0.5689837161314505
+          },
+          {
+            "id": "74",
+            "score": 0.5687857771102913
+          },
+          {
+            "id": "2",
+            "score": 0.5684068422349136
+          },
+          {
+            "id": "88",
+            "score": 0.56688923949748
+          },
+          {
+            "id": "7",
+            "score": 0.5659702898808118
+          },
+          {
+            "id": "48",
+            "score": 0.5658206718245704
+          },
+          {
+            "id": "10",
+            "score": 0.5648404098219426
+          },
+          {
+            "id": "49",
+            "score": 0.5647232836458742
+          },
+          {
+            "id": "81",
+            "score": 0.5639506627045446
+          },
+          {
+            "id": "20",
+            "score": 0.5638270774196835
+          },
+          {
+            "id": "36",
+            "score": 0.5619868096658766
+          },
+          {
+            "id": "57",
+            "score": 0.5619307579894519
+          },
+          {
+            "id": "11",
+            "score": 0.5591045716249314
+          },
+          {
+            "id": "30",
+            "score": 0.5566401133588892
+          },
+          {
+            "id": "35",
+            "score": 0.5549131997323683
+          },
+          {
+            "id": "40",
+            "score": 0.554565237953795
+          },
+          {
+            "id": "69",
+            "score": 0.5525226437529006
+          },
+          {
+            "id": "43",
+            "score": 0.5518080982511265
+          },
+          {
+            "id": "82",
+            "score": 0.5504613881467181
+          },
+          {
+            "id": "5",
+            "score": 0.5479358232414908
+          },
+          {
+            "id": "24",
+            "score": 0.5472232556476989
+          },
+          {
+            "id": "31",
+            "score": 0.54583170110863
+          },
+          {
+            "id": "63",
+            "score": 0.5439044266906636
+          },
+          {
+            "id": "3",
+            "score": 0.5426348072850227
+          },
+          {
+            "id": "45",
+            "score": 0.5419454532304244
+          },
+          {
+            "id": "75",
+            "score": 0.5418630891838363
+          },
+          {
+            "id": "87",
+            "score": 0.5413249734507396
+          },
+          {
+            "id": "98",
+            "score": 0.5408869784467107
+          },
+          {
+            "id": "29",
+            "score": 0.5400691739817822
+          },
+          {
+            "id": "72",
+            "score": 0.5391958901197477
+          },
+          {
+            "id": "84",
+            "score": 0.5387717045610197
+          },
+          {
+            "id": "33",
+            "score": 0.537744975927836
+          },
+          {
+            "id": "14",
+            "score": 0.5374403899165403
+          },
+          {
+            "id": "60",
+            "score": 0.5365520634881151
+          },
+          {
+            "id": "23",
+            "score": 0.5361043034784709
+          },
+          {
+            "id": "13",
+            "score": 0.5347014883797636
+          },
+          {
+            "id": "34",
+            "score": 0.5344521918814522
+          },
+          {
+            "id": "76",
+            "score": 0.5335206245141483
+          },
+          {
+            "id": "42",
+            "score": 0.532074253439541
+          },
+          {
+            "id": "26",
+            "score": 0.5319254669120416
+          },
+          {
+            "id": "73",
+            "score": 0.5313341571107107
+          },
+          {
+            "id": "25",
+            "score": 0.5313127551373898
+          },
+          {
+            "id": "9",
+            "score": 0.5312121254022985
+          },
+          {
+            "id": "71",
+            "score": 0.5310677597715008
+          },
+          {
+            "id": "70",
+            "score": 0.5307825152991543
+          },
+          {
+            "id": "55",
+            "score": 0.5306956748211882
+          },
+          {
+            "id": "64",
+            "score": 0.5297339336295304
+          },
+          {
+            "id": "100",
+            "score": 0.5282842434229037
+          },
+          {
+            "id": "83",
+            "score": 0.5280678927433449
+          },
+          {
+            "id": "39",
+            "score": 0.5279822796815073
+          },
+          {
+            "id": "12",
+            "score": 0.5272987510548802
+          },
+          {
+            "id": "28",
+            "score": 0.5272329391901879
+          },
+          {
+            "id": "41",
+            "score": 0.5271487080779735
+          },
+          {
+            "id": "58",
+            "score": 0.5268241062217002
+          },
+          {
+            "id": "78",
+            "score": 0.5260042502641759
+          },
+          {
+            "id": "18",
+            "score": 0.5257862538221751
+          },
+          {
+            "id": "99",
+            "score": 0.5253577869110051
+          },
+          {
+            "id": "68",
+            "score": 0.5247133963506586
+          },
+          {
+            "id": "67",
+            "score": 0.5240133821374059
+          },
+          {
+            "id": "8",
+            "score": 0.5235420199816444
+          },
+          {
+            "id": "80",
+            "score": 0.522490762688858
+          },
+          {
+            "id": "32",
+            "score": 0.5212974425826448
+          },
+          {
+            "id": "22",
+            "score": 0.5212564936676398
+          },
+          {
+            "id": "17",
+            "score": 0.5210770831577246
+          },
+          {
+            "id": "37",
+            "score": 0.5208448989329371
+          },
+          {
+            "id": "21",
+            "score": 0.5186231661042348
+          },
+          {
+            "id": "19",
+            "score": 0.5183697979997831
+          },
+          {
+            "id": "38",
+            "score": 0.5177600702511868
+          },
+          {
+            "id": "96",
+            "score": 0.5147729799626318
+          },
+          {
+            "id": "62",
+            "score": 0.5140227310552761
+          },
+          {
+            "id": "94",
+            "score": 0.5138301344811417
+          },
+          {
+            "id": "61",
+            "score": 0.5134793608501714
+          },
+          {
+            "id": "59",
+            "score": 0.5114587170552126
+          },
+          {
+            "id": "93",
+            "score": 0.5094261488332631
+          },
+          {
+            "id": "65",
+            "score": 0.5073711336318124
+          },
+          {
+            "id": "92",
+            "score": 0.5052876985990528
+          },
+          {
+            "id": "27",
+            "score": 0.5008824506209633
+          },
+          {
+            "id": "95",
+            "score": 0.5001258439937246
+          },
+          {
+            "id": "91",
+            "score": 0.4976414970112973
+          },
+          {
+            "id": "89",
+            "score": 0.49594530522361435
+          },
+          {
+            "id": "97",
+            "score": 0.4959118268665712
+          },
+          {
+            "id": "90",
+            "score": 0.4935460312376672
+          },
+          {
+            "id": "85",
+            "score": 0.4806896615306566
+          },
+          {
+            "id": "66",
+            "score": 0.4720431319663971
+          }
+        ],
+        "chain": [
+          {
+            "id": "51",
+            "score": 0.6990576838449019
+          }
+        ],
+        "state": "context_validation_required"
+      },
+      "review": {
+        "result": "not_consistent",
+        "message": "The submitted issue concerns a request for physical assistance with moving household items, which does not align with the scope or purpose of the available reference regarding family emergency support services.",
+        "questions": []
+      },
+      "raw_review": {
+        "result": "not_consistent",
+        "message": "The submitted issue concerns a request for physical assistance with moving household items, which does not align with the scope or purpose of the available reference regarding family emergency support services.",
+        "questions": [],
+        "scope": null,
+        "location_reference": {
+          "anchor": "home",
+          "place": ""
+        },
+        "accepted": [],
+        "excluded": {
+          "51": "The reference pertains to social support services for family emergencies, whereas the request is for physical labor assistance with moving household items."
+        },
+        "aspects": []
+      },
+      "review_meta": {
+        "ai_source": "model",
+        "model": "gemini-3.1-flash-lite",
+        "prompt_version": "mr1-context-prompt-5",
+        "schema_sha256": "8c383deb989e7ae166ef02d55c5688558ae90069eec83293cdeef263d66ddf2c",
+        "prompt_sha256": "14516b1437e5cf62b7cdb6e1567e5fb8fc676c9c9441ec48981b0ff1a7f183f9",
+        "temperature": 0,
+        "seed": 20261110,
+        "examples_used": [
+          "51",
+          "79",
+          "15",
+          "77",
+          "50",
+          "52",
+          "86",
+          "1",
+          "16",
+          "44",
+          "56",
+          "47",
+          "53",
+          "46",
+          "4",
+          "6",
+          "54",
+          "74",
+          "2",
+          "88",
+          "7",
+          "48",
+          "10",
+          "49",
+          "81",
+          "20",
+          "36",
+          "57",
+          "11",
+          "30",
+          "35",
+          "40",
+          "69",
+          "43",
+          "82",
+          "5",
+          "24",
+          "31",
+          "63",
+          "3",
+          "45",
+          "75",
+          "87",
+          "98",
+          "29",
+          "72",
+          "84",
+          "33",
+          "14",
+          "60",
+          "23",
+          "13",
+          "34",
+          "76",
+          "42",
+          "26",
+          "73",
+          "25",
+          "9",
+          "71",
+          "70",
+          "55",
+          "64",
+          "100",
+          "83",
+          "39",
+          "12",
+          "28",
+          "41",
+          "58",
+          "78",
+          "18",
+          "99",
+          "68",
+          "67",
+          "8",
+          "80",
+          "32",
+          "22",
+          "17",
+          "37",
+          "21",
+          "19",
+          "38",
+          "96",
+          "62",
+          "94",
+          "61",
+          "59",
+          "93",
+          "65",
+          "92",
+          "27",
+          "95",
+          "91",
+          "89",
+          "97",
+          "90",
+          "85",
+          "66"
+        ],
+        "raw_output": "{\n  \"result\": \"not_consistent\",\n  \"message\": \"The submitted issue concerns a request for physical assistance with moving household items, which does not align with the scope or purpose of the available reference regarding family emergency support services.\",\n  \"questions\": [],\n  \"scope\": null,\n  \"location_reference\": {\n    \"anchor\": \"home\",\n    \"place\": \"\"\n  },\n  \"accepted\": [],\n  \"excluded\": {\n    \"51\": \"The reference pertains to social support services for family emergencies, whereas the request is for physical labor assistance with moving household items.\"\n  },\n  \"aspects\": []\n}",
+        "usage": {
+          "promptTokenCount": 1610,
+          "candidatesTokenCount": 143,
+          "totalTokenCount": 1753,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1610
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "error": null
+      }
+    },
+    "compound-lock-software-clarified": {
+      "state": "stopped",
+      "input": {
+        "title": "Repair the entrance lock and choose an open-source roadmap",
+        "description": "Repair our apartment entrance lock at osbb 2, h12, and in the same decision choose the worldwide open-source software project roadmap for the next year.",
+        "clarification": "For this issue, decide only how to repair the entrance lock at osbb 2, h12. The software-roadmap decision will be registered separately and is outside this issue.",
+        "submitterId": "2",
+        "location": [
+          47.5937,
+          7.6217
+        ],
+        "location_source": "creator"
+      },
+      "input_sha256": "85c4e0f44dbc457614d1a8ac211c67dc06ce5b2695bf45f7d9ec7743a77d853f",
+      "whole_issue_sha256": "4060717f2ca9526bfa82960bad312dfe9fe397f230a15bb8761db90c09773f46",
+      "raw_chain": {
+        "ranked": [
+          {
+            "id": "1",
+            "score": 0.7409257415371802
+          },
+          {
+            "id": "90",
+            "score": 0.7097540918537608
+          },
+          {
+            "id": "10",
+            "score": 0.6960398080294413
+          },
+          {
+            "id": "35",
+            "score": 0.6613544102383325
+          },
+          {
+            "id": "15",
+            "score": 0.6602509755328074
+          },
+          {
+            "id": "4",
+            "score": 0.659234499530471
+          },
+          {
+            "id": "2",
+            "score": 0.6571216486004865
+          },
+          {
+            "id": "89",
+            "score": 0.6554608866521372
+          },
+          {
+            "id": "47",
+            "score": 0.6527715315954856
+          },
+          {
+            "id": "7",
+            "score": 0.6480074627825242
+          },
+          {
+            "id": "56",
+            "score": 0.6471983161430841
+          },
+          {
+            "id": "67",
+            "score": 0.6465685549077136
+          },
+          {
+            "id": "14",
+            "score": 0.6463903411093745
+          },
+          {
+            "id": "3",
+            "score": 0.6450557588248088
+          },
+          {
+            "id": "12",
+            "score": 0.6425166201806272
+          },
+          {
+            "id": "95",
+            "score": 0.6418919065930029
+          },
+          {
+            "id": "13",
+            "score": 0.6388852006990635
+          },
+          {
+            "id": "77",
+            "score": 0.6375875269831999
+          },
+          {
+            "id": "5",
+            "score": 0.6374550089599414
+          },
+          {
+            "id": "39",
+            "score": 0.6366259944872368
+          },
+          {
+            "id": "17",
+            "score": 0.6350091512464318
+          },
+          {
+            "id": "16",
+            "score": 0.6333260202239157
+          },
+          {
+            "id": "11",
+            "score": 0.632272797516875
+          },
+          {
+            "id": "78",
+            "score": 0.6306305248970947
+          },
+          {
+            "id": "6",
+            "score": 0.6297644677053461
+          },
+          {
+            "id": "19",
+            "score": 0.6290993939448023
+          },
+          {
+            "id": "82",
+            "score": 0.6281947881617036
+          },
+          {
+            "id": "99",
+            "score": 0.6275847570180192
+          },
+          {
+            "id": "97",
+            "score": 0.6274801838025681
+          },
+          {
+            "id": "36",
+            "score": 0.6272826970814654
+          },
+          {
+            "id": "74",
+            "score": 0.6257169986509044
+          },
+          {
+            "id": "96",
+            "score": 0.6244515672406162
+          },
+          {
+            "id": "84",
+            "score": 0.6237489509610692
+          },
+          {
+            "id": "52",
+            "score": 0.6215758767403942
+          },
+          {
+            "id": "94",
+            "score": 0.621227874197664
+          },
+          {
+            "id": "60",
+            "score": 0.6205078285708365
+          },
+          {
+            "id": "32",
+            "score": 0.6203567685974588
+          },
+          {
+            "id": "8",
+            "score": 0.6201078127514728
+          },
+          {
+            "id": "83",
+            "score": 0.6200995725461823
+          },
+          {
+            "id": "81",
+            "score": 0.6200294886518791
+          },
+          {
+            "id": "26",
+            "score": 0.6185530857089833
+          },
+          {
+            "id": "18",
+            "score": 0.6165294216030098
+          },
+          {
+            "id": "98",
+            "score": 0.6158744520174048
+          },
+          {
+            "id": "20",
+            "score": 0.6154547967688181
+          },
+          {
+            "id": "87",
+            "score": 0.6141916510648698
+          },
+          {
+            "id": "92",
+            "score": 0.6140421478216794
+          },
+          {
+            "id": "75",
+            "score": 0.6133726951986597
+          },
+          {
+            "id": "70",
+            "score": 0.6128202796200793
+          },
+          {
+            "id": "86",
+            "score": 0.612520918467785
+          },
+          {
+            "id": "24",
+            "score": 0.6121808855005397
+          },
+          {
+            "id": "64",
+            "score": 0.6117309810397625
+          },
+          {
+            "id": "34",
+            "score": 0.6116089386118663
+          },
+          {
+            "id": "23",
+            "score": 0.6105811337839135
+          },
+          {
+            "id": "54",
+            "score": 0.6104694442815778
+          },
+          {
+            "id": "27",
+            "score": 0.6103464043238047
+          },
+          {
+            "id": "51",
+            "score": 0.6102120449966862
+          },
+          {
+            "id": "21",
+            "score": 0.6095330652746731
+          },
+          {
+            "id": "25",
+            "score": 0.6093378642591021
+          },
+          {
+            "id": "33",
+            "score": 0.6086901756223104
+          },
+          {
+            "id": "9",
+            "score": 0.6085308937879818
+          },
+          {
+            "id": "88",
+            "score": 0.608047276057977
+          },
+          {
+            "id": "22",
+            "score": 0.6074761339679454
+          },
+          {
+            "id": "55",
+            "score": 0.6070176539284521
+          },
+          {
+            "id": "50",
+            "score": 0.606775897550061
+          },
+          {
+            "id": "41",
+            "score": 0.605182941719356
+          },
+          {
+            "id": "62",
+            "score": 0.6049252976934684
+          },
+          {
+            "id": "76",
+            "score": 0.6047378991253729
+          },
+          {
+            "id": "93",
+            "score": 0.604072843577115
+          },
+          {
+            "id": "58",
+            "score": 0.6040519347072218
+          },
+          {
+            "id": "59",
+            "score": 0.6040228254172815
+          },
+          {
+            "id": "30",
+            "score": 0.6026393955507976
+          },
+          {
+            "id": "71",
+            "score": 0.6026277599005223
+          },
+          {
+            "id": "57",
+            "score": 0.6013639597919922
+          },
+          {
+            "id": "65",
+            "score": 0.6010829045109984
+          },
+          {
+            "id": "72",
+            "score": 0.6000320392823323
+          },
+          {
+            "id": "69",
+            "score": 0.5997990481356791
+          },
+          {
+            "id": "63",
+            "score": 0.599541435344759
+          },
+          {
+            "id": "91",
+            "score": 0.5986410754528172
+          },
+          {
+            "id": "68",
+            "score": 0.5970956007327559
+          },
+          {
+            "id": "38",
+            "score": 0.5968739394453643
+          },
+          {
+            "id": "29",
+            "score": 0.5954182348515229
+          },
+          {
+            "id": "49",
+            "score": 0.5949039465503152
+          },
+          {
+            "id": "42",
+            "score": 0.5944723314010347
+          },
+          {
+            "id": "31",
+            "score": 0.5935406088985975
+          },
+          {
+            "id": "66",
+            "score": 0.5909597276986026
+          },
+          {
+            "id": "73",
+            "score": 0.5898913366032658
+          },
+          {
+            "id": "53",
+            "score": 0.5893421596727623
+          },
+          {
+            "id": "85",
+            "score": 0.5884484215370455
+          },
+          {
+            "id": "61",
+            "score": 0.5875991119407168
+          },
+          {
+            "id": "45",
+            "score": 0.587270536118999
+          },
+          {
+            "id": "79",
+            "score": 0.5867843223213144
+          },
+          {
+            "id": "40",
+            "score": 0.5867640190025264
+          },
+          {
+            "id": "43",
+            "score": 0.5852684614521869
+          },
+          {
+            "id": "100",
+            "score": 0.5846465709879025
+          },
+          {
+            "id": "80",
+            "score": 0.5823952943533296
+          },
+          {
+            "id": "37",
+            "score": 0.5811362140580809
+          },
+          {
+            "id": "48",
+            "score": 0.5808508134334952
+          },
+          {
+            "id": "46",
+            "score": 0.5781392807247363
+          },
+          {
+            "id": "44",
+            "score": 0.5766921654529593
+          },
+          {
+            "id": "28",
+            "score": 0.5689677524999561
+          }
+        ],
+        "chain": [
+          {
+            "id": "1",
+            "score": 0.7409257415371802
+          },
+          {
+            "id": "90",
+            "score": 0.7097540918537608
+          },
+          {
+            "id": "10",
+            "score": 0.6960398080294413
+          },
+          {
+            "id": "35",
+            "score": 0.6613544102383325
+          },
+          {
+            "id": "15",
+            "score": 0.6602509755328074
+          },
+          {
+            "id": "4",
+            "score": 0.659234499530471
+          },
+          {
+            "id": "2",
+            "score": 0.6571216486004865
+          },
+          {
+            "id": "89",
+            "score": 0.6554608866521372
+          },
+          {
+            "id": "47",
+            "score": 0.6527715315954856
+          },
+          {
+            "id": "7",
+            "score": 0.6480074627825242
+          },
+          {
+            "id": "56",
+            "score": 0.6471983161430841
+          },
+          {
+            "id": "67",
+            "score": 0.6465685549077136
+          },
+          {
+            "id": "14",
+            "score": 0.6463903411093745
+          },
+          {
+            "id": "3",
+            "score": 0.6450557588248088
+          },
+          {
+            "id": "12",
+            "score": 0.6425166201806272
+          },
+          {
+            "id": "95",
+            "score": 0.6418919065930029
+          },
+          {
+            "id": "13",
+            "score": 0.6388852006990635
+          },
+          {
+            "id": "77",
+            "score": 0.6375875269831999
+          },
+          {
+            "id": "5",
+            "score": 0.6374550089599414
+          },
+          {
+            "id": "39",
+            "score": 0.6366259944872368
+          },
+          {
+            "id": "17",
+            "score": 0.6350091512464318
+          },
+          {
+            "id": "16",
+            "score": 0.6333260202239157
+          },
+          {
+            "id": "11",
+            "score": 0.632272797516875
+          },
+          {
+            "id": "78",
+            "score": 0.6306305248970947
+          },
+          {
+            "id": "6",
+            "score": 0.6297644677053461
+          },
+          {
+            "id": "19",
+            "score": 0.6290993939448023
+          },
+          {
+            "id": "82",
+            "score": 0.6281947881617036
+          },
+          {
+            "id": "99",
+            "score": 0.6275847570180192
+          },
+          {
+            "id": "97",
+            "score": 0.6274801838025681
+          },
+          {
+            "id": "36",
+            "score": 0.6272826970814654
+          },
+          {
+            "id": "74",
+            "score": 0.6257169986509044
+          },
+          {
+            "id": "96",
+            "score": 0.6244515672406162
+          },
+          {
+            "id": "84",
+            "score": 0.6237489509610692
+          },
+          {
+            "id": "52",
+            "score": 0.6215758767403942
+          },
+          {
+            "id": "94",
+            "score": 0.621227874197664
+          },
+          {
+            "id": "60",
+            "score": 0.6205078285708365
+          },
+          {
+            "id": "32",
+            "score": 0.6203567685974588
+          },
+          {
+            "id": "8",
+            "score": 0.6201078127514728
+          },
+          {
+            "id": "83",
+            "score": 0.6200995725461823
+          },
+          {
+            "id": "81",
+            "score": 0.6200294886518791
+          },
+          {
+            "id": "26",
+            "score": 0.6185530857089833
+          },
+          {
+            "id": "18",
+            "score": 0.6165294216030098
+          },
+          {
+            "id": "98",
+            "score": 0.6158744520174048
+          },
+          {
+            "id": "20",
+            "score": 0.6154547967688181
+          },
+          {
+            "id": "87",
+            "score": 0.6141916510648698
+          },
+          {
+            "id": "92",
+            "score": 0.6140421478216794
+          },
+          {
+            "id": "75",
+            "score": 0.6133726951986597
+          },
+          {
+            "id": "70",
+            "score": 0.6128202796200793
+          },
+          {
+            "id": "86",
+            "score": 0.612520918467785
+          },
+          {
+            "id": "24",
+            "score": 0.6121808855005397
+          },
+          {
+            "id": "64",
+            "score": 0.6117309810397625
+          },
+          {
+            "id": "34",
+            "score": 0.6116089386118663
+          },
+          {
+            "id": "23",
+            "score": 0.6105811337839135
+          },
+          {
+            "id": "54",
+            "score": 0.6104694442815778
+          },
+          {
+            "id": "27",
+            "score": 0.6103464043238047
+          },
+          {
+            "id": "51",
+            "score": 0.6102120449966862
+          },
+          {
+            "id": "21",
+            "score": 0.6095330652746731
+          },
+          {
+            "id": "25",
+            "score": 0.6093378642591021
+          },
+          {
+            "id": "33",
+            "score": 0.6086901756223104
+          },
+          {
+            "id": "9",
+            "score": 0.6085308937879818
+          },
+          {
+            "id": "88",
+            "score": 0.608047276057977
+          },
+          {
+            "id": "22",
+            "score": 0.6074761339679454
+          },
+          {
+            "id": "55",
+            "score": 0.6070176539284521
+          },
+          {
+            "id": "50",
+            "score": 0.606775897550061
+          },
+          {
+            "id": "41",
+            "score": 0.605182941719356
+          },
+          {
+            "id": "62",
+            "score": 0.6049252976934684
+          },
+          {
+            "id": "76",
+            "score": 0.6047378991253729
+          },
+          {
+            "id": "93",
+            "score": 0.604072843577115
+          },
+          {
+            "id": "58",
+            "score": 0.6040519347072218
+          },
+          {
+            "id": "59",
+            "score": 0.6040228254172815
+          },
+          {
+            "id": "30",
+            "score": 0.6026393955507976
+          },
+          {
+            "id": "71",
+            "score": 0.6026277599005223
+          },
+          {
+            "id": "57",
+            "score": 0.6013639597919922
+          },
+          {
+            "id": "65",
+            "score": 0.6010829045109984
+          },
+          {
+            "id": "72",
+            "score": 0.6000320392823323
+          },
+          {
+            "id": "69",
+            "score": 0.5997990481356791
+          },
+          {
+            "id": "63",
+            "score": 0.599541435344759
+          },
+          {
+            "id": "91",
+            "score": 0.5986410754528172
+          },
+          {
+            "id": "68",
+            "score": 0.5970956007327559
+          },
+          {
+            "id": "38",
+            "score": 0.5968739394453643
+          },
+          {
+            "id": "29",
+            "score": 0.5954182348515229
+          },
+          {
+            "id": "49",
+            "score": 0.5949039465503152
+          },
+          {
+            "id": "42",
+            "score": 0.5944723314010347
+          },
+          {
+            "id": "31",
+            "score": 0.5935406088985975
+          },
+          {
+            "id": "66",
+            "score": 0.5909597276986026
+          },
+          {
+            "id": "73",
+            "score": 0.5898913366032658
+          },
+          {
+            "id": "53",
+            "score": 0.5893421596727623
+          },
+          {
+            "id": "85",
+            "score": 0.5884484215370455
+          },
+          {
+            "id": "61",
+            "score": 0.5875991119407168
+          },
+          {
+            "id": "45",
+            "score": 0.587270536118999
+          },
+          {
+            "id": "79",
+            "score": 0.5867843223213144
+          },
+          {
+            "id": "40",
+            "score": 0.5867640190025264
+          },
+          {
+            "id": "43",
+            "score": 0.5852684614521869
+          },
+          {
+            "id": "100",
+            "score": 0.5846465709879025
+          },
+          {
+            "id": "80",
+            "score": 0.5823952943533296
+          },
+          {
+            "id": "37",
+            "score": 0.5811362140580809
+          },
+          {
+            "id": "48",
+            "score": 0.5808508134334952
+          },
+          {
+            "id": "46",
+            "score": 0.5781392807247363
+          },
+          {
+            "id": "44",
+            "score": 0.5766921654529593
+          },
+          {
+            "id": "28",
+            "score": 0.5689677524999561
+          }
+        ],
+        "state": "context_review_required"
+      }
+    }
+  },
+  "created_at": "2026-11-17T07:52:13.337Z",
+  "stop_reason": "Reviewed reference validation failed",
+  "finished_at": "2026-11-17T07:52:20.786Z"
+}

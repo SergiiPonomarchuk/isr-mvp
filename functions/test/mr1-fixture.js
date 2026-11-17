@@ -6,7 +6,7 @@ module.exports=function configure(helper,AI,v,{semantic=false,sigma=30,onReview=
  helper._setExamplesForTests(library);
  helper.embedTexts=async texts=>texts.map(()=>v);
  helper.reviewContext=async(input,ranked,lib)=>{
-  onReview();const raw={result:"pass",message:"One clear synthetic building decision.",scope:"building",location_reference:{anchor:"home",place:""},accepted:[{id:"fixture",aspect_id:"a",evidence:input.description}],excluded:{},aspects:[{id:"a",text:input.description,demographics:{}}]};
-  return {result:R.validate(raw,input,ranked,lib),raw,meta:{ai_source:"model",model:AI.TEXT_MODEL,prompt_version:R.VERSION,examples_used:["fixture"]}};
+  onReview();const raw={result:"pass",message:"One clear synthetic building decision.",scope:"building",location_reference:{anchor:"home",place:""},accepted:[{id:"fixture",aspect_id:"a",evidence:input.description}],excluded:{},aspects:[{id:"a",text:input.description,demographics:{},demographic_evidence:[]}]};
+  return {result:R.validate(raw,input,ranked,lib),raw,meta:{ai_source:"model",model:AI.TEXT_MODEL,prompt_version:R.PROMPT_VERSION,schema_sha256:R.schemaHash(),examples_used:["fixture"]}};
  };
 };

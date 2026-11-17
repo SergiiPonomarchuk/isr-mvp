@@ -1,0 +1,10 @@
+{
+  "model": "gemini-embedding-001",
+  "contents": [
+    "the proposed on-site shift rotation would move a production team from fixed morning shifts to alternating morning and evening shifts"
+  ],
+  "config": {
+    "taskType": "RETRIEVAL_QUERY",
+    "outputDimensionality": 768
+  }
+}

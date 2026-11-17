@@ -1,5 +1,65 @@
 # CHANGES
 
+## 2026-11-17 - Selected existing model LOW improves fixture; comparison canceled
+
+Followed author choice to keep cheapest gemini-3.1-flash-lite and move forward. One LOW check uses home and correct lock/choice handling, but four false scope reasons remain; no acceptance/repair/public writes. Cumulative 24 reviews, US$0.482644 reserved under original US$0.50 with full native-capacity thinking buffer. Prepared concrete emulator-only runtime/typed-reason integration plan instead of more model comparisons. See specs/tasks/M3-cheapest-low-report.md and M3-emulator-staged-integration.md.
+
+## 2026-11-17 - Offline Analyzer quality/model evaluation plan frozen
+
+Recorded baseline failures, source/receipt manifests and eight quality fixtures with explicit human-judgment boundaries. Official research identifies omitted thinking/default minimal and prepares current 3.1 LOW versus stable 3.5 Flash-Lite LOW, no actual model change or calls. Two-request scenario fits original US$0.50 reservation, but exact generateContent thinking-budget verification is mandatory before execution. Node 205 passed/five optional skips; Python 140 run/two skips. See specs/tasks/M3-analyzer-evaluation-plan.md.
+
+## 2026-11-17 - Actual staged check completes coverage but fails factual quality
+
+Approved one request at 23 total reviews merged 19 actual domain rows plus 81 scope proofs, with no repeated choice. Eighteen false scope claims persisted under context reasons and the home anchor became named_place; semantic acceptance withheld, no model output repaired or member/public data written. US$0.368110 reserved under original US$0.50; review allowance exhausted. Preserved artifacts and proposed offline model-evaluation planning, not more paid prompt trials; see specs/tasks/M3-staged-check-report.md.
+
+## 2026-11-17 - Offline staged review preserves full chain with scope proofs
+
+Implemented isolated decision fixtures, parity-tested scope predicate, immutable 81-proof/19-domain partition and strict complete merge. Domain request 14,742 bytes; no provider calls or application integration. Node 197 passed/five optional skips; Python 140 run/two skips. Original rankings, math, scope rules, models and library unchanged. Integration/trust/storage limits and optional exact 23-review check are documented, not authorized; see specs/tasks/M3-review-stages-offline.md.
+
+## 2026-11-17 - Prototype schema admitted with complete but semantically faulty review
+
+Executed approved one-call check at 22 cumulative reviews under original US$0.50. All 100 keys returned, but repeated settled clarification and 18 false scope reasons prevent semantic acceptance. Non-pass produced no scores. Fourteen embedding texts/POSTs, US$0.351880 reserved; no further call or integration/live change. Preserved actual outputs, quality regression and offline staged-review proposal; see specs/tasks/M3-prototype-check-report.md.
+
+## 2026-11-17 - Isolated complete-candidate review prototype verified offline
+
+Added keyed explicit verdict experiment, raw duplicate-key refusal and unchanged-validator projection with non-pass-only deferral. Full 100-ID request fits current input envelope for the pinned case; output/grammar admission remains untested. Node 186 passed/five optional skips; Python 140 run/two skips. No runtime integration, paid call, math/model/library or production change. Prepared exact request/audit and optional one-call 22-review proposal under original US$0.50; see specs/tasks/M3-candidate-review-prototype.md.
+
+## 2026-11-17 - Focused v5 check reached review ceiling; raw-chain coverage rejected
+
+Executed the approved two cases once each at 21 cumulative reviews under original US$0.50. Blanket personal-help exclusion and repeated lock choice disappeared, but the lock response omitted decisions for 98 of 100 candidates and was correctly rejected. Fourteen embedding texts/POSTs, US$0.331466 reserved; no further calls or live changes. Preserved all outputs/receipts and prepared offline candidate-review protocol proposal. See specs/tasks/M3-two-case-report.md.
+
+## 2026-11-17 - Confirmed clarification precedence and personal-help eligibility
+
+Author confirmed both interpretation rules. Prompt v5 respects explicit narrowing and prohibits invented public-policy-only exclusion while preserving genuine scope/reference limits. Added offline regressions and retained literal failed outputs. Node 178 passed/five optional skips; Python 140 run/two skips. No new API calls or allowance/live changes. Proposed targeted two-case actual check needs one extra cumulative review slot (21 instead of 20) within the SAME US$0.50; see specs/tasks/M3-confirmed-context-rules.md.
+
+## 2026-11-17 - Bounded aligned pilot completed with two quality findings
+
+Completed all 14 pinned case outcomes, preserving two source-verified v3 cases and running 12 v4 reviews. Ten pass, three clarification and one not_consistent; repeated clarification and unsupported public-policy-only reasoning remain unresolved. Nineteen cumulative reviews, 13 embedding texts, US$0.296917 reserved under original limits. No more calls, live writes or deployment; report specs/tasks/M3-aligned-pilot-report.md. All passes are single-reference; no multi-reference/full-population acceptance claimed.
+
+## 2026-11-17 — Grounding prompt v3 and two actual pilot passes
+
+Author-approved input quotation clarification passed the lock/pothole cases. Playground response was rejected for neighborhood versus street_segment reference scope. Seven cumulative reviews, three embedding texts, US$0.098801 reserved; no further call or live write. Completed free prompt/validator contract audit and prepared bounded alignment/completion proposal; see specs/tasks/M3-grounding-pilot-report.md. Models, math and validation unchanged.
+
+## 2026-11-17 — Approved technical continuation and grounded-output stop
+
+Added cumulative 20-attempt continuation preserving all prior reservations and receipts. Diagnosed provider schema state complexity, simplified provider-only constraints while retaining strict validation, and obtained model output. The model copied a reference title as an aspect; strict input grounding rejected it. Four cumulative reviews, zero embeddings, US$0.055576 reserved. No further semantic prompt work or provider request; concrete next proposal in specs/tasks/M3-technical-continuation-report.md. No production/deployment/scoring changes.
+
+## 2026-11-17 - Corrected pilot HTTP400 receipt and safe provider diagnostics
+
+The authorized corrected run stopped on its first HTTP400, retaining both attempts andUS$0.027255 cumulative reservations with zero embeddings/database writes. Detailed provider error text was not retained; fixed that diagnostic gap offline with redacted bounded messages/field paths. Replaced the recorded null enum member with an anyOf null branch as a documented-subset compatibility candidate, without claiming confirmed cause or provider admission. Prepared bounded technical-continuation proposal under the originalUS$0.50; no third request is authorized. No model/math/threshold/production/deployment change. See specs/tasks/M3-corrected-pilot-report.md.
+
+## 2026-11-17 - Grounded context schema and cumulative corrected-pilot guard
+
+Author approved the context correction and one controlled rerun. Added shared structured enums, literal criterion provenance and U6 home/work/property guidance under a separate prompt/schema version; current unfinished drafts require the corrected contract while frozen completed replay/scoring stays unchanged. The corrected pilot carries the original receipt/reservation into its15-review/45-text/17-POST cumulative guard under the sameUS$0.50 total, with schema bytes included. Node168 passed/five optional skips; Python140 run/two skips; actual Check/Create/Join emulator parity passed before paid execution. No model/math/threshold/rules/deployment or historical-data change.
+
+## 2026-11-17 - Bounded M3 pilot guard and first real-model result
+
+Added and verified an exact-case, single-attempt provider adapter with durable request/text/cost reservations, source pins and private existing-loader launcher. Author approved theUS$0.50 pilot. Its first actual review failed strict property-kind validation and the run stopped without retries or embeddings. Reported497 input/285 output tokens imply approximatelyUS$0.000552;US$0.013081 remains reserved. Offline replay identifies additional home-anchor/topic-demographic issues. Prepared a concrete correction/cumulative-rerun proposal; no runtime fix or further paid call is authorized. Node161 passed/five optional skips; Python140 run/two skips. No app/model/math/rules/production change or deployment. See specs/tasks/M3-pilot-report.md.
+
+## 2026-11-17 - M3 real-model evaluation proposal and free capacity preflight
+
+Recorded PR41's explicit merge/main CI and prepared a pinned14-review/45-new-text pilot capped by a proposedUS$0.50 local reservation envelope; execution/credential-loader reuse still need approval. Verified exact cached input vectors and counted9,150 profile/vector keys without decoding profile properties. A real-SDK structural fixture exposed the single-request capacity limit for a three-reference9,150-member public; deployment remains gated on actual-population validation and a scoped storage solution. No provider/database request, profile import, app/model/math/rules change or deployment. See specs/tasks/M3-real-evaluation.md.
+
 ## 2026-11-16 - Versioned multi-reference Check/Create/Join integration
 
 New Checks perform strict actual-context review and full-population A/B scoring, binding frozen references/aspects and input/day/population fingerprints to a checked draft. Create reuses that model without AI calls, verifies drift and atomically publishes the uncapped public after document/request capacity checks. Versioned Join uses frozen A sources; legacy issues/replays retain legacy behavior. The form accepts clarification answers, rejects stale results and shows actual member counts/scores. Full-public values and Python audits follow the same version. Node153 passed/five optional skips; Python136 run/two skips; isolated mr1/U10/D1 HTTP rehearsals passed. The author accepted the mocked local visual flow on 2026-11-16. Real-model quality and full-population performance/capacity validation remain pending before deployment. No production/provider/rules/docs/ changes. See specs/tasks/M3-app-integration.md.

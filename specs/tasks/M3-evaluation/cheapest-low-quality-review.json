@@ -1,0 +1,41 @@
+{
+  "model": "gemini-3.1-flash-lite",
+  "thinking_level": "LOW",
+  "active_application_model_unchanged": true,
+  "result": "pass",
+  "scope_proof_count": 81,
+  "domain_count": 19,
+  "full_coverage": 100,
+  "no_repeated_choice": true,
+  "home_anchor_correct": true,
+  "accepted_ids": [
+    "1"
+  ],
+  "semantic_acceptance": false,
+  "false_scope_reasons": [
+    {
+      "id": "9",
+      "scope": "unit",
+      "verdict": "x:decision:Scope mismatch (unit vs building)"
+    },
+    {
+      "id": "10",
+      "scope": "unit",
+      "verdict": "x:decision:Scope mismatch (unit vs building)"
+    },
+    {
+      "id": "12",
+      "scope": "unit",
+      "verdict": "x:decision:Scope mismatch (unit vs building)"
+    },
+    {
+      "id": "15",
+      "scope": "unit",
+      "verdict": "x:decision:Scope mismatch (unit vs building)"
+    }
+  ],
+  "reason_quality": "Remaining generic Irrelevant topic explanations also require domain-quality review; do not infer complete substantive reasoning.",
+  "all_current_pins_unchanged": true,
+  "no_repair": true,
+  "new_embeddings": 0
+}

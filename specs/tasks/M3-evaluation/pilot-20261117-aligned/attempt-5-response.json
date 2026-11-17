@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"pass\",\n  \"message\": \"The request regarding shift scheduling at Argo Industry is compatible with the provided reference for offline worker shift scheduling.\",\n  \"questions\": [],\n  \"scope\": \"neighborhood\",\n  \"location_reference\": {\n    \"anchor\": \"work\",\n    \"place\": \"\"\n  },\n  \"accepted\": [\n    {\n      \"id\": \"86\",\n      \"aspect_id\": \"shift_scheduling\",\n      \"evidence\": \"the proposed on-site shift rotation would move a production team from fixed morning shifts to alternating morning and evening shifts\"\n    }\n  ],\n  \"excluded\": {},\n  \"aspects\": [\n    {\n      \"id\": \"shift_scheduling\",\n      \"text\": \"the proposed on-site shift rotation would move a production team from fixed morning shifts to alternating morning and evening shifts\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"employed\",\n        \"familyStatus\": \"any\",\n        \"features\": [],\n        \"places\": [\n          \"Argo Industry\"\n        ],\n        \"property_kinds\": []\n      },\n      \"demographic_evidence\": [\n        {\n          \"field\": \"employmentStatus\",\n          \"value\": \"employed\",\n          \"quote\": \"Workers need to agree on a predictable schedule\"\n        },\n        {\n          \"field\": \"places\",\n          \"value\": \"Argo Industry\",\n          \"quote\": \"At my workplace Argo Industry\"\n        }\n      ]\n    }\n  ]\n}",
+  "usage": {
+    "promptTokenCount": 1342,
+    "candidatesTokenCount": 362,
+    "totalTokenCount": 1704
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "8e0846fd643d959b947ec1f6d13e382388c056bd8d20c06aeb48f85e29153963"
+}

@@ -1,0 +1,20 @@
+{
+  "version": "m3-corrected-pilot-approval-1",
+  "date_author": "2026-11-17 Europe/Kyiv",
+  "source": "Author replied Approved to correction and controlled rerun proposal",
+  "author_reply": "Approved",
+  "scope": "Prompt/schema/criterion provenance correction plus one corrected run; same total USD0.50; 15 cumulative review attempts; 45 cumulative embedding texts; 17 cumulative embedding POSTs; no automatic retries",
+  "plan_sha256": "a8243689de12c5768d2f6be0c6100d60966f18a107ecd5725301f7d52120f343",
+  "parent_receipt": "specs/tasks/M3-evaluation/pilot-20261117/ledger.json",
+  "parent_receipt_sha256": "17268de8f0637f2215d646235b6e108a9d951424fb0c76c5d6b0b4d6e9e7a7fa",
+  "max_cumulative_reviews": 15,
+  "max_embedding_texts": 45,
+  "max_embedding_posts": 17,
+  "cumulative_cost_ceiling_usd": 0.5,
+  "automatic_retries": 0,
+  "credential_loader": "Existing privately used main-checkout loader; original Paid/budget confirmation retained",
+  "production_writes_authorized": false,
+  "deployments_authorized": false,
+  "prompt_version": "mr1-context-prompt-2",
+  "schema_sha256": "4a7f5f2b990e4794bad8fa1602e1125501e5e03adbdfcd22720df9e104f04222"
+}

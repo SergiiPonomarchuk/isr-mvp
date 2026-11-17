@@ -1,0 +1,10 @@
+{
+  "model": "gemini-embedding-001",
+  "contents": [
+    "Repair hazardous pothole on Hauptstraße. A deep, widening pothole has formed on Hauptstraße, Weil am Rhein, posing a significant risk to cyclists and vehicles near my home.\nContext: The complete named street reference is Hauptstraße, Weil am Rhein, Deutschland. Include the city and country as part of the named place to distinguish streets with the same name; this is not the home address."
+  ],
+  "config": {
+    "taskType": "RETRIEVAL_QUERY",
+    "outputDimensionality": 768
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "protocol_pass": true,
+  "semantic_acceptance": false,
+  "repeated_choice": false,
+  "questions": [],
+  "full_chain_coverage": 100,
+  "scope_rule_proofs": 81,
+  "actual_model_verdicts": 19,
+  "false_scope_reason_count": 18,
+  "false_scope_reasons": [
+    {
+      "id": "2",
+      "reference_scope": "building",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "3",
+      "reference_scope": "building",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "4",
+      "reference_scope": "building",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "5",
+      "reference_scope": "building",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "6",
+      "reference_scope": "building",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "7",
+      "reference_scope": "building",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "8",
+      "reference_scope": "building",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "9",
+      "reference_scope": "unit",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "10",
+      "reference_scope": "unit",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "12",
+      "reference_scope": "unit",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "13",
+      "reference_scope": "building",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "14",
+      "reference_scope": "building",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "15",
+      "reference_scope": "unit",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "16",
+      "reference_scope": "building",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "17",
+      "reference_scope": "building",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "18",
+      "reference_scope": "building",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "19",
+      "reference_scope": "building",
+      "verdict": "x:context:incompatible scope (unit)"
+    },
+    {
+      "id": "20",
+      "reference_scope": "building",
+      "verdict": "x:context:incompatible scope (unit)"
+    }
+  ],
+  "anchor_issue": {
+    "actual": {
+      "anchor": "named_place",
+      "place": "osbb 2, h12"
+    },
+    "expected": "home under confirmed U6 our-apartment semantics",
+    "no_geocoding_or_real_point_error_measured": true
+  },
+  "all_current_pins_unchanged": true,
+  "additional_calls": 0
+}

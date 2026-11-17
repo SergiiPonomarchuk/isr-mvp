@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"pass\",\n  \"message\": \"The issue regarding the repair of the entrance lock at osbb 2, h12 is consistent with the building-level scope and category for shared entrance lock repairs.\",\n  \"questions\": [],\n  \"location_reference\": {\n    \"anchor\": \"named_place\",\n    \"place\": \"osbb 2, h12\"\n  },\n  \"aspects\": [\n    {\n      \"id\": \"entrance_lock_repair\",\n      \"text\": \"repair the entrance lock at osbb 2, h12\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"any\",\n        \"familyStatus\": \"any\",\n        \"features\": [],\n        \"places\": [],\n        \"property_kinds\": []\n      },\n      \"demographic_evidence\": []\n    }\n  ],\n  \"plan_hash\": \"b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d\",\n  \"reviews\": {\n    \"1\": \"a:entrance_lock_repair:repair the entrance lock at osbb 2, h12\",\n    \"2\": \"x:context:incompatible scope (unit)\",\n    \"3\": \"x:context:incompatible scope (unit)\",\n    \"4\": \"x:context:incompatible scope (unit)\",\n    \"5\": \"x:context:incompatible scope (unit)\",\n    \"6\": \"x:context:incompatible scope (unit)\",\n    \"7\": \"x:context:incompatible scope (unit)\",\n    \"8\": \"x:context:incompatible scope (unit)\",\n    \"9\": \"x:context:incompatible scope (unit)\",\n    \"10\": \"x:context:incompatible scope (unit)\",\n    \"12\": \"x:context:incompatible scope (unit)\",\n    \"13\": \"x:context:incompatible scope (unit)\",\n    \"14\": \"x:context:incompatible scope (unit)\",\n    \"15\": \"x:context:incompatible scope (unit)\",\n    \"16\": \"x:context:incompatible scope (unit)\",\n    \"17\": \"x:context:incompatible scope (unit)\",\n    \"18\": \"x:context:incompatible scope (unit)\",\n    \"19\": \"x:context:incompatible scope (unit)\",\n    \"20\": \"x:context:incompatible scope (unit)\"\n  }\n}",
+  "usage": {
+    "promptTokenCount": 2791,
+    "candidatesTokenCount": 614,
+    "totalTokenCount": 3405
+  },
+  "finish_reason": "STOP",
+  "model_version": "gemini-3.1-flash-lite"
+}

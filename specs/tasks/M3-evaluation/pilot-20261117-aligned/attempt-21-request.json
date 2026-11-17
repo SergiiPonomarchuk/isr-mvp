@@ -1,0 +1,10 @@
+{
+  "model": "gemini-embedding-001",
+  "contents": [
+    "Repair the entrance lock and choose an open-source roadmap. Repair our apartment entrance lock at osbb 2, h12, and in the same decision choose the worldwide open-source software project roadmap for the next year.\nContext: For this issue, decide only how to repair the entrance lock at osbb 2, h12. The software-roadmap decision will be registered separately and is outside this issue."
+  ],
+  "config": {
+    "taskType": "RETRIEVAL_QUERY",
+    "outputDimensionality": 768
+  }
+}

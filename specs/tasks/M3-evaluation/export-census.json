@@ -1,0 +1,23 @@
+{
+  "snapshot": "2026-11-14-d1-author-accepted-7259ca3",
+  "shards": 5,
+  "source_bytes": 551960436,
+  "entity_records": 24518,
+  "numeric_users": 9150,
+  "numeric_user_vectors": 9150,
+  "missing_vector_keys": 0,
+  "orphan_vector_keys": 0,
+  "nonnumeric_keys": {
+    "users": 0,
+    "user_vectors": 0
+  },
+  "duplicate_keys": {
+    "users": 0,
+    "user_vectors": 0
+  },
+  "profile_properties_decoded": 0,
+  "crc_verified": false,
+  "elapsed_seconds": 1.855,
+  "provider_calls": 0,
+  "database_rpcs": 0
+}

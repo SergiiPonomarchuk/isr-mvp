@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"pass\",\n  \"message\": \"The request for a larger, accessible space for the community choir is compatible with the neighborhood-level arts group support reference.\",\n  \"questions\": [],\n  \"scope\": \"neighborhood\",\n  \"location_reference\": {\n    \"anchor\": \"home\",\n    \"place\": \"\"\n  },\n  \"accepted\": [\n    {\n      \"id\": \"82\",\n      \"aspect_id\": \"choir_space\",\n      \"evidence\": \"Our neighbourhood arts group has outgrown the local community center. We are seeking a larger, accessible space near my home building townhouse 1, house 1557 to host our weekly rehearsals and upcoming winter concert.\"\n    }\n  ],\n  \"excluded\": {},\n  \"aspects\": [\n    {\n      \"id\": \"choir_space\",\n      \"text\": \"Our neighbourhood arts group has outgrown the local community center. We are seeking a larger, accessible space near my home building townhouse 1, house 1557 to host our weekly rehearsals and upcoming winter concert.\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"any\",\n        \"familyStatus\": \"any\",\n        \"features\": [],\n        \"places\": [],\n        \"property_kinds\": []\n      },\n      \"demographic_evidence\": []\n    }\n  ]\n}",
+  "usage": {
+    "promptTokenCount": 1331,
+    "candidatesTokenCount": 323,
+    "totalTokenCount": 1654
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "4ce90100c9b38fda19a96f39fa0bb24e280d2fed535e5fb0ecb46f85ff3a6e86"
+}

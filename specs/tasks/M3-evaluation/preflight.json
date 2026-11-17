@@ -1,0 +1,165 @@
+{
+  "version": "m3-evaluation-preflight-1",
+  "base": "7ee49ea",
+  "date": "2026-11-16",
+  "cases": [
+    {
+      "id": "D1-01-live",
+      "whole_issue_cache_verified": true,
+      "conditional": false,
+      "selection_embedding_needed": false,
+      "raw_chain_without_new_selection": 1,
+      "prompt_bytes_without_new_selection": 2145,
+      "all_references_prompt_bytes": 17143
+    },
+    {
+      "id": "D1-02",
+      "whole_issue_cache_verified": true,
+      "conditional": false,
+      "selection_embedding_needed": true,
+      "raw_chain_without_new_selection": 1,
+      "prompt_bytes_without_new_selection": 2349,
+      "all_references_prompt_bytes": 17354
+    },
+    {
+      "id": "D1-03",
+      "whole_issue_cache_verified": true,
+      "conditional": false,
+      "selection_embedding_needed": false,
+      "raw_chain_without_new_selection": 1,
+      "prompt_bytes_without_new_selection": 2142,
+      "all_references_prompt_bytes": 17133
+    },
+    {
+      "id": "D1-04",
+      "whole_issue_cache_verified": true,
+      "conditional": false,
+      "selection_embedding_needed": false,
+      "raw_chain_without_new_selection": 1,
+      "prompt_bytes_without_new_selection": 2187,
+      "all_references_prompt_bytes": 17186
+    },
+    {
+      "id": "D1-05",
+      "whole_issue_cache_verified": true,
+      "conditional": false,
+      "selection_embedding_needed": false,
+      "raw_chain_without_new_selection": 1,
+      "prompt_bytes_without_new_selection": 2345,
+      "all_references_prompt_bytes": 17325
+    },
+    {
+      "id": "D1-06",
+      "whole_issue_cache_verified": true,
+      "conditional": false,
+      "selection_embedding_needed": false,
+      "raw_chain_without_new_selection": 1,
+      "prompt_bytes_without_new_selection": 2238,
+      "all_references_prompt_bytes": 17229
+    },
+    {
+      "id": "D1-07",
+      "whole_issue_cache_verified": true,
+      "conditional": false,
+      "selection_embedding_needed": false,
+      "raw_chain_without_new_selection": 1,
+      "prompt_bytes_without_new_selection": 2279,
+      "all_references_prompt_bytes": 17259
+    },
+    {
+      "id": "D1-08",
+      "whole_issue_cache_verified": true,
+      "conditional": false,
+      "selection_embedding_needed": false,
+      "raw_chain_without_new_selection": 100,
+      "prompt_bytes_without_new_selection": 17305,
+      "all_references_prompt_bytes": 17315
+    },
+    {
+      "id": "D1-09",
+      "whole_issue_cache_verified": true,
+      "conditional": false,
+      "selection_embedding_needed": false,
+      "raw_chain_without_new_selection": 1,
+      "prompt_bytes_without_new_selection": 2247,
+      "all_references_prompt_bytes": 17238
+    },
+    {
+      "id": "D1-10",
+      "whole_issue_cache_verified": true,
+      "conditional": false,
+      "selection_embedding_needed": false,
+      "raw_chain_without_new_selection": 1,
+      "prompt_bytes_without_new_selection": 2317,
+      "all_references_prompt_bytes": 17319
+    },
+    {
+      "id": "vague-help",
+      "whole_issue_cache_verified": true,
+      "conditional": false,
+      "selection_embedding_needed": false,
+      "raw_chain_without_new_selection": 100,
+      "prompt_bytes_without_new_selection": 17006,
+      "all_references_prompt_bytes": 17019
+    },
+    {
+      "id": "compound-lock-software",
+      "whole_issue_cache_verified": true,
+      "conditional": false,
+      "selection_embedding_needed": false,
+      "raw_chain_without_new_selection": 100,
+      "prompt_bytes_without_new_selection": 17171,
+      "all_references_prompt_bytes": 17183
+    },
+    {
+      "id": "vague-help-clarified",
+      "whole_issue_cache_verified": true,
+      "conditional": true,
+      "selection_embedding_needed": true,
+      "raw_chain_without_new_selection": 100,
+      "prompt_bytes_without_new_selection": 17162,
+      "all_references_prompt_bytes": 17175
+    },
+    {
+      "id": "compound-lock-software-clarified",
+      "whole_issue_cache_verified": true,
+      "conditional": true,
+      "selection_embedding_needed": true,
+      "raw_chain_without_new_selection": 100,
+      "prompt_bytes_without_new_selection": 17333,
+      "all_references_prompt_bytes": 17345
+    }
+  ],
+  "capacity_shapes": [
+    {
+      "fixture": "repeated synthetic profiles; not actual population",
+      "references": 1,
+      "population": 9150,
+      "A": 9150,
+      "B": 0,
+      "member_and_cache_documents": 9152,
+      "serialized_subset_bytes": 10110330,
+      "publication_preflight": "fits_member_and_cache_subset",
+      "elapsed_seconds": 8.304
+    },
+    {
+      "fixture": "repeated synthetic profiles; not actual population",
+      "references": 3,
+      "population": 9150,
+      "A": 9150,
+      "B": 0,
+      "member_and_cache_documents": 9152,
+      "serialized_subset_bytes": 11610146,
+      "publication_preflight": "rejected_before_writes",
+      "elapsed_seconds": 7.311
+    }
+  ],
+  "paid_calls": 0,
+  "database_rpcs": 0,
+  "profile_fields_read": 0,
+  "limits": [
+    "Capacity includes members and cache roots only; excludes remaining publication documents/transaction overhead.",
+    "Repeated synthetic shapes are not actual-population affectedness or realistic skill-vector performance.",
+    "Conditional prompts use worst-case chain envelope until new selection embedding exists."
+  ]
+}

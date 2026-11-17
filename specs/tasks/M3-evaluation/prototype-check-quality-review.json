@@ -1,0 +1,131 @@
+{
+  "provider_schema_admitted": true,
+  "finish_reason": "STOP",
+  "candidate_count": 100,
+  "excluded_count": 98,
+  "deferred_count": 2,
+  "accepted_count": 0,
+  "has_scoring_model": false,
+  "actual_outcome": "needs_clarification",
+  "structural_validation_passed": true,
+  "semantic_acceptance": false,
+  "repeated_answered_choice": true,
+  "scope_comparison_basis": "Author-confirmed building lock decision; building/unit equivalence is unchanged",
+  "false_scope_reason_count": 18,
+  "false_scope_reasons": [
+    {
+      "id": "2",
+      "scope": "building",
+      "verdict": "x:Incompatible scope (building vs. unit/neighborhood/city/global)."
+    },
+    {
+      "id": "3",
+      "scope": "building",
+      "verdict": "x:Incompatible scope (building vs. unit/neighborhood/city/global)."
+    },
+    {
+      "id": "4",
+      "scope": "building",
+      "verdict": "x:Incompatible scope (building vs. unit/neighborhood/city/global)."
+    },
+    {
+      "id": "5",
+      "scope": "building",
+      "verdict": "x:Incompatible scope (building vs. unit/neighborhood/city/global)."
+    },
+    {
+      "id": "6",
+      "scope": "building",
+      "verdict": "x:Incompatible scope (building vs. unit/neighborhood/city/global)."
+    },
+    {
+      "id": "7",
+      "scope": "building",
+      "verdict": "x:Incompatible scope (building vs. unit/neighborhood/city/global)."
+    },
+    {
+      "id": "8",
+      "scope": "building",
+      "verdict": "x:Incompatible scope (building vs. unit/neighborhood/city/global)."
+    },
+    {
+      "id": "9",
+      "scope": "unit",
+      "verdict": "x:Incompatible scope (unit vs. building)."
+    },
+    {
+      "id": "10",
+      "scope": "unit",
+      "verdict": "x:Incompatible scope (unit vs. building)."
+    },
+    {
+      "id": "12",
+      "scope": "unit",
+      "verdict": "x:Incompatible scope (unit vs. building)."
+    },
+    {
+      "id": "13",
+      "scope": "building",
+      "verdict": "x:Incompatible scope (building vs. unit/neighborhood/city/global)."
+    },
+    {
+      "id": "14",
+      "scope": "building",
+      "verdict": "x:Incompatible scope (building vs. unit/neighborhood/city/global)."
+    },
+    {
+      "id": "15",
+      "scope": "unit",
+      "verdict": "x:Incompatible scope (unit vs. building)."
+    },
+    {
+      "id": "16",
+      "scope": "building",
+      "verdict": "x:Incompatible scope (building vs. unit/neighborhood/city/global)."
+    },
+    {
+      "id": "17",
+      "scope": "building",
+      "verdict": "x:Incompatible scope (building vs. unit/neighborhood/city/global)."
+    },
+    {
+      "id": "18",
+      "scope": "building",
+      "verdict": "x:Incompatible scope (building vs. unit/neighborhood/city/global)."
+    },
+    {
+      "id": "19",
+      "scope": "building",
+      "verdict": "x:Incompatible scope (building vs. unit/neighborhood/city/global)."
+    },
+    {
+      "id": "20",
+      "scope": "building",
+      "verdict": "x:Incompatible scope (building vs. unit/neighborhood/city/global)."
+    }
+  ],
+  "scope_compatible_ids": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20"
+  ],
+  "body_bytes": 7222,
+  "all_approval_pins_unchanged": true,
+  "additional_provider_calls": 0
+}

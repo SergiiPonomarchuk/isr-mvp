@@ -1,0 +1,17 @@
+{
+  "version": "m3-pilot-approval-1",
+  "date_author": "2026-11-17 Europe/Kyiv",
+  "source": "Explicit user message in this chat",
+  "author_text": "Approve the M3 pilot up to $0.50, using the existing credential loader; Paid status and budget confirmed",
+  "plan_sha256": "a8243689de12c5768d2f6be0c6100d60966f18a107ecd5725301f7d52120f343",
+  "max_review_attempts": 14,
+  "max_embedding_texts": 45,
+  "max_embedding_posts": 17,
+  "automatic_retries": 0,
+  "estimated_cost_ceiling_usd": 0.5,
+  "paid_status": "confirmed by author",
+  "budget": "confirmed sufficient by author",
+  "credential_handling": "Existing C:/isr-mvp/scripts/gemini_api.py load_key; no key copy to files/arguments/output",
+  "production_writes_authorized": false,
+  "deployments_authorized": false
+}

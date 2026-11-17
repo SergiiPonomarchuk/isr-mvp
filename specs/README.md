@@ -11,7 +11,7 @@ Created by task S0 (`tasks/S0-restructure-specs.md`). Every component file state
 
 ---
 
-Current implementation checkpoint: [M3 application integration](tasks/M3-app-integration.md) on feature branch, automated emulator/math checks passed; [local visual review](M3-LOCAL-REVIEW.md) accepted by the author; separately authorized real-model evaluation and full-population performance/capacity checks remain pending. Published historical issues retain their stored scoring version.
+Current checkpoint: [M3 context correction](tasks/M3-context-contract-fix-proposal.md) implemented and offline/emulator checks passed; [corrected real pilot](tasks/M3-corrected-pilot-report.md) stopped onHTTP400 before a valid model result. [Bounded technical continuation](tasks/M3-provider-compatibility-continuation.md) needs author approval; no third actual request is authorized. Full-population publication capacity/performance and deployment remain gated; historical public scoring is unchanged.
 
 ## Status legend
 
@@ -189,3 +189,25 @@ The ids come from `tasks/S0-inventory-report.md` §3, where each contradiction i
 | C-45 | snake_case rule vs camelCase fields | 02 / 14 | open |
 | C-47 | Similar registered active issues at Check | [U10](tasks/U10-similar-active-issues.md) | implemented; emulator and live Check accepted |
 | C-46 | AAuth, logging, encryption described but absent | 09 | partly decided (PD-5 defines gISR and AAuth). R0: rules stay open until 2027-06-30 except `issue_drafts` (server only); real access rules are roadmap stage 5 |
+
+Current M3 result: [technical continuation report and grounding-correction proposal](tasks/M3-technical-continuation-report.md). Schema admission succeeded; semantic validation stopped the pilot.
+
+Latest M3: [grounding pilot result and contract-alignment proposal](tasks/M3-grounding-pilot-report.md). Two cases passed; scope mismatch stopped the remaining cases.
+
+Latest M3: [aligned pilot closeout and semantic attention gate](tasks/M3-aligned-pilot-report.md). All outcomes completed within allowance; semantic acceptance remains withheld.
+
+Latest M3: [confirmed interpretation rules and offline v5 verification](tasks/M3-confirmed-context-rules.md). Actual two-case verification awaits the precise 21-review cumulative allowance decision; no additional US$0.50 is proposed.
+
+Latest M3: [two-case actual closeout](tasks/M3-two-case-report.md) and [offline candidate-review proposal](tasks/M3-candidate-review-proposal.md). The 21-review allowance is exhausted; current semantic coverage is not accepted.
+
+Latest M3: [completed offline candidate-review prototype](tasks/M3-candidate-review-prototype.md), with measured envelopes, no runtime integration and no new provider calls.
+
+Latest M3: [actual keyed-prototype check and semantic review](tasks/M3-prototype-check-report.md); [offline staged-review design proposal](tasks/M3-review-stages-proposal.md). The 22-review allowance is exhausted.
+
+Latest M3: [completed offline staged review](tasks/M3-review-stages-offline.md) and [integration impact proposal](tasks/M3-review-stages-integration.md). No new paid call or runtime integration.
+
+Latest M3: [actual staged-check quality report](tasks/M3-staged-check-report.md), [offline Analyzer evaluation-plan proposal](tasks/M3-analyzer-comparison-proposal.md). The 23-review allowance is exhausted; no runtime acceptance.
+
+Latest M3: [completed offline Analyzer evaluation plan](tasks/M3-analyzer-evaluation-plan.md). Paired LOW requests are prepared only; authorization and endpoint-specific thinking-budget verification are required before any call.
+
+Latest M3: [selected cheapest-model result](tasks/M3-cheapest-low-report.md) and [emulator integration implementation contract](tasks/M3-emulator-staged-integration.md). Model comparison retired by author instruction; no new paid/live action.

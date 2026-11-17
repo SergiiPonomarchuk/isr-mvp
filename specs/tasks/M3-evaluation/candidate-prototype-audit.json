@@ -1,0 +1,87 @@
+{
+  "version": "candidate-review-offline-1",
+  "offline_only": true,
+  "provider_calls": 0,
+  "embedding_texts": 0,
+  "firestore_rpcs": 0,
+  "rows": [
+    {
+      "candidates": 1,
+      "prompt_bytes": 8838,
+      "schema_bytes": 2310,
+      "request_envelope_bytes": 11266,
+      "input_32768_byte_guard_fits": true,
+      "synthetic_concise_output_bytes": 588,
+      "legal_long_reason_output_bytes": 588,
+      "long_output_fits_8192_byte_proxy": true,
+      "structure": {
+        "objects": 39,
+        "arrays": 17,
+        "max_depth": 9,
+        "required_keys": 24,
+        "any_of_branches": 2
+      },
+      "schema_sha256": "f00c1789208e65ee003897fba23cd8ba567d8558bff638a129dc50ca66a9d937"
+    },
+    {
+      "candidates": 3,
+      "prompt_bytes": 9164,
+      "schema_bytes": 2366,
+      "request_envelope_bytes": 11688,
+      "input_32768_byte_guard_fits": true,
+      "synthetic_concise_output_bytes": 674,
+      "legal_long_reason_output_bytes": 1608,
+      "long_output_fits_8192_byte_proxy": true,
+      "structure": {
+        "objects": 41,
+        "arrays": 17,
+        "max_depth": 9,
+        "required_keys": 26,
+        "any_of_branches": 2
+      },
+      "schema_sha256": "11e653178c7a6e12ae557b4e05b908d1f98bf3c8f5f9ad372cf2f9a1934a3b90"
+    },
+    {
+      "candidates": 10,
+      "prompt_bytes": 10244,
+      "schema_bytes": 2556,
+      "request_envelope_bytes": 13098,
+      "input_32768_byte_guard_fits": true,
+      "synthetic_concise_output_bytes": 972,
+      "legal_long_reason_output_bytes": 5175,
+      "long_output_fits_8192_byte_proxy": true,
+      "structure": {
+        "objects": 48,
+        "arrays": 17,
+        "max_depth": 9,
+        "required_keys": 33,
+        "any_of_branches": 2
+      },
+      "schema_sha256": "8c384fe8e4505fea1336fec58313cdf54223a519a14193c26fe5d6e97da64235"
+    },
+    {
+      "candidates": 100,
+      "prompt_bytes": 24314,
+      "schema_bytes": 5068,
+      "request_envelope_bytes": 31480,
+      "input_32768_byte_guard_fits": true,
+      "synthetic_concise_output_bytes": 4838,
+      "legal_long_reason_output_bytes": 51071,
+      "long_output_fits_8192_byte_proxy": false,
+      "structure": {
+        "objects": 138,
+        "arrays": 17,
+        "max_depth": 9,
+        "required_keys": 123,
+        "any_of_branches": 2
+      },
+      "schema_sha256": "91ee4f718880deed29fee7cd5ecc13220b6a9f2982c7b34c29f2872213d123a4"
+    }
+  ],
+  "output_limit_tokens": 8192,
+  "output_measurement": "UTF-8 byte proxy, not Gemini tokenization or provider grammar admission. The long fixture demonstrates uncertainty within the unchanged legal reason bound.",
+  "actual_provider_admission": "not tested",
+  "actual_semantic_quality": "not tested",
+  "runtime_integrated": false,
+  "prepared_request_sha256": "d1312adda76bb61a353c2aba78d7494c7a7b711e54602b0771f790396c35c0c0"
+}

@@ -1,0 +1,576 @@
+{
+  "state": "complete",
+  "input": {
+    "description": "Due to a sudden family emergency, I need to relocate several heavy household items from my residence to a storage unit. I am currently unable to manage the physical labor alone and require assistance to clear the space.",
+    "location": [
+      47.594929,
+      7.6209
+    ],
+    "submitterId": "222",
+    "title": "Urgent assistance needed for family relocation"
+  },
+  "input_sha256": "f39ac6590380c3cdfff8e577ec3ac8d87c4fa0cf9359a80ac629f271a8291f78",
+  "whole_issue_sha256": "826c6ba6e96d70dfb5b77415db13a6b1536dead7dce3cc2886554dfc2abc3243",
+  "raw_chain": {
+    "ranked": [
+      {
+        "id": "51",
+        "score": 0.6990576838449019
+      },
+      {
+        "id": "79",
+        "score": 0.6186854446207308
+      },
+      {
+        "id": "15",
+        "score": 0.612661829833782
+      },
+      {
+        "id": "77",
+        "score": 0.6080089905855577
+      },
+      {
+        "id": "50",
+        "score": 0.602084557310358
+      },
+      {
+        "id": "52",
+        "score": 0.5924863175185162
+      },
+      {
+        "id": "86",
+        "score": 0.590135807527942
+      },
+      {
+        "id": "1",
+        "score": 0.5833274554634235
+      },
+      {
+        "id": "16",
+        "score": 0.5831484541294542
+      },
+      {
+        "id": "44",
+        "score": 0.582015869660984
+      },
+      {
+        "id": "56",
+        "score": 0.579988263568211
+      },
+      {
+        "id": "47",
+        "score": 0.5748085030216715
+      },
+      {
+        "id": "53",
+        "score": 0.5711592335876313
+      },
+      {
+        "id": "46",
+        "score": 0.5698406201086523
+      },
+      {
+        "id": "4",
+        "score": 0.5697130349179403
+      },
+      {
+        "id": "6",
+        "score": 0.5691274911119166
+      },
+      {
+        "id": "54",
+        "score": 0.5689837161314505
+      },
+      {
+        "id": "74",
+        "score": 0.5687857771102913
+      },
+      {
+        "id": "2",
+        "score": 0.5684068422349136
+      },
+      {
+        "id": "88",
+        "score": 0.56688923949748
+      },
+      {
+        "id": "7",
+        "score": 0.5659702898808118
+      },
+      {
+        "id": "48",
+        "score": 0.5658206718245704
+      },
+      {
+        "id": "10",
+        "score": 0.5648404098219426
+      },
+      {
+        "id": "49",
+        "score": 0.5647232836458742
+      },
+      {
+        "id": "81",
+        "score": 0.5639506627045446
+      },
+      {
+        "id": "20",
+        "score": 0.5638270774196835
+      },
+      {
+        "id": "36",
+        "score": 0.5619868096658766
+      },
+      {
+        "id": "57",
+        "score": 0.5619307579894519
+      },
+      {
+        "id": "11",
+        "score": 0.5591045716249314
+      },
+      {
+        "id": "30",
+        "score": 0.5566401133588892
+      },
+      {
+        "id": "35",
+        "score": 0.5549131997323683
+      },
+      {
+        "id": "40",
+        "score": 0.554565237953795
+      },
+      {
+        "id": "69",
+        "score": 0.5525226437529006
+      },
+      {
+        "id": "43",
+        "score": 0.5518080982511265
+      },
+      {
+        "id": "82",
+        "score": 0.5504613881467181
+      },
+      {
+        "id": "5",
+        "score": 0.5479358232414908
+      },
+      {
+        "id": "24",
+        "score": 0.5472232556476989
+      },
+      {
+        "id": "31",
+        "score": 0.54583170110863
+      },
+      {
+        "id": "63",
+        "score": 0.5439044266906636
+      },
+      {
+        "id": "3",
+        "score": 0.5426348072850227
+      },
+      {
+        "id": "45",
+        "score": 0.5419454532304244
+      },
+      {
+        "id": "75",
+        "score": 0.5418630891838363
+      },
+      {
+        "id": "87",
+        "score": 0.5413249734507396
+      },
+      {
+        "id": "98",
+        "score": 0.5408869784467107
+      },
+      {
+        "id": "29",
+        "score": 0.5400691739817822
+      },
+      {
+        "id": "72",
+        "score": 0.5391958901197477
+      },
+      {
+        "id": "84",
+        "score": 0.5387717045610197
+      },
+      {
+        "id": "33",
+        "score": 0.537744975927836
+      },
+      {
+        "id": "14",
+        "score": 0.5374403899165403
+      },
+      {
+        "id": "60",
+        "score": 0.5365520634881151
+      },
+      {
+        "id": "23",
+        "score": 0.5361043034784709
+      },
+      {
+        "id": "13",
+        "score": 0.5347014883797636
+      },
+      {
+        "id": "34",
+        "score": 0.5344521918814522
+      },
+      {
+        "id": "76",
+        "score": 0.5335206245141483
+      },
+      {
+        "id": "42",
+        "score": 0.532074253439541
+      },
+      {
+        "id": "26",
+        "score": 0.5319254669120416
+      },
+      {
+        "id": "73",
+        "score": 0.5313341571107107
+      },
+      {
+        "id": "25",
+        "score": 0.5313127551373898
+      },
+      {
+        "id": "9",
+        "score": 0.5312121254022985
+      },
+      {
+        "id": "71",
+        "score": 0.5310677597715008
+      },
+      {
+        "id": "70",
+        "score": 0.5307825152991543
+      },
+      {
+        "id": "55",
+        "score": 0.5306956748211882
+      },
+      {
+        "id": "64",
+        "score": 0.5297339336295304
+      },
+      {
+        "id": "100",
+        "score": 0.5282842434229037
+      },
+      {
+        "id": "83",
+        "score": 0.5280678927433449
+      },
+      {
+        "id": "39",
+        "score": 0.5279822796815073
+      },
+      {
+        "id": "12",
+        "score": 0.5272987510548802
+      },
+      {
+        "id": "28",
+        "score": 0.5272329391901879
+      },
+      {
+        "id": "41",
+        "score": 0.5271487080779735
+      },
+      {
+        "id": "58",
+        "score": 0.5268241062217002
+      },
+      {
+        "id": "78",
+        "score": 0.5260042502641759
+      },
+      {
+        "id": "18",
+        "score": 0.5257862538221751
+      },
+      {
+        "id": "99",
+        "score": 0.5253577869110051
+      },
+      {
+        "id": "68",
+        "score": 0.5247133963506586
+      },
+      {
+        "id": "67",
+        "score": 0.5240133821374059
+      },
+      {
+        "id": "8",
+        "score": 0.5235420199816444
+      },
+      {
+        "id": "80",
+        "score": 0.522490762688858
+      },
+      {
+        "id": "32",
+        "score": 0.5212974425826448
+      },
+      {
+        "id": "22",
+        "score": 0.5212564936676398
+      },
+      {
+        "id": "17",
+        "score": 0.5210770831577246
+      },
+      {
+        "id": "37",
+        "score": 0.5208448989329371
+      },
+      {
+        "id": "21",
+        "score": 0.5186231661042348
+      },
+      {
+        "id": "19",
+        "score": 0.5183697979997831
+      },
+      {
+        "id": "38",
+        "score": 0.5177600702511868
+      },
+      {
+        "id": "96",
+        "score": 0.5147729799626318
+      },
+      {
+        "id": "62",
+        "score": 0.5140227310552761
+      },
+      {
+        "id": "94",
+        "score": 0.5138301344811417
+      },
+      {
+        "id": "61",
+        "score": 0.5134793608501714
+      },
+      {
+        "id": "59",
+        "score": 0.5114587170552126
+      },
+      {
+        "id": "93",
+        "score": 0.5094261488332631
+      },
+      {
+        "id": "65",
+        "score": 0.5073711336318124
+      },
+      {
+        "id": "92",
+        "score": 0.5052876985990528
+      },
+      {
+        "id": "27",
+        "score": 0.5008824506209633
+      },
+      {
+        "id": "95",
+        "score": 0.5001258439937246
+      },
+      {
+        "id": "91",
+        "score": 0.4976414970112973
+      },
+      {
+        "id": "89",
+        "score": 0.49594530522361435
+      },
+      {
+        "id": "97",
+        "score": 0.4959118268665712
+      },
+      {
+        "id": "90",
+        "score": 0.4935460312376672
+      },
+      {
+        "id": "85",
+        "score": 0.4806896615306566
+      },
+      {
+        "id": "66",
+        "score": 0.4720431319663971
+      }
+    ],
+    "chain": [
+      {
+        "id": "51",
+        "score": 0.6990576838449019
+      }
+    ],
+    "state": "context_validation_required"
+  },
+  "review": {
+    "result": "not_consistent",
+    "message": "The submitted request for assistance with moving heavy household items does not align with the scope of the available reference, which pertains to city-wide social support for family emergencies. The request is for a private, localized service task rather than a public policy or community-level issue.",
+    "questions": [
+      "Are you seeking assistance from a specific municipal social service department or a private moving service?",
+      "Is there a specific city program you are inquiring about regarding emergency relocation support?"
+    ]
+  },
+  "raw_review": {
+    "result": "not_consistent",
+    "message": "The submitted request for assistance with moving heavy household items does not align with the scope of the available reference, which pertains to city-wide social support for family emergencies. The request is for a private, localized service task rather than a public policy or community-level issue.",
+    "questions": [
+      "Are you seeking assistance from a specific municipal social service department or a private moving service?",
+      "Is there a specific city program you are inquiring about regarding emergency relocation support?"
+    ],
+    "scope": null,
+    "location_reference": {
+      "anchor": "home",
+      "place": ""
+    },
+    "accepted": [],
+    "excluded": {
+      "51": "The reference pertains to city-level social support for family emergencies, whereas the input describes a private request for physical labor assistance with moving household items."
+    },
+    "aspects": []
+  },
+  "review_meta": {
+    "ai_source": "model",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "mr1-context-prompt-4",
+    "schema_sha256": "8c383deb989e7ae166ef02d55c5688558ae90069eec83293cdeef263d66ddf2c",
+    "prompt_sha256": "f0175c11c946e1fc03ff5776c09607318dad785912bc101d127dc5b941646d52",
+    "temperature": 0,
+    "seed": 20261110,
+    "examples_used": [
+      "51",
+      "79",
+      "15",
+      "77",
+      "50",
+      "52",
+      "86",
+      "1",
+      "16",
+      "44",
+      "56",
+      "47",
+      "53",
+      "46",
+      "4",
+      "6",
+      "54",
+      "74",
+      "2",
+      "88",
+      "7",
+      "48",
+      "10",
+      "49",
+      "81",
+      "20",
+      "36",
+      "57",
+      "11",
+      "30",
+      "35",
+      "40",
+      "69",
+      "43",
+      "82",
+      "5",
+      "24",
+      "31",
+      "63",
+      "3",
+      "45",
+      "75",
+      "87",
+      "98",
+      "29",
+      "72",
+      "84",
+      "33",
+      "14",
+      "60",
+      "23",
+      "13",
+      "34",
+      "76",
+      "42",
+      "26",
+      "73",
+      "25",
+      "9",
+      "71",
+      "70",
+      "55",
+      "64",
+      "100",
+      "83",
+      "39",
+      "12",
+      "28",
+      "41",
+      "58",
+      "78",
+      "18",
+      "99",
+      "68",
+      "67",
+      "8",
+      "80",
+      "32",
+      "22",
+      "17",
+      "37",
+      "21",
+      "19",
+      "38",
+      "96",
+      "62",
+      "94",
+      "61",
+      "59",
+      "93",
+      "65",
+      "92",
+      "27",
+      "95",
+      "91",
+      "89",
+      "97",
+      "90",
+      "85",
+      "66"
+    ],
+    "raw_output": "{\n  \"result\": \"not_consistent\",\n  \"message\": \"The submitted request for assistance with moving heavy household items does not align with the scope of the available reference, which pertains to city-wide social support for family emergencies. The request is for a private, localized service task rather than a public policy or community-level issue.\",\n  \"questions\": [\n    \"Are you seeking assistance from a specific municipal social service department or a private moving service?\",\n    \"Is there a specific city program you are inquiring about regarding emergency relocation support?\"\n  ],\n  \"scope\": null,\n  \"location_reference\": {\n    \"anchor\": \"home\",\n    \"place\": \"\"\n  },\n  \"accepted\": [],\n  \"excluded\": {\n    \"51\": \"The reference pertains to city-level social support for family emergencies, whereas the input describes a private request for physical labor assistance with moving household items.\"\n  },\n  \"aspects\": []\n}",
+    "usage": {
+      "promptTokenCount": 1328,
+      "candidatesTokenCount": 210,
+      "totalTokenCount": 1538,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 1328
+        }
+      ],
+      "serviceTier": "standard"
+    },
+    "error": null
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "version": "m3-corrected-preflight-1",
+  "prompt_version": "mr1-context-prompt-2",
+  "schema_sha256": "4a7f5f2b990e4794bad8fa1602e1125501e5e03adbdfcd22720df9e104f04222",
+  "cases_verified": 14,
+  "largest_prompt_schema_bytes": 23509,
+  "rows": [
+    {
+      "case": "D1-01-live",
+      "all_reference_prompt_schema_bytes": 23298
+    },
+    {
+      "case": "D1-02",
+      "all_reference_prompt_schema_bytes": 23509
+    },
+    {
+      "case": "D1-03",
+      "all_reference_prompt_schema_bytes": 23288
+    },
+    {
+      "case": "D1-04",
+      "all_reference_prompt_schema_bytes": 23341
+    },
+    {
+      "case": "D1-05",
+      "all_reference_prompt_schema_bytes": 23480
+    },
+    {
+      "case": "D1-06",
+      "all_reference_prompt_schema_bytes": 23384
+    },
+    {
+      "case": "D1-07",
+      "all_reference_prompt_schema_bytes": 23414
+    },
+    {
+      "case": "D1-08",
+      "all_reference_prompt_schema_bytes": 23470
+    },
+    {
+      "case": "D1-09",
+      "all_reference_prompt_schema_bytes": 23393
+    },
+    {
+      "case": "D1-10",
+      "all_reference_prompt_schema_bytes": 23474
+    },
+    {
+      "case": "vague-help",
+      "all_reference_prompt_schema_bytes": 23174
+    },
+    {
+      "case": "compound-lock-software",
+      "all_reference_prompt_schema_bytes": 23338
+    },
+    {
+      "case": "vague-help-clarified",
+      "all_reference_prompt_schema_bytes": 23330
+    },
+    {
+      "case": "compound-lock-software-clarified",
+      "all_reference_prompt_schema_bytes": 23500
+    }
+  ],
+  "provider_calls": 0,
+  "credential_loaded": false
+}

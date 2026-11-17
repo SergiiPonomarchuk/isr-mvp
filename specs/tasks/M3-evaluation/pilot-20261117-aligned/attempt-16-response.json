@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"needs_clarification\",\n  \"message\": \"The request is too vague to identify a specific issue or location. Please provide details about the problem you are experiencing, the location it concerns, and who is affected.\",\n  \"questions\": [\n    \"What specific issue or problem are you seeking help with?\",\n    \"Where is this issue located (e.g., a specific building, street, or neighborhood)?\",\n    \"Who is affected by this situation?\"\n  ],\n  \"scope\": null,\n  \"location_reference\": null,\n  \"accepted\": [],\n  \"excluded\": {},\n  \"aspects\": []\n}",
+  "usage": {
+    "promptTokenCount": 6119,
+    "candidatesTokenCount": 144,
+    "totalTokenCount": 6263
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "e7ad2889e21a6abcca7524c20ed91699b1f596c48ecbf0f6043e0e8a39ebc285"
+}

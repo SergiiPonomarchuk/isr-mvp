@@ -1,0 +1,536 @@
+{
+  "version": "m3-pilot-ledger-1",
+  "authorization": {
+    "version": "m3-pilot-approval-1",
+    "date_author": "2026-11-17 Europe/Kyiv",
+    "source": "Explicit user message in this chat",
+    "author_text": "Approve the M3 pilot up to $0.50, using the existing credential loader; Paid status and budget confirmed",
+    "plan_sha256": "a8243689de12c5768d2f6be0c6100d60966f18a107ecd5725301f7d52120f343",
+    "max_review_attempts": 14,
+    "max_embedding_texts": 45,
+    "max_embedding_posts": 17,
+    "automatic_retries": 0,
+    "estimated_cost_ceiling_usd": 0.5,
+    "paid_status": "confirmed by author",
+    "budget": "confirmed sufficient by author",
+    "credential_handling": "Existing C:/isr-mvp/scripts/gemini_api.py load_key; no key copy to files/arguments/output",
+    "production_writes_authorized": false,
+    "deployments_authorized": false
+  },
+  "pins": {
+    "specs/tasks/M3-evaluation/cases.json": "a8243689de12c5768d2f6be0c6100d60966f18a107ecd5725301f7d52120f343",
+    "functions/data/analyzer_examples.json": "153baac827ea806aba7394ed8a61b79208555a96e4adc1afd0aaf91424b08be3",
+    "functions/ai-config.js": "593e86b7d8efbdecc3c19b7a17d186c18cf72e4adfd00c7171f85f925b12b6f0",
+    "functions/ai-helper.js": "3844f7c9736f5d9476c2710b5e85559ed38326c9279f8ecaa722fce3b6ea4bdb",
+    "functions/context-review.js": "dfa54a250cb29cb54315f9cd4e269571d61df14d0eb151907725735bce72c390",
+    "functions/multi-reference.js": "cad5c25433bfd2aec56bf589bbd072d3dc49fa84c0095db2a6e675736cb45d13",
+    "functions/tools/mr1-pilot.js": "c6f42e8f6fceaa3b4a534397dab3422e2abc7aee959d1fdaba891ad1da9648d5",
+    "functions/tools/mr1-pilot-budget.js": "a0ccc4a682bbd1bbbedf1f44785d5683e5c2f925580548f3eabfba0a69f97ca7",
+    "specs/tasks/M3-calibration/inputs.json": "8e193d6c87b6a9ac8c3b785ad43ea0cf7dbc6f0d3cc2536a5fc20bae90caa306",
+    "specs/tasks/M3-calibration/evaluation-vectors.json": "3526d6d99b59b9eb89a85d69688122af4ec016d1e0263350780fa78e403e4f27"
+  },
+  "limits": {
+    "reviews": 14,
+    "embeddingTexts": 45,
+    "embeddingPosts": 17,
+    "usdMicros": 500000
+  },
+  "status": "stopped_no_retry",
+  "attempts": [
+    {
+      "id": 1,
+      "request_key": "D1-01-live:review",
+      "case_id": "D1-01-live",
+      "stage": "review",
+      "template": "mr1-context-review-1",
+      "kind": "review",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "7ea9c7bdeff52c5d32e1afc81bef6b84345b4c90e8fcdf3a2a757248d04a748a",
+      "text_sha256": [
+        "47c9110f192b736d5c43ba77da22a504a381e869766ad5a2e0b10bee52f04cdd"
+      ],
+      "estimated_input_tokens_bytes": 3169,
+      "embedding_texts": 0,
+      "reserved_usd_micros": 13081,
+      "http_attempts": 1,
+      "status": "succeeded",
+      "reserved_at": "2026-11-16T22:32:21.099Z",
+      "usage": {
+        "promptTokenCount": 497,
+        "candidatesTokenCount": 285,
+        "totalTokenCount": 782
+      },
+      "finished_at": "2026-11-16T22:32:22.943Z",
+      "reported_cost_usd_micros": 552
+    }
+  ],
+  "cases": {
+    "D1-01-live": {
+      "state": "stopped",
+      "input": {
+        "description": "The main entrance lock at my home building osbb 2, h12 is jammed, preventing residents from entering or securing the building properly.",
+        "location": [
+          47.593671,
+          7.621699
+        ],
+        "submitterId": "2",
+        "title": "Repair of broken main entrance lock"
+      },
+      "input_sha256": "7601e6d8b5258a624facf10cb0274907ab2c544af3fb864b5704fb970e548d0a",
+      "whole_issue_sha256": "b918df42d6ffcc0229943790db1270b5c9ad328e5c837dd73cc43918a70fcb11",
+      "raw_chain": {
+        "ranked": [
+          {
+            "id": "1",
+            "score": 0.7842495579948031
+          },
+          {
+            "id": "2",
+            "score": 0.6774999912300388
+          },
+          {
+            "id": "6",
+            "score": 0.6766376095239361
+          },
+          {
+            "id": "3",
+            "score": 0.6616033082192432
+          },
+          {
+            "id": "7",
+            "score": 0.6597756538957441
+          },
+          {
+            "id": "5",
+            "score": 0.6504297234573502
+          },
+          {
+            "id": "10",
+            "score": 0.6419234177530942
+          },
+          {
+            "id": "4",
+            "score": 0.6415517862690423
+          },
+          {
+            "id": "32",
+            "score": 0.6279695526961675
+          },
+          {
+            "id": "26",
+            "score": 0.6157592450447643
+          },
+          {
+            "id": "17",
+            "score": 0.6121865665768961
+          },
+          {
+            "id": "47",
+            "score": 0.6120991213650561
+          },
+          {
+            "id": "15",
+            "score": 0.6102933216413764
+          },
+          {
+            "id": "35",
+            "score": 0.6089840483389913
+          },
+          {
+            "id": "13",
+            "score": 0.6087084342968252
+          },
+          {
+            "id": "9",
+            "score": 0.6049351054796215
+          },
+          {
+            "id": "14",
+            "score": 0.603637571428525
+          },
+          {
+            "id": "30",
+            "score": 0.6018018665193509
+          },
+          {
+            "id": "36",
+            "score": 0.6012853647732568
+          },
+          {
+            "id": "51",
+            "score": 0.595843590879967
+          },
+          {
+            "id": "77",
+            "score": 0.5944935461650221
+          },
+          {
+            "id": "18",
+            "score": 0.5908580897930629
+          },
+          {
+            "id": "16",
+            "score": 0.5896870644375161
+          },
+          {
+            "id": "11",
+            "score": 0.5869823883615726
+          },
+          {
+            "id": "19",
+            "score": 0.58594522049986
+          },
+          {
+            "id": "12",
+            "score": 0.5859410247676397
+          },
+          {
+            "id": "20",
+            "score": 0.585630648480585
+          },
+          {
+            "id": "75",
+            "score": 0.5846374372190154
+          },
+          {
+            "id": "56",
+            "score": 0.5821198357246942
+          },
+          {
+            "id": "39",
+            "score": 0.5807764594141087
+          },
+          {
+            "id": "31",
+            "score": 0.5797063854132535
+          },
+          {
+            "id": "74",
+            "score": 0.5778214138358035
+          },
+          {
+            "id": "29",
+            "score": 0.576802611596233
+          },
+          {
+            "id": "21",
+            "score": 0.5754762895733074
+          },
+          {
+            "id": "8",
+            "score": 0.5739454682067485
+          },
+          {
+            "id": "45",
+            "score": 0.5738863464501758
+          },
+          {
+            "id": "25",
+            "score": 0.5725669090698039
+          },
+          {
+            "id": "24",
+            "score": 0.5677500689165866
+          },
+          {
+            "id": "98",
+            "score": 0.5664248889496049
+          },
+          {
+            "id": "78",
+            "score": 0.5660992346307203
+          },
+          {
+            "id": "67",
+            "score": 0.5652998968716615
+          },
+          {
+            "id": "87",
+            "score": 0.563580298742382
+          },
+          {
+            "id": "50",
+            "score": 0.5622101153110223
+          },
+          {
+            "id": "94",
+            "score": 0.5614159642315366
+          },
+          {
+            "id": "33",
+            "score": 0.5604640319682351
+          },
+          {
+            "id": "52",
+            "score": 0.5603561579442106
+          },
+          {
+            "id": "86",
+            "score": 0.5602675490662012
+          },
+          {
+            "id": "41",
+            "score": 0.5598215630244452
+          },
+          {
+            "id": "34",
+            "score": 0.5589597935609775
+          },
+          {
+            "id": "84",
+            "score": 0.5588532316248479
+          },
+          {
+            "id": "81",
+            "score": 0.557972228376197
+          },
+          {
+            "id": "82",
+            "score": 0.5577613007571486
+          },
+          {
+            "id": "40",
+            "score": 0.5571355462787999
+          },
+          {
+            "id": "95",
+            "score": 0.5570450904681153
+          },
+          {
+            "id": "58",
+            "score": 0.5569608810864733
+          },
+          {
+            "id": "27",
+            "score": 0.5549106585203063
+          },
+          {
+            "id": "28",
+            "score": 0.5534166277405742
+          },
+          {
+            "id": "54",
+            "score": 0.5526972524392979
+          },
+          {
+            "id": "100",
+            "score": 0.5520469618392498
+          },
+          {
+            "id": "69",
+            "score": 0.5520407557622328
+          },
+          {
+            "id": "64",
+            "score": 0.5511466703485385
+          },
+          {
+            "id": "70",
+            "score": 0.5511291509994432
+          },
+          {
+            "id": "59",
+            "score": 0.5509046768733206
+          },
+          {
+            "id": "99",
+            "score": 0.5505726365918473
+          },
+          {
+            "id": "53",
+            "score": 0.5505512909145783
+          },
+          {
+            "id": "72",
+            "score": 0.5497124466256288
+          },
+          {
+            "id": "49",
+            "score": 0.5492988607782802
+          },
+          {
+            "id": "60",
+            "score": 0.5483651923842654
+          },
+          {
+            "id": "42",
+            "score": 0.5477811997500824
+          },
+          {
+            "id": "63",
+            "score": 0.5463514690832668
+          },
+          {
+            "id": "23",
+            "score": 0.5451697471753012
+          },
+          {
+            "id": "22",
+            "score": 0.544961095349584
+          },
+          {
+            "id": "92",
+            "score": 0.5426442555615226
+          },
+          {
+            "id": "48",
+            "score": 0.5423287374017856
+          },
+          {
+            "id": "73",
+            "score": 0.5418159091327147
+          },
+          {
+            "id": "90",
+            "score": 0.5411532000962171
+          },
+          {
+            "id": "89",
+            "score": 0.540894574417966
+          },
+          {
+            "id": "43",
+            "score": 0.5395624398167366
+          },
+          {
+            "id": "71",
+            "score": 0.5392300709891066
+          },
+          {
+            "id": "83",
+            "score": 0.5392166023572201
+          },
+          {
+            "id": "97",
+            "score": 0.5386467101567161
+          },
+          {
+            "id": "79",
+            "score": 0.5377507174530215
+          },
+          {
+            "id": "46",
+            "score": 0.5377095472178214
+          },
+          {
+            "id": "88",
+            "score": 0.5373387727231417
+          },
+          {
+            "id": "65",
+            "score": 0.536339074133815
+          },
+          {
+            "id": "68",
+            "score": 0.5357806819591814
+          },
+          {
+            "id": "62",
+            "score": 0.5352708286119668
+          },
+          {
+            "id": "76",
+            "score": 0.5343799540546278
+          },
+          {
+            "id": "37",
+            "score": 0.5340776343638305
+          },
+          {
+            "id": "44",
+            "score": 0.5339153311701252
+          },
+          {
+            "id": "96",
+            "score": 0.5326702152327629
+          },
+          {
+            "id": "66",
+            "score": 0.532217570141476
+          },
+          {
+            "id": "93",
+            "score": 0.5297770858794825
+          },
+          {
+            "id": "55",
+            "score": 0.5285893306275788
+          },
+          {
+            "id": "57",
+            "score": 0.52847963370974
+          },
+          {
+            "id": "38",
+            "score": 0.525647940726594
+          },
+          {
+            "id": "61",
+            "score": 0.5169242355737113
+          },
+          {
+            "id": "91",
+            "score": 0.5138650226819753
+          },
+          {
+            "id": "85",
+            "score": 0.5102594724471468
+          },
+          {
+            "id": "80",
+            "score": 0.5098413299669305
+          }
+        ],
+        "chain": [
+          {
+            "id": "1",
+            "score": 0.7842495579948031
+          }
+        ],
+        "state": "context_validation_required"
+      }
+    },
+    "D1-02": {
+      "state": "not_run_after_stop"
+    },
+    "D1-03": {
+      "state": "not_run_after_stop"
+    },
+    "D1-04": {
+      "state": "not_run_after_stop"
+    },
+    "D1-05": {
+      "state": "not_run_after_stop"
+    },
+    "D1-06": {
+      "state": "not_run_after_stop"
+    },
+    "D1-07": {
+      "state": "not_run_after_stop"
+    },
+    "D1-08": {
+      "state": "not_run_after_stop"
+    },
+    "D1-09": {
+      "state": "not_run_after_stop"
+    },
+    "D1-10": {
+      "state": "not_run_after_stop"
+    },
+    "vague-help": {
+      "state": "not_run_after_stop"
+    },
+    "compound-lock-software": {
+      "state": "not_run_after_stop"
+    },
+    "vague-help-clarified": {
+      "state": "not_run_after_stop"
+    },
+    "compound-lock-software-clarified": {
+      "state": "not_run_after_stop"
+    }
+  },
+  "created_at": "2026-11-16T22:32:21.041Z",
+  "stop_reason": "Invalid property kind",
+  "finished_at": "2026-11-16T22:32:22.958Z"
+}

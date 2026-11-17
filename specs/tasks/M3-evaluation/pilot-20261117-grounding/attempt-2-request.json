@@ -1,0 +1,10 @@
+{
+  "model": "gemini-embedding-001",
+  "contents": [
+    "The main entrance lock at my home building osbb 2, h12 is jammed"
+  ],
+  "config": {
+    "taskType": "RETRIEVAL_QUERY",
+    "outputDimensionality": 768
+  }
+}

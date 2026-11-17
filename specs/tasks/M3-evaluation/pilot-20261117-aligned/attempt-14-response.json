@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"pass\",\n  \"message\": \"The request aligns with the city-wide participatory budget allocation process.\",\n  \"questions\": [],\n  \"scope\": \"city\",\n  \"location_reference\": {\n    \"anchor\": \"none\",\n    \"place\": \"\"\n  },\n  \"accepted\": [\n    {\n      \"id\": \"97\",\n      \"aspect_id\": \"budget_allocation\",\n      \"evidence\": \"Participatory allocation of the city improvement budget\"\n    }\n  ],\n  \"excluded\": {},\n  \"aspects\": [\n    {\n      \"id\": \"budget_allocation\",\n      \"text\": \"Participatory allocation of the city improvement budget\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"any\",\n        \"familyStatus\": \"any\",\n        \"features\": [],\n        \"places\": [],\n        \"property_kinds\": []\n      },\n      \"demographic_evidence\": []\n    }\n  ]\n}",
+  "usage": {
+    "promptTokenCount": 1337,
+    "candidatesTokenCount": 240,
+    "totalTokenCount": 1577
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "1aaf52a2228266b44fca7feeb646a241ff14f5ba48646b5bd6d0a36f70acb0e2"
+}

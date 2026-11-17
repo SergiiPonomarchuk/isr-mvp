@@ -1,0 +1,133 @@
+{
+  "version": "m3-pilot-summary-1",
+  "status": "stopped_no_retry",
+  "stop_reason": "Context evidence must quote the submitted input",
+  "totals": {
+    "reviews": 4,
+    "embeddingTexts": 0,
+    "embeddingPosts": 0,
+    "reserved_usd_micros": 55576,
+    "transport_attempts": 4
+  },
+  "conservative_reserved_usd": 0.055576,
+  "reported_token_totals": {
+    "promptTokenCount": 1357,
+    "candidatesTokenCount": 538,
+    "totalTokenCount": 1895
+  },
+  "current_run_totals": {
+    "reviews": 1,
+    "embeddingTexts": 0,
+    "embeddingPosts": 0,
+    "reserved_usd_micros": 14144,
+    "transport_attempts": 1
+  },
+  "reported_cost_usd": 0.001147,
+  "usage_complete": false,
+  "cases": [
+    {
+      "id": "D1-01-live",
+      "state": "stopped",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-02",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-03",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-04",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-05",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-06",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-07",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-08",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-09",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "D1-10",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "vague-help",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "compound-lock-software",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "vague-help-clarified",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    },
+    {
+      "id": "compound-lock-software-clarified",
+      "state": "not_run_after_stop",
+      "retained": [],
+      "questions": [],
+      "message": null
+    }
+  ],
+  "production_writes": 0,
+  "firestore_rpcs": 0,
+  "geocode_calls": 0,
+  "profile_embedding_texts": 0,
+  "full_population": "not run; memory and publication-capacity gates remain",
+  "deployment_ready": false
+}

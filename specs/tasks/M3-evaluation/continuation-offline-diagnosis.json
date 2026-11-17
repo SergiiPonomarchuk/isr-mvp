@@ -1,0 +1,23 @@
+{
+  "provider_schema_admitted": true,
+  "aspect_is_input_substring": false,
+  "aspect_exact_reference_title_ids": [
+    "1"
+  ],
+  "accepted_evidence_is_input_substring": true,
+  "home_anchor": {
+    "anchor": "home",
+    "place": ""
+  },
+  "demographics": {
+    "minAge": null,
+    "maxAge": null,
+    "employmentStatus": "any",
+    "familyStatus": "any",
+    "features": [],
+    "places": [],
+    "property_kinds": []
+  },
+  "offline_only": true,
+  "additional_provider_calls": 0
+}

@@ -1,0 +1,10 @@
+{
+  "model": "gemini-embedding-001",
+  "contents": [
+    "Help us. We need help. Something should be done.\nContext: This concerns only the jammed entrance lock at osbb 2, h12. Residents of that building need to choose a repair service. It does not concern other buildings."
+  ],
+  "config": {
+    "taskType": "RETRIEVAL_QUERY",
+    "outputDimensionality": 768
+  }
+}

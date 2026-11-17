@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"pass\",\n  \"message\": \"The request for repair of the main entrance lock at the specified building is clear and matches the provided reference.\",\n  \"questions\": [],\n  \"scope\": \"building\",\n  \"location_reference\": {\n    \"anchor\": \"home\",\n    \"place\": \"\"\n  },\n  \"accepted\": [\n    {\n      \"id\": \"1\",\n      \"aspect_id\": \"1\",\n      \"evidence\": \"The main entrance lock at my home building osbb 2, h12 is jammed\"\n    }\n  ],\n  \"excluded\": {},\n  \"aspects\": [\n    {\n      \"id\": \"1\",\n      \"text\": \"House entrance lock broken (shared front door)\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"any\",\n        \"familyStatus\": \"any\",\n        \"features\": [],\n        \"places\": [],\n        \"property_kinds\": []\n      },\n      \"demographic_evidence\": []\n    }\n  ]\n}",
+  "usage": {
+    "promptTokenCount": 860,
+    "candidatesTokenCount": 253,
+    "totalTokenCount": 1113
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "96b3904eedb280c825ea78fa538219fbf098899463a0a22da044c7f7b34b2627"
+}
