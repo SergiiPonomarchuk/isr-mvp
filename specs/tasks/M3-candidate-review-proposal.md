@@ -19,3 +19,7 @@ Keep clarification authority, personal-help eligibility, scope compatibility, li
 ## Decision requested
 
 Approve the **offline candidate-review design/prototype scope** above, with no paid calls, before implementing the new review contract. This is a request to change the output protocol, not approval to bypass validation or silently change the application's Gemini model. Sol Medium remains sufficient.
+
+- 2026-11-17: Author approved offline candidate-review prototype. Plan: implement an isolated keyed-verdict adapter, test strict parsing/full coverage and actual-SDK fake transport, then measure full-chain request/output envelopes. No app-handler or paid-runner integration and no provider call. Explicit deferred verdicts are permitted only for non-pass outcomes, preserving clarification without fabricated exclusions.
+
+- 2026-11-17 completed: approved isolated prototype and fake-SDK/strict-validation tests. Actual 100-candidate envelope fits 32 KiB; provider grammar/token/semantic behavior untested. No paid calls. See M3-candidate-review-prototype.md for final evidence and the optional exact one-call decision.

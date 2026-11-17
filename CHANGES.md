@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Isolated complete-candidate review prototype verified offline
+
+Added keyed explicit verdict experiment, raw duplicate-key refusal and unchanged-validator projection with non-pass-only deferral. Full 100-ID request fits current input envelope for the pinned case; output/grammar admission remains untested. Node 186 passed/five optional skips; Python 140 run/two skips. No runtime integration, paid call, math/model/library or production change. Prepared exact request/audit and optional one-call 22-review proposal under original US$0.50; see specs/tasks/M3-candidate-review-prototype.md.
+
 ## 2026-11-17 - Focused v5 check reached review ceiling; raw-chain coverage rejected
 
 Executed the approved two cases once each at 21 cumulative reviews under original US$0.50. Blanket personal-help exclusion and repeated lock choice disappeared, but the lock response omitted decisions for 98 of 100 candidates and was correctly rejected. Fourteen embedding texts/POSTs, US$0.331466 reserved; no further calls or live changes. Preserved all outputs/receipts and prepared offline candidate-review protocol proposal. See specs/tasks/M3-two-case-report.md.
