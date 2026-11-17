@@ -1,7 +1,7 @@
 "use strict";
 const { PROPERTY_KINDS, EMPLOYMENT_STATUSES, FAMILY_STATUSES } = require("./demographics");
 const { ANCHORS } = require("./location");
-const PROMPT_VERSION = "mr1-context-prompt-4";
+const PROMPT_VERSION = "mr1-context-prompt-5";
 const SCOPES = ["unit", "building", "street_segment", "neighborhood", "district", "city", "region", "global_digital"];
 const DEMOGRAPHIC_FIELDS = ["minAge", "maxAge", "employmentStatus", "familyStatus", "features", "places", "property_kinds"];
 function responseSchema() {

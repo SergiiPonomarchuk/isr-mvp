@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Confirmed clarification precedence and personal-help eligibility
+
+Author confirmed both interpretation rules. Prompt v5 respects explicit narrowing and prohibits invented public-policy-only exclusion while preserving genuine scope/reference limits. Added offline regressions and retained literal failed outputs. Node 178 passed/five optional skips; Python 140 run/two skips. No new API calls or allowance/live changes. Proposed targeted two-case actual check needs one extra cumulative review slot (21 instead of 20) within the SAME US$0.50; see specs/tasks/M3-confirmed-context-rules.md.
+
 ## 2026-11-17 - Bounded aligned pilot completed with two quality findings
 
 Completed all 14 pinned case outcomes, preserving two source-verified v3 cases and running 12 v4 reviews. Ten pass, three clarification and one not_consistent; repeated clarification and unsupported public-policy-only reasoning remain unresolved. Nineteen cumulative reviews, 13 embedding texts, US$0.296917 reserved under original limits. No more calls, live writes or deployment; report specs/tasks/M3-aligned-pilot-report.md. All passes are single-reference; no multi-reference/full-population acceptance claimed.

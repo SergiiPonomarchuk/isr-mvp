@@ -28,3 +28,5 @@ Confirm the recommended clarification precedence and handling of personal-help/r
 Validation: Node 175 passed, five optional skips; Python 140 run, two optional skips. Reuse tests check immutable hashes, original prompt provenance and forbidden case changes. Earlier actual Check/Create/Join emulator parity predates the latest prompt edits; no new full-population/browser acceptance is claimed. Final CI is checked on the pushed head.
 
 CI portability correction: reuse unit tests compute the local fixture plan hash to accommodate checkout line endings; real launcher authorization hashes and all recorded receipts remain unchanged. Local full Node suite passes after the test-only fix.
+
+Author resolution, 2026-11-17: **Confirm both**. The two intended rules are now specified and implemented in prompt v5, with offline fixtures; no actual v5 model result exists yet. Historical quality findings above describe the v3/v4 pilot and remain unchanged. See M3-confirmed-context-rules.md for verification and the exact proposed allowance decision.
