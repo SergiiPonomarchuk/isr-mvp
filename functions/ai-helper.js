@@ -1146,8 +1146,40 @@ async function reviewContext(input, ranked, library) {
       examples_used:ranked.map(r=>r.id),raw_output:response.text,usage:response.usageMetadata||null,error:null}};
   } catch(error) { throw Object.assign(new Error(error.status?error.message:"AI returned an invalid context review; please retry."),{status:error.status||503}); }
 }
+// Current runtime contract. Historical one-call reviewContext remains unchanged.
+async function reviewStagedContext(input,ranked,library) {
+ const S=require('./staged-context'),R=require('./context-review');
+ const meta={ai_source:'model',model:AI.TEXT_MODEL,prompt_version:S.PROMPT_VERSION,schema_sha256:S.contractHash(),temperature:AI.TEMPERATURE,seed:AI.SEED,thinking_config:{thinkingLevel:'LOW'},examples_used:ranked.map(r=>r.id),stages:[],request_count:0,usage:{prompt_tokens:0,output_tokens:0,thinking_tokens:0,total_tokens:0},error:null};
+ const client=getClient();
+ if(!client)throw Object.assign(new Error('AI unavailable: staged context review could not run.'),{status:503,staged_meta:meta});
+ async function call(stage,prompt,schema){
+  const config={temperature:AI.TEMPERATURE,seed:AI.SEED,maxOutputTokens:8192,responseMimeType:'application/json',responseJsonSchema:schema,thinkingConfig:{thinkingLevel:'LOW'},httpOptions:{retryOptions:{attempts:1}}};
+  if(Buffer.byteLength(JSON.stringify({contents:prompt,config}))>262144)throw new Error('Staged request exceeds capacity');
+  const record={stage,prompt_sha256:sha256(prompt),schema_sha256:R.hash(schema),thinking_config:{thinkingLevel:'LOW'},raw_output:null,usage:null,finish_reason:null};
+  meta.stages.push(record);meta.request_count++;
+  const response=await client.models.generateContent({model:AI.TEXT_MODEL,contents:prompt,config});
+  record.raw_output=typeof response.text==='string'?response.text:'';record.usage=response.usageMetadata||null;
+  record.finish_reason=response.candidates?.[0]?.finishReason||null;
+  const u=record.usage||{};
+  meta.usage.prompt_tokens+=u.promptTokenCount||0;meta.usage.output_tokens+=u.candidatesTokenCount||0;meta.usage.thinking_tokens+=u.thoughtsTokenCount||0;meta.usage.total_tokens+=u.totalTokenCount||0;
+  if(record.finish_reason&&record.finish_reason!=='STOP')throw new Error('Incomplete staged response');
+  return S.parse(record.raw_output);
+ }
+ try{
+  const rawDecision=await call('effective_decision',S.decisionPrompt(input),S.decisionSchema()),decision=S.resolve(rawDecision,input);
+  if(rawDecision.result!=='pass')return {result:{result:rawDecision.result,message:rawDecision.message,questions:rawDecision.questions},raw:{decision:rawDecision},meta};
+  const plan=S.partition(decision,ranked,library);
+  if(!plan.domain_ids.length)return {result:{result:'not_consistent',message:'No reference matches the stated scope. Please review the affected place and decision.',questions:[]},raw:{decision:rawDecision,plan},meta};
+  const rawDomain=await call('domain_review',S.domainPrompt(decision,plan,ranked,library),S.domainSchema(plan));
+  const result=S.merge(rawDomain,input,ranked,library,decision,plan);
+  result.staged_context.receipts=meta.stages;
+  return {result,raw:{decision:rawDecision,domain:rawDomain},meta};
+ }catch(error){meta.error='Staged context review failed validation or transport.';throw Object.assign(new Error('AI returned an invalid or incomplete staged review; please retry.'),{status:503,staged_meta:meta});}
+}
+
 module.exports = {
   reviewContext,
+  reviewStagedContext,
   hasGeminiKey,
   embedTexts,
   embedIssue,

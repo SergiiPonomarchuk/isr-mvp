@@ -4,7 +4,18 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: cheapest model retained; LOW check improves facts, emulator integration planned, 2026-11-17
+## Current checkpoint: staged Analyzer implemented; local human review pending, 2026-11-17
+
+- Author approved [emulator-only staged integration](tasks/M3-emulator-staged-integration.md). Branch `codex/m3-staged-runtime`, worktree `A:/BackUp/isr-mvp/worktrees/wt-m3-staged-runtime`, stacked on evaluation PR #42/head `9f4af19`. No merge/deploy is implicit.
+- New helper uses the selected gemini-3.1-flash-lite with explicit LOW for each stage. Source-backed effective facts own scope/location; complete rule proofs and typed domain judgments merge without changing scoring math, thresholds, retrieval text/library or cap policy. Full raw responses/usage/provenance are retained. New unfinished drafts need the current contract; completed replay and historical Join stay frozen.
+- [Evidence and exact human steps](tasks/M3-staged-runtime-report.md). Browser preview at http://127.0.0.1:5190/main.html?emulator=1 with verified Firestore host `127.0.0.1:8189`, project `demo-mr1-preview`, 20 synthetic profiles and fake SDK/vector responses. Agent verified mixed-text clarification -> explicit repair-only answer -> home/20 members/enabled Create. Left checked form open; author visual acceptance/Create/member-list check is next. Guide http://127.0.0.1:5190/staged-guide.
+- Actual isolated handlers verify 109 A/B members, concurrent creation/replay, Join to 110 and independent score audit; separate scenarios cover U6 locations/pin, personal/mixed/vague/clarified text, provenance capacity refusal and downstream-failure receipt retention. Final required suite/CI summaries are appended below before handoff.
+- No provider/geocoding calls, secret-loader access/copy, saved-snapshot import, production mutation, rules edit or deployment. Cumulative historical paid allowance stays 24 reviews / 14 embedding texts / 14 POSTs / 38 attempts, US$0.482644 reserved. No paid retry is available under this task.
+- Real-model semantic quality and full-population 9,150-person memory/storage acceptance remain gated. Previous four false scope claims remain preserved. Sol Medium remains sufficient. Next action after human feedback must respect these gates; do not automatically deploy or run the paid helper.
+
+- 2026-11-17: Final local verification: Node 220 passed / six optional skips (226 total); Python 140 run / two optional skips; isolated actual-handler and staged location/provenance emulator suites both passed; final focused staged contract tests 10/10 passed. No paid calls or production mutations.
+
+## Previous checkpoint: cheapest model retained; LOW check improves facts, emulator integration planned, 2026-11-17
 
 - Author chose cheapest offered model and directed continuation. Kept gemini-3.1-flash-lite; paired alternative model comparison canceled. Ran one fixed LOW staged check after tested guard and broader native-capacity reservation, within original US$0.50. [Actual report](tasks/M3-cheapest-low-report.md), [quality audit](tasks/M3-evaluation/cheapest-low-quality-review.json).
 - Correct home anchor, no repeated choice, reference 1/input quote/default demographics; complete 19-model+81-rule merge. Four false unit/building scope reasons (IDs 9,10,12,15) remain and other reasons are generic. Semantic acceptance withheld; no member scores/public/draft/production write. No output repaired and no runtime blacklist.
