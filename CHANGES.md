@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Align staged quotation instructions with effective source
+
+Staged prompt v2 names EFFECTIVE_JSON consistently in schema descriptions and quotation instructions, distinguishing source quotes from reference titles. Wire shape, exact validator and scoring math stay unchanged. Actual copied-title output remains rejected; historical artifact hashes match. Node 231 passed/six skips, Python 140 run/two skips. No paid retest, loader access or deployment; see specs/tasks/M3-quotation-contract.md.
+
 ## 2026-11-17 - Actual two-stage pilot validates clear repair, refuses copied aspect
 
 Executed author-approved four-call pilot with private existing loader. Clear repair passes; narrowed mixed request gets home/building correct but copies reference title into aspect text, safely refused. Reported-token estimate US$0.004735; additional reserved US$0.516096. No retry, scoring, publication or deployment. Preserved raw evidence and added a rejection regression; proposed offline quotation instruction alignment without relaxing validation. See specs/tasks/M3-two-stage-pilot-result.md.

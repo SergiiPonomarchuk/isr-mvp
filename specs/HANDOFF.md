@@ -4,7 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: real two-case pilot stopped safely; offline quotation correction proposed, 2026-11-17
+## Current checkpoint: offline quotation contract corrected; review/merge next, 2026-11-17
+
+- Author approved the offline quotation correction. Feature branch codex/m3-quotation-contract is stacked on unmerged PR #44/head ae33f7b. No paid calls or loader access this task.
+- Staged prompt mr1-staged-prompts-2 aligns domain schema and instructions with EFFECTIVE_JSON source quotes and explicitly rejects reference-only labels. Strict validator, schema field/type shape, math, multi-aspect support, model and library remain unchanged. Existing failed response stays rejected; original artifacts match their SHA-256 Git-blob manifest. [Task/evidence](tasks/M3-quotation-contract.md).
+- Node 231 passed / six optional skips; Python 140 run / two optional skips. CI is checked on the final PR head before handoff. Old unfinished contracts require Check; frozen published/completed replay follows the existing unchanged path.
+- Next: explicit merge instructions for #44 and the quotation fix PR, in that order. No deployment is authorized. Real-model improvement is unproven; old paid plans/approval pins are not regenerated and the four-call allowance remains consumed. Any paid retest needs a precise separate allowance.
+- Usage remains 28 text reviews / 14 embedding texts / 14 embedding POSTs / 42 HTTP attempts, conservative cumulative reserved US$0.998740. No model change needed; Sol Medium remains sufficient.
+
+## Previous checkpoint: real two-case pilot stopped safely; offline quotation correction proposed, 2026-11-17
 
 - Author approved US$0.55 additional and existing loader. Real pilot completed four single-attempt requests: clear building repair passes; narrowed mixed issue resolves scope/home correctly but copies a reference title into aspect.text. Validator refuses; no output repair, retry or scores/public. [Actual report and offline proposal](tasks/M3-two-stage-pilot-result.md).
 - Current totals: 28 text reviews / 14 embedding texts / 14 embedding POSTs / 42 HTTP attempts. New reported-token estimate US$0.004735; conservative new reservation US$0.516096, cumulative reserved US$0.998740. Four-call allowance consumed, no automatic additional requests.
