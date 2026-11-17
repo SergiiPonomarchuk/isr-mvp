@@ -16,6 +16,6 @@ Plan: add offline preflight and fail-closed guard, exercise synthetic two-stage 
 
 - Offline preparation started from merged main 444e979; feature branch codex/m3-two-case-preflight. User authorization covers preparation only. No paid API, credential loader, database or deployment operation.
 
-- Verified entry points: functions/tools/two-stage-pilot-plan.js:9 (cached-source preflight), :22 (pure guard); functions/test/two-stage-pilot-plan.test.js covers preparation and refusal/sequence scenarios. Manifest approved=false; no executable paid transport. Current pricing is $0.25/M input and $1.50/M output including thinking, per the official pricing page; capacity buffer is deliberately separate.
+- Verified entry points: functions/tools/two-stage-pilot-plan.js:8 (cached-source preflight), :16 (pure guard); functions/test/two-stage-pilot-plan.test.js covers preparation and refusal/sequence scenarios. Manifest approved=false; no executable paid transport. Current pricing is $0.25/M input and $1.50/M output including thinking, per the official pricing page; capacity buffer is deliberately separate.
 
 - Verification: Node 225 passed / six optional skips; Python 140 run / two optional skips. Five new offline guard tests pass with synthetic responses only. No paid request, credential-loader invocation, Firestore RPC or application runtime change. The future transport adapter remains unimplemented and must be fake-fetch tested before any approved execution.
