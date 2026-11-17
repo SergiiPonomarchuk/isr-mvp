@@ -59,3 +59,5 @@ Approve **Phase A offline audit only**, including its bounded synthetic codec ex
 - 2026-11-18: read-only code/evidence/resource inventory completed. This plan is documentation only; no audit tool, codec, data write/import, large-memory run, AI request, credential loader or deployment performed. Current PR #46 merge receipt 175d6fa and main CI were verified in the prior closeout.
 
 - Documentation verification: local source references and evidence paths resolve; git diff --check passes; no runtime/scripts/prototype/docs/ diff. Required suite behavior is unchanged; GitHub Node/Python CI will be verified on the final documentation head. No local heavy/full-population test was run.
+
+- Draft plan PR #47 opened against main. Initial plan head ee2713e passed Node/Python CI. Author review is requested for Phase A only; no merge or implementation is implicit. Final documentation-head CI is checked before handoff.
