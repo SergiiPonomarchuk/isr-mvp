@@ -203,3 +203,5 @@ Latest M3: [two-case actual closeout](tasks/M3-two-case-report.md) and [offline 
 Latest M3: [completed offline candidate-review prototype](tasks/M3-candidate-review-prototype.md), with measured envelopes, no runtime integration and no new provider calls.
 
 Latest M3: [actual keyed-prototype check and semantic review](tasks/M3-prototype-check-report.md); [offline staged-review design proposal](tasks/M3-review-stages-proposal.md). The 22-review allowance is exhausted.
+
+Latest M3: [completed offline staged review](tasks/M3-review-stages-offline.md) and [integration impact proposal](tasks/M3-review-stages-integration.md). No new paid call or runtime integration.

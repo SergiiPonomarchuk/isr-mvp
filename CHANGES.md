@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Offline staged review preserves full chain with scope proofs
+
+Implemented isolated decision fixtures, parity-tested scope predicate, immutable 81-proof/19-domain partition and strict complete merge. Domain request 14,742 bytes; no provider calls or application integration. Node 197 passed/five optional skips; Python 140 run/two skips. Original rankings, math, scope rules, models and library unchanged. Integration/trust/storage limits and optional exact 23-review check are documented, not authorized; see specs/tasks/M3-review-stages-offline.md.
+
 ## 2026-11-17 - Prototype schema admitted with complete but semantically faulty review
 
 Executed approved one-call check at 22 cumulative reviews under original US$0.50. All 100 keys returned, but repeated settled clarification and 18 false scope reasons prevent semantic acceptance. Non-pass produced no scores. Fourteen embedding texts/POSTs, US$0.351880 reserved; no further call or integration/live change. Preserved actual outputs, quality regression and offline staged-review proposal; see specs/tasks/M3-prototype-check-report.md.

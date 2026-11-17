@@ -1,0 +1,22 @@
+{
+  "version": "review-stages-offline-1",
+  "fixture_only": true,
+  "provider_calls": 0,
+  "embedding_texts": 0,
+  "raw_chain_count": 100,
+  "scope_compatible_count": 19,
+  "scope_proof_count": 81,
+  "merged_coverage": 100,
+  "raw_rankings_unchanged": true,
+  "request_envelope_bytes": 14742,
+  "input_guard_fits": true,
+  "schema_bytes": 2751,
+  "synthetic_domain_output_bytes": 1284,
+  "merged_artifact_bytes": 124167,
+  "hypothetical_one_request_reservation_usd": 0.01623,
+  "prepared_request_hash": "300be0e09c65716069376600bee39cad633aa0386d86f6a55817147dda44af99",
+  "real_provider_admission": "not tested",
+  "semantic_quality": "not tested",
+  "automatic_decision_resolution": "not implemented",
+  "runtime_integrated": false
+}

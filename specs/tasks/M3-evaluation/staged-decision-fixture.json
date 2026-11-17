@@ -1,0 +1,35 @@
+{
+  "version": "review-stages-offline-1",
+  "fixture_only": true,
+  "origin": "author_confirmed_fixture",
+  "original_input": {
+    "title": "Repair the entrance lock and choose an open-source roadmap",
+    "description": "Repair our apartment entrance lock at osbb 2, h12, and in the same decision choose the worldwide open-source software project roadmap for the next year.",
+    "clarification": "For this issue, decide only how to repair the entrance lock at osbb 2, h12. The software-roadmap decision will be registered separately and is outside this issue.",
+    "submitterId": "2",
+    "location": [
+      47.5937,
+      7.6217
+    ],
+    "location_source": "creator"
+  },
+  "input_hash": "85c4e0f44dbc457614d1a8ac211c67dc06ce5b2695bf45f7d9ec7743a77d853f",
+  "status": "resolved",
+  "unresolved_facts": [],
+  "contradictions": [],
+  "decision": {
+    "field": "clarification",
+    "quote": "decide only how to repair the entrance lock at osbb 2, h12."
+  },
+  "scope": "building",
+  "scope_evidence": {
+    "field": "description",
+    "quote": "our apartment entrance lock at osbb 2, h12"
+  },
+  "affected_place": {
+    "field": "clarification",
+    "quote": "osbb 2, h12"
+  },
+  "affected_group": null,
+  "seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57"
+}

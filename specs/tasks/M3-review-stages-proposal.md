@@ -15,3 +15,7 @@ Status: proposal only, not implemented or paid-authorized. The 22-review allowan
 The effective decision/scope can itself be wrong; source checks and a deterministic scope comparison do not prove general semantic understanding. The design must expose that boundary and keep genuine ambiguity visible. It must not force the issue's scope from the nearest reference, silently bypass a clarification gate or relabel earlier model output.
 
 Approve **offline review-stage design and fixtures** above, before any application integration or additional real trial. This approval would authorize design/prototype work only, with no paid calls. No stronger application model is selected or requested here; Sol Medium remains sufficient for the offline work.
+
+- 2026-11-17: Author approved offline review-stage design. Plan: source-backed fixture decision record, one experimental compatibility predicate proved against the current validator, immutable partition proofs, complete domain merge and envelope/SDK tests. No handler integration, selection/math/model/library change or provider call. Original inputs remain auditable; fixture records are explicitly not production authorization.
+
+- 2026-11-17 completed: approved offline design and fixtures implemented/tested; 100 raw IDs retained, 81 source-backed scope proofs plus 19 domain rows. No provider call or integration. See M3-review-stages-offline.md and separately proposed integration impacts.

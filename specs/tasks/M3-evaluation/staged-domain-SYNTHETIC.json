@@ -1,0 +1,39 @@
+{
+  "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+  "result": "pass",
+  "message": "SYNTHETIC fixture, not model output.",
+  "questions": [],
+  "location_reference": {
+    "anchor": "home",
+    "place": ""
+  },
+  "aspects": [
+    {
+      "id": "a",
+      "text": "decide only how to repair the entrance lock at osbb 2, h12.",
+      "demographics": {},
+      "demographic_evidence": []
+    }
+  ],
+  "reviews": {
+    "1": "a:a:decide only how to repair the entrance lock at osbb 2, h12.",
+    "2": "x:decision:Synthetic different decision.",
+    "3": "x:decision:Synthetic different decision.",
+    "4": "x:decision:Synthetic different decision.",
+    "5": "x:decision:Synthetic different decision.",
+    "6": "x:decision:Synthetic different decision.",
+    "7": "x:decision:Synthetic different decision.",
+    "8": "x:decision:Synthetic different decision.",
+    "9": "x:decision:Synthetic different decision.",
+    "10": "x:decision:Synthetic different decision.",
+    "12": "x:decision:Synthetic different decision.",
+    "13": "x:decision:Synthetic different decision.",
+    "14": "x:decision:Synthetic different decision.",
+    "15": "x:decision:Synthetic different decision.",
+    "16": "x:decision:Synthetic different decision.",
+    "17": "x:decision:Synthetic different decision.",
+    "18": "x:decision:Synthetic different decision.",
+    "19": "x:decision:Synthetic different decision.",
+    "20": "x:decision:Synthetic different decision."
+  }
+}
