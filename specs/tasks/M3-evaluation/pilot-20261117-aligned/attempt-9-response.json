@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"pass\",\n  \"message\": \"The request aligns with the open-source project roadmap synchronization scope.\",\n  \"questions\": [],\n  \"scope\": \"global_digital\",\n  \"location_reference\": {\n    \"anchor\": \"none\",\n    \"place\": \"\"\n  },\n  \"accepted\": [\n    {\n      \"id\": \"90\",\n      \"aspect_id\": \"roadmap_sync\",\n      \"evidence\": \"The project roadmap requires synchronization across global time zones to ensure consistent feature delivery for our open-source software suite.\"\n    }\n  ],\n  \"excluded\": {},\n  \"aspects\": [\n    {\n      \"id\": \"roadmap_sync\",\n      \"text\": \"The project roadmap requires synchronization across global time zones to ensure consistent feature delivery for our open-source software suite.\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"any\",\n        \"familyStatus\": \"any\",\n        \"features\": [],\n        \"places\": [],\n        \"property_kinds\": []\n      },\n      \"demographic_evidence\": []\n    }\n  ]\n}",
+  "usage": {
+    "promptTokenCount": 1329,
+    "candidatesTokenCount": 268,
+    "totalTokenCount": 1597
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "5f49cc3e62cc82511783e8d827b828118f2df66687d10cc2027a8f00f26453f4"
+}

@@ -193,3 +193,5 @@ The ids come from `tasks/S0-inventory-report.md` §3, where each contradiction i
 Current M3 result: [technical continuation report and grounding-correction proposal](tasks/M3-technical-continuation-report.md). Schema admission succeeded; semantic validation stopped the pilot.
 
 Latest M3: [grounding pilot result and contract-alignment proposal](tasks/M3-grounding-pilot-report.md). Two cases passed; scope mismatch stopped the remaining cases.
+
+Latest M3: [aligned pilot closeout and semantic attention gate](tasks/M3-aligned-pilot-report.md). All outcomes completed within allowance; semantic acceptance remains withheld.

@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"needs_clarification\",\n  \"message\": \"The request combines two distinct issues with different scopes: a physical building maintenance issue (entrance lock) and a global digital governance issue (open-source roadmap). These cannot be processed as a single decision. Please submit them as separate requests or choose one to proceed with.\",\n  \"questions\": [\n    \"Would you like to proceed with the building entrance lock repair or the open-source software project roadmap?\",\n    \"If you choose the building repair, please confirm the address or building name if 'osbb 2, h12' is not sufficient for your local service provider.\"\n  ],\n  \"scope\": null,\n  \"location_reference\": null,\n  \"accepted\": [],\n  \"excluded\": {},\n  \"aspects\": []\n}",
+  "usage": {
+    "promptTokenCount": 6154,
+    "candidatesTokenCount": 177,
+    "totalTokenCount": 6331
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "95ef57cb3c3a69a4feee90c9ee20435376a756456b058ef8cf9a0dfc31aca336"
+}

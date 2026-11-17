@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"not_consistent\",\n  \"message\": \"The submitted request for assistance with moving heavy household items does not align with the scope of the available reference, which pertains to city-wide social support for family emergencies. The request is for a private, localized service task rather than a public policy or community-level issue.\",\n  \"questions\": [\n    \"Are you seeking assistance from a specific municipal social service department or a private moving service?\",\n    \"Is there a specific city program you are inquiring about regarding emergency relocation support?\"\n  ],\n  \"scope\": null,\n  \"location_reference\": {\n    \"anchor\": \"home\",\n    \"place\": \"\"\n  },\n  \"accepted\": [],\n  \"excluded\": {\n    \"51\": \"The reference pertains to city-level social support for family emergencies, whereas the input describes a private request for physical labor assistance with moving household items.\"\n  },\n  \"aspects\": []\n}",
+  "usage": {
+    "promptTokenCount": 1328,
+    "candidatesTokenCount": 210,
+    "totalTokenCount": 1538
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "fde5a750c8eb37178439e6a0555892d3f1b5dad0b9e40da9c2378cc6082426d4"
+}

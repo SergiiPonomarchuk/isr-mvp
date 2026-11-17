@@ -1,0 +1,142 @@
+{
+  "status": "completed_with_unresolved_quality_findings",
+  "counts": {
+    "pass": 10,
+    "not_consistent": 1,
+    "needs_clarification": 3
+  },
+  "rows": [
+    {
+      "id": "D1-01-live",
+      "outcome": "pass",
+      "prompt_version": "mr1-context-prompt-3",
+      "reused": true,
+      "references": [
+        "1"
+      ]
+    },
+    {
+      "id": "D1-02",
+      "outcome": "pass",
+      "prompt_version": "mr1-context-prompt-3",
+      "reused": true,
+      "references": [
+        "21"
+      ]
+    },
+    {
+      "id": "D1-03",
+      "outcome": "pass",
+      "prompt_version": "mr1-context-prompt-4",
+      "reused": false,
+      "references": [
+        "32"
+      ]
+    },
+    {
+      "id": "D1-04",
+      "outcome": "pass",
+      "prompt_version": "mr1-context-prompt-4",
+      "reused": false,
+      "references": [
+        "44"
+      ]
+    },
+    {
+      "id": "D1-05",
+      "outcome": "pass",
+      "prompt_version": "mr1-context-prompt-4",
+      "reused": false,
+      "references": [
+        "86"
+      ]
+    },
+    {
+      "id": "D1-06",
+      "outcome": "pass",
+      "prompt_version": "mr1-context-prompt-4",
+      "reused": false,
+      "references": [
+        "82"
+      ]
+    },
+    {
+      "id": "D1-07",
+      "outcome": "pass",
+      "prompt_version": "mr1-context-prompt-4",
+      "reused": false,
+      "references": [
+        "90"
+      ]
+    },
+    {
+      "id": "D1-08",
+      "outcome": "pass",
+      "prompt_version": "mr1-context-prompt-4",
+      "reused": false,
+      "references": [
+        "98"
+      ]
+    },
+    {
+      "id": "D1-09",
+      "outcome": "not_consistent",
+      "prompt_version": "mr1-context-prompt-4",
+      "reused": false,
+      "references": []
+    },
+    {
+      "id": "D1-10",
+      "outcome": "pass",
+      "prompt_version": "mr1-context-prompt-4",
+      "reused": false,
+      "references": [
+        "97"
+      ]
+    },
+    {
+      "id": "vague-help",
+      "outcome": "needs_clarification",
+      "prompt_version": "mr1-context-prompt-4",
+      "reused": false,
+      "references": []
+    },
+    {
+      "id": "compound-lock-software",
+      "outcome": "needs_clarification",
+      "prompt_version": "mr1-context-prompt-4",
+      "reused": false,
+      "references": []
+    },
+    {
+      "id": "vague-help-clarified",
+      "outcome": "pass",
+      "prompt_version": "mr1-context-prompt-4",
+      "reused": false,
+      "references": [
+        "1"
+      ]
+    },
+    {
+      "id": "compound-lock-software-clarified",
+      "outcome": "needs_clarification",
+      "prompt_version": "mr1-context-prompt-4",
+      "reused": false,
+      "references": []
+    }
+  ],
+  "all_prior_receipts_and_reused_files_unchanged": true,
+  "all_passes_single_reference": true,
+  "quality_findings": [
+    {
+      "case": "compound-lock-software-clarified",
+      "finding": "Repeated choice question despite explicit clarification choosing only lock repair"
+    },
+    {
+      "case": "D1-09",
+      "finding": "Introduces private-service versus public-policy exclusion unsupported by prompt; reference 51 family-crisis scope is city, so compatibility also requires judgment"
+    }
+  ],
+  "further_provider_calls": 0,
+  "deployment_ready": false
+}

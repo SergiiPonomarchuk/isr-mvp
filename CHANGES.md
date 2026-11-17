@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Bounded aligned pilot completed with two quality findings
+
+Completed all 14 pinned case outcomes, preserving two source-verified v3 cases and running 12 v4 reviews. Ten pass, three clarification and one not_consistent; repeated clarification and unsupported public-policy-only reasoning remain unresolved. Nineteen cumulative reviews, 13 embedding texts, US$0.296917 reserved under original limits. No more calls, live writes or deployment; report specs/tasks/M3-aligned-pilot-report.md. All passes are single-reference; no multi-reference/full-population acceptance claimed.
+
 ## 2026-11-17 — Grounding prompt v3 and two actual pilot passes
 
 Author-approved input quotation clarification passed the lock/pothole cases. Playground response was rejected for neighborhood versus street_segment reference scope. Seven cumulative reviews, three embedding texts, US$0.098801 reserved; no further call or live write. Completed free prompt/validator contract audit and prepared bounded alignment/completion proposal; see specs/tasks/M3-grounding-pilot-report.md. Models, math and validation unchanged.

@@ -1,0 +1,969 @@
+{
+  "state": "complete",
+  "input": {
+    "title": "Repair the entrance lock and choose an open-source roadmap",
+    "description": "Repair our apartment entrance lock at osbb 2, h12, and in the same decision choose the worldwide open-source software project roadmap for the next year.",
+    "clarification": "",
+    "submitterId": "2",
+    "location": [
+      47.5937,
+      7.6217
+    ],
+    "location_source": "creator"
+  },
+  "input_sha256": "2071cb2184e561932702112626fd54d1c12334cc3026f5cab8efc1c84288e86d",
+  "whole_issue_sha256": "4060717f2ca9526bfa82960bad312dfe9fe397f230a15bb8761db90c09773f46",
+  "raw_chain": {
+    "ranked": [
+      {
+        "id": "1",
+        "score": 0.7270446341850785
+      },
+      {
+        "id": "90",
+        "score": 0.7046936788841569
+      },
+      {
+        "id": "10",
+        "score": 0.6740064952097847
+      },
+      {
+        "id": "15",
+        "score": 0.6465818726642688
+      },
+      {
+        "id": "89",
+        "score": 0.6464749911717041
+      },
+      {
+        "id": "2",
+        "score": 0.6435643089716372
+      },
+      {
+        "id": "35",
+        "score": 0.6372829496018408
+      },
+      {
+        "id": "4",
+        "score": 0.6368996517675122
+      },
+      {
+        "id": "47",
+        "score": 0.6360670043798459
+      },
+      {
+        "id": "7",
+        "score": 0.6337125636376648
+      },
+      {
+        "id": "3",
+        "score": 0.6310598379916706
+      },
+      {
+        "id": "14",
+        "score": 0.6283412955193909
+      },
+      {
+        "id": "67",
+        "score": 0.6236336680855342
+      },
+      {
+        "id": "56",
+        "score": 0.6218904564145484
+      },
+      {
+        "id": "97",
+        "score": 0.6212226111820431
+      },
+      {
+        "id": "13",
+        "score": 0.6204113143118186
+      },
+      {
+        "id": "77",
+        "score": 0.6197489232624628
+      },
+      {
+        "id": "17",
+        "score": 0.6189967648911597
+      },
+      {
+        "id": "39",
+        "score": 0.618177376184689
+      },
+      {
+        "id": "5",
+        "score": 0.6166784320513111
+      },
+      {
+        "id": "95",
+        "score": 0.6157290185018729
+      },
+      {
+        "id": "6",
+        "score": 0.6126660342433294
+      },
+      {
+        "id": "11",
+        "score": 0.6123814461231697
+      },
+      {
+        "id": "16",
+        "score": 0.6095785586191523
+      },
+      {
+        "id": "19",
+        "score": 0.6094650057358764
+      },
+      {
+        "id": "99",
+        "score": 0.6090187633915148
+      },
+      {
+        "id": "12",
+        "score": 0.6081828195779531
+      },
+      {
+        "id": "82",
+        "score": 0.6071269209424338
+      },
+      {
+        "id": "94",
+        "score": 0.6062124237347138
+      },
+      {
+        "id": "84",
+        "score": 0.6054142162589532
+      },
+      {
+        "id": "36",
+        "score": 0.6013616369173236
+      },
+      {
+        "id": "51",
+        "score": 0.6009478530204496
+      },
+      {
+        "id": "52",
+        "score": 0.6009051591614453
+      },
+      {
+        "id": "74",
+        "score": 0.600761554674056
+      },
+      {
+        "id": "75",
+        "score": 0.6001505162269754
+      },
+      {
+        "id": "32",
+        "score": 0.5997248938775076
+      },
+      {
+        "id": "24",
+        "score": 0.5979835469275413
+      },
+      {
+        "id": "87",
+        "score": 0.5973672818013434
+      },
+      {
+        "id": "26",
+        "score": 0.596830290486186
+      },
+      {
+        "id": "78",
+        "score": 0.5966009432714482
+      },
+      {
+        "id": "60",
+        "score": 0.5963074895628048
+      },
+      {
+        "id": "18",
+        "score": 0.595760871401489
+      },
+      {
+        "id": "81",
+        "score": 0.5952061446647271
+      },
+      {
+        "id": "20",
+        "score": 0.5943243038779027
+      },
+      {
+        "id": "64",
+        "score": 0.5937809965206199
+      },
+      {
+        "id": "50",
+        "score": 0.5931187774965282
+      },
+      {
+        "id": "41",
+        "score": 0.5931173955822016
+      },
+      {
+        "id": "8",
+        "score": 0.5929560128663302
+      },
+      {
+        "id": "25",
+        "score": 0.5921665864503113
+      },
+      {
+        "id": "70",
+        "score": 0.590915776135177
+      },
+      {
+        "id": "71",
+        "score": 0.5904071616316426
+      },
+      {
+        "id": "83",
+        "score": 0.5896846351215943
+      },
+      {
+        "id": "86",
+        "score": 0.5892818566117991
+      },
+      {
+        "id": "23",
+        "score": 0.5891405968158158
+      },
+      {
+        "id": "9",
+        "score": 0.588798539271509
+      },
+      {
+        "id": "76",
+        "score": 0.5881823275907845
+      },
+      {
+        "id": "72",
+        "score": 0.5880299261336275
+      },
+      {
+        "id": "96",
+        "score": 0.5880035407632583
+      },
+      {
+        "id": "21",
+        "score": 0.5872814935087607
+      },
+      {
+        "id": "59",
+        "score": 0.5868696858632216
+      },
+      {
+        "id": "54",
+        "score": 0.5867071285046883
+      },
+      {
+        "id": "53",
+        "score": 0.586690119786192
+      },
+      {
+        "id": "98",
+        "score": 0.5864158120818638
+      },
+      {
+        "id": "92",
+        "score": 0.5848589732272931
+      },
+      {
+        "id": "27",
+        "score": 0.5847564820421083
+      },
+      {
+        "id": "65",
+        "score": 0.5846574752391048
+      },
+      {
+        "id": "33",
+        "score": 0.5843854910792332
+      },
+      {
+        "id": "30",
+        "score": 0.584329936865927
+      },
+      {
+        "id": "63",
+        "score": 0.5841718237670784
+      },
+      {
+        "id": "58",
+        "score": 0.5825022420794895
+      },
+      {
+        "id": "49",
+        "score": 0.5822264178519385
+      },
+      {
+        "id": "29",
+        "score": 0.5821164596694038
+      },
+      {
+        "id": "57",
+        "score": 0.5820734510494031
+      },
+      {
+        "id": "42",
+        "score": 0.5820217795137055
+      },
+      {
+        "id": "79",
+        "score": 0.5813632448719246
+      },
+      {
+        "id": "22",
+        "score": 0.5810047296068884
+      },
+      {
+        "id": "88",
+        "score": 0.5803292724439137
+      },
+      {
+        "id": "31",
+        "score": 0.5798099999896441
+      },
+      {
+        "id": "62",
+        "score": 0.5797473157880758
+      },
+      {
+        "id": "40",
+        "score": 0.5784994140796836
+      },
+      {
+        "id": "46",
+        "score": 0.5780203090764628
+      },
+      {
+        "id": "43",
+        "score": 0.5772970276583816
+      },
+      {
+        "id": "55",
+        "score": 0.5772287862621045
+      },
+      {
+        "id": "38",
+        "score": 0.5770853386602921
+      },
+      {
+        "id": "73",
+        "score": 0.5769780155514668
+      },
+      {
+        "id": "93",
+        "score": 0.5766347510469978
+      },
+      {
+        "id": "34",
+        "score": 0.575236625143393
+      },
+      {
+        "id": "69",
+        "score": 0.5736007084528182
+      },
+      {
+        "id": "61",
+        "score": 0.5723427546677898
+      },
+      {
+        "id": "45",
+        "score": 0.5711754633530036
+      },
+      {
+        "id": "44",
+        "score": 0.5710444283983417
+      },
+      {
+        "id": "68",
+        "score": 0.5707037313036298
+      },
+      {
+        "id": "85",
+        "score": 0.570639178642919
+      },
+      {
+        "id": "48",
+        "score": 0.5671932497062463
+      },
+      {
+        "id": "100",
+        "score": 0.5666009214396217
+      },
+      {
+        "id": "91",
+        "score": 0.566446173794908
+      },
+      {
+        "id": "80",
+        "score": 0.5661151814523904
+      },
+      {
+        "id": "66",
+        "score": 0.5654612368763577
+      },
+      {
+        "id": "37",
+        "score": 0.560536667025239
+      },
+      {
+        "id": "28",
+        "score": 0.5475048015825754
+      }
+    ],
+    "chain": [
+      {
+        "id": "1",
+        "score": 0.7270446341850785
+      },
+      {
+        "id": "90",
+        "score": 0.7046936788841569
+      },
+      {
+        "id": "10",
+        "score": 0.6740064952097847
+      },
+      {
+        "id": "15",
+        "score": 0.6465818726642688
+      },
+      {
+        "id": "89",
+        "score": 0.6464749911717041
+      },
+      {
+        "id": "2",
+        "score": 0.6435643089716372
+      },
+      {
+        "id": "35",
+        "score": 0.6372829496018408
+      },
+      {
+        "id": "4",
+        "score": 0.6368996517675122
+      },
+      {
+        "id": "47",
+        "score": 0.6360670043798459
+      },
+      {
+        "id": "7",
+        "score": 0.6337125636376648
+      },
+      {
+        "id": "3",
+        "score": 0.6310598379916706
+      },
+      {
+        "id": "14",
+        "score": 0.6283412955193909
+      },
+      {
+        "id": "67",
+        "score": 0.6236336680855342
+      },
+      {
+        "id": "56",
+        "score": 0.6218904564145484
+      },
+      {
+        "id": "97",
+        "score": 0.6212226111820431
+      },
+      {
+        "id": "13",
+        "score": 0.6204113143118186
+      },
+      {
+        "id": "77",
+        "score": 0.6197489232624628
+      },
+      {
+        "id": "17",
+        "score": 0.6189967648911597
+      },
+      {
+        "id": "39",
+        "score": 0.618177376184689
+      },
+      {
+        "id": "5",
+        "score": 0.6166784320513111
+      },
+      {
+        "id": "95",
+        "score": 0.6157290185018729
+      },
+      {
+        "id": "6",
+        "score": 0.6126660342433294
+      },
+      {
+        "id": "11",
+        "score": 0.6123814461231697
+      },
+      {
+        "id": "16",
+        "score": 0.6095785586191523
+      },
+      {
+        "id": "19",
+        "score": 0.6094650057358764
+      },
+      {
+        "id": "99",
+        "score": 0.6090187633915148
+      },
+      {
+        "id": "12",
+        "score": 0.6081828195779531
+      },
+      {
+        "id": "82",
+        "score": 0.6071269209424338
+      },
+      {
+        "id": "94",
+        "score": 0.6062124237347138
+      },
+      {
+        "id": "84",
+        "score": 0.6054142162589532
+      },
+      {
+        "id": "36",
+        "score": 0.6013616369173236
+      },
+      {
+        "id": "51",
+        "score": 0.6009478530204496
+      },
+      {
+        "id": "52",
+        "score": 0.6009051591614453
+      },
+      {
+        "id": "74",
+        "score": 0.600761554674056
+      },
+      {
+        "id": "75",
+        "score": 0.6001505162269754
+      },
+      {
+        "id": "32",
+        "score": 0.5997248938775076
+      },
+      {
+        "id": "24",
+        "score": 0.5979835469275413
+      },
+      {
+        "id": "87",
+        "score": 0.5973672818013434
+      },
+      {
+        "id": "26",
+        "score": 0.596830290486186
+      },
+      {
+        "id": "78",
+        "score": 0.5966009432714482
+      },
+      {
+        "id": "60",
+        "score": 0.5963074895628048
+      },
+      {
+        "id": "18",
+        "score": 0.595760871401489
+      },
+      {
+        "id": "81",
+        "score": 0.5952061446647271
+      },
+      {
+        "id": "20",
+        "score": 0.5943243038779027
+      },
+      {
+        "id": "64",
+        "score": 0.5937809965206199
+      },
+      {
+        "id": "50",
+        "score": 0.5931187774965282
+      },
+      {
+        "id": "41",
+        "score": 0.5931173955822016
+      },
+      {
+        "id": "8",
+        "score": 0.5929560128663302
+      },
+      {
+        "id": "25",
+        "score": 0.5921665864503113
+      },
+      {
+        "id": "70",
+        "score": 0.590915776135177
+      },
+      {
+        "id": "71",
+        "score": 0.5904071616316426
+      },
+      {
+        "id": "83",
+        "score": 0.5896846351215943
+      },
+      {
+        "id": "86",
+        "score": 0.5892818566117991
+      },
+      {
+        "id": "23",
+        "score": 0.5891405968158158
+      },
+      {
+        "id": "9",
+        "score": 0.588798539271509
+      },
+      {
+        "id": "76",
+        "score": 0.5881823275907845
+      },
+      {
+        "id": "72",
+        "score": 0.5880299261336275
+      },
+      {
+        "id": "96",
+        "score": 0.5880035407632583
+      },
+      {
+        "id": "21",
+        "score": 0.5872814935087607
+      },
+      {
+        "id": "59",
+        "score": 0.5868696858632216
+      },
+      {
+        "id": "54",
+        "score": 0.5867071285046883
+      },
+      {
+        "id": "53",
+        "score": 0.586690119786192
+      },
+      {
+        "id": "98",
+        "score": 0.5864158120818638
+      },
+      {
+        "id": "92",
+        "score": 0.5848589732272931
+      },
+      {
+        "id": "27",
+        "score": 0.5847564820421083
+      },
+      {
+        "id": "65",
+        "score": 0.5846574752391048
+      },
+      {
+        "id": "33",
+        "score": 0.5843854910792332
+      },
+      {
+        "id": "30",
+        "score": 0.584329936865927
+      },
+      {
+        "id": "63",
+        "score": 0.5841718237670784
+      },
+      {
+        "id": "58",
+        "score": 0.5825022420794895
+      },
+      {
+        "id": "49",
+        "score": 0.5822264178519385
+      },
+      {
+        "id": "29",
+        "score": 0.5821164596694038
+      },
+      {
+        "id": "57",
+        "score": 0.5820734510494031
+      },
+      {
+        "id": "42",
+        "score": 0.5820217795137055
+      },
+      {
+        "id": "79",
+        "score": 0.5813632448719246
+      },
+      {
+        "id": "22",
+        "score": 0.5810047296068884
+      },
+      {
+        "id": "88",
+        "score": 0.5803292724439137
+      },
+      {
+        "id": "31",
+        "score": 0.5798099999896441
+      },
+      {
+        "id": "62",
+        "score": 0.5797473157880758
+      },
+      {
+        "id": "40",
+        "score": 0.5784994140796836
+      },
+      {
+        "id": "46",
+        "score": 0.5780203090764628
+      },
+      {
+        "id": "43",
+        "score": 0.5772970276583816
+      },
+      {
+        "id": "55",
+        "score": 0.5772287862621045
+      },
+      {
+        "id": "38",
+        "score": 0.5770853386602921
+      },
+      {
+        "id": "73",
+        "score": 0.5769780155514668
+      },
+      {
+        "id": "93",
+        "score": 0.5766347510469978
+      },
+      {
+        "id": "34",
+        "score": 0.575236625143393
+      },
+      {
+        "id": "69",
+        "score": 0.5736007084528182
+      },
+      {
+        "id": "61",
+        "score": 0.5723427546677898
+      },
+      {
+        "id": "45",
+        "score": 0.5711754633530036
+      },
+      {
+        "id": "44",
+        "score": 0.5710444283983417
+      },
+      {
+        "id": "68",
+        "score": 0.5707037313036298
+      },
+      {
+        "id": "85",
+        "score": 0.570639178642919
+      },
+      {
+        "id": "48",
+        "score": 0.5671932497062463
+      },
+      {
+        "id": "100",
+        "score": 0.5666009214396217
+      },
+      {
+        "id": "91",
+        "score": 0.566446173794908
+      },
+      {
+        "id": "80",
+        "score": 0.5661151814523904
+      },
+      {
+        "id": "66",
+        "score": 0.5654612368763577
+      },
+      {
+        "id": "37",
+        "score": 0.560536667025239
+      },
+      {
+        "id": "28",
+        "score": 0.5475048015825754
+      }
+    ],
+    "state": "context_review_required"
+  },
+  "review": {
+    "result": "needs_clarification",
+    "message": "The request combines two distinct issues with different scopes: a physical building maintenance issue (entrance lock) and a global digital governance issue (open-source roadmap). These cannot be processed as a single decision. Please submit them as separate requests or choose one to proceed with.",
+    "questions": [
+      "Would you like to proceed with the building entrance lock repair or the open-source software project roadmap?",
+      "If you choose the building repair, please confirm the address or building name if 'osbb 2, h12' is not sufficient for your local service provider."
+    ]
+  },
+  "raw_review": {
+    "result": "needs_clarification",
+    "message": "The request combines two distinct issues with different scopes: a physical building maintenance issue (entrance lock) and a global digital governance issue (open-source roadmap). These cannot be processed as a single decision. Please submit them as separate requests or choose one to proceed with.",
+    "questions": [
+      "Would you like to proceed with the building entrance lock repair or the open-source software project roadmap?",
+      "If you choose the building repair, please confirm the address or building name if 'osbb 2, h12' is not sufficient for your local service provider."
+    ],
+    "scope": null,
+    "location_reference": null,
+    "accepted": [],
+    "excluded": {},
+    "aspects": []
+  },
+  "review_meta": {
+    "ai_source": "model",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "mr1-context-prompt-4",
+    "schema_sha256": "8c383deb989e7ae166ef02d55c5688558ae90069eec83293cdeef263d66ddf2c",
+    "prompt_sha256": "32ec8bf0d90358552918454d74c5390fba93182237d79e97be38efa386918925",
+    "temperature": 0,
+    "seed": 20261110,
+    "examples_used": [
+      "1",
+      "90",
+      "10",
+      "15",
+      "89",
+      "2",
+      "35",
+      "4",
+      "47",
+      "7",
+      "3",
+      "14",
+      "67",
+      "56",
+      "97",
+      "13",
+      "77",
+      "17",
+      "39",
+      "5",
+      "95",
+      "6",
+      "11",
+      "16",
+      "19",
+      "99",
+      "12",
+      "82",
+      "94",
+      "84",
+      "36",
+      "51",
+      "52",
+      "74",
+      "75",
+      "32",
+      "24",
+      "87",
+      "26",
+      "78",
+      "60",
+      "18",
+      "81",
+      "20",
+      "64",
+      "50",
+      "41",
+      "8",
+      "25",
+      "70",
+      "71",
+      "83",
+      "86",
+      "23",
+      "9",
+      "76",
+      "72",
+      "96",
+      "21",
+      "59",
+      "54",
+      "53",
+      "98",
+      "92",
+      "27",
+      "65",
+      "33",
+      "30",
+      "63",
+      "58",
+      "49",
+      "29",
+      "57",
+      "42",
+      "79",
+      "22",
+      "88",
+      "31",
+      "62",
+      "40",
+      "46",
+      "43",
+      "55",
+      "38",
+      "73",
+      "93",
+      "34",
+      "69",
+      "61",
+      "45",
+      "44",
+      "68",
+      "85",
+      "48",
+      "100",
+      "91",
+      "80",
+      "66",
+      "37",
+      "28"
+    ],
+    "raw_output": "{\n  \"result\": \"needs_clarification\",\n  \"message\": \"The request combines two distinct issues with different scopes: a physical building maintenance issue (entrance lock) and a global digital governance issue (open-source roadmap). These cannot be processed as a single decision. Please submit them as separate requests or choose one to proceed with.\",\n  \"questions\": [\n    \"Would you like to proceed with the building entrance lock repair or the open-source software project roadmap?\",\n    \"If you choose the building repair, please confirm the address or building name if 'osbb 2, h12' is not sufficient for your local service provider.\"\n  ],\n  \"scope\": null,\n  \"location_reference\": null,\n  \"accepted\": [],\n  \"excluded\": {},\n  \"aspects\": []\n}",
+    "usage": {
+      "promptTokenCount": 6154,
+      "candidatesTokenCount": 177,
+      "totalTokenCount": 6331,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 6154
+        }
+      ],
+      "serviceTier": "standard"
+    },
+    "error": null
+  }
+}

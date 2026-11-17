@@ -1,0 +1,10 @@
+{
+  "model": "gemini-embedding-001",
+  "contents": [
+    "Our neighbourhood arts group has outgrown the local community center. We are seeking a larger, accessible space near my home building townhouse 1, house 1557 to host our weekly rehearsals and upcoming winter concert."
+  ],
+  "config": {
+    "taskType": "RETRIEVAL_QUERY",
+    "outputDimensionality": 768
+  }
+}

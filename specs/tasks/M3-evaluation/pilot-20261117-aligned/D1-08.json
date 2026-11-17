@@ -1,0 +1,3854 @@
+{
+  "state": "complete",
+  "input": {
+    "description": "I am seeking a zoning variance to convert a portion of my residential property at my home building Quill Lane 1 into a small-scale home office studio. The current district zoning code restricts commercial activity, but this modification is necessary to support my independent software development work.",
+    "location": [
+      47.555466,
+      7.605061
+    ],
+    "submitterId": "1",
+    "title": "Zoning Variance Request for Quill Lane 1"
+  },
+  "input_sha256": "951d6a0979da55160e34f48be50ea350b4083cd95d79a1089341c0eb6195ad25",
+  "whole_issue_sha256": "1c6aed0de14fc2b93f0e922dfd05e614fdc6c05d15d62658eff61aaeda830c5a",
+  "raw_chain": {
+    "ranked": [
+      {
+        "id": "98",
+        "score": 0.6472981539133847
+      },
+      {
+        "id": "77",
+        "score": 0.6209464528720955
+      },
+      {
+        "id": "39",
+        "score": 0.6069621430986659
+      },
+      {
+        "id": "87",
+        "score": 0.5969995758976991
+      },
+      {
+        "id": "47",
+        "score": 0.5960085960605433
+      },
+      {
+        "id": "67",
+        "score": 0.5914663487451887
+      },
+      {
+        "id": "86",
+        "score": 0.5913677882434396
+      },
+      {
+        "id": "10",
+        "score": 0.5900894228022309
+      },
+      {
+        "id": "58",
+        "score": 0.5872874291219627
+      },
+      {
+        "id": "60",
+        "score": 0.5851141897152511
+      },
+      {
+        "id": "23",
+        "score": 0.5831018972042639
+      },
+      {
+        "id": "33",
+        "score": 0.5796297900437752
+      },
+      {
+        "id": "78",
+        "score": 0.5789568368757431
+      },
+      {
+        "id": "11",
+        "score": 0.578226805736592
+      },
+      {
+        "id": "24",
+        "score": 0.5780364213040555
+      },
+      {
+        "id": "51",
+        "score": 0.5732513729756701
+      },
+      {
+        "id": "65",
+        "score": 0.5688036226304455
+      },
+      {
+        "id": "75",
+        "score": 0.5685063288380413
+      },
+      {
+        "id": "40",
+        "score": 0.5683684279689861
+      },
+      {
+        "id": "84",
+        "score": 0.5679502879344285
+      },
+      {
+        "id": "82",
+        "score": 0.5677498037286507
+      },
+      {
+        "id": "12",
+        "score": 0.56720544737055
+      },
+      {
+        "id": "96",
+        "score": 0.5647874356896749
+      },
+      {
+        "id": "70",
+        "score": 0.564611876030751
+      },
+      {
+        "id": "34",
+        "score": 0.5645739255991115
+      },
+      {
+        "id": "64",
+        "score": 0.5622213492047848
+      },
+      {
+        "id": "90",
+        "score": 0.5616365147069087
+      },
+      {
+        "id": "54",
+        "score": 0.5616181272490532
+      },
+      {
+        "id": "94",
+        "score": 0.5596507815460249
+      },
+      {
+        "id": "50",
+        "score": 0.5582061104960451
+      },
+      {
+        "id": "8",
+        "score": 0.5581394333940913
+      },
+      {
+        "id": "15",
+        "score": 0.5578270897981044
+      },
+      {
+        "id": "57",
+        "score": 0.5561581297073104
+      },
+      {
+        "id": "55",
+        "score": 0.5558724981455857
+      },
+      {
+        "id": "35",
+        "score": 0.5555922785767711
+      },
+      {
+        "id": "30",
+        "score": 0.5555309008066627
+      },
+      {
+        "id": "88",
+        "score": 0.5548879529526312
+      },
+      {
+        "id": "4",
+        "score": 0.5546988966628766
+      },
+      {
+        "id": "92",
+        "score": 0.554465300526371
+      },
+      {
+        "id": "56",
+        "score": 0.5538526013201351
+      },
+      {
+        "id": "72",
+        "score": 0.5525565483699313
+      },
+      {
+        "id": "73",
+        "score": 0.5520101512233886
+      },
+      {
+        "id": "74",
+        "score": 0.5514083924217401
+      },
+      {
+        "id": "83",
+        "score": 0.551246876260363
+      },
+      {
+        "id": "52",
+        "score": 0.551003855826736
+      },
+      {
+        "id": "49",
+        "score": 0.5502489396559236
+      },
+      {
+        "id": "27",
+        "score": 0.5500795462164285
+      },
+      {
+        "id": "76",
+        "score": 0.5485670090370458
+      },
+      {
+        "id": "63",
+        "score": 0.5485398109252912
+      },
+      {
+        "id": "29",
+        "score": 0.5484494802301336
+      },
+      {
+        "id": "20",
+        "score": 0.5479174510294896
+      },
+      {
+        "id": "81",
+        "score": 0.5476569835513125
+      },
+      {
+        "id": "99",
+        "score": 0.5466779057328546
+      },
+      {
+        "id": "71",
+        "score": 0.5465897846899755
+      },
+      {
+        "id": "62",
+        "score": 0.5458504400363949
+      },
+      {
+        "id": "13",
+        "score": 0.5450378462376878
+      },
+      {
+        "id": "79",
+        "score": 0.5450350028238765
+      },
+      {
+        "id": "43",
+        "score": 0.5444736218634427
+      },
+      {
+        "id": "36",
+        "score": 0.5440472997485023
+      },
+      {
+        "id": "9",
+        "score": 0.5438588693048287
+      },
+      {
+        "id": "100",
+        "score": 0.5435168258441319
+      },
+      {
+        "id": "95",
+        "score": 0.5414760752186693
+      },
+      {
+        "id": "93",
+        "score": 0.5411710504946071
+      },
+      {
+        "id": "68",
+        "score": 0.5397016523876649
+      },
+      {
+        "id": "1",
+        "score": 0.5396520084748109
+      },
+      {
+        "id": "69",
+        "score": 0.5389551589173986
+      },
+      {
+        "id": "14",
+        "score": 0.5380140062996884
+      },
+      {
+        "id": "61",
+        "score": 0.5379220513604388
+      },
+      {
+        "id": "7",
+        "score": 0.5378060830473763
+      },
+      {
+        "id": "89",
+        "score": 0.5370508211720224
+      },
+      {
+        "id": "53",
+        "score": 0.5364135288699428
+      },
+      {
+        "id": "31",
+        "score": 0.5360694104215861
+      },
+      {
+        "id": "3",
+        "score": 0.5353693879652446
+      },
+      {
+        "id": "38",
+        "score": 0.5353098761472111
+      },
+      {
+        "id": "42",
+        "score": 0.5352328904327204
+      },
+      {
+        "id": "66",
+        "score": 0.5351350756585542
+      },
+      {
+        "id": "46",
+        "score": 0.5348119086841889
+      },
+      {
+        "id": "2",
+        "score": 0.5346612443429922
+      },
+      {
+        "id": "19",
+        "score": 0.5326150512842452
+      },
+      {
+        "id": "59",
+        "score": 0.5325097274274406
+      },
+      {
+        "id": "21",
+        "score": 0.5312820137636262
+      },
+      {
+        "id": "26",
+        "score": 0.5308625550838538
+      },
+      {
+        "id": "25",
+        "score": 0.5308052814682587
+      },
+      {
+        "id": "48",
+        "score": 0.5304073720787531
+      },
+      {
+        "id": "97",
+        "score": 0.5280455200118542
+      },
+      {
+        "id": "6",
+        "score": 0.5269890564886962
+      },
+      {
+        "id": "18",
+        "score": 0.5250549307419995
+      },
+      {
+        "id": "22",
+        "score": 0.524902171138279
+      },
+      {
+        "id": "5",
+        "score": 0.5245840892767372
+      },
+      {
+        "id": "17",
+        "score": 0.5243166820578735
+      },
+      {
+        "id": "44",
+        "score": 0.5235251713937814
+      },
+      {
+        "id": "41",
+        "score": 0.522148268028487
+      },
+      {
+        "id": "16",
+        "score": 0.5172271930470752
+      },
+      {
+        "id": "85",
+        "score": 0.5122480595888674
+      },
+      {
+        "id": "28",
+        "score": 0.5120116995378676
+      },
+      {
+        "id": "32",
+        "score": 0.5114571588325165
+      },
+      {
+        "id": "80",
+        "score": 0.507942626083459
+      },
+      {
+        "id": "45",
+        "score": 0.5056164593668583
+      },
+      {
+        "id": "37",
+        "score": 0.5036944427343807
+      },
+      {
+        "id": "91",
+        "score": 0.5002310069617689
+      }
+    ],
+    "chain": [
+      {
+        "id": "98",
+        "score": 0.6472981539133847
+      },
+      {
+        "id": "77",
+        "score": 0.6209464528720955
+      },
+      {
+        "id": "39",
+        "score": 0.6069621430986659
+      },
+      {
+        "id": "87",
+        "score": 0.5969995758976991
+      },
+      {
+        "id": "47",
+        "score": 0.5960085960605433
+      },
+      {
+        "id": "67",
+        "score": 0.5914663487451887
+      },
+      {
+        "id": "86",
+        "score": 0.5913677882434396
+      },
+      {
+        "id": "10",
+        "score": 0.5900894228022309
+      },
+      {
+        "id": "58",
+        "score": 0.5872874291219627
+      },
+      {
+        "id": "60",
+        "score": 0.5851141897152511
+      },
+      {
+        "id": "23",
+        "score": 0.5831018972042639
+      },
+      {
+        "id": "33",
+        "score": 0.5796297900437752
+      },
+      {
+        "id": "78",
+        "score": 0.5789568368757431
+      },
+      {
+        "id": "11",
+        "score": 0.578226805736592
+      },
+      {
+        "id": "24",
+        "score": 0.5780364213040555
+      },
+      {
+        "id": "51",
+        "score": 0.5732513729756701
+      },
+      {
+        "id": "65",
+        "score": 0.5688036226304455
+      },
+      {
+        "id": "75",
+        "score": 0.5685063288380413
+      },
+      {
+        "id": "40",
+        "score": 0.5683684279689861
+      },
+      {
+        "id": "84",
+        "score": 0.5679502879344285
+      },
+      {
+        "id": "82",
+        "score": 0.5677498037286507
+      },
+      {
+        "id": "12",
+        "score": 0.56720544737055
+      },
+      {
+        "id": "96",
+        "score": 0.5647874356896749
+      },
+      {
+        "id": "70",
+        "score": 0.564611876030751
+      },
+      {
+        "id": "34",
+        "score": 0.5645739255991115
+      },
+      {
+        "id": "64",
+        "score": 0.5622213492047848
+      },
+      {
+        "id": "90",
+        "score": 0.5616365147069087
+      },
+      {
+        "id": "54",
+        "score": 0.5616181272490532
+      },
+      {
+        "id": "94",
+        "score": 0.5596507815460249
+      },
+      {
+        "id": "50",
+        "score": 0.5582061104960451
+      },
+      {
+        "id": "8",
+        "score": 0.5581394333940913
+      },
+      {
+        "id": "15",
+        "score": 0.5578270897981044
+      },
+      {
+        "id": "57",
+        "score": 0.5561581297073104
+      },
+      {
+        "id": "55",
+        "score": 0.5558724981455857
+      },
+      {
+        "id": "35",
+        "score": 0.5555922785767711
+      },
+      {
+        "id": "30",
+        "score": 0.5555309008066627
+      },
+      {
+        "id": "88",
+        "score": 0.5548879529526312
+      },
+      {
+        "id": "4",
+        "score": 0.5546988966628766
+      },
+      {
+        "id": "92",
+        "score": 0.554465300526371
+      },
+      {
+        "id": "56",
+        "score": 0.5538526013201351
+      },
+      {
+        "id": "72",
+        "score": 0.5525565483699313
+      },
+      {
+        "id": "73",
+        "score": 0.5520101512233886
+      },
+      {
+        "id": "74",
+        "score": 0.5514083924217401
+      },
+      {
+        "id": "83",
+        "score": 0.551246876260363
+      },
+      {
+        "id": "52",
+        "score": 0.551003855826736
+      },
+      {
+        "id": "49",
+        "score": 0.5502489396559236
+      },
+      {
+        "id": "27",
+        "score": 0.5500795462164285
+      },
+      {
+        "id": "76",
+        "score": 0.5485670090370458
+      },
+      {
+        "id": "63",
+        "score": 0.5485398109252912
+      },
+      {
+        "id": "29",
+        "score": 0.5484494802301336
+      },
+      {
+        "id": "20",
+        "score": 0.5479174510294896
+      },
+      {
+        "id": "81",
+        "score": 0.5476569835513125
+      },
+      {
+        "id": "99",
+        "score": 0.5466779057328546
+      },
+      {
+        "id": "71",
+        "score": 0.5465897846899755
+      },
+      {
+        "id": "62",
+        "score": 0.5458504400363949
+      },
+      {
+        "id": "13",
+        "score": 0.5450378462376878
+      },
+      {
+        "id": "79",
+        "score": 0.5450350028238765
+      },
+      {
+        "id": "43",
+        "score": 0.5444736218634427
+      },
+      {
+        "id": "36",
+        "score": 0.5440472997485023
+      },
+      {
+        "id": "9",
+        "score": 0.5438588693048287
+      },
+      {
+        "id": "100",
+        "score": 0.5435168258441319
+      },
+      {
+        "id": "95",
+        "score": 0.5414760752186693
+      },
+      {
+        "id": "93",
+        "score": 0.5411710504946071
+      },
+      {
+        "id": "68",
+        "score": 0.5397016523876649
+      },
+      {
+        "id": "1",
+        "score": 0.5396520084748109
+      },
+      {
+        "id": "69",
+        "score": 0.5389551589173986
+      },
+      {
+        "id": "14",
+        "score": 0.5380140062996884
+      },
+      {
+        "id": "61",
+        "score": 0.5379220513604388
+      },
+      {
+        "id": "7",
+        "score": 0.5378060830473763
+      },
+      {
+        "id": "89",
+        "score": 0.5370508211720224
+      },
+      {
+        "id": "53",
+        "score": 0.5364135288699428
+      },
+      {
+        "id": "31",
+        "score": 0.5360694104215861
+      },
+      {
+        "id": "3",
+        "score": 0.5353693879652446
+      },
+      {
+        "id": "38",
+        "score": 0.5353098761472111
+      },
+      {
+        "id": "42",
+        "score": 0.5352328904327204
+      },
+      {
+        "id": "66",
+        "score": 0.5351350756585542
+      },
+      {
+        "id": "46",
+        "score": 0.5348119086841889
+      },
+      {
+        "id": "2",
+        "score": 0.5346612443429922
+      },
+      {
+        "id": "19",
+        "score": 0.5326150512842452
+      },
+      {
+        "id": "59",
+        "score": 0.5325097274274406
+      },
+      {
+        "id": "21",
+        "score": 0.5312820137636262
+      },
+      {
+        "id": "26",
+        "score": 0.5308625550838538
+      },
+      {
+        "id": "25",
+        "score": 0.5308052814682587
+      },
+      {
+        "id": "48",
+        "score": 0.5304073720787531
+      },
+      {
+        "id": "97",
+        "score": 0.5280455200118542
+      },
+      {
+        "id": "6",
+        "score": 0.5269890564886962
+      },
+      {
+        "id": "18",
+        "score": 0.5250549307419995
+      },
+      {
+        "id": "22",
+        "score": 0.524902171138279
+      },
+      {
+        "id": "5",
+        "score": 0.5245840892767372
+      },
+      {
+        "id": "17",
+        "score": 0.5243166820578735
+      },
+      {
+        "id": "44",
+        "score": 0.5235251713937814
+      },
+      {
+        "id": "41",
+        "score": 0.522148268028487
+      },
+      {
+        "id": "16",
+        "score": 0.5172271930470752
+      },
+      {
+        "id": "85",
+        "score": 0.5122480595888674
+      },
+      {
+        "id": "28",
+        "score": 0.5120116995378676
+      },
+      {
+        "id": "32",
+        "score": 0.5114571588325165
+      },
+      {
+        "id": "80",
+        "score": 0.507942626083459
+      },
+      {
+        "id": "45",
+        "score": 0.5056164593668583
+      },
+      {
+        "id": "37",
+        "score": 0.5036944427343807
+      },
+      {
+        "id": "91",
+        "score": 0.5002310069617689
+      }
+    ],
+    "state": "context_review_required"
+  },
+  "review": {
+    "result": "pass",
+    "model": {
+      "refs": [
+        {
+          "id": "98",
+          "evidence": "I am seeking a zoning variance to convert a portion of my residential property at my home building Quill Lane 1 into a small-scale home office studio.",
+          "aspect_id": "zoning_variance",
+          "cbc_adjustment": 1.1,
+          "reference_title": "Zoning / building permit for new development",
+          "expertise_domain": "urban_planning.zoning_and_permits",
+          "reference_classification": {
+            "issue_category": "community.governance.zoning",
+            "scope_type": "district",
+            "affected_roles": [
+              "resident"
+            ],
+            "affected_vulnerabilities": [],
+            "technicality_level": "high",
+            "safety_sensitivity": "low",
+            "digital_or_physical": "physical",
+            "expertise_domain": "urban_planning.zoning_and_permits",
+            "classification_reasoning": "Category 'community.governance.zoning' at 'district' scope. Physical/digital classification is 'physical'. Technicality level is 'high' based on knowledge requirement, and safety sensitivity is 'low'."
+          },
+          "relevance": {
+            "D": 0.3,
+            "G": 0.5,
+            "S": 0.15,
+            "X": 0.05
+          },
+          "aggregation": {
+            "R": 0.5,
+            "E": 0.35,
+            "C": 0.15
+          },
+          "mu": 1500,
+          "sigma": 1300,
+          "alpha": 1
+        }
+      ],
+      "relevance": {
+        "D": 0.3,
+        "G": 0.5,
+        "S": 0.15,
+        "X": 0.05
+      },
+      "aggregation": {
+        "R": 0.5,
+        "E": 0.35,
+        "C": 0.15
+      },
+      "mu": 1500,
+      "sigma": 1300
+    },
+    "aspects": {
+      "zoning_variance": {
+        "id": "zoning_variance",
+        "text": "I am seeking a zoning variance to convert a portion of my residential property at my home building Quill Lane 1 into a small-scale home office studio.",
+        "demographics": {
+          "minAge": null,
+          "maxAge": null,
+          "employmentStatus": "any",
+          "familyStatus": "any",
+          "features": [],
+          "places": [],
+          "property_kinds": []
+        },
+        "demographic_evidence": []
+      }
+    },
+    "scope": "district",
+    "location_reference": {
+      "anchor": "home",
+      "place": ""
+    },
+    "prompt_version": "mr1-context-prompt-4",
+    "schema_sha256": "8c383deb989e7ae166ef02d55c5688558ae90069eec83293cdeef263d66ddf2c",
+    "classification": {
+      "issue_category": "community.governance.zoning",
+      "scope_type": "district",
+      "affected_roles": [
+        "resident"
+      ],
+      "affected_vulnerabilities": [],
+      "technicality_level": "high",
+      "safety_sensitivity": "low",
+      "digital_or_physical": "physical",
+      "expertise_domain": "urban_planning.zoning_and_permits",
+      "classification_reasoning": "Category 'community.governance.zoning' at 'district' scope. Physical/digital classification is 'physical'. Technicality level is 'high' based on knowledge requirement, and safety sensitivity is 'low'."
+    },
+    "category": "community.governance.zoning",
+    "resources_needed": [
+      {
+        "resource_type": "money_budget",
+        "importance_level": "low",
+        "explanation": "Financial budget is required to fund the activities, services, or materials."
+      },
+      {
+        "resource_type": "professional_services",
+        "importance_level": "medium",
+        "explanation": "Licensed experts or professional consultation is required to execute this legally and safely."
+      }
+    ],
+    "expertise_domain": "urban_planning.zoning_and_permits",
+    "raw_chain": {
+      "ranked": [
+        {
+          "id": "98",
+          "score": 0.6472981539133847
+        },
+        {
+          "id": "77",
+          "score": 0.6209464528720955
+        },
+        {
+          "id": "39",
+          "score": 0.6069621430986659
+        },
+        {
+          "id": "87",
+          "score": 0.5969995758976991
+        },
+        {
+          "id": "47",
+          "score": 0.5960085960605433
+        },
+        {
+          "id": "67",
+          "score": 0.5914663487451887
+        },
+        {
+          "id": "86",
+          "score": 0.5913677882434396
+        },
+        {
+          "id": "10",
+          "score": 0.5900894228022309
+        },
+        {
+          "id": "58",
+          "score": 0.5872874291219627
+        },
+        {
+          "id": "60",
+          "score": 0.5851141897152511
+        },
+        {
+          "id": "23",
+          "score": 0.5831018972042639
+        },
+        {
+          "id": "33",
+          "score": 0.5796297900437752
+        },
+        {
+          "id": "78",
+          "score": 0.5789568368757431
+        },
+        {
+          "id": "11",
+          "score": 0.578226805736592
+        },
+        {
+          "id": "24",
+          "score": 0.5780364213040555
+        },
+        {
+          "id": "51",
+          "score": 0.5732513729756701
+        },
+        {
+          "id": "65",
+          "score": 0.5688036226304455
+        },
+        {
+          "id": "75",
+          "score": 0.5685063288380413
+        },
+        {
+          "id": "40",
+          "score": 0.5683684279689861
+        },
+        {
+          "id": "84",
+          "score": 0.5679502879344285
+        },
+        {
+          "id": "82",
+          "score": 0.5677498037286507
+        },
+        {
+          "id": "12",
+          "score": 0.56720544737055
+        },
+        {
+          "id": "96",
+          "score": 0.5647874356896749
+        },
+        {
+          "id": "70",
+          "score": 0.564611876030751
+        },
+        {
+          "id": "34",
+          "score": 0.5645739255991115
+        },
+        {
+          "id": "64",
+          "score": 0.5622213492047848
+        },
+        {
+          "id": "90",
+          "score": 0.5616365147069087
+        },
+        {
+          "id": "54",
+          "score": 0.5616181272490532
+        },
+        {
+          "id": "94",
+          "score": 0.5596507815460249
+        },
+        {
+          "id": "50",
+          "score": 0.5582061104960451
+        },
+        {
+          "id": "8",
+          "score": 0.5581394333940913
+        },
+        {
+          "id": "15",
+          "score": 0.5578270897981044
+        },
+        {
+          "id": "57",
+          "score": 0.5561581297073104
+        },
+        {
+          "id": "55",
+          "score": 0.5558724981455857
+        },
+        {
+          "id": "35",
+          "score": 0.5555922785767711
+        },
+        {
+          "id": "30",
+          "score": 0.5555309008066627
+        },
+        {
+          "id": "88",
+          "score": 0.5548879529526312
+        },
+        {
+          "id": "4",
+          "score": 0.5546988966628766
+        },
+        {
+          "id": "92",
+          "score": 0.554465300526371
+        },
+        {
+          "id": "56",
+          "score": 0.5538526013201351
+        },
+        {
+          "id": "72",
+          "score": 0.5525565483699313
+        },
+        {
+          "id": "73",
+          "score": 0.5520101512233886
+        },
+        {
+          "id": "74",
+          "score": 0.5514083924217401
+        },
+        {
+          "id": "83",
+          "score": 0.551246876260363
+        },
+        {
+          "id": "52",
+          "score": 0.551003855826736
+        },
+        {
+          "id": "49",
+          "score": 0.5502489396559236
+        },
+        {
+          "id": "27",
+          "score": 0.5500795462164285
+        },
+        {
+          "id": "76",
+          "score": 0.5485670090370458
+        },
+        {
+          "id": "63",
+          "score": 0.5485398109252912
+        },
+        {
+          "id": "29",
+          "score": 0.5484494802301336
+        },
+        {
+          "id": "20",
+          "score": 0.5479174510294896
+        },
+        {
+          "id": "81",
+          "score": 0.5476569835513125
+        },
+        {
+          "id": "99",
+          "score": 0.5466779057328546
+        },
+        {
+          "id": "71",
+          "score": 0.5465897846899755
+        },
+        {
+          "id": "62",
+          "score": 0.5458504400363949
+        },
+        {
+          "id": "13",
+          "score": 0.5450378462376878
+        },
+        {
+          "id": "79",
+          "score": 0.5450350028238765
+        },
+        {
+          "id": "43",
+          "score": 0.5444736218634427
+        },
+        {
+          "id": "36",
+          "score": 0.5440472997485023
+        },
+        {
+          "id": "9",
+          "score": 0.5438588693048287
+        },
+        {
+          "id": "100",
+          "score": 0.5435168258441319
+        },
+        {
+          "id": "95",
+          "score": 0.5414760752186693
+        },
+        {
+          "id": "93",
+          "score": 0.5411710504946071
+        },
+        {
+          "id": "68",
+          "score": 0.5397016523876649
+        },
+        {
+          "id": "1",
+          "score": 0.5396520084748109
+        },
+        {
+          "id": "69",
+          "score": 0.5389551589173986
+        },
+        {
+          "id": "14",
+          "score": 0.5380140062996884
+        },
+        {
+          "id": "61",
+          "score": 0.5379220513604388
+        },
+        {
+          "id": "7",
+          "score": 0.5378060830473763
+        },
+        {
+          "id": "89",
+          "score": 0.5370508211720224
+        },
+        {
+          "id": "53",
+          "score": 0.5364135288699428
+        },
+        {
+          "id": "31",
+          "score": 0.5360694104215861
+        },
+        {
+          "id": "3",
+          "score": 0.5353693879652446
+        },
+        {
+          "id": "38",
+          "score": 0.5353098761472111
+        },
+        {
+          "id": "42",
+          "score": 0.5352328904327204
+        },
+        {
+          "id": "66",
+          "score": 0.5351350756585542
+        },
+        {
+          "id": "46",
+          "score": 0.5348119086841889
+        },
+        {
+          "id": "2",
+          "score": 0.5346612443429922
+        },
+        {
+          "id": "19",
+          "score": 0.5326150512842452
+        },
+        {
+          "id": "59",
+          "score": 0.5325097274274406
+        },
+        {
+          "id": "21",
+          "score": 0.5312820137636262
+        },
+        {
+          "id": "26",
+          "score": 0.5308625550838538
+        },
+        {
+          "id": "25",
+          "score": 0.5308052814682587
+        },
+        {
+          "id": "48",
+          "score": 0.5304073720787531
+        },
+        {
+          "id": "97",
+          "score": 0.5280455200118542
+        },
+        {
+          "id": "6",
+          "score": 0.5269890564886962
+        },
+        {
+          "id": "18",
+          "score": 0.5250549307419995
+        },
+        {
+          "id": "22",
+          "score": 0.524902171138279
+        },
+        {
+          "id": "5",
+          "score": 0.5245840892767372
+        },
+        {
+          "id": "17",
+          "score": 0.5243166820578735
+        },
+        {
+          "id": "44",
+          "score": 0.5235251713937814
+        },
+        {
+          "id": "41",
+          "score": 0.522148268028487
+        },
+        {
+          "id": "16",
+          "score": 0.5172271930470752
+        },
+        {
+          "id": "85",
+          "score": 0.5122480595888674
+        },
+        {
+          "id": "28",
+          "score": 0.5120116995378676
+        },
+        {
+          "id": "32",
+          "score": 0.5114571588325165
+        },
+        {
+          "id": "80",
+          "score": 0.507942626083459
+        },
+        {
+          "id": "45",
+          "score": 0.5056164593668583
+        },
+        {
+          "id": "37",
+          "score": 0.5036944427343807
+        },
+        {
+          "id": "91",
+          "score": 0.5002310069617689
+        }
+      ],
+      "chain": [
+        {
+          "id": "98",
+          "score": 0.6472981539133847
+        },
+        {
+          "id": "77",
+          "score": 0.6209464528720955
+        },
+        {
+          "id": "39",
+          "score": 0.6069621430986659
+        },
+        {
+          "id": "87",
+          "score": 0.5969995758976991
+        },
+        {
+          "id": "47",
+          "score": 0.5960085960605433
+        },
+        {
+          "id": "67",
+          "score": 0.5914663487451887
+        },
+        {
+          "id": "86",
+          "score": 0.5913677882434396
+        },
+        {
+          "id": "10",
+          "score": 0.5900894228022309
+        },
+        {
+          "id": "58",
+          "score": 0.5872874291219627
+        },
+        {
+          "id": "60",
+          "score": 0.5851141897152511
+        },
+        {
+          "id": "23",
+          "score": 0.5831018972042639
+        },
+        {
+          "id": "33",
+          "score": 0.5796297900437752
+        },
+        {
+          "id": "78",
+          "score": 0.5789568368757431
+        },
+        {
+          "id": "11",
+          "score": 0.578226805736592
+        },
+        {
+          "id": "24",
+          "score": 0.5780364213040555
+        },
+        {
+          "id": "51",
+          "score": 0.5732513729756701
+        },
+        {
+          "id": "65",
+          "score": 0.5688036226304455
+        },
+        {
+          "id": "75",
+          "score": 0.5685063288380413
+        },
+        {
+          "id": "40",
+          "score": 0.5683684279689861
+        },
+        {
+          "id": "84",
+          "score": 0.5679502879344285
+        },
+        {
+          "id": "82",
+          "score": 0.5677498037286507
+        },
+        {
+          "id": "12",
+          "score": 0.56720544737055
+        },
+        {
+          "id": "96",
+          "score": 0.5647874356896749
+        },
+        {
+          "id": "70",
+          "score": 0.564611876030751
+        },
+        {
+          "id": "34",
+          "score": 0.5645739255991115
+        },
+        {
+          "id": "64",
+          "score": 0.5622213492047848
+        },
+        {
+          "id": "90",
+          "score": 0.5616365147069087
+        },
+        {
+          "id": "54",
+          "score": 0.5616181272490532
+        },
+        {
+          "id": "94",
+          "score": 0.5596507815460249
+        },
+        {
+          "id": "50",
+          "score": 0.5582061104960451
+        },
+        {
+          "id": "8",
+          "score": 0.5581394333940913
+        },
+        {
+          "id": "15",
+          "score": 0.5578270897981044
+        },
+        {
+          "id": "57",
+          "score": 0.5561581297073104
+        },
+        {
+          "id": "55",
+          "score": 0.5558724981455857
+        },
+        {
+          "id": "35",
+          "score": 0.5555922785767711
+        },
+        {
+          "id": "30",
+          "score": 0.5555309008066627
+        },
+        {
+          "id": "88",
+          "score": 0.5548879529526312
+        },
+        {
+          "id": "4",
+          "score": 0.5546988966628766
+        },
+        {
+          "id": "92",
+          "score": 0.554465300526371
+        },
+        {
+          "id": "56",
+          "score": 0.5538526013201351
+        },
+        {
+          "id": "72",
+          "score": 0.5525565483699313
+        },
+        {
+          "id": "73",
+          "score": 0.5520101512233886
+        },
+        {
+          "id": "74",
+          "score": 0.5514083924217401
+        },
+        {
+          "id": "83",
+          "score": 0.551246876260363
+        },
+        {
+          "id": "52",
+          "score": 0.551003855826736
+        },
+        {
+          "id": "49",
+          "score": 0.5502489396559236
+        },
+        {
+          "id": "27",
+          "score": 0.5500795462164285
+        },
+        {
+          "id": "76",
+          "score": 0.5485670090370458
+        },
+        {
+          "id": "63",
+          "score": 0.5485398109252912
+        },
+        {
+          "id": "29",
+          "score": 0.5484494802301336
+        },
+        {
+          "id": "20",
+          "score": 0.5479174510294896
+        },
+        {
+          "id": "81",
+          "score": 0.5476569835513125
+        },
+        {
+          "id": "99",
+          "score": 0.5466779057328546
+        },
+        {
+          "id": "71",
+          "score": 0.5465897846899755
+        },
+        {
+          "id": "62",
+          "score": 0.5458504400363949
+        },
+        {
+          "id": "13",
+          "score": 0.5450378462376878
+        },
+        {
+          "id": "79",
+          "score": 0.5450350028238765
+        },
+        {
+          "id": "43",
+          "score": 0.5444736218634427
+        },
+        {
+          "id": "36",
+          "score": 0.5440472997485023
+        },
+        {
+          "id": "9",
+          "score": 0.5438588693048287
+        },
+        {
+          "id": "100",
+          "score": 0.5435168258441319
+        },
+        {
+          "id": "95",
+          "score": 0.5414760752186693
+        },
+        {
+          "id": "93",
+          "score": 0.5411710504946071
+        },
+        {
+          "id": "68",
+          "score": 0.5397016523876649
+        },
+        {
+          "id": "1",
+          "score": 0.5396520084748109
+        },
+        {
+          "id": "69",
+          "score": 0.5389551589173986
+        },
+        {
+          "id": "14",
+          "score": 0.5380140062996884
+        },
+        {
+          "id": "61",
+          "score": 0.5379220513604388
+        },
+        {
+          "id": "7",
+          "score": 0.5378060830473763
+        },
+        {
+          "id": "89",
+          "score": 0.5370508211720224
+        },
+        {
+          "id": "53",
+          "score": 0.5364135288699428
+        },
+        {
+          "id": "31",
+          "score": 0.5360694104215861
+        },
+        {
+          "id": "3",
+          "score": 0.5353693879652446
+        },
+        {
+          "id": "38",
+          "score": 0.5353098761472111
+        },
+        {
+          "id": "42",
+          "score": 0.5352328904327204
+        },
+        {
+          "id": "66",
+          "score": 0.5351350756585542
+        },
+        {
+          "id": "46",
+          "score": 0.5348119086841889
+        },
+        {
+          "id": "2",
+          "score": 0.5346612443429922
+        },
+        {
+          "id": "19",
+          "score": 0.5326150512842452
+        },
+        {
+          "id": "59",
+          "score": 0.5325097274274406
+        },
+        {
+          "id": "21",
+          "score": 0.5312820137636262
+        },
+        {
+          "id": "26",
+          "score": 0.5308625550838538
+        },
+        {
+          "id": "25",
+          "score": 0.5308052814682587
+        },
+        {
+          "id": "48",
+          "score": 0.5304073720787531
+        },
+        {
+          "id": "97",
+          "score": 0.5280455200118542
+        },
+        {
+          "id": "6",
+          "score": 0.5269890564886962
+        },
+        {
+          "id": "18",
+          "score": 0.5250549307419995
+        },
+        {
+          "id": "22",
+          "score": 0.524902171138279
+        },
+        {
+          "id": "5",
+          "score": 0.5245840892767372
+        },
+        {
+          "id": "17",
+          "score": 0.5243166820578735
+        },
+        {
+          "id": "44",
+          "score": 0.5235251713937814
+        },
+        {
+          "id": "41",
+          "score": 0.522148268028487
+        },
+        {
+          "id": "16",
+          "score": 0.5172271930470752
+        },
+        {
+          "id": "85",
+          "score": 0.5122480595888674
+        },
+        {
+          "id": "28",
+          "score": 0.5120116995378676
+        },
+        {
+          "id": "32",
+          "score": 0.5114571588325165
+        },
+        {
+          "id": "80",
+          "score": 0.507942626083459
+        },
+        {
+          "id": "45",
+          "score": 0.5056164593668583
+        },
+        {
+          "id": "37",
+          "score": 0.5036944427343807
+        },
+        {
+          "id": "91",
+          "score": 0.5002310069617689
+        }
+      ],
+      "state": "context_review_required"
+    },
+    "exclusions": {
+      "1": "The issue is a zoning variance request, not a building maintenance or security issue.",
+      "2": "The issue is a zoning variance request, not an elevator maintenance issue.",
+      "3": "The issue is a zoning variance request, not a building heating issue.",
+      "4": "The issue is a zoning variance request, not a building water leak issue.",
+      "5": "The issue is a zoning variance request, not a building mold issue.",
+      "6": "The issue is a zoning variance request, not a building lighting issue.",
+      "7": "The issue is a zoning variance request, not a building waste issue.",
+      "8": "The issue is a zoning variance request, not a building parking issue.",
+      "9": "The issue is a zoning variance request, not a building noise issue.",
+      "10": "The issue is a zoning variance request, not a building renovation issue.",
+      "11": "The issue is a zoning variance request, not a tenancy policy issue.",
+      "12": "The issue is a zoning variance request, not a pet policy issue.",
+      "13": "The issue is a zoning variance request, not a building safety issue.",
+      "14": "The issue is a zoning variance request, not a building laundry issue.",
+      "15": "The issue is a zoning variance request, not a storage policy issue.",
+      "16": "The issue is a zoning variance request, not a building moving policy issue.",
+      "17": "The issue is a zoning variance request, not a building security issue.",
+      "18": "The issue is a zoning variance request, not a building safety issue.",
+      "19": "The issue is a zoning variance request, not a building health issue.",
+      "20": "The issue is a zoning variance request, not a building safety issue.",
+      "21": "The issue is a zoning variance request, not a street maintenance issue.",
+      "22": "The issue is a zoning variance request, not a street safety issue.",
+      "23": "The issue is a zoning variance request, not a street infrastructure issue.",
+      "24": "The issue is a zoning variance request, not a transit issue.",
+      "25": "The issue is a zoning variance request, not a street maintenance issue.",
+      "26": "The issue is a zoning variance request, not a street lighting issue.",
+      "27": "The issue is a zoning variance request, not a street noise issue.",
+      "28": "The issue is a zoning variance request, not a street cleanliness issue.",
+      "29": "The issue is a zoning variance request, not a neighborhood utility issue.",
+      "30": "The issue is a zoning variance request, not a neighborhood utility issue.",
+      "31": "The issue is a zoning variance request, not a neighborhood utility issue.",
+      "32": "The issue is a zoning variance request, not a public playground issue.",
+      "33": "The issue is a zoning variance request, not a street traffic issue.",
+      "34": "The issue is a zoning variance request, not a street parking issue.",
+      "35": "The issue is a zoning variance request, not a public sanitation issue.",
+      "36": "The issue is a zoning variance request, not a neighborhood safety issue.",
+      "37": "The issue is a zoning variance request, not a street transport issue.",
+      "38": "The issue is a zoning variance request, not a city-wide transport issue.",
+      "39": "The issue is a zoning variance request, not a pedestrian zone design issue.",
+      "40": "The issue is a zoning variance request, not a waste collection issue.",
+      "41": "The issue is a zoning variance request, not a health access issue.",
+      "42": "The issue is a zoning variance request, not a health access issue.",
+      "43": "The issue is a zoning variance request, not a health access issue.",
+      "44": "The issue is a zoning variance request, not a health access issue.",
+      "45": "The issue is a zoning variance request, not a health access issue.",
+      "46": "The issue is a zoning variance request, not a health support issue.",
+      "47": "The issue is a zoning variance request, not a disability access issue.",
+      "48": "The issue is a zoning variance request, not a social service issue.",
+      "49": "The issue is a zoning variance request, not a social service issue.",
+      "50": "The issue is a zoning variance request, not a social service issue.",
+      "51": "The issue is a zoning variance request, not a family emergency issue.",
+      "52": "The issue is a zoning variance request, not a social service issue.",
+      "53": "The issue is a zoning variance request, not a health support issue.",
+      "54": "The issue is a zoning variance request, not a health safety issue.",
+      "55": "The issue is a zoning variance request, not a health safety issue.",
+      "56": "The issue is a zoning variance request, not a school safety issue.",
+      "57": "The issue is a zoning variance request, not a school schedule issue.",
+      "58": "The issue is a zoning variance request, not a school policy issue.",
+      "59": "The issue is a zoning variance request, not a school cafeteria issue.",
+      "60": "The issue is a zoning variance request, not a school transport issue.",
+      "61": "The issue is a zoning variance request, not a school program issue.",
+      "62": "The issue is a zoning variance request, not a school communication issue.",
+      "63": "The issue is a zoning variance request, not a youth club issue.",
+      "64": "The issue is a zoning variance request, not a school scholarship issue.",
+      "65": "The issue is a zoning variance request, not a university curriculum issue.",
+      "66": "The issue is a zoning variance request, not a university exam issue.",
+      "67": "The issue is a zoning variance request, not a vocational training issue.",
+      "68": "The issue is a zoning variance request, not an internship issue.",
+      "69": "The issue is a zoning variance request, not a youth sports issue.",
+      "70": "The issue is a zoning variance request, not a library issue.",
+      "71": "The issue is a zoning variance request, not a community event issue.",
+      "72": "The issue is a zoning variance request, not a sports league issue.",
+      "73": "The issue is a zoning variance request, not a cultural workshop issue.",
+      "74": "The issue is a zoning variance request, not a neighborhood watch issue.",
+      "75": "The issue is a zoning variance request, not a public art issue.",
+      "76": "The issue is a zoning variance request, not a street market issue.",
+      "77": "The issue is a zoning variance request, not a religious facility issue.",
+      "78": "The issue is a zoning variance request, not a religious visibility issue.",
+      "79": "The issue is a zoning variance request, not a charity issue.",
+      "80": "The issue is a zoning variance request, not a global digital issue.",
+      "81": "The issue is a zoning variance request, not a volunteer issue.",
+      "82": "The issue is a zoning variance request, not a community group issue.",
+      "83": "The issue is a zoning variance request, not a support group issue.",
+      "84": "The issue is a zoning variance request, not a heritage preservation issue.",
+      "85": "The issue is a zoning variance request, not a city festival issue.",
+      "86": "The issue is a zoning variance request, not a work schedule issue.",
+      "87": "The issue is a zoning variance request, not a remote work policy issue.",
+      "88": "The issue is a zoning variance request, not a gig platform issue.",
+      "89": "The issue is a zoning variance request, not a global digital issue.",
+      "90": "The issue is a zoning variance request, not a global digital issue.",
+      "91": "The issue is a zoning variance request, not a global digital issue.",
+      "92": "The issue is a zoning variance request, not a local forum issue.",
+      "93": "The issue is a zoning variance request, not a global digital issue.",
+      "94": "The issue is a zoning variance request, not a neighborhood app issue.",
+      "95": "The issue is a zoning variance request, not an election issue.",
+      "96": "The issue is a zoning variance request, not a policy debate issue.",
+      "97": "The issue is a zoning variance request, not a city budget issue.",
+      "99": "The issue is a zoning variance request, not a digital privacy issue.",
+      "100": "The issue is a zoning variance request, not a digital fraud issue."
+    },
+    "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+    "version": "mr1-context-review-1",
+    "context_message": "The request for a zoning variance to allow a home office studio is a matter of local zoning governance."
+  },
+  "raw_review": {
+    "result": "pass",
+    "message": "The request for a zoning variance to allow a home office studio is a matter of local zoning governance.",
+    "questions": [],
+    "scope": "district",
+    "location_reference": {
+      "anchor": "home",
+      "place": ""
+    },
+    "accepted": [
+      {
+        "id": "98",
+        "aspect_id": "zoning_variance",
+        "evidence": "I am seeking a zoning variance to convert a portion of my residential property at my home building Quill Lane 1 into a small-scale home office studio."
+      }
+    ],
+    "excluded": {
+      "1": "The issue is a zoning variance request, not a building maintenance or security issue.",
+      "2": "The issue is a zoning variance request, not an elevator maintenance issue.",
+      "3": "The issue is a zoning variance request, not a building heating issue.",
+      "4": "The issue is a zoning variance request, not a building water leak issue.",
+      "5": "The issue is a zoning variance request, not a building mold issue.",
+      "6": "The issue is a zoning variance request, not a building lighting issue.",
+      "7": "The issue is a zoning variance request, not a building waste issue.",
+      "8": "The issue is a zoning variance request, not a building parking issue.",
+      "9": "The issue is a zoning variance request, not a building noise issue.",
+      "10": "The issue is a zoning variance request, not a building renovation issue.",
+      "11": "The issue is a zoning variance request, not a tenancy policy issue.",
+      "12": "The issue is a zoning variance request, not a pet policy issue.",
+      "13": "The issue is a zoning variance request, not a building safety issue.",
+      "14": "The issue is a zoning variance request, not a building laundry issue.",
+      "15": "The issue is a zoning variance request, not a storage policy issue.",
+      "16": "The issue is a zoning variance request, not a building moving policy issue.",
+      "17": "The issue is a zoning variance request, not a building security issue.",
+      "18": "The issue is a zoning variance request, not a building safety issue.",
+      "19": "The issue is a zoning variance request, not a building health issue.",
+      "20": "The issue is a zoning variance request, not a building safety issue.",
+      "21": "The issue is a zoning variance request, not a street maintenance issue.",
+      "22": "The issue is a zoning variance request, not a street safety issue.",
+      "23": "The issue is a zoning variance request, not a street infrastructure issue.",
+      "24": "The issue is a zoning variance request, not a transit issue.",
+      "25": "The issue is a zoning variance request, not a street maintenance issue.",
+      "26": "The issue is a zoning variance request, not a street lighting issue.",
+      "27": "The issue is a zoning variance request, not a street noise issue.",
+      "28": "The issue is a zoning variance request, not a street cleanliness issue.",
+      "29": "The issue is a zoning variance request, not a neighborhood utility issue.",
+      "30": "The issue is a zoning variance request, not a neighborhood utility issue.",
+      "31": "The issue is a zoning variance request, not a neighborhood utility issue.",
+      "32": "The issue is a zoning variance request, not a public playground issue.",
+      "33": "The issue is a zoning variance request, not a street traffic issue.",
+      "34": "The issue is a zoning variance request, not a street parking issue.",
+      "35": "The issue is a zoning variance request, not a public sanitation issue.",
+      "36": "The issue is a zoning variance request, not a neighborhood safety issue.",
+      "37": "The issue is a zoning variance request, not a street transport issue.",
+      "38": "The issue is a zoning variance request, not a city-wide transport issue.",
+      "39": "The issue is a zoning variance request, not a pedestrian zone design issue.",
+      "40": "The issue is a zoning variance request, not a waste collection issue.",
+      "41": "The issue is a zoning variance request, not a health access issue.",
+      "42": "The issue is a zoning variance request, not a health access issue.",
+      "43": "The issue is a zoning variance request, not a health access issue.",
+      "44": "The issue is a zoning variance request, not a health access issue.",
+      "45": "The issue is a zoning variance request, not a health access issue.",
+      "46": "The issue is a zoning variance request, not a health support issue.",
+      "47": "The issue is a zoning variance request, not a disability access issue.",
+      "48": "The issue is a zoning variance request, not a social service issue.",
+      "49": "The issue is a zoning variance request, not a social service issue.",
+      "50": "The issue is a zoning variance request, not a social service issue.",
+      "51": "The issue is a zoning variance request, not a family emergency issue.",
+      "52": "The issue is a zoning variance request, not a social service issue.",
+      "53": "The issue is a zoning variance request, not a health support issue.",
+      "54": "The issue is a zoning variance request, not a health safety issue.",
+      "55": "The issue is a zoning variance request, not a health safety issue.",
+      "56": "The issue is a zoning variance request, not a school safety issue.",
+      "57": "The issue is a zoning variance request, not a school schedule issue.",
+      "58": "The issue is a zoning variance request, not a school policy issue.",
+      "59": "The issue is a zoning variance request, not a school cafeteria issue.",
+      "60": "The issue is a zoning variance request, not a school transport issue.",
+      "61": "The issue is a zoning variance request, not a school program issue.",
+      "62": "The issue is a zoning variance request, not a school communication issue.",
+      "63": "The issue is a zoning variance request, not a youth club issue.",
+      "64": "The issue is a zoning variance request, not a school scholarship issue.",
+      "65": "The issue is a zoning variance request, not a university curriculum issue.",
+      "66": "The issue is a zoning variance request, not a university exam issue.",
+      "67": "The issue is a zoning variance request, not a vocational training issue.",
+      "68": "The issue is a zoning variance request, not an internship issue.",
+      "69": "The issue is a zoning variance request, not a youth sports issue.",
+      "70": "The issue is a zoning variance request, not a library issue.",
+      "71": "The issue is a zoning variance request, not a community event issue.",
+      "72": "The issue is a zoning variance request, not a sports league issue.",
+      "73": "The issue is a zoning variance request, not a cultural workshop issue.",
+      "74": "The issue is a zoning variance request, not a neighborhood watch issue.",
+      "75": "The issue is a zoning variance request, not a public art issue.",
+      "76": "The issue is a zoning variance request, not a street market issue.",
+      "77": "The issue is a zoning variance request, not a religious facility issue.",
+      "78": "The issue is a zoning variance request, not a religious visibility issue.",
+      "79": "The issue is a zoning variance request, not a charity issue.",
+      "80": "The issue is a zoning variance request, not a global digital issue.",
+      "81": "The issue is a zoning variance request, not a volunteer issue.",
+      "82": "The issue is a zoning variance request, not a community group issue.",
+      "83": "The issue is a zoning variance request, not a support group issue.",
+      "84": "The issue is a zoning variance request, not a heritage preservation issue.",
+      "85": "The issue is a zoning variance request, not a city festival issue.",
+      "86": "The issue is a zoning variance request, not a work schedule issue.",
+      "87": "The issue is a zoning variance request, not a remote work policy issue.",
+      "88": "The issue is a zoning variance request, not a gig platform issue.",
+      "89": "The issue is a zoning variance request, not a global digital issue.",
+      "90": "The issue is a zoning variance request, not a global digital issue.",
+      "91": "The issue is a zoning variance request, not a global digital issue.",
+      "92": "The issue is a zoning variance request, not a local forum issue.",
+      "93": "The issue is a zoning variance request, not a global digital issue.",
+      "94": "The issue is a zoning variance request, not a neighborhood app issue.",
+      "95": "The issue is a zoning variance request, not an election issue.",
+      "96": "The issue is a zoning variance request, not a policy debate issue.",
+      "97": "The issue is a zoning variance request, not a city budget issue.",
+      "99": "The issue is a zoning variance request, not a digital privacy issue.",
+      "100": "The issue is a zoning variance request, not a digital fraud issue."
+    },
+    "aspects": [
+      {
+        "id": "zoning_variance",
+        "text": "I am seeking a zoning variance to convert a portion of my residential property at my home building Quill Lane 1 into a small-scale home office studio.",
+        "demographics": {
+          "minAge": null,
+          "maxAge": null,
+          "employmentStatus": "any",
+          "familyStatus": "any",
+          "features": [],
+          "places": [],
+          "property_kinds": []
+        },
+        "demographic_evidence": []
+      }
+    ]
+  },
+  "review_meta": {
+    "ai_source": "model",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "mr1-context-prompt-4",
+    "schema_sha256": "8c383deb989e7ae166ef02d55c5688558ae90069eec83293cdeef263d66ddf2c",
+    "prompt_sha256": "3afd29e760662a892b8801228311e5e77075451766343d6c7200582e3c9f15f2",
+    "temperature": 0,
+    "seed": 20261110,
+    "examples_used": [
+      "98",
+      "77",
+      "39",
+      "87",
+      "47",
+      "67",
+      "86",
+      "10",
+      "58",
+      "60",
+      "23",
+      "33",
+      "78",
+      "11",
+      "24",
+      "51",
+      "65",
+      "75",
+      "40",
+      "84",
+      "82",
+      "12",
+      "96",
+      "70",
+      "34",
+      "64",
+      "90",
+      "54",
+      "94",
+      "50",
+      "8",
+      "15",
+      "57",
+      "55",
+      "35",
+      "30",
+      "88",
+      "4",
+      "92",
+      "56",
+      "72",
+      "73",
+      "74",
+      "83",
+      "52",
+      "49",
+      "27",
+      "76",
+      "63",
+      "29",
+      "20",
+      "81",
+      "99",
+      "71",
+      "62",
+      "13",
+      "79",
+      "43",
+      "36",
+      "9",
+      "100",
+      "95",
+      "93",
+      "68",
+      "1",
+      "69",
+      "14",
+      "61",
+      "7",
+      "89",
+      "53",
+      "31",
+      "3",
+      "38",
+      "42",
+      "66",
+      "46",
+      "2",
+      "19",
+      "59",
+      "21",
+      "26",
+      "25",
+      "48",
+      "97",
+      "6",
+      "18",
+      "22",
+      "5",
+      "17",
+      "44",
+      "41",
+      "16",
+      "85",
+      "28",
+      "32",
+      "80",
+      "45",
+      "37",
+      "91"
+    ],
+    "raw_output": "{\n  \"result\": \"pass\",\n  \"message\": \"The request for a zoning variance to allow a home office studio is a matter of local zoning governance.\",\n  \"questions\": [],\n  \"scope\": \"district\",\n  \"location_reference\": {\n    \"anchor\": \"home\",\n    \"place\": \"\"\n  },\n  \"accepted\": [\n    {\n      \"id\": \"98\",\n      \"aspect_id\": \"zoning_variance\",\n      \"evidence\": \"I am seeking a zoning variance to convert a portion of my residential property at my home building Quill Lane 1 into a small-scale home office studio.\"\n    }\n  ],\n  \"excluded\": {\n    \"1\": \"The issue is a zoning variance request, not a building maintenance or security issue.\",\n    \"2\": \"The issue is a zoning variance request, not an elevator maintenance issue.\",\n    \"3\": \"The issue is a zoning variance request, not a building heating issue.\",\n    \"4\": \"The issue is a zoning variance request, not a building water leak issue.\",\n    \"5\": \"The issue is a zoning variance request, not a building mold issue.\",\n    \"6\": \"The issue is a zoning variance request, not a building lighting issue.\",\n    \"7\": \"The issue is a zoning variance request, not a building waste issue.\",\n    \"8\": \"The issue is a zoning variance request, not a building parking issue.\",\n    \"9\": \"The issue is a zoning variance request, not a building noise issue.\",\n    \"10\": \"The issue is a zoning variance request, not a building renovation issue.\",\n    \"11\": \"The issue is a zoning variance request, not a tenancy policy issue.\",\n    \"12\": \"The issue is a zoning variance request, not a pet policy issue.\",\n    \"13\": \"The issue is a zoning variance request, not a building safety issue.\",\n    \"14\": \"The issue is a zoning variance request, not a building laundry issue.\",\n    \"15\": \"The issue is a zoning variance request, not a storage policy issue.\",\n    \"16\": \"The issue is a zoning variance request, not a building moving policy issue.\",\n    \"17\": \"The issue is a zoning variance request, not a building security issue.\",\n    \"18\": \"The issue is a zoning variance request, not a building safety issue.\",\n    \"19\": \"The issue is a zoning variance request, not a building health issue.\",\n    \"20\": \"The issue is a zoning variance request, not a building safety issue.\",\n    \"21\": \"The issue is a zoning variance request, not a street maintenance issue.\",\n    \"22\": \"The issue is a zoning variance request, not a street safety issue.\",\n    \"23\": \"The issue is a zoning variance request, not a street infrastructure issue.\",\n    \"24\": \"The issue is a zoning variance request, not a transit issue.\",\n    \"25\": \"The issue is a zoning variance request, not a street maintenance issue.\",\n    \"26\": \"The issue is a zoning variance request, not a street lighting issue.\",\n    \"27\": \"The issue is a zoning variance request, not a street noise issue.\",\n    \"28\": \"The issue is a zoning variance request, not a street cleanliness issue.\",\n    \"29\": \"The issue is a zoning variance request, not a neighborhood utility issue.\",\n    \"30\": \"The issue is a zoning variance request, not a neighborhood utility issue.\",\n    \"31\": \"The issue is a zoning variance request, not a neighborhood utility issue.\",\n    \"32\": \"The issue is a zoning variance request, not a public playground issue.\",\n    \"33\": \"The issue is a zoning variance request, not a street traffic issue.\",\n    \"34\": \"The issue is a zoning variance request, not a street parking issue.\",\n    \"35\": \"The issue is a zoning variance request, not a public sanitation issue.\",\n    \"36\": \"The issue is a zoning variance request, not a neighborhood safety issue.\",\n    \"37\": \"The issue is a zoning variance request, not a street transport issue.\",\n    \"38\": \"The issue is a zoning variance request, not a city-wide transport issue.\",\n    \"39\": \"The issue is a zoning variance request, not a pedestrian zone design issue.\",\n    \"40\": \"The issue is a zoning variance request, not a waste collection issue.\",\n    \"41\": \"The issue is a zoning variance request, not a health access issue.\",\n    \"42\": \"The issue is a zoning variance request, not a health access issue.\",\n    \"43\": \"The issue is a zoning variance request, not a health access issue.\",\n    \"44\": \"The issue is a zoning variance request, not a health access issue.\",\n    \"45\": \"The issue is a zoning variance request, not a health access issue.\",\n    \"46\": \"The issue is a zoning variance request, not a health support issue.\",\n    \"47\": \"The issue is a zoning variance request, not a disability access issue.\",\n    \"48\": \"The issue is a zoning variance request, not a social service issue.\",\n    \"49\": \"The issue is a zoning variance request, not a social service issue.\",\n    \"50\": \"The issue is a zoning variance request, not a social service issue.\",\n    \"51\": \"The issue is a zoning variance request, not a family emergency issue.\",\n    \"52\": \"The issue is a zoning variance request, not a social service issue.\",\n    \"53\": \"The issue is a zoning variance request, not a health support issue.\",\n    \"54\": \"The issue is a zoning variance request, not a health safety issue.\",\n    \"55\": \"The issue is a zoning variance request, not a health safety issue.\",\n    \"56\": \"The issue is a zoning variance request, not a school safety issue.\",\n    \"57\": \"The issue is a zoning variance request, not a school schedule issue.\",\n    \"58\": \"The issue is a zoning variance request, not a school policy issue.\",\n    \"59\": \"The issue is a zoning variance request, not a school cafeteria issue.\",\n    \"60\": \"The issue is a zoning variance request, not a school transport issue.\",\n    \"61\": \"The issue is a zoning variance request, not a school program issue.\",\n    \"62\": \"The issue is a zoning variance request, not a school communication issue.\",\n    \"63\": \"The issue is a zoning variance request, not a youth club issue.\",\n    \"64\": \"The issue is a zoning variance request, not a school scholarship issue.\",\n    \"65\": \"The issue is a zoning variance request, not a university curriculum issue.\",\n    \"66\": \"The issue is a zoning variance request, not a university exam issue.\",\n    \"67\": \"The issue is a zoning variance request, not a vocational training issue.\",\n    \"68\": \"The issue is a zoning variance request, not an internship issue.\",\n    \"69\": \"The issue is a zoning variance request, not a youth sports issue.\",\n    \"70\": \"The issue is a zoning variance request, not a library issue.\",\n    \"71\": \"The issue is a zoning variance request, not a community event issue.\",\n    \"72\": \"The issue is a zoning variance request, not a sports league issue.\",\n    \"73\": \"The issue is a zoning variance request, not a cultural workshop issue.\",\n    \"74\": \"The issue is a zoning variance request, not a neighborhood watch issue.\",\n    \"75\": \"The issue is a zoning variance request, not a public art issue.\",\n    \"76\": \"The issue is a zoning variance request, not a street market issue.\",\n    \"77\": \"The issue is a zoning variance request, not a religious facility issue.\",\n    \"78\": \"The issue is a zoning variance request, not a religious visibility issue.\",\n    \"79\": \"The issue is a zoning variance request, not a charity issue.\",\n    \"80\": \"The issue is a zoning variance request, not a global digital issue.\",\n    \"81\": \"The issue is a zoning variance request, not a volunteer issue.\",\n    \"82\": \"The issue is a zoning variance request, not a community group issue.\",\n    \"83\": \"The issue is a zoning variance request, not a support group issue.\",\n    \"84\": \"The issue is a zoning variance request, not a heritage preservation issue.\",\n    \"85\": \"The issue is a zoning variance request, not a city festival issue.\",\n    \"86\": \"The issue is a zoning variance request, not a work schedule issue.\",\n    \"87\": \"The issue is a zoning variance request, not a remote work policy issue.\",\n    \"88\": \"The issue is a zoning variance request, not a gig platform issue.\",\n    \"89\": \"The issue is a zoning variance request, not a global digital issue.\",\n    \"90\": \"The issue is a zoning variance request, not a global digital issue.\",\n    \"91\": \"The issue is a zoning variance request, not a global digital issue.\",\n    \"92\": \"The issue is a zoning variance request, not a local forum issue.\",\n    \"93\": \"The issue is a zoning variance request, not a global digital issue.\",\n    \"94\": \"The issue is a zoning variance request, not a neighborhood app issue.\",\n    \"95\": \"The issue is a zoning variance request, not an election issue.\",\n    \"96\": \"The issue is a zoning variance request, not a policy debate issue.\",\n    \"97\": \"The issue is a zoning variance request, not a city budget issue.\",\n    \"99\": \"The issue is a zoning variance request, not a digital privacy issue.\",\n    \"100\": \"The issue is a zoning variance request, not a digital fraud issue.\"\n  },\n  \"aspects\": [\n    {\n      \"id\": \"zoning_variance\",\n      \"text\": \"I am seeking a zoning variance to convert a portion of my residential property at my home building Quill Lane 1 into a small-scale home office studio.\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"any\",\n        \"familyStatus\": \"any\",\n        \"features\": [],\n        \"places\": [],\n        \"property_kinds\": []\n      },\n      \"demographic_evidence\": []\n    }\n  ]\n}",
+    "usage": {
+      "promptTokenCount": 6173,
+      "candidatesTokenCount": 2369,
+      "totalTokenCount": 8542,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 6173
+        }
+      ],
+      "serviceTier": "standard"
+    },
+    "error": null
+  },
+  "bundle": {
+    "version": "mr1-context-review-1",
+    "prompt_version": "mr1-context-prompt-4",
+    "schema_sha256": "8c383deb989e7ae166ef02d55c5688558ae90069eec83293cdeef263d66ddf2c",
+    "scope": "district",
+    "model": {
+      "refs": [
+        {
+          "id": "98",
+          "evidence": "I am seeking a zoning variance to convert a portion of my residential property at my home building Quill Lane 1 into a small-scale home office studio.",
+          "aspect_id": "zoning_variance",
+          "cbc_adjustment": 1.1,
+          "reference_title": "Zoning / building permit for new development",
+          "expertise_domain": "urban_planning.zoning_and_permits",
+          "reference_classification": {
+            "issue_category": "community.governance.zoning",
+            "scope_type": "district",
+            "affected_roles": [
+              "resident"
+            ],
+            "affected_vulnerabilities": [],
+            "technicality_level": "high",
+            "safety_sensitivity": "low",
+            "digital_or_physical": "physical",
+            "expertise_domain": "urban_planning.zoning_and_permits",
+            "classification_reasoning": "Category 'community.governance.zoning' at 'district' scope. Physical/digital classification is 'physical'. Technicality level is 'high' based on knowledge requirement, and safety sensitivity is 'low'."
+          },
+          "relevance": {
+            "D": 0.3,
+            "G": 0.5,
+            "S": 0.15,
+            "X": 0.05
+          },
+          "aggregation": {
+            "R": 0.5,
+            "E": 0.35,
+            "C": 0.15
+          },
+          "mu": 1500,
+          "sigma": 1300,
+          "alpha": 1
+        }
+      ],
+      "relevance": {
+        "D": 0.3,
+        "G": 0.5,
+        "S": 0.15,
+        "X": 0.05
+      },
+      "aggregation": {
+        "R": 0.5,
+        "E": 0.35,
+        "C": 0.15
+      },
+      "mu": 1500,
+      "sigma": 1300
+    },
+    "aspects": {
+      "zoning_variance": {
+        "id": "zoning_variance",
+        "text": "I am seeking a zoning variance to convert a portion of my residential property at my home building Quill Lane 1 into a small-scale home office studio.",
+        "demographics": {
+          "minAge": null,
+          "maxAge": null,
+          "employmentStatus": "any",
+          "familyStatus": "any",
+          "features": [],
+          "places": [],
+          "property_kinds": []
+        },
+        "demographic_evidence": [],
+        "vector": [
+          0.01914485168865524,
+          -0.0178282921482088,
+          0.02535658124579513,
+          -0.11223272159590292,
+          -0.016193035796057253,
+          0.023859909757250712,
+          0.05255157044201,
+          -0.020808041031099674,
+          0.06946983310646102,
+          -0.028792118029980905,
+          -0.050743238142659554,
+          -0.01759150519618791,
+          -0.048356726055820004,
+          0.014681294788280449,
+          0.23866592123206543,
+          0.019674298245640223,
+          -0.006427888916197784,
+          0.0030440717428882494,
+          0.032314862525642134,
+          0.03362270463111974,
+          0.012710769156682624,
+          0.0009884858980504984,
+          0.018811062004466778,
+          0.039106278154958624,
+          -0.010084412843652475,
+          0.00643382564621196,
+          0.026299081756935877,
+          -0.005338712307224911,
+          0.038852803637031065,
+          -0.030660074515233778,
+          -0.05926609215633253,
+          -0.04895487620906625,
+          0.010454596567768811,
+          0.009350528257888785,
+          0.06085046177462275,
+          0.06036465410325195,
+          0.03014689683372738,
+          -0.015204589431724468,
+          -0.036474698720540336,
+          0.04131133548176948,
+          -0.05919993573251622,
+          0.018295725815335107,
+          0.009449141363519601,
+          0.03483551068177923,
+          0.0021601783835702285,
+          0.031191848056868875,
+          -0.039138817574005134,
+          -0.07062785409843672,
+          -0.014997836428538993,
+          0.03241854261949747,
+          0.015760204974509504,
+          -0.006246272351501666,
+          -0.034871816646589164,
+          -0.26426305263946614,
+          -0.00715707199211462,
+          0.007921339324197842,
+          0.004839387440575416,
+          -0.0016293199557552407,
+          0.04159208659682877,
+          0.00332071001683403,
+          -0.06686199892401008,
+          0.03257396684514256,
+          0.01300763901917854,
+          -0.023289189665356837,
+          -0.026874771087018075,
+          -0.02109424096003682,
+          -0.01413804812806218,
+          -0.014594494090607596,
+          -0.029706506231223107,
+          -0.017527780846651082,
+          -0.0393087641855742,
+          -0.008889151423210211,
+          -0.04740745310189826,
+          -0.019105701631495164,
+          0.026002413733251902,
+          -0.020372502066484204,
+          -0.02315340719186598,
+          -0.010109827519446234,
+          0.004607413259961354,
+          0.0001985026499169121,
+          -0.003593329863523797,
+          -0.00886965863143537,
+          -0.0387035029674079,
+          0.0018841214387646395,
+          0.009498566183870273,
+          0.030946937509689507,
+          -0.016435238200168907,
+          0.011902353004069421,
+          0.027196540519314947,
+          -0.013543752929315155,
+          -0.03052711778511016,
+          0.0010194793318828671,
+          0.030688954146235584,
+          0.014659546239270942,
+          -0.013903187819246224,
+          0.042285693163410576,
+          -0.007918494064185147,
+          -0.0371075718217987,
+          0.0012158184532255485,
+          -0.007819640920496158,
+          0.00003389000427362091,
+          -0.03726546982395715,
+          -0.043963300636194295,
+          0.006422909836282269,
+          -0.0012849070445099416,
+          -0.019286495828139304,
+          0.04021747421065224,
+          -0.03174678468728646,
+          -0.02717675197529748,
+          0.07441681064233971,
+          0.03898718491546378,
+          0.014747392828969332,
+          -0.03118626996606601,
+          0.0426192659959829,
+          0.03289965962360222,
+          -0.19821705633845546,
+          0.031863804491713124,
+          -0.020736831130582625,
+          -0.010851348284658899,
+          -0.005861482503375741,
+          0.05036671534537663,
+          0.015293742135387764,
+          -0.001398948141775518,
+          -0.005904124705600354,
+          0.0010498979421235287,
+          -0.039357282232551534,
+          -0.03285299315580885,
+          -0.024722929146808015,
+          -0.04458511930929758,
+          -0.0006228400775770876,
+          -0.018114444536599328,
+          -0.0374979764586933,
+          0.04088758573866994,
+          0.04599693175617828,
+          0.030873558258966375,
+          -0.02559392700774992,
+          0.006633809542795151,
+          0.03490044940036644,
+          -0.03566248933273403,
+          -0.012358202624670453,
+          -0.027459579861603644,
+          0.003594341726526494,
+          0.0784863181305794,
+          0.018537623793139488,
+          -0.025053109085632422,
+          0.03178749273990404,
+          -0.006495914100518412,
+          0.02375919385817908,
+          -0.010037767727402851,
+          -0.027190031634652032,
+          -0.046423198646114404,
+          0.00633558352365368,
+          0.024512523027935256,
+          -0.0081640906965162,
+          0.0024216725746894555,
+          -0.01953738147138802,
+          -0.035192770383191484,
+          0.02343179295621998,
+          0.0166026785074822,
+          0.017660405626993066,
+          -0.05032906990481469,
+          -0.058726228381326046,
+          -0.03717136956726714,
+          0.03914912803430792,
+          0.02628597391078488,
+          0.031587482153891164,
+          -0.0014253283076879075,
+          0.026976115855776514,
+          0.026029993922646225,
+          0.039901908402666324,
+          -0.04007199846991992,
+          0.019592600233304083,
+          0.031411452020444694,
+          0.002639581425862795,
+          -0.001215257307966552,
+          0.01229664929342906,
+          -0.01779274516405536,
+          0.027213987065878104,
+          0.019680084013567776,
+          0.025529748937908554,
+          0.011913281157860337,
+          0.02549270400951439,
+          -0.03156757851170821,
+          -0.0013284190886095736,
+          0.034305527000021964,
+          -0.02095831836704015,
+          -0.037660775307376514,
+          0.0006334281579912161,
+          0.005960275762656888,
+          0.012343192322610164,
+          -0.0020792483595730975,
+          0.017517321926395706,
+          -0.0016902282368430838,
+          0.006152127390016951,
+          0.047659014321335715,
+          -0.01413624325538015,
+          0.04913948866224382,
+          -0.017427138343511065,
+          0.06731587936512763,
+          -0.026655824350648102,
+          -0.0015501747873678789,
+          0.02047326300396842,
+          0.01909160627644605,
+          -0.01717800919835309,
+          0.02401042145974555,
+          0.046577181642556836,
+          -0.009798906005842305,
+          -0.009358198633169536,
+          0.0074810137771784135,
+          -0.010886566154782614,
+          -0.007507701538767851,
+          0.05522985471027681,
+          0.008705201201506555,
+          0.04064689378946917,
+          -0.03032373599051099,
+          -0.02883784035919939,
+          -0.016792335262869055,
+          0.05623035302019894,
+          -0.06030187222420066,
+          -0.03971545437884093,
+          0.0613887909074227,
+          0.0037500903955511194,
+          -0.005581373936335976,
+          0.02743551934074821,
+          -0.027736008957144318,
+          -0.04762125545069765,
+          0.012677357326903485,
+          0.0018535343514991304,
+          -0.030421654503734418,
+          0.016822075627978002,
+          -0.0043260332752152655,
+          0.05500995049061711,
+          0.03329325364734344,
+          -0.006750442350491474,
+          0.04345371768724776,
+          0.03604364775033429,
+          0.029211026977772458,
+          -0.007267430948938136,
+          -0.02192854585943845,
+          -0.008677602663129327,
+          -0.013901082690480312,
+          -0.05626487079322038,
+          0.021211737838018992,
+          0.0121206563583752,
+          0.0021367118693340855,
+          0.0026179483086366494,
+          0.01299033926447862,
+          -0.047103362080584875,
+          0.022808831641908577,
+          0.06182130979626108,
+          -0.036539610749697866,
+          -0.021044757089322984,
+          0.011452937037301396,
+          -0.035054894457560194,
+          -0.017084407700380208,
+          -0.007278967454916794,
+          0.0010429634277808108,
+          -0.01638797705852051,
+          -0.0071578751771390154,
+          0.006132041759285369,
+          0.02670464598988803,
+          -0.033860712624548435,
+          0.0274635115482132,
+          0.005513810145530919,
+          0.005649649667677714,
+          0.003135694052841511,
+          -0.004165611120244947,
+          0.0098143571839191,
+          -0.0022000098552317935,
+          -0.058991874947276486,
+          -0.025544249638670913,
+          0.002256150570134327,
+          0.01755058696431161,
+          -0.03305844504929749,
+          0.018651158958903714,
+          0.008888607626080507,
+          -0.1145679632883295,
+          0.0023619733247660616,
+          -0.021901092444835103,
+          -0.0031471589977868433,
+          -0.038682151423664865,
+          0.032784998497523414,
+          0.008275147081499009,
+          -0.0048982773335438014,
+          -0.023139016585001046,
+          0.04107112227421357,
+          -0.07081880028689493,
+          -0.019262792278405824,
+          0.01442539653652019,
+          -0.0000329522728299459,
+          0.01804558080375998,
+          0.017717574385365042,
+          -0.01686887721100912,
+          -0.014629712461158116,
+          -0.00677732110831205,
+          -0.07442091914642088,
+          0.01549712226189758,
+          0.004822432980371965,
+          -0.031600248041724406,
+          0.019887893751359596,
+          -0.041664500023815394,
+          0.015897326923752363,
+          0.07361297839927385,
+          0.04380392303877804,
+          -0.003274772170470892,
+          -0.06988998311273263,
+          -0.004811035426236571,
+          0.010479589550573645,
+          0.007947259764684012,
+          -0.018593896787527864,
+          0.042296477361090164,
+          0.005391880653705905,
+          -0.04211688418878157,
+          -0.010614489604795746,
+          0.07337284526000698,
+          0.026575564231335908,
+          0.02291398465866431,
+          0.003946352784783474,
+          0.043055754937486,
+          -0.032194411461412394,
+          0.009863623702589988,
+          0.014831689724520446,
+          0.0009094309732972379,
+          0.06419617861940326,
+          0.01800206702484742,
+          0.018257960272339613,
+          -0.031163992632730994,
+          0.0026044211048218244,
+          -0.032836327275063804,
+          -0.013405051299453179,
+          0.0796494201227302,
+          0.02055536803010716,
+          0.02787762974337741,
+          0.01931699016963668,
+          0.027693405955019543,
+          -0.007347632685122907,
+          -0.0006982814537225623,
+          0.02754077244286524,
+          0.013713387608174848,
+          -0.04878600885130983,
+          -0.01786588754609009,
+          -0.04383567678773838,
+          -0.01861450603150796,
+          -0.005163285021271306,
+          0.06071849922575467,
+          0.029571669564396493,
+          0.0168932246432336,
+          -0.016770575037234062,
+          0.001386952243988514,
+          -0.04762939239057097,
+          -0.0025555205649554057,
+          -0.01725163199012204,
+          -0.0006585283822606784,
+          -0.010172686797843599,
+          0.025538860041965154,
+          0.01665868460757379,
+          -0.014180649462097596,
+          -0.014082422352343511,
+          0.0041751987974302475,
+          0.026774520584876466,
+          0.04782469896460295,
+          -0.005945587235033165,
+          -0.005452456317776376,
+          -0.013038663813090783,
+          -0.0639080178514294,
+          0.03543519214105331,
+          0.006227346209680692,
+          0.040113310370883976,
+          0.0014318038305637245,
+          -0.033449613671116644,
+          -0.05609492584974068,
+          -0.014977979492857972,
+          -0.01108358235359446,
+          0.053706315306492634,
+          0.01914585421035755,
+          -0.0162081920559361,
+          0.011174603984571013,
+          -0.030188021908683686,
+          -0.01985839859538582,
+          0.024896357060860807,
+          0.014545327990915874,
+          -0.052800476063194414,
+          0.019486479724722495,
+          0.03056632789348702,
+          -0.02563280850252386,
+          -0.01764663388127881,
+          0.026230142960075555,
+          0.0005836203109628666,
+          -0.03667372179765509,
+          -0.07801625221845102,
+          -0.033347129597328794,
+          -0.00779104653277404,
+          -0.003538679753268824,
+          0.03341321429330283,
+          -0.007306127953029417,
+          -0.007454220925959616,
+          0.010672768643442358,
+          -0.01604774771537736,
+          -0.03565125641901797,
+          0.0025364332857027464,
+          -0.006545929591309663,
+          0.03128287569296711,
+          -0.04373822533953434,
+          0.02718855871175163,
+          -0.0006433013286696112,
+          -0.021314417078261372,
+          0.04932267823520163,
+          -0.004172701167239119,
+          -0.03748815975283957,
+          -0.03468969965508657,
+          -0.032866259470448564,
+          0.038285087774065404,
+          0.025260726159103745,
+          0.015615364775821405,
+          0.018715010083231513,
+          -0.004674360691749766,
+          -0.004412065150504433,
+          0.019855941499766015,
+          0.0509150763675571,
+          0.0050308345562669115,
+          -0.026124316035220432,
+          -0.01266861253526923,
+          -0.04036873488526744,
+          -0.026940477126708554,
+          0.014339493270920285,
+          0.005475324655169843,
+          -0.04399183830887835,
+          -0.05957446015875194,
+          -0.023834177810861647,
+          -0.07752043934712938,
+          -0.029095425049297477,
+          -0.054375282525212856,
+          0.006871252053932527,
+          0.030483669061682445,
+          -0.009634148153020668,
+          0.03853205841159811,
+          -0.06179727262865662,
+          -0.04863819611739125,
+          -0.019845460894349028,
+          -0.013955375662804394,
+          0.0640445426246832,
+          -0.0679127184001409,
+          0.0006422855122951428,
+          -0.012439767523476069,
+          -0.015457226568795852,
+          0.03789803933295291,
+          -0.019535046146291122,
+          -0.010035064254985324,
+          -0.05369878888732322,
+          0.012409477189306801,
+          0.006081677971436811,
+          0.04230926993835308,
+          0.018876781388872093,
+          -0.011480183608824733,
+          -0.01645947303636193,
+          0.010816299225177902,
+          0.009555173630174314,
+          0.018033355376877738,
+          -0.014416335475144237,
+          0.03258991878364371,
+          0.01013736650703349,
+          0.01967232406188867,
+          -0.007672366145394549,
+          0.043584889561761604,
+          -0.02157084244625779,
+          -0.009688763400208121,
+          0.013152257361982432,
+          -0.03794561657753407,
+          -0.029189341816158437,
+          0.015878364083965583,
+          0.03380084156142149,
+          -0.012586771067248566,
+          0.017717072290469208,
+          0.0038745835739057177,
+          -0.01561439728399555,
+          0.02215717919069247,
+          0.030820452966262995,
+          -0.010628061179787414,
+          0.03191055770015295,
+          -0.03491415275441715,
+          0.017919880262330285,
+          -0.06121630546385543,
+          -0.02319607358138624,
+          -0.02021003183140391,
+          0.01949596614888395,
+          -0.011855341241779583,
+          0.0182939459639934,
+          0.02956551931894489,
+          0.002137055328932265,
+          0.021652905770162656,
+          0.03815707526078979,
+          0.029991025560135165,
+          -0.028593063259168404,
+          -0.01912208894131794,
+          0.0159831734743142,
+          -0.0032098704834673595,
+          0.020078262780901003,
+          -0.005010917068942306,
+          0.01621185351207016,
+          0.016730919548999443,
+          -0.041294079097392786,
+          -0.009187262344186192,
+          -0.014557440821766658,
+          0.04896778722067337,
+          -0.028265834170412864,
+          0.021719587642125764,
+          -0.011020604307235027,
+          -0.014665148517369457,
+          -0.0035884328536045446,
+          -0.039710016407543874,
+          -0.0002043776773058498,
+          -0.011305323806869674,
+          -0.010578822017781942,
+          0.021953075947447293,
+          -0.006951583901086984,
+          0.022519915229456938,
+          -0.029787563697246954,
+          0.009351894423070469,
+          0.03171392332699445,
+          0.029130568355827027,
+          -0.05892729153172187,
+          -0.029730746905728873,
+          0.017706795191953516,
+          0.024059693483111315,
+          -0.005767683336814302,
+          0.015425793092991654,
+          -0.0046945417371924494,
+          0.0037102344029760364,
+          -0.02319920291701608,
+          0.018724114514930692,
+          -0.026551822315547268,
+          -0.024769765759715585,
+          -0.017989119315274495,
+          -0.017820885831472934,
+          -0.005446872221851831,
+          -0.03996033323232256,
+          -0.006307881063309642,
+          -0.004125863053051129,
+          -0.016345285647659923,
+          0.019895366791669658,
+          0.019321649143204982,
+          -0.0032961195439905385,
+          -0.025484907359869476,
+          0.026289637035008293,
+          0.04711548408592711,
+          -0.1982328865064337,
+          0.055669920035356875,
+          0.002419046001191191,
+          -0.06450370924096649,
+          -0.03786763340019135,
+          0.018262192215033057,
+          -0.026624235742533895,
+          0.016316754647333294,
+          -0.0044695186517292925,
+          0.02452562420172883,
+          0.04101887771561734,
+          -0.023124108870436085,
+          -0.012106495947841245,
+          -0.024482700926447915,
+          0.021304592031960865,
+          0.009365055147654016,
+          -0.028212929048432075,
+          -0.04350419407112778,
+          -0.0389251019658522,
+          0.01838103690921401,
+          0.015219927513343,
+          -0.030234941926059,
+          0.04491857704370441,
+          -0.0020241001578367437,
+          -0.010384979692585714,
+          0.006373624468201669,
+          0.03666510778422626,
+          0.03642908314904057,
+          0.0050396982826721734,
+          0.007370249307832715,
+          -0.025016399443198598,
+          0.007671198649655036,
+          0.031188995624071958,
+          0.0060688538672850866,
+          0.00923555753442571,
+          -0.0016004444949768196,
+          0.030660716729635423,
+          0.014506083686707244,
+          0.001855352235278127,
+          0.07698721123157679,
+          -0.03314333912083766,
+          -0.055287950926330126,
+          -0.02631980609908146,
+          -0.004258836630877227,
+          0.05025805100052878,
+          -0.027070002597029085,
+          0.03278326034841558,
+          -0.017563926674882942,
+          -0.029727861111144848,
+          0.027463579939876748,
+          -0.050157852209157174,
+          -0.00947636157923113,
+          -0.0027860350005749746,
+          -0.04655764664812132,
+          -0.02191518613179486,
+          -0.05170539041449066,
+          0.02425864650047316,
+          0.03333397838085456,
+          -0.019036922971212913,
+          0.013341789010667668,
+          0.0007123973596325271,
+          0.01545084445892391,
+          -0.0074396251441040265,
+          0.01950866197696428,
+          -0.002350568431037507,
+          -0.0246659839124096,
+          0.008109282951817186,
+          0.019009668059242802,
+          -0.06314141402658674,
+          0.004929911313688461,
+          -0.02307791113575145,
+          0.01699734511267863,
+          -0.02132072746029105,
+          0.0032444441374822027,
+          0.010360118488839918,
+          -0.02135879325937043,
+          -0.0869059257536293,
+          0.04691039249973914,
+          0.022669499474270438,
+          0.013685490481803092,
+          -0.013252215948486929,
+          -0.002220747542092215,
+          -0.11873223159664374,
+          0.023293071309285745,
+          0.05042023432424003,
+          0.03150813614754547,
+          0.03798776752744366,
+          -0.02559394702482218,
+          0.006363599084369637,
+          0.01221654597451623,
+          -0.04118965670377451,
+          0.06120791664248952,
+          -0.015361935296306433,
+          -0.0420909487354912,
+          0.013581440072110963,
+          -0.014450417876844056,
+          0.024543709626514924,
+          0.010205462418342769,
+          -0.021728561962855258,
+          -0.008905895704154943,
+          -0.021859266772349725,
+          0.005759384258655682,
+          -0.03705173419873195,
+          0.020961988163620982,
+          0.05216057029721569,
+          -0.00002639440138694433,
+          0.014575696391666953,
+          0.007467196159006896,
+          0.0012122142125563632,
+          0.017711222301101486,
+          -0.0014449565483183689,
+          0.011581238296844352,
+          -0.04881384425837545,
+          -0.2528551396691792,
+          0.03825308214361247,
+          0.019457346544138734,
+          -0.018519925365083737,
+          -0.0386684464015248,
+          0.044703953994942404,
+          -0.013526976954672677,
+          0.02984052553426581,
+          -0.038854410007079856,
+          -0.0051273673876632,
+          -0.021973285684026882,
+          0.015427744757536917,
+          -0.0529106933992317,
+          -0.006097194538616319,
+          0.049475193313011735,
+          0.20593582289139126,
+          0.040859311624103965,
+          0.008424909645064553,
+          0.007712053327326913,
+          0.02040086959405405,
+          -0.008028702892966718,
+          0.0026508728895152144,
+          0.051106431237907264,
+          -0.01956142864752861,
+          0.020936661562945165,
+          0.03647794315433566,
+          0.01445574408615433,
+          0.02218998300190174,
+          0.01824687581857614,
+          0.021538433138180962,
+          0.0159283333686817,
+          -0.007570209183929196,
+          -0.00018604479146395507,
+          0.0018190567794311306,
+          0.024277836200412215,
+          -0.01849520594893311,
+          0.015846401823835874,
+          -0.03954084879370356,
+          0.042643213086762194,
+          0.03894262357643633,
+          0.028933838901575297,
+          0.037406853741501836,
+          -0.0010578570636716157,
+          0.03597190155908963,
+          -0.007369890001385665,
+          -0.00730523452437092,
+          -0.017328555930724382,
+          0.01819618425116934,
+          0.010702777404128514,
+          0.04018004061743838,
+          -0.016629883376771664,
+          -0.11723298624622468,
+          0.05282450655844146,
+          0.02551417231951227,
+          0.002621760059621588,
+          0.013126655526563051,
+          -0.007964783710593237,
+          -0.037084241924080726,
+          0.052950752565090214,
+          0.025995155876468626,
+          -0.0006472540332050404,
+          -0.016076023498032686,
+          -0.03406451310957569,
+          0.015866312138376252,
+          0.010934285687385746,
+          -0.016544230324575,
+          0.02486821806153259,
+          0.036626658324595246,
+          0.015386893249234816,
+          -0.018209483927596155,
+          0.007630809869339991,
+          -0.00002530454519836826,
+          -0.005423503124034015,
+          0.017998850948571125,
+          -0.004626685196705603,
+          0.0470316942895399,
+          0.009608215869100075,
+          0.0025447900797530474,
+          0.016535604634520685,
+          0.005451141196128953,
+          -0.0017599612110452843,
+          0.04150660535783565,
+          -0.006276863775799497,
+          -0.011003081028561543,
+          0.0011248446964134812,
+          0.00541256863150355,
+          -0.023497448953229808,
+          -0.01197829944430978,
+          0.023581120315272822,
+          0.022771368023086325,
+          0.014584123579088032,
+          0.023698038366248838,
+          0.00801085834028348,
+          -0.04639492119536972,
+          -0.008014789026039422,
+          -0.04752299497915646,
+          0.013246546112769542,
+          0.03439382397384619,
+          -0.046294510556650036,
+          -0.03721479994171196,
+          0.004813924723808236,
+          -0.03184378575136468,
+          -0.016811169659775506,
+          -0.052072586924190194,
+          -0.017918622522956673,
+          -0.018080562305622102,
+          0.047305667957550125,
+          -0.056326535052403884,
+          -0.001068655690324123,
+          -0.016762758370516887
+        ],
+        "model": "gemini-embedding-001",
+        "dims": 768,
+        "task_type": "RETRIEVAL_QUERY",
+        "template_version": "mr1-aspect1",
+        "text_sha256": "40d42146ea126ff752ebe23b7d80b0e227c8e090c99b21492925e5bf86c73f40"
+      }
+    },
+    "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+    "exclusions": {
+      "1": "The issue is a zoning variance request, not a building maintenance or security issue.",
+      "2": "The issue is a zoning variance request, not an elevator maintenance issue.",
+      "3": "The issue is a zoning variance request, not a building heating issue.",
+      "4": "The issue is a zoning variance request, not a building water leak issue.",
+      "5": "The issue is a zoning variance request, not a building mold issue.",
+      "6": "The issue is a zoning variance request, not a building lighting issue.",
+      "7": "The issue is a zoning variance request, not a building waste issue.",
+      "8": "The issue is a zoning variance request, not a building parking issue.",
+      "9": "The issue is a zoning variance request, not a building noise issue.",
+      "10": "The issue is a zoning variance request, not a building renovation issue.",
+      "11": "The issue is a zoning variance request, not a tenancy policy issue.",
+      "12": "The issue is a zoning variance request, not a pet policy issue.",
+      "13": "The issue is a zoning variance request, not a building safety issue.",
+      "14": "The issue is a zoning variance request, not a building laundry issue.",
+      "15": "The issue is a zoning variance request, not a storage policy issue.",
+      "16": "The issue is a zoning variance request, not a building moving policy issue.",
+      "17": "The issue is a zoning variance request, not a building security issue.",
+      "18": "The issue is a zoning variance request, not a building safety issue.",
+      "19": "The issue is a zoning variance request, not a building health issue.",
+      "20": "The issue is a zoning variance request, not a building safety issue.",
+      "21": "The issue is a zoning variance request, not a street maintenance issue.",
+      "22": "The issue is a zoning variance request, not a street safety issue.",
+      "23": "The issue is a zoning variance request, not a street infrastructure issue.",
+      "24": "The issue is a zoning variance request, not a transit issue.",
+      "25": "The issue is a zoning variance request, not a street maintenance issue.",
+      "26": "The issue is a zoning variance request, not a street lighting issue.",
+      "27": "The issue is a zoning variance request, not a street noise issue.",
+      "28": "The issue is a zoning variance request, not a street cleanliness issue.",
+      "29": "The issue is a zoning variance request, not a neighborhood utility issue.",
+      "30": "The issue is a zoning variance request, not a neighborhood utility issue.",
+      "31": "The issue is a zoning variance request, not a neighborhood utility issue.",
+      "32": "The issue is a zoning variance request, not a public playground issue.",
+      "33": "The issue is a zoning variance request, not a street traffic issue.",
+      "34": "The issue is a zoning variance request, not a street parking issue.",
+      "35": "The issue is a zoning variance request, not a public sanitation issue.",
+      "36": "The issue is a zoning variance request, not a neighborhood safety issue.",
+      "37": "The issue is a zoning variance request, not a street transport issue.",
+      "38": "The issue is a zoning variance request, not a city-wide transport issue.",
+      "39": "The issue is a zoning variance request, not a pedestrian zone design issue.",
+      "40": "The issue is a zoning variance request, not a waste collection issue.",
+      "41": "The issue is a zoning variance request, not a health access issue.",
+      "42": "The issue is a zoning variance request, not a health access issue.",
+      "43": "The issue is a zoning variance request, not a health access issue.",
+      "44": "The issue is a zoning variance request, not a health access issue.",
+      "45": "The issue is a zoning variance request, not a health access issue.",
+      "46": "The issue is a zoning variance request, not a health support issue.",
+      "47": "The issue is a zoning variance request, not a disability access issue.",
+      "48": "The issue is a zoning variance request, not a social service issue.",
+      "49": "The issue is a zoning variance request, not a social service issue.",
+      "50": "The issue is a zoning variance request, not a social service issue.",
+      "51": "The issue is a zoning variance request, not a family emergency issue.",
+      "52": "The issue is a zoning variance request, not a social service issue.",
+      "53": "The issue is a zoning variance request, not a health support issue.",
+      "54": "The issue is a zoning variance request, not a health safety issue.",
+      "55": "The issue is a zoning variance request, not a health safety issue.",
+      "56": "The issue is a zoning variance request, not a school safety issue.",
+      "57": "The issue is a zoning variance request, not a school schedule issue.",
+      "58": "The issue is a zoning variance request, not a school policy issue.",
+      "59": "The issue is a zoning variance request, not a school cafeteria issue.",
+      "60": "The issue is a zoning variance request, not a school transport issue.",
+      "61": "The issue is a zoning variance request, not a school program issue.",
+      "62": "The issue is a zoning variance request, not a school communication issue.",
+      "63": "The issue is a zoning variance request, not a youth club issue.",
+      "64": "The issue is a zoning variance request, not a school scholarship issue.",
+      "65": "The issue is a zoning variance request, not a university curriculum issue.",
+      "66": "The issue is a zoning variance request, not a university exam issue.",
+      "67": "The issue is a zoning variance request, not a vocational training issue.",
+      "68": "The issue is a zoning variance request, not an internship issue.",
+      "69": "The issue is a zoning variance request, not a youth sports issue.",
+      "70": "The issue is a zoning variance request, not a library issue.",
+      "71": "The issue is a zoning variance request, not a community event issue.",
+      "72": "The issue is a zoning variance request, not a sports league issue.",
+      "73": "The issue is a zoning variance request, not a cultural workshop issue.",
+      "74": "The issue is a zoning variance request, not a neighborhood watch issue.",
+      "75": "The issue is a zoning variance request, not a public art issue.",
+      "76": "The issue is a zoning variance request, not a street market issue.",
+      "77": "The issue is a zoning variance request, not a religious facility issue.",
+      "78": "The issue is a zoning variance request, not a religious visibility issue.",
+      "79": "The issue is a zoning variance request, not a charity issue.",
+      "80": "The issue is a zoning variance request, not a global digital issue.",
+      "81": "The issue is a zoning variance request, not a volunteer issue.",
+      "82": "The issue is a zoning variance request, not a community group issue.",
+      "83": "The issue is a zoning variance request, not a support group issue.",
+      "84": "The issue is a zoning variance request, not a heritage preservation issue.",
+      "85": "The issue is a zoning variance request, not a city festival issue.",
+      "86": "The issue is a zoning variance request, not a work schedule issue.",
+      "87": "The issue is a zoning variance request, not a remote work policy issue.",
+      "88": "The issue is a zoning variance request, not a gig platform issue.",
+      "89": "The issue is a zoning variance request, not a global digital issue.",
+      "90": "The issue is a zoning variance request, not a global digital issue.",
+      "91": "The issue is a zoning variance request, not a global digital issue.",
+      "92": "The issue is a zoning variance request, not a local forum issue.",
+      "93": "The issue is a zoning variance request, not a global digital issue.",
+      "94": "The issue is a zoning variance request, not a neighborhood app issue.",
+      "95": "The issue is a zoning variance request, not an election issue.",
+      "96": "The issue is a zoning variance request, not a policy debate issue.",
+      "97": "The issue is a zoning variance request, not a city budget issue.",
+      "99": "The issue is a zoning variance request, not a digital privacy issue.",
+      "100": "The issue is a zoning variance request, not a digital fraud issue."
+    },
+    "raw_chain": {
+      "ranked": [
+        {
+          "id": "98",
+          "score": 0.6472981539133847
+        },
+        {
+          "id": "77",
+          "score": 0.6209464528720955
+        },
+        {
+          "id": "39",
+          "score": 0.6069621430986659
+        },
+        {
+          "id": "87",
+          "score": 0.5969995758976991
+        },
+        {
+          "id": "47",
+          "score": 0.5960085960605433
+        },
+        {
+          "id": "67",
+          "score": 0.5914663487451887
+        },
+        {
+          "id": "86",
+          "score": 0.5913677882434396
+        },
+        {
+          "id": "10",
+          "score": 0.5900894228022309
+        },
+        {
+          "id": "58",
+          "score": 0.5872874291219627
+        },
+        {
+          "id": "60",
+          "score": 0.5851141897152511
+        },
+        {
+          "id": "23",
+          "score": 0.5831018972042639
+        },
+        {
+          "id": "33",
+          "score": 0.5796297900437752
+        },
+        {
+          "id": "78",
+          "score": 0.5789568368757431
+        },
+        {
+          "id": "11",
+          "score": 0.578226805736592
+        },
+        {
+          "id": "24",
+          "score": 0.5780364213040555
+        },
+        {
+          "id": "51",
+          "score": 0.5732513729756701
+        },
+        {
+          "id": "65",
+          "score": 0.5688036226304455
+        },
+        {
+          "id": "75",
+          "score": 0.5685063288380413
+        },
+        {
+          "id": "40",
+          "score": 0.5683684279689861
+        },
+        {
+          "id": "84",
+          "score": 0.5679502879344285
+        },
+        {
+          "id": "82",
+          "score": 0.5677498037286507
+        },
+        {
+          "id": "12",
+          "score": 0.56720544737055
+        },
+        {
+          "id": "96",
+          "score": 0.5647874356896749
+        },
+        {
+          "id": "70",
+          "score": 0.564611876030751
+        },
+        {
+          "id": "34",
+          "score": 0.5645739255991115
+        },
+        {
+          "id": "64",
+          "score": 0.5622213492047848
+        },
+        {
+          "id": "90",
+          "score": 0.5616365147069087
+        },
+        {
+          "id": "54",
+          "score": 0.5616181272490532
+        },
+        {
+          "id": "94",
+          "score": 0.5596507815460249
+        },
+        {
+          "id": "50",
+          "score": 0.5582061104960451
+        },
+        {
+          "id": "8",
+          "score": 0.5581394333940913
+        },
+        {
+          "id": "15",
+          "score": 0.5578270897981044
+        },
+        {
+          "id": "57",
+          "score": 0.5561581297073104
+        },
+        {
+          "id": "55",
+          "score": 0.5558724981455857
+        },
+        {
+          "id": "35",
+          "score": 0.5555922785767711
+        },
+        {
+          "id": "30",
+          "score": 0.5555309008066627
+        },
+        {
+          "id": "88",
+          "score": 0.5548879529526312
+        },
+        {
+          "id": "4",
+          "score": 0.5546988966628766
+        },
+        {
+          "id": "92",
+          "score": 0.554465300526371
+        },
+        {
+          "id": "56",
+          "score": 0.5538526013201351
+        },
+        {
+          "id": "72",
+          "score": 0.5525565483699313
+        },
+        {
+          "id": "73",
+          "score": 0.5520101512233886
+        },
+        {
+          "id": "74",
+          "score": 0.5514083924217401
+        },
+        {
+          "id": "83",
+          "score": 0.551246876260363
+        },
+        {
+          "id": "52",
+          "score": 0.551003855826736
+        },
+        {
+          "id": "49",
+          "score": 0.5502489396559236
+        },
+        {
+          "id": "27",
+          "score": 0.5500795462164285
+        },
+        {
+          "id": "76",
+          "score": 0.5485670090370458
+        },
+        {
+          "id": "63",
+          "score": 0.5485398109252912
+        },
+        {
+          "id": "29",
+          "score": 0.5484494802301336
+        },
+        {
+          "id": "20",
+          "score": 0.5479174510294896
+        },
+        {
+          "id": "81",
+          "score": 0.5476569835513125
+        },
+        {
+          "id": "99",
+          "score": 0.5466779057328546
+        },
+        {
+          "id": "71",
+          "score": 0.5465897846899755
+        },
+        {
+          "id": "62",
+          "score": 0.5458504400363949
+        },
+        {
+          "id": "13",
+          "score": 0.5450378462376878
+        },
+        {
+          "id": "79",
+          "score": 0.5450350028238765
+        },
+        {
+          "id": "43",
+          "score": 0.5444736218634427
+        },
+        {
+          "id": "36",
+          "score": 0.5440472997485023
+        },
+        {
+          "id": "9",
+          "score": 0.5438588693048287
+        },
+        {
+          "id": "100",
+          "score": 0.5435168258441319
+        },
+        {
+          "id": "95",
+          "score": 0.5414760752186693
+        },
+        {
+          "id": "93",
+          "score": 0.5411710504946071
+        },
+        {
+          "id": "68",
+          "score": 0.5397016523876649
+        },
+        {
+          "id": "1",
+          "score": 0.5396520084748109
+        },
+        {
+          "id": "69",
+          "score": 0.5389551589173986
+        },
+        {
+          "id": "14",
+          "score": 0.5380140062996884
+        },
+        {
+          "id": "61",
+          "score": 0.5379220513604388
+        },
+        {
+          "id": "7",
+          "score": 0.5378060830473763
+        },
+        {
+          "id": "89",
+          "score": 0.5370508211720224
+        },
+        {
+          "id": "53",
+          "score": 0.5364135288699428
+        },
+        {
+          "id": "31",
+          "score": 0.5360694104215861
+        },
+        {
+          "id": "3",
+          "score": 0.5353693879652446
+        },
+        {
+          "id": "38",
+          "score": 0.5353098761472111
+        },
+        {
+          "id": "42",
+          "score": 0.5352328904327204
+        },
+        {
+          "id": "66",
+          "score": 0.5351350756585542
+        },
+        {
+          "id": "46",
+          "score": 0.5348119086841889
+        },
+        {
+          "id": "2",
+          "score": 0.5346612443429922
+        },
+        {
+          "id": "19",
+          "score": 0.5326150512842452
+        },
+        {
+          "id": "59",
+          "score": 0.5325097274274406
+        },
+        {
+          "id": "21",
+          "score": 0.5312820137636262
+        },
+        {
+          "id": "26",
+          "score": 0.5308625550838538
+        },
+        {
+          "id": "25",
+          "score": 0.5308052814682587
+        },
+        {
+          "id": "48",
+          "score": 0.5304073720787531
+        },
+        {
+          "id": "97",
+          "score": 0.5280455200118542
+        },
+        {
+          "id": "6",
+          "score": 0.5269890564886962
+        },
+        {
+          "id": "18",
+          "score": 0.5250549307419995
+        },
+        {
+          "id": "22",
+          "score": 0.524902171138279
+        },
+        {
+          "id": "5",
+          "score": 0.5245840892767372
+        },
+        {
+          "id": "17",
+          "score": 0.5243166820578735
+        },
+        {
+          "id": "44",
+          "score": 0.5235251713937814
+        },
+        {
+          "id": "41",
+          "score": 0.522148268028487
+        },
+        {
+          "id": "16",
+          "score": 0.5172271930470752
+        },
+        {
+          "id": "85",
+          "score": 0.5122480595888674
+        },
+        {
+          "id": "28",
+          "score": 0.5120116995378676
+        },
+        {
+          "id": "32",
+          "score": 0.5114571588325165
+        },
+        {
+          "id": "80",
+          "score": 0.507942626083459
+        },
+        {
+          "id": "45",
+          "score": 0.5056164593668583
+        },
+        {
+          "id": "37",
+          "score": 0.5036944427343807
+        },
+        {
+          "id": "91",
+          "score": 0.5002310069617689
+        }
+      ],
+      "chain": [
+        {
+          "id": "98",
+          "score": 0.6472981539133847
+        },
+        {
+          "id": "77",
+          "score": 0.6209464528720955
+        },
+        {
+          "id": "39",
+          "score": 0.6069621430986659
+        },
+        {
+          "id": "87",
+          "score": 0.5969995758976991
+        },
+        {
+          "id": "47",
+          "score": 0.5960085960605433
+        },
+        {
+          "id": "67",
+          "score": 0.5914663487451887
+        },
+        {
+          "id": "86",
+          "score": 0.5913677882434396
+        },
+        {
+          "id": "10",
+          "score": 0.5900894228022309
+        },
+        {
+          "id": "58",
+          "score": 0.5872874291219627
+        },
+        {
+          "id": "60",
+          "score": 0.5851141897152511
+        },
+        {
+          "id": "23",
+          "score": 0.5831018972042639
+        },
+        {
+          "id": "33",
+          "score": 0.5796297900437752
+        },
+        {
+          "id": "78",
+          "score": 0.5789568368757431
+        },
+        {
+          "id": "11",
+          "score": 0.578226805736592
+        },
+        {
+          "id": "24",
+          "score": 0.5780364213040555
+        },
+        {
+          "id": "51",
+          "score": 0.5732513729756701
+        },
+        {
+          "id": "65",
+          "score": 0.5688036226304455
+        },
+        {
+          "id": "75",
+          "score": 0.5685063288380413
+        },
+        {
+          "id": "40",
+          "score": 0.5683684279689861
+        },
+        {
+          "id": "84",
+          "score": 0.5679502879344285
+        },
+        {
+          "id": "82",
+          "score": 0.5677498037286507
+        },
+        {
+          "id": "12",
+          "score": 0.56720544737055
+        },
+        {
+          "id": "96",
+          "score": 0.5647874356896749
+        },
+        {
+          "id": "70",
+          "score": 0.564611876030751
+        },
+        {
+          "id": "34",
+          "score": 0.5645739255991115
+        },
+        {
+          "id": "64",
+          "score": 0.5622213492047848
+        },
+        {
+          "id": "90",
+          "score": 0.5616365147069087
+        },
+        {
+          "id": "54",
+          "score": 0.5616181272490532
+        },
+        {
+          "id": "94",
+          "score": 0.5596507815460249
+        },
+        {
+          "id": "50",
+          "score": 0.5582061104960451
+        },
+        {
+          "id": "8",
+          "score": 0.5581394333940913
+        },
+        {
+          "id": "15",
+          "score": 0.5578270897981044
+        },
+        {
+          "id": "57",
+          "score": 0.5561581297073104
+        },
+        {
+          "id": "55",
+          "score": 0.5558724981455857
+        },
+        {
+          "id": "35",
+          "score": 0.5555922785767711
+        },
+        {
+          "id": "30",
+          "score": 0.5555309008066627
+        },
+        {
+          "id": "88",
+          "score": 0.5548879529526312
+        },
+        {
+          "id": "4",
+          "score": 0.5546988966628766
+        },
+        {
+          "id": "92",
+          "score": 0.554465300526371
+        },
+        {
+          "id": "56",
+          "score": 0.5538526013201351
+        },
+        {
+          "id": "72",
+          "score": 0.5525565483699313
+        },
+        {
+          "id": "73",
+          "score": 0.5520101512233886
+        },
+        {
+          "id": "74",
+          "score": 0.5514083924217401
+        },
+        {
+          "id": "83",
+          "score": 0.551246876260363
+        },
+        {
+          "id": "52",
+          "score": 0.551003855826736
+        },
+        {
+          "id": "49",
+          "score": 0.5502489396559236
+        },
+        {
+          "id": "27",
+          "score": 0.5500795462164285
+        },
+        {
+          "id": "76",
+          "score": 0.5485670090370458
+        },
+        {
+          "id": "63",
+          "score": 0.5485398109252912
+        },
+        {
+          "id": "29",
+          "score": 0.5484494802301336
+        },
+        {
+          "id": "20",
+          "score": 0.5479174510294896
+        },
+        {
+          "id": "81",
+          "score": 0.5476569835513125
+        },
+        {
+          "id": "99",
+          "score": 0.5466779057328546
+        },
+        {
+          "id": "71",
+          "score": 0.5465897846899755
+        },
+        {
+          "id": "62",
+          "score": 0.5458504400363949
+        },
+        {
+          "id": "13",
+          "score": 0.5450378462376878
+        },
+        {
+          "id": "79",
+          "score": 0.5450350028238765
+        },
+        {
+          "id": "43",
+          "score": 0.5444736218634427
+        },
+        {
+          "id": "36",
+          "score": 0.5440472997485023
+        },
+        {
+          "id": "9",
+          "score": 0.5438588693048287
+        },
+        {
+          "id": "100",
+          "score": 0.5435168258441319
+        },
+        {
+          "id": "95",
+          "score": 0.5414760752186693
+        },
+        {
+          "id": "93",
+          "score": 0.5411710504946071
+        },
+        {
+          "id": "68",
+          "score": 0.5397016523876649
+        },
+        {
+          "id": "1",
+          "score": 0.5396520084748109
+        },
+        {
+          "id": "69",
+          "score": 0.5389551589173986
+        },
+        {
+          "id": "14",
+          "score": 0.5380140062996884
+        },
+        {
+          "id": "61",
+          "score": 0.5379220513604388
+        },
+        {
+          "id": "7",
+          "score": 0.5378060830473763
+        },
+        {
+          "id": "89",
+          "score": 0.5370508211720224
+        },
+        {
+          "id": "53",
+          "score": 0.5364135288699428
+        },
+        {
+          "id": "31",
+          "score": 0.5360694104215861
+        },
+        {
+          "id": "3",
+          "score": 0.5353693879652446
+        },
+        {
+          "id": "38",
+          "score": 0.5353098761472111
+        },
+        {
+          "id": "42",
+          "score": 0.5352328904327204
+        },
+        {
+          "id": "66",
+          "score": 0.5351350756585542
+        },
+        {
+          "id": "46",
+          "score": 0.5348119086841889
+        },
+        {
+          "id": "2",
+          "score": 0.5346612443429922
+        },
+        {
+          "id": "19",
+          "score": 0.5326150512842452
+        },
+        {
+          "id": "59",
+          "score": 0.5325097274274406
+        },
+        {
+          "id": "21",
+          "score": 0.5312820137636262
+        },
+        {
+          "id": "26",
+          "score": 0.5308625550838538
+        },
+        {
+          "id": "25",
+          "score": 0.5308052814682587
+        },
+        {
+          "id": "48",
+          "score": 0.5304073720787531
+        },
+        {
+          "id": "97",
+          "score": 0.5280455200118542
+        },
+        {
+          "id": "6",
+          "score": 0.5269890564886962
+        },
+        {
+          "id": "18",
+          "score": 0.5250549307419995
+        },
+        {
+          "id": "22",
+          "score": 0.524902171138279
+        },
+        {
+          "id": "5",
+          "score": 0.5245840892767372
+        },
+        {
+          "id": "17",
+          "score": 0.5243166820578735
+        },
+        {
+          "id": "44",
+          "score": 0.5235251713937814
+        },
+        {
+          "id": "41",
+          "score": 0.522148268028487
+        },
+        {
+          "id": "16",
+          "score": 0.5172271930470752
+        },
+        {
+          "id": "85",
+          "score": 0.5122480595888674
+        },
+        {
+          "id": "28",
+          "score": 0.5120116995378676
+        },
+        {
+          "id": "32",
+          "score": 0.5114571588325165
+        },
+        {
+          "id": "80",
+          "score": 0.507942626083459
+        },
+        {
+          "id": "45",
+          "score": 0.5056164593668583
+        },
+        {
+          "id": "37",
+          "score": 0.5036944427343807
+        },
+        {
+          "id": "91",
+          "score": 0.5002310069617689
+        }
+      ],
+      "state": "context_review_required"
+    }
+  }
+}

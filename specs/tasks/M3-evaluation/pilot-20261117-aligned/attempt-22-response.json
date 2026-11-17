@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"result\": \"needs_clarification\",\n  \"message\": \"The input contains two distinct, unrelated decisions: a local building maintenance issue and a global digital software project roadmap. These require separate handling. Please confirm if you would like to proceed with the building entrance lock repair, or if you wish to submit the software roadmap decision separately.\",\n  \"questions\": [\n    \"Do you want to proceed with the building entrance lock repair as the primary issue?\",\n    \"Would you like to submit the open-source software roadmap as a separate, independent request?\"\n  ],\n  \"scope\": null,\n  \"location_reference\": null,\n  \"accepted\": [],\n  \"excluded\": {\n    \"1\": \"The input contains two unrelated decisions; the building lock repair is the only one relevant to this scope, but the request must be split.\",\n    \"90\": \"The input contains two unrelated decisions; the software roadmap is a global digital issue and must be submitted separately.\"\n  },\n  \"aspects\": []\n}",
+  "usage": {
+    "promptTokenCount": 6192,
+    "candidatesTokenCount": 222,
+    "totalTokenCount": 6414
+  },
+  "model_version": "gemini-3.1-flash-lite",
+  "request_sha256": "7aabafae869a72eda5b4d711ff26b6137471887c33cc7db79b15db939ed5687c"
+}
