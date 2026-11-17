@@ -7,7 +7,7 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current planning: [full-population capacity/memory plan](tasks/M3-capacity-memory-plan.md), proposing a bounded offline audit before any storage/publication redesign.
+Current checkpoint: [approved capacity/memory plan](tasks/M3-capacity-memory-plan.md), Phase A complete. [Offline capacity result](tasks/M3-capacity-audit/README.md): compact-only publication cannot cover the intended reference range; next decision is separate offline Phase C design approval. No application/deployment acceptance.
 
 Current M3 preparation: [one-case quotation retest](tasks/M3-one-case-retest.md), offline only; two-call/US$0.27 proposal needs fresh paid approval.
 

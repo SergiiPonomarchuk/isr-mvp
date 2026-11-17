@@ -41,7 +41,7 @@ def run_case(config,out,verify,timeout=120):
     verify();available=free_memory()
     if available<1024**3:return {'config':config,'status':'memory_prerequisite_refused','available_bytes':available}
     progress=out/(config['id']+'-progress.json');env=os.environ.copy();env.pop('GEMINI_API_KEY',None);env['NODE_PATH']='C:/isr-mvp/functions/node_modules' if os.name=='nt' else env.get('NODE_PATH','')
-    command=['node','--max-old-space-size=256',str(ROOT/'functions/tools/capacity/worker.js'),json.dumps(config),str(progress)]
+    command=['node','--max-old-space-size=256',str(ROOT/('functions/tools/capacity/admitted-worker.js' if config.get('admitted') else 'functions/tools/capacity/worker.js')),json.dumps(config),str(progress)]
     process=subprocess.Popen(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,env=env,creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0);start=time.monotonic();peak=0;stop=None
     try:
         while process.poll() is None:
@@ -72,14 +72,14 @@ def run_case(config,out,verify,timeout=120):
     return result
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',type=Path,required=True);parser.add_argument('--smoke',action='store_true');args=parser.parse_args();out=args.out.resolve()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',type=Path,required=True);parser.add_argument('--smoke',action='store_true');parser.add_argument('--receipts',action='store_true',help='Supplement: exact saved admitted receipts and two-aspect coverage');args=parser.parse_args();out=args.out.resolve()
     if not out.is_relative_to(ROOT.resolve()/'specs/tasks/M3-capacity-audit'):raise ValueError('Output must be a new directory inside specs/tasks/M3-capacity-audit')
-    files=list((ROOT/'functions/tools/capacity').glob('*.js'))+list((ROOT/'functions').glob('*.js'))+[Path(__file__).resolve()]+[ROOT/f for f in ['functions/mr1-service.js','functions/mr1-engine.js','functions/join-issue.js','functions/multi-reference.js','functions/isr.js','functions/staged-context.js','functions/context-review.js','functions/params.js','functions/analyzer-log.js','functions/public-values.js','functions/package-lock.json','specs/tasks/M3-evaluation/pilot-20261117-one-case-quotation/ledger.json']]
+    files=list((ROOT/'functions/tools/capacity').glob('*.js'))+list((ROOT/'functions/tools').glob('*.js'))+list((ROOT/'specs/tasks/M3-evaluation').rglob('*.json'))+[ROOT/'functions/data/analyzer_examples.json']+list((ROOT/'functions').glob('*.js'))+[Path(__file__).resolve()]+[ROOT/f for f in ['functions/mr1-service.js','functions/mr1-engine.js','functions/join-issue.js','functions/multi-reference.js','functions/isr.js','functions/staged-context.js','functions/context-review.js','functions/params.js','functions/analyzer-log.js','functions/public-values.js','functions/package-lock.json','specs/tasks/M3-evaluation/pilot-20261117-one-case-quotation/ledger.json']]
     pins={str(p.relative_to(ROOT)).replace('\\','/'):hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
     def verify():
         for f,h in pins.items():
             if hashlib.sha256((ROOT/f).read_bytes()).hexdigest()!=h:raise ValueError('Audit source changed; stop')
-    cases=matrix()[:2] if args.smoke else matrix();out.parent.mkdir(parents=True,exist_ok=True);out.mkdir(exist_ok=False)
+    cases=([dict(id='admitted-100',members=100,refs=1,aspects=1,mixed=False,admitted=True),dict(id='admitted-9150',members=9150,refs=1,aspects=1,mixed=False,admitted=True),dict(id='two-aspect-1000-3',members=1000,refs=3,aspects=2,mixed=True)] if args.receipts else matrix()[:2] if args.smoke else matrix());out.parent.mkdir(parents=True,exist_ok=True);out.mkdir(exist_ok=False)
     report={'version':'capacity-audit-phase-a-1','date_client':'2026-11-18','scope':'synthetic offline structural audit; not actual population or database acceptance','source_pins':pins,'guards':{'heap_mib':256,'rss_mib':512,'seconds_per_fixture':120,'min_free_mib':1024},'fixtures':[],'real_provider_calls':0,'database_rpcs':0,'credential_loader_invocations':0}
     for config in cases:
         result=run_case(config,out,verify);report['fixtures'].append(result);(out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({'fixture':config['id'],'status':result['status'],'peak_rss_mib':round(result.get('parent_peak_rss',0)/1024**2,1)}),flush=True)
