@@ -35,3 +35,5 @@ This proposed permission would allow offline-tested prompt explanations of EXIST
 Full-population memory and publication-capacity blockers remain separate. Sol Medium and the current application models remain sufficient.
 
 Final checks: Node 173 passed, five optional skips; Python 140 run, two optional skips. Captured-scope regression verifies exact quotations do not bypass compatibility, and its altered-scope variant is explicitly a synthetic diagnosis, not repaired model output.
+
+- 2026-11-17: Author approved contract alignment and bounded completion. Implemented prompt v4 explaining existing compatibility/coverage/linkage/bounds, with no validator change. Exact source-hashed v3 cases are revalidated offline and preserved without provider repetition. Node 175 passed/five optional skips; Python 140 run/two skips before execution. Existing 20/45/17/original US.50 limits retained.

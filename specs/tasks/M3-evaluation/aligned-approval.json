@@ -1,0 +1,49 @@
+{
+  "version": "m3-technical-continuation-1",
+  "author_reply": "Approve contract alignment and bounded completion",
+  "date": "2026-11-17",
+  "plan_sha256": "a8243689de12c5768d2f6be0c6100d60966f18a107ecd5725301f7d52120f343",
+  "receipts": [
+    {
+      "file": "specs/tasks/M3-evaluation/pilot-20261117/ledger.json",
+      "sha256": "17268de8f0637f2215d646235b6e108a9d951424fb0c76c5d6b0b4d6e9e7a7fa"
+    },
+    {
+      "file": "specs/tasks/M3-evaluation/pilot-20261117-corrected/ledger.json",
+      "sha256": "977418cbf0df3ef72030d5e4a99d11b60e87c79006ab50fc9eb78af0781f719a"
+    },
+    {
+      "file": "specs/tasks/M3-evaluation/pilot-20261117-continuation/ledger.json",
+      "sha256": "3574d46debc9093d07f37bf3fb7a2b55c226ea5d414f452241894ee1602e50f5"
+    },
+    {
+      "file": "specs/tasks/M3-evaluation/pilot-20261117-technical-repair/ledger.json",
+      "sha256": "0865f32990bba086bb1a15a0c62a8ccc5c0b31dcdaee113c55146876fa34f259"
+    },
+    {
+      "file": "specs/tasks/M3-evaluation/pilot-20261117-grounding/ledger.json",
+      "sha256": "ee5f9a07498de4eac170ec45b3f34960d0169fd873623cd30cd6785b2b214c77"
+    }
+  ],
+  "max_cumulative_reviews": 20,
+  "max_embedding_texts": 45,
+  "max_embedding_posts": 17,
+  "cumulative_cost_ceiling_usd": 0.5,
+  "automatic_retries": 0,
+  "production_writes_authorized": false,
+  "repair": "Explain existing validator contract, preserve validated v3 cases, complete remaining pinned cases; stop on genuine semantic/policy ambiguity",
+  "prompt_version": "mr1-context-prompt-4",
+  "reuse_sources": [
+    {
+      "id": "D1-01-live",
+      "file": "specs/tasks/M3-evaluation/pilot-20261117-grounding/D1-01-live.json",
+      "sha256": "9b0e0c5cd90cbf629b1f2f3f6e920e7457394897c2c431f957eafafc320af0f1"
+    },
+    {
+      "id": "D1-02",
+      "file": "specs/tasks/M3-evaluation/pilot-20261117-grounding/D1-02.json",
+      "sha256": "5e1344d5401e74bab200d7eacba1489591785f1faee4763cc4621fc584dc1c13"
+    }
+  ],
+  "schema_sha256": "8c383deb989e7ae166ef02d55c5688558ae90069eec83293cdeef263d66ddf2c"
+}

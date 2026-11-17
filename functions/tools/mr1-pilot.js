@@ -39,8 +39,27 @@ function summary(ledger) {
   for (const a of ledger.data.attempts) for (const [name, value] of Object.entries(a.usage || {})) tokens[name] = (tokens[name] || 0) + value;
   return { version: "m3-pilot-summary-1", status: ledger.data.status, stop_reason: ledger.data.stop_reason || null, totals: t, conservative_reserved_usd: t.reserved_usd_micros / 1e6, reported_token_totals: tokens, current_run_totals:ledger.currentTotals(),reported_cost_usd: ((ledger.data.parent_receipt && ledger.data.parent_receipt.reported_cost_usd_micros)||0)/1e6+ledger.data.attempts.reduce((s, a) => s + (a.reported_cost_usd_micros || 0), 0) / 1e6, usage_complete: !ledger.data.parent_receipt && ledger.data.attempts.every(a => a.status === "succeeded" && a.usage != null), cases: rows, production_writes: 0, firestore_rpcs: 0, geocode_calls: 0, profile_embedding_texts: 0, full_population: "not run; memory and publication-capacity gates remain", deployment_ready: false };
 }
-async function runPilot({ root = ROOT, folder, expectedPlanHash, apiKey, fetchFn, authorization, parentReceipt=null, onStatus = () => {} }) {
+function verifiedReuse(root, checked, sources) {
+  const reused={};
+  for(const source of sources){
+    const c=checked.plan.cases.find(c=>c.id===source.id);
+    if(!c || reused[c.id] || !["D1-01-live","D1-02"].includes(c.id))throw new Error("Unapproved reuse case");
+    const file=path.resolve(root,source.file);
+    if(!file.startsWith(path.resolve(root,"specs/tasks/M3-evaluation")+path.sep))throw new Error("Reuse path escaped");
+    const bytes=fs.readFileSync(file);if(sha(bytes)!==source.sha256)throw new Error("Reuse artifact changed");
+    const state=JSON.parse(bytes);
+    if(state.state!=="complete" || state.input_sha256!==Review.hash(c.input) || state.whole_issue_sha256!==c.whole_issue_sha256 || Review.hash(state.input)!==Review.hash(c.input) || state.bundle.library_hash!==Review.hash(checked.library))throw new Error("Reuse input/library mismatch");
+    const validated=Review.validate(state.raw_review,c.input,state.raw_chain.ranked,checked.library);
+    if(validated.result!=="pass" || Review.hash(validated.model)!==Review.hash(state.review.model))throw new Error("Reuse semantic mismatch");
+    for(const a of Object.values(state.bundle.aspects))if(a.model!==AI.EMBED_MODEL || a.dims!==768 || a.task_type!==AI.TASK_TYPE_ISSUE || a.template_version!=="mr1-aspect1" || a.text_sha256!==Review.hash(a.text) || a.vector.length!==768 || !a.vector.every(Number.isFinite) || Math.abs(Math.hypot(...a.vector)-1)>1e-4)throw new Error("Reuse vector mismatch");
+    checked.pins[source.file]=source.sha256;
+    reused[c.id]={...state,reuse_origin:{file:source.file,sha256:source.sha256,original_prompt_version:state.bundle.prompt_version,offline_revalidated:true,no_provider_call:true}};
+  }
+  return reused;
+}
+async function runPilot({ root = ROOT, folder, expectedPlanHash, apiKey, fetchFn, authorization, parentReceipt=null, reuseSources=[], onStatus = () => {} }) {
   const checked = preflight(root, expectedPlanHash);
+  const reused=verifiedReuse(root,checked,reuseSources);
   const ledger = new Ledger(folder, checked.pins, authorization,parentReceipt);
   const client = guardedClient(ledger, { apiKey, fetchFn, beforeRequest: () => assertPins(root, checked.pins) });
   const embeddingCache = {};
@@ -60,6 +79,7 @@ async function runPilot({ root = ROOT, folder, expectedPlanHash, apiKey, fetchFn
   let active;
   try {
     for (const c of checked.plan.cases) {
+      if(reused[c.id]){ledger.data.cases[c.id]=reused[c.id];ledger.persist();continue;}
       if (c.conditional_on) {
         const previous = ledger.data.cases[c.conditional_on];
         if (!previous || previous.state !== "complete" || !["needs_clarification", "not_consistent"].includes(previous.review.result)) {
@@ -103,15 +123,15 @@ async function cli() {
   const expected = sha(fs.readFileSync(path.join(ROOT, PLAN)));
   if (!process.argv.includes("--apply")) { preflight(ROOT, expected); console.log(JSON.stringify({ dry_run: true, verified_cases: 14, plan_sha256: expected, provider_calls: 0 })); return; }
   const corrected=process.argv.includes("--corrected"),continuation=process.argv.includes("--continuation");
-  const approvalFile = path.join(ROOT, continuation?(process.argv.includes("--grounding")?"specs/tasks/M3-evaluation/grounding-approval.json":process.argv.includes("--epoch2")?"specs/tasks/M3-evaluation/technical-repair-approval.json":"specs/tasks/M3-evaluation/continuation-approval.json"):corrected?"specs/tasks/M3-evaluation/corrected-approval.json":"specs/tasks/M3-evaluation/approval.json"), approval = JSON.parse(fs.readFileSync(approvalFile, "utf8"));
+  const approvalFile = path.join(ROOT, continuation?(process.argv.includes("--aligned")?"specs/tasks/M3-evaluation/aligned-approval.json":process.argv.includes("--grounding")?"specs/tasks/M3-evaluation/grounding-approval.json":process.argv.includes("--epoch2")?"specs/tasks/M3-evaluation/technical-repair-approval.json":"specs/tasks/M3-evaluation/continuation-approval.json"):corrected?"specs/tasks/M3-evaluation/corrected-approval.json":"specs/tasks/M3-evaluation/approval.json"), approval = JSON.parse(fs.readFileSync(approvalFile, "utf8"));
   if (approval.plan_sha256 !== expected || process.env.M3_PILOT_AUTHORIZATION_SHA256 !== sha(fs.readFileSync(approvalFile)) || !process.env.GEMINI_API_KEY) throw new Error("Approved launcher binding is missing; no request permitted.");
-  const folder = path.join(ROOT, continuation?(process.argv.includes("--grounding")?"specs/tasks/M3-evaluation/pilot-20261117-grounding":process.argv.includes("--epoch2")?"specs/tasks/M3-evaluation/pilot-20261117-technical-repair":"specs/tasks/M3-evaluation/pilot-20261117-continuation"):corrected?"specs/tasks/M3-evaluation/pilot-20261117-corrected":"specs/tasks/M3-evaluation/pilot-20261117");
+  const folder = path.join(ROOT, continuation?(process.argv.includes("--aligned")?"specs/tasks/M3-evaluation/pilot-20261117-aligned":process.argv.includes("--grounding")?"specs/tasks/M3-evaluation/pilot-20261117-grounding":process.argv.includes("--epoch2")?"specs/tasks/M3-evaluation/pilot-20261117-technical-repair":"specs/tasks/M3-evaluation/pilot-20261117-continuation"):corrected?"specs/tasks/M3-evaluation/pilot-20261117-corrected":"specs/tasks/M3-evaluation/pilot-20261117");
   const parentReceipt=continuation?{receipts:approval.receipts.map(p=>({...p,file:path.join(ROOT,p.file)}))}:corrected?{file:path.join(ROOT,"specs/tasks/M3-evaluation/pilot-20261117/ledger.json"),sha256:approval.parent_receipt_sha256}:null;
   if(continuation && (approval.max_cumulative_reviews!==20 || approval.max_embedding_texts!==45 || approval.max_embedding_posts!==17 || approval.cumulative_cost_ceiling_usd!==.5 || approval.schema_sha256!==Review.schemaHash()))throw new Error("Continuation approval differs");
   if(corrected && (approval.prompt_version!==Review.PROMPT_VERSION || approval.schema_sha256!==Review.schemaHash() || approval.max_cumulative_reviews!==15 || approval.max_embedding_texts!==45 || approval.max_embedding_posts!==17 || approval.cumulative_cost_ceiling_usd!==.5))throw new Error("Corrected cumulative approval differs.");
-  const result = await runPilot({ folder, expectedPlanHash: expected, apiKey: process.env.GEMINI_API_KEY, authorization: approval,parentReceipt, onStatus: value => console.log(JSON.stringify(value)) });
+  const result = await runPilot({ folder, expectedPlanHash: expected, apiKey: process.env.GEMINI_API_KEY, authorization: approval,parentReceipt,reuseSources:approval.reuse_sources||[], onStatus: value => console.log(JSON.stringify(value)) });
   console.log(JSON.stringify({ status: result.status, stop_reason: result.stop_reason, totals: result.totals, conservative_reserved_usd: result.conservative_reserved_usd, reported_token_totals: result.reported_token_totals }));
   if (result.status === "stopped_no_retry") process.exitCode = 1;
 }
-module.exports = { preflight, runPilot, summary };
+module.exports = { preflight, runPilot, summary, verifiedReuse };
 if (require.main === module) cli().catch(() => { console.error("Pilot launch refused; no automatic retry. Inspect the bounded receipt, without credentials."); process.exitCode = 1; });

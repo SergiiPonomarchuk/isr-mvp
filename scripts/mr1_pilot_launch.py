@@ -22,22 +22,24 @@ def main():
     parser.add_argument('--continuation',action='store_true')
     parser.add_argument('--epoch2',action='store_true')
     parser.add_argument('--grounding',action='store_true')
+    parser.add_argument('--aligned',action='store_true')
     args=parser.parse_args()
     command=['node',str(ROOT/'functions/tools/mr1-pilot.js')]
     if args.corrected:command.append('--corrected')
     if args.continuation:command.append('--continuation')
     if args.epoch2:command.append('--epoch2')
     if args.grounding:command.append('--grounding')
+    if args.aligned:command.append('--aligned')
     env=os.environ.copy()
     env['NODE_PATH']=str(MAIN/'functions/node_modules')
     if not args.apply:
         return subprocess.run(command,env=env).returncode
-    approval_path=ROOT/('specs/tasks/M3-evaluation/grounding-approval.json' if args.grounding else 'specs/tasks/M3-evaluation/technical-repair-approval.json' if args.epoch2 else 'specs/tasks/M3-evaluation/continuation-approval.json' if args.continuation else 'specs/tasks/M3-evaluation/corrected-approval.json' if args.corrected else 'specs/tasks/M3-evaluation/approval.json')
+    approval_path=ROOT/('specs/tasks/M3-evaluation/aligned-approval.json' if args.aligned else 'specs/tasks/M3-evaluation/grounding-approval.json' if args.grounding else 'specs/tasks/M3-evaluation/technical-repair-approval.json' if args.epoch2 else 'specs/tasks/M3-evaluation/continuation-approval.json' if args.continuation else 'specs/tasks/M3-evaluation/corrected-approval.json' if args.corrected else 'specs/tasks/M3-evaluation/approval.json')
     approval=json.loads(approval_path.read_text(encoding='utf8'))
     plan=(ROOT/'specs/tasks/M3-evaluation/cases.json').read_bytes()
     if approval['plan_sha256']!=hashlib.sha256(plan).hexdigest():
         raise ValueError('Approved case plan changed; no request made')
-    folder=ROOT/('specs/tasks/M3-evaluation/pilot-20261117-grounding' if args.grounding else 'specs/tasks/M3-evaluation/pilot-20261117-technical-repair' if args.epoch2 else 'specs/tasks/M3-evaluation/pilot-20261117-continuation' if args.continuation else 'specs/tasks/M3-evaluation/pilot-20261117-corrected' if args.corrected else 'specs/tasks/M3-evaluation/pilot-20261117')
+    folder=ROOT/('specs/tasks/M3-evaluation/pilot-20261117-aligned' if args.aligned else 'specs/tasks/M3-evaluation/pilot-20261117-grounding' if args.grounding else 'specs/tasks/M3-evaluation/pilot-20261117-technical-repair' if args.epoch2 else 'specs/tasks/M3-evaluation/pilot-20261117-continuation' if args.continuation else 'specs/tasks/M3-evaluation/pilot-20261117-corrected' if args.corrected else 'specs/tasks/M3-evaluation/pilot-20261117')
     if args.continuation:
         for receipt in approval['receipts']:
             if hashlib.sha256((ROOT/receipt['file']).read_bytes()).hexdigest()!=receipt['sha256']:
