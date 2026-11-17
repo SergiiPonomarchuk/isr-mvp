@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Prepare bounded one-case quotation retest offline
+
+Added a distinct cached one-case plan and exact two-call/US$0.27 runner profile, preserving the old four-call profile and historical receipts. Fake SDK tests verify send/count/budget/profile/source/restart refusals. No application change, paid call, private-loader use, database operation or deployment. See specs/tasks/M3-one-case-retest.md.
+
 ## 2026-11-17 - Ordered pilot-evidence and quotation-fix merges authorized
 
 Author authorized #44 followed by #45. #44 merged as 137f7b4; #45 now targets main with an identical conflict-free tested tree. Final CI/merge receipt are verified through GitHub. Real-model compliance of the new quotation prompt remains unverified; no new spending or deployment is authorized.

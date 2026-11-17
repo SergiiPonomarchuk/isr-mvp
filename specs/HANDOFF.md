@@ -4,7 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: quotation correction accepted; ordered merges authorized, 2026-11-17
+## Current checkpoint: one-case retest prepared offline; fresh paid approval needed, 2026-11-17
+
+- Author approved preparation after clarification that Gemini Flash-Lite LOW is the application model, not the Codex selection. No setting change required. Branch codex/m3-one-case-retest starts from merged main 816f36a; #44/#45 are merged and main CI passed.
+- [One-case task and exact limits](tasks/M3-one-case-retest.md): only compound-lock-software-clarified; source-bound cached input/ranking/library and merged staged prompt v2. Proposed new cap US$0.27, up to two text HTTP attempts, no retries/repair, zero embeddings/geocoding/Firestore/publication/deployment. New maximum reservation US$0.258048. Historical 28 text reviews / 42 HTTP attempts / US$0.998740 reserved remain intact; no old approval is reused.
+- Separate one-case manifest approved=false; CLI refuses --apply. The durable runner now recognizes exact one-case/two-call/US$0.27 and legacy two-case/four-call/US$0.55 profiles. Fake installed-SDK tests cover exactly two sends, source/profile drift, old allowance, extra cases, restart and one-send HTTP failure. No private loader or real provider invoked.
+- Required checks: Node 235 passed / six optional skips; Python 140 run / two skips. Final PR-head CI is checked before handoff.
+- Old raw responses, hashes, paid manifests and approvals are untouched. No application prompt/math/library/model or validator changes. Offline tests do not establish corrected real-model behavior. Next attention gate is fresh explicit approval of this one-case run up to US$0.27 additional using the existing private loader; earlier Paid-project confirmation remains recorded.
+
+## Previous checkpoint: quotation correction accepted; ordered merges authorized, 2026-11-17
 
 - Author approved the offline quotation correction. Feature branch codex/m3-quotation-contract was stacked on #44/head ae33f7b; #44 is now merged. No paid calls or loader access this task.
 - Staged prompt mr1-staged-prompts-2 aligns domain schema and instructions with EFFECTIVE_JSON source quotes and explicitly rejects reference-only labels. Strict validator, schema field/type shape, math, multi-aspect support, model and library remain unchanged. Existing failed response stays rejected; original artifacts match their SHA-256 Git-blob manifest. [Task/evidence](tasks/M3-quotation-contract.md).
