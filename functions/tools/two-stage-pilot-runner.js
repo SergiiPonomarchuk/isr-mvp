@@ -3,7 +3,11 @@
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const R=require('../context-review'),{Guard}=require('./two-stage-pilot-plan'),{save}=require('./mr1-pilot-budget');
 async function run({plan,root,folder,approval,apiKey,fetchFn}){
- if(!approval||approval.approved!==true||approval.plan_hash!==R.hash(plan)||approval.cap_micros!==550000||approval.calls!==4||typeof apiKey!=='string'||!apiKey||typeof fetchFn!=='function')throw new Error('Fresh bounded authorization/private transport required');
+ const one=plan.version==='one-case-quotation-retest-1',legacy=plan.version==='two-stage-pilot-preflight-1';
+ const cap=one?270000:550000,calls=one?2:4;
+ const ids=one?['compound-lock-software-clarified']:['D1-01-live','compound-lock-software-clarified'];
+ if((!one&&!legacy)||JSON.stringify(plan.cases?.map(c=>c.id))!==JSON.stringify(ids)||plan.limits?.calls!==calls||plan.limits?.usdMicros!==cap||one&&(plan.contract_hash!==require('../staged-context').contractHash()||plan.prompt_version!==require('../staged-context').PROMPT_VERSION))throw new Error('Unapproved pilot profile');
+ if(!approval||approval.approved!==true||approval.plan_hash!==R.hash(plan)||approval.cap_micros!==cap||approval.calls!==calls||typeof apiKey!=='string'||!apiKey||typeof fetchFn!=='function')throw new Error('Fresh bounded authorization/private transport required');
  const verify=()=>{for(const[f,h]of Object.entries(plan.pins))if(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,f))).digest('hex')!==h)throw new Error('Pinned source changed');};verify();
  // An existing directory, including an interrupted run, can never be resumed.
  fs.mkdirSync(folder);const file=path.join(folder,'ledger.json');fs.writeFileSync(file,JSON.stringify({status:'reserved',approval}),'utf8');

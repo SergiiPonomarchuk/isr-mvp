@@ -21,7 +21,7 @@ class Guard{
   if(this.active)this.fail('Parallel or nested request');
   const expected=this.expected();if(R.hash(args)!==R.hash(expected))this.fail('Request differs from source-bound staged contract');
   if(Buffer.byteLength(JSON.stringify(args))>LIMITS.bytes)this.fail('Request byte envelope exceeded');
-  if(this.records.length>=LIMITS.calls||(this.records.length+1)*RESERVE>this.plan.limits.usdMicros)this.fail('Pilot allowance exhausted');
+  if(this.records.length>=Math.min(LIMITS.calls,this.plan.limits.calls)||(this.records.length+1)*RESERVE>this.plan.limits.usdMicros)this.fail('Pilot allowance exhausted');
   this.active={case_id:this.plan.cases[this.index].id,stage:this.stage,request_hash:R.hash(args),schema_hash:R.hash(args.config.responseJsonSchema),reserved_micros:RESERVE,http_attempts:0,status:'reserved'};this.records.push(this.active);this.persist(this);return this.active;
  }
  transport(record){if(record!==this.active||this.stopped||record.http_attempts!==0)this.fail('Unreserved or repeated transport');record.http_attempts=1;record.status='sending';this.persist(this);}

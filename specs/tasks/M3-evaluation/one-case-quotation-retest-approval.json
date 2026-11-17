@@ -1,0 +1,12 @@
+{
+  "approved": true,
+  "plan_hash": "19f97dd1188f56cfc7ae4d9e4b92b82406732f3f74a8c09d96ad055f35bfc4a1",
+  "cap_micros": 270000,
+  "calls": 2,
+  "author_reply": "Approve the one-case quotation retest up to $0.27 additional, using the existing credential loader.",
+  "date": "2026-11-17",
+  "existing_loader_authorized": true,
+  "new_embedding_texts": 0,
+  "production_writes_authorized": false,
+  "deployments_authorized": false
+}

@@ -7,6 +7,8 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
+Current M3 preparation: [one-case quotation retest](tasks/M3-one-case-retest.md), offline only; two-call/US$0.27 proposal needs fresh paid approval.
+
 Next M3 work: [two-case staged pilot preflight](tasks/M3-two-stage-pilot.md), offline only; fresh paid allowance and reviewed transport adapter required.
 
 Current M3 work: [approved staged runtime integration](tasks/M3-emulator-staged-integration.md) is implemented on an emulator-only feature branch with [mocked evidence and human preview steps](tasks/M3-staged-runtime-report.md). No paid calls or deployment; full-population and real-model quality remain gated.

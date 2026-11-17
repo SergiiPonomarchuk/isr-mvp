@@ -1,0 +1,478 @@
+{
+  "version": "one-case-quotation-retest-1",
+  "approved": false,
+  "model": "gemini-3.1-flash-lite",
+  "thinking": "LOW",
+  "limits": {
+    "calls": 2,
+    "bytes": 65536,
+    "inputOverhead": 8192,
+    "thinking": 65536,
+    "visible": 8192,
+    "usdMicros": 270000
+  },
+  "reserve_per_call_micros": 129024,
+  "max_new_reservation_micros": 258048,
+  "historical": {
+    "reviews": 28,
+    "embedding_texts": 14,
+    "embedding_posts": 14,
+    "http_attempts": 42,
+    "reserved_micros": 998740
+  },
+  "max_cumulative_reviews": 30,
+  "max_cumulative_http_attempts": 44,
+  "max_cumulative_reservation_micros": 1256788,
+  "cases": [
+    {
+      "id": "compound-lock-software-clarified",
+      "input": {
+        "title": "Repair the entrance lock and choose an open-source roadmap",
+        "description": "Repair our apartment entrance lock at osbb 2, h12, and in the same decision choose the worldwide open-source software project roadmap for the next year.",
+        "clarification": "For this issue, decide only how to repair the entrance lock at osbb 2, h12. The software-roadmap decision will be registered separately and is outside this issue.",
+        "submitterId": "2",
+        "location": [
+          47.5937,
+          7.6217
+        ],
+        "location_source": "creator"
+      },
+      "ranked": [
+        {
+          "id": "1",
+          "score": 0.7409257415371802
+        },
+        {
+          "id": "90",
+          "score": 0.7097540918537608
+        },
+        {
+          "id": "10",
+          "score": 0.6960398080294413
+        },
+        {
+          "id": "35",
+          "score": 0.6613544102383325
+        },
+        {
+          "id": "15",
+          "score": 0.6602509755328074
+        },
+        {
+          "id": "4",
+          "score": 0.659234499530471
+        },
+        {
+          "id": "2",
+          "score": 0.6571216486004865
+        },
+        {
+          "id": "89",
+          "score": 0.6554608866521372
+        },
+        {
+          "id": "47",
+          "score": 0.6527715315954856
+        },
+        {
+          "id": "7",
+          "score": 0.6480074627825242
+        },
+        {
+          "id": "56",
+          "score": 0.6471983161430841
+        },
+        {
+          "id": "67",
+          "score": 0.6465685549077136
+        },
+        {
+          "id": "14",
+          "score": 0.6463903411093745
+        },
+        {
+          "id": "3",
+          "score": 0.6450557588248088
+        },
+        {
+          "id": "12",
+          "score": 0.6425166201806272
+        },
+        {
+          "id": "95",
+          "score": 0.6418919065930029
+        },
+        {
+          "id": "13",
+          "score": 0.6388852006990635
+        },
+        {
+          "id": "77",
+          "score": 0.6375875269831999
+        },
+        {
+          "id": "5",
+          "score": 0.6374550089599414
+        },
+        {
+          "id": "39",
+          "score": 0.6366259944872368
+        },
+        {
+          "id": "17",
+          "score": 0.6350091512464318
+        },
+        {
+          "id": "16",
+          "score": 0.6333260202239157
+        },
+        {
+          "id": "11",
+          "score": 0.632272797516875
+        },
+        {
+          "id": "78",
+          "score": 0.6306305248970947
+        },
+        {
+          "id": "6",
+          "score": 0.6297644677053461
+        },
+        {
+          "id": "19",
+          "score": 0.6290993939448023
+        },
+        {
+          "id": "82",
+          "score": 0.6281947881617036
+        },
+        {
+          "id": "99",
+          "score": 0.6275847570180192
+        },
+        {
+          "id": "97",
+          "score": 0.6274801838025681
+        },
+        {
+          "id": "36",
+          "score": 0.6272826970814654
+        },
+        {
+          "id": "74",
+          "score": 0.6257169986509044
+        },
+        {
+          "id": "96",
+          "score": 0.6244515672406162
+        },
+        {
+          "id": "84",
+          "score": 0.6237489509610692
+        },
+        {
+          "id": "52",
+          "score": 0.6215758767403942
+        },
+        {
+          "id": "94",
+          "score": 0.621227874197664
+        },
+        {
+          "id": "60",
+          "score": 0.6205078285708365
+        },
+        {
+          "id": "32",
+          "score": 0.6203567685974588
+        },
+        {
+          "id": "8",
+          "score": 0.6201078127514728
+        },
+        {
+          "id": "83",
+          "score": 0.6200995725461823
+        },
+        {
+          "id": "81",
+          "score": 0.6200294886518791
+        },
+        {
+          "id": "26",
+          "score": 0.6185530857089833
+        },
+        {
+          "id": "18",
+          "score": 0.6165294216030098
+        },
+        {
+          "id": "98",
+          "score": 0.6158744520174048
+        },
+        {
+          "id": "20",
+          "score": 0.6154547967688181
+        },
+        {
+          "id": "87",
+          "score": 0.6141916510648698
+        },
+        {
+          "id": "92",
+          "score": 0.6140421478216794
+        },
+        {
+          "id": "75",
+          "score": 0.6133726951986597
+        },
+        {
+          "id": "70",
+          "score": 0.6128202796200793
+        },
+        {
+          "id": "86",
+          "score": 0.612520918467785
+        },
+        {
+          "id": "24",
+          "score": 0.6121808855005397
+        },
+        {
+          "id": "64",
+          "score": 0.6117309810397625
+        },
+        {
+          "id": "34",
+          "score": 0.6116089386118663
+        },
+        {
+          "id": "23",
+          "score": 0.6105811337839135
+        },
+        {
+          "id": "54",
+          "score": 0.6104694442815778
+        },
+        {
+          "id": "27",
+          "score": 0.6103464043238047
+        },
+        {
+          "id": "51",
+          "score": 0.6102120449966862
+        },
+        {
+          "id": "21",
+          "score": 0.6095330652746731
+        },
+        {
+          "id": "25",
+          "score": 0.6093378642591021
+        },
+        {
+          "id": "33",
+          "score": 0.6086901756223104
+        },
+        {
+          "id": "9",
+          "score": 0.6085308937879818
+        },
+        {
+          "id": "88",
+          "score": 0.608047276057977
+        },
+        {
+          "id": "22",
+          "score": 0.6074761339679454
+        },
+        {
+          "id": "55",
+          "score": 0.6070176539284521
+        },
+        {
+          "id": "50",
+          "score": 0.606775897550061
+        },
+        {
+          "id": "41",
+          "score": 0.605182941719356
+        },
+        {
+          "id": "62",
+          "score": 0.6049252976934684
+        },
+        {
+          "id": "76",
+          "score": 0.6047378991253729
+        },
+        {
+          "id": "93",
+          "score": 0.604072843577115
+        },
+        {
+          "id": "58",
+          "score": 0.6040519347072218
+        },
+        {
+          "id": "59",
+          "score": 0.6040228254172815
+        },
+        {
+          "id": "30",
+          "score": 0.6026393955507976
+        },
+        {
+          "id": "71",
+          "score": 0.6026277599005223
+        },
+        {
+          "id": "57",
+          "score": 0.6013639597919922
+        },
+        {
+          "id": "65",
+          "score": 0.6010829045109984
+        },
+        {
+          "id": "72",
+          "score": 0.6000320392823323
+        },
+        {
+          "id": "69",
+          "score": 0.5997990481356791
+        },
+        {
+          "id": "63",
+          "score": 0.599541435344759
+        },
+        {
+          "id": "91",
+          "score": 0.5986410754528172
+        },
+        {
+          "id": "68",
+          "score": 0.5970956007327559
+        },
+        {
+          "id": "38",
+          "score": 0.5968739394453643
+        },
+        {
+          "id": "29",
+          "score": 0.5954182348515229
+        },
+        {
+          "id": "49",
+          "score": 0.5949039465503152
+        },
+        {
+          "id": "42",
+          "score": 0.5944723314010347
+        },
+        {
+          "id": "31",
+          "score": 0.5935406088985975
+        },
+        {
+          "id": "66",
+          "score": 0.5909597276986026
+        },
+        {
+          "id": "73",
+          "score": 0.5898913366032658
+        },
+        {
+          "id": "53",
+          "score": 0.5893421596727623
+        },
+        {
+          "id": "85",
+          "score": 0.5884484215370455
+        },
+        {
+          "id": "61",
+          "score": 0.5875991119407168
+        },
+        {
+          "id": "45",
+          "score": 0.587270536118999
+        },
+        {
+          "id": "79",
+          "score": 0.5867843223213144
+        },
+        {
+          "id": "40",
+          "score": 0.5867640190025264
+        },
+        {
+          "id": "43",
+          "score": 0.5852684614521869
+        },
+        {
+          "id": "100",
+          "score": 0.5846465709879025
+        },
+        {
+          "id": "80",
+          "score": 0.5823952943533296
+        },
+        {
+          "id": "37",
+          "score": 0.5811362140580809
+        },
+        {
+          "id": "48",
+          "score": 0.5808508134334952
+        },
+        {
+          "id": "46",
+          "score": 0.5781392807247363
+        },
+        {
+          "id": "44",
+          "score": 0.5766921654529593
+        },
+        {
+          "id": "28",
+          "score": 0.5689677524999561
+        }
+      ],
+      "source": "specs/tasks/M3-evaluation/pilot-20261117-two-case/ledger.json",
+      "input_hash": "85c4e0f44dbc457614d1a8ac211c67dc06ce5b2695bf45f7d9ec7743a77d853f",
+      "ranking_hash": "93088c364cf25f9d54371901792af89a8252fd3b602172e09600726f86e059d4"
+    }
+  ],
+  "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+  "contract_hash": "c39d659798b2a616d14144d25306cbc6bb626bc5514d2713cb28e539c758532f",
+  "pins": {
+    "functions/tools/two-stage-pilot-plan.js": "978497f2661fd2d9fa95b006c02efd368316615a445ef7dcf788e0516f335a4d",
+    "functions/tools/two-stage-pilot-runner.js": "37fa059b3e01ffd8c6371295d59d25e396270c604392917a149e767f07590d1e",
+    "functions/tools/mr1-pilot-budget.js": "80bddd7344794ca4309c33aeb8471263e466feeea98cf343cc6bdc752d5becc2",
+    "functions/ai-helper.js": "c047586187fbbbb6270f9a62025297d6ba6101782f986891c3942ff5fd91f005",
+    "functions/ai-config.js": "593e86b7d8efbdecc3c19b7a17d186c18cf72e4adfd00c7171f85f925b12b6f0",
+    "functions/staged-context.js": "e5e3b99bcf71884f47b55110606238afa513250b44e826046a8a3a6d6fea8a61",
+    "functions/strict-json.js": "e47ab8da8e50de06996e535387b023c33d5e70bdebfe88babbb957317b989a1b",
+    "functions/scope-compatibility.js": "14de98432acfbdd6603ee7e878c53197872bdd4c71a810d8eac470b013650fdc",
+    "functions/context-review.js": "39a66cc0d5ca1af572daeebaa4c6be25baa70f8c73366c27096fc6345d58be59",
+    "functions/context-schema.js": "5c338c29757dd74a5585fc508ba754ddc8461f8b0c7a10f93749fb5f4ae92beb",
+    "functions/multi-reference.js": "cad5c25433bfd2aec56bf589bbd072d3dc49fa84c0095db2a6e675736cb45d13",
+    "functions/demographics.js": "ba1bf10c28067af5f4490d2f12e12e1ccc5106a6a0c735e5a9936435b23e987c",
+    "functions/location.js": "003139fad07b0e8d95ff0304968650437acd9f4c94e14d8c627003277650ecca",
+    "functions/isr.js": "0f0db88cee6683a28d58cb87bd88cfee305ecfc1d54390419b41d61d831f4f16",
+    "functions/package.json": "b769ab03951c56934c20e5fcc733666d792350f002905928fab920550375c0cf",
+    "functions/package-lock.json": "a39381f845aba6e28ec4139e609dbea992340ff3093aa6ae354f381fe8743eec",
+    "functions/data/analyzer_examples.json": "153baac827ea806aba7394ed8a61b79208555a96e4adc1afd0aaf91424b08be3",
+    "specs/tasks/M3-evaluation/cases.json": "a8243689de12c5768d2f6be0c6100d60966f18a107ecd5725301f7d52120f343",
+    "specs/tasks/M3-evaluation/pilot-20261117-grounding/ledger.json": "4220fe62286a8165c81b44861445464c873655abd74bd395bf10b6c484228eaa",
+    "specs/tasks/M3-evaluation/pilot-20261117-two-case/ledger.json": "09d9825f079033b9b511a2a136dd2353a0e05d736cfd6eae7de4e85359c8ed73",
+    "specs/tasks/M3-evaluation/pilot-20261117-cheapest-low/ledger.json": "b3f92d5e512373ab6e1d701a79c73b6e113a6243aa005ab6b35460b54f6ae8ef",
+    "functions/tools/one-case-retest-plan.js": "bf245ef7f6550247ea2af0cc9414ce3d01a65ce4330755d8b36e4b0b132b569f",
+    "specs/tasks/M3-evaluation/pilot-20261117-two-stage-runtime/ledger.json": "8293e493ca305bac83631eece1dbf8b28e30d8080952c3d5b4939b1f5ea3cb4c",
+    "specs/tasks/M3-evaluation/pilot-20261117-two-stage-runtime/artifact-hashes.json": "8bc9f5662af53e3e75d10830656f7a562e1de0d2f94e600d2175abe84b61388f",
+    "specs/tasks/M3-evaluation/two-stage-runtime-approval.json": "c586a9ba4cb4439e8b6875ad17b8b01c4322d3a1bf6310297f36dee4d03559de"
+  },
+  "provider_calls": 0,
+  "prompt_version": "mr1-staged-prompts-2"
+}
