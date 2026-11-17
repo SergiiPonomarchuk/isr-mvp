@@ -1,6 +1,6 @@
 # M3 staged runtime: mocked integration evidence, 2026-11-17
 
-Status: implementation and automated mocked acceptance completed on `codex/m3-staged-runtime`; author UI review pending. Parent evaluation PR #42 remains separate. No deployment readiness claim.
+Status: implementation and automated mocked acceptance completed on `codex/m3-staged-runtime`; author UI review pending. Draft implementation [PR #43](https://github.com/SergiiPonomarchuk/isr-mvp/pull/43) targets the separate parent evaluation PR #42. Runtime commit `e1acc5d` passed Node/Python CI. No deployment readiness claim.
 
 VERIFIED code entry points: `functions/ai-helper.js:1150`, `functions/staged-context.js:13`, `functions/staged-context.js:27`, `functions/staged-context.js:46`, `functions/staged-context.js:66`, `functions/mr1-service.js:22`, `functions/mr1-service.js:82`, `functions/mr1-service.js:86`, and `functions/analyzer-log.js:25`. These describe the feature branch, not the deployed release.
 

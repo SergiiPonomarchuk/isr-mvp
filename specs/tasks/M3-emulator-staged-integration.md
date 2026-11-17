@@ -33,3 +33,5 @@ The local mocked Check resolves explicit narrowing once, personal help has no in
 - Required suites and isolated fake-SDK emulator results: [implementation evidence](M3-staged-runtime-report.md). No paid generation/embedding/geocoding, key access, deploy, rules edit, production write or full-population import. Actual model quality, human UI acceptance and 9,150-person capacity remain unproven.
 
 - 2026-11-17: Final local verification: Node 220 passed / six optional skips (226 total); Python 140 run / two optional skips; isolated actual-handler and staged location/provenance emulator suites both passed; final focused staged contract tests 10/10 passed. No paid calls or production mutations.
+
+- 2026-11-17: opened draft implementation [PR #43](https://github.com/SergiiPonomarchuk/isr-mvp/pull/43), stacked on #42. Runtime commit `e1acc5d` passed Node/Python CI. Human mock-preview acceptance remains next; no merge/deploy is authorized.
