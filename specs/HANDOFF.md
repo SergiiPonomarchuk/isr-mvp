@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: quotation retest accepted; PR #46 merge authorized, 2026-11-17
+## Current checkpoint: capacity/memory plan ready for Phase A review, 2026-11-18
+
+- PR #46 merged as 175d6fa; main Node/Python CI passed. Quotation-v2 has one narrowly reviewed successful real case, not full-population acceptance. Paid counters remain 30 text reviews / 14 embedding texts / 14 embedding POSTs / 44 HTTP attempts, cumulative reserved US$1.256788; no fresh calls are authorized.
+- [Capacity/memory plan](tasks/M3-capacity-memory-plan.md) is documentation only, branch codex/m3-capacity-plan. Verified old subset sizes 10,110,330 / 11,610,146 bytes; current free RAM about 2.42 GiB, below existing 6 GiB full-import gate. No import/audit execution or app change.
+- Recommended next approval: **Phase A offline complete-envelope audit and bounded lossless codec experiment only**. Measure actual Create/replay/Join wire writes separately from post-update document size, all current receipts and 9,150-person synthetic shapes. Keep caps/guardrails/math/provenance; no partial publication. A later paged-scoring/codec implementation or generation-based publication requires a separate evidence-based decision.
+- Do not run the old preflight over its frozen report, import under insufficient RAM, stop user apps, weaken capacity checks, trim members/references or drop provenance. No loader, paid API, database, rules edit, deploy or production write is authorized. Sol Medium remains sufficient; no settings change needed.
+
+## Previous checkpoint: quotation retest accepted; PR #46 merge authorized, 2026-11-17
 
 - Author explicitly approved US$0.27/two requests and existing loader. The actual retest passed stage resolution and strict domain merge, using submitted-source aspect **repair the entrance lock** with home/building and no repeated question. Coverage: 81 scope proofs + 19 typed domain declarations, reference 1 accepted, all 100 origins retained. [Actual result and limits](tasks/M3-one-case-retest-result.md).
 - New reported-token estimate US$0.003079; conservative new reservation US$0.258048, cumulative US$1.256788. Totals: 30 text reviews / 14 embedding texts / 14 embedding POSTs / 44 HTTP attempts. No retry, embeddings, database/scoring/publication/deploy. The two-call allowance is consumed.

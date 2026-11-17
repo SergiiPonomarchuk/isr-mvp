@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-18 - Plan full-population capacity and memory work
+
+Documented verified subset-size and resource blockers, exact Create/replay/Join measurement scope, bounded lossless codec audit, and conditional paged-scoring/atomic-publication designs. Recommended Phase A offline audit first; application persistence, imports, physical-atomicity changes and deployment remain separately gated. No runtime change, paid call, data operation or new benchmark. See specs/tasks/M3-capacity-memory-plan.md.
+
 ## 2026-11-17 - One-case retest merge authorized
 
 Author authorized PR #46. Its conflict-free main merge preview matches the tested tree; final CI/merge receipt are verified through GitHub. The case-specific quotation pass and immutable evidence are retained. No deployment, new paid allowance or full-population capacity change is included.
