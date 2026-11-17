@@ -1,6 +1,6 @@
 # M3 staged runtime: mocked integration evidence, 2026-11-17
 
-Status: implementation and automated mocked acceptance completed on `codex/m3-staged-runtime`; author UI review pending. Draft implementation [PR #43](https://github.com/SergiiPonomarchuk/isr-mvp/pull/43) targets the separate parent evaluation PR #42. Runtime commit `e1acc5d` passed Node/Python CI. No deployment readiness claim.
+Status: implementation and automated mocked acceptance completed on `codex/m3-staged-runtime`; local Create/member-list continuation verified; merge instruction pending. Draft implementation [PR #43](https://github.com/SergiiPonomarchuk/isr-mvp/pull/43) targets the separate parent evaluation PR #42. Runtime commit `e1acc5d` passed Node/Python CI. No deployment readiness claim.
 
 VERIFIED code entry points: `functions/ai-helper.js:1150`, `functions/staged-context.js:13`, `functions/staged-context.js:27`, `functions/staged-context.js:46`, `functions/staged-context.js:66`, `functions/mr1-service.js:22`, `functions/mr1-service.js:82`, `functions/mr1-service.js:86`, and `functions/analyzer-log.js:25`. These describe the feature branch, not the deployed release.
 
@@ -28,13 +28,21 @@ Running local preview: [app](http://127.0.0.1:5190/main.html?emulator=1), [step-
 
 Agent browser observation: mixed repair/tax text produced clarification with Create disabled; `Only repair our building entrance lock.` produced home location, 20 members, R 80%, ISR 1.00, and enabled Create without repeating the question. No Create was pressed in the visual check. Screenshot: `C:/isr-mvp/scratch/staged-analyzer-preview.jpg`. The script is a deterministic fixture demonstration, not real-model extraction quality.
 
-Author steps from the open checked form:
+Original author review steps (completed local creation/member-list continuation below):
 
 1. Confirm the green footer says **Emulator verified | Synthetic data | Mock AI**.
 2. Review the original description and the narrowing answer, home location and 20 members.
 3. Press **Create** locally, dismiss success, then open **Chat** and the new **Local entrance repair rehearsal** issue.
 4. Open its member card and verify the synthetic list. Report any misleading wording or flow. To repeat Check from the start, use the guide above; its full input texts are provided there.
 
+## Browser continuation result
+
+After the author said `ok, go`, the preview already contained **Local entrance repair rehearsal**; the agent did not create a second issue. With the green emulator-verified footer present, the agent opened the issue and its member card. All 20 synthetic members appeared with ISR 1.00. Screenshot: `C:/isr-mvp/scratch/staged-analyzer-members.jpg`.
+
+Read-only aggregate audit of `demo-mr1-preview` / `127.0.0.1:8189`: exactly one issue/public; 20 member records and 20 entries in each cached score map; one completed draft; two frozen stage receipts; model hash matches. The frozen decision quotes the clarification `Only repair our building entrance lock.`, with building scope and home anchor. The UI retains the original submitted description, including its earlier tax clause; narrowing remains in the frozen decision record. No extra UI/specification change was introduced. Independent `scripts/mr1_check.py` returned no problems. Local aggregate evidence: `C:/isr-mvp/scratch/staged-browser-audit.json`.
+
+The author's continuation and agent browser check establish this mocked flow. They do not establish truthful real-model extraction/judgments. No provider call, key-loader access, production mutation, deploy, merge or new Check occurred during this continuation.
+
 ## Remaining gates
 
-Human acceptance and a separately authorized real-model pilot remain necessary. This task demonstrates contracts and integration with mocks; it cannot prove model judgments/extraction are true. Full-population 9,150-person atomic storage and memory failures remain hard gates. No import, rescore, migration, production write, rules change, deployment or additional paid allowance is authorized by this evidence. Sol Medium remains sufficient.
+An explicit merge instruction and a separately authorized real-model pilot remain necessary. This task demonstrates contracts and integration with mocks; it cannot prove model judgments/extraction are true. Full-population 9,150-person atomic storage and memory failures remain hard gates. No import, rescore, migration, production write, rules change, deployment or additional paid allowance is authorized by this evidence. Sol Medium remains sufficient.
