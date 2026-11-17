@@ -57,8 +57,10 @@ function verifiedReuse(root, checked, sources) {
   }
   return reused;
 }
-async function runPilot({ root = ROOT, folder, expectedPlanHash, apiKey, fetchFn, authorization, parentReceipt=null, reuseSources=[], onStatus = () => {} }) {
+async function runPilot({ root = ROOT, folder, expectedPlanHash, apiKey, fetchFn, authorization, parentReceipt=null, reuseSources=[], caseIds=null, onStatus = () => {} }) {
   const checked = preflight(root, expectedPlanHash);
+  if(caseIds && (authorization.version!=="m3-two-case-approval-1" || JSON.stringify(caseIds)!==JSON.stringify(["D1-09","compound-lock-software-clarified"]) || reuseSources.length))throw new Error("Focused case binding differs");
+  const runCases=caseIds?checked.plan.cases.filter(c=>caseIds.includes(c.id)):checked.plan.cases;
   const reused=verifiedReuse(root,checked,reuseSources);
   const ledger = new Ledger(folder, checked.pins, authorization,parentReceipt);
   const client = guardedClient(ledger, { apiKey, fetchFn, beforeRequest: () => assertPins(root, checked.pins) });
@@ -78,9 +80,9 @@ async function runPilot({ root = ROOT, folder, expectedPlanHash, apiKey, fetchFn
   ledger.data.status = "running"; ledger.persist();
   let active;
   try {
-    for (const c of checked.plan.cases) {
+    for (const c of runCases) {
       if(reused[c.id]){ledger.data.cases[c.id]=reused[c.id];ledger.persist();continue;}
-      if (c.conditional_on) {
+      if (c.conditional_on && !caseIds) {
         const previous = ledger.data.cases[c.conditional_on];
         if (!previous || previous.state !== "complete" || !["needs_clarification", "not_consistent"].includes(previous.review.result)) {
           ledger.data.cases[c.id] = { state: "skipped_condition_not_met" }; ledger.persist(); continue;
@@ -110,7 +112,7 @@ async function runPilot({ root = ROOT, folder, expectedPlanHash, apiKey, fetchFn
     ledger.data.status = "stopped_no_retry";
     ledger.data.stop_reason = helper.redact(error.message).slice(0, 300);
     if (active && ledger.data.cases[active]) ledger.data.cases[active].state = "stopped";
-    for (const c of checked.plan.cases) if (!ledger.data.cases[c.id]) ledger.data.cases[c.id] = { state: "not_run_after_stop" };
+    for (const c of runCases) if (!ledger.data.cases[c.id]) ledger.data.cases[c.id] = { state: "not_run_after_stop" };
   } finally {
     ledger.data.finished_at = new Date().toISOString(); ledger.persist();
     const result = summary(ledger); save(path.join(folder, "summary.json"), result);
@@ -123,13 +125,13 @@ async function cli() {
   const expected = sha(fs.readFileSync(path.join(ROOT, PLAN)));
   if (!process.argv.includes("--apply")) { preflight(ROOT, expected); console.log(JSON.stringify({ dry_run: true, verified_cases: 14, plan_sha256: expected, provider_calls: 0 })); return; }
   const corrected=process.argv.includes("--corrected"),continuation=process.argv.includes("--continuation");
-  const approvalFile = path.join(ROOT, continuation?(process.argv.includes("--aligned")?"specs/tasks/M3-evaluation/aligned-approval.json":process.argv.includes("--grounding")?"specs/tasks/M3-evaluation/grounding-approval.json":process.argv.includes("--epoch2")?"specs/tasks/M3-evaluation/technical-repair-approval.json":"specs/tasks/M3-evaluation/continuation-approval.json"):corrected?"specs/tasks/M3-evaluation/corrected-approval.json":"specs/tasks/M3-evaluation/approval.json"), approval = JSON.parse(fs.readFileSync(approvalFile, "utf8"));
+  const approvalFile = path.join(ROOT, continuation?(process.argv.includes("--two-case")?"specs/tasks/M3-evaluation/two-case-approval.json":process.argv.includes("--aligned")?"specs/tasks/M3-evaluation/aligned-approval.json":process.argv.includes("--grounding")?"specs/tasks/M3-evaluation/grounding-approval.json":process.argv.includes("--epoch2")?"specs/tasks/M3-evaluation/technical-repair-approval.json":"specs/tasks/M3-evaluation/continuation-approval.json"):corrected?"specs/tasks/M3-evaluation/corrected-approval.json":"specs/tasks/M3-evaluation/approval.json"), approval = JSON.parse(fs.readFileSync(approvalFile, "utf8"));
   if (approval.plan_sha256 !== expected || process.env.M3_PILOT_AUTHORIZATION_SHA256 !== sha(fs.readFileSync(approvalFile)) || !process.env.GEMINI_API_KEY) throw new Error("Approved launcher binding is missing; no request permitted.");
-  const folder = path.join(ROOT, continuation?(process.argv.includes("--aligned")?"specs/tasks/M3-evaluation/pilot-20261117-aligned":process.argv.includes("--grounding")?"specs/tasks/M3-evaluation/pilot-20261117-grounding":process.argv.includes("--epoch2")?"specs/tasks/M3-evaluation/pilot-20261117-technical-repair":"specs/tasks/M3-evaluation/pilot-20261117-continuation"):corrected?"specs/tasks/M3-evaluation/pilot-20261117-corrected":"specs/tasks/M3-evaluation/pilot-20261117");
+  const folder = path.join(ROOT, continuation?(process.argv.includes("--two-case")?"specs/tasks/M3-evaluation/pilot-20261117-two-case":process.argv.includes("--aligned")?"specs/tasks/M3-evaluation/pilot-20261117-aligned":process.argv.includes("--grounding")?"specs/tasks/M3-evaluation/pilot-20261117-grounding":process.argv.includes("--epoch2")?"specs/tasks/M3-evaluation/pilot-20261117-technical-repair":"specs/tasks/M3-evaluation/pilot-20261117-continuation"):corrected?"specs/tasks/M3-evaluation/pilot-20261117-corrected":"specs/tasks/M3-evaluation/pilot-20261117");
   const parentReceipt=continuation?{receipts:approval.receipts.map(p=>({...p,file:path.join(ROOT,p.file)}))}:corrected?{file:path.join(ROOT,"specs/tasks/M3-evaluation/pilot-20261117/ledger.json"),sha256:approval.parent_receipt_sha256}:null;
-  if(continuation && (approval.max_cumulative_reviews!==20 || approval.max_embedding_texts!==45 || approval.max_embedding_posts!==17 || approval.cumulative_cost_ceiling_usd!==.5 || approval.schema_sha256!==Review.schemaHash()))throw new Error("Continuation approval differs");
+  if(continuation && (approval.max_cumulative_reviews!==(process.argv.includes("--two-case")?21:20) || approval.max_embedding_texts!==45 || approval.max_embedding_posts!==17 || approval.cumulative_cost_ceiling_usd!==.5 || approval.schema_sha256!==Review.schemaHash()))throw new Error("Continuation approval differs");
   if(corrected && (approval.prompt_version!==Review.PROMPT_VERSION || approval.schema_sha256!==Review.schemaHash() || approval.max_cumulative_reviews!==15 || approval.max_embedding_texts!==45 || approval.max_embedding_posts!==17 || approval.cumulative_cost_ceiling_usd!==.5))throw new Error("Corrected cumulative approval differs.");
-  const result = await runPilot({ folder, expectedPlanHash: expected, apiKey: process.env.GEMINI_API_KEY, authorization: approval,parentReceipt,reuseSources:approval.reuse_sources||[], onStatus: value => console.log(JSON.stringify(value)) });
+  const result = await runPilot({ folder, expectedPlanHash: expected, apiKey: process.env.GEMINI_API_KEY, authorization: approval,parentReceipt,reuseSources:approval.reuse_sources||[],caseIds:approval.target_cases||null, onStatus: value => console.log(JSON.stringify(value)) });
   console.log(JSON.stringify({ status: result.status, stop_reason: result.stop_reason, totals: result.totals, conservative_reserved_usd: result.conservative_reserved_usd, reported_token_totals: result.reported_token_totals }));
   if (result.status === "stopped_no_retry") process.exitCode = 1;
 }
