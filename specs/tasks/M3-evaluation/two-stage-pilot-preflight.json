@@ -864,7 +864,9 @@
   "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
   "contract_hash": "a8feb2f7a82120eb6acdcdbd71c7630efa7a4e01c815f932b6a8d237318420e0",
   "pins": {
-    "functions/tools/two-stage-pilot-plan.js": "a4b604d5a5914adfd4f2ee7e31ac60be20ec5ba3ddcd3ecfb311ceca5e45d4c9",
+    "functions/tools/two-stage-pilot-plan.js": "1a32c270fc96b66f6dea3e6913af6db13781b23d43b1bfe097d91917aa88653f",
+    "functions/tools/two-stage-pilot-runner.js": "28ceb765bdca575c89dcafa3fe8868cd97ea05698c4cc6c79d6eca92cc8f8ed1",
+    "functions/tools/mr1-pilot-budget.js": "80bddd7344794ca4309c33aeb8471263e466feeea98cf343cc6bdc752d5becc2",
     "functions/ai-helper.js": "c047586187fbbbb6270f9a62025297d6ba6101782f986891c3942ff5fd91f005",
     "functions/ai-config.js": "593e86b7d8efbdecc3c19b7a17d186c18cf72e4adfd00c7171f85f925b12b6f0",
     "functions/staged-context.js": "723c767c8738e7424d2125771a96c2628fa5c3f2d435df07ffb6ea4cd334664b",

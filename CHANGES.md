@@ -2,7 +2,7 @@
 
 ## 2026-11-17 - Offline two-case staged pilot preflight
 
-Prepared exact cached cases, request/schema bindings and a fail-closed pure guard with a proposed separate US$0.55 ceiling. Synthetic tests cover four-stage sequencing, duplicate/changed requests, malformed/truncated replies and accounting failures. No API/credential/database/deployment operation; execution adapter and new allowance remain gated. See specs/tasks/M3-two-stage-pilot.md.
+Prepared exact cached cases, request/schema bindings and a fail-closed pure guard with a proposed separate US$0.55 ceiling. Synthetic tests cover four-stage sequencing, duplicate/changed requests, malformed/truncated replies and accounting failures. No API/credential/database/deployment operation; the exact durable SDK adapter is fake-fetch tested; new allowance/private-loader invocation and execution remain gated. See specs/tasks/M3-two-stage-pilot.md.
 
 ## 2026-11-17 - Staged Analyzer local acceptance and ordered merge authorization
 
