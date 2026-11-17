@@ -1,6 +1,6 @@
-# M3 emulator-only staged Analyzer integration - proposed task
+# M3 emulator-only staged Analyzer integration
 
-Status: **concrete implementation plan for author review, not deployed/implemented**. Author chose the existing cheapest model and continuation. Model comparison is retired. No additional paid allowance is requested by this plan.
+Status: **author approved 2026-11-17; implemented on codex/m3-staged-runtime, mocked emulator and local Create/member-list checks passed; author authorized ordered merges #42 then #43**. Stacked on draft PR #42. No deployment or paid calls. Model comparison is retired.
 
 ## Resulting behavior and contract
 
@@ -22,4 +22,20 @@ Status: **concrete implementation plan for author review, not deployed/implement
 
 ## Acceptance and limits
 
-The local mocked Check resolves explicit narrowing once, personal help has no invented public-only restriction, scope proofs are accurate, all IDs have provenance, domain output cannot impersonate scope/location facts, and old replay stays intact. Tests establish contract/handler behavior, not truthful model reasoning. The model chosen by the author stays unchanged. This task authorizes no paid calls and no active live changes; author approval is needed before implementation because it introduces a new two-stage runtime/wire contract.
+The local mocked Check resolves explicit narrowing once, personal help has no invented public-only restriction, scope proofs are accurate, all IDs have provenance, domain output cannot impersonate scope/location facts, and old replay stays intact. Tests establish contract/handler behavior, not truthful model reasoning. The model chosen by the author stays unchanged. This task authorizes no paid calls and no active live changes; the author explicitly approved the new two-stage runtime/wire contract on 2026-11-17.
+
+
+## Status log
+
+- 2026-11-17: author approved emulator-only staged integration. Feature worktree `A:/BackUp/isr-mvp/worktrees/wt-m3-staged-runtime`, branch `codex/m3-staged-runtime`, based on evaluation head `9f4af19` / draft PR #42. Production modules do not import experiment modules; old one-call helper, schema/prompt and recorded model outputs remain available unchanged.
+- Implemented two explicit LOW stages with strict duplicate-aware parsing, source-only effective-decision hashes, complete typed verdicts and shared unchanged scope compatibility. Stage-one scope/location feed the existing resolver. Domain exclusions are attributed model judgments. Full original/raw responses, receipt hashes/usage and provenance are retained; Check records completed stages before downstream vector/population work can fail.
+- New unfinished drafts bind current staged contract and receipt/projection hashes; old unfinished drafts require Check. Completed replay and frozen historical Join retain their prior behavior. Auto-resolved location changes between Check and Create do not change the text-only decision binding.
+- Required suites and isolated fake-SDK emulator results: [implementation evidence](M3-staged-runtime-report.md). No paid generation/embedding/geocoding, key access, deploy, rules edit, production write or full-population import. Actual model quality, human UI acceptance and 9,150-person capacity remain unproven.
+
+- 2026-11-17: Final local verification: Node 220 passed / six optional skips (226 total); Python 140 run / two optional skips; isolated actual-handler and staged location/provenance emulator suites both passed; final focused staged contract tests 10/10 passed. No paid calls or production mutations.
+
+- 2026-11-17: opened draft implementation [PR #43](https://github.com/SergiiPonomarchuk/isr-mvp/pull/43), stacked on #42. Runtime commit `e1acc5d` passed Node/Python CI. Human mock-preview acceptance remains next; no merge/deploy is authorized.
+
+- 2026-11-17 browser continuation: author said `ok, go`; creation was already complete when reopened. Agent verified the opened 20-member list and independently checked stored narrowing/source receipts and public scores. Screenshot and read-only audit are recorded in M3-staged-runtime-report.md. No further paid/live action or merge is authorized.
+
+- 2026-11-17 merge authorization: author explicitly requested #42 then #43. #42 merged as `e19bfc02920fdc04b1134878b050afff4124449b`; #43 retargeted to main with a conflict-free identical code-tree preview. Final-head CI/merge receipt are checked through GitHub. No deployment or additional paid allowance follows from these merges.

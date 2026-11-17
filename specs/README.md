@@ -7,6 +7,8 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
+Current M3 work: [approved staged runtime integration](tasks/M3-emulator-staged-integration.md) is implemented on an emulator-only feature branch with [mocked evidence and human preview steps](tasks/M3-staged-runtime-report.md). No paid calls or deployment; full-population and real-model quality remain gated.
+
 Created by task S0 (`tasks/S0-restructure-specs.md`). Every component file states the commit its as-built evidence was checked against. The audited code state is commit `0620f27` (PD-6).
 
 ---

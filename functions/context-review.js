@@ -4,6 +4,7 @@ const VERSION="mr1-context-review-1";
 const {PROPERTY_KINDS,EMPLOYMENT_STATUSES,FAMILY_STATUSES}=require("./demographics");
 const {ANCHORS}=require("./location");
 const {PROMPT_VERSION,SCOPES,DEMOGRAPHIC_FIELDS,responseSchema}=require("./context-schema");
+const {compatible}=require("./scope-compatibility");
 const schemaHash=()=>hash(responseSchema());
 const fail=(message,status=503)=>{throw Object.assign(new Error(message),{status,code:"invalid_analysis"});};
 function canonical(v){if(Array.isArray(v))return v.map(canonical);if(v && typeof v==="object")return Object.fromEntries(Object.keys(v).sort().map(k=>[k,canonical(v[k])]));return v;}
@@ -60,7 +61,7 @@ function validate(raw,input,ranked,library){
  const accepted=raw.accepted.map(a=>{
   const ex=byId.get(String(a.id));if(!ex || !aspects[a.aspect_id])fail("Unknown reviewed reference/aspect");
   const p=ex.params,scope=p.classification.scope_type;
-  if(scope!==raw.scope && !(scope==="unit" && raw.scope==="building") && !(scope==="building" && raw.scope==="unit"))fail("Incompatible reference scope");
+  if(!compatible(scope,raw.scope))fail("Incompatible reference scope");
   const rw=p.relevance_weights,aw=p.aggregation_weights,g=p.geographic_parameters;
   const adj=p.expertise_domain_parameters.CBC_adjustment_factor;
   if(typeof adj!=="number" || !Number.isFinite(adj) || adj<=0)fail("Invalid reference CBC adjustment");

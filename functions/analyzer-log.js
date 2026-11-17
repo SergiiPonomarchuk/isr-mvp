@@ -1,5 +1,5 @@
 /**
- * Task A4 (R7): one analyzer_logs document per Analyzer call. Pure, so it can be tested.
+ * Task A4 (R7): one analyzer_logs receipt per Analyzer operation; staged calls have individual records. Pure, so it can be tested.
  * The collection is server-only (firestore.rules). The entry holds the issue text the
  * submitter typed and the submitter's id, never names or other profile fields.
  */
@@ -47,6 +47,7 @@ function buildAnalyzerLog(a) {
     normalized_output: a.normalized || null,
     shown_parameters: a.shown || null,
     usage: meta.usage || null,
+    ...(Array.isArray(meta.stages)?{request_count:meta.request_count,thinking_config:meta.thinking_config,stages:meta.stages}:{}),
     error: meta.error || null,
     embedding: a.embedding ? {
       ok: !!a.embedding.ok,

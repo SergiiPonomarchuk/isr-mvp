@@ -1,5 +1,13 @@
 # CHANGES
 
+## 2026-11-17 - Staged Analyzer local acceptance and ordered merge authorization
+
+The local created public/member list and independent 20-member score audit pass. Author explicitly authorized PR #42 followed by #43. #42 merged as e19bfc0; #43 now targets main with an identical conflict-free tested code tree. Final-head CI/merge receipt are verified through GitHub. Deployment, new paid calls and full-population acceptance remain gated.
+
+## 2026-11-17 - Emulator-only staged Analyzer integration
+
+Implemented the approved two-stage LOW context contract with server-bound source facts, unchanged scope proofs, typed domain judgments, full receipts/provenance and unfinished-draft recheck. Check/Create/Join and location/clarification/storage scenarios pass on isolated Firestore with fake SDK/vectors/places. Old model records, completed replay and scoring math remain intact. Human preview review is pending; no paid call, deploy or production mutation. See specs/tasks/M3-staged-runtime-report.md.
+
 ## 2026-11-17 - Selected existing model LOW improves fixture; comparison canceled
 
 Followed author choice to keep cheapest gemini-3.1-flash-lite and move forward. One LOW check uses home and correct lock/choice handling, but four false scope reasons remain; no acceptance/repair/public writes. Cumulative 24 reviews, US$0.482644 reserved under original US$0.50 with full native-capacity thinking buffer. Prepared concrete emulator-only runtime/typed-reason integration plan instead of more model comparisons. See specs/tasks/M3-cheapest-low-report.md and M3-emulator-staged-integration.md.
