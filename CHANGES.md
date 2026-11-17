@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Offline two-case staged pilot preflight
+
+Prepared exact cached cases, request/schema bindings and a fail-closed pure guard with a proposed separate US$0.55 ceiling. Synthetic tests cover four-stage sequencing, duplicate/changed requests, malformed/truncated replies and accounting failures. No API/credential/database/deployment operation; execution adapter and new allowance remain gated. See specs/tasks/M3-two-stage-pilot.md.
+
 ## 2026-11-17 - Staged Analyzer local acceptance and ordered merge authorization
 
 The local created public/member list and independent 20-member score audit pass. Author explicitly authorized PR #42 followed by #43. #42 merged as e19bfc0; #43 now targets main with an identical conflict-free tested code tree. Final-head CI/merge receipt are verified through GitHub. Deployment, new paid calls and full-population acceptance remain gated.
