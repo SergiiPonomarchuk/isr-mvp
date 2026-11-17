@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Actual staged check completes coverage but fails factual quality
+
+Approved one request at 23 total reviews merged 19 actual domain rows plus 81 scope proofs, with no repeated choice. Eighteen false scope claims persisted under context reasons and the home anchor became named_place; semantic acceptance withheld, no model output repaired or member/public data written. US$0.368110 reserved under original US$0.50; review allowance exhausted. Preserved artifacts and proposed offline model-evaluation planning, not more paid prompt trials; see specs/tasks/M3-staged-check-report.md.
+
 ## 2026-11-17 - Offline staged review preserves full chain with scope proofs
 
 Implemented isolated decision fixtures, parity-tested scope predicate, immutable 81-proof/19-domain partition and strict complete merge. Domain request 14,742 bytes; no provider calls or application integration. Node 197 passed/five optional skips; Python 140 run/two skips. Original rankings, math, scope rules, models and library unchanged. Integration/trust/storage limits and optional exact 23-review check are documented, not authorized; see specs/tasks/M3-review-stages-offline.md.
