@@ -21,3 +21,5 @@ No paid runner invocation in this task. CLI is offline-only and refuses --apply.
 - Author explicitly approved the one-case quotation retest up to US$0.27 additional using the existing loader. Executed once: two real requests, both valid, source-backed aspect text and full 100-candidate coverage. Reviewed pass is limited to this input/run. Reported-token estimate US$0.003079; new reserved US$0.258048. Raw evidence preserved; no retry/score/public/deploy. See M3-one-case-retest-result.md.
 
 - Post-run verification: Node 236 passed / six optional skips (242 total); Python 140 run / two optional skips. Actual-result regression verifies literal quotation, no repeated questions, home/building and complete provenance. Artifact hashes recorded before staging. No further API request.
+
+- Author explicitly authorized merge PR #46. Its merge preview equals tested tree 1c5b69339007415967c18238db0e76a8194799a3 before this documentation-only checkpoint. Final-head CI/merge receipt are verified through GitHub. No deployment, additional paid calls or capacity redesign is authorized. Next development item is an offline capacity/memory design.

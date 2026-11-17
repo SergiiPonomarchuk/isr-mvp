@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - One-case retest merge authorized
+
+Author authorized PR #46. Its conflict-free main merge preview matches the tested tree; final CI/merge receipt are verified through GitHub. The case-specific quotation pass and immutable evidence are retained. No deployment, new paid allowance or full-population capacity change is included.
+
 ## 2026-11-17 - Real quotation-v2 retest passes the prior failing case
 
 Executed the explicitly approved two-call retest privately. Both stages pass with source-backed aspect text, home/building, no repeated question and full 81-rule/19-domain coverage. Reported-token estimate US$0.003079; reserved US$0.258048. Preserved raw evidence and added offline regression; no score/public/database write/deploy. General model and full-population acceptance remain gated. See specs/tasks/M3-one-case-retest-result.md.

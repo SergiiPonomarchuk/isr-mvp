@@ -4,11 +4,11 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: real quotation-v2 case passes; PR #46 review/merge next, 2026-11-17
+## Current checkpoint: quotation retest accepted; PR #46 merge authorized, 2026-11-17
 
 - Author explicitly approved US$0.27/two requests and existing loader. The actual retest passed stage resolution and strict domain merge, using submitted-source aspect **repair the entrance lock** with home/building and no repeated question. Coverage: 81 scope proofs + 19 typed domain declarations, reference 1 accepted, all 100 origins retained. [Actual result and limits](tasks/M3-one-case-retest-result.md).
 - New reported-token estimate US$0.003079; conservative new reservation US$0.258048, cumulative US$1.256788. Totals: 30 text reviews / 14 embedding texts / 14 embedding POSTs / 44 HTTP attempts. No retry, embeddings, database/scoring/publication/deploy. The two-call allowance is consumed.
-- Next: finish PR #46 evidence/CI, merge only on explicit author instruction. After that, prepare an offline design for existing full-population storage/atomic-commit and memory blockers; no redesign, import or deployment is implicit. General real-model reliability and full-population acceptance remain unproven. Earlier preparation notes below are historical.
+- Author explicitly authorized merge PR #46. Its main merge preview matches the tested code tree without conflicts; final-head CI and merge receipt are verified through GitHub. This checkpoint records authorization before the merge; no further confirmation is needed. After that, prepare an offline design for existing full-population storage/atomic-commit and memory blockers; no redesign, import or deployment is implicit. General real-model reliability and full-population acceptance remain unproven. Earlier preparation notes below are historical.
 
 - Author approved preparation after clarification that Gemini Flash-Lite LOW is the application model, not the Codex selection. No setting change required. Branch codex/m3-one-case-retest starts from merged main 816f36a; #44/#45 are merged and main CI passed.
 - [One-case task and exact limits](tasks/M3-one-case-retest.md): only compound-lock-software-clarified; source-bound cached input/ranking/library and merged staged prompt v2. Proposed new cap US$0.27, up to two text HTTP attempts, no retries/repair, zero embeddings/geocoding/Firestore/publication/deployment. New maximum reservation US$0.258048. Historical 28 text reviews / 42 HTTP attempts / US$0.998740 reserved remain intact; no old approval is reused.
