@@ -1,0 +1,24 @@
+{
+  "status": "validated_pending_semantic_review",
+  "stop_reason": null,
+  "totals": {
+    "reviews": 24,
+    "embeddingTexts": 14,
+    "embeddingPosts": 14,
+    "reserved_usd_micros": 482644,
+    "transport_attempts": 38
+  },
+  "conservative_reserved_usd": 0.482644,
+  "reported_token_totals": {
+    "promptTokenCount": 65139,
+    "candidatesTokenCount": 11620,
+    "totalTokenCount": 78327,
+    "thoughtsTokenCount": 1568
+  },
+  "reported_cost_usd": 0.036074,
+  "usage_complete": false,
+  "new_embedding_texts": 0,
+  "firestore_rpcs": 0,
+  "production_writes": 0,
+  "deployment_ready": false
+}

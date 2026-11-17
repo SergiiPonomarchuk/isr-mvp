@@ -1,0 +1,3550 @@
+{
+  "version": "review-stages-offline-1",
+  "fixture_only": false,
+  "decision": {
+    "version": "review-stages-offline-1",
+    "fixture_only": true,
+    "origin": "author_confirmed_fixture",
+    "original_input": {
+      "title": "Repair the entrance lock and choose an open-source roadmap",
+      "description": "Repair our apartment entrance lock at osbb 2, h12, and in the same decision choose the worldwide open-source software project roadmap for the next year.",
+      "clarification": "For this issue, decide only how to repair the entrance lock at osbb 2, h12. The software-roadmap decision will be registered separately and is outside this issue.",
+      "submitterId": "2",
+      "location": [
+        47.5937,
+        7.6217
+      ],
+      "location_source": "creator"
+    },
+    "input_hash": "85c4e0f44dbc457614d1a8ac211c67dc06ce5b2695bf45f7d9ec7743a77d853f",
+    "status": "resolved",
+    "unresolved_facts": [],
+    "contradictions": [],
+    "decision": {
+      "field": "clarification",
+      "quote": "decide only how to repair the entrance lock at osbb 2, h12."
+    },
+    "scope": "building",
+    "scope_evidence": {
+      "field": "description",
+      "quote": "our apartment entrance lock at osbb 2, h12"
+    },
+    "affected_place": {
+      "field": "clarification",
+      "quote": "osbb 2, h12"
+    },
+    "affected_group": null,
+    "seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57"
+  },
+  "plan": {
+    "version": "review-stages-offline-1",
+    "fixture_only": true,
+    "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+    "input_hash": "85c4e0f44dbc457614d1a8ac211c67dc06ce5b2695bf45f7d9ec7743a77d853f",
+    "ranked_hash": "93088c364cf25f9d54371901792af89a8252fd3b602172e09600726f86e059d4",
+    "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+    "raw_chain": [
+      {
+        "id": "1",
+        "score": 0.7409257415371802
+      },
+      {
+        "id": "90",
+        "score": 0.7097540918537608
+      },
+      {
+        "id": "10",
+        "score": 0.6960398080294413
+      },
+      {
+        "id": "35",
+        "score": 0.6613544102383325
+      },
+      {
+        "id": "15",
+        "score": 0.6602509755328074
+      },
+      {
+        "id": "4",
+        "score": 0.659234499530471
+      },
+      {
+        "id": "2",
+        "score": 0.6571216486004865
+      },
+      {
+        "id": "89",
+        "score": 0.6554608866521372
+      },
+      {
+        "id": "47",
+        "score": 0.6527715315954856
+      },
+      {
+        "id": "7",
+        "score": 0.6480074627825242
+      },
+      {
+        "id": "56",
+        "score": 0.6471983161430841
+      },
+      {
+        "id": "67",
+        "score": 0.6465685549077136
+      },
+      {
+        "id": "14",
+        "score": 0.6463903411093745
+      },
+      {
+        "id": "3",
+        "score": 0.6450557588248088
+      },
+      {
+        "id": "12",
+        "score": 0.6425166201806272
+      },
+      {
+        "id": "95",
+        "score": 0.6418919065930029
+      },
+      {
+        "id": "13",
+        "score": 0.6388852006990635
+      },
+      {
+        "id": "77",
+        "score": 0.6375875269831999
+      },
+      {
+        "id": "5",
+        "score": 0.6374550089599414
+      },
+      {
+        "id": "39",
+        "score": 0.6366259944872368
+      },
+      {
+        "id": "17",
+        "score": 0.6350091512464318
+      },
+      {
+        "id": "16",
+        "score": 0.6333260202239157
+      },
+      {
+        "id": "11",
+        "score": 0.632272797516875
+      },
+      {
+        "id": "78",
+        "score": 0.6306305248970947
+      },
+      {
+        "id": "6",
+        "score": 0.6297644677053461
+      },
+      {
+        "id": "19",
+        "score": 0.6290993939448023
+      },
+      {
+        "id": "82",
+        "score": 0.6281947881617036
+      },
+      {
+        "id": "99",
+        "score": 0.6275847570180192
+      },
+      {
+        "id": "97",
+        "score": 0.6274801838025681
+      },
+      {
+        "id": "36",
+        "score": 0.6272826970814654
+      },
+      {
+        "id": "74",
+        "score": 0.6257169986509044
+      },
+      {
+        "id": "96",
+        "score": 0.6244515672406162
+      },
+      {
+        "id": "84",
+        "score": 0.6237489509610692
+      },
+      {
+        "id": "52",
+        "score": 0.6215758767403942
+      },
+      {
+        "id": "94",
+        "score": 0.621227874197664
+      },
+      {
+        "id": "60",
+        "score": 0.6205078285708365
+      },
+      {
+        "id": "32",
+        "score": 0.6203567685974588
+      },
+      {
+        "id": "8",
+        "score": 0.6201078127514728
+      },
+      {
+        "id": "83",
+        "score": 0.6200995725461823
+      },
+      {
+        "id": "81",
+        "score": 0.6200294886518791
+      },
+      {
+        "id": "26",
+        "score": 0.6185530857089833
+      },
+      {
+        "id": "18",
+        "score": 0.6165294216030098
+      },
+      {
+        "id": "98",
+        "score": 0.6158744520174048
+      },
+      {
+        "id": "20",
+        "score": 0.6154547967688181
+      },
+      {
+        "id": "87",
+        "score": 0.6141916510648698
+      },
+      {
+        "id": "92",
+        "score": 0.6140421478216794
+      },
+      {
+        "id": "75",
+        "score": 0.6133726951986597
+      },
+      {
+        "id": "70",
+        "score": 0.6128202796200793
+      },
+      {
+        "id": "86",
+        "score": 0.612520918467785
+      },
+      {
+        "id": "24",
+        "score": 0.6121808855005397
+      },
+      {
+        "id": "64",
+        "score": 0.6117309810397625
+      },
+      {
+        "id": "34",
+        "score": 0.6116089386118663
+      },
+      {
+        "id": "23",
+        "score": 0.6105811337839135
+      },
+      {
+        "id": "54",
+        "score": 0.6104694442815778
+      },
+      {
+        "id": "27",
+        "score": 0.6103464043238047
+      },
+      {
+        "id": "51",
+        "score": 0.6102120449966862
+      },
+      {
+        "id": "21",
+        "score": 0.6095330652746731
+      },
+      {
+        "id": "25",
+        "score": 0.6093378642591021
+      },
+      {
+        "id": "33",
+        "score": 0.6086901756223104
+      },
+      {
+        "id": "9",
+        "score": 0.6085308937879818
+      },
+      {
+        "id": "88",
+        "score": 0.608047276057977
+      },
+      {
+        "id": "22",
+        "score": 0.6074761339679454
+      },
+      {
+        "id": "55",
+        "score": 0.6070176539284521
+      },
+      {
+        "id": "50",
+        "score": 0.606775897550061
+      },
+      {
+        "id": "41",
+        "score": 0.605182941719356
+      },
+      {
+        "id": "62",
+        "score": 0.6049252976934684
+      },
+      {
+        "id": "76",
+        "score": 0.6047378991253729
+      },
+      {
+        "id": "93",
+        "score": 0.604072843577115
+      },
+      {
+        "id": "58",
+        "score": 0.6040519347072218
+      },
+      {
+        "id": "59",
+        "score": 0.6040228254172815
+      },
+      {
+        "id": "30",
+        "score": 0.6026393955507976
+      },
+      {
+        "id": "71",
+        "score": 0.6026277599005223
+      },
+      {
+        "id": "57",
+        "score": 0.6013639597919922
+      },
+      {
+        "id": "65",
+        "score": 0.6010829045109984
+      },
+      {
+        "id": "72",
+        "score": 0.6000320392823323
+      },
+      {
+        "id": "69",
+        "score": 0.5997990481356791
+      },
+      {
+        "id": "63",
+        "score": 0.599541435344759
+      },
+      {
+        "id": "91",
+        "score": 0.5986410754528172
+      },
+      {
+        "id": "68",
+        "score": 0.5970956007327559
+      },
+      {
+        "id": "38",
+        "score": 0.5968739394453643
+      },
+      {
+        "id": "29",
+        "score": 0.5954182348515229
+      },
+      {
+        "id": "49",
+        "score": 0.5949039465503152
+      },
+      {
+        "id": "42",
+        "score": 0.5944723314010347
+      },
+      {
+        "id": "31",
+        "score": 0.5935406088985975
+      },
+      {
+        "id": "66",
+        "score": 0.5909597276986026
+      },
+      {
+        "id": "73",
+        "score": 0.5898913366032658
+      },
+      {
+        "id": "53",
+        "score": 0.5893421596727623
+      },
+      {
+        "id": "85",
+        "score": 0.5884484215370455
+      },
+      {
+        "id": "61",
+        "score": 0.5875991119407168
+      },
+      {
+        "id": "45",
+        "score": 0.587270536118999
+      },
+      {
+        "id": "79",
+        "score": 0.5867843223213144
+      },
+      {
+        "id": "40",
+        "score": 0.5867640190025264
+      },
+      {
+        "id": "43",
+        "score": 0.5852684614521869
+      },
+      {
+        "id": "100",
+        "score": 0.5846465709879025
+      },
+      {
+        "id": "80",
+        "score": 0.5823952943533296
+      },
+      {
+        "id": "37",
+        "score": 0.5811362140580809
+      },
+      {
+        "id": "48",
+        "score": 0.5808508134334952
+      },
+      {
+        "id": "46",
+        "score": 0.5781392807247363
+      },
+      {
+        "id": "44",
+        "score": 0.5766921654529593
+      },
+      {
+        "id": "28",
+        "score": 0.5689677524999561
+      }
+    ],
+    "compatible_ids": [
+      "1",
+      "10",
+      "15",
+      "4",
+      "2",
+      "7",
+      "14",
+      "3",
+      "12",
+      "13",
+      "5",
+      "17",
+      "16",
+      "6",
+      "19",
+      "8",
+      "18",
+      "20",
+      "9"
+    ],
+    "scope_proofs": {
+      "11": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "11",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "21": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "21",
+        "issue_scope": "building",
+        "reference_scope": "street_segment",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "22": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "22",
+        "issue_scope": "building",
+        "reference_scope": "street_segment",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "23": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "23",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "24": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "24",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "25": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "25",
+        "issue_scope": "building",
+        "reference_scope": "street_segment",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "26": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "26",
+        "issue_scope": "building",
+        "reference_scope": "street_segment",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "27": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "27",
+        "issue_scope": "building",
+        "reference_scope": "street_segment",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "28": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "28",
+        "issue_scope": "building",
+        "reference_scope": "street_segment",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "29": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "29",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "30": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "30",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "31": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "31",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "32": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "32",
+        "issue_scope": "building",
+        "reference_scope": "street_segment",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "33": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "33",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "34": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "34",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "35": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "35",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "36": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "36",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "37": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "37",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "38": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "38",
+        "issue_scope": "building",
+        "reference_scope": "district",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "39": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "39",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "40": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "40",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "41": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "41",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "42": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "42",
+        "issue_scope": "building",
+        "reference_scope": "district",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "43": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "43",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "44": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "44",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "45": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "45",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "46": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "46",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "47": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "47",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "48": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "48",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "49": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "49",
+        "issue_scope": "building",
+        "reference_scope": "district",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "50": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "50",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "51": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "51",
+        "issue_scope": "building",
+        "reference_scope": "city",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "52": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "52",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "53": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "53",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "54": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "54",
+        "issue_scope": "building",
+        "reference_scope": "district",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "55": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "55",
+        "issue_scope": "building",
+        "reference_scope": "city",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "56": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "56",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "57": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "57",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "58": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "58",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "59": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "59",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "60": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "60",
+        "issue_scope": "building",
+        "reference_scope": "district",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "61": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "61",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "62": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "62",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "63": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "63",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "64": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "64",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "65": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "65",
+        "issue_scope": "building",
+        "reference_scope": "district",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "66": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "66",
+        "issue_scope": "building",
+        "reference_scope": "district",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "67": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "67",
+        "issue_scope": "building",
+        "reference_scope": "district",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "68": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "68",
+        "issue_scope": "building",
+        "reference_scope": "district",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "69": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "69",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "70": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "70",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "71": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "71",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "72": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "72",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "73": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "73",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "74": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "74",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "75": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "75",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "76": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "76",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "77": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "77",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "78": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "78",
+        "issue_scope": "building",
+        "reference_scope": "city",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "79": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "79",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "80": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "80",
+        "issue_scope": "building",
+        "reference_scope": "global_digital",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "81": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "81",
+        "issue_scope": "building",
+        "reference_scope": "district",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "82": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "82",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "83": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "83",
+        "issue_scope": "building",
+        "reference_scope": "district",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "84": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "84",
+        "issue_scope": "building",
+        "reference_scope": "district",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "85": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "85",
+        "issue_scope": "building",
+        "reference_scope": "region",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope region is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "86": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "86",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "87": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "87",
+        "issue_scope": "building",
+        "reference_scope": "city",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "88": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "88",
+        "issue_scope": "building",
+        "reference_scope": "city",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "89": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "89",
+        "issue_scope": "building",
+        "reference_scope": "global_digital",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "90": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "90",
+        "issue_scope": "building",
+        "reference_scope": "global_digital",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "91": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "91",
+        "issue_scope": "building",
+        "reference_scope": "global_digital",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "92": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "92",
+        "issue_scope": "building",
+        "reference_scope": "city",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "93": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "93",
+        "issue_scope": "building",
+        "reference_scope": "global_digital",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "94": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "94",
+        "issue_scope": "building",
+        "reference_scope": "neighborhood",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "95": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "95",
+        "issue_scope": "building",
+        "reference_scope": "city",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "96": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "96",
+        "issue_scope": "building",
+        "reference_scope": "city",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "97": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "97",
+        "issue_scope": "building",
+        "reference_scope": "city",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "98": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "98",
+        "issue_scope": "building",
+        "reference_scope": "district",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "99": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "99",
+        "issue_scope": "building",
+        "reference_scope": "global_digital",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1."
+      },
+      "100": {
+        "origin": "scope_rule",
+        "rule_version": "equal-or-unit-building-1",
+        "reference_id": "100",
+        "issue_scope": "building",
+        "reference_scope": "city",
+        "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+        "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+        "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+      }
+    },
+    "seal": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d"
+  },
+  "domain_response": {
+    "result": "pass",
+    "message": "The issue regarding the entrance lock repair at the specified building is addressed by the relevant reference.",
+    "questions": [],
+    "location_reference": {
+      "anchor": "home",
+      "place": ""
+    },
+    "aspects": [
+      {
+        "id": "lock_repair",
+        "text": "repair the entrance lock at osbb 2, h12",
+        "demographics": {
+          "minAge": null,
+          "maxAge": null,
+          "employmentStatus": "any",
+          "familyStatus": "any",
+          "features": [],
+          "places": [],
+          "property_kinds": []
+        },
+        "demographic_evidence": []
+      }
+    ],
+    "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+    "reviews": {
+      "1": "a:lock_repair:repair the entrance lock at osbb 2, h12",
+      "2": "x:decision:Irrelevant topic",
+      "3": "x:decision:Irrelevant topic",
+      "4": "x:decision:Irrelevant topic",
+      "5": "x:decision:Irrelevant topic",
+      "6": "x:decision:Irrelevant topic",
+      "7": "x:decision:Irrelevant topic",
+      "8": "x:decision:Irrelevant topic",
+      "9": "x:decision:Scope mismatch (unit vs building)",
+      "10": "x:decision:Scope mismatch (unit vs building)",
+      "12": "x:decision:Scope mismatch (unit vs building)",
+      "13": "x:decision:Irrelevant topic",
+      "14": "x:decision:Irrelevant topic",
+      "15": "x:decision:Scope mismatch (unit vs building)",
+      "16": "x:decision:Irrelevant topic",
+      "17": "x:decision:Irrelevant topic",
+      "18": "x:decision:Irrelevant topic",
+      "19": "x:decision:Irrelevant topic",
+      "20": "x:decision:Irrelevant topic"
+    }
+  },
+  "combined_reviews": {
+    "1": "a:lock_repair:repair the entrance lock at osbb 2, h12",
+    "2": "x:Irrelevant topic",
+    "3": "x:Irrelevant topic",
+    "4": "x:Irrelevant topic",
+    "5": "x:Irrelevant topic",
+    "6": "x:Irrelevant topic",
+    "7": "x:Irrelevant topic",
+    "8": "x:Irrelevant topic",
+    "9": "x:Scope mismatch (unit vs building)",
+    "10": "x:Scope mismatch (unit vs building)",
+    "11": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "12": "x:Scope mismatch (unit vs building)",
+    "13": "x:Irrelevant topic",
+    "14": "x:Irrelevant topic",
+    "15": "x:Scope mismatch (unit vs building)",
+    "16": "x:Irrelevant topic",
+    "17": "x:Irrelevant topic",
+    "18": "x:Irrelevant topic",
+    "19": "x:Irrelevant topic",
+    "20": "x:Irrelevant topic",
+    "21": "x:Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "22": "x:Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "23": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "24": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "25": "x:Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "26": "x:Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "27": "x:Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "28": "x:Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "29": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "30": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "31": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "32": "x:Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "33": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "34": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "35": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "36": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "37": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "38": "x:Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "39": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "40": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "41": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "42": "x:Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "43": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "44": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "45": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "46": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "47": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "48": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "49": "x:Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "50": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "51": "x:Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "52": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "53": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "54": "x:Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "55": "x:Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "56": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "57": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "58": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "59": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "60": "x:Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "61": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "62": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "63": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "64": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "65": "x:Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "66": "x:Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "67": "x:Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "68": "x:Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "69": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "70": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "71": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "72": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "73": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "74": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "75": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "76": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "77": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "78": "x:Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "79": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "80": "x:Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "81": "x:Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "82": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "83": "x:Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "84": "x:Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "85": "x:Reference scope region is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "86": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "87": "x:Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "88": "x:Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "89": "x:Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "90": "x:Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "91": "x:Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "92": "x:Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "93": "x:Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "94": "x:Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "95": "x:Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "96": "x:Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "97": "x:Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "98": "x:Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "99": "x:Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+    "100": "x:Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+  },
+  "provenance": {
+    "1": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "a:lock_repair:repair the entrance lock at osbb 2, h12",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "2": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Irrelevant topic",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "3": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Irrelevant topic",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "4": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Irrelevant topic",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "5": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Irrelevant topic",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "6": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Irrelevant topic",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "7": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Irrelevant topic",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "8": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Irrelevant topic",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "9": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Scope mismatch (unit vs building)",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "10": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Scope mismatch (unit vs building)",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "11": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "11",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "12": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Scope mismatch (unit vs building)",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "13": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Irrelevant topic",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "14": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Irrelevant topic",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "15": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Scope mismatch (unit vs building)",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "16": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Irrelevant topic",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "17": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Irrelevant topic",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "18": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Irrelevant topic",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "19": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Irrelevant topic",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "20": {
+      "origin": "domain_model",
+      "plan_hash": "b722cc1c7b53fbf295ba3eca594f8725157f4d2b457da557ca8029dc52871b5d",
+      "raw_response_sha256": "e8067e597f69180ba103ad51a6d4320ffe25538d4e06901d5b8fab97c928f0fb",
+      "verdict": "x:decision:Irrelevant topic",
+      "model": "gemini-3.1-flash-lite",
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    "21": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "21",
+      "issue_scope": "building",
+      "reference_scope": "street_segment",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "22": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "22",
+      "issue_scope": "building",
+      "reference_scope": "street_segment",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "23": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "23",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "24": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "24",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "25": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "25",
+      "issue_scope": "building",
+      "reference_scope": "street_segment",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "26": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "26",
+      "issue_scope": "building",
+      "reference_scope": "street_segment",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "27": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "27",
+      "issue_scope": "building",
+      "reference_scope": "street_segment",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "28": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "28",
+      "issue_scope": "building",
+      "reference_scope": "street_segment",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "29": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "29",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "30": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "30",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "31": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "31",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "32": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "32",
+      "issue_scope": "building",
+      "reference_scope": "street_segment",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "33": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "33",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "34": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "34",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "35": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "35",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "36": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "36",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "37": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "37",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "38": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "38",
+      "issue_scope": "building",
+      "reference_scope": "district",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "39": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "39",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "40": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "40",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "41": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "41",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "42": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "42",
+      "issue_scope": "building",
+      "reference_scope": "district",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "43": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "43",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "44": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "44",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "45": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "45",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "46": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "46",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "47": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "47",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "48": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "48",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "49": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "49",
+      "issue_scope": "building",
+      "reference_scope": "district",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "50": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "50",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "51": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "51",
+      "issue_scope": "building",
+      "reference_scope": "city",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "52": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "52",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "53": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "53",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "54": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "54",
+      "issue_scope": "building",
+      "reference_scope": "district",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "55": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "55",
+      "issue_scope": "building",
+      "reference_scope": "city",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "56": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "56",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "57": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "57",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "58": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "58",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "59": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "59",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "60": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "60",
+      "issue_scope": "building",
+      "reference_scope": "district",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "61": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "61",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "62": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "62",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "63": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "63",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "64": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "64",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "65": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "65",
+      "issue_scope": "building",
+      "reference_scope": "district",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "66": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "66",
+      "issue_scope": "building",
+      "reference_scope": "district",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "67": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "67",
+      "issue_scope": "building",
+      "reference_scope": "district",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "68": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "68",
+      "issue_scope": "building",
+      "reference_scope": "district",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "69": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "69",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "70": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "70",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "71": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "71",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "72": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "72",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "73": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "73",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "74": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "74",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "75": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "75",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "76": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "76",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "77": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "77",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "78": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "78",
+      "issue_scope": "building",
+      "reference_scope": "city",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "79": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "79",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "80": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "80",
+      "issue_scope": "building",
+      "reference_scope": "global_digital",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "81": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "81",
+      "issue_scope": "building",
+      "reference_scope": "district",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "82": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "82",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "83": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "83",
+      "issue_scope": "building",
+      "reference_scope": "district",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "84": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "84",
+      "issue_scope": "building",
+      "reference_scope": "district",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "85": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "85",
+      "issue_scope": "building",
+      "reference_scope": "region",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope region is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "86": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "86",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "87": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "87",
+      "issue_scope": "building",
+      "reference_scope": "city",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "88": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "88",
+      "issue_scope": "building",
+      "reference_scope": "city",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "89": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "89",
+      "issue_scope": "building",
+      "reference_scope": "global_digital",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "90": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "90",
+      "issue_scope": "building",
+      "reference_scope": "global_digital",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "91": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "91",
+      "issue_scope": "building",
+      "reference_scope": "global_digital",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "92": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "92",
+      "issue_scope": "building",
+      "reference_scope": "city",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "93": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "93",
+      "issue_scope": "building",
+      "reference_scope": "global_digital",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "94": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "94",
+      "issue_scope": "building",
+      "reference_scope": "neighborhood",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "95": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "95",
+      "issue_scope": "building",
+      "reference_scope": "city",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "96": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "96",
+      "issue_scope": "building",
+      "reference_scope": "city",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "97": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "97",
+      "issue_scope": "building",
+      "reference_scope": "city",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "98": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "98",
+      "issue_scope": "building",
+      "reference_scope": "district",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "99": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "99",
+      "issue_scope": "building",
+      "reference_scope": "global_digital",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "100": {
+      "origin": "scope_rule",
+      "rule_version": "equal-or-unit-building-1",
+      "reference_id": "100",
+      "issue_scope": "building",
+      "reference_scope": "city",
+      "decision_seal": "39109c4bdf810d94a3f4ee9b5bc73f9c31e29af3e4989851cf99cbb486e7aa57",
+      "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+      "reason": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+    }
+  },
+  "projection": {
+    "result": "pass",
+    "message": "The issue regarding the entrance lock repair at the specified building is addressed by the relevant reference.",
+    "questions": [],
+    "location_reference": {
+      "anchor": "home",
+      "place": ""
+    },
+    "aspects": [
+      {
+        "id": "lock_repair",
+        "text": "repair the entrance lock at osbb 2, h12",
+        "demographics": {
+          "minAge": null,
+          "maxAge": null,
+          "employmentStatus": "any",
+          "familyStatus": "any",
+          "features": [],
+          "places": [],
+          "property_kinds": []
+        },
+        "demographic_evidence": []
+      }
+    ],
+    "scope": "building",
+    "accepted": [
+      {
+        "id": "1",
+        "aspect_id": "lock_repair",
+        "evidence": "repair the entrance lock at osbb 2, h12"
+      }
+    ],
+    "excluded": {
+      "2": "Irrelevant topic",
+      "3": "Irrelevant topic",
+      "4": "Irrelevant topic",
+      "5": "Irrelevant topic",
+      "6": "Irrelevant topic",
+      "7": "Irrelevant topic",
+      "8": "Irrelevant topic",
+      "9": "Scope mismatch (unit vs building)",
+      "10": "Scope mismatch (unit vs building)",
+      "11": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "12": "Scope mismatch (unit vs building)",
+      "13": "Irrelevant topic",
+      "14": "Irrelevant topic",
+      "15": "Scope mismatch (unit vs building)",
+      "16": "Irrelevant topic",
+      "17": "Irrelevant topic",
+      "18": "Irrelevant topic",
+      "19": "Irrelevant topic",
+      "20": "Irrelevant topic",
+      "21": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "22": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "23": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "24": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "25": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "26": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "27": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "28": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "29": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "30": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "31": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "32": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "33": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "34": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "35": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "36": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "37": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "38": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "39": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "40": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "41": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "42": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "43": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "44": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "45": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "46": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "47": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "48": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "49": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "50": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "51": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "52": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "53": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "54": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "55": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "56": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "57": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "58": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "59": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "60": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "61": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "62": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "63": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "64": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "65": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "66": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "67": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "68": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "69": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "70": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "71": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "72": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "73": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "74": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "75": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "76": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "77": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "78": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "79": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "80": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "81": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "82": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "83": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "84": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "85": "Reference scope region is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "86": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "87": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "88": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "89": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "90": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "91": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "92": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "93": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "94": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "95": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "96": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "97": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "98": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "99": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "100": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+    }
+  },
+  "validated": {
+    "result": "pass",
+    "model": {
+      "refs": [
+        {
+          "id": "1",
+          "evidence": "repair the entrance lock at osbb 2, h12",
+          "aspect_id": "lock_repair",
+          "cbc_adjustment": 0.9,
+          "reference_title": "House entrance lock broken (shared front door)",
+          "expertise_domain": "locksmith.security",
+          "reference_classification": {
+            "issue_category": "building.security.locks",
+            "scope_type": "building",
+            "affected_roles": [
+              "tenant",
+              "visitor"
+            ],
+            "affected_vulnerabilities": [],
+            "technicality_level": "medium",
+            "safety_sensitivity": "high",
+            "digital_or_physical": "physical",
+            "expertise_domain": "locksmith.security",
+            "classification_reasoning": "Category 'building.security.locks' at 'building' scope. Physical/digital classification is 'physical'. Technicality level is 'medium' based on knowledge requirement, and safety sensitivity is 'high'."
+          },
+          "relevance": {
+            "D": 0.3,
+            "G": 0.5,
+            "S": 0.05,
+            "X": 0.15
+          },
+          "aggregation": {
+            "R": 0.7,
+            "E": 0.1,
+            "C": 0.2
+          },
+          "mu": 40,
+          "sigma": 30,
+          "alpha": 1
+        }
+      ],
+      "relevance": {
+        "D": 0.3,
+        "G": 0.5,
+        "S": 0.05,
+        "X": 0.15
+      },
+      "aggregation": {
+        "R": 0.7,
+        "E": 0.1,
+        "C": 0.2
+      },
+      "mu": 40,
+      "sigma": 30
+    },
+    "aspects": {
+      "lock_repair": {
+        "id": "lock_repair",
+        "text": "repair the entrance lock at osbb 2, h12",
+        "demographics": {
+          "minAge": null,
+          "maxAge": null,
+          "employmentStatus": "any",
+          "familyStatus": "any",
+          "features": [],
+          "places": [],
+          "property_kinds": []
+        },
+        "demographic_evidence": []
+      }
+    },
+    "scope": "building",
+    "location_reference": {
+      "anchor": "home",
+      "place": ""
+    },
+    "prompt_version": "mr1-context-prompt-5",
+    "schema_sha256": "8c383deb989e7ae166ef02d55c5688558ae90069eec83293cdeef263d66ddf2c",
+    "classification": {
+      "issue_category": "building.security.locks",
+      "scope_type": "building",
+      "affected_roles": [
+        "tenant",
+        "visitor"
+      ],
+      "affected_vulnerabilities": [],
+      "technicality_level": "medium",
+      "safety_sensitivity": "high",
+      "digital_or_physical": "physical",
+      "expertise_domain": "locksmith.security",
+      "classification_reasoning": "Category 'building.security.locks' at 'building' scope. Physical/digital classification is 'physical'. Technicality level is 'medium' based on knowledge requirement, and safety sensitivity is 'high'."
+    },
+    "category": "building.security.locks",
+    "resources_needed": [
+      {
+        "resource_type": "money_budget",
+        "importance_level": "medium",
+        "explanation": "Financial budget is required to fund the activities, services, or materials."
+      },
+      {
+        "resource_type": "physical_equipment",
+        "importance_level": "medium",
+        "explanation": "Specific tools, replacement parts, and maintenance equipment are required."
+      }
+    ],
+    "expertise_domain": "locksmith.security",
+    "raw_chain": {
+      "ranked": [
+        {
+          "id": "1",
+          "score": 0.7409257415371802
+        },
+        {
+          "id": "90",
+          "score": 0.7097540918537608
+        },
+        {
+          "id": "10",
+          "score": 0.6960398080294413
+        },
+        {
+          "id": "35",
+          "score": 0.6613544102383325
+        },
+        {
+          "id": "15",
+          "score": 0.6602509755328074
+        },
+        {
+          "id": "4",
+          "score": 0.659234499530471
+        },
+        {
+          "id": "2",
+          "score": 0.6571216486004865
+        },
+        {
+          "id": "89",
+          "score": 0.6554608866521372
+        },
+        {
+          "id": "47",
+          "score": 0.6527715315954856
+        },
+        {
+          "id": "7",
+          "score": 0.6480074627825242
+        },
+        {
+          "id": "56",
+          "score": 0.6471983161430841
+        },
+        {
+          "id": "67",
+          "score": 0.6465685549077136
+        },
+        {
+          "id": "14",
+          "score": 0.6463903411093745
+        },
+        {
+          "id": "3",
+          "score": 0.6450557588248088
+        },
+        {
+          "id": "12",
+          "score": 0.6425166201806272
+        },
+        {
+          "id": "95",
+          "score": 0.6418919065930029
+        },
+        {
+          "id": "13",
+          "score": 0.6388852006990635
+        },
+        {
+          "id": "77",
+          "score": 0.6375875269831999
+        },
+        {
+          "id": "5",
+          "score": 0.6374550089599414
+        },
+        {
+          "id": "39",
+          "score": 0.6366259944872368
+        },
+        {
+          "id": "17",
+          "score": 0.6350091512464318
+        },
+        {
+          "id": "16",
+          "score": 0.6333260202239157
+        },
+        {
+          "id": "11",
+          "score": 0.632272797516875
+        },
+        {
+          "id": "78",
+          "score": 0.6306305248970947
+        },
+        {
+          "id": "6",
+          "score": 0.6297644677053461
+        },
+        {
+          "id": "19",
+          "score": 0.6290993939448023
+        },
+        {
+          "id": "82",
+          "score": 0.6281947881617036
+        },
+        {
+          "id": "99",
+          "score": 0.6275847570180192
+        },
+        {
+          "id": "97",
+          "score": 0.6274801838025681
+        },
+        {
+          "id": "36",
+          "score": 0.6272826970814654
+        },
+        {
+          "id": "74",
+          "score": 0.6257169986509044
+        },
+        {
+          "id": "96",
+          "score": 0.6244515672406162
+        },
+        {
+          "id": "84",
+          "score": 0.6237489509610692
+        },
+        {
+          "id": "52",
+          "score": 0.6215758767403942
+        },
+        {
+          "id": "94",
+          "score": 0.621227874197664
+        },
+        {
+          "id": "60",
+          "score": 0.6205078285708365
+        },
+        {
+          "id": "32",
+          "score": 0.6203567685974588
+        },
+        {
+          "id": "8",
+          "score": 0.6201078127514728
+        },
+        {
+          "id": "83",
+          "score": 0.6200995725461823
+        },
+        {
+          "id": "81",
+          "score": 0.6200294886518791
+        },
+        {
+          "id": "26",
+          "score": 0.6185530857089833
+        },
+        {
+          "id": "18",
+          "score": 0.6165294216030098
+        },
+        {
+          "id": "98",
+          "score": 0.6158744520174048
+        },
+        {
+          "id": "20",
+          "score": 0.6154547967688181
+        },
+        {
+          "id": "87",
+          "score": 0.6141916510648698
+        },
+        {
+          "id": "92",
+          "score": 0.6140421478216794
+        },
+        {
+          "id": "75",
+          "score": 0.6133726951986597
+        },
+        {
+          "id": "70",
+          "score": 0.6128202796200793
+        },
+        {
+          "id": "86",
+          "score": 0.612520918467785
+        },
+        {
+          "id": "24",
+          "score": 0.6121808855005397
+        },
+        {
+          "id": "64",
+          "score": 0.6117309810397625
+        },
+        {
+          "id": "34",
+          "score": 0.6116089386118663
+        },
+        {
+          "id": "23",
+          "score": 0.6105811337839135
+        },
+        {
+          "id": "54",
+          "score": 0.6104694442815778
+        },
+        {
+          "id": "27",
+          "score": 0.6103464043238047
+        },
+        {
+          "id": "51",
+          "score": 0.6102120449966862
+        },
+        {
+          "id": "21",
+          "score": 0.6095330652746731
+        },
+        {
+          "id": "25",
+          "score": 0.6093378642591021
+        },
+        {
+          "id": "33",
+          "score": 0.6086901756223104
+        },
+        {
+          "id": "9",
+          "score": 0.6085308937879818
+        },
+        {
+          "id": "88",
+          "score": 0.608047276057977
+        },
+        {
+          "id": "22",
+          "score": 0.6074761339679454
+        },
+        {
+          "id": "55",
+          "score": 0.6070176539284521
+        },
+        {
+          "id": "50",
+          "score": 0.606775897550061
+        },
+        {
+          "id": "41",
+          "score": 0.605182941719356
+        },
+        {
+          "id": "62",
+          "score": 0.6049252976934684
+        },
+        {
+          "id": "76",
+          "score": 0.6047378991253729
+        },
+        {
+          "id": "93",
+          "score": 0.604072843577115
+        },
+        {
+          "id": "58",
+          "score": 0.6040519347072218
+        },
+        {
+          "id": "59",
+          "score": 0.6040228254172815
+        },
+        {
+          "id": "30",
+          "score": 0.6026393955507976
+        },
+        {
+          "id": "71",
+          "score": 0.6026277599005223
+        },
+        {
+          "id": "57",
+          "score": 0.6013639597919922
+        },
+        {
+          "id": "65",
+          "score": 0.6010829045109984
+        },
+        {
+          "id": "72",
+          "score": 0.6000320392823323
+        },
+        {
+          "id": "69",
+          "score": 0.5997990481356791
+        },
+        {
+          "id": "63",
+          "score": 0.599541435344759
+        },
+        {
+          "id": "91",
+          "score": 0.5986410754528172
+        },
+        {
+          "id": "68",
+          "score": 0.5970956007327559
+        },
+        {
+          "id": "38",
+          "score": 0.5968739394453643
+        },
+        {
+          "id": "29",
+          "score": 0.5954182348515229
+        },
+        {
+          "id": "49",
+          "score": 0.5949039465503152
+        },
+        {
+          "id": "42",
+          "score": 0.5944723314010347
+        },
+        {
+          "id": "31",
+          "score": 0.5935406088985975
+        },
+        {
+          "id": "66",
+          "score": 0.5909597276986026
+        },
+        {
+          "id": "73",
+          "score": 0.5898913366032658
+        },
+        {
+          "id": "53",
+          "score": 0.5893421596727623
+        },
+        {
+          "id": "85",
+          "score": 0.5884484215370455
+        },
+        {
+          "id": "61",
+          "score": 0.5875991119407168
+        },
+        {
+          "id": "45",
+          "score": 0.587270536118999
+        },
+        {
+          "id": "79",
+          "score": 0.5867843223213144
+        },
+        {
+          "id": "40",
+          "score": 0.5867640190025264
+        },
+        {
+          "id": "43",
+          "score": 0.5852684614521869
+        },
+        {
+          "id": "100",
+          "score": 0.5846465709879025
+        },
+        {
+          "id": "80",
+          "score": 0.5823952943533296
+        },
+        {
+          "id": "37",
+          "score": 0.5811362140580809
+        },
+        {
+          "id": "48",
+          "score": 0.5808508134334952
+        },
+        {
+          "id": "46",
+          "score": 0.5781392807247363
+        },
+        {
+          "id": "44",
+          "score": 0.5766921654529593
+        },
+        {
+          "id": "28",
+          "score": 0.5689677524999561
+        }
+      ],
+      "chain": [
+        {
+          "id": "1",
+          "score": 0.7409257415371802
+        },
+        {
+          "id": "90",
+          "score": 0.7097540918537608
+        },
+        {
+          "id": "10",
+          "score": 0.6960398080294413
+        },
+        {
+          "id": "35",
+          "score": 0.6613544102383325
+        },
+        {
+          "id": "15",
+          "score": 0.6602509755328074
+        },
+        {
+          "id": "4",
+          "score": 0.659234499530471
+        },
+        {
+          "id": "2",
+          "score": 0.6571216486004865
+        },
+        {
+          "id": "89",
+          "score": 0.6554608866521372
+        },
+        {
+          "id": "47",
+          "score": 0.6527715315954856
+        },
+        {
+          "id": "7",
+          "score": 0.6480074627825242
+        },
+        {
+          "id": "56",
+          "score": 0.6471983161430841
+        },
+        {
+          "id": "67",
+          "score": 0.6465685549077136
+        },
+        {
+          "id": "14",
+          "score": 0.6463903411093745
+        },
+        {
+          "id": "3",
+          "score": 0.6450557588248088
+        },
+        {
+          "id": "12",
+          "score": 0.6425166201806272
+        },
+        {
+          "id": "95",
+          "score": 0.6418919065930029
+        },
+        {
+          "id": "13",
+          "score": 0.6388852006990635
+        },
+        {
+          "id": "77",
+          "score": 0.6375875269831999
+        },
+        {
+          "id": "5",
+          "score": 0.6374550089599414
+        },
+        {
+          "id": "39",
+          "score": 0.6366259944872368
+        },
+        {
+          "id": "17",
+          "score": 0.6350091512464318
+        },
+        {
+          "id": "16",
+          "score": 0.6333260202239157
+        },
+        {
+          "id": "11",
+          "score": 0.632272797516875
+        },
+        {
+          "id": "78",
+          "score": 0.6306305248970947
+        },
+        {
+          "id": "6",
+          "score": 0.6297644677053461
+        },
+        {
+          "id": "19",
+          "score": 0.6290993939448023
+        },
+        {
+          "id": "82",
+          "score": 0.6281947881617036
+        },
+        {
+          "id": "99",
+          "score": 0.6275847570180192
+        },
+        {
+          "id": "97",
+          "score": 0.6274801838025681
+        },
+        {
+          "id": "36",
+          "score": 0.6272826970814654
+        },
+        {
+          "id": "74",
+          "score": 0.6257169986509044
+        },
+        {
+          "id": "96",
+          "score": 0.6244515672406162
+        },
+        {
+          "id": "84",
+          "score": 0.6237489509610692
+        },
+        {
+          "id": "52",
+          "score": 0.6215758767403942
+        },
+        {
+          "id": "94",
+          "score": 0.621227874197664
+        },
+        {
+          "id": "60",
+          "score": 0.6205078285708365
+        },
+        {
+          "id": "32",
+          "score": 0.6203567685974588
+        },
+        {
+          "id": "8",
+          "score": 0.6201078127514728
+        },
+        {
+          "id": "83",
+          "score": 0.6200995725461823
+        },
+        {
+          "id": "81",
+          "score": 0.6200294886518791
+        },
+        {
+          "id": "26",
+          "score": 0.6185530857089833
+        },
+        {
+          "id": "18",
+          "score": 0.6165294216030098
+        },
+        {
+          "id": "98",
+          "score": 0.6158744520174048
+        },
+        {
+          "id": "20",
+          "score": 0.6154547967688181
+        },
+        {
+          "id": "87",
+          "score": 0.6141916510648698
+        },
+        {
+          "id": "92",
+          "score": 0.6140421478216794
+        },
+        {
+          "id": "75",
+          "score": 0.6133726951986597
+        },
+        {
+          "id": "70",
+          "score": 0.6128202796200793
+        },
+        {
+          "id": "86",
+          "score": 0.612520918467785
+        },
+        {
+          "id": "24",
+          "score": 0.6121808855005397
+        },
+        {
+          "id": "64",
+          "score": 0.6117309810397625
+        },
+        {
+          "id": "34",
+          "score": 0.6116089386118663
+        },
+        {
+          "id": "23",
+          "score": 0.6105811337839135
+        },
+        {
+          "id": "54",
+          "score": 0.6104694442815778
+        },
+        {
+          "id": "27",
+          "score": 0.6103464043238047
+        },
+        {
+          "id": "51",
+          "score": 0.6102120449966862
+        },
+        {
+          "id": "21",
+          "score": 0.6095330652746731
+        },
+        {
+          "id": "25",
+          "score": 0.6093378642591021
+        },
+        {
+          "id": "33",
+          "score": 0.6086901756223104
+        },
+        {
+          "id": "9",
+          "score": 0.6085308937879818
+        },
+        {
+          "id": "88",
+          "score": 0.608047276057977
+        },
+        {
+          "id": "22",
+          "score": 0.6074761339679454
+        },
+        {
+          "id": "55",
+          "score": 0.6070176539284521
+        },
+        {
+          "id": "50",
+          "score": 0.606775897550061
+        },
+        {
+          "id": "41",
+          "score": 0.605182941719356
+        },
+        {
+          "id": "62",
+          "score": 0.6049252976934684
+        },
+        {
+          "id": "76",
+          "score": 0.6047378991253729
+        },
+        {
+          "id": "93",
+          "score": 0.604072843577115
+        },
+        {
+          "id": "58",
+          "score": 0.6040519347072218
+        },
+        {
+          "id": "59",
+          "score": 0.6040228254172815
+        },
+        {
+          "id": "30",
+          "score": 0.6026393955507976
+        },
+        {
+          "id": "71",
+          "score": 0.6026277599005223
+        },
+        {
+          "id": "57",
+          "score": 0.6013639597919922
+        },
+        {
+          "id": "65",
+          "score": 0.6010829045109984
+        },
+        {
+          "id": "72",
+          "score": 0.6000320392823323
+        },
+        {
+          "id": "69",
+          "score": 0.5997990481356791
+        },
+        {
+          "id": "63",
+          "score": 0.599541435344759
+        },
+        {
+          "id": "91",
+          "score": 0.5986410754528172
+        },
+        {
+          "id": "68",
+          "score": 0.5970956007327559
+        },
+        {
+          "id": "38",
+          "score": 0.5968739394453643
+        },
+        {
+          "id": "29",
+          "score": 0.5954182348515229
+        },
+        {
+          "id": "49",
+          "score": 0.5949039465503152
+        },
+        {
+          "id": "42",
+          "score": 0.5944723314010347
+        },
+        {
+          "id": "31",
+          "score": 0.5935406088985975
+        },
+        {
+          "id": "66",
+          "score": 0.5909597276986026
+        },
+        {
+          "id": "73",
+          "score": 0.5898913366032658
+        },
+        {
+          "id": "53",
+          "score": 0.5893421596727623
+        },
+        {
+          "id": "85",
+          "score": 0.5884484215370455
+        },
+        {
+          "id": "61",
+          "score": 0.5875991119407168
+        },
+        {
+          "id": "45",
+          "score": 0.587270536118999
+        },
+        {
+          "id": "79",
+          "score": 0.5867843223213144
+        },
+        {
+          "id": "40",
+          "score": 0.5867640190025264
+        },
+        {
+          "id": "43",
+          "score": 0.5852684614521869
+        },
+        {
+          "id": "100",
+          "score": 0.5846465709879025
+        },
+        {
+          "id": "80",
+          "score": 0.5823952943533296
+        },
+        {
+          "id": "37",
+          "score": 0.5811362140580809
+        },
+        {
+          "id": "48",
+          "score": 0.5808508134334952
+        },
+        {
+          "id": "46",
+          "score": 0.5781392807247363
+        },
+        {
+          "id": "44",
+          "score": 0.5766921654529593
+        },
+        {
+          "id": "28",
+          "score": 0.5689677524999561
+        }
+      ],
+      "state": "context_review_required"
+    },
+    "exclusions": {
+      "2": "Irrelevant topic",
+      "3": "Irrelevant topic",
+      "4": "Irrelevant topic",
+      "5": "Irrelevant topic",
+      "6": "Irrelevant topic",
+      "7": "Irrelevant topic",
+      "8": "Irrelevant topic",
+      "9": "Scope mismatch (unit vs building)",
+      "10": "Scope mismatch (unit vs building)",
+      "11": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "12": "Scope mismatch (unit vs building)",
+      "13": "Irrelevant topic",
+      "14": "Irrelevant topic",
+      "15": "Scope mismatch (unit vs building)",
+      "16": "Irrelevant topic",
+      "17": "Irrelevant topic",
+      "18": "Irrelevant topic",
+      "19": "Irrelevant topic",
+      "20": "Irrelevant topic",
+      "21": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "22": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "23": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "24": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "25": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "26": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "27": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "28": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "29": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "30": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "31": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "32": "Reference scope street_segment is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "33": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "34": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "35": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "36": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "37": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "38": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "39": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "40": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "41": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "42": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "43": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "44": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "45": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "46": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "47": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "48": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "49": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "50": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "51": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "52": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "53": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "54": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "55": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "56": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "57": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "58": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "59": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "60": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "61": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "62": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "63": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "64": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "65": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "66": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "67": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "68": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "69": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "70": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "71": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "72": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "73": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "74": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "75": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "76": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "77": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "78": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "79": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "80": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "81": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "82": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "83": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "84": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "85": "Reference scope region is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "86": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "87": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "88": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "89": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "90": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "91": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "92": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "93": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "94": "Reference scope neighborhood is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "95": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "96": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "97": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "98": "Reference scope district is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "99": "Reference scope global_digital is incompatible with effective issue scope building under equal-or-unit-building-1.",
+      "100": "Reference scope city is incompatible with effective issue scope building under equal-or-unit-building-1."
+    },
+    "library_hash": "514615dca72a09a774f5165130b955fa58a922a13af613d5991d589e488ab60e",
+    "version": "mr1-context-review-1",
+    "context_message": "The issue regarding the entrance lock repair at the specified building is addressed by the relevant reference."
+  },
+  "experiment_only": true,
+  "domain_origin": "real_model"
+}

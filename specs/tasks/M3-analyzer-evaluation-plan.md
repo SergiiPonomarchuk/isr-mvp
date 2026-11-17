@@ -64,3 +64,5 @@ Official-source fact records/links are in analyzer-model-research.json. Current 
 ## Next author decision
 
 Approve preparation of the paired LOW comparison and the exact potential 25-review/SAME-US$0.50 allowance **subject to the endpoint thinking-budget gate above**, or request changes to fixtures/arms. No real call may precede that gate. Choosing/testing a candidate does not authorize changing the active Analyzer model.
+
+Author steering, 2026-11-17: use the cheapest offered model and move on. The paired comparison is canceled; these prepared alternative requests remain historical and unexecuted. One existing-model LOW check is separately recorded in M3-cheapest-low-report.md. Do not restart comparison without a new author request.

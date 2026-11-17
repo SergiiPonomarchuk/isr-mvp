@@ -9,3 +9,5 @@ Budget gate: official model page lists output capacity 65,536. Reserve that full
 References: https://aistudio.google.com/docs/models/gemini-3.1-flash-lite and https://aistudio.google.com/docs/pricing#gemini-3.1-flash-lite (checked 2026-11-17). Existing paired scenario remains historical/unexecuted. Application integration, automatic decision resolution, publication storage and human quality acceptance remain separate gates.
 
 Status: author selected cheapest configuration and directed continuation; prepare/test one guard before execution.
+
+- Completed 2026-11-17: selected single LOW check ran once, full provenance retained. Home/choice handling improved; four false scope reasons remain. No extra paid trial or comparison. See M3-cheapest-low-report.md; emulator integration awaits its reviewed runtime contract.

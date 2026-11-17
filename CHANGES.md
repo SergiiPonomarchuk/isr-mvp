@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Selected existing model LOW improves fixture; comparison canceled
+
+Followed author choice to keep cheapest gemini-3.1-flash-lite and move forward. One LOW check uses home and correct lock/choice handling, but four false scope reasons remain; no acceptance/repair/public writes. Cumulative 24 reviews, US$0.482644 reserved under original US$0.50 with full native-capacity thinking buffer. Prepared concrete emulator-only runtime/typed-reason integration plan instead of more model comparisons. See specs/tasks/M3-cheapest-low-report.md and M3-emulator-staged-integration.md.
+
 ## 2026-11-17 - Offline Analyzer quality/model evaluation plan frozen
 
 Recorded baseline failures, source/receipt manifests and eight quality fixtures with explicit human-judgment boundaries. Official research identifies omitted thinking/default minimal and prepares current 3.1 LOW versus stable 3.5 Flash-Lite LOW, no actual model change or calls. Two-request scenario fits original US$0.50 reservation, but exact generateContent thinking-budget verification is mandatory before execution. Node 205 passed/five optional skips; Python 140 run/two skips. See specs/tasks/M3-analyzer-evaluation-plan.md.
