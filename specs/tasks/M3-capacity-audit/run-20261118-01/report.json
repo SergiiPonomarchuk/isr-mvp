@@ -1,0 +1,2231 @@
+{
+  "version": "capacity-audit-phase-a-1",
+  "date_client": "2026-11-18",
+  "scope": "synthetic offline structural audit; not actual population or database acceptance",
+  "source_pins": {
+    "functions/tools/capacity/wire.js": "2013aeee3b9daf52234c751c4581fb430c7a2077ef8a14d3b3432ffd6716e349",
+    "functions/tools/capacity/codec.js": "8603726f917c77d72377643e6089128592414a338362f03284b178ceeda8eb3c",
+    "functions/tools/capacity/fixture.js": "547a474fe10a55f37285a115e87c961dfaaaeac107c22e527db2982766e35b31",
+    "functions/tools/capacity/capture.js": "cd9f397420dca2db70af6f579d094fa4c522dd1905f54a8fe219ce5a7273530f",
+    "functions/tools/capacity/envelopes.js": "602ddba33a0d7b9cf96e975687274a918242973eebe529b0fd80ce68207f8d81",
+    "functions/tools/capacity/worker.js": "d94e2f2ae362995ef88f7f4773f6b7020a7cdf858d8a46d1eee1074b2ffc0b44",
+    "functions/tools/capacity/no-network.js": "999ad257175dda274e09178e429826f22bb71c63c9ae7af40b5107b9a2b69e3a",
+    "functions/ai-config.js": "593e86b7d8efbdecc3c19b7a17d186c18cf72e4adfd00c7171f85f925b12b6f0",
+    "functions/ai-helper.js": "c047586187fbbbb6270f9a62025297d6ba6101782f986891c3942ff5fd91f005",
+    "functions/analyzer-log.js": "86a774ef71f86ccd69e7b2a80ca1f011079e4b0285ff5ef211ff6549e3a64551",
+    "functions/close-voting.js": "ba510982b5e646f899bc2a6c547bef7641f6cdd5750ba7e3921cb61526bcb871",
+    "functions/context-review.js": "39a66cc0d5ca1af572daeebaa4c6be25baa70f8c73366c27096fc6345d58be59",
+    "functions/context-schema.js": "5c338c29757dd74a5585fc508ba754ddc8461f8b0c7a10f93749fb5f4ae92beb",
+    "functions/deadlines.js": "6d24c824a490d46fe30b4c0a314c6ab5a9cbd6a9658d39d2fb2466eb72249968",
+    "functions/demo-coalition.js": "3c75182140959cd1c8c8b65138f69b2587f0911fe7eb23517021ed3e318bd1b4",
+    "functions/demo-phase.js": "5e4580c6c396534c9dc913d04b44c25030b0df17ccdf3a72860401a3fbd23ab4",
+    "functions/demo-standby.js": "08adf64bf69c528e2fe1708245bd9e7065fa65570f89cca980e011cd1ef3d71a",
+    "functions/demographics.js": "ba1bf10c28067af5f4490d2f12e12e1ccc5106a6a0c735e5a9936435b23e987c",
+    "functions/geo.js": "cfa88bb9227f3cb0d275172e9dec6f8492c89dcbde49697240ea39939aa18088",
+    "functions/geocode.js": "98a40dd08fdff3ef8b0818d3b2b38ec9b8790c8887e58dd6e7bb3fc4093e30cd",
+    "functions/index.js": "c4791fa5ec76b52c088c848ab27e0b835eb8f1303246d9cd4a6158de62ab764c",
+    "functions/isr.js": "0f0db88cee6683a28d58cb87bd88cfee305ecfc1d54390419b41d61d831f4f16",
+    "functions/issue-scope.js": "76b8237eeaac0c90637c4a8916d2899657a4185c2c85364062c292519965b436",
+    "functions/join-issue.js": "62b6e6e56a5fec13ae1507449c209825f0728d9a6535726b6962301d36b187f2",
+    "functions/lifecycle.js": "2dec0fa7b10efdedb71f08caa717837301fc6e7ab824bc486a290cd4cf9fb79b",
+    "functions/location.js": "003139fad07b0e8d95ff0304968650437acd9f4c94e14d8c627003277650ecca",
+    "functions/mr1-engine.js": "1d997c3bb034a2cdc74ad1254e4a8a9d4d5fe58dbfd619a413c0d13658f2b1f0",
+    "functions/mr1-service.js": "36d54af0934a99637c19ff7fe700dfcb24229750eebe9252b99ed4347f32efbd",
+    "functions/multi-reference.js": "cad5c25433bfd2aec56bf589bbd072d3dc49fa84c0095db2a6e675736cb45d13",
+    "functions/params.js": "98933f5a1b7ba66bbe6388ca2658b11cdc42f726157134c5ca1c82409bc32ed4",
+    "functions/public-values.js": "5c57a2c743ae5d2563494091f363793ee8ad07c1163fd7ea6a90ae2b6c083332",
+    "functions/scope-compatibility.js": "14de98432acfbdd6603ee7e878c53197872bdd4c71a810d8eac470b013650fdc",
+    "functions/similar-issues.js": "8541113af3d641f20202e3c48d00eeebc45e26dd6a1b5521dd62a4f2c6c118e8",
+    "functions/staged-context.js": "e5e3b99bcf71884f47b55110606238afa513250b44e826046a8a3a6d6fea8a61",
+    "functions/strict-json.js": "e47ab8da8e50de06996e535387b023c33d5e70bdebfe88babbb957317b989a1b",
+    "scripts/audit_capacity_phase_a.py": "0137b2ba34d80f4b54988aef70d359e84272ed1aba2cacfc8b094e037f99d461",
+    "functions/package-lock.json": "a39381f845aba6e28ec4139e609dbea992340ff3093aa6ae354f381fe8743eec",
+    "specs/tasks/M3-evaluation/pilot-20261117-one-case-quotation/ledger.json": "c2e0f640f596862b7c6ddf2ed79524626bf55a2ea5d5f951632a39fa44bbe837"
+  },
+  "guards": {
+    "heap_mib": 256,
+    "rss_mib": 512,
+    "seconds_per_fixture": 120,
+    "min_free_mib": 1024
+  },
+  "fixtures": [
+    {
+      "config": {
+        "id": "oracle-small",
+        "members": 4,
+        "refs": 3,
+        "aspects": 3,
+        "mixed": false
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 3,
+      "cohorts": {
+        "A": 4,
+        "B": 0
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 437,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 8399,
+              "write_count": 1,
+              "largest_document_bytes": 8376,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 27176,
+              "write_count": 1,
+              "largest_document_bytes": 39681,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 37573,
+          "write_count": 11,
+          "largest_document_bytes": 40259,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 64417,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 5496,
+          "write_count": 9,
+          "largest_document_bytes": 32577,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 34548,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 35275,
+          "write_count": 11,
+          "largest_document_bytes": 39987,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 62119,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 4271,
+          "write_count": 9,
+          "largest_document_bytes": 32577,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 31779,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 108736512,
+        "heap": 36418224,
+        "external": 2718272
+      },
+      "elapsed_seconds": 0.4243119999999999,
+      "handler_shape_byte_parity": true,
+      "parent_peak_rss": 111992832,
+      "elapsed_parent_seconds": 1.7189999999973224,
+      "initial_free_bytes": 2355544064
+    },
+    {
+      "config": {
+        "id": "shared-100-1",
+        "members": 100,
+        "refs": 1,
+        "aspects": 1,
+        "mixed": false
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 1,
+      "cohorts": {
+        "A": 100,
+        "B": 0
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 7349,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 6059,
+              "write_count": 1,
+              "largest_document_bytes": 6006,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 15864,
+              "write_count": 1,
+              "largest_document_bytes": 22106,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 148134,
+          "write_count": 107,
+          "largest_document_bytes": 31320,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 163668,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 53966,
+          "write_count": 105,
+          "largest_document_bytes": 17110,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 137114,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 80525,
+          "write_count": 107,
+          "largest_document_bytes": 23272,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 96059,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 39047,
+          "write_count": 105,
+          "largest_document_bytes": 17110,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 75463,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 111464448,
+        "heap": 38782584,
+        "external": 2849582
+      },
+      "elapsed_seconds": 0.47869319999999993,
+      "parent_peak_rss": 113299456,
+      "elapsed_parent_seconds": 1.735000000000582,
+      "initial_free_bytes": 2367348736
+    },
+    {
+      "config": {
+        "id": "shared-100-3",
+        "members": 100,
+        "refs": 3,
+        "aspects": 3,
+        "mixed": false
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 3,
+      "cohorts": {
+        "A": 100,
+        "B": 0
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 7349,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 8399,
+              "write_count": 1,
+              "largest_document_bytes": 8376,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 27176,
+              "write_count": 1,
+              "largest_document_bytes": 39681,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 179584,
+          "write_count": 107,
+          "largest_document_bytes": 48895,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 206428,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 54273,
+          "write_count": 105,
+          "largest_document_bytes": 34685,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 168613,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 102605,
+          "write_count": 107,
+          "largest_document_bytes": 40847,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 129449,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 39260,
+          "write_count": 105,
+          "largest_document_bytes": 34685,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 97498,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 109338624,
+        "heap": 36639872,
+        "external": 2767976
+      },
+      "elapsed_seconds": 0.5813710999999998,
+      "parent_peak_rss": 112041984,
+      "elapsed_parent_seconds": 1.8279999999940628,
+      "initial_free_bytes": 2369306624
+    },
+    {
+      "config": {
+        "id": "shared-100-19",
+        "members": 100,
+        "refs": 19,
+        "aspects": 3,
+        "mixed": false
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 3,
+      "cohorts": {
+        "A": 100,
+        "B": 0
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 7349,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 13603,
+              "write_count": 1,
+              "largest_document_bytes": 13507,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 47627,
+              "write_count": 1,
+              "largest_document_bytes": 61047,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 355131,
+          "write_count": 107,
+          "largest_document_bytes": 70261,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 402426,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 55899,
+          "write_count": 105,
+          "largest_document_bytes": 56051,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 345786,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 123213,
+          "write_count": 107,
+          "largest_document_bytes": 62213,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 170508,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 39260,
+          "write_count": 105,
+          "largest_document_bytes": 56051,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 118106,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 113168384,
+        "heap": 41911160,
+        "external": 2910115
+      },
+      "elapsed_seconds": 0.8643268000000001,
+      "parent_peak_rss": 115138560,
+      "elapsed_parent_seconds": 2.125,
+      "initial_free_bytes": 2365321216
+    },
+    {
+      "config": {
+        "id": "shared-100-100",
+        "members": 100,
+        "refs": 100,
+        "aspects": 3,
+        "mixed": false
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 3,
+      "cohorts": {
+        "A": 100,
+        "B": 0
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 7349,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 40027,
+              "write_count": 1,
+              "largest_document_bytes": 39929,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 151709,
+              "write_count": 1,
+              "largest_document_bytes": 169805,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 1247419,
+          "write_count": 107,
+          "largest_document_bytes": 179019,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 1398796,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 64060,
+          "write_count": 105,
+          "largest_document_bytes": 164809,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 1246336,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 228001,
+          "write_count": 107,
+          "largest_document_bytes": 170971,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 379378,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 39158,
+          "write_count": 105,
+          "largest_document_bytes": 164809,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 222893,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 169172992,
+        "heap": 84196976,
+        "external": 3794171
+      },
+      "elapsed_seconds": 2.4119889,
+      "parent_peak_rss": 171233280,
+      "elapsed_parent_seconds": 3.8439999999973224,
+      "initial_free_bytes": 2394705920
+    },
+    {
+      "config": {
+        "id": "shared-1000-1",
+        "members": 1000,
+        "refs": 1,
+        "aspects": 1,
+        "mixed": true
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 1,
+      "cohorts": {
+        "A": 600,
+        "B": 400
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 73053,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 6059,
+              "write_count": 1,
+              "largest_document_bytes": 6006,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 15865,
+              "write_count": 1,
+              "largest_document_bytes": 22106,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 1278088,
+          "write_count": 1007,
+          "largest_document_bytes": 113221,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 1293621,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 513907,
+          "write_count": 1005,
+          "largest_document_bytes": 46579,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 1191466,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 593788,
+          "write_count": 1007,
+          "largest_document_bytes": 47259,
+          "largest_document_path": "microcommunities/00000000000000000004",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 609321,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 372116,
+          "write_count": 1005,
+          "largest_document_bytes": 47305,
+          "largest_document_path": "microcommunities/00000000000000000004",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 572525,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 119930880,
+        "heap": 45037936,
+        "external": 2931816
+      },
+      "elapsed_seconds": 2.1407682999999995,
+      "parent_peak_rss": 120397824,
+      "elapsed_parent_seconds": 3.4539999999979045,
+      "initial_free_bytes": 2427322368
+    },
+    {
+      "config": {
+        "id": "shared-1000-3",
+        "members": 1000,
+        "refs": 3,
+        "aspects": 3,
+        "mixed": true
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 3,
+      "cohorts": {
+        "A": 600,
+        "B": 400
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 73053,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 8399,
+              "write_count": 1,
+              "largest_document_bytes": 8376,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 27177,
+              "write_count": 1,
+              "largest_document_bytes": 39681,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 1487407,
+          "write_count": 1007,
+          "largest_document_bytes": 130796,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 1514250,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 514112,
+          "write_count": 1005,
+          "largest_document_bytes": 57889,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 1400833,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 709137,
+          "write_count": 1007,
+          "largest_document_bytes": 57851,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 735980,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 372227,
+          "write_count": 1005,
+          "largest_document_bytes": 57889,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 687828,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 119185408,
+        "heap": 44534136,
+        "external": 2882624
+      },
+      "elapsed_seconds": 3.173742,
+      "parent_peak_rss": 120074240,
+      "elapsed_parent_seconds": 4.639999999999418,
+      "initial_free_bytes": 2444279808
+    },
+    {
+      "config": {
+        "id": "shared-1000-19",
+        "members": 1000,
+        "refs": 19,
+        "aspects": 3,
+        "mixed": true
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 3,
+      "cohorts": {
+        "A": 600,
+        "B": 400
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 73053,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 13603,
+              "write_count": 1,
+              "largest_document_bytes": 13507,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 47628,
+              "write_count": 1,
+              "largest_document_bytes": 61047,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 3074162,
+          "write_count": 1007,
+          "largest_document_bytes": 152162,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 3121456,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 514736,
+          "write_count": 1005,
+          "largest_document_bytes": 78340,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 2988212,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 729745,
+          "write_count": 1007,
+          "largest_document_bytes": 78302,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 777039,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 371225,
+          "write_count": 1005,
+          "largest_document_bytes": 78340,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 707434,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 119042048,
+        "heap": 45364072,
+        "external": 2841704
+      },
+      "elapsed_seconds": 4.7623771,
+      "parent_peak_rss": 120725504,
+      "elapsed_parent_seconds": 6.046999999998661,
+      "initial_free_bytes": 2459295744
+    },
+    {
+      "config": {
+        "id": "shared-1000-100",
+        "members": 1000,
+        "refs": 100,
+        "aspects": 3,
+        "mixed": true
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 3,
+      "cohorts": {
+        "A": 600,
+        "B": 400
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 73053,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 40027,
+              "write_count": 1,
+              "largest_document_bytes": 39929,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 151710,
+              "write_count": 1,
+              "largest_document_bytes": 169805,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 11138028,
+          "write_count": 1007,
+          "largest_document_bytes": 260920,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": false,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 11289404,
+          "within_full_image_request_guard": false,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 524001,
+          "write_count": 1005,
+          "largest_document_bytes": 186413,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 11062344,
+          "within_full_image_request_guard": false,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 833633,
+          "write_count": 1007,
+          "largest_document_bytes": 186387,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 985009,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 372227,
+          "write_count": 1005,
+          "largest_document_bytes": 186413,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 813325,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 148992000,
+        "heap": 68550240,
+        "external": 2835795
+      },
+      "elapsed_seconds": 15.593712499999999,
+      "parent_peak_rss": 151982080,
+      "elapsed_parent_seconds": 17.0,
+      "initial_free_bytes": 2441482240
+    },
+    {
+      "config": {
+        "id": "shared-9150-1",
+        "members": 9150,
+        "refs": 1,
+        "aspects": 1,
+        "mixed": true
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 1,
+      "cohorts": {
+        "A": 5490,
+        "B": 3660
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 676155,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 6059,
+              "write_count": 1,
+              "largest_document_bytes": 6006,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 15865,
+              "write_count": 1,
+              "largest_document_bytes": 22106,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 11630616,
+          "write_count": 9157,
+          "largest_document_bytes": 863021,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": false,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 11646149,
+          "within_full_image_request_guard": false,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 4719931,
+          "write_count": 9155,
+          "largest_document_bytes": 420764,
+          "largest_document_path": "discussions/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 10842092,
+          "within_full_image_request_guard": false,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 5371716,
+          "write_count": 9157,
+          "largest_document_bytes": 422159,
+          "largest_document_path": "microcommunities/00000000000000000004",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 5387249,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 3428013,
+          "write_count": 9155,
+          "largest_document_bytes": 422205,
+          "largest_document_path": "microcommunities/00000000000000000004",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 5186451,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 184180736,
+        "heap": 96773456,
+        "external": 4224753
+      },
+      "elapsed_seconds": 27.1042703,
+      "parent_peak_rss": 185585664,
+      "elapsed_parent_seconds": 28.43800000000192,
+      "initial_free_bytes": 2437066752
+    },
+    {
+      "config": {
+        "id": "shared-9150-3",
+        "members": 9150,
+        "refs": 3,
+        "aspects": 3,
+        "mixed": true
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 3,
+      "cohorts": {
+        "A": 5490,
+        "B": 3660
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 676155,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 8399,
+              "write_count": 1,
+              "largest_document_bytes": 8376,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 27177,
+              "write_count": 1,
+              "largest_document_bytes": 39681,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 13449827,
+          "write_count": 9157,
+          "largest_document_bytes": 880596,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": false,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 13476670,
+          "within_full_image_request_guard": false,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 4729288,
+          "write_count": 9155,
+          "largest_document_bytes": 421078,
+          "largest_document_path": "discussions/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 12670503,
+          "within_full_image_request_guard": false,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 6330857,
+          "write_count": 9157,
+          "largest_document_bytes": 422189,
+          "largest_document_path": "microcommunities/00000000000000000004",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 6357700,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 3437276,
+          "write_count": 9155,
+          "largest_document_bytes": 422235,
+          "largest_document_path": "microcommunities/00000000000000000004",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 6154698,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 182784000,
+        "heap": 95449200,
+        "external": 4227931
+      },
+      "elapsed_seconds": 24.035286799999998,
+      "parent_peak_rss": 183369728,
+      "elapsed_parent_seconds": 25.639999999999418,
+      "initial_free_bytes": 2383712256
+    },
+    {
+      "config": {
+        "id": "shared-9150-19",
+        "members": 9150,
+        "refs": 19,
+        "aspects": 3,
+        "mixed": true
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 3,
+      "cohorts": {
+        "A": 5490,
+        "B": 3660
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 676155,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 13603,
+              "write_count": 1,
+              "largest_document_bytes": 13507,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 47628,
+              "write_count": 1,
+              "largest_document_bytes": 61047,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 27801618,
+          "write_count": 9157,
+          "largest_document_bytes": 901962,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": false,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 27848912,
+          "within_full_image_request_guard": false,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 4730914,
+          "write_count": 9155,
+          "largest_document_bytes": 421078,
+          "largest_document_path": "discussions/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 27023920,
+          "within_full_image_request_guard": false,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 6351465,
+          "write_count": 9157,
+          "largest_document_bytes": 422346,
+          "largest_document_path": "microcommunities/00000000000000000004",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 6398759,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 3437276,
+          "write_count": 9155,
+          "largest_document_bytes": 422392,
+          "largest_document_path": "microcommunities/00000000000000000004",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 6175306,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 181239808,
+        "heap": 99079944,
+        "external": 4248696
+      },
+      "elapsed_seconds": 42.454369699999994,
+      "parent_peak_rss": 182407168,
+      "elapsed_parent_seconds": 43.92199999999866,
+      "initial_free_bytes": 2446282752
+    },
+    {
+      "config": {
+        "id": "shared-9150-100",
+        "members": 9150,
+        "refs": 100,
+        "aspects": 3,
+        "mixed": true
+      },
+      "status": "timeout_refused",
+      "parent_peak_rss": 188944384,
+      "elapsed_seconds": 120.125,
+      "partial": {
+        "config": {
+          "id": "shared-9150-100",
+          "members": 9150,
+          "refs": 100,
+          "aspects": 3,
+          "mixed": true
+        },
+        "status": "running",
+        "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+        "real_provider_calls": 0,
+        "database_rpcs": 0,
+        "codec_scope": "offline experiment only",
+        "evidence_slots": 3,
+        "cohorts": {
+          "A": 5490,
+          "B": 3660
+        },
+        "replay": {
+          "writes": 0,
+          "response_json_bytes": 676155,
+          "same_frozen_response": true
+        },
+        "operations": {
+          "check": {
+            "independent_requests": [
+              {
+                "path": "analyzer_logs/00000000000000000002",
+                "wire_bytes": 40027,
+                "write_count": 1,
+                "largest_document_bytes": 39929,
+                "largest_document_path": "analyzer_logs/00000000000000000002",
+                "oversized_documents": 0,
+                "within_document_guard": true,
+                "within_request_guard": true,
+                "transaction_token_bytes": 32
+              },
+              {
+                "path": "issue_drafts/00000000000000000001",
+                "wire_bytes": 151710,
+                "write_count": 1,
+                "largest_document_bytes": 169805,
+                "largest_document_path": "issue_drafts/00000000000000000001",
+                "oversized_documents": 0,
+                "within_document_guard": true,
+                "within_request_guard": true,
+                "transaction_token_bytes": 32
+              }
+            ]
+          },
+          "create_current": {
+            "wire_bytes": 100736035,
+            "write_count": 9157,
+            "largest_document_bytes": 1010720,
+            "largest_document_path": "issue_drafts/00000000000000000001",
+            "oversized_documents": 0,
+            "within_document_guard": true,
+            "within_request_guard": false,
+            "transaction_token_bytes": 32,
+            "full_image_estimate_bytes": 100887411,
+            "within_full_image_request_guard": false,
+            "stream_full_byte_parity": "validated separately on small fixtures",
+            "round_trip": "not encoded"
+          },
+          "join_current": {
+            "wire_bytes": 4739177,
+            "write_count": 9155,
+            "largest_document_bytes": 484511,
+            "largest_document_path": "issues/00000000000000000003",
+            "oversized_documents": 0,
+            "within_document_guard": true,
+            "within_request_guard": true,
+            "transaction_token_bytes": 32,
+            "full_image_estimate_bytes": 99975751,
+            "within_full_image_request_guard": false,
+            "stream_full_byte_parity": "validated separately on small fixtures",
+            "round_trip": "not encoded"
+          }
+        },
+        "peak": {
+          "rss": 184524800,
+          "heap": 104657080,
+          "external": 3621271
+        },
+        "elapsed_seconds": 110.0745359
+      }
+    },
+    {
+      "config": {
+        "id": "distinct-9150-3",
+        "members": 9150,
+        "refs": 3,
+        "aspects": 3,
+        "mixed": true,
+        "distinct": true
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 3,
+      "cohorts": {
+        "A": 5490,
+        "B": 3660
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 676155,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 8399,
+              "write_count": 1,
+              "largest_document_bytes": 8376,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 27191,
+              "write_count": 1,
+              "largest_document_bytes": 39681,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 13449841,
+          "write_count": 9157,
+          "largest_document_bytes": 880596,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": false,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 13476698,
+          "within_full_image_request_guard": false,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 4729288,
+          "write_count": 9155,
+          "largest_document_bytes": 421078,
+          "largest_document_path": "discussions/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 12670517,
+          "within_full_image_request_guard": false,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 6330871,
+          "write_count": 9157,
+          "largest_document_bytes": 422189,
+          "largest_document_path": "microcommunities/00000000000000000004",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 6357728,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 3437276,
+          "write_count": 9155,
+          "largest_document_bytes": 422235,
+          "largest_document_path": "microcommunities/00000000000000000004",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 6154712,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 186281984,
+        "heap": 94147280,
+        "external": 3448574
+      },
+      "elapsed_seconds": 22.7900142,
+      "parent_peak_rss": 186580992,
+      "elapsed_parent_seconds": 24.235000000000582,
+      "initial_free_bytes": 2410848256
+    },
+    {
+      "config": {
+        "id": "distinct-9150-19",
+        "members": 9150,
+        "refs": 19,
+        "aspects": 3,
+        "mixed": true,
+        "distinct": true
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 19,
+      "cohorts": {
+        "A": 5490,
+        "B": 3660
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 676155,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 13603,
+              "write_count": 1,
+              "largest_document_bytes": 13507,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 47754,
+              "write_count": 1,
+              "largest_document_bytes": 61047,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 27801744,
+          "write_count": 9157,
+          "largest_document_bytes": 901962,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": false,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 27849164,
+          "within_full_image_request_guard": false,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 4730914,
+          "write_count": 9155,
+          "largest_document_bytes": 421078,
+          "largest_document_path": "discussions/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 27024046,
+          "within_full_image_request_guard": false,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 13793088,
+          "write_count": 9157,
+          "largest_document_bytes": 422453,
+          "largest_document_path": "microcommunities/00000000000000000004",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": false,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 13840508,
+          "within_full_image_request_guard": false,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 3438149,
+          "write_count": 9155,
+          "largest_document_bytes": 422499,
+          "largest_document_path": "microcommunities/00000000000000000004",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 13617802,
+          "within_full_image_request_guard": false,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 174874624,
+        "heap": 94606264,
+        "external": 3015187
+      },
+      "elapsed_seconds": 58.207364399999996,
+      "parent_peak_rss": 176590848,
+      "elapsed_parent_seconds": 59.70300000000134,
+      "initial_free_bytes": 2437693440
+    },
+    {
+      "config": {
+        "id": "distinct-9150-100",
+        "members": 9150,
+        "refs": 100,
+        "aspects": 3,
+        "mixed": true,
+        "distinct": true
+      },
+      "status": "timeout_refused",
+      "parent_peak_rss": 185573376,
+      "elapsed_seconds": 120.10900000000402,
+      "partial": {
+        "config": {
+          "id": "distinct-9150-100",
+          "members": 9150,
+          "refs": 100,
+          "aspects": 3,
+          "mixed": true,
+          "distinct": true
+        },
+        "status": "running",
+        "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+        "real_provider_calls": 0,
+        "database_rpcs": 0,
+        "codec_scope": "offline experiment only",
+        "evidence_slots": 100,
+        "cohorts": {
+          "A": 5490,
+          "B": 3660
+        },
+        "replay": {
+          "writes": 0,
+          "response_json_bytes": 676155,
+          "same_frozen_response": true
+        },
+        "operations": {
+          "check": {
+            "independent_requests": [
+              {
+                "path": "analyzer_logs/00000000000000000002",
+                "wire_bytes": 40027,
+                "write_count": 1,
+                "largest_document_bytes": 39929,
+                "largest_document_path": "analyzer_logs/00000000000000000002",
+                "oversized_documents": 0,
+                "within_document_guard": true,
+                "within_request_guard": true,
+                "transaction_token_bytes": 32
+              },
+              {
+                "path": "issue_drafts/00000000000000000001",
+                "wire_bytes": 152403,
+                "write_count": 1,
+                "largest_document_bytes": 169805,
+                "largest_document_path": "issue_drafts/00000000000000000001",
+                "oversized_documents": 0,
+                "within_document_guard": true,
+                "within_request_guard": true,
+                "transaction_token_bytes": 32
+              }
+            ]
+          },
+          "create_current": {
+            "wire_bytes": 100745883,
+            "write_count": 9157,
+            "largest_document_bytes": 1010720,
+            "largest_document_path": "issue_drafts/00000000000000000001",
+            "oversized_documents": 0,
+            "within_document_guard": true,
+            "within_request_guard": false,
+            "transaction_token_bytes": 32,
+            "full_image_estimate_bytes": 100897952,
+            "within_full_image_request_guard": false,
+            "stream_full_byte_parity": "validated separately on small fixtures",
+            "round_trip": "not encoded"
+          },
+          "join_current": {
+            "wire_bytes": 4739177,
+            "write_count": 9155,
+            "largest_document_bytes": 485206,
+            "largest_document_path": "issues/00000000000000000003",
+            "oversized_documents": 0,
+            "within_document_guard": true,
+            "within_request_guard": true,
+            "transaction_token_bytes": 32,
+            "full_image_estimate_bytes": 99976448,
+            "within_full_image_request_guard": false,
+            "stream_full_byte_parity": "validated separately on small fixtures",
+            "round_trip": "not encoded"
+          }
+        },
+        "peak": {
+          "rss": 180793344,
+          "heap": 95521472,
+          "external": 3565795
+        },
+        "elapsed_seconds": 107.621039
+      }
+    },
+    {
+      "config": {
+        "id": "one-aspect-9150-100",
+        "members": 9150,
+        "refs": 100,
+        "aspects": 1,
+        "mixed": false
+      },
+      "status": "timeout_refused",
+      "parent_peak_rss": 185606144,
+      "elapsed_seconds": 120.09399999999732,
+      "partial": {
+        "config": {
+          "id": "one-aspect-9150-100",
+          "members": 9150,
+          "refs": 100,
+          "aspects": 1,
+          "mixed": false
+        },
+        "status": "running",
+        "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+        "real_provider_calls": 0,
+        "database_rpcs": 0,
+        "codec_scope": "offline experiment only",
+        "evidence_slots": 1,
+        "cohorts": {
+          "A": 9150,
+          "B": 0
+        },
+        "replay": {
+          "writes": 0,
+          "response_json_bytes": 676152,
+          "same_frozen_response": true
+        },
+        "operations": {
+          "check": {
+            "independent_requests": [
+              {
+                "path": "analyzer_logs/00000000000000000002",
+                "wire_bytes": 38333,
+                "write_count": 1,
+                "largest_document_bytes": 38235,
+                "largest_document_path": "analyzer_logs/00000000000000000002",
+                "oversized_documents": 0,
+                "within_document_guard": true,
+                "within_request_guard": true,
+                "transaction_token_bytes": 32
+              },
+              {
+                "path": "issue_drafts/00000000000000000001",
+                "wire_bytes": 142955,
+                "write_count": 1,
+                "largest_document_bytes": 154893,
+                "largest_document_path": "issue_drafts/00000000000000000001",
+                "oversized_documents": 0,
+                "within_document_guard": true,
+                "within_request_guard": true,
+                "transaction_token_bytes": 32
+              }
+            ]
+          },
+          "create_current": {
+            "wire_bytes": 100239908,
+            "write_count": 9157,
+            "largest_document_bytes": 995808,
+            "largest_document_path": "issue_drafts/00000000000000000001",
+            "oversized_documents": 0,
+            "within_document_guard": true,
+            "within_request_guard": false,
+            "transaction_token_bytes": 32,
+            "full_image_estimate_bytes": 100382529,
+            "within_full_image_request_guard": false,
+            "stream_full_byte_parity": "validated separately on small fixtures",
+            "round_trip": "not encoded"
+          },
+          "join_current": {
+            "wire_bytes": 4764797,
+            "write_count": 9155,
+            "largest_document_bytes": 484298,
+            "largest_document_path": "issues/00000000000000000003",
+            "oversized_documents": 0,
+            "within_document_guard": true,
+            "within_request_guard": true,
+            "transaction_token_bytes": 32,
+            "full_image_estimate_bytes": 99470631,
+            "within_full_image_request_guard": false,
+            "stream_full_byte_parity": "validated separately on small fixtures",
+            "round_trip": "not encoded"
+          }
+        },
+        "peak": {
+          "rss": 181063680,
+          "heap": 79384344,
+          "external": 3147390
+        },
+        "elapsed_seconds": 107.0692853
+      }
+    },
+    {
+      "config": {
+        "id": "dense-1000-19",
+        "members": 1000,
+        "refs": 19,
+        "aspects": 3,
+        "mixed": true,
+        "dense": true
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 3,
+      "cohorts": {
+        "A": 600,
+        "B": 400
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 73053,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 13603,
+              "write_count": 1,
+              "largest_document_bytes": 13507,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 47628,
+              "write_count": 1,
+              "largest_document_bytes": 61047,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 4390073,
+          "write_count": 1007,
+          "largest_document_bytes": 152162,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 4437367,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 514736,
+          "write_count": 1005,
+          "largest_document_bytes": 78338,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 4305124,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 2119456,
+          "write_count": 1007,
+          "largest_document_bytes": 78300,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 2166750,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 371225,
+          "write_count": 1005,
+          "largest_document_bytes": 78338,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 2098146,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 121364480,
+        "heap": 46748784,
+        "external": 2965444
+      },
+      "elapsed_seconds": 7.9747827,
+      "parent_peak_rss": 124125184,
+      "elapsed_parent_seconds": 9.655999999995402,
+      "initial_free_bytes": 2602487808
+    },
+    {
+      "config": {
+        "id": "metadata-stress-1000-3",
+        "members": 1000,
+        "refs": 3,
+        "aspects": 3,
+        "mixed": true,
+        "metadataStress": true
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 3,
+      "cohorts": {
+        "A": 600,
+        "B": 400
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 101053,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 25408,
+              "write_count": 1,
+              "largest_document_bytes": 25359,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 49686,
+              "write_count": 1,
+              "largest_document_bytes": 62136,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 1570668,
+          "write_count": 1007,
+          "largest_document_bytes": 181251,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 1620020,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 514140,
+          "write_count": 1005,
+          "largest_document_bytes": 80398,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 1454754,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 764398,
+          "write_count": 1007,
+          "largest_document_bytes": 80360,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 813750,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 372255,
+          "write_count": 1005,
+          "largest_document_bytes": 80398,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 741749,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": "validated separately on small fixtures",
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 120115200,
+        "heap": 45129880,
+        "external": 2895509
+      },
+      "elapsed_seconds": 2.6059517,
+      "parent_peak_rss": 120983552,
+      "elapsed_parent_seconds": 4.046999999998661,
+      "initial_free_bytes": 2534547456
+    }
+  ],
+  "real_provider_calls": 0,
+  "database_rpcs": 0,
+  "credential_loader_invocations": 0,
+  "completed_fixtures": 16,
+  "total_fixtures": 19
+}
