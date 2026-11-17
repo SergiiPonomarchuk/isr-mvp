@@ -1,0 +1,124 @@
+{
+  "version": "two-stage-pilot-run-1",
+  "approval": {
+    "approved": true,
+    "plan_hash": "e6a8eaadd321ccc21dcb131ea2ffceacbe516123e04cad8073d6eb7367b58a63",
+    "cap_micros": 550000,
+    "calls": 4,
+    "author_reply": "Approve the two-case staged pilot up to $0.55 additional, using the existing credential loader",
+    "date": "2026-11-17",
+    "existing_loader_authorized": true,
+    "new_embedding_texts": 0,
+    "production_writes_authorized": false,
+    "deployments_authorized": false
+  },
+  "status": "stopped_no_retry",
+  "records": [
+    {
+      "case_id": "D1-01-live",
+      "stage": "effective_decision",
+      "request_hash": "628bba0a44220e716c44f2718b0a7fbc93ed33068a58f0be774dcc59b996ee7d",
+      "schema_hash": "89a12b00f7caf18e15ea183c1e550536f78094c335839064b71d025055d73b5d",
+      "reserved_micros": 129024,
+      "http_attempts": 1,
+      "status": "validated",
+      "raw_output": "{\n  \"result\": \"pass\",\n  \"message\": \"The request clearly identifies a broken main entrance lock at the user's home building (OSBB 2, H12) that requires repair.\",\n  \"questions\": [],\n  \"decision\": {\n    \"field\": \"title\",\n    \"quote\": \"Repair of broken main entrance lock\"\n  },\n  \"scope\": \"building\",\n  \"scope_evidence\": {\n    \"field\": \"description\",\n    \"quote\": \"The main entrance lock at my home building osbb 2, h12 is jammed\"\n  },\n  \"affected_place\": {\n    \"field\": \"description\",\n    \"quote\": \"my home building osbb 2, h12\"\n  },\n  \"affected_group\": {\n    \"field\": \"description\",\n    \"quote\": \"residents\"\n  },\n  \"location_reference\": {\n    \"anchor\": \"home\",\n    \"place\": \"\"\n  },\n  \"location_evidence\": {\n    \"field\": \"description\",\n    \"quote\": \"my home building osbb 2, h12\"\n  },\n  \"unresolved_facts\": [],\n  \"contradictions\": []\n}",
+      "model_version": "gemini-3.1-flash-lite",
+      "usage": {
+        "promptTokenCount": 367,
+        "candidatesTokenCount": 277,
+        "totalTokenCount": 751,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 367
+          }
+        ],
+        "thoughtsTokenCount": 107,
+        "serviceTier": "standard"
+      },
+      "finish_reason": "STOP",
+      "reported_cost_micros": 668
+    },
+    {
+      "case_id": "D1-01-live",
+      "stage": "domain_review",
+      "request_hash": "b24568dcfd3a1422030b15d591d763022512c6752b76ccc339795cceb615ddf4",
+      "schema_hash": "cd38e26095033d3827fb72c8e23cc440d27ff7561d9c60c72afa8b21f6068b2b",
+      "reserved_micros": 129024,
+      "http_attempts": 1,
+      "status": "validated",
+      "raw_output": "{\n  \"result\": \"pass\",\n  \"message\": \"The request is consistent with the reference regarding a broken entrance lock in a building.\",\n  \"questions\": [],\n  \"aspects\": [\n    {\n      \"id\": \"1\",\n      \"text\": \"Repair of broken main entrance lock\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"any\",\n        \"familyStatus\": \"any\",\n        \"features\": [],\n        \"places\": [],\n        \"property_kinds\": []\n      },\n      \"demographic_evidence\": []\n    }\n  ],\n  \"plan_hash\": \"b72bfaa9b6481bd71c14668889b629b8d9a65588898a98dd9158b6427c1825ee\",\n  \"reviews\": {\n    \"1\": {\n      \"verdict\": \"accept\",\n      \"aspect_id\": \"1\",\n      \"evidence\": \"Repair of broken main entrance lock\",\n      \"reason_code\": \"none\"\n    }\n  }\n}",
+      "model_version": "gemini-3.1-flash-lite",
+      "usage": {
+        "promptTokenCount": 789,
+        "candidatesTokenCount": 277,
+        "totalTokenCount": 1171,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 789
+          }
+        ],
+        "thoughtsTokenCount": 105,
+        "serviceTier": "standard"
+      },
+      "finish_reason": "STOP",
+      "reported_cost_micros": 771
+    },
+    {
+      "case_id": "compound-lock-software-clarified",
+      "stage": "effective_decision",
+      "request_hash": "80984378106e65a009837ef4ab3330b4c57d866c52bf46d8931c1ac6dfdf0063",
+      "schema_hash": "89a12b00f7caf18e15ea183c1e550536f78094c335839064b71d025055d73b5d",
+      "reserved_micros": 129024,
+      "http_attempts": 1,
+      "status": "validated",
+      "raw_output": "{\n  \"result\": \"pass\",\n  \"message\": \"The request has been clarified to focus solely on the repair of the entrance lock at the specified location, removing the unrelated software roadmap task.\",\n  \"questions\": [],\n  \"decision\": {\n    \"field\": \"clarification\",\n    \"quote\": \"For this issue, decide only how to repair the entrance lock at osbb 2, h12.\"\n  },\n  \"scope\": \"building\",\n  \"scope_evidence\": {\n    \"field\": \"clarification\",\n    \"quote\": \"repair the entrance lock at osbb 2, h12\"\n  },\n  \"affected_place\": {\n    \"field\": \"clarification\",\n    \"quote\": \"osbb 2, h12\"\n  },\n  \"affected_group\": null,\n  \"location_reference\": {\n    \"anchor\": \"home\",\n    \"place\": \"\"\n  },\n  \"location_evidence\": {\n    \"field\": \"clarification\",\n    \"quote\": \"repair the entrance lock at osbb 2, h12\"\n  },\n  \"unresolved_facts\": [],\n  \"contradictions\": []\n}",
+      "model_version": "gemini-3.1-flash-lite",
+      "usage": {
+        "promptTokenCount": 413,
+        "candidatesTokenCount": 269,
+        "totalTokenCount": 809,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 413
+          }
+        ],
+        "thoughtsTokenCount": 127,
+        "serviceTier": "standard"
+      },
+      "finish_reason": "STOP",
+      "reported_cost_micros": 698
+    },
+    {
+      "case_id": "compound-lock-software-clarified",
+      "stage": "domain_review",
+      "request_hash": "1a33b7fc94c7124ffc6648d6733cf43d2f316fbbeefba4b571cdc9a12a6ff363",
+      "schema_hash": "d04199b16ac18749ab6115f2b1cc824265cb9a8c38e7e2e9a25c308e2f0b8969",
+      "reserved_micros": 129024,
+      "http_attempts": 1,
+      "status": "failed_or_ambiguous",
+      "raw_output": "{\n  \"result\": \"pass\",\n  \"message\": \"The issue is a straightforward request to repair a building entrance lock, which matches the reference for a broken house entrance lock.\",\n  \"questions\": [],\n  \"aspects\": [\n    {\n      \"id\": \"1\",\n      \"text\": \"House entrance lock broken (shared front door)\",\n      \"demographics\": {\n        \"minAge\": null,\n        \"maxAge\": null,\n        \"employmentStatus\": \"any\",\n        \"familyStatus\": \"any\",\n        \"features\": [],\n        \"places\": [],\n        \"property_kinds\": []\n      },\n      \"demographic_evidence\": []\n    }\n  ],\n  \"plan_hash\": \"31775f5e9f2736ad54ee24555b950864b57138b00f8f4db44bf95ab68e833117\",\n  \"reviews\": {\n    \"1\": {\n      \"verdict\": \"accept\",\n      \"aspect_id\": \"1\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"none\"\n    },\n    \"2\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"3\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"4\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"5\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"6\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"7\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"8\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"9\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"10\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"12\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"13\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"14\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"15\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"16\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"17\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"18\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"19\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    },\n    \"20\": {\n      \"verdict\": \"exclude\",\n      \"aspect_id\": \"\",\n      \"evidence\": \"repair the entrance lock at osbb 2, h12\",\n      \"reason_code\": \"different_context\"\n    }\n  }\n}",
+      "model_version": "gemini-3.1-flash-lite",
+      "usage": {
+        "promptTokenCount": 1648,
+        "candidatesTokenCount": 1348,
+        "totalTokenCount": 3105,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1648
+          }
+        ],
+        "thoughtsTokenCount": 109,
+        "serviceTier": "standard"
+      },
+      "finish_reason": "STOP",
+      "reported_cost_micros": 2598
+    }
+  ],
+  "index": 1,
+  "stage": "domain_review"
+}

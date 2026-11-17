@@ -4,7 +4,11 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: two-case pilot offline preflight; fresh allowance required, 2026-11-17
+## Current checkpoint: real two-case pilot stopped safely; offline quotation correction proposed, 2026-11-17
+
+- Author approved US$0.55 additional and existing loader. Real pilot completed four single-attempt requests: clear building repair passes; narrowed mixed issue resolves scope/home correctly but copies a reference title into aspect.text. Validator refuses; no output repair, retry or scores/public. [Actual report and offline proposal](tasks/M3-two-stage-pilot-result.md).
+- Current totals: 28 text reviews / 14 embedding texts / 14 embedding POSTs / 42 HTTP attempts. New reported-token estimate US$0.004735; conservative new reservation US$0.516096, cumulative reserved US$0.998740. Four-call allowance consumed, no automatic additional requests.
+- Next decision: approve the report's offline quotation-contract correction (accurate EFFECTIVE_JSON wording and explicit reference-title warning), without weakening validation or any paid retry. No runtime/model change has been made. Earlier preparation notes below are historical; fresh paid approval was received and used exactly once.
 
 - PR #42 merged e19bfc0, #43 merged 444e979; post-merge Node/Python CI passes. Author approved preparation, not paid execution, of a two-case real staged review. [Task and exact limits](tasks/M3-two-stage-pilot.md).
 - Feature branch codex/m3-two-case-preflight adds an offline plan generator and pure fail-closed guard for D1-01-live and compound-lock-software-clarified, using saved source/input/library/ranking bindings. No new embeddings or changed math/prompts/library. Full dynamic stage-two request must follow validated stage-one output, never the old fixture-only stage.

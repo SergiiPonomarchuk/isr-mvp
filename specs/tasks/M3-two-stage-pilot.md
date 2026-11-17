@@ -1,6 +1,6 @@
 # M3 two-case staged pilot preparation
 
-Author approved offline preparation with “ok, go” after the two-case proposal. No paid execution is approved. This task changes local tools/specs only; no application math, prompts, model, library, deployment or database changes.
+Author approved offline preparation with “ok, go” after the two-case proposal. The subsequent explicit paid approval and actual execution are recorded in the Status log and result report; the initial preparation itself made no calls. This task changes local tools/specs only; no application math, prompts, model, library, deployment or database changes.
 
 Prepare source-bound cases D1-01-live and compound-lock-software-clarified from their existing cached rankings/input/library bindings. Run the merged effective-decision and domain-review contracts, not the old fixture-only domain experiment. Stage one is a real extraction in a future pilot. Domain requests derive dynamically from its validated output; preflight fixtures are never semantic gold or publishable model evidence.
 
@@ -23,3 +23,7 @@ Plan: add offline preflight and fail-closed guard, exercise synthetic two-stage 
 - Transport completion: functions/tools/two-stage-pilot-runner.js implements the durable exclusive run/receipt and exact source-pinned SDK HTTP fuse. Fake-fetch tests complete exactly four sends and refuse unapproved requests, changed sources, retry after HTTP 503 and restart after failure/success. No actual key or provider was used.
 
 - Final local regression after adapter completion: Node 227 passed / six optional skips (233 total); Python 140 run / two optional skips. Draft PR #44 contains preparation only; no API/loader/database/deploy operation.
+
+- 2026-11-17: author approved the exact additional US$0.55/4-call pilot and existing loader. Executed once; stopped on copied reference-title aspect in fourth response, no retry. Clear case passed. See M3-two-stage-pilot-result.md. Actual responses, usage and approval are preserved; offline quotation correction is proposed, not implemented or authorized for paid retest.
+
+- Actual-result verification: Node 228 passed / six optional skips; Python 140 run / two optional skips. Artifact byte hashes recorded before staging; no paid retry or runtime fix.

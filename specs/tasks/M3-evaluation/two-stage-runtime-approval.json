@@ -1,0 +1,12 @@
+{
+  "approved": true,
+  "plan_hash": "e6a8eaadd321ccc21dcb131ea2ffceacbe516123e04cad8073d6eb7367b58a63",
+  "cap_micros": 550000,
+  "calls": 4,
+  "author_reply": "Approve the two-case staged pilot up to $0.55 additional, using the existing credential loader",
+  "date": "2026-11-17",
+  "existing_loader_authorized": true,
+  "new_embedding_texts": 0,
+  "production_writes_authorized": false,
+  "deployments_authorized": false
+}
