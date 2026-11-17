@@ -15,3 +15,5 @@ No paid runner invocation in this task. CLI is offline-only and refuses --apply.
 - Prepared from merged main 816f36a in codex/m3-one-case-retest. Author authorization is preparation only.
 
 - Offline verification: six focused one-/two-case SDK tests pass, including exact two sends and zero sends on invalid authorization/source/profile. Full Node: 235 passed / six optional skips (241 total); Python: 140 run / two optional skips. Historical artifact Git blobs match their original SHA-256 manifest. No API call, loader invocation or production mutation.
+
+- Draft preparation PR #46 opened against main. Runtime 8057fb1 passed Node/Python CI. Final documentation-head checks are verified before handoff. Preparation approval does not authorize paid execution or merge.
