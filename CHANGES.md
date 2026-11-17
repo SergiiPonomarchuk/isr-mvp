@@ -1,5 +1,13 @@
 # CHANGES
 
+## 2026-11-17 - Actual two-stage pilot validates clear repair, refuses copied aspect
+
+Executed author-approved four-call pilot with private existing loader. Clear repair passes; narrowed mixed request gets home/building correct but copies reference title into aspect text, safely refused. Reported-token estimate US$0.004735; additional reserved US$0.516096. No retry, scoring, publication or deployment. Preserved raw evidence and added a rejection regression; proposed offline quotation instruction alignment without relaxing validation. See specs/tasks/M3-two-stage-pilot-result.md.
+
+## 2026-11-17 - Offline two-case staged pilot preflight
+
+Prepared exact cached cases, request/schema bindings and a fail-closed pure guard with a proposed separate US$0.55 ceiling. Synthetic tests cover four-stage sequencing, duplicate/changed requests, malformed/truncated replies and accounting failures. No API/credential/database/deployment operation; the exact durable SDK adapter is fake-fetch tested; new allowance/private-loader invocation and execution remain gated. See specs/tasks/M3-two-stage-pilot.md.
+
 ## 2026-11-17 - Staged Analyzer local acceptance and ordered merge authorization
 
 The local created public/member list and independent 20-member score audit pass. Author explicitly authorized PR #42 followed by #43. #42 merged as e19bfc0; #43 now targets main with an identical conflict-free tested code tree. Final-head CI/merge receipt are verified through GitHub. Deployment, new paid calls and full-population acceptance remain gated.

@@ -1,0 +1,29 @@
+# M3 two-case staged pilot preparation
+
+Author approved offline preparation with “ok, go” after the two-case proposal. The subsequent explicit paid approval and actual execution are recorded in the Status log and result report; the initial preparation itself made no calls. This task changes local tools/specs only; no application math, prompts, model, library, deployment or database changes.
+
+Prepare source-bound cases D1-01-live and compound-lock-software-clarified from their existing cached rankings/input/library bindings. Run the merged effective-decision and domain-review contracts, not the old fixture-only domain experiment. Stage one is a real extraction in a future pilot. Domain requests derive dynamically from its validated output; preflight fixtures are never semantic gold or publishable model evidence.
+
+Limits proposed for later approval: four text calls/HTTP attempts, zero embeddings/geocoding/Firestore calls, no retries/repair/new cases, LOW on gemini-3.1-flash-lite. New ceiling US$0.55; fixed maximum conservative reservation US$0.516096 (four times US$0.129024). This is separate from historical US$0.482644 reservation/24 reviews/38 HTTP attempts, which is preserved. Maximum totals: 28 reviews/42 HTTP attempts, US$0.998740 reserved; money ceilings combined US$1.05. Reserve before dispatch using <=65,536 request bytes plus 8,192 input token overhead at $0.25/M, plus native 65,536 thinking buffer and separate 8,192 visible tokens at $1.50/M. This deliberately does not assume maxOutputTokens limits all thinking. Pricing/capacity sources checked 2026-11-17: https://ai.google.dev/gemini-api/docs/pricing and https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-lite-preview . Reservation is a conservative guard, not an expected bill or billing-system hard cap; refuse requests outside the envelope and stop on any accounting mismatch.
+
+Offline plan generator and guard validate exact case order, request/schema/model/LOW/retry pins, source evidence and full dynamic coverage. Fail closed on duplicates, malformed/truncated output, missing usage, overspend, or changed source. Persist reservation/transport status before a future network send. An interrupted/ambiguous request must never be replayed. The CLI remains offline-only and rejects --apply. The separate runner requires fresh approval bound to the complete plan hash, an explicit in-memory key, and an explicit transport. It verifies source pins before calls/sends, creates an exclusive run directory, persists reservations before dispatch, refuses restarts and allows only one exact SDK HTTP request per stage. The installed SDK is tested with fake fetch only. The existing private loader is not invoked during preparation; its reviewed invocation and execution need fresh approval. Never weaken or reuse legacy approvals.
+
+Quality review: preserve immutable requests/raw outputs/usage and all rule/model origins. For the clear building repair, verify home/building interpretation and a defensible accepted set. For narrowed compound input, verify no repeated answered choice, building/home scope and repair-only source aspects; inspect all typed exclusions as model judgments. Parser success is not semantic acceptance. Non-pass/refusal is reported honestly, never repaired into pass. No scores or publication are produced by this pilot. On transport, schema, provenance, usage or substantive failure, stop without spending the remainder automatically.
+
+Plan: add offline preflight and fail-closed guard, exercise synthetic two-stage responses and refusals, run required suites, open PR. Stop for fresh paid-project/budget/loader authorization. Existing secret loader may only be invoked after that authorization; never read/copy/print the secret file. No deploy is included.
+
+## Status log
+
+- Offline preparation started from merged main 444e979; feature branch codex/m3-two-case-preflight. User authorization covers preparation only. No paid API, credential loader, database or deployment operation.
+
+- Verified entry points: functions/tools/two-stage-pilot-plan.js:8 (cached-source preflight), :16 (pure guard); functions/test/two-stage-pilot-plan.test.js covers preparation and refusal/sequence scenarios. Manifest approved=false; the guarded runner refuses missing approval/key/explicit transport. Current pricing is $0.25/M input and $1.50/M output including thinking, per the official pricing page; capacity buffer is deliberately separate.
+
+- Verification: Node 225 passed / six optional skips; Python 140 run / two optional skips. Five new offline guard tests pass with synthetic responses only. No paid request, credential-loader invocation, Firestore RPC or application runtime change. The transport adapter is now implemented and fake-fetch tested; real execution remains unauthorized.
+
+- Transport completion: functions/tools/two-stage-pilot-runner.js implements the durable exclusive run/receipt and exact source-pinned SDK HTTP fuse. Fake-fetch tests complete exactly four sends and refuse unapproved requests, changed sources, retry after HTTP 503 and restart after failure/success. No actual key or provider was used.
+
+- Final local regression after adapter completion: Node 227 passed / six optional skips (233 total); Python 140 run / two optional skips. Draft PR #44 contains preparation only; no API/loader/database/deploy operation.
+
+- 2026-11-17: author approved the exact additional US$0.55/4-call pilot and existing loader. Executed once; stopped on copied reference-title aspect in fourth response, no retry. Clear case passed. See M3-two-stage-pilot-result.md. Actual responses, usage and approval are preserved; offline quotation correction is proposed, not implemented or authorized for paid retest.
+
+- Actual-result verification: Node 228 passed / six optional skips; Python 140 run / two optional skips. Artifact byte hashes recorded before staging; no paid retry or runtime fix.

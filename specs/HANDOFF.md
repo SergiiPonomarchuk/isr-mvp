@@ -4,7 +4,20 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: staged integration accepted; ordered merges authorized, 2026-11-17
+## Current checkpoint: real two-case pilot stopped safely; offline quotation correction proposed, 2026-11-17
+
+- Author approved US$0.55 additional and existing loader. Real pilot completed four single-attempt requests: clear building repair passes; narrowed mixed issue resolves scope/home correctly but copies a reference title into aspect.text. Validator refuses; no output repair, retry or scores/public. [Actual report and offline proposal](tasks/M3-two-stage-pilot-result.md).
+- Current totals: 28 text reviews / 14 embedding texts / 14 embedding POSTs / 42 HTTP attempts. New reported-token estimate US$0.004735; conservative new reservation US$0.516096, cumulative reserved US$0.998740. Four-call allowance consumed, no automatic additional requests.
+- Next decision: approve the report's offline quotation-contract correction (accurate EFFECTIVE_JSON wording and explicit reference-title warning), without weakening validation or any paid retry. No runtime/model change has been made. Earlier preparation notes below are historical; fresh paid approval was received and used exactly once.
+
+- PR #42 merged e19bfc0, #43 merged 444e979; post-merge Node/Python CI passes. Author approved preparation, not paid execution, of a two-case real staged review. [Task and exact limits](tasks/M3-two-stage-pilot.md).
+- Feature branch codex/m3-two-case-preflight adds an offline plan generator and pure fail-closed guard for D1-01-live and compound-lock-software-clarified, using saved source/input/library/ranking bindings. No new embeddings or changed math/prompts/library. Full dynamic stage-two request must follow validated stage-one output, never the old fixture-only stage.
+- Proposed additional cap US$0.55, maximum conservative reservation US$0.516096; up to four text HTTP attempts, zero retries/repair/embedding/geocoding/Firestore calls. Historical 24 reviews/38 attempts/US$0.482644 reservation remain separate and unchanged. No credential-loader access or provider call during preparation.
+- Guard is offline only. The durable exclusive receipt/run directory and source-pinned exact SDK transport fuse are implemented and fake-fetch tested. Runner requires fresh plan-bound approval, explicit in-memory key and transport. Private loader has not been invoked. --apply deliberately refuses. Current source hashes are worktree-byte pins; verify/rebind reviewed source only before launch, never silently bypass a mismatch. Semantic/human acceptance remains separate from parser success.
+- Draft preparation PR: #44. Final local checks: Node 227 passed / six optional skips; Python 140 run / two skips. No real provider calls.
+- Next attention gate is fresh approval covering the bounded adapter/completion and paid run, including use of the existing private loader; earlier Paid-project confirmation remains recorded. No deployment/production permission is included. Sol Medium remains sufficient.
+
+## Previous checkpoint: staged integration accepted; ordered merges authorized, 2026-11-17
 
 - Author approved [emulator-only staged integration](tasks/M3-emulator-staged-integration.md). Branch `codex/m3-staged-runtime`, worktree `A:/BackUp/isr-mvp/worktrees/wt-m3-staged-runtime`, stacked on evaluation PR #42/head `9f4af19`. No merge/deploy is implicit.
 - Author explicitly authorized `merge PR 42`, then `merge PR 43`. PR #42 merged as `e19bfc02920fdc04b1134878b050afff4124449b`. [PR #43](https://github.com/SergiiPonomarchuk/isr-mvp/pull/43) now targets main. Its merge preview has the exact tested code tree, with no conflicts; final-head CI and ordered merge are verified through GitHub. This checkpoint records the authorization before #43 merges; GitHub is the final merge receipt.

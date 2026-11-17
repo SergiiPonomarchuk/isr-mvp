@@ -1,0 +1,9 @@
+{
+  "status": "stopped_no_retry",
+  "calls_reserved": 4,
+  "http_attempts": 4,
+  "reserved_micros": 516096,
+  "embedding_texts": 0,
+  "firestore_rpcs": 0,
+  "production_writes": 0
+}
