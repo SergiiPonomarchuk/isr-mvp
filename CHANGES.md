@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Offline Analyzer quality/model evaluation plan frozen
+
+Recorded baseline failures, source/receipt manifests and eight quality fixtures with explicit human-judgment boundaries. Official research identifies omitted thinking/default minimal and prepares current 3.1 LOW versus stable 3.5 Flash-Lite LOW, no actual model change or calls. Two-request scenario fits original US$0.50 reservation, but exact generateContent thinking-budget verification is mandatory before execution. Node 205 passed/five optional skips; Python 140 run/two skips. See specs/tasks/M3-analyzer-evaluation-plan.md.
+
 ## 2026-11-17 - Actual staged check completes coverage but fails factual quality
 
 Approved one request at 23 total reviews merged 19 actual domain rows plus 81 scope proofs, with no repeated choice. Eighteen false scope claims persisted under context reasons and the home anchor became named_place; semantic acceptance withheld, no model output repaired or member/public data written. US$0.368110 reserved under original US$0.50; review allowance exhausted. Preserved artifacts and proposed offline model-evaluation planning, not more paid prompt trials; see specs/tasks/M3-staged-check-report.md.

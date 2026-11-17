@@ -13,3 +13,7 @@ Status: proposal only. No new paid call, model switch, prompt patch, production 
 ## Decision requested
 
 Approve **offline Analyzer evaluation/model-comparison planning** above, including fixture/quality criteria and primary-source research, before selecting a different application model or requesting any new actual benchmark. This is not approval to spend more or integrate the staged prototype. Sol Medium remains sufficient for this offline task. Keep the full-population storage/memory gates and final human acceptance visible.
+
+- 2026-11-17: Author approved offline evaluation planning. Plan: freeze request/source/result manifests, annotate independent quality facts and ambiguous retention judgments, verify official model/pricing/thinking documentation, prepare exact nonexecuting comparison requests and reservation scenarios. No SDK client/API calls or runtime/model change. Added planning generator only; future thinking/output accounting is an explicit execution gate.
+
+- 2026-11-17 completed: approved offline planning, primary-source research, eight fixtures, baseline/source freeze and two unexecuted LOW arms. No paid call/model change. Exact generateContent thinking-budget verification remains a pre-execution gate; see M3-analyzer-evaluation-plan.md.

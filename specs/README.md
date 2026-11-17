@@ -207,3 +207,5 @@ Latest M3: [actual keyed-prototype check and semantic review](tasks/M3-prototype
 Latest M3: [completed offline staged review](tasks/M3-review-stages-offline.md) and [integration impact proposal](tasks/M3-review-stages-integration.md). No new paid call or runtime integration.
 
 Latest M3: [actual staged-check quality report](tasks/M3-staged-check-report.md), [offline Analyzer evaluation-plan proposal](tasks/M3-analyzer-comparison-proposal.md). The 23-review allowance is exhausted; no runtime acceptance.
+
+Latest M3: [completed offline Analyzer evaluation plan](tasks/M3-analyzer-evaluation-plan.md). Paired LOW requests are prepared only; authorization and endpoint-specific thinking-budget verification are required before any call.

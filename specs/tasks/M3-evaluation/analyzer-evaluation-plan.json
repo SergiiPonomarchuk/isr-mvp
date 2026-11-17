@@ -1,0 +1,271 @@
+{
+  "version": "analyzer-offline-evaluation-plan-1",
+  "date": "2026-11-17 Europe/Kyiv",
+  "status": "proposal_not_authorized",
+  "freeze": {
+    "functions/tools/analyzer-evaluation-plan.js": "a073df6642a2f32f548f56f2e3c803f7bd2d17476009eb890992c1362520baaa",
+    "functions/package.json": "b769ab03951c56934c20e5fcc733666d792350f002905928fab920550375c0cf",
+    "functions/package-lock.json": "a39381f845aba6e28ec4139e609dbea992340ff3093aa6ae354f381fe8743eec",
+    "specs/tasks/M3-evaluation/pilot-20261117/ledger.json": "17268de8f0637f2215d646235b6e108a9d951424fb0c76c5d6b0b4d6e9e7a7fa",
+    "specs/tasks/M3-evaluation/pilot-20261117-corrected/ledger.json": "977418cbf0df3ef72030d5e4a99d11b60e87c79006ab50fc9eb78af0781f719a",
+    "specs/tasks/M3-evaluation/pilot-20261117-continuation/ledger.json": "3574d46debc9093d07f37bf3fb7a2b55c226ea5d414f452241894ee1602e50f5",
+    "specs/tasks/M3-evaluation/pilot-20261117-technical-repair/ledger.json": "0865f32990bba086bb1a15a0c62a8ccc5c0b31dcdaee113c55146876fa34f259",
+    "specs/tasks/M3-evaluation/pilot-20261117-grounding/ledger.json": "ee5f9a07498de4eac170ec45b3f34960d0169fd873623cd30cd6785b2b214c77",
+    "specs/tasks/M3-evaluation/pilot-20261117-aligned/ledger.json": "7ce430829e7d5ca79c3ed7f5ef9f1e36ab6b9f1a8290d3ca1e1e184771a0e51e",
+    "specs/tasks/M3-evaluation/pilot-20261117-two-case/ledger.json": "b177d7cfffb89057ef2bb6dfd20e00fbd9a46fb004517accad9a9450795229a4",
+    "functions/tools/candidate-prototype-check.js": "46958e9b66617fdce85468e2e7238b3fda16a410882847918be9b15143bd4778",
+    "functions/tools/mr1-pilot-budget.js": "80bddd7344794ca4309c33aeb8471263e466feeea98cf343cc6bdc752d5becc2",
+    "functions/experiments/candidate-review.js": "681e43f059d193b658c86649454590876860092acf53f2cef4c0ce34d90ac064",
+    "functions/context-review.js": "fe84970412cdf2505cf25b960577fcbbb6c4f3f3fa641ca92c1df17e6daeef79",
+    "functions/context-schema.js": "5c338c29757dd74a5585fc508ba754ddc8461f8b0c7a10f93749fb5f4ae92beb",
+    "functions/multi-reference.js": "cad5c25433bfd2aec56bf589bbd072d3dc49fa84c0095db2a6e675736cb45d13",
+    "functions/isr.js": "0f0db88cee6683a28d58cb87bd88cfee305ecfc1d54390419b41d61d831f4f16",
+    "functions/ai-config.js": "593e86b7d8efbdecc3c19b7a17d186c18cf72e4adfd00c7171f85f925b12b6f0",
+    "functions/demographics.js": "ba1bf10c28067af5f4490d2f12e12e1ccc5106a6a0c735e5a9936435b23e987c",
+    "functions/location.js": "003139fad07b0e8d95ff0304968650437acd9f4c94e14d8c627003277650ecca",
+    "functions/data/analyzer_examples.json": "153baac827ea806aba7394ed8a61b79208555a96e4adc1afd0aaf91424b08be3",
+    "scripts/mr1_pilot_launch.py": "ba3c9e3d1ccbdf87bb85c45dc40d4b9d9a3d53e2929cf265f79bfa56edf3184f",
+    "specs/tasks/M3-evaluation/cases.json": "a8243689de12c5768d2f6be0c6100d60966f18a107ecd5725301f7d52120f343",
+    "specs/tasks/M3-evaluation/candidate-prototype-request.json": "b7622b1245113a3986aa2175ab2fef5979e3970310ee8b20a0e178e482eb3d30",
+    "specs/tasks/M3-evaluation/pilot-20261117-prototype-check/ledger.json": "0d7aa7f04ef2afb73597623f32887c01f462424d20bd9116a4d09a4852811161",
+    "functions/tools/staged-review-check.js": "21f439b9c60e0ea83ca9b61ea9aa66ac4dded77c32addb98f3d6407752600c7c",
+    "functions/experiments/review-stages.js": "9b9de165a6ab73c043eabf0e850077950a30706d06816e5dcafa431776e9f2c0",
+    "specs/tasks/M3-evaluation/staged-decision-fixture.json": "207dfbe722b363956310807ef8ea7cb5b8019704af1473a29bb988bf9c6e9a87",
+    "specs/tasks/M3-evaluation/staged-scope-plan.json": "c40ba5009a9e3124e4298ef4f81e18c8e5740ed9b23da67bb2eb4755e10258a4",
+    "specs/tasks/M3-evaluation/staged-domain-request.json": "c130cb4b9808754acff2708a16138400dd91e799fda783bd8b9a8618955f8633",
+    "specs/tasks/M3-evaluation/staged-check-approval.json": "28439a6f303aabd34acc7028f930e9ea70f3c51d19bb493a0904ae298ace5a7d",
+    "specs/tasks/M3-evaluation/pilot-20261117-staged-check/ledger.json": "afd16b559afab4a449c5a3a792f97be1de2811f7387ee34d217d2ea2e38a6e50",
+    "specs/tasks/M3-evaluation/pilot-20261117-staged-check/attempt-1-request.json": "c130cb4b9808754acff2708a16138400dd91e799fda783bd8b9a8618955f8633",
+    "specs/tasks/M3-evaluation/pilot-20261117-staged-check/attempt-1-response.json": "db783ba6577fcb0a555f530b668ddfc2a0fec99b9313ba788fb96c4bf9e8d6c4",
+    "specs/tasks/M3-evaluation/pilot-20261117-staged-check/validated-review.json": "1f0eb9d11a883c44da2842933a06cbd070c29736837843d5cc54791fe607377b"
+  },
+  "historical": {
+    "model": "gemini-3.1-flash-lite",
+    "thinking_config_present": false,
+    "documented_current_default": "minimal",
+    "actual_historical_internal_effort": "not inferred",
+    "result": "pass",
+    "no_repeated_choice": true,
+    "actual_anchor": "named_place",
+    "known_false_scope_claims": [
+      {
+        "id": "2",
+        "reference_scope": "building",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "3",
+        "reference_scope": "building",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "4",
+        "reference_scope": "building",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "5",
+        "reference_scope": "building",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "6",
+        "reference_scope": "building",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "7",
+        "reference_scope": "building",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "8",
+        "reference_scope": "building",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "9",
+        "reference_scope": "unit",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "10",
+        "reference_scope": "unit",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "12",
+        "reference_scope": "unit",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "13",
+        "reference_scope": "building",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "14",
+        "reference_scope": "building",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "15",
+        "reference_scope": "unit",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "16",
+        "reference_scope": "building",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "17",
+        "reference_scope": "building",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "18",
+        "reference_scope": "building",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "19",
+        "reference_scope": "building",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      },
+      {
+        "id": "20",
+        "reference_scope": "building",
+        "claimed_reason": "x:context:incompatible scope (unit)"
+      }
+    ],
+    "domain_keys": 19,
+    "requires_human_review": true,
+    "semantic_acceptance": false,
+    "usage": {
+      "promptTokenCount": 2791,
+      "candidatesTokenCount": 614,
+      "totalTokenCount": 3405
+    }
+  },
+  "fixtures": [
+    {
+      "fixture_id": "confirmed-lock-domain",
+      "source": "author Confirm both; frozen U6/context rules",
+      "decision_already_chosen": true,
+      "expected_anchor": "home",
+      "expected_scope": "building",
+      "required_domain_ids": [
+        "1",
+        "10",
+        "15",
+        "4",
+        "2",
+        "7",
+        "14",
+        "3",
+        "12",
+        "13",
+        "5",
+        "17",
+        "16",
+        "6",
+        "19",
+        "8",
+        "18",
+        "20",
+        "9"
+      ],
+      "required_full_chain_count": 100,
+      "required_scope_proof_count": 81,
+      "must_retain_reference_ids": [
+        "1"
+      ],
+      "other_retention_judgments": "human adjudication; scope compatibility alone does not imply acceptance",
+      "original_decision_resolution": "author-confirmed fixture, not automatic extraction"
+    },
+    {
+      "fixture_id": "personal-help",
+      "case_id": "D1-09",
+      "policy": "eligible regardless of private/nonmunicipal nature",
+      "outcome": "accurate reference-gap or factual clarification may be valid; pass is not mandatory",
+      "reference_scope": "city",
+      "reference_id": "51",
+      "retention_gold": "unresolved; author review before any actual new case request"
+    },
+    {
+      "fixture_id": "home-anchor",
+      "input": "Our apartment entrance lock needs repair.",
+      "expected_anchor": "home",
+      "source": "synthetic U6 fixture"
+    },
+    {
+      "fixture_id": "work-anchor",
+      "input": "At my workplace Argo Industry, repair the loading door.",
+      "expected_anchor": "work",
+      "source": "synthetic U6 fixture"
+    },
+    {
+      "fixture_id": "distinct-property-anchor",
+      "input": "My separate garage needs its door repaired.",
+      "expected_anchor": "property",
+      "source": "synthetic U6 fixture"
+    },
+    {
+      "fixture_id": "external-place-anchor",
+      "input": "Repair the pothole on Hauptstraße, Weil am Rhein, Deutschland.",
+      "expected_anchor": "named_place",
+      "source": "synthetic U6 fixture; no geocoding"
+    },
+    {
+      "fixture_id": "genuinely-vague",
+      "input": "We need help. Something should be done.",
+      "expected_outcome": "needs_clarification",
+      "source": "existing vague-help case"
+    },
+    {
+      "fixture_id": "multi-reference",
+      "type": "synthetic arithmetic fixture",
+      "semantic_gold": "not annotated; no claim of real-model multi-reference acceptance"
+    }
+  ],
+  "arms": [
+    {
+      "id": "existing-low",
+      "model": "gemini-3.1-flash-lite",
+      "input_per_million": 0.25,
+      "output_per_million": 1.5,
+      "input_envelope_bytes": 14742,
+      "input_token_proxy": 15766,
+      "max_output_tokens": 8192,
+      "additional_thinking_buffer_tokens": 8192,
+      "reserved_usd_micros": 28518,
+      "request_sha256": "38e5c6e8bc329ef87cd157d51b8abffed7f35a9c9e0da61b3779bd09c6eeb1b9"
+    },
+    {
+      "id": "candidate-low",
+      "model": "gemini-3.5-flash-lite",
+      "input_per_million": 0.3,
+      "output_per_million": 2.5,
+      "input_envelope_bytes": 14742,
+      "input_token_proxy": 15766,
+      "max_output_tokens": 8192,
+      "additional_thinking_buffer_tokens": 8192,
+      "reserved_usd_micros": 45690,
+      "request_sha256": "9858aeaf83da3f6add52919255dfae4175b9c9edf70891a0e05e0ae275877250"
+    }
+  ],
+  "baseline_prior_reviews": 23,
+  "baseline_reserved_usd_micros": 368110,
+  "proposed_max_cumulative_reviews": 25,
+  "proposed_new_reviews": 2,
+  "new_embedding_texts": 0,
+  "max_embedding_texts": 45,
+  "max_embedding_posts": 17,
+  "proposed_money_ceiling_usd": 0.5,
+  "cumulative_scenario_reservation_usd": 0.442318,
+  "execution_gate": "Before any thinking-enabled request verify generateContent combined thinking/output accounting and implement an exact guarded reservation. The 2x output scenario is a buffer, not a proven provider billing hard cap; unresolved accounting blocks execution.",
+  "quality_gate": "Independent factual review, not parser success or keyword absence. All free-text reasons require human adjudication; do not auto-promote a model.",
+  "provider_calls": 0,
+  "runtime_changes": false
+}
