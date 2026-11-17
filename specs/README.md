@@ -201,3 +201,5 @@ Latest M3: [confirmed interpretation rules and offline v5 verification](tasks/M3
 Latest M3: [two-case actual closeout](tasks/M3-two-case-report.md) and [offline candidate-review proposal](tasks/M3-candidate-review-proposal.md). The 21-review allowance is exhausted; current semantic coverage is not accepted.
 
 Latest M3: [completed offline candidate-review prototype](tasks/M3-candidate-review-prototype.md), with measured envelopes, no runtime integration and no new provider calls.
+
+Latest M3: [actual keyed-prototype check and semantic review](tasks/M3-prototype-check-report.md); [offline staged-review design proposal](tasks/M3-review-stages-proposal.md). The 22-review allowance is exhausted.

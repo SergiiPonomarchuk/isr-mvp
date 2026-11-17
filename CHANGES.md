@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-17 - Prototype schema admitted with complete but semantically faulty review
+
+Executed approved one-call check at 22 cumulative reviews under original US$0.50. All 100 keys returned, but repeated settled clarification and 18 false scope reasons prevent semantic acceptance. Non-pass produced no scores. Fourteen embedding texts/POSTs, US$0.351880 reserved; no further call or integration/live change. Preserved actual outputs, quality regression and offline staged-review proposal; see specs/tasks/M3-prototype-check-report.md.
+
 ## 2026-11-17 - Isolated complete-candidate review prototype verified offline
 
 Added keyed explicit verdict experiment, raw duplicate-key refusal and unchanged-validator projection with non-pass-only deferral. Full 100-ID request fits current input envelope for the pinned case; output/grammar admission remains untested. Node 186 passed/five optional skips; Python 140 run/two skips. No runtime integration, paid call, math/model/library or production change. Prepared exact request/audit and optional one-call 22-review proposal under original US$0.50; see specs/tasks/M3-candidate-review-prototype.md.
