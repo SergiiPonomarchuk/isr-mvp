@@ -12,7 +12,7 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 - Reviewed producer/consumer inventory includes duplicate active catalog/title claims, current browser score-map writers/caches, backend scheduler/tally and Python/recovery. Explicit source/catalog writer fences and stale-client cutover are later live prerequisites; current open writers cannot prove freshness. No live compatibility/performance acceptance is claimed.
 - **Next author decision after design review: approve C1 pure offline protocol prototype only** (design section 13). Tiny synthetic fake store, lease/CAS/manifest/replay/source/catalog/race/cleanup tests and byte/inventory evidence; no Firestore/model clients, browser/runtime, rules/import/data writes or application scoring port. C2 emulator implementation, large parity/import and live readiness require later scopes. A design PR merge alone is not C1 approval.
 - Sol Medium remains sufficient. Historical totals unchanged: 30 text reviews / 14 embedding texts / 14 POSTs / 44 HTTP attempts, US$1.256788 cumulative reserved. This task: zero provider calls, credential loaders and database operations.
-- Required documentation/source/link checks, Node/Python suites and final PR-head CI are verified before handoff. Merge only on the author's explicit PR instruction.
+- Local checks: Node 243 passed / six optional skips (249 total), Python 145 run / two skips; design links/source paths/diagram and git diff --check pass. Documentation only; final PR-head CI is verified before handoff. Merge only on the author's explicit PR instruction.
 
 ## Previous checkpoint: Phase A offline audit complete; Phase C design decision, 2026-11-18
 

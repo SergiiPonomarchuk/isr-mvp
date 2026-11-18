@@ -207,11 +207,14 @@ No row is claimed implemented by this document.
 | C3: resource-gated population parity | Stream accepted immutable source to a new disposable environment only after measured restore prerequisites. Cached review and **actual matching** aspect vectors required. | Separate resource/import approval; full numeric/membership/cache/replay/Join/races/recovery under application limits. Missing vectors need their own embedding/paid gate. |
 | Later live readiness | Enforced source/catalog writers, access/rules/IAM, all consumers, recovery and author runbook. | Separate architecture/security/policy decisions; author-only deploy/live apply and human review. C1-C3 grant no live permission. |
 
+C1 byte accounting may use pure protobuf/schema encoders or explicit conservative bounds. A network-capable Firestore client/adapter and actual server acceptance wait for C2; no fake-store measurement is represented as server verification.
+
 No model comparison is needed. Sol Medium is sufficient for C1; keep the application model/config. Raise ambiguities in approved scoring/lifecycle rules rather than changing them as storage work.
 
 ## Status and verification
 
 - 2026-11-18: Author approved Phase C **offline design**. Feature branch codex/m3-generation-design starts at main 7973380. Reviewed the complete Phase A plan/result and producer/consumer source. No paid call, credential loader, source export decoding, database RPC/write/import, browser/runtime/code/rules/docs/ edit or deploy.
+- Local verification: Node 243 passed / six optional skips (249 total); Python 145 run / two optional skips. Internal links/source paths/diagram fences and git diff --check passed. Only CHANGES and specs Markdown change; application, tests, tools, frozen reports/approvals and docs/ are unchanged.
 - Choices and C1 scope are proposals, not runtime/schema acceptance. Final documentation/link/source and required Node/Python checks/CI are recorded before handoff. Merge remains author-only.
 
 ## Official constraints checked 2026-11-18
