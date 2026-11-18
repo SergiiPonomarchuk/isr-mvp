@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-18 - Ordered capacity plan and audit merges authorized
+
+Author ordered #47 then #48. Plan #47 merged as 19c46e2; audit #48 targets main with the accepted tree preserved. Final head/merge-preview checks and merge receipt are verified through GitHub before closeout. Phase C design remains separately gated; no application, paid API, database or deployment operation.
+
 ## 2026-11-18 - Complete bounded offline publication capacity audit
 
 Measured complete synthetic Check/Create/replay/Join envelopes and an audit-only lossless codec. Of 22 fixtures, 19 completed and three stopped at the unchanged timeout; 19 distinct calculations at 9,150 members still need 13,793,088 compact Create bytes, exceeding the request guard. Recommend separately approved Phase C design. Added byte/parity, codec and resource/network refusal tests, source-pinned reports and exact admitted receipt coverage. No application/runtime/docs/ change, paid call, database operation, import or deploy. See specs/tasks/M3-capacity-audit/README.md.
