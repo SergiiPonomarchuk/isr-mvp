@@ -215,6 +215,7 @@ No model comparison is needed. Sol Medium is sufficient for C1; keep the applica
 
 - 2026-11-18: Author approved Phase C **offline design**. Feature branch codex/m3-generation-design starts at main 7973380. Reviewed the complete Phase A plan/result and producer/consumer source. No paid call, credential loader, source export decoding, database RPC/write/import, browser/runtime/code/rules/docs/ edit or deploy.
 - Local verification: Node 243 passed / six optional skips (249 total); Python 145 run / two optional skips. Internal links/source paths/diagram fences and git diff --check passed. Only CHANGES and specs Markdown change; application, tests, tools, frozen reports/approvals and docs/ are unchanged.
+- Draft [PR #49](https://github.com/SergiiPonomarchuk/isr-mvp/pull/49) targets main. Design head b8b8557 passed GitHub Node/Python CI; final documentation-head CI is verified before handoff. No merge or C1 implementation is authorized.
 - Choices and C1 scope are proposals, not runtime/schema acceptance. Final documentation/link/source and required Node/Python checks/CI are recorded before handoff. Merge remains author-only.
 
 ## Official constraints checked 2026-11-18
