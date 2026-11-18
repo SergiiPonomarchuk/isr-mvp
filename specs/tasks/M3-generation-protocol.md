@@ -27,3 +27,6 @@ The fake model treats source/catalog and phase updates as trusted atomic command
 ## Status
 
 - 2026-11-18: C1 authorized; spec/plan recorded before implementation. No paid calls, credential loader, database or emulator operation. Final implementation/result/checks are appended before handoff.
+
+- Implemented pure fake-store/typed-manifest/protocol modules, source-pinned bounded report and 25 focused crash/race/refusal tests. Initial run/code ee2ae92 preserved; final run 02 includes recovery/ordered upload/replay validation tightening. [Result and limitations](M3-generation-protocol/README.md). Three sizes 2/7/17 plus Join pass exact supplied-payload/replay checks; no scoring/SDK acceptance.
+- Final local verification: Node 268 passed / six skips (274 total), Python 147 run / two skips. Create activation 7 reads/10 writes, Join 11/10 in the fake model; peak child RSS 57.28 MiB, unchanged 256 MiB heap / 512 MiB RSS / 120 seconds / 1 GiB free guard. C2 remains separately approved. Final PR-head CI checked before handoff; merge only on explicit instruction.

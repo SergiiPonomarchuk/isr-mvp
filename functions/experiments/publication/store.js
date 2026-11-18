@@ -9,7 +9,7 @@ class Store{
  run(label,callback,fault={}){
   const reads=new Map(),creates=new Set(),writes=new Map();
   const tx={get:p=>{reads.set(p,this.versions.get(p)||0);return this.get(p);},set:(p,v)=>writes.set(p,{op:'set',value:copy(v)}),create:(p,v)=>{creates.add(p);writes.set(p,{op:'create',value:copy(v)});},delete:p=>writes.set(p,{op:'delete'})};
-  const value=callback(tx);const json_bytes=size([...writes]);const metric={label,reads:reads.size,writes:writes.size,json_bytes,model_bound_bytes:256+json_bytes+128*(writes.size+reads.size)};if(fault.bounds&&(metric.writes>fault.bounds.writes||metric.model_bound_bytes>fault.bounds.bytes))fail('transaction_budget');if(fault.beforeCommit)fault.beforeCommit();
+  const value=callback(tx);if(value&&typeof value.then==='function')fail('async_unsupported');const json_bytes=size([...writes]);const metric={label,reads:reads.size,writes:writes.size,json_bytes,model_bound_bytes:256+json_bytes+128*(writes.size+reads.size)};if(fault.bounds&&(metric.writes>fault.bounds.writes||metric.model_bound_bytes>fault.bounds.bytes))fail('transaction_budget');if(fault.beforeCommit)fault.beforeCommit();
   for(const [p,v]of reads)if((this.versions.get(p)||0)!==v)fail('conflict');
   for(const p of creates)if(this.rows.has(p))fail('already_exists');
   if(fault.crash==='before')fail('crash_before_commit');

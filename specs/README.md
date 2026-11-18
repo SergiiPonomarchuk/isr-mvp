@@ -7,7 +7,7 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: [Phase C offline publication design](tasks/M3-generation-publication-design.md) is prepared after explicit author approval. [Phase A capacity result](tasks/M3-capacity-audit/README.md) remains a compact-only no-go. Next decision after design review is the limited C1 offline protocol prototype; no runtime, import, rules or deployment acceptance.
+Current checkpoint: [C1 offline publication protocol](tasks/M3-generation-protocol.md) implemented after explicit approval; [result and limitations](tasks/M3-generation-protocol/README.md). Design #49 is merged. Next scope is a separately approved C2 isolated-emulator slice, not automatic runtime/import/rules/deployment work.
 
 Current M3 preparation: [one-case quotation retest](tasks/M3-one-case-retest.md), offline only; two-call/US$0.27 proposal needs fresh paid approval.
 

@@ -1,0 +1,11 @@
+{
+  "specs/tasks/M3-generation-protocol/README.md": "811c38fddb2dba760ae37526f1f8650a0209091d0afcdcc04cc1681134db89ea",
+  "specs/tasks/M3-generation-protocol/run-20261118-01/stdout.txt": "7b9d681e4b7f24ce440b4467ee0a7abb3a6219afc3029a4d3ba296a41d2f8830",
+  "specs/tasks/M3-generation-protocol/run-20261118-01/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "specs/tasks/M3-generation-protocol/run-20261118-01/worker.json": "838bb1568420a0b22d791da07da09d686e6acaef1b7d6ba40e4689f869bb5196",
+  "specs/tasks/M3-generation-protocol/run-20261118-01/report.json": "dbcf5444edd8c827bf965f0ee63e46b3a259ade7acbda38939a4f86f8ca28ce0",
+  "specs/tasks/M3-generation-protocol/run-20261118-02/stdout.txt": "7b9d681e4b7f24ce440b4467ee0a7abb3a6219afc3029a4d3ba296a41d2f8830",
+  "specs/tasks/M3-generation-protocol/run-20261118-02/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "specs/tasks/M3-generation-protocol/run-20261118-02/worker.json": "a6ca464572b43ee5cb4d5a548a64f6d00a1d3fbc20267a2c4f682c10eac04944",
+  "specs/tasks/M3-generation-protocol/run-20261118-02/report.json": "7387bca3c2220f0640d7f1f109758ad3f6a22de5c448d40a0a9b14d478d81169"
+}
