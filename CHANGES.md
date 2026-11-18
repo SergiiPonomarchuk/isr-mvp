@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-18 - Design immutable generations and atomic publication offline
+
+Prepared the approved Phase C design: private byte-bounded immutable builds, source/catalog fences, lease/resume/seal/activation, frozen replay and generation-consistent readers, Join, lifecycle/tally and recovery. Inventoried existing map consumers and documented stale-client/access and live-writer prerequisites. Proposed separate C1 fake-store protocol scope. Documentation only; no runtime/math/schema, docs/, provider, database/import, rules or deployment change. See specs/tasks/M3-generation-publication-design.md.
+
 ## 2026-11-18 - Ordered capacity plan and audit merges authorized
 
 Author ordered #47 then #48. Plan #47 merged as 19c46e2; audit #48 targets main with the accepted tree preserved. Final head/merge-preview checks and merge receipt are verified through GitHub before closeout. Phase C design remains separately gated; no application, paid API, database or deployment operation.

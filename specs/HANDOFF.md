@@ -4,7 +4,17 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: Phase A offline audit complete; Phase C design decision, 2026-11-18
+## Current checkpoint: Phase C offline design prepared for review, 2026-11-18
+
+- Author approved **Phase C offline design**. [Design, consumer inventory and proposed C1 scope](tasks/M3-generation-publication-design.md) are documentation only on codex/m3-generation-design, based on main 7973380. No schema/runtime, emulator import, database access/write, rules, docs/, model/paid call or deployment change.
+- Ordered merges are complete: #47 -> 19c46e2, #48 -> 7973380. Main Node/Python CI passed; one stalled Node checkout was canceled and that job retried successfully without source changes. Phase A measurements and paid artifacts remain unchanged.
+- Proposed approach: private immutable chunks under issue_drafts; validated bounded manifests; one small activation transaction and matching root tokens; full successor generation for Join; all consumers resolve one token. Exact current arithmetic, frozen evidence/replay, zero-X B and no new membership/reference cap.
+- Reviewed producer/consumer inventory includes duplicate active catalog/title claims, current browser score-map writers/caches, backend scheduler/tally and Python/recovery. Explicit source/catalog writer fences and stale-client cutover are later live prerequisites; current open writers cannot prove freshness. No live compatibility/performance acceptance is claimed.
+- **Next author decision after design review: approve C1 pure offline protocol prototype only** (design section 13). Tiny synthetic fake store, lease/CAS/manifest/replay/source/catalog/race/cleanup tests and byte/inventory evidence; no Firestore/model clients, browser/runtime, rules/import/data writes or application scoring port. C2 emulator implementation, large parity/import and live readiness require later scopes. A design PR merge alone is not C1 approval.
+- Sol Medium remains sufficient. Historical totals unchanged: 30 text reviews / 14 embedding texts / 14 POSTs / 44 HTTP attempts, US$1.256788 cumulative reserved. This task: zero provider calls, credential loaders and database operations.
+- Required documentation/source/link checks, Node/Python suites and final PR-head CI are verified before handoff. Merge only on the author's explicit PR instruction.
+
+## Previous checkpoint: Phase A offline audit complete; Phase C design decision, 2026-11-18
 
 - Author explicitly approved Phase A and then ordered **merge PR #47, then #48**. Plan #47 merged as **19c46e2c2ec12b4fa476667e1b240855c48a9799**. Audit [PR #48](https://github.com/SergiiPonomarchuk/isr-mvp/pull/48) now targets main; its merge is already authorized and needs no new confirmation. [Full result and limitations](tasks/M3-capacity-audit/README.md), [task/Status](tasks/M3-capacity-memory-plan.md). Previously accepted head c7d6497 passed GitHub Node/Python CI. Final documentation-head/merge-preview checks and the GitHub merge receipt are verified before closeout. This checkpoint records authorization before #48 merges. Application code remains unchanged from 175d6fa; neither deployment nor Phase C work is authorized.
 - **NO-GO for compact-only atomic publication across intended reference shapes.** At 9,150 members / 19 distinct calculations, compact Create is 13,793,088 bytes versus the existing 10,452,992-byte request guard. Exact saved admitted-response case compacts to 5,816,909 bytes, but that one synthetic-vector/population shape is not universal or server acceptance.
