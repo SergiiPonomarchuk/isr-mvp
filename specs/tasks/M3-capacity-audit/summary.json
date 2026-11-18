@@ -1,0 +1,1072 @@
+{
+  "date": "2026-11-18",
+  "application_base": "175d6fa25c3e7643b5b5a4c9a90389b546ac4013",
+  "plan_base": "ba5c30114051e6f8b86476e20c60f47f32fe8983",
+  "initial_audit_source_commit": "6b08466",
+  "scope": "offline synthetic structural evidence; not actual-population or server acceptance",
+  "decision": "NO-GO for compact-only physical atomic publication across intended reference shapes; propose separate Phase C design approval",
+  "total_fixtures": 22,
+  "completed": 19,
+  "timeouts": 3,
+  "provider_calls": 0,
+  "database_rpcs": 0,
+  "loader_invocations": 0,
+  "request_guard_bytes": 10452992,
+  "document_guard_bytes": 1048448,
+  "parent_peak_rss_bytes": 188944384,
+  "fixtures": [
+    {
+      "id": "oracle-small",
+      "status": "completed",
+      "config": {
+        "id": "oracle-small",
+        "members": 4,
+        "refs": 3,
+        "aspects": 3,
+        "mixed": false
+      },
+      "parent_peak_rss_bytes": 111992832,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 37573,
+          "full_image_guard_shape_bytes_without_token": 64383,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 40259,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 11
+        },
+        "join_current": {
+          "wire_bytes": 5496,
+          "full_image_guard_shape_bytes_without_token": 34514,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 32577,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9
+        },
+        "create_compact": {
+          "wire_bytes": 35275,
+          "full_image_guard_shape_bytes_without_token": 62085,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 39987,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 11
+        },
+        "join_compact": {
+          "wire_bytes": 4271,
+          "full_image_guard_shape_bytes_without_token": 31745,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 32577,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9
+        }
+      }
+    },
+    {
+      "id": "shared-100-1",
+      "status": "completed",
+      "config": {
+        "id": "shared-100-1",
+        "members": 100,
+        "refs": 1,
+        "aspects": 1,
+        "mixed": false
+      },
+      "parent_peak_rss_bytes": 113299456,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 148134,
+          "full_image_guard_shape_bytes_without_token": 163634,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 31320,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 107
+        },
+        "join_current": {
+          "wire_bytes": 53966,
+          "full_image_guard_shape_bytes_without_token": 137080,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 17110,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 105
+        },
+        "create_compact": {
+          "wire_bytes": 80525,
+          "full_image_guard_shape_bytes_without_token": 96025,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 23272,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 107
+        },
+        "join_compact": {
+          "wire_bytes": 39047,
+          "full_image_guard_shape_bytes_without_token": 75429,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 17110,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 105
+        }
+      }
+    },
+    {
+      "id": "shared-100-3",
+      "status": "completed",
+      "config": {
+        "id": "shared-100-3",
+        "members": 100,
+        "refs": 3,
+        "aspects": 3,
+        "mixed": false
+      },
+      "parent_peak_rss_bytes": 112041984,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 179584,
+          "full_image_guard_shape_bytes_without_token": 206394,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 48895,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 107
+        },
+        "join_current": {
+          "wire_bytes": 54273,
+          "full_image_guard_shape_bytes_without_token": 168579,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 34685,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 105
+        },
+        "create_compact": {
+          "wire_bytes": 102605,
+          "full_image_guard_shape_bytes_without_token": 129415,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 40847,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 107
+        },
+        "join_compact": {
+          "wire_bytes": 39260,
+          "full_image_guard_shape_bytes_without_token": 97464,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 34685,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 105
+        }
+      }
+    },
+    {
+      "id": "shared-100-19",
+      "status": "completed",
+      "config": {
+        "id": "shared-100-19",
+        "members": 100,
+        "refs": 19,
+        "aspects": 3,
+        "mixed": false
+      },
+      "parent_peak_rss_bytes": 115138560,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 355131,
+          "full_image_guard_shape_bytes_without_token": 402392,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 70261,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 107
+        },
+        "join_current": {
+          "wire_bytes": 55899,
+          "full_image_guard_shape_bytes_without_token": 345752,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 56051,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 105
+        },
+        "create_compact": {
+          "wire_bytes": 123213,
+          "full_image_guard_shape_bytes_without_token": 170474,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 62213,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 107
+        },
+        "join_compact": {
+          "wire_bytes": 39260,
+          "full_image_guard_shape_bytes_without_token": 118072,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 56051,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 105
+        }
+      }
+    },
+    {
+      "id": "shared-100-100",
+      "status": "completed",
+      "config": {
+        "id": "shared-100-100",
+        "members": 100,
+        "refs": 100,
+        "aspects": 3,
+        "mixed": false
+      },
+      "parent_peak_rss_bytes": 171233280,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 1247419,
+          "full_image_guard_shape_bytes_without_token": 1398762,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 179019,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 107
+        },
+        "join_current": {
+          "wire_bytes": 64060,
+          "full_image_guard_shape_bytes_without_token": 1246302,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 164809,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 105
+        },
+        "create_compact": {
+          "wire_bytes": 228001,
+          "full_image_guard_shape_bytes_without_token": 379344,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 170971,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 107
+        },
+        "join_compact": {
+          "wire_bytes": 39158,
+          "full_image_guard_shape_bytes_without_token": 222859,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 164809,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 105
+        }
+      }
+    },
+    {
+      "id": "shared-1000-1",
+      "status": "completed",
+      "config": {
+        "id": "shared-1000-1",
+        "members": 1000,
+        "refs": 1,
+        "aspects": 1,
+        "mixed": true
+      },
+      "parent_peak_rss_bytes": 120397824,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 1278088,
+          "full_image_guard_shape_bytes_without_token": 1293587,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 113221,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1007
+        },
+        "join_current": {
+          "wire_bytes": 513907,
+          "full_image_guard_shape_bytes_without_token": 1191432,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 46579,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1005
+        },
+        "create_compact": {
+          "wire_bytes": 593788,
+          "full_image_guard_shape_bytes_without_token": 609287,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 47259,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1007
+        },
+        "join_compact": {
+          "wire_bytes": 372116,
+          "full_image_guard_shape_bytes_without_token": 572491,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 47305,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1005
+        }
+      }
+    },
+    {
+      "id": "shared-1000-3",
+      "status": "completed",
+      "config": {
+        "id": "shared-1000-3",
+        "members": 1000,
+        "refs": 3,
+        "aspects": 3,
+        "mixed": true
+      },
+      "parent_peak_rss_bytes": 120074240,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 1487407,
+          "full_image_guard_shape_bytes_without_token": 1514216,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 130796,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1007
+        },
+        "join_current": {
+          "wire_bytes": 514112,
+          "full_image_guard_shape_bytes_without_token": 1400799,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 57889,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1005
+        },
+        "create_compact": {
+          "wire_bytes": 709137,
+          "full_image_guard_shape_bytes_without_token": 735946,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 57851,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1007
+        },
+        "join_compact": {
+          "wire_bytes": 372227,
+          "full_image_guard_shape_bytes_without_token": 687794,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 57889,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1005
+        }
+      }
+    },
+    {
+      "id": "shared-1000-19",
+      "status": "completed",
+      "config": {
+        "id": "shared-1000-19",
+        "members": 1000,
+        "refs": 19,
+        "aspects": 3,
+        "mixed": true
+      },
+      "parent_peak_rss_bytes": 120725504,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 3074162,
+          "full_image_guard_shape_bytes_without_token": 3121422,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 152162,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1007
+        },
+        "join_current": {
+          "wire_bytes": 514736,
+          "full_image_guard_shape_bytes_without_token": 2988178,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 78340,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1005
+        },
+        "create_compact": {
+          "wire_bytes": 729745,
+          "full_image_guard_shape_bytes_without_token": 777005,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 78302,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1007
+        },
+        "join_compact": {
+          "wire_bytes": 371225,
+          "full_image_guard_shape_bytes_without_token": 707400,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 78340,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1005
+        }
+      }
+    },
+    {
+      "id": "shared-1000-100",
+      "status": "completed",
+      "config": {
+        "id": "shared-1000-100",
+        "members": 1000,
+        "refs": 100,
+        "aspects": 3,
+        "mixed": true
+      },
+      "parent_peak_rss_bytes": 151982080,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 11138028,
+          "full_image_guard_shape_bytes_without_token": 11289370,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 260920,
+          "wire_fits_request": false,
+          "documents_fit": true,
+          "write_count": 1007
+        },
+        "join_current": {
+          "wire_bytes": 524001,
+          "full_image_guard_shape_bytes_without_token": 11062310,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 186413,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1005
+        },
+        "create_compact": {
+          "wire_bytes": 833633,
+          "full_image_guard_shape_bytes_without_token": 984975,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 186387,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1007
+        },
+        "join_compact": {
+          "wire_bytes": 372227,
+          "full_image_guard_shape_bytes_without_token": 813291,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 186413,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1005
+        }
+      }
+    },
+    {
+      "id": "shared-9150-1",
+      "status": "completed",
+      "config": {
+        "id": "shared-9150-1",
+        "members": 9150,
+        "refs": 1,
+        "aspects": 1,
+        "mixed": true
+      },
+      "parent_peak_rss_bytes": 185585664,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 11630616,
+          "full_image_guard_shape_bytes_without_token": 11646115,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 863021,
+          "wire_fits_request": false,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_current": {
+          "wire_bytes": 4719931,
+          "full_image_guard_shape_bytes_without_token": 10842058,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 420764,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        },
+        "create_compact": {
+          "wire_bytes": 5371716,
+          "full_image_guard_shape_bytes_without_token": 5387215,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 422159,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_compact": {
+          "wire_bytes": 3428013,
+          "full_image_guard_shape_bytes_without_token": 5186417,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 422205,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        }
+      }
+    },
+    {
+      "id": "shared-9150-3",
+      "status": "completed",
+      "config": {
+        "id": "shared-9150-3",
+        "members": 9150,
+        "refs": 3,
+        "aspects": 3,
+        "mixed": true
+      },
+      "parent_peak_rss_bytes": 183369728,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 13449827,
+          "full_image_guard_shape_bytes_without_token": 13476636,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 880596,
+          "wire_fits_request": false,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_current": {
+          "wire_bytes": 4729288,
+          "full_image_guard_shape_bytes_without_token": 12670469,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 421078,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        },
+        "create_compact": {
+          "wire_bytes": 6330857,
+          "full_image_guard_shape_bytes_without_token": 6357666,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 422189,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_compact": {
+          "wire_bytes": 3437276,
+          "full_image_guard_shape_bytes_without_token": 6154664,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 422235,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        }
+      }
+    },
+    {
+      "id": "shared-9150-19",
+      "status": "completed",
+      "config": {
+        "id": "shared-9150-19",
+        "members": 9150,
+        "refs": 19,
+        "aspects": 3,
+        "mixed": true
+      },
+      "parent_peak_rss_bytes": 182407168,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 27801618,
+          "full_image_guard_shape_bytes_without_token": 27848878,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 901962,
+          "wire_fits_request": false,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_current": {
+          "wire_bytes": 4730914,
+          "full_image_guard_shape_bytes_without_token": 27023886,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 421078,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        },
+        "create_compact": {
+          "wire_bytes": 6351465,
+          "full_image_guard_shape_bytes_without_token": 6398725,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 422346,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_compact": {
+          "wire_bytes": 3437276,
+          "full_image_guard_shape_bytes_without_token": 6175272,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 422392,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        }
+      }
+    },
+    {
+      "id": "shared-9150-100",
+      "status": "timeout_refused",
+      "config": {
+        "id": "shared-9150-100",
+        "members": 9150,
+        "refs": 100,
+        "aspects": 3,
+        "mixed": true
+      },
+      "parent_peak_rss_bytes": 188944384,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 100736035,
+          "full_image_guard_shape_bytes_without_token": 100887377,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 1010720,
+          "wire_fits_request": false,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_current": {
+          "wire_bytes": 4739177,
+          "full_image_guard_shape_bytes_without_token": 99975717,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 484511,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        }
+      }
+    },
+    {
+      "id": "distinct-9150-3",
+      "status": "completed",
+      "config": {
+        "id": "distinct-9150-3",
+        "members": 9150,
+        "refs": 3,
+        "aspects": 3,
+        "mixed": true,
+        "distinct": true
+      },
+      "parent_peak_rss_bytes": 186580992,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 13449841,
+          "full_image_guard_shape_bytes_without_token": 13476664,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 880596,
+          "wire_fits_request": false,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_current": {
+          "wire_bytes": 4729288,
+          "full_image_guard_shape_bytes_without_token": 12670483,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 421078,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        },
+        "create_compact": {
+          "wire_bytes": 6330871,
+          "full_image_guard_shape_bytes_without_token": 6357694,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 422189,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_compact": {
+          "wire_bytes": 3437276,
+          "full_image_guard_shape_bytes_without_token": 6154678,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 422235,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        }
+      }
+    },
+    {
+      "id": "distinct-9150-19",
+      "status": "completed",
+      "config": {
+        "id": "distinct-9150-19",
+        "members": 9150,
+        "refs": 19,
+        "aspects": 3,
+        "mixed": true,
+        "distinct": true
+      },
+      "parent_peak_rss_bytes": 176590848,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 27801744,
+          "full_image_guard_shape_bytes_without_token": 27849130,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 901962,
+          "wire_fits_request": false,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_current": {
+          "wire_bytes": 4730914,
+          "full_image_guard_shape_bytes_without_token": 27024012,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 421078,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        },
+        "create_compact": {
+          "wire_bytes": 13793088,
+          "full_image_guard_shape_bytes_without_token": 13840474,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 422453,
+          "wire_fits_request": false,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_compact": {
+          "wire_bytes": 3438149,
+          "full_image_guard_shape_bytes_without_token": 13617768,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 422499,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        }
+      }
+    },
+    {
+      "id": "distinct-9150-100",
+      "status": "timeout_refused",
+      "config": {
+        "id": "distinct-9150-100",
+        "members": 9150,
+        "refs": 100,
+        "aspects": 3,
+        "mixed": true,
+        "distinct": true
+      },
+      "parent_peak_rss_bytes": 185573376,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 100745883,
+          "full_image_guard_shape_bytes_without_token": 100897918,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 1010720,
+          "wire_fits_request": false,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_current": {
+          "wire_bytes": 4739177,
+          "full_image_guard_shape_bytes_without_token": 99976414,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 485206,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        }
+      }
+    },
+    {
+      "id": "one-aspect-9150-100",
+      "status": "timeout_refused",
+      "config": {
+        "id": "one-aspect-9150-100",
+        "members": 9150,
+        "refs": 100,
+        "aspects": 1,
+        "mixed": false
+      },
+      "parent_peak_rss_bytes": 185606144,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 100239908,
+          "full_image_guard_shape_bytes_without_token": 100382495,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 995808,
+          "wire_fits_request": false,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_current": {
+          "wire_bytes": 4764797,
+          "full_image_guard_shape_bytes_without_token": 99470597,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 484298,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        }
+      }
+    },
+    {
+      "id": "dense-1000-19",
+      "status": "completed",
+      "config": {
+        "id": "dense-1000-19",
+        "members": 1000,
+        "refs": 19,
+        "aspects": 3,
+        "mixed": true,
+        "dense": true
+      },
+      "parent_peak_rss_bytes": 124125184,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 4390073,
+          "full_image_guard_shape_bytes_without_token": 4437333,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 152162,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1007
+        },
+        "join_current": {
+          "wire_bytes": 514736,
+          "full_image_guard_shape_bytes_without_token": 4305090,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 78338,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1005
+        },
+        "create_compact": {
+          "wire_bytes": 2119456,
+          "full_image_guard_shape_bytes_without_token": 2166716,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 78300,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1007
+        },
+        "join_compact": {
+          "wire_bytes": 371225,
+          "full_image_guard_shape_bytes_without_token": 2098112,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 78338,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1005
+        }
+      }
+    },
+    {
+      "id": "metadata-stress-1000-3",
+      "status": "completed",
+      "config": {
+        "id": "metadata-stress-1000-3",
+        "members": 1000,
+        "refs": 3,
+        "aspects": 3,
+        "mixed": true,
+        "metadataStress": true
+      },
+      "parent_peak_rss_bytes": 120983552,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 1570668,
+          "full_image_guard_shape_bytes_without_token": 1619986,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 181251,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1007
+        },
+        "join_current": {
+          "wire_bytes": 514140,
+          "full_image_guard_shape_bytes_without_token": 1454720,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 80398,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1005
+        },
+        "create_compact": {
+          "wire_bytes": 764398,
+          "full_image_guard_shape_bytes_without_token": 813716,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 80360,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1007
+        },
+        "join_compact": {
+          "wire_bytes": 372255,
+          "full_image_guard_shape_bytes_without_token": 741715,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 80398,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1005
+        }
+      }
+    },
+    {
+      "id": "admitted-100",
+      "status": "completed",
+      "config": {
+        "id": "admitted-100",
+        "members": 100,
+        "refs": 1,
+        "aspects": 1,
+        "mixed": false,
+        "admitted": true
+      },
+      "parent_peak_rss_bytes": 122220544,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 257650,
+          "full_image_guard_shape_bytes_without_token": 382031,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 138047,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 107
+        },
+        "join_current": {
+          "wire_bytes": 53630,
+          "full_image_guard_shape_bytes_without_token": 246181,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 123688,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 105
+        },
+        "create_compact": {
+          "wire_bytes": 190041,
+          "full_image_guard_shape_bytes_without_token": 314422,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 129999,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 107
+        },
+        "join_compact": {
+          "wire_bytes": 38711,
+          "full_image_guard_shape_bytes_without_token": 184530,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 123688,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 105
+        }
+      }
+    },
+    {
+      "id": "admitted-9150",
+      "status": "completed",
+      "config": {
+        "id": "admitted-9150",
+        "members": 9150,
+        "refs": 1,
+        "aspects": 1,
+        "mixed": false,
+        "admitted": true
+      },
+      "parent_peak_rss_bytes": 168448000,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 12057509,
+          "full_image_guard_shape_bytes_without_token": 12181889,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 969748,
+          "wire_fits_request": false,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_current": {
+          "wire_bytes": 4722678,
+          "full_image_guard_shape_bytes_without_token": 11278025,
+          "guard_shape_fits_request": false,
+          "largest_document_bytes": 455237,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        },
+        "create_compact": {
+          "wire_bytes": 5816909,
+          "full_image_guard_shape_bytes_without_token": 5941289,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 455199,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9157
+        },
+        "join_compact": {
+          "wire_bytes": 3407580,
+          "full_image_guard_shape_bytes_without_token": 5640684,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 455237,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 9155
+        }
+      }
+    },
+    {
+      "id": "two-aspect-1000-3",
+      "status": "completed",
+      "config": {
+        "id": "two-aspect-1000-3",
+        "members": 1000,
+        "refs": 3,
+        "aspects": 2,
+        "mixed": true
+      },
+      "parent_peak_rss_bytes": 120623104,
+      "operations": {
+        "create_current": {
+          "wire_bytes": 1482810,
+          "full_image_guard_shape_bytes_without_token": 1505253,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 123340,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1007
+        },
+        "join_current": {
+          "wire_bytes": 514112,
+          "full_image_guard_shape_bytes_without_token": 1396279,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 53523,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1005
+        },
+        "create_compact": {
+          "wire_bytes": 651265,
+          "full_image_guard_shape_bytes_without_token": 673708,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 53485,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1007
+        },
+        "join_compact": {
+          "wire_bytes": 372170,
+          "full_image_guard_shape_bytes_without_token": 629942,
+          "guard_shape_fits_request": true,
+          "largest_document_bytes": 53523,
+          "wire_fits_request": true,
+          "documents_fit": true,
+          "write_count": 1005
+        }
+      }
+    }
+  ]
+}

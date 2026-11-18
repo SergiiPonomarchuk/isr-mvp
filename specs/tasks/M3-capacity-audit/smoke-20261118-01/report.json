@@ -1,0 +1,274 @@
+{
+  "version": "capacity-audit-phase-a-1",
+  "date_client": "2026-11-18",
+  "scope": "synthetic offline structural audit; not actual population or database acceptance",
+  "source_pins": {
+    "functions/tools/capacity/wire.js": "2013aeee3b9daf52234c751c4581fb430c7a2077ef8a14d3b3432ffd6716e349",
+    "functions/tools/capacity/codec.js": "1e791a17e3c79f17f4aa81667e4bd5b53050e190cffb67ae0e0d3fedd71e267a",
+    "functions/tools/capacity/fixture.js": "547a474fe10a55f37285a115e87c961dfaaaeac107c22e527db2982766e35b31",
+    "functions/tools/capacity/capture.js": "cd9f397420dca2db70af6f579d094fa4c522dd1905f54a8fe219ce5a7273530f",
+    "functions/tools/capacity/envelopes.js": "602ddba33a0d7b9cf96e975687274a918242973eebe529b0fd80ce68207f8d81",
+    "functions/tools/capacity/worker.js": "2663729e734586ae1ef1b67b68c64c696b6bc581028ffb72fc8d5fc94fc92438",
+    "scripts/audit_capacity_phase_a.py": "52525a959f67dda44e9b1d52a66b867cefb088c43014cfad463bd2fa582cc165",
+    "functions/mr1-service.js": "36d54af0934a99637c19ff7fe700dfcb24229750eebe9252b99ed4347f32efbd",
+    "functions/mr1-engine.js": "1d997c3bb034a2cdc74ad1254e4a8a9d4d5fe58dbfd619a413c0d13658f2b1f0",
+    "functions/join-issue.js": "62b6e6e56a5fec13ae1507449c209825f0728d9a6535726b6962301d36b187f2",
+    "functions/multi-reference.js": "cad5c25433bfd2aec56bf589bbd072d3dc49fa84c0095db2a6e675736cb45d13",
+    "functions/isr.js": "0f0db88cee6683a28d58cb87bd88cfee305ecfc1d54390419b41d61d831f4f16",
+    "functions/staged-context.js": "e5e3b99bcf71884f47b55110606238afa513250b44e826046a8a3a6d6fea8a61",
+    "functions/context-review.js": "39a66cc0d5ca1af572daeebaa4c6be25baa70f8c73366c27096fc6345d58be59",
+    "functions/params.js": "98933f5a1b7ba66bbe6388ca2658b11cdc42f726157134c5ca1c82409bc32ed4",
+    "functions/analyzer-log.js": "86a774ef71f86ccd69e7b2a80ca1f011079e4b0285ff5ef211ff6549e3a64551",
+    "functions/public-values.js": "5c57a2c743ae5d2563494091f363793ee8ad07c1163fd7ea6a90ae2b6c083332",
+    "functions/package-lock.json": "a39381f845aba6e28ec4139e609dbea992340ff3093aa6ae354f381fe8743eec",
+    "specs/tasks/M3-evaluation/pilot-20261117-one-case-quotation/ledger.json": "c2e0f640f596862b7c6ddf2ed79524626bf55a2ea5d5f951632a39fa44bbe837"
+  },
+  "guards": {
+    "heap_mib": 256,
+    "rss_mib": 512,
+    "seconds_per_fixture": 120,
+    "min_free_mib": 1024
+  },
+  "fixtures": [
+    {
+      "config": {
+        "id": "oracle-small",
+        "members": 4,
+        "refs": 3,
+        "aspects": 3,
+        "mixed": false
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 3,
+      "cohorts": {
+        "A": 4,
+        "B": 0
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 437,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 8399,
+              "write_count": 1,
+              "largest_document_bytes": 8376,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 27176,
+              "write_count": 1,
+              "largest_document_bytes": 39681,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 37573,
+          "write_count": 11,
+          "largest_document_bytes": 40259,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 64417,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 5496,
+          "write_count": 9,
+          "largest_document_bytes": 32577,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 34548,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 35275,
+          "write_count": 11,
+          "largest_document_bytes": 39987,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 62119,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 4271,
+          "write_count": 9,
+          "largest_document_bytes": 32577,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 31779,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 108187648,
+        "heap": 36232160,
+        "external": 2718272
+      },
+      "elapsed_seconds": 0.4122737999999999,
+      "handler_shape_byte_parity": true,
+      "parent_peak_rss": 111935488,
+      "elapsed_parent_seconds": 2.0309999999954016,
+      "initial_free_bytes": 2611277824
+    },
+    {
+      "config": {
+        "id": "shared-100-1",
+        "members": 100,
+        "refs": 1,
+        "aspects": 1,
+        "mixed": false
+      },
+      "status": "completed",
+      "fixture": "synthetic repeated score shapes, not actual profiles or whole-population performance",
+      "real_provider_calls": 0,
+      "database_rpcs": 0,
+      "codec_scope": "offline experiment only",
+      "evidence_slots": 1,
+      "cohorts": {
+        "A": 100,
+        "B": 0
+      },
+      "replay": {
+        "writes": 0,
+        "response_json_bytes": 7349,
+        "same_frozen_response": true
+      },
+      "operations": {
+        "check": {
+          "independent_requests": [
+            {
+              "path": "analyzer_logs/00000000000000000002",
+              "wire_bytes": 6059,
+              "write_count": 1,
+              "largest_document_bytes": 6006,
+              "largest_document_path": "analyzer_logs/00000000000000000002",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            },
+            {
+              "path": "issue_drafts/00000000000000000001",
+              "wire_bytes": 15864,
+              "write_count": 1,
+              "largest_document_bytes": 22106,
+              "largest_document_path": "issue_drafts/00000000000000000001",
+              "oversized_documents": 0,
+              "within_document_guard": true,
+              "within_request_guard": true,
+              "transaction_token_bytes": 32
+            }
+          ]
+        },
+        "create_current": {
+          "wire_bytes": 148239,
+          "write_count": 107,
+          "largest_document_bytes": 31320,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 163773,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": "not encoded"
+        },
+        "join_current": {
+          "wire_bytes": 54068,
+          "write_count": 105,
+          "largest_document_bytes": 17110,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 137220,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": "not encoded"
+        },
+        "create_compact": {
+          "wire_bytes": 80630,
+          "write_count": 107,
+          "largest_document_bytes": 23272,
+          "largest_document_path": "issue_drafts/00000000000000000001",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 96164,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": true
+        },
+        "join_compact": {
+          "wire_bytes": 39149,
+          "write_count": 105,
+          "largest_document_bytes": 17110,
+          "largest_document_path": "issues/00000000000000000003",
+          "oversized_documents": 0,
+          "within_document_guard": true,
+          "within_request_guard": true,
+          "transaction_token_bytes": 32,
+          "full_image_estimate_bytes": 75569,
+          "within_full_image_request_guard": true,
+          "stream_full_byte_parity": true,
+          "round_trip": true
+        }
+      },
+      "peak": {
+        "rss": 113152000,
+        "heap": 38704728,
+        "external": 2849582
+      },
+      "elapsed_seconds": 0.5046907999999999,
+      "parent_peak_rss": 113471488,
+      "elapsed_parent_seconds": 1.8119999999980791,
+      "initial_free_bytes": 2588659712
+    }
+  ],
+  "real_provider_calls": 0,
+  "database_rpcs": 0,
+  "credential_loader_invocations": 0,
+  "completed_fixtures": 2,
+  "total_fixtures": 2
+}
