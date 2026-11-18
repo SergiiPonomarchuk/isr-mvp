@@ -221,3 +221,5 @@ No model comparison is needed. Sol Medium is sufficient for C1; keep the applica
 ## Official constraints checked 2026-11-18
 
 [Firestore quotas](https://firebase.google.com/docs/firestore/quotas) and [transactions](https://firebase.google.com/docs/firestore/manage-data/transactions) establish document/request/time constraints; protobuf bytes do not prove index/server acceptance. [Secure querying](https://firebase.google.com/docs/firestore/security/rules-query) and [rule conditions](https://firebase.google.com/docs/firestore/security/rules-conditions) describe server rule bypass and query authorization. These motivate this proposal; they do not validate an unimplemented protocol.
+
+- 2026-11-18: Author explicitly ordered merge #49 and approved C1. #49 merged as b8014acdce016bc7aaad51cd02ddc851220ebe6d. [C1 offline prototype/result](M3-generation-protocol.md) implemented under that approval; previous C1 approval requests above are historical. No runtime/schema/C2/import/access/rules/live operation is authorized.

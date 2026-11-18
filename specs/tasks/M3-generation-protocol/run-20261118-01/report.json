@@ -1,0 +1,152 @@
+{
+  "guards": {
+    "heap_mib": 256,
+    "rss_mib": 512,
+    "timeout_seconds": 120,
+    "minimum_free_mib": 1024
+  },
+  "initial_free_bytes": 2126290944,
+  "source_pins": {
+    "functions/experiments/publication/artifact.js": "ea9331570d19d4925541e7bf9238789b0efa5247d35107159d52c26937137f5a",
+    "functions/experiments/publication/store.js": "4e369bc0f5e46ed937d02d9521db85b7930e2a75247ed3fc097557429048a25a",
+    "functions/experiments/publication/protocol.js": "3f7e975593ee9688ac75a26003856b8bfa99ac5b3f19893779e6af9f8ac36ba4",
+    "functions/experiments/publication/fixture.js": "2b0219163b5050d1e037f49d29426dc8fa564333ce2da4fd7683ddc3f628ca16",
+    "functions/experiments/publication/report.js": "625eb699d428aca7ada4fe651649beaa32e1bba06441789f23ddcaa42204fa6f",
+    "scripts/run_generation_protocol.py": "5f1e976eec016d593f8165bf743e5b2486d7468462777505726a498a4de3532b",
+    "scripts/audit_capacity_phase_a.py": "00384e9335bfcdd4b47d76649cf03069168d4574e7d68f6a02340a1c5524e713",
+    "functions/tools/capacity/no-network.js": "999ad257175dda274e09178e429826f22bb71c63c9ae7af40b5107b9a2b69e3a",
+    "functions/test/generation-protocol.test.js": "f2c13b8cc071ac426c39a612754cee2767b9831025cbcd2db0f5a4e85252759d",
+    "tests/test_generation_protocol_runner.py": "d5aef8b227e2236297317a610f02c21398d4fc1daacf0cc746606d9115ea90a2"
+  },
+  "scope": "tiny C1 offline model only",
+  "status": "completed",
+  "parent_peak_rss_bytes": 60379136,
+  "elapsed_seconds": 0.40600000000267755,
+  "exit_code": 0,
+  "worker": {
+    "version": "c1-offline-protocol-1",
+    "scope": "tiny fake-store protocol; no application scoring, Firestore client/server or full-population acceptance",
+    "status": "completed",
+    "cases": [
+      {
+        "members": 2,
+        "joined_members": 3,
+        "node_count": 18,
+        "typed_payload_bytes": 2237,
+        "largest_json_node_bytes": 499,
+        "chunk_commits": 15,
+        "largest_chunk_model_bound": 3471,
+        "create_activation": {
+          "label": "activate",
+          "reads": 7,
+          "writes": 10,
+          "json_bytes": 2681,
+          "model_bound_bytes": 5113
+        },
+        "join_activation": {
+          "label": "activate",
+          "reads": 11,
+          "writes": 10,
+          "json_bytes": 3784,
+          "model_bound_bytes": 6728
+        },
+        "payload_and_replay_exact": true,
+        "create_replay_digest": "f623aec4ecdcbe2def2edf2a1b722c5ac7d4bcca4cf41445c2d43572c226956e"
+      },
+      {
+        "members": 7,
+        "joined_members": 8,
+        "node_count": 49,
+        "typed_payload_bytes": 6072,
+        "largest_json_node_bytes": 499,
+        "chunk_commits": 36,
+        "largest_chunk_model_bound": 3473,
+        "create_activation": {
+          "label": "activate",
+          "reads": 7,
+          "writes": 10,
+          "json_bytes": 2681,
+          "model_bound_bytes": 5113
+        },
+        "join_activation": {
+          "label": "activate",
+          "reads": 11,
+          "writes": 10,
+          "json_bytes": 3785,
+          "model_bound_bytes": 6729
+        },
+        "payload_and_replay_exact": true,
+        "create_replay_digest": "6a5f1803ccee67839558b205c95633f343ba60f2b8cb51632c414c1b78264366"
+      },
+      {
+        "members": 17,
+        "joined_members": 18,
+        "node_count": 112,
+        "typed_payload_bytes": 13774,
+        "largest_json_node_bytes": 499,
+        "chunk_commits": 77,
+        "largest_chunk_model_bound": 3478,
+        "create_activation": {
+          "label": "activate",
+          "reads": 7,
+          "writes": 10,
+          "json_bytes": 2693,
+          "model_bound_bytes": 5125
+        },
+        "join_activation": {
+          "label": "activate",
+          "reads": 11,
+          "writes": 10,
+          "json_bytes": 3806,
+          "model_bound_bytes": 6750
+        },
+        "payload_and_replay_exact": true,
+        "create_replay_digest": "cd766cde74b7e94b495ba6ff20c2875fc6cc866f247b57a95e1bdc35a4bd48c9"
+      }
+    ],
+    "traces": [
+      {
+        "scenario": "source-change-refuses",
+        "status": "passed"
+      },
+      {
+        "scenario": "catalog-change-refuses",
+        "status": "passed"
+      },
+      {
+        "scenario": "day-change-refuses",
+        "status": "passed"
+      },
+      {
+        "scenario": "cancel-change-refuses",
+        "status": "passed"
+      },
+      {
+        "scenario": "phase-wins-pending-join",
+        "status": "passed"
+      },
+      {
+        "scenario": "bounded-aborted-cleanup-resumes",
+        "status": "passed",
+        "remaining_steps": 5
+      }
+    ],
+    "provider_calls": 0,
+    "database_rpcs": 0,
+    "credential_loader_invocations": 0,
+    "byte_model": "UTF-8 JSON + 128 bytes per fake read/write + 256-byte envelope; NOT SDK protobuf/server/index size",
+    "elapsed_seconds": 0.17408869999999999,
+    "cpu_microseconds": {
+      "user": 187000,
+      "system": 31000
+    },
+    "memory_sample": {
+      "rss": 59142144,
+      "heapTotal": 11304960,
+      "heapUsed": 7873992,
+      "external": 2109719,
+      "arrayBuffers": 74019
+    },
+    "node": "v22.14.0"
+  }
+}

@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-18 - Complete C1 offline publication protocol prototype
+
+Merged approved design #49 and implemented the authorized fake-store protocol: immutable typed manifests, leases/checkpoints/seal, bounded atomic activation, source/catalog/phase fences, frozen replay and safe never-published cleanup. Tiny failure/restart/race traces and 25 focused Node tests pass; measured constant fake activation inventories, not Firestore sizes or population acceptance. No application/runtime/scoring, database/import, provider/loader, browser/rules/docs/ or deployment change. See specs/tasks/M3-generation-protocol/README.md.
+
 ## 2026-11-18 - Design immutable generations and atomic publication offline
 
 Prepared the approved Phase C design: private byte-bounded immutable builds, source/catalog fences, lease/resume/seal/activation, frozen replay and generation-consistent readers, Join, lifecycle/tally and recovery. Inventoried existing map consumers and documented stale-client/access and live-writer prerequisites. Proposed separate C1 fake-store protocol scope. Documentation only; no runtime/math/schema, docs/, provider, database/import, rules or deployment change. See specs/tasks/M3-generation-publication-design.md.

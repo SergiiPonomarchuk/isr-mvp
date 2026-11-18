@@ -4,7 +4,16 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: Phase C offline design prepared for review, 2026-11-18
+## Current checkpoint: C1 offline protocol complete, 2026-11-18
+
+- Author explicitly ordered merge #49 and approved C1. Design #49 merged as **b8014acdce016bc7aaad51cd02ddc851220ebe6d**. Post-merge Node/Python CI passed. Feature branch codex/m3-generation-protocol starts there; draft [PR #50](https://github.com/SergiiPonomarchuk/isr-mvp/pull/50) targets main. Implementation/result head b562d7b passed GitHub Node/Python CI; final documentation-head checks are verified before handoff. [C1 scope/status](tasks/M3-generation-protocol.md), [results and limitations](tasks/M3-generation-protocol/README.md). No further C1 approval is needed.
+- Pure fake transactions, typed payload/manifest pages, lease/checkpoint/seal/CAS activation, frozen replay, Join/race/refusal and never-published cleanup model implemented. No application scoring, SDK/Firestore/model client, source data/import, browser, rules, docs/ or deploy change. No database operations/provider/loader calls.
+- 25 focused Node tests plus two Python output/refusal tests; required suites **Node 268 passed / six skips; Python 147 run / two skips**. Tiny 2/7/17-member traces and one Join each reconstruct supplied payload/replay exactly. Model Create activation 7 reads/10 writes; Join 11/10. Model byte bounds are not Firestore sizes. Peak supervised RSS 57.28 MiB with unchanged resource gates. Final PR-head CI checked before handoff.
+- Initial run/code ee2ae92 preserved; final run 02 tightens missing authority, upload order, replay coverage and unsupported async callback refusal. No published history is collected. These fake closed-writer/logical-time traces are not live security/freshness, distributed SDK, UI or population acceptance.
+- Next after review/merge: **separate C2 isolated-emulator implementation spec/slice approval** using tiny immutable allowlisted source and fake AI, real serializer/transaction checks and complete versioned reader/lifecycle adapters. Legacy retained; live format default-off. No large import, paid call, rules/deploy/live write implicit. Sol Medium remains sufficient.
+- Historical paid counters remain 30 text reviews / 14 embedding texts / 14 POSTs / 44 HTTP attempts; US$1.256788 reserved. Phase A no-go and three 100-reference timeouts remain unresolved by C1. Merge only on explicit PR instruction.
+
+## Previous checkpoint: Phase C offline design prepared for review, 2026-11-18
 
 - Author approved **Phase C offline design**. [Design, consumer inventory and proposed C1 scope](tasks/M3-generation-publication-design.md) are documentation only on codex/m3-generation-design, based on main 7973380. Draft [PR #49](https://github.com/SergiiPonomarchuk/isr-mvp/pull/49) targets main; design head b8b8557 passed GitHub Node/Python CI. Final documentation-head CI is verified before handoff. No schema/runtime, emulator import, database access/write, rules, docs/, model/paid call or deployment change.
 - Ordered merges are complete: #47 -> 19c46e2, #48 -> 7973380. Main Node/Python CI passed; one stalled Node checkout was canceled and that job retried successfully without source changes. Phase A measurements and paid artifacts remain unchanged.
