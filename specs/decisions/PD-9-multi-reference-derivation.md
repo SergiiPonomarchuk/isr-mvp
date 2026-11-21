@@ -4,6 +4,8 @@ Status: **Intended model adopted for documentation by the author, 2026-11-16** (
 
 The selection settings .30 minimum similarity and .05 adjacent gap are experimental. A raw chain longer than three triggers context review, not automatic reformulation (author-approved amendment, 2026-11-16). Similarity is not a probability or confidence. A reference is a worked analogy; category labels do not require a separate same-type group. The amended selection/review policy is mr1-context-review-1; all scoring equations retain mr1 arithmetic. These are intended specifications, not a claim about deployed behavior. Runtime changes require an implementation spec/plan; no paid evaluation, migration, deploy or rules change is authorized here.
 
+**2026-11-21 MVP amendment:** the author retains hard demographic/geographic candidate exclusions and top-300 direct-vector selection for MVP, with mathematical pruning only for UB<Theta. The global full-population A definition below remains the arithmetic/full-policy baseline, not a claim that the approximate adapter reaches every such person. A separately routed policy is required; existing results/oracles remain frozen. The author also confirmed directed child/dependent -> parent/carer X eligibility. [Concrete implementation proposal](../tasks/X-eligibility-values-reconciliation.md) defines per-link flags, direct seeds/carer lookup, recovered direct targets, no second hop and tests. The exact direct-only cutoff boundary/direct-recovery detail is a proposal pending review, not an implicit reinterpretation of the historical baseline.
+
 ## 1. Consistent notation
 
 | Symbol | Meaning |

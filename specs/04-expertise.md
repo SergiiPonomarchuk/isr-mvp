@@ -1,5 +1,8 @@
 # 04 Expertise
 
+**2026-11-21 reconciliation boundary:** preserve the current CBC adjustment and corrected paired-reference/one-floor math while possible removal is separately clarified. The [X/Values task](tasks/X-eligibility-values-reconciliation.md) changes no Expertise formula or recency behavior. References to single-vector runtime below are dated historical evidence; main b8014ac includes the mr1 evaluator. No new Expertise migration/implementation is authorized by documentation reconciliation.
+
+
 Status: current single-vector calculation VERIFIED at3c25ef7; PD-9 multi-reference extension specified, not implemented.
 
 Expertise is max(age floor, education evidence) + work evidence, without Education/Experience component weights or resources. [PD-8](decisions/PD-8-resources-option-level.md) owns that definition. [PD-9](decisions/PD-9-multi-reference-derivation.md) sections2/6 own exact notation, CBC/nominal-power mapping and the multi-reference evidence-before-floor convention. [Assessment document](../docs/ISR-Expertise-Assessment-v1.md) explains it with corrected examples.

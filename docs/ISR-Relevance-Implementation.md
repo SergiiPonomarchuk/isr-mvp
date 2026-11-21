@@ -1,6 +1,6 @@
 # ISR Relevance Engine: MVP Implementation Specification v1.0
 
-**2026-11-16 intended-model revision:** [PD-9 multi-reference derivation](../specs/decisions/PD-9-multi-reference-derivation.md) governs reference selection, notation and member-score combination. Runtime at3c25ef7 still uses the earlier single-vector model. Sections explicitly marked historical are not implementation instructions for mr1.
+**2026-11-21 reconciliation:** PD-9 still governs paired multi-reference arithmetic, actual-issue aspect vectors, maximum geography and the single Expertise floor. Repository main b8014ac contains mr1 logic; the new marked-carer/MVP formation policy is a separate implementation proposal, not current runtime or a deployment claim. [Exact flag, cutoff, version and backfill specification](../specs/tasks/X-eligibility-values-reconciliation.md).
 
 ## Overview
 
@@ -19,15 +19,18 @@ The ad-hoc public is formed from the issue's parameters, and the parameters foll
 
 ---
 
-## Relevance processing order for mr1
+## Relevance processing order: MVP decision, 2026-11-21
 
-1. Freeze actual context, compatible reference chain, alpha, aspect vectors/rules and one geographical center/max-mu/max-sigma curve.
-2. Retrieve candidates across D/G/S channels and compute blended direct r0 without X. A is exactly r0>=Theta; no separate seed predicate or old top100 cap applies to the new formation policy.
-3. Expand one social step using affected people's recorded outgoing links. Do not prefilter these candidates to residents or people already scoring above the formation threshold.
-4. Compute paired D/G/S/X contributions, with the upper bound sum_j alpha_j*(w_Dj*D_ij+w_Gj*G_i+w_Sj*1+w_Xj*X_ij) when S remains unknown. Prune only with a proven bound that preserves all channels. Current top300 approximations/cutoff bypasses require a full-population comparison before adoption.
-5. Form A union B under the new versioned inclusive/direct-threshold and automatic-relative policy; compute combined Expertise and one-public normalized ISR. E and ISR aggregation weights do not determine automatic membership.
+Preserve hard demographic/geographic exclusions and the top-300 direct-candidate cutoff for MVP. These are declared approximations; they can miss people qualifying in the full PD-9 model. Do not claim exact population coverage or unmeasured scaling percentages. Current main's mr1 implementation uses the broader policy; the revised path requires a new version and tests before use.
 
-The earlier demographic-first, geography-first, creator-network pipeline is superseded in the intended model. Runtime integration is pending; no scaling percentages or coverage guarantees are established by this document.
+1. Freeze reviewed references, alpha, actual-issue aspect vectors/rules and common max-mu/max-sigma geography. Apply the legacy hard demographic/geographic candidate adapter, preserving existing A3 distance bypasses and creator-fetch compatibility rather than inventing new predicates.
+2. For direct candidates, compute UB_i=sum_j alpha_j*(w_Dj*D_ij+w_Gj*G_i+w_Sj*1). Prune only when **UB_i < Theta**. Equality stays eligible. Rank survivors and keep the top 300 with the legacy creator-fetch exception identified separately. Fetch vectors and form the fixed direct seed set A_seed from weighted r0_i>=Theta, without renormalizing away W_X.
+3. On the proposed direct-only cutoff boundary, read only A_seed's outgoing relationships explicitly marked x_eligible=true. The confirmed direction is directly affected child/dependent -> parent/carer. Do not use the submitter's graph or propagate from newly discovered targets.
+4. Evaluate every distinct marked carer, including outside direct filters/top 300. All marked carers enter: below-threshold recipients are B, while an outside-pool recipient already reaching Theta enters at its direct score with X=0 and does not become a new source in this pass. This direct recovery is an explicit proposed resolution of MVP approximation, not a claim about the old full-policy oracle.
+5. For each B recipient independently, choose the largest full W_X*t_hi whose sum with that recipient's r0 does not exceed the supplying seed's r0. Reject overflowing additions entirely; equality qualifies. Zero accepted addition or zero final R does not remove the carer. The maximum chooses a source/addition per recipient, not one relative per family.
+6. Normalize R/E once over the final unique public. No Education/Experience preferences or new automatic 100-member limit. Explicit Join is separate from the direct-vector fetch approximation.
+
+The cutoff boundary and direct-recovery detail are concrete implementation proposals pending review in the linked task. Historical publications/replay/Join retain their frozen policy. This reconciliation changes no runtime.
 
 ## Part 1: Relevance Taxonomy & Issue Classification
 
@@ -147,121 +150,32 @@ Where:
 
 #### **Dimension 4: Social Graph Relevance (X)**
 
-### Affected-person social relevance
+### Marked outgoing carer eligibility
 
-Use PD-9's two-phase rule: blended weighted D/G/S>=Theta forms A, with no X bonus. One-step eligible outgoing relatives belowTheta form B regardless of final R. For each supplying A, accept the full weighted tie addition only if r0_B+W_X*t_AB<=r0_A; otherwise reject that addition. Choose the maximum eligible addition across sources, or0 if none. Do not partially cap the addition, require B to crossTheta, recruit through B or silently truncate membership.
+On a directly affected child's/dependent's profile:
 
-### 1.3 Issue Analysis & Weight Assignment
-
-**During issue submission**, Google AI Studio analyzes the issue description to suggest weights. The evaluation is conducted according to the guidelines in [ISR-AI-Weight-Evaluation-Instructions.md](ISR-AI-Weight-Evaluation-Instructions.md), using the 100-issue benchmarks in [ISR-Issue-Analyzer-100-Examples.md](ISR-Issue-Analyzer-100-Examples.md) to set weights for the issue type:
-
-1. **Taxonomy Category**: Extracted from description (e.g. `building.security.locks`)
-2. **Demographic Conditions**: Structured JSON-based filtering criteria (e.g., familyStatus, employmentStatus)
-3. **Geospatial Parameters**: μ and σ suggestions
-4. **Weights**: Suggests both relevance component weights `(w_D, w_G, w_S, w_X)` and issue aggregation weights `(w_Relevance, w_Expertise, w_Contribution)` that sum to 1.0.
-
-> [!IMPORTANT]
-> **No fallback weights.** If the description and the context are too vague to choose an issue type, the result is `needs_clarification` (Analyzer protocol, Step 4A); if no consistent type is found, it is `not_consistent`.
-> For every published issue the weights are derived from the chosen type and the context, and follow PD-9.
-
-**Weight Assignment Examples** (For reference, detailed in benchmark files):
-
-| Issue Type | Category | Typical w_D | w_G | w_S | w_X | w_Relevance | w_Expertise | w_Contribution | Rationale |
-|-----------|----------|-------------|-----|-----|-----|-------------|-------------|----------------|-----------|
-| Door lock broken | building.security.locks | 0.30 | 0.50 | 0.05 | 0.15 | 0.70 | 0.10 | 0.20 | Lived geographic proximity and building demographics dominate; expert advice is minor. |
-| Childcare services | health.access.childcare | 0.70 | 0.25 | 0.03 | 0.02 | 0.65 | 0.20 | 0.15 | Parents of young children are primary; professional expertise is secondary. |
-| Open-source roadmap | platform.policy.oss | 0.35 | 0.05 | 0.45 | 0.15 | 0.40 | 0.35 | 0.25 | Semantic interest and technical expertise are co-primary; geography is minor. |
-
-**AI decides final weights during issue analysis based on issue context and matching benchmarks.**
-
-The Analyzer derives the parameters from a published table of typical issues, for the issue type and context. Nobody types a number: if the result looks wrong, the topic starter clarifies the context or picks another type that the assistant lists as consistent with the rules (Analyzer protocol, Step 4A). After publication the issue belongs to the public (Part 10).
-
----
-
-## Part 2: Demographic Relevance Calculation
-
-### 2.1 Per-reference affectedness
-
-Evaluate D_ij for each person's actual-context rules under reference j. Do not average categorical ages/statuses/features/places or pre-exclude a person because one rule returns0. PD-9 combines paired demographic contributions with other channels. A3 named place/property behavior and A5 residential guard remain baseline constraints to revalidate per reference; the exact soft-D rule and candidate retrieval must be specified before runtime implementation.
-
-The older binary early-exclusion sketches are superseded by PD-1/PD-9. This document does not claim that current code has removed its gates.
-
-## Part 3: Geospatial Relevance Calculation
-
-### 3.1 Threshold Gaussian Distance Decay
-
-Geospatial relevance uses **threshold Gaussian** distance decay calculated on geographic coordinates:
-
-**Formula**:
-$$G(d) = \begin{cases}
-1.0 & \text{if } d \leq \mu \\
-e^{-\frac{(d - \mu)^2}{2\sigma^2}} & \text{if } d > \mu
-\end{cases}$$
-
-### 3.2 Parameter Assignment
-
-**Derived from the Issue Type and Context**:
-
-| Issue Type Pattern | Suggested μ (meters) | Suggested σ (meters) |
-|---|---|---|
-| Personal (lock, appliance, unit) | 10-20 | 20-30 |
-| Building (elevator, heating, roof) | 30-80 | 40-60 |
-| Street (noise, lighting, parking) | 100-300 | 80-150 |
-| Block/Neighborhood | 300-1000 | 150-300 |
-| District (water main, zoning) | 500-2000 | 200-500 |
-| District / Social Club Event (e.g. Chess club) | 500-2000 | 200-4000 |
-| City-wide (transit, budget) | 2000-10000 | 500-2000 |
-
-**Nobody types μ or σ.** If the derived values look wrong, the topic starter clarifies the context (for example, "it is very popular and draws people from the whole neighbourhood") and the assistant derives them again, using the PD-9 compatible-reference maximum rule. The table can contain as many types as needed; new types are added by protocol-level decisions.
-
-### 3.3 JavaScript Implementation (Haversine & Gaussian Decay)
-
-```javascript
-// Helper: Haversine distance in meters
-function haversineDistance(coords1, coords2) {
-  const R = 6371e3; // Earth radius in meters
-  const lat1 = (coords1[0] * Math.PI) / 180;
-  const lat2 = (coords2[0] * Math.PI) / 180;
-  const deltaLat = ((coords2[0] - coords1[0]) * Math.PI) / 180;
-  const deltaLon = ((coords2[1] - coords1[1]) * Math.PI) / 180;
-
-  const a =
-    Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-    Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-  return R * c;
-}
-
-function evaluateGeographics(user, issueLocation, muVal, sigmaVal) {
-  const anchors = (user.geography || []).filter(
-    (g) => (g.type === "home" || g.type === "work" || g.type === "property") && g.geo
-  );
-  if (anchors.length === 0) return 0.0;
-
-  // nearest declared place (home, work or registered property)
-  const distance = Math.min(...anchors.map((g) => haversineDistance(issueLocation, g.geo)));
-  const maxDistance = muVal + 3 * sigmaVal;
-  if (distance > maxDistance) return 0.0; // Excluded by distance threshold
-
-  if (distance <= muVal) return 1.0;
-  return Math.exp(-Math.pow(distance - muVal, 2) / (2 * Math.pow(sigmaVal, 2)));
+```json
+{
+  "social_relations_version": "x-links-1",
+  "socialRelations": [
+    {"relative": 205, "type": "parent", "tie": null, "x_eligible": true},
+    {"relative": 206, "type": "sibling", "tie": null, "x_eligible": false}
+  ]
 }
 ```
 
+The true flag means: when **this profile** is a direct source, the named relative may enter through X. It is directional, never inferred reciprocally from another profile. Type/tie still determine t_hi using the existing validated mapping; the flag only selects edges. Missing/non-Boolean is unknown, not a silent false or an inferred true. New-policy formation must report required incomplete eligibility data. Historical profiles/publics are not silently reinterpreted.
+
+Read marked links only from fixed direct seeds; preserve the full socialRelations graph for demographic/family predicates. No self-link or social second hop. Every eligible carer is admitted regardless of accepted X. For recipient i:
+
+    H_i = {h in A_seed: h records an x_eligible=true outgoing link to i}
+    delta_hi = W_X*t_hi
+    x_i = max({delta_hi: h in H_i and r0_i+delta_hi<=r0_h} union {0})
+    R_i = r0_i+x_i
+
+Apply this addition to below-threshold B only. A source ceiling is tested **before** maximizing, with existing 1e-12 equality tolerance; a stronger rejected tie cannot suppress a weaker qualifying source. Retain the raw baseline when all additions overflow. Do not multiply tie by source affectedness or renormalize D/G/S by (1-W_X). Direct members get X=0. An eligible zero-tie edge or W_X=0 still establishes membership. The linked task specifies recovered direct targets under the MVP cutoff, frozen links/versions and tests.
+
 ---
-
-## Part 4: Semantic Relevance Calculation
-
-### 4.1 Per-aspect semantic relevance
-
-S_ij=max(0,cos(p_i,u_j)), where p_i is the existing person profile vector and u_j represents an evidenced aspect of the actual submitted issue associated with reference j. Reference retrieval score s_j is a different quantity. Never replace u_j with a reference example's topic vector. PD-9 defines the effective S display and paired semantic contribution; vectors/templates/coverage must be versioned and consistent with skill embeddings.
-
-## Part 5: Social Graph Relevance Calculation
-
-### Affected-person social relevance
-
-PD-9's two-phase A/B membership and social-limit section is normative. A is determined by the weighted direct score>=Theta; B comprises eligible outgoing relatives of A outside A regardless of score. Source ceilings are checked individually before maximizing. Equality is accepted; an overflowing full addition is rejected, with no partial cap. Related B members remain members even with0 accepted X or0 total R. A and B do not generate further social hops.
 
 ## Part 6: Combined Relevance Score
 
@@ -273,50 +187,25 @@ R_i=sum_j alpha_j*(w_Dj*D_ij+w_Gj*G_i+w_Sj*S_ij+w_Xj*X_ij). PD-9 defines W_d and
 
 R and reference similarities are scores, not calibrated probabilities. R determines automatic membership using the separately versioned formation policy, while E and ISR aggregation weights do not determine inclusion.
 
-### 6.3 Ad-hoc Public Formation & Scaling Pruning
+### 6.3 MVP pruning and publication boundary
 
-**Legacy single-vector sketch:** pending mr1 integration; PD-9 governs changed formulas, candidate safety and aspect/reference storage. Any early demographic/geographical gate here must not erase direct or social channels.
-
-To form the **ad-hoc public** (all users with Relevance > 0.15 threshold), we perform in-memory evaluation with mathematical pruning inside Firebase Cloud Functions to scale efficiently without scanning the entire vector database:
+Direct admission is inclusive: r0>=Theta (default .15). The paired upper bound at the direct stage contains no X:
 
 ```javascript
-// 1. First Pass: Local calculation using demographics and distance
-// We assume the maximum possible semantic similarity (S = 1.0) and the maximum possible social score:
-// xBound = the largest tie weight among the user's relations (R0 of a relative is at most 1)
-const maxScore = w_D * dScore + w_G * gScore + w_S * 1.0 + w_X * xBound;
-
-// Prune immediately if the user cannot mathematically exceed the threshold
-if (maxScore <= 0.15) return; 
-
-// 2. Sort remaining candidate pool by maxScore descending
-filteredCandidates.sort((a, b) => b.maxScore - a.maxScore);
-
-// 3. Limit vector fetches to the top 300 candidates
-const candidatesToFetch = filteredCandidates.slice(0, 300);
-
-// 4. Batch-fetch 768-dimensional interest vectors from `user_vectors` for the top 300
-const vectorDocs = await db.getAll(...chunkRefs);
-
-// 5. Compute R0 (D, G, S only) for the candidates, then the exact social score
-// xScore = max over relatives of tie * R0 (Part 5.4), and the actual relevance score with in-memory Cosine Similarity
-const relevanceScore = w_D * dScore + w_G * gScore + w_S * sScore + w_X * xScore;
-
-// 6. Gather into the ad-hoc public if final score > 0.15
-if (relevanceScore > 0.15) {
-  microcommunityMembers.push({
-    user_id: user.uid,
-    relevance_score: relevanceScore
-  });
-}
+const upperBound = references.reduce((sum, r) =>
+  sum + r.alpha * (r.w_D * D[r.id] + r.w_G * G + r.w_S), 0);
+if (upperBound < theta) return; // equality is not pruned
 ```
 
-The same procedure (Phases 1 to 5) is run again after a change of text, options, type or context adopted by the public, with the parameters derived again (Part 10.4). A recomputation can add members and change scores; it never removes a member.
+Apply the retained hard D/G adapter and rank/select at most 300 direct vector candidates, with existing creator-fetch compatibility separately accounted for. This approximation is deliberately retained for MVP and is not exact full-population pruning. Marked-carer expansion is a separate pass under the proposed boundary above; do not apply a final single-threshold filter that removes B or a global 300-member public cap.
+
+Public-owned text/context/options recomputation is an intended later workflow, not deployed mr1 behavior. A zero-direct/zero-public outcome should return needs_clarification to the submitter under the planned contract; current engine still throws its existing error. No extra AI call, reanalysis or membership migration is authorized by this document. The historical never-remove-on-recomputation policy requires its own versioned implementation/acceptance.
 
 ---
 
 ## Part 7: Database Schema (Firebase Firestore NoSQL)
 
-**Legacy single-vector sketch:** pending mr1 integration; PD-9 governs changed formulas, candidate safety and aspect/reference storage. Any early demographic/geographical gate here must not erase direct or social channels.
+**Historical schema/flow sketch:** current source fields and the 2026-11-21 versioned MVP adapter take precedence. Hard D/G gates and top-300 direct selection are retained approximations; the proposed marked-carer path is specified separately above. These sketches do not override paired-reference arithmetic or claim a deployed implementation.
 
 
 ### 7.1 issues Collection
@@ -425,7 +314,8 @@ Stores user profile metadata chunked into documents of up to 250 users to optimi
       "birthDate": "1985-05-12",
       "gender": "Male",
       "post": [{"job": "Locksmith", "place": "Basel"}],
-      "socialRelations": [{"relative": 37, "type": "friend", "tie": 0.5}],
+      "social_relations_version": "x-links-1",
+      "socialRelations": [{"relative": 37, "type": "parent", "tie": null, "x_eligible": true}],
       "geography": [{"type": "home", "geo": [47.5943, 7.6205]}, {"type": "work", "geo": [47.5602, 7.5886]}]
     },
     ...
@@ -494,7 +384,7 @@ Every request is logged and can be analysed (for example, to see where the compu
 
 ## Part 8: Vectorization Protocols
 
-**Legacy single-vector sketch:** pending mr1 integration; PD-9 governs changed formulas, candidate safety and aspect/reference storage. Any early demographic/geographical gate here must not erase direct or social channels.
+**Historical schema/flow sketch:** current source fields and the 2026-11-21 versioned MVP adapter take precedence. Hard D/G gates and top-300 direct selection are retained approximations; the proposed marked-carer path is specified separately above. These sketches do not override paired-reference arithmetic or claim a deployed implementation.
 
 ### 8.1 User Profile Vectorization
 
@@ -529,7 +419,7 @@ const vector = embedResult.embedding.values; // 768-dimensional array
 
 ## Part 9: Issue Submission Workflow
 
-**Legacy single-vector sketch:** pending mr1 integration; PD-9 governs changed formulas, candidate safety and aspect/reference storage. Any early demographic/geographical gate here must not erase direct or social channels.
+**Historical schema/flow sketch:** current source fields and the 2026-11-21 versioned MVP adapter take precedence. Hard D/G gates and top-300 direct selection are retained approximations; the proposed marked-carer path is specified separately above. These sketches do not override paired-reference arithmetic or claim a deployed implementation.
 
 ```
 User submits issue (title + description + location + context)
@@ -645,4 +535,4 @@ Every change, vote, recomputation and join request is logged with its version. R
 
 ### 10.9 Open points
 
-A quorum for votes on changes; a limit on the number of open proposals per member (against spam); a limit on the number of clarification rounds with the assistant; verification of workplace and role claims.
+A quorum for votes on changes; a limit on the number of open proposals per member (against spam); a limit on the number of clarification rounds with the assistant; verification of workplace and role claims; verification of registered property (as for workplace and role); cap or waiting period for mass joiners.

@@ -1,6 +1,8 @@
 # ISR Weight Evaluation Instructions for AI (Relevance & Aggregation)
 
-**2026-11-16 intended-model revision:** [PD-9 multi-reference derivation](../specs/decisions/PD-9-multi-reference-derivation.md) governs reference selection, notation and member-score combination. Runtime at3c25ef7 still uses the earlier single-vector model. Sections explicitly marked historical are not implementation instructions for mr1.
+**2026-11-21 reconciliation:** PD-9 still governs paired multi-reference arithmetic, actual-issue aspect vectors, maximum geography and the single Expertise floor. Repository main b8014ac contains mr1 logic; the new marked-carer/MVP formation policy is a separate implementation proposal, not current runtime or a deployment claim. [Exact flag, cutoff, version and backfill specification](../specs/tasks/X-eligibility-values-reconciliation.md).
+
+**2026-11-21 MVP boundary:** the author retains hard D/G and top-300 direct-candidate selection with UB<Theta pruning. This changes candidate coverage, not paired parameter derivation. The new eligibility flag is profile data, not a model-generated weight or an instruction to infer carers. See the linked implementation proposal before using the new formation policy.
 
 This document defines **instructions for an AI model** on how to evaluate:
 
