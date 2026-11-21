@@ -28,3 +28,5 @@ Run Node/Python required suites. Add meaningful coverage for table-only scoring 
 - PR is stacked on documentation reconciliation #51. Neither merge nor deployment is implicit. The C serving checkout and its eight original edited documents are untouched.
 
 Final local verification (2026-11-22): Node 252 passed / six optional skips (258 total); Python 147 run / two optional skips. All 100 non-CBC reference objects and vectors match the prior library exactly, 12 worked arithmetic rows independently checked, frontend bytes equal exactly two substitutions with CRLF/final CR preserved. No provider calls, database writes or deployments.
+
+Review checkpoint (2026-11-22): [PR #52](https://github.com/SergiiPonomarchuk/isr-mvp/pull/52) targets codex/docs-x-eligibility (#51). Implementation head f3ef66d passed GitHub Node/Python CI; final documentation-head checks are verified before handoff. Worktree is clean after commit. Merge order: explicit author merge PR 51, then retarget/recheck #52 against main before its separately authorized merge. No author deploy step is implied yet.
