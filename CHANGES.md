@@ -1,3 +1,9 @@
+## 2026-11-22 - Remove issue-specific CBC adjustment
+
+New issues use the existing education-category CBC table without an issue/reference multiplier. Removed the field from all 100 Analyzer examples and rebuilt the derived library offline with identical embedding inputs/vectors. Updated Analyzer/Expertise/PD-9 documentation and recalculated worked examples.
+
+New scoring version mr1-cbc-table-1; frozen legacy multipliers remain for historical Join/audit and completed Create replay. Unfinished old drafts must Check again. Browser and D1 checker recognize both policies. Historical paid approvals remain immutable and invalid for the changed contract; isolated tests retain old evidence. No provider calls, data migration, rules changes or deployment. See specs/tasks/CBC-table-only.md for validation.
+
 # CHANGES
 
 ## 2026-11-21 - Reconcile author documents and specify X/Values updates

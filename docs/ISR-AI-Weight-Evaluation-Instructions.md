@@ -205,7 +205,7 @@ Use the 100 examples as anchors. For instance:
 
 #### Step 3: Compute ISR aggregation weights
 
-For c in R/E/C, B_c=sum_j alpha_j*b_cj. Use the same reference alpha, no free up/down adjustments. Valid positive source groups yield a positive sum-one blend. Education and Experience have no separate component weights. Form one public from final R, then normalize combined R/E over that public before the additive ISR calculation.
+For c in R/E/C, B_c=sum_j alpha_j*b_cj. Use the same reference alpha, no free up/down adjustments. Valid positive source groups yield a positive sum-one blend. Education and Experience have no separate component weights. CBC comes only from the education-category table; the Analyzer must not generate an issue/reference adjustment or replacement CBC. Form one public from final R, then normalize combined R/E over that public before the additive ISR calculation.
 
 #### Step 4: Produce a short reasoning
 

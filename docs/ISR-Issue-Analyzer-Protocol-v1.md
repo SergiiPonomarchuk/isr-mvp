@@ -472,7 +472,6 @@ These configure how expertise formulas behave for this issue.
 | :--- | :--- |
 | `expertise_domain` | short descriptor string |
 | `recency_decay_rate` (per year) | Future extension; not applied by current scoring |
-| `CBC_adjustment_factor` [0.7–1.3] | Existing modifier: <1 broader transfer; >1 narrower transfer |
 
 #### 3.1.1 Output structure
 
@@ -480,7 +479,6 @@ These configure how expertise formulas behave for this issue.
 "expertise_domain_parameters": {
   "expertise_domain":        "locksmith.security",
   "recency_decay_rate":      0.02,
-    "CBC_adjustment_factor":   0.9,
   "domain_reasoning":        "short explanation"
 }
 ```
@@ -689,7 +687,6 @@ The Issue Analyzer produces a single JSON object. All fields must be present:
   "expertise_domain_parameters": {
     "expertise_domain":        "locksmith.security",
     "recency_decay_rate":      0.02,
-    "CBC_adjustment_factor":   0.9,
     "domain_reasoning":        "..."
   },
 
@@ -758,7 +755,7 @@ Three top-level fields are added to the combined output:
 
 Use the actual app paths issue_drafts, analyzer_logs, issue_vectors, users.skills, user_vectors and microcommunity_members. Version old issues separately; do not migrate their scores implicitly. PD-9 sections5-8 define the one-public R/E/ISR pipeline, precision and immutable reference/aspect/member provenance. Keep whole-issue duplicate vectors distinct from scoring aspect vectors. Check, Create, Join, caches and the independent checker must reproduce the same parameters and scores.
 
-The single-reference JSON in section5 remains a legacy compatibility projection, not a sufficient mr1 schema. The new draft binds reference IDs/scores/alpha, selection/formula/library/model/template versions, actual-context source hash, per-reference demographic rules, actual-issue aspect texts/vectors and CBC adjustments, common location/max geography, direct-affectedness rule/version and affected-person outgoing relation provenance. Member data must reproduce per-reference D/S/X and education/work contributions and effective displayed components. Context outcomes/cautions attach to the issue. Step4B changes/governance remain a separate implementation task.
+The single-reference JSON in section5 remains a legacy compatibility projection, not a sufficient mr1 schema. The new draft binds reference IDs/scores/alpha, selection/formula/library/model/template versions, actual-context source hash, per-reference demographic rules, actual-issue aspect texts/vectors and education-category CBC table/scoring version, common location/max geography, direct-affectedness rule/version and affected-person outgoing relation provenance. Member data must reproduce per-reference D/S/X and education/work contributions and effective displayed components. Context outcomes/cautions attach to the issue. Step4B changes/governance remain a separate implementation task.
 
 ## 7. How the Issue Analyzer Uses the reference library
 
@@ -776,7 +773,7 @@ For each new issue, the Analyzer must:
 2. Decide **Relevance weights** `w_D, w_G, w_S, w_X` with reasoning
 3. Generate **Demographic rules** (simplified flat schema + optional tiered schema)
 4. Select **Geo parameters** μ and σ with reasoning
-5. Configure **Expertise domain parameters** (domain, decay, CBC)
+5. Configure **Expertise domain parameters** (domain and decay metadata; CBC is fixed by education category)
 6. Produce **Resource needs list** for the options' implementation plans (2–4 entries, money first; not scored as Expertise)
 7. Decide **Aggregation weights** `w_Relevance, w_Expertise, w_Contribution` with reasoning
 8. Output everything in a single structured JSON
@@ -789,3 +786,6 @@ belongs to the issue's ad-hoc public.
 
 This protocol and `ISR-Issue-Analyzer-100-Examples.md` together define the complete and
 auditable process for initializing ISR parameters for each new issue.
+
+
+CBC policy (2026-11-21): CBC depends only on education category and the standard table; no Analyzer adjustment parameter.

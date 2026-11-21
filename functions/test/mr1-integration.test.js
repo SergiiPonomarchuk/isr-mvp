@@ -4,7 +4,7 @@ test("mr1 actual Check/Create/Join on isolated Firestore",{skip:process.env.MR1_
  process.env.GEMINI_API_KEY="";
  const AI=require("../ai-config"),helper=require("../ai-helper"),Review=require("../context-review"),crypto=require("crypto");
  const V=(c=1)=>{const v=Array(768).fill(0);v[0]=c;v[1]=Math.sqrt(1-c*c);return v;};
- const lib={embedding_model:AI.EMBED_MODEL,embedding_dims:768,examples:[1,2,3,4].map(id=>({id,title:"Reference "+id,vector:V(),params:{classification:{scope_type:"building",issue_category:"building.security.locks"},relevance_weights:{w_demographic:0,w_geographic:0,w_semantic:.8,w_social:.2},aggregation_weights:{w_relevance:.6,w_expertise:.2,w_contribution:.2},geographic_parameters:{mu_distance_meters:40,sigma_distance_meters:30},expertise_domain_parameters:{CBC_adjustment_factor:1,expertise_domain:"locksmith.security"},resources_needed:[]}}))};
+ const lib={embedding_model:AI.EMBED_MODEL,embedding_dims:768,examples:[1,2,3,4].map(id=>({id,title:"Reference "+id,vector:V(),params:{classification:{scope_type:"building",issue_category:"building.security.locks"},relevance_weights:{w_demographic:0,w_geographic:0,w_semantic:.8,w_social:.2},aggregation_weights:{w_relevance:.6,w_expertise:.2,w_contribution:.2},geographic_parameters:{mu_distance_meters:40,sigma_distance_meters:30},expertise_domain_parameters:{expertise_domain:"locksmith.security"},resources_needed:[]}}))};
  helper._setExamplesForTests(lib);
  let reviews=0,embeddings=0,mode="pass";
  helper.embedIssue=async(title,description)=>{embeddings++;return {ok:true,vector:V(),model:AI.EMBED_MODEL,dims:768,task_type:AI.TASK_TYPE_ISSUE,template_version:AI.EMBED_TEMPLATE_VERSION,text_sha256:crypto.createHash('sha256').update(`${title}. ${description}`).digest('hex')};};

@@ -2,7 +2,7 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const S=require('../staged-context'),R=require('../context-review'),M=require('../multi-reference'),H=require('../ai-helper'),AI=require('../ai-config'),F=require('./staged-fixture');
 const input={title:'Repair the entrance',description:'Our building entrance lock is broken; residents need a repair.',clarification:''};
-const library={examples:['building','unit','city'].map((scope,i)=>({id:String(i+1),title:'Synthetic '+scope,params:{classification:{scope_type:scope,issue_category:'building.security.locks'},relevance_weights:{w_demographic:.1,w_geographic:.3,w_semantic:.4,w_social:.2},aggregation_weights:{w_relevance:.6,w_expertise:.2,w_contribution:.2},geographic_parameters:{mu_distance_meters:40+i*10,sigma_distance_meters:30+i*10},expertise_domain_parameters:{CBC_adjustment_factor:1,expertise_domain:'locksmith.security'},resources_needed:[]}}))};
+const library={examples:['building','unit','city'].map((scope,i)=>({id:String(i+1),title:'Synthetic '+scope,params:{classification:{scope_type:scope,issue_category:'building.security.locks'},relevance_weights:{w_demographic:.1,w_geographic:.3,w_semantic:.4,w_social:.2},aggregation_weights:{w_relevance:.6,w_expertise:.2,w_contribution:.2},geographic_parameters:{mu_distance_meters:40+i*10,sigma_distance_meters:30+i*10},expertise_domain_parameters:{expertise_domain:'locksmith.security'},resources_needed:[]}}))};
 const ranked=[{id:'1',score:.57},{id:'2',score:.55},{id:'3',score:.51}];
 function context(i=input,opts={}){const d=S.resolve(F.decision(i,opts),i),plan=S.partition(d,ranked,library);return {d,plan,raw:F.domain(d.resolution,plan,{accept:plan.domain_ids})};}
 const clone=x=>JSON.parse(JSON.stringify(x));

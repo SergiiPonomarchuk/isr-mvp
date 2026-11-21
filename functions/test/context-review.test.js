@@ -1,6 +1,6 @@
 const test=require("node:test"),assert=require("node:assert/strict"),R=require("../context-review");
 const input={title:"Repair our entrance",description:"The entrance lock is broken.",clarification:"Residents need a repair."};
-function library(){return {examples:[1,2,3,4].map(id=>({id,title:"Reference "+id,params:{classification:{scope_type:"building",issue_category:"building.security.locks"},relevance_weights:{w_demographic:.3,w_geographic:.5,w_semantic:.1,w_social:.1},aggregation_weights:{w_relevance:.6,w_expertise:.2,w_contribution:.2},geographic_parameters:{mu_distance_meters:40,sigma_distance_meters:30},expertise_domain_parameters:{CBC_adjustment_factor:.9,expertise_domain:"locksmith.security"}}}))};}
+function library(){return {examples:[1,2,3,4].map(id=>({id,title:"Reference "+id,params:{classification:{scope_type:"building",issue_category:"building.security.locks"},relevance_weights:{w_demographic:.3,w_geographic:.5,w_semantic:.1,w_social:.1},aggregation_weights:{w_relevance:.6,w_expertise:.2,w_contribution:.2},geographic_parameters:{mu_distance_meters:40,sigma_distance_meters:30},expertise_domain_parameters:{expertise_domain:"locksmith.security"}}}))};}
 function raw(){return {result:"pass",message:"One clear building repair.",scope:"building",location_reference:{anchor:"home",place:""},accepted:[{id:"1",aspect_id:"a",evidence:input.description}],excluded:{"2":"Different actual decision","3":"Different actual stakeholders","4":"Different scope"},aspects:[{id:"a",text:input.description,demographics:{},demographic_evidence:[]}]};}
 const ranked=[1,2,3,4].map(id=>({id:String(id),score:.7}));
 test("long clear chain may pass unchanged but every exclusion has a reason",()=>{const v=R.validate(raw(),input,ranked,library());assert.equal(v.model.refs.length,1);assert.equal(v.model.refs[0].alpha,1);assert.equal(v.raw_chain.state,"context_review_required");const bad=raw();delete bad.excluded["4"];assert.throws(()=>R.validate(bad,input,ranked,library()));});
@@ -12,3 +12,8 @@ test("unsupported demographic criteria and unsafe aspect identifiers fail explic
  for(const change of [r=>r.aspects[0].demographics={employmentStatus:"student"},r=>r.aspects[0].demographics="any",r=>r.aspects[0].demographics.familyStatus=false,r=>r.aspects[0].id="__proto__",r=>r.excluded="reasons"]){const v=raw();change(v);assert.throws(()=>R.validate(v,input,ranked,library()));}
 });
 test("expertise display preserves every reviewed domain",()=>{const v=raw(),l=library();v.accepted.push({id:"2",aspect_id:"a",evidence:input.description});delete v.excluded["2"];l.examples[1].params.expertise_domain_parameters.expertise_domain="mechanics";assert.equal(R.validate(v,input,ranked,l).expertise_domain,"locksmith.security; mechanics");});
+
+test("new context references reject issue CBC settings",()=>{
+ for(const field of ["CBC_adjustment_factor","cbc_adjustment_factor","cbc_adjustment","cbc"]){const l=library();l.examples[0].params.expertise_domain_parameters[field]=1;assert.throws(()=>R.validate(raw(),input,ranked,l),/CBC is fixed/);}
+ assert.ok(!Object.hasOwn(R.validate(raw(),input,ranked,library()).model.refs[0],"cbc_adjustment"));
+});

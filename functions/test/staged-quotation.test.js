@@ -1,3 +1,5 @@
+// Exercise the frozen historical pilot contract, not new scoring.
+require("./legacy-cbc-fixture.cjs").install();
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const S=require('../staged-context'),R=require('../context-review'),{prepare}=require('../tools/two-stage-pilot-plan');
 const folder=path.resolve(__dirname,'../../specs/tasks/M3-evaluation/pilot-20261117-two-stage-runtime');
