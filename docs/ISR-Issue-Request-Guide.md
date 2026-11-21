@@ -352,6 +352,13 @@ User confirms: ✓ Geographic proximity is main factor
 
 ---
 
+### Q: What if an action of mine was misread.
+
+**A (intended workflow; not implemented in the current MVP)**: Raise an ordinary issue about it (conflict resolution, name the action). The connected public votes; options always include ‘no change’; a chosen option adds a correction entry. Nothing is deleted.
+
+---
+
+
 ## Design Philosophy: Why This Process?
 
 ### Why We Ask for Detailed Descriptions

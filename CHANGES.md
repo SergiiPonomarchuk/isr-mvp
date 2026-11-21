@@ -1,5 +1,9 @@
 # CHANGES
 
+## 2026-11-21 - Reconcile author documents and specify X/Values updates
+
+Transplanted eight author-edited documents from the old checkout onto current main while preserving paired-reference math and corrected examples. Recorded strict UB<Theta pruning, retained MVP D/G/top-300 approximation, directed child-to-carer eligibility/version/data plan, and Values 1.0 host-calculated grounding mean plus metadata-only recovery/backfill requirements. CBC/cutoff-boundary assumptions remain explicit review items. Documentation only; no runtime, data/profile writes, vectorization, paid call, rules or deployment. See specs/tasks/X-eligibility-values-reconciliation.md.
+
 ## 2026-11-18 - Design immutable generations and atomic publication offline
 
 Prepared the approved Phase C design: private byte-bounded immutable builds, source/catalog fences, lease/resume/seal/activation, frozen replay and generation-consistent readers, Join, lifecycle/tally and recovery. Inventoried existing map consumers and documented stale-client/access and live-writer prerequisites. Proposed separate C1 fake-store protocol scope. Documentation only; no runtime/math/schema, docs/, provider, database/import, rules or deployment change. See specs/tasks/M3-generation-publication-design.md.

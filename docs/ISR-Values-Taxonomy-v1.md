@@ -2,7 +2,7 @@
 
 **FOCUSED ON ACTION EVALUATION FOR COMMUNITY FUTURES**
 
-Based on Shalom Schwartz's universal value types, Community-Oriented Action Assessment approach.
+Follows the approach of Shalom Schwartz's theory of basic values (universal values that conflict and fit together), applied to the future a community wants; the ten domains are the designers' own.
 
 **Purpose**: Measure whether proposed actions move community toward or away from stated desired future.
 
@@ -46,6 +46,7 @@ YES measured:
     "timestamp": "2025-12-30T22:00:00Z",
     "uid": person_id,
     "version": "1.0",                 // current taxonomy version
+    "overall_grounding": OG,          // calculated numeric mean, 0-100; may be fractional
     "overall_confidence": OC,         // 1 Int8 (0-100)
     "hash": VALUES_DESCRIPTION_HASH,  // 40 Char (SHA-1)
     "gl_cs": [                        // Grounding_level & Confidence_score per domain (20 Int8 0-100)
@@ -81,6 +82,21 @@ YES measured:
 ```
 
 ---
+
+### Calculated overall grounding (author decision, 2026-11-21)
+
+Values schema/version remains **1.0**. The application calculates, rather than asks the model to generate:
+
+    OG = (g_1 + g_2 + ... + g_10) / 10
+    g_d = meta.gl_cs[d-1][0]
+
+This is the plain unweighted arithmetic mean of all ten domain grounding values, including grounding for domains whose value score is null. Do not weight by confidence, importance, domain score or number of items; do not round to an integer or add another rounding step. Store a numeric result in meta.overall_grounding. Per-domain grounding/confidence storage rules are unchanged. Overall summaries may be fractional, so the 22 metadata entries are not all Int8.
+
+The raw JSON represents gl_cs as ten pairs. For Firestore profile storage, preserve the existing flattened values_taxonomy fields and use values_taxonomy.meta.gl_cs as a map d1..d10 -> {grounding, confidence}, avoiding nested arrays. The adapter reconstructs the ten canonical pairs before calculation; OG is values_taxonomy.meta.overall_grounding and its schema version is 1.0. This is an additive metadata update, not a move or regeneration of Values quantities.
+
+The host computes OG after each vectorization stage from validated gl_cs, and persists it with the profile's Values metadata. The model supplies the per-domain evidence/grounding only; any model-supplied OG is ignored/replaced. Version 1.0 stays 1.0 in both stages.
+
+All profiles with existing vectorized Values belong in a future metadata-only backfill inventory. Existing vector values, embeddings, narrative, hash and historical results must not be regenerated. If domain grounding is absent, recover a matching original artifact using UID/narrative hash/version provenance; do not derive grounding from domain value scores or substitute zero. Missing or ambiguous sources are reported as unresolved, never counted as successfully updated. See [implementation/backfill specification](../specs/tasks/X-eligibility-values-reconciliation.md). This documentation does not claim that the backfill has run.
 
 ## II. DOMAIN CATEGORIES (10 Main Domains, 28 Facets, 145 Items)
 
@@ -557,12 +573,12 @@ gl_cs = [
   [d_2_gl, d_2_cs],   // Domain 2: Relationality
   [d_3_gl, d_3_cs],   // Domain 3: Security
   [d_4_gl, d_4_cs],   // Domain 4: Justice
-  [d_5_gl, d_5_cs],   // Domain 5: Growth
+  [d_5_gl, d_5_cs],   // Domain 5: Redemption & Restoration
   [d_6_gl, d_6_cs],   // Domain 6: Authenticity
   [d_7_gl, d_7_cs],   // Domain 7: Stewardship
   [d_8_gl, d_8_cs],   // Domain 8: Cooperation
-  [d_9_gl, d_9_cs],   // Domain 9: Religion & Spirituality
-  [d_10_gl, d_10_cs]  // Domain 10: Digital & Technological Ethics
+  [d_9_gl, d_9_cs],   // Domain 9: Spiritual & Religious Practice
+  [d_10_gl, d_10_cs]  // Domain 10: Digital Rights & Tech Democracy
 ]
 ```
 
@@ -788,10 +804,11 @@ CONFLICT RESOLUTION: 36 dimensions
 CONTEXTUAL SHIFTS: 40 dimensions
 └─ 4 contexts × 10 domains
 
-METADATA: 20 dimensions
-└─ Grounding + confidence per domain
+METADATA: 22 dimensions
+├─ Grounding + confidence per domain
+└─ Overall grounding and confidence
 
-TOTAL: 195 (145 + 10 + 40) vector dimensions + 36 agregations + 20 metadata
+TOTAL: 231 vector dimensions (10 domains + 145 items + 36 conflict weights + 40 contextual shifts) + 22 metadata values
 
 ```
 

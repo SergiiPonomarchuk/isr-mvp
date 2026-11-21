@@ -1,6 +1,8 @@
 # ISR Expertise Assessment: Complete Implementation Specification v1.0
 
-**2026-11-16 intended-model revision:** [PD-9 multi-reference derivation](../specs/decisions/PD-9-multi-reference-derivation.md) governs reference selection, notation and member-score combination. Runtime at3c25ef7 still uses the earlier single-vector model. Sections explicitly marked historical are not implementation instructions for mr1.
+**2026-11-21 reconciliation:** PD-9 still governs paired multi-reference arithmetic, actual-issue aspect vectors, maximum geography and the single Expertise floor. Repository main b8014ac contains mr1 logic; the new marked-carer/MVP formation policy is a separate implementation proposal, not current runtime or a deployment claim. [Exact flag, cutoff, version and backfill specification](../specs/tasks/X-eligibility-values-reconciliation.md).
+
+**Reconciliation boundary:** preserve the current CBC adjustment and corrected worked examples while its possible removal is separately clarified. Negative cosine is clipped at zero before powers or work sums. Recency remains an unimplemented extension; this X/Values task does not activate it.
 
 ## Overview
 
@@ -51,7 +53,7 @@ Where:
 - **$u_1$** = Actual-issue aspect vector u_1 for this single-reference reduction
 - **$CBC$** = Credential Broadcast Coefficient
 - **$P_{i,education}$** = Education Power scalar (education time in years)
-- **Cosine similarity with CBC exponent** = Semantic relevance of credential to issue, adjusted by broadcast capability [0.0-1.0]
+- **Cosine similarity with CBC exponent** = Semantic relevance of credential to issue, adjusted by broadcast capability [0.0-1.0]; a negative cosine counts as zero, max(0, cos)
 - **Power scalar** = Education time in years [0.5+]
 - **$\min(age_i, 30)/30$** = Common-knowledge floor: 1.0 from age 30 on, age/30 below 30. It never exceeds 1.0 and never falls with age. The age is taken at the moment the issue is registered and is not stored.
 
@@ -117,7 +119,7 @@ Where:
 - **v_{i,experience}** = Vectorized experience records (semantic embedding)
 - **u_1** = Actual-issue aspect vector u_1 for this single-reference reduction
 - **P_{i,experience}** = Experience Power scalar (duration in years)
-- **Cosine similarity** = Semantic relevance of experience to issue [0.0-1.0]
+- **Cosine similarity** = Semantic relevance of experience to issue [0.0-1.0]; a negative cosine counts as zero, max(0, cos)
 - **Power scalar** = Duration of active experience in years [0.0+]
 
 **Intended recency extension, not applied by current code:**
