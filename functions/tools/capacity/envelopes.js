@@ -6,7 +6,7 @@ function build(config,template){
  const names=Object.fromEntries(pop.order.map(id=>[id,pop.user(id).displayName]));
  const rawMember=id=>({...pop.member(id),microcommunity_id:mc,calculated_at:created});
  const d=Codec.dictionary(bundle,rawMember(pop.order[0]),names),uid=String(config.members+1);
- const joining=Engine.joining(pop.user(uid),{profile_vector:F.v(.1),experience_vectors:{edu:F.v(.72),exp:F.v(.61)},embedding_model:require('../../ai-config').EMBED_MODEL,embedding_dims:768,embedding_template:require('../../ai-config').EMBED_TEMPLATE_VERSION},{location:[47.59,7.61],created_at:F.at},bundle,[]);
+ const joining=Engine.joining(pop.user(uid),{profile_vector:F.v(.1),experience_vectors:{edu:F.v(.72),exp:F.v(.61)},embedding_model:require('../../ai-config').EMBED_MODEL,embedding_dims:768,embedding_template:require('../../ai-config').EMBED_TEMPLATE_VERSION},{scoring_version:bundle.version,location:[47.59,7.61],created_at:F.at},bundle,[]);
  const joinOrder=[...pop.order].sort(),values=joinOrder.map(id=>{const m=rawMember(id);return {uid:id,R:m.relevance_score,E:m.expertise_score};});values.push({uid,R:joining.relevance_score,E:joining.expertise_score});
  const norm=ISR.isrForPublic(values,{w_relevance:bundle.model.aggregation.R,w_expertise:bundle.model.aggregation.E,w_contribution:bundle.model.aggregation.C}),joined=new Map(norm.map(v=>[v.uid,v]));
  const fields=id=>{const b=joined.get(id),stamp=template.operations.join.find(o=>o.path==='microcommunity_members/'+mc+'_'+id)?.data.calculated_at||joinedAt;return {normalized_relevance:Engine.round(b.R_norm),normalized_experience:Engine.round(b.E_norm),normalized_contribution:1,contribution_source:'constant',isr_score:Engine.round(b.isr),calculated_at:stamp};};

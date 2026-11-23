@@ -1,11 +1,11 @@
 const test=require('node:test'),assert=require('node:assert/strict'),Engine=require('../mr1-engine'),M=require('../multi-reference'),AI=require('../ai-config'),ISR=require('../isr');
 const v=(i)=>Array.from({length:768},(_,j)=>j===i?1:0);
 function fixture(){
- const raw=[{id:'a',score:.57},{id:'b',score:.55}],base={evidence:'Actual affected context',aggregation:{R:.6,E:.2,C:.2},mu:40,sigma:30,cbc_adjustment:1};
+ const raw=[{id:'a',score:.57},{id:'b',score:.55}],base={evidence:'Actual affected context',aggregation:{R:.6,E:.2,C:.2},mu:40,sigma:30};
  const model=M.reviewed(raw,[{...base,id:'a',aspect_id:'repair',relevance:{D:.6,G:.1,S:.2,X:.1}},{...base,id:'b',aspect_id:'access',mu:100,sigma:50,relevance:{D:.1,G:.3,S:.5,X:.1}}]);
  const user={uid:7,birthDate:'2011-11-16',skills:[{id:'e',type:'education',educationLevel:'Bachelor'},{id:'w',type:'work experience',time:2}],geography:[{type:'home',geo:[47.59,7.61]}],features:['renter'],post:[],socialRelations:[]};
  const vectors={embedding_model:AI.EMBED_MODEL,embedding_dims:768,embedding_template:AI.EMBED_TEMPLATE_VERSION,profile_vector:v(0),experience_vectors:{e:v(0),w:v(1)}};
- const bundle={model,scope:'building',aspects:{repair:{vector:v(0),demographics:{features:['renter']}},access:{vector:v(1),demographics:{features:['driver']}}}};
+ const bundle={version:require("../context-review").VERSION,model,scope:'building',aspects:{repair:{vector:v(0),demographics:{features:['renter']}},access:{vector:v(1),demographics:{features:['driver']}}}};
  return {user,vectors,bundle};
 }
 test('adapter pairs actual D/S/skill vectors with each reference then applies one age floor',()=>{

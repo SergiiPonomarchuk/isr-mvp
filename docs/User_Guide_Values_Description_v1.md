@@ -261,7 +261,7 @@ Where are you genuinely uncertain? Where do you see validity on both sides? What
 
 Once you submit your description:
 
-1. **Vectorization**: AI extracts your values and converts them into numbers (a 233-dimensional vector)
+1. **Vectorization**: AI extracts your values and converts them into numbers (a 231-dimensional vector)
 
 2. **Clarification**: If anything is unclear, you may get 1–3 clarifying questions to make sure we understand correctly
 

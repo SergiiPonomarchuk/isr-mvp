@@ -14,3 +14,5 @@ Author approved2026-11-23: resume capacity work by reviewing/reconciling existin
 ## Status
 
 - 2026-11-23: current main and clean existing C1 worktree verified. Both findings reproduced without database/provider calls. Author clarification requested under AGENTS workflow rule5; independent main reconciliation continues.
+
+- 2026-11-23: author explicitly approved both C1 fixes and regression tests. The pending clarification above is resolved. Four status/design-history conflicts are reconciled while retaining both histories; implementation fixes follow within the existing acceptance contract.

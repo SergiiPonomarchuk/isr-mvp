@@ -279,8 +279,7 @@ E. EXPERTISE DOMAIN PARAMETERS
   "expertise_domain": "<string matching classification.expertise_domain>",
   "recency_decay_rate": <float per year, 0.01–0.08>,
     // 0.01–0.03 = slow change; 0.05–0.08 = cutting-edge domain
-  "CBC_adjustment_factor": <float 0.7–1.3>,
-    // <1.0 = narrow, focused credentials; >1.0 = broader credential broadcast
+    // CBC is fixed by education category and is not an issue parameter.
   "domain_reasoning": "1 sentence"
 },
 
@@ -640,12 +639,13 @@ function normalizeIssueParams(data) {
     data.expertise_domain_parameters = {
       expertise_domain:        data.expertise_domain || "General Maintenance",
       recency_decay_rate:      0.02,
-      CBC_adjustment_factor:   1.0,
       domain_reasoning:        ""
     };
   }
   delete data.expertise_domain_parameters.contemporary_importance;
   delete data.expertise_domain_parameters.age_penalty_threshold;
+  // New analyses never expose a configurable CBC, even if a stale model returns one.
+  for(const k of ["CBC_adjustment_factor","cbc_adjustment_factor","cbc_adjustment","cbc"]) delete data.expertise_domain_parameters[k];
   if (!data.expertise_domain) data.expertise_domain = data.expertise_domain_parameters.expertise_domain;
   if (!data.expertise_depth)  data.expertise_depth  = "Vocational Training";
 
@@ -721,7 +721,7 @@ function getLocalFallbackParams(description, title) {
   let aw = { w_relevance: 0.65, w_expertise: 0.15, w_contribution: 0.20 };
   let edDepth = "Vocational Training";
   let demo = { employmentStatus: "any", familyStatus: "any", features: [] };
-  let rdr = 0.02, cbc = 1.0;
+  let rdr = 0.02;
   let resources = [
     { resource_type: "professional_services", importance_level: "high", explanation: "Qualified maintenance worker required." },
     { resource_type: "money_budget", importance_level: "medium", explanation: "Funds to cover repair materials and labor." }
@@ -739,7 +739,7 @@ function getLocalFallbackParams(description, title) {
     mu = 600; sigma = 500;
     rw = { w_demographic: 0.30, w_geographic: 0.60, w_semantic: 0.05, w_social: 0.05 };
     aw = { w_relevance: 0.70, w_expertise: 0.20, w_contribution: 0.10 };
-    rdr = 0.04; cbc = 1.0;
+    rdr = 0.04;
     resources = [
       { resource_type: "professional_services", importance_level: "high", explanation: "Water utility engineers and repair crews." },
       { resource_type: "physical_equipment", importance_level: "high", explanation: "Pipe repair kits, excavation tools, temporary distribution tanks." },
@@ -756,7 +756,7 @@ function getLocalFallbackParams(description, title) {
     mu = 40; sigma = 35;
     rw = { w_demographic: 0.25, w_geographic: 0.55, w_semantic: 0.05, w_social: 0.15 };
     aw = { w_relevance: 0.70, w_expertise: 0.15, w_contribution: 0.15 };
-    rdr = 0.02; cbc = 1.0;
+    rdr = 0.02;
     resources = [
       { resource_type: "professional_services", importance_level: "high", explanation: "Certified plumber for pipe repair or replacement." },
       { resource_type: "physical_equipment", importance_level: "high", explanation: "Pipe cutters, sealants, replacement sections." },
@@ -773,7 +773,7 @@ function getLocalFallbackParams(description, title) {
     mu = 50; sigma = 45;
     rw = { w_demographic: 0.25, w_geographic: 0.55, w_semantic: 0.05, w_social: 0.15 };
     aw = { w_relevance: 0.70, w_expertise: 0.15, w_contribution: 0.15 };
-    rdr = 0.03; cbc = 1.0;
+    rdr = 0.03;
     resources = [
       { resource_type: "professional_services", importance_level: "high", explanation: "HVAC technician with radiator/boiler expertise." },
       { resource_type: "physical_equipment", importance_level: "medium", explanation: "Pipe venting keys, thermal camera, replacement valves." },
@@ -790,7 +790,7 @@ function getLocalFallbackParams(description, title) {
     mu = 40; sigma = 30;
     rw = { w_demographic: 0.30, w_geographic: 0.50, w_semantic: 0.05, w_social: 0.15 };
     aw = { w_relevance: 0.70, w_expertise: 0.10, w_contribution: 0.20 };
-    rdr = 0.02; cbc = 0.90;
+    rdr = 0.02;
     resources = [
       { resource_type: "physical_equipment", importance_level: "high", explanation: "Locksmith tools and security-grade replacement hardware." },
       { resource_type: "money_budget", importance_level: "medium", explanation: "Funds to cover locksmith services and lock replacement." }
@@ -806,7 +806,7 @@ function getLocalFallbackParams(description, title) {
     mu = 50; sigma = 40;
     rw = { w_demographic: 0.40, w_geographic: 0.40, w_semantic: 0.10, w_social: 0.10 };
     aw = { w_relevance: 0.55, w_expertise: 0.30, w_contribution: 0.15 };
-    rdr = 0.03; cbc = 0.95;
+    rdr = 0.03;
     resources = [
       { resource_type: "professional_services", importance_level: "high", explanation: "Structural engineer for safety assessment and permit sign-off." },
       { resource_type: "money_budget", importance_level: "medium", explanation: "Inspection fees and remediation costs." }
@@ -822,7 +822,7 @@ function getLocalFallbackParams(description, title) {
     mu = 60; sigma = 50;
     rw = { w_demographic: 0.40, w_geographic: 0.35, w_semantic: 0.15, w_social: 0.10 };
     aw = { w_relevance: 0.60, w_expertise: 0.20, w_contribution: 0.20 };
-    rdr = 0.02; cbc = 1.0;
+    rdr = 0.02;
     resources = [
       { resource_type: "professional_services", importance_level: "medium", explanation: "Building manager or housing policy consultant for allocation review." },
       { resource_type: "money_budget", importance_level: "low", explanation: "Administrative costs of re-allocation process." }
@@ -838,7 +838,7 @@ function getLocalFallbackParams(description, title) {
     mu = 35; sigma = 25;
     rw = { w_demographic: 0.35, w_geographic: 0.40, w_semantic: 0.15, w_social: 0.10 };
     aw = { w_relevance: 0.65, w_expertise: 0.10, w_contribution: 0.25 };
-    rdr = 0.02; cbc = 1.0;
+    rdr = 0.02;
     resources = [
       { resource_type: "professional_services", importance_level: "medium", explanation: "Appliance technician for maintenance or scheduling system setup." },
       { resource_type: "digital_infrastructure", importance_level: "low", explanation: "Optional booking system or notice board app." },
@@ -855,7 +855,7 @@ function getLocalFallbackParams(description, title) {
     mu = 250; sigma = 200;
     rw = { w_demographic: 0.35, w_geographic: 0.50, w_semantic: 0.10, w_social: 0.05 };
     aw = { w_relevance: 0.70, w_expertise: 0.15, w_contribution: 0.15 };
-    rdr = 0.02; cbc = 1.0;
+    rdr = 0.02;
     roles = ["parent", "child", "resident"];
     vulns = ["children"];
     resources = [
@@ -873,7 +873,7 @@ function getLocalFallbackParams(description, title) {
     mu = 300; sigma = 250;
     rw = { w_demographic: 0.25, w_geographic: 0.60, w_semantic: 0.10, w_social: 0.05 };
     aw = { w_relevance: 0.60, w_expertise: 0.25, w_contribution: 0.15 };
-    rdr = 0.04; cbc = 0.95;
+    rdr = 0.04;
     resources = [
       { resource_type: "professional_services", importance_level: "high", explanation: "Structural engineers and safety inspectors." },
       { resource_type: "physical_equipment", importance_level: "high", explanation: "Lighting hardware, CCTV units, safety barriers." },
@@ -890,7 +890,7 @@ function getLocalFallbackParams(description, title) {
     mu = 4000; sigma = 3500;
     rw = { w_demographic: 0.60, w_geographic: 0.25, w_semantic: 0.10, w_social: 0.05 };
     aw = { w_relevance: 0.50, w_expertise: 0.35, w_contribution: 0.15 };
-    rdr = 0.04; cbc = 1.0;
+    rdr = 0.04;
     resources = [
       { resource_type: "professional_services", importance_level: "high", explanation: "Election administration officials and legal advisors." },
       { resource_type: "facilities_space", importance_level: "high", explanation: "Polling stations and ballot drop-off locations." },
@@ -907,7 +907,7 @@ function getLocalFallbackParams(description, title) {
     mu = 5000; sigma = 4000;
     rw = { w_demographic: 0.65, w_geographic: 0.05, w_semantic: 0.15, w_social: 0.15 };
     aw = { w_relevance: 0.55, w_expertise: 0.25, w_contribution: 0.20 };
-    rdr = 0.05; cbc = 1.1;
+    rdr = 0.05;
     demo = { employmentStatus: "employed", familyStatus: "any", features: [] };
     resources = [
       { resource_type: "digital_infrastructure", importance_level: "high", explanation: "Remote collaboration tools, VPN, and cloud infrastructure." },
@@ -952,7 +952,7 @@ function getLocalFallbackParams(description, title) {
     mu = 1000; sigma = 4000;
     rw = { w_demographic: 0.10, w_geographic: 0.20, w_semantic: 0.55, w_social: 0.15 };
     aw = { w_relevance: 0.50, w_expertise: 0.20, w_contribution: 0.30 };
-    rdr = 0.03; cbc = 1.1;
+    rdr = 0.03;
     resources = [
       { resource_type: "facilities_space", importance_level: "high", explanation: "Venue or community hall required for the activity." },
       { resource_type: "human_volunteers", importance_level: "high", explanation: "Organizers and activity hosts." },
@@ -969,7 +969,7 @@ function getLocalFallbackParams(description, title) {
     tech = "high"; mu = 5000; sigma = 10000;
     rw = { w_demographic: 0.10, w_geographic: 0.10, w_semantic: 0.60, w_social: 0.20 };
     aw = { w_relevance: 0.35, w_expertise: 0.40, w_contribution: 0.25 };
-    rdr = 0.07; cbc = 1.2;
+    rdr = 0.07;
     demo = { employmentStatus: "any", familyStatus: "any", features: [] };
     resources = [
       { resource_type: "digital_infrastructure", importance_level: "high", explanation: "Servers, hosting, CI/CD pipeline." },
@@ -987,7 +987,7 @@ function getLocalFallbackParams(description, title) {
     mu = 1000; sigma = 800;
     rw = { w_demographic: 0.25, w_geographic: 0.40, w_semantic: 0.25, w_social: 0.10 };
     aw = { w_relevance: 0.50, w_expertise: 0.15, w_contribution: 0.35 };
-    rdr = 0.03; cbc = 1.1;
+    rdr = 0.03;
     resources = [
       { resource_type: "human_volunteers", importance_level: "high", explanation: "Volunteer staff are the core delivery mechanism." },
       { resource_type: "money_budget", importance_level: "high", explanation: "Funding for supplies, food, hygiene items." },
@@ -1025,7 +1025,6 @@ function getLocalFallbackParams(description, title) {
     expertise_domain_parameters: {
       expertise_domain: expertiseDomain,
       recency_decay_rate: rdr,
-      CBC_adjustment_factor: cbc,
       domain_reasoning: domain_reasoning
     },
     resources_needed: resources,

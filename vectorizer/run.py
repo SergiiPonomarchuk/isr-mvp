@@ -3,8 +3,12 @@ import json
 import argparse
 import time
 import datetime
-from google.cloud import firestore
-from pipeline import run_vectorization_pipeline, QuotaExhaustedError
+if __package__:
+    from .pipeline import run_vectorization_pipeline, QuotaExhaustedError
+    from .values_metadata import metadata_for_firestore
+else:
+    from pipeline import run_vectorization_pipeline, QuotaExhaustedError
+    from values_metadata import metadata_for_firestore
 
 class ProgressTracker:
     def __init__(self, file_path, total_count):
@@ -116,6 +120,7 @@ def format_for_firestore(pipeline_vector):
     return {
         "conflict_resolution": pipeline_vector.get("conflict_resolution", []),
         "contextual_shifts": pipeline_vector.get("contextual_shifts", {}),
+        "meta": metadata_for_firestore(pipeline_vector.get("meta")),
         "domains": domains,
         "items": items_dict
     }
@@ -135,7 +140,8 @@ def main():
         print("Error: GEMINI_API_KEY must be provided via --key or set as an environment variable.")
         return
 
-    # Initialize Firestore
+    # Initialize Firestore only for the explicit CLI, never for pure formatting.
+    from google.cloud import firestore
     project_id = "project-a3d59130-5adf-4677-9e2"
     print(f"Connecting to Firestore project: {project_id}...")
     db = firestore.Client(project=project_id)

@@ -62,7 +62,7 @@ async function joinIssue(db, input, timestamp) {
     const userSnap = await tx.get(db.collection("users").doc(uid));
     const vectorsSnap = await tx.get(db.collection("user_vectors").doc(uid));
     const issueVectorSnap = await tx.get(db.collection("issue_vectors").doc(issueId));
-    const mr1 = issue.scoring_version === MR1Review.VERSION;
+    const mr1 = MR1Review.supported(issue.scoring_version);
     if (issue.scoring_version && !mr1) fail("This issue uses an unsupported scoring version.");
     if (mr1 && MR1Review.hash(issue.mr1_model) !== issue.mr1_model_hash) fail("The issue scoring model changed.");
     const creator = mr1 ? null : await tx.get(db.collection("users").doc(String(issue.submitter_id || disc.creator_uid)));

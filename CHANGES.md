@@ -1,4 +1,74 @@
+## 2026-11-23 - Review and reconcile C1 offline publication prototype
+
+- Reconcile draft PR50 onto current main, preserving C1 and CBC/Values/recovery histories and prior reports.
+- Reproduce two C1 acceptance gaps; author approves mirror-consistency and strict UTF8 refusal fixes with regressions. No C2/runtime/data/AI operation.
+
+## 2026-11-23 - R1 live recovery verified complete
+
+- Author completed optional metadata recovery:224 desired, zero conflicts; bound journal has224 acknowledged applies. Private completion receipt saved.
+- No agent production writes or AI calls. Sixteen unresolved grounding cases remain separate.
+
+## 2026-11-23 - R1 author-runbook path correction
+
+- Correct escaped Windows path formatting using absolute PowerShell-compatible forward-slash paths. No utility, scope, plan or runtime change.
+- PR58 merged and live step approved; fresh read-only verification before224/desired0/conflict0. Author apply remains pending.
+
+## 2026-11-23 - R1 optional Values metadata recovery preparation
+
+- Source-bound224-profile plan for three absent historical metadata fields; exact dotted updates preserve grounding metadata/Values and exclude16 unresolved cases.
+- Reuse guarded journal/retry/rollback through a strict store adapter; previous recovery modules and application/scoring code unchanged.
+- Synthetic CLI/SDK rehearsal applied224, retried without duplicate writes and restored241 full documents. Actual live read-only plan ready224/zero conflicts; author-only runbook prepared.
+- Node253 passed/six skips; Python220 tests/four skips. No R1 production writes, provider calls, deployment or docs/ edits.
+
+## 2026-11-23 - Scoped read-only DB completeness audit
+
+- Record author-verified224 grounding patches; audit25,667 approved-path documents against D1 backup with redacted private receipts.
+- No missing historical scoped documents or emptied projected fields;9,150 embeddings pass current structure/source-hash checks. Message authors resolve;184 counter differences predate the audit.
+- Four user archives lack grounding metadata for16 deferred cases. Verified sources contain224 sets of optional metadata; propose separate recovery/regeneration/counter decisions without executing them.
+- Node253 passed/six skips; Python200 tests/three skips. No agent database writes, provider calls, deployment or docs/ edits.
+
+## 2026-11-23 - Grounding metadata dry run and recovery rehearsal
+
+- Log16 unresolved cases for post-DB-audit restoration; freeze224 verified candidates and source hashes.
+- Add minimal five-field metadata planner, CAS apply, verification and journaled retry/rollback; no application/scoring or Values edits.
+- Live read-only plan ready224/zero conflicts. Synthetic SDK/CLI apply/retry/rollback restores241 complete documents and leaves16 deferred untouched; uncertain ownership blocks rollback.
+- Node253 passed/six skips; Python180 tests/three skips; opted-in emulator test passed. Author-only live runbook prepared; no production writes, AI calls or deployment.
+
+## 2026-11-23 - Integrate read-only grounding inventory PR #55
+
+Author requested merge #55. Reviewed implementation58eafe8 is current with main and passed all checks. Update integration status and verify the final head/main checks; inventory results and tool behavior are unchanged. No profile changes, metadata dry-run/apply, source repair, regeneration, provider call or deployment.
+
+## 2026-11-23 - Inventory existing-profile grounding without writes
+
+Add a paginated, allowlisted read-only inventory with strict UID/hash/Values provenance, explicit retained UID-map/list artifacts, exact null-group codec, conflict detection and sanitized atomic reports. Observed240 taxonomy payloads:224 verified recoverable and16 unresolved;8,911 users have none. No source/profile changes, AI calls, data apply or deployment. See specs/tasks/Values-grounding-inventory-report.md for evidence, tests and proposed next scope.
+
+## 2026-11-23 - Integrate CBC verification #53 then Values grounding #54
+
+Author authorized ordered merges. #53 merged as7288a63 after final checks passed. Retarget and reconcile #54 to main without implementation/test changes, verify its final CI before the authorized merge, then check main. No deployment, profile inventory, regeneration, database write or backfill.
+
+## 2026-11-23 - Calculate and retain Values overall_grounding
+
+Both future pipeline stages calculate the plain mean of all ten domain grounding values and finalize schema1.0, replacing model summaries. Add strict pure validation and raw/Firestore-map metadata adapters; formatter preserves canonical metadata alongside unchanged flattened Values. Keep existing confidence semantics and public Values weighting. No provider calls, profile backfill, live data operation or deployment. See specs/tasks/Values-grounding-offline-implementation.md for tests and limits.
+
+## 2026-11-23 - Verify CBC scoring in isolated emulator and browser
+
+Test-only verification of actual Check/Create/Join, category CBC and frozen legacy multiplier, independent Python audit, uncapped preview/saved counts and members list. Synthetic demo-mr1 on8189 only; zero paid calls or production changes. Temporary services stopped. See specs/tasks/CBC-emulator-report.md and the separate offline overall-grounding plan.
+
+## 2026-11-23 - Integrate documentation #51 then CBC removal #52
+
+Author authorized both merges in order. #51 merged as 70749a0 with checks passed. Retargeted #52 to main and reconciled without application/library/frontend changes; update integration status and verify the reconciled head before its authorized merge. No deployment, data operation, new provider call or X/Values implementation.
+
+## 2026-11-22 - Remove issue-specific CBC adjustment
+
+New issues use the existing education-category CBC table without an issue/reference multiplier. Removed the field from all 100 Analyzer examples and rebuilt the derived library offline with identical embedding inputs/vectors. Updated Analyzer/Expertise/PD-9 documentation and recalculated worked examples.
+
+New scoring version mr1-cbc-table-1; frozen legacy multipliers remain for historical Join/audit and completed Create replay. Unfinished old drafts must Check again. Browser and D1 checker recognize both policies. Historical paid approvals remain immutable and invalid for the changed contract; isolated tests retain old evidence. No provider calls, data migration, rules changes or deployment. See specs/tasks/CBC-table-only.md for validation.
+
 # CHANGES
+
+## 2026-11-21 - Reconcile author documents and specify X/Values updates
+
+Transplanted eight author-edited documents from the old checkout onto current main while preserving paired-reference math and corrected examples. Recorded strict UB<Theta pruning, retained MVP D/G/top-300 approximation, directed child-to-carer eligibility/version/data plan, and Values 1.0 host-calculated grounding mean plus metadata-only recovery/backfill requirements. CBC/cutoff-boundary assumptions remain explicit review items. Documentation only; no runtime, data/profile writes, vectorization, paid call, rules or deployment. See specs/tasks/X-eligibility-values-reconciliation.md.
 
 ## 2026-11-18 - Complete C1 offline publication protocol prototype
 

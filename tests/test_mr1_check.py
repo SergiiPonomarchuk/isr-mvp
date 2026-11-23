@@ -10,10 +10,10 @@ import mr1_check as C
 
 def fixture():
     basis = lambda n: [1 if j == n else 0 for j in range(768)]
-    ref = dict(id='r', alpha=1, aspect_id='a', cbc_adjustment=1,
+    ref = dict(id='r', alpha=1, aspect_id='a',
                relevance=dict(D=0, G=0, S=.8, X=.2), aggregation=dict(R=.6, E=.2, C=.2), mu=40, sigma=30)
     model = dict(refs=[ref], relevance=ref['relevance'], aggregation=ref['aggregation'], mu=40, sigma=30)
-    bundle = dict(model=model, scope='building', aspects={'a': dict(vector=basis(0), demographics={})})
+    bundle = dict(version=C.VERSION, model=model, scope='building', aspects={'a': dict(vector=basis(0), demographics={})})
     users = {str(i): dict(uid=i, birthDate='1990-01-01', skills=[], features=[], post=[],
                          geography=[dict(type='home', geo=[47.59, 7.61])], socialRelations=[]) for i in (1, 2)}
     users['1']['socialRelations'] = [dict(relative=2, type='spouse')]
@@ -56,3 +56,29 @@ class AuditTests(unittest.TestCase):
         values[0]['scoring_version'] = 'unknown'
         with self.assertRaises(ValueError):
             C.audit(*values)
+
+
+class CBCPolicyTests(unittest.TestCase):
+    def test_current_and_frozen_legacy_education(self):
+        issue, _, _, _, users, vectors = fixture()
+        user, vec = users['1'], vectors['1']
+        user['skills'] = [dict(id='e', type='education', educationLevel='Vocational')]
+        vec['experience_vectors'] = {'e': [.5, 3 ** .5 / 2] + [0] * 766}
+        bundle = issue['mr1_model']
+        current = C.evaluate(user, vec, bundle, issue['location'], issue['created_at'])
+        self.assertAlmostEqual(current['aspects']['r']['education'], .5)
+        bundle['version'] = C.LEGACY_VERSION
+        bundle['model']['refs'][0]['cbc_adjustment'] = .9
+        old = C.evaluate(user, vec, bundle, issue['location'], issue['created_at'])
+        self.assertAlmostEqual(old['aspects']['r']['education'], 2 * .5 ** 1.8)
+
+    def test_new_adjustments_and_root_bundle_mismatch_refused(self):
+        for field in ('cbc_adjustment', 'CBC_adjustment_factor', 'cbc_adjustment_factor', 'cbc'):
+            f = fixture()
+            f[0]['mr1_model']['model']['refs'][0][field] = 1
+            with self.assertRaises(ValueError):
+                C.audit(*f)
+        f = fixture()
+        f[0]['mr1_model']['version'] = C.LEGACY_VERSION
+        with self.assertRaises(ValueError):
+            C.audit(*f)

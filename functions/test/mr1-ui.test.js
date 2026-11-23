@@ -18,3 +18,9 @@ test('mr1 form uses uncapped totals, real viewer scores, safe names and supplied
 test('clarification outcome leaves Create unavailable and shows concrete questions',async()=>{const c=harness();c.response={success:false,context_result:'needs_clarification',message:'Missing place.',questions:['Which entrance?']};await c.checkBtn.handlers.click();assert.equal(c.submitBtn.disabled,true);assert.equal(c.suggestedParams,null);assert.match(c.contextStatus.textContent,/Which entrance/);});
 test('text or context edited while Check is pending cannot enable Create',async()=>{for(const key of ['titleInput','descTextarea','contextInput']){const c=harness();let finish;c.fetch=()=>new Promise(r=>{finish=r;});const pending=c.checkBtn.handlers.click();c[key].value+=' changed';finish({ok:true,json:async()=>pass()});await pending;assert.equal(c.suggestedParams,null,key);assert.equal(c.submitBtn.disabled,true,key);}});
 test('nonmember preview has no invented relevance or ISR',async()=>{const c=harness();c.response={...pass(),viewer_member:null};await c.checkBtn.handlers.click();assert.equal(c.valIsr.textContent,'Not a member');assert.equal(c.valRelevance.textContent,'Not a member');});
+
+test('table-only policy keeps uncapped totals and server Values preview',async()=>{
+ const c=harness();let clientAggregations=0;c.calculateMicrocommunityValuesFromMembers=async()=>{clientAggregations++;return {};};
+ c.mapTaxonomyToUserValues=x=>x;c.response={...pass(),scoring_version:'mr1-cbc-table-1',public_values_taxonomy:{fixture:true}};
+ await c.checkBtn.handlers.click();assert.equal(c.calculatedPublicSize,109);assert.equal(c.valMicrocommunity.textContent,'109 members');assert.equal(clientAggregations,0);assert.equal(c.microcommunityPreviewValues.fixture,true);
+});

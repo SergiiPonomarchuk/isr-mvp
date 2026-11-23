@@ -24,7 +24,7 @@
 | **Force** | N/A – only direction (values intensities and conflict/context preferences) | Non‑negative scalar showing the action’s magnitude for the community: based on action type, time spent, complexity for the actor, and success of results |
 | **Sentiment** | N/A - it is assumed that all ad-hoc publics share the same sentiment values | Normalized sentiment marks array `[good, funny, flood, rude, foolish]`, each value [0.0–1.0] = (number of marks in category) ÷ (number of ad-hoc public members) |
 
-**Saying versus doing.** How a person votes is not scored (a vote has Force zero). Messages and proposed options are scored as actions, with a smaller Force than tasks (Section 5: Vote Message 0.4, Task Message 0.3, Chat Message 0.1). A person's declared values are not judged. An action is scored by what it *does* to the values of the public, not by whether its author's opinion matches the majority's. A respectful, well-argued dissent advances values such as honest expression, cooperation and respect, and can score positive even when its position differs from the majority's. An action that works against a value (harms, deceives, excludes, obstructs) scores negative against the publics that hold that value.
+**Saying versus doing.** How a person votes is not scored (a vote has Force zero). Messages and proposed options are scored as actions, with a smaller Force than tasks (Section 1.4.1: Vote Message 0.4, Task Message 0.3, Chat Message 0.1). A person's declared values are not judged. An action is scored by what it *does* to the values of the public, not by whether its author's opinion matches the majority's. A respectful, well-argued dissent advances values such as honest expression, cooperation and respect, and can score positive even when its position differs from the majority's. An action that works against a value (harms, deceives, excludes, obstructs) scores negative against the publics that hold that value.
 
 ---
 
@@ -407,7 +407,7 @@ To compare an action with an ad-hoc public’s Vector of Values:
 1. Start from `action_content.domains` and `VoV.core_values.domains`.
 2. Apply conflict resolution (CR) and contextual shifts (CS) as in 1.2.
 3. Restrict to indices where both action and VoV domains are non‑null (mutual‑null‑skip rule).
-4. Normalize both vectors and compute cosine similarity:
+4. Normalize both vectors and compute cosine similarity (zero vector or no shared dimension → A = 0):
 
 $$A = \cos(\vec{Action}, \vec{Values}_{mv}) \in [-1, 1].$$
 
@@ -889,7 +889,7 @@ For each historical action `a` and a target ad-hoc public with Vector of Values 
 3. Compute cosine alignment $A_a$:
 
    - Use only dimensions where both action and VoV have non-null values (mutual-null-skip rule).
-   - After normalization:
+   - After normalization (zero vector or no shared dimension → A = 0):
 
    $$A_a = cos(\vec{Action_a}, \vec{VoV_{new}}) \in [-1, 1]$$
 

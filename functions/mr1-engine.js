@@ -27,6 +27,7 @@ function checkVectors(data){
  return p;
 }
 function evaluate(user,vectors,bundle,location,registeredAt){
+ require("./cbc-policy").validate(bundle);
  const p=checkVectors(vectors),uid=String(user.uid),age=ISR.ageInYears(user.birthDate,registeredAt),out={};
  const near=nearestAnchor(user.geography,location);
  const g=near?gScore(near.distance,bundle.model.mu,bundle.model.sigma):0;
@@ -36,25 +37,26 @@ function evaluate(user,vectors,bundle,location,registeredAt){
   if(!Array.isArray(v) || v.length!==AI.EMBED_DIMS || !v.every(Number.isFinite))error("The issue's aspect vector is unavailable.");
   const rules=demographicRulesForScope(a.demographics,{scope_type:bundle.scope});
   const d=evaluateDemographics(user,rules,Number(registeredAt.slice(0,4)));
-  const key=ref.aspect_id+":"+ref.cbc_adjustment;
+  const adjustment=require("./cbc-policy").adjustment(bundle,ref);
+  const key=ref.aspect_id+":"+adjustment;
   if(!cache.has(key)){
    const skill=vectors.experience_vectors||{};
    for(const s of user.skills||[])if(["education","work experience"].includes(s.type)){
     const sv=vector(skill[String(s.id)]);if(sv.length!==AI.EMBED_DIMS || !sv.every(Number.isFinite))error("A profile has an unavailable skill vector.");
    }
-   cache.set(key,{education:ISR.educationSum(user.skills,skill,v,ref.cbc_adjustment),experience:ISR.experienceSum(user.skills,skill,v)});
+   cache.set(key,{education:ISR.educationSum(user.skills,skill,v,adjustment),experience:ISR.experienceSum(user.skills,skill,v)});
   }
   out[ref.id]={D:d.score,G:g,S:Math.max(0,ISR.cosine(p,v)),X:0,...cache.get(key)};
  }
  return {uid,age,aspects:out,anchor_type:near?near.type:null};
 }
-function pack(row,user,aspects,sourceLinks){
+function pack(row,user,aspects,sourceLinks,version){
  return {user_id:String(user.uid),displayName:user.displayName||`User ${user.uid}`,cohort:row.cohort,
   D_score:row.effective.D,G_score:row.effective.G,S_score:row.effective.S,X_score:row.effective.X,
   D_match:null,G_anchor_type:aspects.anchor_type,relevance_score:round(row.R),direct_relevance:row.direct_relevance,
   social_addition:row.social_addition,social_source:row.social_source,social_tie:row.social_tie,
   education_expertise:round(Math.max(ISR.ageFloor(aspects.age),row.education_raw)),experience_expertise:round(row.experience),expertise_score:round(row.E),
-  expertise_source:"mr1_aspects",contribution_score:0,accepted_rejected:null,scoring_version:Review.VERSION,
+  expertise_source:"mr1_aspects",contribution_score:0,accepted_rejected:null,scoring_version:version,
   mr1_evidence:aspects.aspects,social_links:sourceLinks||{}};
 }
 async function population(db,bundle,location,registeredAt){
@@ -76,7 +78,7 @@ async function population(db,bundle,location,registeredAt){
    const score=evaluate(u,vectors,bundle,location,registeredAt);people.push(score);scored.set(score.uid,score);userById.set(score.uid,u);outgoing[score.uid]=eligibleLinks(u,relationship_diagnostics);
   }
  }
- const cohorts=M.cohorts(bundle.model,people,outgoing),members=cohorts.members.map(row=>pack(row,userById.get(row.uid),scored.get(row.uid),row.cohort==="A"?outgoing[row.uid]:{}));
+ const cohorts=M.cohorts(bundle.model,people,outgoing),members=cohorts.members.map(row=>pack(row,userById.get(row.uid),scored.get(row.uid),row.cohort==="A"?outgoing[row.uid]:{},bundle.version));
  if(!members.length)error("No directly affected people were found for this context.");
  const weights={w_relevance:bundle.model.aggregation.R,w_expertise:bundle.model.aggregation.E,w_contribution:bundle.model.aggregation.C};
  const normalized=ISR.isrForPublic(members.map(m=>({uid:m.user_id,R:m.relevance_score,E:m.expertise_score})),weights);
@@ -84,6 +86,7 @@ async function population(db,bundle,location,registeredAt){
  return {members,population_hash:digest.digest("hex"),population_count:people.length,A:cohorts.A.length,B:cohorts.B.length,relationship_diagnostics};
 }
 function joining(user,vectors,issue,bundle,existing){
+ if(issue.scoring_version!==bundle.version)error("Issue and model scoring versions disagree.");
  const scored=evaluate(user,vectors,bundle,issue.location,issue.created_at.toDate?issue.created_at.toDate().toISOString():issue.created_at);
  const row=M.member(bundle.model,scored.age,scored.aspects);Object.assign(row,{cohort:"explicit",direct_relevance:row.R,social_addition:0,social_source:null,social_tie:0});
  if(row.R<.15){
@@ -94,6 +97,6 @@ function joining(user,vectors,issue,bundle,existing){
   }
  }
  row.effective.X=bundle.model.relevance.X?row.social_addition/bundle.model.relevance.X:0;
- return {...pack(row,user,scored,{}),membership_source:"explicit_join"};
+ return {...pack(row,user,scored,{},bundle.version),membership_source:"explicit_join"};
 }
 module.exports={population,evaluate,eligibleLinks,joining,error,round};

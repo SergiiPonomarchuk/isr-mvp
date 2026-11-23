@@ -78,7 +78,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "locksmith.security",
     "recency_decay_rate": 0.02,
-    "CBC_adjustment_factor": 0.9,
     "domain_reasoning": "Evolving domain locksmith.security with decay rate 0.02."
   },
   "resources_needed": [
@@ -171,7 +170,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.elevator_engineering",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain building.maintenance.elevator_engineering with decay rate 0.03."
   },
   "resources_needed": [
@@ -264,7 +262,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.heating_engineering",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain building.maintenance.heating_engineering with decay rate 0.03."
   },
   "resources_needed": [
@@ -357,7 +354,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.plumbing",
     "recency_decay_rate": 0.02,
-    "CBC_adjustment_factor": 0.95,
     "domain_reasoning": "Evolving domain building.maintenance.plumbing with decay rate 0.02."
   },
   "resources_needed": [
@@ -452,7 +448,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.health.mold_remediation",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain building.health.mold_remediation with decay rate 0.03."
   },
   "resources_needed": [
@@ -540,7 +535,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.electrical_basic",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 0.95,
     "domain_reasoning": "Evolving domain building.maintenance.electrical_basic with decay rate 0.03."
   },
   "resources_needed": [
@@ -628,7 +622,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.waste_logistics",
     "recency_decay_rate": 0.02,
-    "CBC_adjustment_factor": 0.9,
     "domain_reasoning": "Evolving domain building.maintenance.waste_logistics with decay rate 0.02."
   },
   "resources_needed": [
@@ -722,7 +715,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "housing.policy.parking_management",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain housing.policy.parking_management with decay rate 0.03."
   },
   "resources_needed": [
@@ -810,7 +802,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.conflict.noise_mediation",
     "recency_decay_rate": 0.02,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain building.conflict.noise_mediation with decay rate 0.02."
   },
   "resources_needed": [
@@ -898,7 +889,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.renovation_coordination",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain building.maintenance.renovation_coordination with decay rate 0.03."
   },
   "resources_needed": [
@@ -991,7 +981,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "housing.policy.tenancy_law",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain housing.policy.tenancy_law with decay rate 0.04."
   },
   "resources_needed": [
@@ -1083,7 +1072,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "housing.policy.pet_management",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain housing.policy.pet_management with decay rate 0.03."
   },
   "resources_needed": [
@@ -1176,7 +1164,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.safety.access_control",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain building.safety.access_control with decay rate 0.03."
   },
   "resources_needed": [
@@ -1269,7 +1256,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.shared_facilities",
     "recency_decay_rate": 0.02,
-    "CBC_adjustment_factor": 0.95,
     "domain_reasoning": "Evolving domain building.maintenance.shared_facilities with decay rate 0.02."
   },
   "resources_needed": [
@@ -1366,7 +1352,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "housing.policy.resource_allocation",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain housing.policy.resource_allocation with decay rate 0.03."
   },
   "resources_needed": [
@@ -1462,7 +1447,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.maintenance.move_coordination",
     "recency_decay_rate": 0.02,
-    "CBC_adjustment_factor": 0.95,
     "domain_reasoning": "Evolving domain building.maintenance.move_coordination with decay rate 0.02."
   },
   "resources_needed": [
@@ -1556,7 +1540,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.security.access_policies",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain building.security.access_policies with decay rate 0.04."
   },
   "resources_needed": [
@@ -1651,7 +1634,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.safety.structural",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain building.safety.structural with decay rate 0.04."
   },
   "resources_needed": [
@@ -1756,7 +1738,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.health.smoke_policy",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain building.health.smoke_policy with decay rate 0.04."
   },
   "resources_needed": [
@@ -1846,7 +1827,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "building.safety.emergency_planning",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain building.safety.emergency_planning with decay rate 0.04."
   },
   "resources_needed": [
@@ -1945,7 +1925,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "infrastructure.maintenance.roadworks",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain infrastructure.maintenance.roadworks with decay rate 0.03."
   },
   "resources_needed": [
@@ -2036,7 +2015,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "transportation.engineering.signal_timing",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain transportation.engineering.signal_timing with decay rate 0.04."
   },
   "resources_needed": [
@@ -2131,7 +2109,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "urban_planning.cycling_infrastructure",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain urban_planning.cycling_infrastructure with decay rate 0.04."
   },
   "resources_needed": [
@@ -2221,7 +2198,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "transportation.planning.transit",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain transportation.planning.transit with decay rate 0.04."
   },
   "resources_needed": [
@@ -2316,7 +2292,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "infrastructure.maintenance.winter_ops",
     "recency_decay_rate": 0.02,
-    "CBC_adjustment_factor": 0.9,
     "domain_reasoning": "Evolving domain infrastructure.maintenance.winter_ops with decay rate 0.02."
   },
   "resources_needed": [
@@ -2409,7 +2384,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "infrastructure.maintenance.electrical_public",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 0.95,
     "domain_reasoning": "Evolving domain infrastructure.maintenance.electrical_public with decay rate 0.03."
   },
   "resources_needed": [
@@ -2492,7 +2466,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "infrastructure.construction.noise_management",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain infrastructure.construction.noise_management with decay rate 0.04."
   },
   "resources_needed": [
@@ -2580,7 +2553,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "environment.cleanliness.illegal_dumping",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain environment.cleanliness.illegal_dumping with decay rate 0.03."
   },
   "resources_needed": [
@@ -2668,7 +2640,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "utilities.water_network.operations",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain utilities.water_network.operations with decay rate 0.04."
   },
   "resources_needed": [
@@ -2761,7 +2732,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "utilities.electric_grid.reliability",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain utilities.electric_grid.reliability with decay rate 0.04."
   },
   "resources_needed": [
@@ -2852,7 +2822,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "utilities.networking.isp_operations",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain utilities.networking.isp_operations with decay rate 0.05."
   },
   "resources_needed": [
@@ -2942,7 +2911,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "infrastructure.public.playground_safety",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain infrastructure.public.playground_safety with decay rate 0.03."
   },
   "resources_needed": [
@@ -3034,7 +3002,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "transportation.safety.traffic_calming",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain transportation.safety.traffic_calming with decay rate 0.04."
   },
   "resources_needed": [
@@ -3128,7 +3095,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "urban_planning.parking_policy",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain urban_planning.parking_policy with decay rate 0.04."
   },
   "resources_needed": [
@@ -3216,7 +3182,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "public_health.sanitation.facilities",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain public_health.sanitation.facilities with decay rate 0.04."
   },
   "resources_needed": [
@@ -3304,7 +3269,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "infrastructure.safety.personal_security",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain infrastructure.safety.personal_security with decay rate 0.04."
   },
   "resources_needed": [
@@ -3404,7 +3368,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "urban_planning.cycling_parking",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain urban_planning.cycling_parking with decay rate 0.04."
   },
   "resources_needed": [
@@ -3496,7 +3459,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "urban_planning.mobility_events",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain urban_planning.mobility_events with decay rate 0.04."
   },
   "resources_needed": [
@@ -3584,7 +3546,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "urban_planning.public_space_design",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain urban_planning.public_space_design with decay rate 0.04."
   },
   "resources_needed": [
@@ -3667,7 +3628,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "public_services.waste_collection",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain public_services.waste_collection with decay rate 0.03."
   },
   "resources_needed": [
@@ -3762,7 +3722,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "healthcare.management.primary_care",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain healthcare.management.primary_care with decay rate 0.05."
   },
   "resources_needed": [
@@ -3855,7 +3814,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "public_health.prevention_campaigns",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.15,
     "domain_reasoning": "Evolving domain public_health.prevention_campaigns with decay rate 0.05."
   },
   "resources_needed": [
@@ -3951,7 +3909,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "social_services.childcare_management",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain social_services.childcare_management with decay rate 0.04."
   },
   "resources_needed": [
@@ -4042,7 +3999,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "social_services.elderly_care",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain social_services.elderly_care with decay rate 0.04."
   },
   "resources_needed": [
@@ -4130,7 +4086,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "healthcare.pharmacy.operations",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain healthcare.pharmacy.operations with decay rate 0.05."
   },
   "resources_needed": [
@@ -4220,7 +4175,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "mental_health.community_services",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain mental_health.community_services with decay rate 0.05."
   },
   "resources_needed": [
@@ -4315,7 +4269,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "accessibility.design_and_compliance",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain accessibility.design_and_compliance with decay rate 0.05."
   },
   "resources_needed": [
@@ -4408,7 +4361,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "social_services.food_security",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain social_services.food_security with decay rate 0.04."
   },
   "resources_needed": [
@@ -4501,7 +4453,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "social_services.homelessness_policy",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain social_services.homelessness_policy with decay rate 0.05."
   },
   "resources_needed": [
@@ -4594,7 +4545,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "community.resilience.mutual_aid",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain community.resilience.mutual_aid with decay rate 0.04."
   },
   "resources_needed": [
@@ -4691,7 +4641,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "social_support.family_crisis",
     "recency_decay_rate": 0.02,
-    "CBC_adjustment_factor": 0.9,
     "domain_reasoning": "Evolving domain social_support.family_crisis with decay rate 0.02."
   },
   "resources_needed": [
@@ -4784,7 +4733,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "community.organizing.mutual_aid",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain community.organizing.mutual_aid with decay rate 0.03."
   },
   "resources_needed": [
@@ -4874,7 +4822,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "mental_health.addiction_support",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain mental_health.addiction_support with decay rate 0.04."
   },
   "resources_needed": [
@@ -4969,7 +4916,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "public_health.emergency_heatwave",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain public_health.emergency_heatwave with decay rate 0.05."
   },
   "resources_needed": [
@@ -5062,7 +5008,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "public_health.infectious_disease_policy",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.15,
     "domain_reasoning": "Evolving domain public_health.infectious_disease_policy with decay rate 0.05."
   },
   "resources_needed": [
@@ -5159,7 +5104,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "education.safety_crisis_management",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain education.safety_crisis_management with decay rate 0.05."
   },
   "resources_needed": [
@@ -5256,7 +5200,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "education.pedagogy_and_timetabling",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain education.pedagogy_and_timetabling with decay rate 0.04."
   },
   "resources_needed": [
@@ -5349,7 +5292,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "education.assessment_policy",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain education.assessment_policy with decay rate 0.04."
   },
   "resources_needed": [
@@ -5438,7 +5380,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "nutrition.school_food_services",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain nutrition.school_food_services with decay rate 0.04."
   },
   "resources_needed": [
@@ -5527,7 +5468,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "transportation.school_bus_planning",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain transportation.school_bus_planning with decay rate 0.04."
   },
   "resources_needed": [
@@ -5630,7 +5570,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "education.extracurricular_programs",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain education.extracurricular_programs with decay rate 0.04."
   },
   "resources_needed": [
@@ -5719,7 +5658,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "education.digital_communication_platforms",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain education.digital_communication_platforms with decay rate 0.05."
   },
   "resources_needed": [
@@ -5817,7 +5755,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "youth_work.community_clubs",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain youth_work.community_clubs with decay rate 0.03."
   },
   "resources_needed": [
@@ -5914,7 +5851,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "education.equity_scholarships",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain education.equity_scholarships with decay rate 0.04."
   },
   "resources_needed": [
@@ -5998,7 +5934,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "higher_education.curriculum_design",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain higher_education.curriculum_design with decay rate 0.04."
   },
   "resources_needed": [
@@ -6087,7 +6022,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "higher_education.assessment_admin",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain higher_education.assessment_admin with decay rate 0.04."
   },
   "resources_needed": [
@@ -6178,7 +6112,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "vocational_education.center_management",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain vocational_education.center_management with decay rate 0.04."
   },
   "resources_needed": [
@@ -6279,7 +6212,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "education.career_services_internships",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain education.career_services_internships with decay rate 0.04."
   },
   "resources_needed": [
@@ -6372,7 +6304,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "youth_sports.safety_and_management",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain youth_sports.safety_and_management with decay rate 0.04."
   },
   "resources_needed": [
@@ -6467,7 +6398,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "library_services.youth_programming",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain library_services.youth_programming with decay rate 0.04."
   },
   "resources_needed": [
@@ -6555,7 +6485,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "events.community_festival_management",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain events.community_festival_management with decay rate 0.03."
   },
   "resources_needed": [
@@ -6658,7 +6587,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "sports_management.amateur_leagues",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain sports_management.amateur_leagues with decay rate 0.03."
   },
   "resources_needed": [
@@ -6753,7 +6681,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "arts_education.children_workshops",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain arts_education.children_workshops with decay rate 0.04."
   },
   "resources_needed": [
@@ -6841,7 +6768,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "community.safety.neighborhood_watch",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain community.safety.neighborhood_watch with decay rate 0.03."
   },
   "resources_needed": [
@@ -6939,7 +6865,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "arts.public_art_urban_design",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain arts.public_art_urban_design with decay rate 0.04."
   },
   "resources_needed": [
@@ -7030,7 +6955,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "commerce.local_markets_management",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain commerce.local_markets_management with decay rate 0.03."
   },
   "resources_needed": [
@@ -7128,7 +7052,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "religion.community_service_management",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain religion.community_service_management with decay rate 0.03."
   },
   "resources_needed": [
@@ -7219,7 +7142,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "law_and_policy.religious_freedom_local",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain law_and_policy.religious_freedom_local with decay rate 0.05."
   },
   "resources_needed": [
@@ -7311,7 +7233,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "charity.local_food_drives",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain charity.local_food_drives with decay rate 0.03."
   },
   "resources_needed": [
@@ -7402,7 +7323,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "charity.online_fundraising_management",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain charity.online_fundraising_management with decay rate 0.05."
   },
   "resources_needed": [
@@ -7501,7 +7421,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "nonprofit.management.volunteer_programs",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain nonprofit.management.volunteer_programs with decay rate 0.04."
   },
   "resources_needed": [
@@ -7599,7 +7518,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "arts.community_choir_management",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.0,
     "domain_reasoning": "Evolving domain arts.community_choir_management with decay rate 0.03."
   },
   "resources_needed": [
@@ -7687,7 +7605,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "social_inclusion.lgbtq_support_practice",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain social_inclusion.lgbtq_support_practice with decay rate 0.04."
   },
   "resources_needed": [
@@ -7780,7 +7697,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "heritage.preservation_policy_and_practice",
     "recency_decay_rate": 0.03,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain heritage.preservation_policy_and_practice with decay rate 0.03."
   },
   "resources_needed": [
@@ -7871,7 +7787,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "culture.city_festival_governance",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain culture.city_festival_governance with decay rate 0.04."
   },
   "resources_needed": [
@@ -7964,7 +7879,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "hr_and_operations.shift_scheduling",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain hr_and_operations.shift_scheduling with decay rate 0.04."
   },
   "resources_needed": [
@@ -8052,7 +7966,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "organizational_design.remote_work_policy",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain organizational_design.remote_work_policy with decay rate 0.05."
   },
   "resources_needed": [
@@ -8141,7 +8054,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "labor_policy.gig_economy",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain labor_policy.gig_economy with decay rate 0.05."
   },
   "resources_needed": [
@@ -8227,7 +8139,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "software.open_source_governance",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain software.open_source_governance with decay rate 0.05."
   },
   "resources_needed": [
@@ -8318,7 +8229,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "software.open_source_product_direction",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain software.open_source_product_direction with decay rate 0.05."
   },
   "resources_needed": [
@@ -8415,7 +8325,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "platform_governance.online_communities",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain platform_governance.online_communities with decay rate 0.05."
   },
   "resources_needed": [
@@ -8503,7 +8412,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "online_community.moderation_practice",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain online_community.moderation_practice with decay rate 0.05."
   },
   "resources_needed": [
@@ -8586,7 +8494,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "political_discourse.online_forum_governance",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain political_discourse.online_forum_governance with decay rate 0.05."
   },
   "resources_needed": [
@@ -8677,7 +8584,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "civic_tech.neighborhood_app_design",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain civic_tech.neighborhood_app_design with decay rate 0.05."
   },
   "resources_needed": [
@@ -8765,7 +8671,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "elections.administration.local",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain elections.administration.local with decay rate 0.05."
   },
   "resources_needed": [
@@ -8851,7 +8756,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "public_policy.local_nightlife_regulation",
     "recency_decay_rate": 0.04,
-    "CBC_adjustment_factor": 1.05,
     "domain_reasoning": "Evolving domain public_policy.local_nightlife_regulation with decay rate 0.04."
   },
   "resources_needed": [
@@ -8937,7 +8841,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "public_finance.municipal_budgeting",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain public_finance.municipal_budgeting with decay rate 0.05."
   },
   "resources_needed": [
@@ -9028,7 +8931,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "urban_planning.zoning_and_permits",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain urban_planning.zoning_and_permits with decay rate 0.05."
   },
   "resources_needed": [
@@ -9116,7 +9018,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "data_privacy.app_governance",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.15,
     "domain_reasoning": "Evolving domain data_privacy.app_governance with decay rate 0.05."
   },
   "resources_needed": [
@@ -9212,7 +9113,6 @@ It is formatted according to the schema defined in `ISR-Issue-Analyzer-Protocol-
   "expertise_domain_parameters": {
     "expertise_domain": "cybersecurity.consumer_fraud_prevention",
     "recency_decay_rate": 0.05,
-    "CBC_adjustment_factor": 1.1,
     "domain_reasoning": "Evolving domain cybersecurity.consumer_fraud_prevention with decay rate 0.05."
   },
   "resources_needed": [

@@ -1,3 +1,5 @@
+// Exercise the frozen historical pilot contract, not new scoring.
+require("./legacy-cbc-fixture.cjs").install();
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const S=require('../staged-context'),{prepare}=require('../tools/two-stage-pilot-plan');
 test('actual two-stage pilot preserves valid clear repair and refuses copied reference-title aspect',()=>{

@@ -1,6 +1,8 @@
 # ISR Expertise Assessment: Complete Implementation Specification v1.0
 
-**2026-11-16 intended-model revision:** [PD-9 multi-reference derivation](../specs/decisions/PD-9-multi-reference-derivation.md) governs reference selection, notation and member-score combination. Runtime at3c25ef7 still uses the earlier single-vector model. Sections explicitly marked historical are not implementation instructions for mr1.
+**2026-11-21 reconciliation:** PD-9 still governs paired multi-reference arithmetic, actual-issue aspect vectors, maximum geography and the single Expertise floor. Repository main b8014ac contains mr1 logic; the new marked-carer/MVP formation policy is a separate implementation proposal, not current runtime or a deployment claim. [Exact flag, cutoff, version and backfill specification](../specs/tasks/X-eligibility-values-reconciliation.md).
+
+**CBC policy (2026-11-21):** new scoring uses the standard education-category CBC only; the issue adjustment is removed. Frozen historical issues retain their recorded old arithmetic for replay/Join. Negative cosine is clipped at zero before powers or work sums. Recency remains an unimplemented extension; this X/Values task does not activate it.
 
 ## Overview
 
@@ -38,20 +40,20 @@ Where:
 - **$E_{i,education}$** = User i floor-adjusted education expertise
 - **$E_{i,experience}$** = User i work-experience expertise
 
-The two components are added **without weights**. The context of the issue acts through the similarity of each record to the issue ($u_1$) and through the CBC adjustment factor. Recency decay remains a documented extension, not implemented current behavior. Multi-reference evidence combines before one age floor under PD-9.
+The two components are added **without weights**. The context of the issue acts through the similarity of each record to the issue ($u_1$) with CBC fixed by education category, not by the issue. Recency decay remains a documented extension, not implemented current behavior. Multi-reference evidence combines before one age floor under PD-9.
 
 ---
 
 ### 2.2 Single-reference education expertise
 
-$$E_{i,\text{education}} = \max\left( \frac{\min(age_i, 30)}{30},\ \sum_{\text{education}} [\max(0,\cos(\vec{v}_{i,\text{education}}, u_1))] ^ {\text{CBC}\,a} \times P_{i,\text{education}}\right)$$
+$$E_{i,\text{education}} = \max\left( \frac{\min(age_i, 30)}{30},\ \sum_{\text{education}} [\max(0,\cos(\vec{v}_{i,\text{education}}, u_1))] ^ {\text{CBC}} \times P_{i,\text{education}}\right)$$
 
 Where:
 - **$v_{i,education}$** = Vectorized education records (semantic embedding)
 - **$u_1$** = Actual-issue aspect vector u_1 for this single-reference reduction
 - **$CBC$** = Credential Broadcast Coefficient
 - **$P_{i,education}$** = Education Power scalar (education time in years)
-- **Cosine similarity with CBC exponent** = Semantic relevance of credential to issue, adjusted by broadcast capability [0.0-1.0]
+- **Cosine similarity with CBC exponent** = Semantic relevance of credential to issue, adjusted by broadcast capability [0.0-1.0]; a negative cosine counts as zero, max(0, cos)
 - **Power scalar** = Education time in years [0.5+]
 - **$\min(age_i, 30)/30$** = Common-knowledge floor: 1.0 from age 30 on, age/30 below 30. It never exceeds 1.0 and never falls with age. The age is taken at the moment the issue is registered and is not stored.
 
@@ -65,7 +67,7 @@ Where:
 | **Vocational** | 2.0 | 2 years |
 | **Course/Cert** | 3.0 | 0.5 years |
 
-**Current runtime mapping:** PhD(.5,10), Master(.8,6), Bachelor(1,4), College(1.5,3), Vocational/training(2,2), unknown(1,4). The intended certificate row is not implemented and runtime College is absent from the older table. Resolve explicitly before changing mappings. a is the positive per-issue/aspect CBC adjustment, multiplied into the exponent; cosine is clipped at0 before exponentiation. For mr1 use PD-9: blend raw education evidence, apply one age floor, then add blended work evidence.
+**Current runtime mapping:** PhD(.5,10), Master(.8,6), Bachelor(1,4), College(1.5,3), Vocational/training(2,2), unknown(1,4). The intended certificate row is not implemented and runtime College is absent from the older table. Resolve explicitly before changing mappings. CBC is fixed by education category; no issue/reference adjustment is applied; cosine is clipped at0 before exponentiation. For mr1 use PD-9: blend raw education evidence, apply one age floor, then add blended work evidence.
 
 **CBC Interpretation (Broadcast Mechanism)**:
 - **CBC < 1.0 (PhD, Master's)**: Exponent < 1 → **amplifies cosine similarity** (broadcasts to distant domains)
@@ -83,7 +85,7 @@ Where:
 ```
 cos_similarity = 0.3 (distant domain)
 CBC = 0.5 (PhD amplifies)
-CBC_adjusted = 0.3^0.5 = 0.547723 (rounded)
+Credential similarity after exponent = 0.3^0.5 = 0.547723 (rounded)
 P_education = 10 years (PhD time)
 E_education = 10 × 0.3^0.5 = 5.477226 (full intermediate precision)
 ```
@@ -92,7 +94,7 @@ E_education = 10 × 0.3^0.5 = 5.477226 (full intermediate precision)
 ```
 cos_similarity = 0.2 (very distant domain)
 CBC = 2.0 (Vocational suppresses)
-CBC_adjusted = 0.2^2.0 = 0.04
+Credential similarity after exponent = 0.2^2.0 = 0.04
 P_education = 2 years (vocational training)
 Σ education = 0.04 × 2 = 0.08
 E_education = max(1.0, 0.08) = 1.0 (member aged 30+: the floor applies)
@@ -102,7 +104,7 @@ E_education = max(1.0, 0.08) = 1.0 (member aged 30+: the floor applies)
 ```
 cos_similarity = 0.75 (related domain)
 CBC = 0.8 (Master's amplifies moderately)
-CBC_adjusted = 0.75^0.8 = 0.794418 (rounded)
+Credential similarity after exponent = 0.75^0.8 = 0.794418 (rounded)
 P_education = 6 years (Master's time)
 E_education = 6 × 0.75^0.8 = 4.766507 (unrounded intermediate)
 ```
@@ -117,7 +119,7 @@ Where:
 - **v_{i,experience}** = Vectorized experience records (semantic embedding)
 - **u_1** = Actual-issue aspect vector u_1 for this single-reference reduction
 - **P_{i,experience}** = Experience Power scalar (duration in years)
-- **Cosine similarity** = Semantic relevance of experience to issue [0.0-1.0]
+- **Cosine similarity** = Semantic relevance of experience to issue [0.0-1.0]; a negative cosine counts as zero, max(0, cos)
 - **Power scalar** = Duration of active experience in years [0.0+]
 
 **Intended recency extension, not applied by current code:**
@@ -167,10 +169,7 @@ When an issue is submitted, **LLM determines** contextual parameters:
    - 0.05 = Fast decay (software engineering, medical practice)
    - 0.08 = Extremely fast decay (cutting-edge AI, quantum computing)
 
-3. **CBC Adjustment Factor** [multiplier for Credential Broadcast Coefficient]:
-   - 1.0 = Use base CBC values (default)
-   - 0.8 = Lower the positive exponent (broader transfer to less-similar domains)
-   - 1.2 = Raise the positive exponent (narrower transfer to less-similar domains)
+CBC is taken only from the education-category table. The Analyzer does not generate or adjust it. Recency metadata above remains an unimplemented extension.
 
 ### 3.2 Example Domain Contexts
 
@@ -178,7 +177,6 @@ When an issue is submitted, **LLM determines** contextual parameters:
 ```
 Domain: locksmith.security
 Recency decay: 0.02/year (skills decay slowly)
-CBC adjustment: 0.9 (broaden transfer slightly)
 → Master Locksmith dominates; Engineer has lower relevance
 ```
 
@@ -186,7 +184,6 @@ CBC adjustment: 0.9 (broaden transfer slightly)
 ```
 Domain: social.event.cultural
 Recency decay: 0.03/year
-CBC adjustment: 1.1 (narrow transfer for organisational skills)
 → Dancer + Event organizer + Business person all relevant
 ```
 
@@ -194,7 +191,6 @@ CBC adjustment: 1.1 (narrow transfer for organisational skills)
 ```
 Domain: urban_planning.infrastructure.governance
 Recency decay: 0.04/year
-CBC adjustment: 1.0 (neutral, balanced)
 → Urban planner, Accountant, Builder, MBA all weighted similarly
 ```
 
@@ -341,37 +337,37 @@ Each document in this collection tracks the calculated expertise components for 
 
 Authoritative current code is functions/isr.js (Python arithmetic via scripts/isr_core.py), using users.skills and user_vectors.experience_vectors. Do not create competing user_expertise_profiles or microcommunity_expertise_scores collections from the historical schema above. Current members store education_expertise, experience_expertise and expertise_score; normalized_experience is normalized total E.
 
-For mr1 follow PD-9: actual-issue aspect vectors u_j, per-reference CBC adjustment a_j, raw H_ij/T_ij, normalized alpha, blended H_i/T_i, then E_i=max(A_i,H_i)+T_i. Evaluate powers before blending. The common age floor applies once after education evidence combines. Do not average exponents, floor each reference first, introduce Education/Experience preferences, or normalize expertise separately for each reference. Normalize the combined score once over the final public.
+For mr1 follow PD-9: actual-issue aspect vectors u_j, education-category CBC_k, raw H_ij/T_ij, normalized alpha, blended H_i/T_i, then E_i=max(A_i,H_i)+T_i. Evaluate powers before blending. The common age floor applies once after education evidence combines. Do not average exponents, floor each reference first, introduce Education/Experience preferences, or normalize expertise separately for each reference. Normalize the combined score once over the final public.
 
 Current code skips missing vectors, includes records typed education/work experience without a graduation-status filter, ignores activities and does not apply recency decay. Missing birthDate fallback and unknown-level mappings are known implementation discrepancies. They are not new policy choices approved by mr1.
 
-The actual-issue aspect texts/vectors, CBC adjustment, fixed registration time, library/reference weights and storage precision must be reproducible across Check/Create/Join/checker. Existing three-decimal storage-before-normalization must be preserved or explicitly versioned. Historical source-schema and performance/cost sketches are not current implementation evidence.
+The actual-issue aspect texts/vectors, credential-table/scoring version, fixed registration time, library/reference weights and storage precision must be reproducible across Check/Create/Join/checker. Existing three-decimal storage-before-normalization must be preserved or explicitly versioned. Historical source-schema and performance/cost sketches are not current implementation evidence.
 
 ## Part 7: Corrected worked arithmetic
 
 These are single-reference arithmetic examples with explicitly stated nominal power assumptions, not outputs from live synthetic profiles or evidence of calibrated embeddings. Ages35 are illustrative adult assumptions where the old example did not specify age; Lisa32 and coordinator24 retain their stated ages. No decay is used. Some historical powers (course P1, diploma P2, Master P2) differ from runtime level mappings: retain them only as explicit hypothetical inputs, not inferred runtime parameters. Every expression below uses full intermediate precision; displayed totals round to6 decimals.
 
-### Door lock repair — CBC adjustment a=0.9
+### Door lock repair — standard credential CBC
 
 | Person | Age | Education inputs (similarity, CBC, power) | Work inputs (similarity, years) | Raw H | Floor-adjusted education | Work T | Total E |
 |---|---:|---|---|---:|---:|---:|---:|
-| John | 35 | [(0.95, 2, 2)] | [(0.98, 30)] | 1.823612 | 1.823612 | 29.400000 | 31.223612 |
-| Sarah | 35 | [(0.4, 1, 4)] | [(0.35, 33)] | 1.753533 | 1.753533 | 11.550000 | 13.303533 |
-| Lisa | 32 | [(0.05, 1, 4)] | [(0.02, 8)] | 0.269857 | 1.000000 | 0.160000 | 1.160000 |
+| John | 35 | [(0.95, 2, 2)] | [(0.98, 30)] | 1.805000 | 1.805000 | 29.400000 | 31.205000 |
+| Sarah | 35 | [(0.4, 1, 4)] | [(0.35, 33)] | 1.600000 | 1.600000 | 11.550000 | 13.150000 |
+| Lisa | 32 | [(0.05, 1, 4)] | [(0.02, 8)] | 0.200000 | 1.000000 | 0.160000 | 1.160000 |
 
-Sum of the illustrated members' raw Expertise: 45.687145. This total alone does not establish sufficient group expertise or automatically justify inviting an external expert.
+Sum of the illustrated members' raw Expertise: 45.515000. This total alone does not establish sufficient group expertise or automatically justify inviting an external expert.
 
-### Salsa evening — CBC adjustment a=1.1
+### Salsa evening — standard credential CBC
 
 | Person | Age | Education inputs (similarity, CBC, power) | Work inputs (similarity, years) | Raw H | Floor-adjusted education | Work T | Total E |
 |---|---:|---|---|---:|---:|---:|---:|
-| Maria | 35 | [(0.95, 1, 4), (0.92, 1, 1)] | [(0.98, 8), (0.92, 6)] | 4.692919 | 4.692919 | 13.360000 | 18.052919 |
-| David | 35 | [(0.6, 1, 4)] | [(0.75, 20)] | 2.280481 | 2.280481 | 15.000000 | 17.280481 |
-| Alex | 35 | [(0.85, 1, 2)] | [(0.88, 15)] | 1.672595 | 1.672595 | 13.200000 | 14.872595 |
+| Maria | 35 | [(0.95, 1, 4), (0.92, 1, 1)] | [(0.98, 8), (0.92, 6)] | 4.720000 | 4.720000 | 13.360000 | 18.080000 |
+| David | 35 | [(0.6, 1, 4)] | [(0.75, 20)] | 2.400000 | 2.400000 | 15.000000 | 17.400000 |
+| Alex | 35 | [(0.85, 1, 2)] | [(0.88, 15)] | 1.700000 | 1.700000 | 13.200000 | 14.900000 |
 
-Sum of the illustrated members' raw Expertise: 50.205995. This total alone does not establish sufficient group expertise or automatically justify inviting an external expert.
+Sum of the illustrated members' raw Expertise: 50.380000. This total alone does not establish sufficient group expertise or automatically justify inviting an external expert.
 
-### Parking proposal — CBC adjustment a=1.0
+### Parking proposal — standard credential CBC
 
 | Person | Age | Education inputs (similarity, CBC, power) | Work inputs (similarity, years) | Raw H | Floor-adjusted education | Work T | Total E |
 |---|---:|---|---|---:|---:|---:|---:|
@@ -381,15 +377,15 @@ Sum of the illustrated members' raw Expertise: 50.205995. This total alone does 
 
 Sum of the illustrated members' raw Expertise: 46.549592. This total alone does not establish sufficient group expertise or automatically justify inviting an external expert.
 
-### Crisis allocation — CBC adjustment a=1.2
+### Crisis allocation — standard credential CBC
 
 | Person | Age | Education inputs (similarity, CBC, power) | Work inputs (similarity, years) | Raw H | Floor-adjusted education | Work T | Total E |
 |---|---:|---|---|---:|---:|---:|---:|
 | Co-founder | 35 | none | [(0.9, 2.5)] | 0.000000 | 1.000000 | 2.250000 | 3.250000 |
-| Operations manager | 35 | [(0.65, 1, 4)] | [(0.8, 1.5)] | 2.385371 | 2.385371 | 1.200000 | 3.585371 |
-| Volunteer coordinator | 24 | [(0.7, 3, 0.5)] | [(0.75, 0.5)] | 0.138460 | 0.800000 | 0.375000 | 1.175000 |
+| Operations manager | 35 | [(0.65, 1, 4)] | [(0.8, 1.5)] | 2.600000 | 2.600000 | 1.200000 | 3.800000 |
+| Volunteer coordinator | 24 | [(0.7, 3, 0.5)] | [(0.75, 0.5)] | 0.171500 | 0.800000 | 0.375000 | 1.175000 |
 
-Sum of the illustrated members' raw Expertise: 8.010371. This total alone does not establish sufficient group expertise or automatically justify inviting an external expert.
+Sum of the illustrated members' raw Expertise: 8.225000. This total alone does not establish sufficient group expertise or automatically justify inviting an external expert.
 
 ### Multi-reference floor and contribution checks
 
@@ -482,8 +478,8 @@ async function freezeExpertiseScores(microcommunityId) {
 - [ ] Implement user profile vectorization using Google AI Studio (`text-embedding-004`)
 
 ### Week 2: Expertise Calculation Engine
-- [ ] Implement CBC exponent calculation (cosine^CBC) in Cloud Functions
-- [ ] Implement CBC adjustment factor application
+- [x] Implement category-table CBC exponent (cosine^CBC) for new scoring
+- [x] Remove issue-specific CBC adjustment from new scoring; retain frozen legacy replay only
 - [ ] Implement recency decay for experience
 - [ ] Implement additive component summation
 

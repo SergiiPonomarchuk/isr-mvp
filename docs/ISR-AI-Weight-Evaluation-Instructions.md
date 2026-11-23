@@ -1,6 +1,8 @@
 # ISR Weight Evaluation Instructions for AI (Relevance & Aggregation)
 
-**2026-11-16 intended-model revision:** [PD-9 multi-reference derivation](../specs/decisions/PD-9-multi-reference-derivation.md) governs reference selection, notation and member-score combination. Runtime at3c25ef7 still uses the earlier single-vector model. Sections explicitly marked historical are not implementation instructions for mr1.
+**2026-11-21 reconciliation:** PD-9 still governs paired multi-reference arithmetic, actual-issue aspect vectors, maximum geography and the single Expertise floor. Repository main b8014ac contains mr1 logic; the new marked-carer/MVP formation policy is a separate implementation proposal, not current runtime or a deployment claim. [Exact flag, cutoff, version and backfill specification](../specs/tasks/X-eligibility-values-reconciliation.md).
+
+**2026-11-21 MVP boundary:** the author retains hard D/G and top-300 direct-candidate selection with UB<Theta pruning. This changes candidate coverage, not paired parameter derivation. The new eligibility flag is profile data, not a model-generated weight or an instruction to infer carers. See the linked implementation proposal before using the new formation policy.
 
 This document defines **instructions for an AI model** on how to evaluate:
 
@@ -203,7 +205,7 @@ Use the 100 examples as anchors. For instance:
 
 #### Step 3: Compute ISR aggregation weights
 
-For c in R/E/C, B_c=sum_j alpha_j*b_cj. Use the same reference alpha, no free up/down adjustments. Valid positive source groups yield a positive sum-one blend. Education and Experience have no separate component weights. Form one public from final R, then normalize combined R/E over that public before the additive ISR calculation.
+For c in R/E/C, B_c=sum_j alpha_j*b_cj. Use the same reference alpha, no free up/down adjustments. Valid positive source groups yield a positive sum-one blend. Education and Experience have no separate component weights. CBC comes only from the education-category table; the Analyzer must not generate an issue/reference adjustment or replacement CBC. Form one public from final R, then normalize combined R/E over that public before the additive ISR calculation.
 
 #### Step 4: Produce a short reasoning
 

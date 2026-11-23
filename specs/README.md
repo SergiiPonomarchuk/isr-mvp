@@ -7,7 +7,25 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: [C1 offline publication protocol](tasks/M3-generation-protocol.md) implemented after explicit approval; [result and limitations](tasks/M3-generation-protocol/README.md). Design #49 is merged. Next scope is a separately approved C2 isolated-emulator slice, not automatic runtime/import/rules/deployment work.
+Current checkpoint: [C1 review and reconciliation](tasks/M3-generation-protocol-review.md); author-approved fixes for mirror consistency and strict UTF8 refusal, offline only. No PR50 merge or C2 implementation authorized.
+
+Previous checkpoint: [R1 optional Values metadata recovery](tasks/Values-optional-metadata-recovery.md), live dry run ready224/zero conflicts and synthetic recovery passed; [author-only runbook](tasks/Values-optional-metadata-author-runbook.md) prepared. No live apply or AI calls.
+
+Previous checkpoint: [scoped DB completeness audit and restoration proposal](tasks/DB-completeness-audit-report.md): no missing historical scoped documents;224 optional-metadata recovery candidates,16 unresolved grounding cases; no repairs or AI calls.
+
+Previous checkpoint: [grounding metadata dry run and recovery rehearsal](tasks/Values-grounding-dry-run.md), ready224/zero conflicts; [post-audit restoration log](tasks/DB-audit-restoration-followups.md) holds16 cases. [Author-only runbook](tasks/Values-grounding-author-runbook.md) prepared; no live writes or AI calls.
+
+Previous checkpoint: [read-only grounding inventory](tasks/Values-grounding-inventory-report.md):224 verified recoverable profiles,16 review cases; no database writes or AI calls.
+
+Previous checkpoint: [offline overall-grounding implementation](tasks/Values-grounding-offline-implementation.md), retargeted to main after CBC verification PR #53 merged; both merges authorized in order. Existing-profile backfill remains separate.
+
+Previous checkpoint: [CBC emulator/browser evidence](tasks/CBC-emulator-report.md), with [offline overall-grounding implementation plan](tasks/Values-grounding-offline-implementation.md) next. No production operations.
+
+Previous checkpoint: [CBC table-only scoring and removal from all 100 examples](tasks/CBC-table-only.md), retargeted to main after documentation PR #51 merged; both merges authorized in order. No live migration or deployment.
+
+Previous checkpoint: [X eligibility, MVP cutoff and Values metadata reconciliation/specification](tasks/X-eligibility-values-reconciliation.md), documentation only after the author's 2026-11-21 decisions. Existing C1 PR #50 is separately open/green. New scoring/metadata implementation, backfill and C2/live operations are not implicit.
+
+Previous checkpoint: [C1 offline publication protocol](tasks/M3-generation-protocol.md) implemented after explicit approval; [result and limitations](tasks/M3-generation-protocol/README.md). Design #49 is merged. Next scope is a separately approved C2 isolated-emulator slice, not automatic runtime/import/rules/deployment work.
 
 Current M3 preparation: [one-case quotation retest](tasks/M3-one-case-retest.md), offline only; two-call/US$0.27 proposal needs fresh paid approval.
 

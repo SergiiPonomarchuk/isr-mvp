@@ -1,3 +1,5 @@
+// Exercise the frozen historical pilot contract, not new scoring.
+require("./legacy-cbc-fixture.cjs").install();
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),os=require('node:os');
 const {preflight,run}=require('../tools/cheapest-low-check'),{sha}=require('../tools/mr1-pilot-budget');
 const root=path.resolve(__dirname,'../..'),source=require('../../specs/tasks/M3-evaluation/cheapest-low-approval.json');
