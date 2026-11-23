@@ -6,6 +6,8 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 ## Current checkpoint: R1 optional-metadata recovery prepared, 2026-11-23
 
+- Author explicitly instructed merge PR #58. Reviewed head972a5a0 passed all four Node/Python checks and is current with main322ab63. Integration changes status documentation only; verify final PR-head CI before the authorized merge, then main merge-head checks and private receipt. No live apply, regeneration, provider request or deployment follows automatically.
+
 - #57 merged as322ab63 with main Node/Python checks passed. Author approved R1 preparation only. [Scope/implementation](tasks/Values-optional-metadata-recovery.md), [aggregate evidence](tasks/Values-optional-metadata-summary.json), [author-only runbook](tasks/Values-optional-metadata-author-runbook.md). Branch codex/values-optional-metadata starts at322ab63; Sol Medium is sufficient.
 - Recover exactly three absent dotted metadata fields (historical timestamp/vector_id/overall_confidence), preserving existing five-key metadata and all Values/other fields. Committed scope binds original source/plan hashes and224 IDs, excluding16. Reuses the existing journal engine through a strict R1 store adapter; previous recovery modules remain unchanged. No application/scoring/docs/ changes.
 - Actual live read-only plan ready224/zero conflicts, second verification before224/desired0/conflict0. Private plan and receipt in A:/BackUp/isr-mvp/rollouts/optional-metadata-20261123; task records digest. No R1 live writes/provider calls/deployment. Separate author live decision follows PR review/merge; full PowerShell steps are prepared, not executed.
