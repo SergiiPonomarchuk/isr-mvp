@@ -1,0 +1,49 @@
+{
+  "version": "r2-proposal-estimate-1",
+  "profiles": 16,
+  "reason_counts": {
+    "invalid_grounding_metadata": 6,
+    "missing_source_hash": 5,
+    "narrative_hash_mismatch": 2,
+    "artifact_layout_invalid": 2,
+    "invalid_flattened_layout": 1
+  },
+  "pilot_ids": [
+    "66",
+    "1016"
+  ],
+  "pilot_max_generation_attempts": 4,
+  "automatic_retries": 0,
+  "pilot_visible_output_limits": [
+    4096,
+    8192
+  ],
+  "proposed_model": "gemini-3.1-flash-lite",
+  "proposed_thinking": "LOW",
+  "input_price_per_million_usd": 0.25,
+  "output_price_per_million_usd": 1.5,
+  "price_verified_date": "2026-11-23",
+  "price_source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-3.1-flash-lite",
+  "max_serialized_request_bytes": 65536,
+  "planning_input_bytes_margin": 1024,
+  "reservation_output_tokens_per_attempt": 65536,
+  "additional_thinking_token_margin_per_attempt": 8192,
+  "reservation_per_attempt_usd": 0.127232,
+  "pilot_reservation_usd": 0.508928,
+  "proposed_pilot_ceiling_usd": 0.55,
+  "pilot_planning_estimate_usd": 0.0906,
+  "estimate_caveat": "Input byte heuristic and thought allowance are planning/reservation assumptions, not provider-certified hard billing bounds; execution requires a reviewed transport and fresh paid approval.",
+  "max_step1_prompt_bytes": 13505,
+  "max_step2_prompt_bytes_with_16k_stage1": 27312,
+  "preflight_receipt_sha256": "98e8e8552cf7780c1e86a5dbb62868e88e6f836e10476bf7b430fa05ccbfacd3",
+  "prompt_sha256": {
+    "step1_system": "1cd7533af9a1eaae87eb0b3d92cb9472b449c69a714dace7e6712027a0026d35",
+    "step1_user": "6eaa4c5db8354ebd123ee263629138be66d8b73e8b4aa5c86b3ef6d57830cab1",
+    "step2_system": "57d6201b67799bd2fc8e8892319432d55f204a752acaecd77432acf2c82e1cea",
+    "step2_user": "885154f53bdaabbac5f5b74a3068bd057fa54fe5ed0567b65754b17feebbe713"
+  },
+  "provider_calls": 0,
+  "production_writes": 0,
+  "authorization": "proposal_only_no_paid_run",
+  "additional_source_probe_sha256": "2e2e75d388d4b253cfdd0450a379fbba3613784b854d6fbaf5650847588469a0"
+}

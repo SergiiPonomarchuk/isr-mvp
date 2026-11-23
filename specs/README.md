@@ -7,7 +7,9 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: [R1 optional Values metadata recovery](tasks/Values-optional-metadata-recovery.md), live dry run ready224/zero conflicts and synthetic recovery passed; [author-only runbook](tasks/Values-optional-metadata-author-runbook.md) prepared. No live apply or AI calls.
+Current checkpoint: [16-case Values recovery/regeneration proposal](tasks/Values-deferred-recovery-proposal.md) deferred at the author's request; keep as a draft reference. R1 remains complete224/zero conflicts. Next development track is for author selection; no R2 implementation, provider call or data change.
+
+Previous checkpoint: [R1 optional Values metadata recovery](tasks/Values-optional-metadata-recovery.md), live dry run ready224/zero conflicts and synthetic recovery passed; [author-only runbook](tasks/Values-optional-metadata-author-runbook.md) prepared. No live apply or AI calls.
 
 Previous checkpoint: [scoped DB completeness audit and restoration proposal](tasks/DB-completeness-audit-report.md): no missing historical scoped documents;224 optional-metadata recovery candidates,16 unresolved grounding cases; no repairs or AI calls.
 
