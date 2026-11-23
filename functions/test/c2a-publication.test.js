@@ -51,3 +51,10 @@ test('HTTP start explicitly distinguishes pending from completed',async()=>{
  let r=await H.dispatch(new Map([['demo2',{start:async()=>({job_id:'b0'})}]]),body);assert.equal(r.success,false);assert.equal(r.pending,true);
  r=await H.dispatch(new Map([['demo2',{start:async()=>({job_id:'b0',receipt:{build_id:'b0'}})}]]),body);assert.equal(r.success,true);assert.equal(r.pending,false);
 });
+
+test('restart or repeated initialization cannot recreate absent authority',async()=>{
+ for(const resume of [false,true]){
+  let writes=0;const session={verified:true,resume,initialized:new Set(resume?[]:['authority']),als:new(require('node:async_hooks').AsyncLocalStorage)(),db:{doc:path=>({path}),getAll:async()=>[{exists:false},{exists:false},{exists:false}],batch:()=>{writes++;throw new Error('unexpected seed');}}};
+  const service=new C.Service(session,'authority',2);await assert.rejects(service.initialize(),e=>e.code==='fixture_authority_missing');assert.equal(writes,0);
+ }
+});

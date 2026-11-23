@@ -28,7 +28,7 @@ function fixture(count){if(![2,7,17].includes(count))A.fail('fixture_count');con
 function clientGuard(db){G.target();if(db.projectId!==G.PROJECT||db._settings.servicePath!=='127.0.0.1'||db._settings.port!==8190||db._settings.ssl!==false)A.fail('c2a_client_refused');}
 async function open({resume=false}={}){
  G.target();const {Firestore}=require('@google-cloud/firestore'),db=new Firestore({projectId:G.PROJECT,host:G.HOST,ssl:false});clientGuard(db);
- const session={db,als:new AsyncLocalStorage(),metrics:[],counters:new Map(),paths:new Set(),verified:false};const wire=codec();
+ const session={db,als:new AsyncLocalStorage(),metrics:[],counters:new Map(),paths:new Set(),initialized:new Set(),resume,verified:false};const wire=codec();
  const request=db.request.bind(db),stream=db.requestStream.bind(db);
  function guardRequest(method,r){clientGuard(db);if(!['commit','beginTransaction','rollback','batchGetDocuments','listCollectionIds'].includes(method))A.fail('c2a_rpc_refused');if(method==='listCollectionIds'&&r.parent!==database+'/documents')A.fail('c2a_path_refused');if(r.database&&r.database!==database)A.fail('c2a_database_refused');for(const name of r.documents||[])if(!name.startsWith(prefix)||!G.allowedPhysical(name.slice(prefix.length)))A.fail('c2a_path_refused');}
  db.request=function(method,r,...rest){guardRequest(method,r);if(method==='commit'){
@@ -52,8 +52,9 @@ class Service{
   const controls={'control/source':{id:this.id,epoch:0,seal:'sealed',fixture_hash:this.fixture.hash,fixture_count:this.count,policy:'c2a_fixture_only'},'control/catalog':{revision:0},'control/day':{utc:'2026-11-23',local:'2026-11-23'}};
   return this.session.als.run({fixture:this.id,operation:'initialize'},async()=>{
    const snaps=await this.session.db.getAll(...Object.keys(controls).map(k=>this.ref(k)));
-   if(snaps.every(s=>!s.exists)){const b=this.session.db.batch();for(const [k,v]of Object.entries(controls))b.create(this.ref(k),encode(this.id,k,v));await b.commit();}
+   if(snaps.every(s=>!s.exists)){if(this.session.resume||this.session.initialized.has(this.id))A.fail('fixture_authority_missing');const b=this.session.db.batch();for(const [k,v]of Object.entries(controls))b.create(this.ref(k),encode(this.id,k,v));await b.commit();}
    else{if(snaps.some(s=>!s.exists))A.fail('partial_fixture');const source=decode(this.id,'control/source',snaps.find(s=>s.ref.path===this.ref('control/source').path));if(source.fixture_hash!==this.fixture.hash||source.fixture_count!==this.count||source.policy!=='c2a_fixture_only')A.fail('fixture_source_changed');}
+   this.session.initialized.add(this.id);
   });
  }
  async execute(label,call,fault={}){
