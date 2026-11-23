@@ -7,7 +7,9 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: [read-only grounding inventory](tasks/Values-grounding-inventory-report.md):224 verified recoverable profiles,16 review cases; no database writes or AI calls.
+Current checkpoint: [grounding metadata dry run and recovery rehearsal](tasks/Values-grounding-dry-run.md), ready224/zero conflicts; [post-audit restoration log](tasks/DB-audit-restoration-followups.md) holds16 cases. [Author-only runbook](tasks/Values-grounding-author-runbook.md) prepared; no live writes or AI calls.
+
+Previous checkpoint: [read-only grounding inventory](tasks/Values-grounding-inventory-report.md):224 verified recoverable profiles,16 review cases; no database writes or AI calls.
 
 Previous checkpoint: [offline overall-grounding implementation](tasks/Values-grounding-offline-implementation.md), retargeted to main after CBC verification PR #53 merged; both merges authorized in order. Existing-profile backfill remains separate.
 
