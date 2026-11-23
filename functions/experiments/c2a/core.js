@@ -30,7 +30,7 @@ async function open({resume=false}={}){
  G.target();const {Firestore}=require('@google-cloud/firestore'),db=new Firestore({projectId:G.PROJECT,host:G.HOST,ssl:false});clientGuard(db);
  const session={db,als:new AsyncLocalStorage(),metrics:[],counters:new Map(),paths:new Set(),verified:false};const wire=codec();
  const request=db.request.bind(db),stream=db.requestStream.bind(db);
- function guardRequest(method,r){clientGuard(db);if(r.database&&r.database!==database)A.fail('c2a_database_refused');for(const name of r.documents||[])if(!name.startsWith(prefix)||!G.allowedPhysical(name.slice(prefix.length)))A.fail('c2a_path_refused');}
+ function guardRequest(method,r){clientGuard(db);if(!['commit','beginTransaction','rollback','batchGetDocuments','listCollectionIds'].includes(method))A.fail('c2a_rpc_refused');if(method==='listCollectionIds'&&r.parent!==database+'/documents')A.fail('c2a_path_refused');if(r.database&&r.database!==database)A.fail('c2a_database_refused');for(const name of r.documents||[])if(!name.startsWith(prefix)||!G.allowedPhysical(name.slice(prefix.length)))A.fail('c2a_path_refused');}
  db.request=function(method,r,...rest){guardRequest(method,r);if(method==='commit'){
    const m=measure(r,wire),context=session.als.getStore()||{fixture:'bootstrap',operation:'bootstrap'};
    const counters=session.counters.get(context.fixture)||{commits:0,bytes:0,operations:0};counters.commits++;counters.bytes+=m.bytes;
@@ -60,7 +60,7 @@ class Service{
   clientGuard(this.session.db);const counters=this.session.counters.get(this.id)||{commits:0,bytes:0,operations:0};if(++counters.operations>LIMITS.fixture_operations)A.fail('fixture_operation_budget');this.session.counters.set(this.id,counters);
   return this.session.als.run({fixture:this.id,operation:label},async()=>{
    let attempts=0,injected=false;const details=[];
-   const result=await this.session.db.runTransaction(async tx=>{
+   let result;try{result=await this.session.db.runTransaction(async tx=>{
     attempts++;const cache=new Map();let prepared;
     for(let step=0;step<LIMITS.discovery_steps;step++){
      try{prepared=plan(cache,this.clock(),call);if(fault.afterReads&&!injected){injected=true;await fault.afterReads();prepared=plan(cache,this.clock(),call);}break;}
@@ -74,7 +74,7 @@ class Service{
     if(prepared.operations.length>LIMITS.writes)A.fail('write_budget');
     for(const [key,op]of prepared.operations){const ref=this.ref(key);if(op.kind==='delete')tx.delete(ref);else if(op.kind==='create')tx.create(ref,encode(this.id,key,op.data));else tx.set(ref,encode(this.id,key,op.data));}
     details.push({reads:cache.size,writes:prepared.operations.length});return prepared.result;
-   },{maxAttempts:LIMITS.sdk_attempts});
+   },{maxAttempts:LIMITS.sdk_attempts});}catch(e){this.operations.push({operation:label,attempts,callbacks:details,status:'refused'});throw e;}
    this.operations.push({operation:label,attempts,callbacks:details});if(fault.crash==='after')A.fail('result_lost_after_commit');return result;
   });
  }
