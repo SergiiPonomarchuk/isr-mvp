@@ -35,3 +35,5 @@ Implemented pure mean/strict validation and raw/map codecs; stage-one and stage-
 Full suites: Node253 passed/six optional skips (259 total); Python154 run/two optional skips. All seven new Python cases also passed with python -S (no site packages). The installed Firestore Python serializer locally accepted a complete synthetic formatter payload, including the mapped gl_cs, without constructing a client or making RPCs. Two pipeline responses were mocked; zero real provider/embedding requests/tokens, database operations, profile-artifact reads, backfill or CLI execution.
 
 No runtime model, value dimensions/scoring, confidence rounding, education/X policy, credentials, rules or deployment changed. Historical version2.1 artifacts are untouched. Existing-profile coverage requires the separately reviewed provenance inventory/recovery/backfill phase; this implementation does not claim that coverage.
+
+Review PR: [#54](https://github.com/SergiiPonomarchuk/isr-mvp/pull/54), based on CBC verification #53. Required local suites passed; final pushed-head Node/Python CI is checked before handoff. Merge #53 then retarget/recheck #54 to main only when explicitly instructed.
