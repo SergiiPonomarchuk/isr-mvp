@@ -4,7 +4,21 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: CBC emulator/browser verification passed, 2026-11-23
+## Current checkpoint: #53 merged; #54 reconciled for authorized merge, 2026-11-23
+
+- Author instructed merge PR #53, then PR #54. CBC emulator/browser verification #53 merged as7288a63296a66d22afaf374864b49991dd0dd812 after all final Node/Python checks passed. Grounding #54 is retargeted to main and reconciled without implementation/test changes from reviewed158cbeb.
+- The new grounding helper, version1.0 finalization and canonical metadata retention are described in tasks/Values-grounding-offline-implementation.md. Reviewed local verification remains Node253 passed/six skips, Python154 run/two skips, seven dependency-free tests and local SDK serialization. Final reconciled-head CI must pass before the already authorized #54 merge; verify main merge-head checks afterwards and save scratch/merge-53-54-receipt.json.
+- No deploy, real vectorizer CLI, model request, profile inventory/artifact recovery, database write, regeneration, migration or backfill is authorized by these merges. Existing vectorized profiles have not received overall_grounding. Next data phase needs a concrete field-allowlisted provenance inventory/recovery/backfill plan; never derive missing grounding from domain scores.
+- X eligibility cut/marked-carer recovery boundary, relationship flag population, open C1 #50 and C2 remain separate. Main's existing deployment state is unchanged; Sol Medium is sufficient for the integration.
+
+## Previous checkpoint: CBC verified; offline Values grounding implemented, 2026-11-23
+
+- CBC verification [PR #53](https://github.com/SergiiPonomarchuk/isr-mvp/pull/53) targets main7027110 and passed final Node/Python CI. Actual endpoint/independent Python and browser evidence is tasks/CBC-emulator-report.md; both temporary demo services stopped. No deployment/live writes or provider calls.
+- Next ordered step is implemented separately in [PR #54](https://github.com/SergiiPonomarchuk/isr-mvp/pull/54), branch codex/values-grounding-offline, stacked on #53: [scope, implementation and tests](tasks/Values-grounding-offline-implementation.md). Pure ten-domain mean; strict metadata validation and raw/map adapters; finalized stage versions1.0; formatter preserves canonical metadata. No change to Public Values aggregation, vector dimensions/content, model/API transport or confidence rounding.
+- Required suites: Node253 passed/six skips; Python154 run/two skips. Seven new pure/mocked cases also pass without site packages. Local Firestore serialization accepted the synthetic output without any client/RPC. No real vectorizer CLI, profile-artifact inventory, regeneration, metadata backfill, production operation or deployment.
+- Final PR checks are verified before handoff. Merge #53 then its grounding successor only on explicit author instructions. Existing profiles still need a separately reviewed field-allowlisted provenance inventory and recovery/backfill plan; missing gl_cs cannot be invented from scores. X cut/marked-carer recovery decision, relationship flag population, C1 #50 and C2 remain separate.
+
+## Previous checkpoint: CBC emulator/browser verification passed, 2026-11-23
 
 - #51 merged as70749a0, then #52 as7027110; both final main checks passed. CBC verification starts at merged main7027110. Test-only feature codex/cbc-emulator-verification adds actual education vectors and frozen legacy .9-multiplier Join/audit to the opt-in HTTP endpoint test, plus guarded demo-project preview selection and isolated emulator ports.
 - [Evidence](tasks/CBC-emulator-report.md): Check/Create109 -> Join110; Bachelor2.400, vocational new1.280 versus frozen legacy1.338; both independent Python audits passed. Actual browser Check/Create/saved/member-list display109 /80% /ISR1.30. Screenshots retained. No application/scoring change, provider/embedding call, real-data operation, deployment or rules change. Temporary demo emulator/preview server stopped; original author documents/serving checkout untouched.
@@ -524,3 +538,5 @@ Next: finish final checks/PR, then ask the author before invoking the existing m
 Final local verification (2026-11-22): Node 252 passed / six optional skips (258 total); Python 147 run / two optional skips. All 100 non-CBC reference objects and vectors match the prior library exactly, 12 worked arithmetic rows independently checked, frontend bytes equal exactly two substitutions with CRLF/final CR preserved. No provider calls, database writes or deployments.
 
 Review checkpoint (2026-11-22): [PR #52](https://github.com/SergiiPonomarchuk/isr-mvp/pull/52) targets codex/docs-x-eligibility (#51). Implementation head f3ef66d passed GitHub Node/Python CI; final documentation-head checks are verified before handoff. Worktree is clean after commit. Merge order: explicit author merge PR 51, then retarget/recheck #52 against main before its separately authorized merge. No author deploy step is implied yet.
+
+Review checkpoint (2026-11-23): CBC verification #53 head6240176 passed final GitHub Node/Python checks. Grounding implementation #54 targets codex/cbc-emulator-verification; its final pushed-head checks are verified before handoff. No PR merge or production operation authorized by implementation completion.

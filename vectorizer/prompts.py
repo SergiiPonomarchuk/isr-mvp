@@ -92,6 +92,7 @@ For each domain (1-10), assess shift (-50 to +50) in:
 SPECIAL RULE: If a domain is NULL, its contextual shifts must be 0.
 
 OUTPUT FORMAT:
+The host calculates overall_grounding as the plain mean of the ten domain grounding values; do not generate or estimate that summary.
 Your response must be a single, valid JSON object matching this schema exactly:
 {
   "meta": {
@@ -159,13 +160,14 @@ TAXONOMY ITEMS COUNT PER DOMAIN:
 TOTAL: 145 items.
 
 OUTPUT FORMAT:
+The host calculates overall_grounding as the plain mean of the ten domain grounding values; do not generate or estimate that summary.
 Your response must be a single, valid JSON object matching this schema exactly. Integrate the items array into 'core_values' -> 'items' (as a list of 10 lists):
 {
   "meta": {
     "vector_id": "uid_<UID>_1",
     "timestamp": "<ISO 8601 current timestamp>",
     "uid": <UID>,
-    "version": "2.1",
+    "version": "1.0",
     "overall_confidence": <float: updated mean of all confidences>,
     "hash": "<SHA1 of narrative>",
     "gl_cs": <gl_cs from Step 1>
