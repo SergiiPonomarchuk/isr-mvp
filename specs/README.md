@@ -7,7 +7,7 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: [C1 review/reconciliation](tasks/M3-generation-protocol-review.md) verified on current main; [dated evidence](tasks/M3-generation-protocol/review-20261123.md), [C2a proposal](tasks/M3-generation-emulator-slice-proposal.md). No PR50 merge/C2/live operation authorized;16-case Values recovery remains deferred.
+Current checkpoint: C1 PR50 merged(a660233); author-approved [C2a isolated emulator slice](tasks/M3-c2a-emulator-publication.md) implemented and verified; [evidence/limits](tasks/M3-c2a-evidence/README.md). Review/explicit merge precedes later C2b scope; no application/live/scoring acceptance. The16 Values cases remain deferred.
 
 Previous checkpoint: [R1 optional Values metadata recovery](tasks/Values-optional-metadata-recovery.md), live dry run ready224/zero conflicts and synthetic recovery passed; [author-only runbook](tasks/Values-optional-metadata-author-runbook.md) prepared. No live apply or AI calls.
 

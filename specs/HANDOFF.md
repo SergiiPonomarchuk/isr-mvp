@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: C1 PR50 reconciled and acceptance fixes verified, 2026-11-23
+## Current checkpoint: C2a isolated emulator slice verified, 2026-11-23
+
+- C1 PR50 merged as a660233 with main CI passed. Author approved C2a including provisional emulator-only paths. [Spec](tasks/M3-c2a-emulator-publication.md), [evidence/limits](tasks/M3-c2a-evidence/README.md). Branch codex/c2a-emulator-publication; Sol Medium sufficient, zero AI calls.
+- Reads-first SDK orchestration, loopback harness, private build/seal/atomic mirrored activation, complete pinned pages, frozen replay, successor Join and phase fences pass22 scenarios on2/7/17 supplied fixtures. Actual conflict retries once; source-pinned restart/refusals pass. Largest request9318B/document2718B;46.172s/114.85MiB within unchanged gates. Node293 passed/seven skips; Python224/four skips. Temporary services stopped/dedicated ports closed.
+- Existing rules deny private records but leave public roots open. Trusted clocks and process-local harness counters do not prove distributed clock/quota/security. No application-root/scoring/UI/population/live acceptance. C1/application/scorers/docs/rules/source population unchanged; original C serving checkout untouched.
+- Next: review/explicit author `merge PR61` for [PR61](https://github.com/SergiiPonomarchuk/isr-mvp/pull/61) after final CI, then a separate C2b consumers/lifecycle/browser proposal. C3 population parity/resources and live writer/access/client-cutover/recovery remain gated. No deployment/import/provider/data operation follows automatically. The16 Values cases stay deferred; PR60 remains draft.
+
+## Previous checkpoint: C1 PR50 reconciled and acceptance fixes verified, 2026-11-23
 
 - Author explicitly instructed merge PR50. Reviewed f0f8ba2 passed all four Node/Python checks and is current with main410d296. This integration records status only; verify final PR-head checks before the authorized merge, then main merge-head CI/private receipt. No C2/emulator/runtime/database/provider operation follows automatically;16-case Values recovery remains deferred.
 
