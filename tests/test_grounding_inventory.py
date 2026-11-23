@@ -145,6 +145,7 @@ class InventoryTests(unittest.TestCase):
         private_id='PRIVATE_EMAIL@example.invalid';data[private_id]=dict(values_description='NEVER_PRINT_NARRATIVE')
         db=ReadOnlyDB(data)
         result=I.inventory(db,{},[],page_size=2)
+        self.assertIn(('select',I.FIELDS),db.calls)
         self.assertEqual(result['scanned'],6);self.assertEqual(result['vectorized'],5)
         self.assertEqual(result['counts']['already_correct'],5)
         self.assertEqual(sum(c[0]=='get' for c in db.calls),4)
