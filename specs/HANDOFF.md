@@ -6,6 +6,8 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 ## Current checkpoint: scoped DB audit complete; restoration proposal ready, 2026-11-23
 
+- Author explicitly instructed merge PR #57. Reviewed head5c477f7 passed all four Node/Python checks and is current with main45124f2. Integration changes status documentation only; verify final PR-head CI before the authorized merge, then main merge-head checks and a private receipt. No restoration implementation, live write, paid/model request or deployment follows automatically.
+
 - Author ran/verified the live224-profile metadata patch: desired224/before0/conflict0; private journal224 acknowledged applies and verification receipt saved. #56 merged as45124f2 with main Node/Python checks successful. No deployment was needed.
 - Author approved a read-only DB audit and explicitly excepted the additional app collection paths from the older skill list. [Scope](tasks/DB-completeness-audit.md), [results/restoration order](tasks/DB-completeness-audit-report.md), [aggregate evidence](tasks/DB-completeness-audit-summary.json). Feature codex/db-completeness-audit starts at45124f2. Original C serving checkout/docs untouched.
 - Scoped25,667 documents: no missing documents/emptied projected historical top-level fields; all9,150 embedding documents pass current structural/source-hash checks.224 grounding profiles correct;16 still unresolved. Four known archives lack metadata for all16.184 message-count mismatches already existed in D1. Missing optional metadata for224 is available in verified retained sources. Values/X coverage remains separate unfinished preparation; unapproved collections/subcollections remain unassessed.
