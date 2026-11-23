@@ -83,7 +83,9 @@ def check_plan(db,plan):
         if not iv.exists:problems.append(key+': issue vector missing');continue
         issue_vector=vec(iv.to_dict().get('vector'))
         if len(issue_vector)!=768 or not all(isinstance(x,(int,float)) and math.isfinite(x) for x in issue_vector):problems.append(key+': bad vector');continue
-        mr1=issue.get('scoring_version')=='mr1-context-review-1'
+        mr1=issue.get('scoring_version') in ('mr1-context-review-1', 'mr1-cbc-table-1')
+        if issue.get('scoring_version') and not mr1:
+            problems.append(key+': unsupported scoring version');continue
         if mr1:
             from mr1_check import audit_db
             problems.extend(key+': '+p for p in audit_db(db,ident)['problems'])

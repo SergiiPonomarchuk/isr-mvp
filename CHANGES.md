@@ -1,3 +1,13 @@
+## 2026-11-23 - Integrate documentation #51 then CBC removal #52
+
+Author authorized both merges in order. #51 merged as 70749a0 with checks passed. Retargeted #52 to main and reconciled without application/library/frontend changes; update integration status and verify the reconciled head before its authorized merge. No deployment, data operation, new provider call or X/Values implementation.
+
+## 2026-11-22 - Remove issue-specific CBC adjustment
+
+New issues use the existing education-category CBC table without an issue/reference multiplier. Removed the field from all 100 Analyzer examples and rebuilt the derived library offline with identical embedding inputs/vectors. Updated Analyzer/Expertise/PD-9 documentation and recalculated worked examples.
+
+New scoring version mr1-cbc-table-1; frozen legacy multipliers remain for historical Join/audit and completed Create replay. Unfinished old drafts must Check again. Browser and D1 checker recognize both policies. Historical paid approvals remain immutable and invalid for the changed contract; isolated tests retain old evidence. No provider calls, data migration, rules changes or deployment. See specs/tasks/CBC-table-only.md for validation.
+
 # CHANGES
 
 ## 2026-11-21 - Reconcile author documents and specify X/Values updates

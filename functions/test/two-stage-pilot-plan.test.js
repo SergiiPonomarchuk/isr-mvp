@@ -1,3 +1,5 @@
+// Exercise the frozen historical pilot contract, not new scoring.
+require("./legacy-cbc-fixture.cjs").install();
 const test=require('node:test'),assert=require('node:assert/strict');
 const {prepare,Guard,RESERVE}=require('../tools/two-stage-pilot-plan'),F=require('./staged-fixture');
 const response=raw=>({text:JSON.stringify(raw),candidates:[{finishReason:'STOP'}],usageMetadata:{promptTokenCount:10,candidatesTokenCount:20,thoughtsTokenCount:3,totalTokenCount:33}});

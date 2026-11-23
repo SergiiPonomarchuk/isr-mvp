@@ -22,22 +22,21 @@ The selection settings .30 minimum similarity and .05 adjacent gap are experimen
 | v_ik, v_il | Existing education/work skill vectors |
 | w_dj | Relevance-component weight in reference j, d in D,G,S,X |
 | b_cj | ISR aggregation weight in reference j, c in R,E,C |
-| a_j | CBC adjustment for aspect/reference j; not alpha_j |
 | H_ij / T_ij | Raw education evidence / work-experience evidence for person i, aspect j |
 | M | One final ad-hoc public used for normalization |
 
 Reference matching s_j and person relevance S_ij are different computations. Do not use q for both an issue ID and a vector. Do not call an embedding similarity a probability. A possible selection metric is s_j=max(0,cos(z,r_j)); choosing that metric requires specifying text template, embedding model/task and version. Do not mix these scores with LLM-reported confidence or softmax probabilities. Threshold calibration must use the same metric and corpus as runtime.
 
-## 2. Current implemented Expertise
+## 2. Expertise: standard-table CBC (2026-11-21 decision)
 
 At the issue's registration date, let a person's completed age in years be age_i. Then:
 
     A_i = min(age_i,30)/30
-    H_i = sum_k P_k * max(0,cos(v_ik,u))^(CBC_k * a)
+    H_i = sum_k P_k * max(0,cos(v_ik,u))^CBC_k
     T_i = sum_l t_l * max(0,cos(v_il,u))
     E_i = max(A_i,H_i) + T_i
 
-u is the single current issue vector; a is its CBC adjustment. There are no separate Education or Experience weights. The floor replaces a smaller education score; it is not added as a bonus. E is nonnegative and unbounded above.
+u is the issue vector in the single-reference reduction. CBC_k is fixed by education category; no issue/reference modifier applies under mr1-cbc-table-1. Frozen mr1-context-review-1 replay retains its original CBC_k*a_j exponent. There are no separate Education or Experience weights. The floor replaces a smaller education score; it is not added as a bonus. E is nonnegative and unbounded above.
 
 | Runtime education-level mapping | CBC | P (nominal education years/power) |
 |---|---:|---:|
@@ -48,16 +47,16 @@ u is the single current issue vector; a is its CBC adjustment. There are no sepa
 | Vocational/training | 2 | 2 |
 | Unrecognized label: current fallback | 1 | 4 |
 
-Each education record contributes separately. The core does not filter in-progress records by completion date. Work contributes stored duration t_l in years; only work-experience skills participate, not activity skills. There is no implemented recency decay. The domain and expertise-depth labels do not themselves change the formula; vector direction and CBC adjustment do. Missing skill vectors are skipped; malformed work duration has a JS fallback of one year. Invalid birthDate is caught by Create/Join and the raw education sum is used without the floor, despite PD-8 requiring birthDate. Those are implementation facts and separate cleanup questions, not recommended policies to copy into the new model.
+Each education record contributes separately. The core does not filter in-progress records by completion date. Work contributes stored duration t_l in years; only work-experience skills participate, not activity skills. There is no implemented recency decay. The domain and expertise-depth labels do not themselves change the formula; vector direction does; CBC depends only on education category. Missing skill vectors are skipped; malformed work duration has a JS fallback of one year. Invalid birthDate is caught by Create/Join and the raw education sum is used without the floor, despite PD-8 requiring birthDate. Those are implementation facts and separate cleanup questions, not recommended policies to copy into the new model.
 
-Example: age 35, vocational education with similarity .95 and adjustment .9, ten years' work with similarity .95:
+Example: age 35, vocational education with similarity .95, ten years' work with similarity .95:
 
     A = 1
-    H = 2 * .95^(2*.9) = 1.823612184...
+    H = 2 * .95^2 = 1.805
     T = 10 * .95 = 9.5
-    E = 11.323612184...; stored total = 11.324
+    E = 11.305; stored total = 11.305
 
-For 0<c<1, lowering the positive exponent increases c^exponent. Hence a<1 broadens transfer; a>1 narrows it. CBC is an exponent, not a multiplier of the final education score. The documents reverse this interpretation in several places.
+For 0<c<1, lowering the positive exponent increases c^exponent. The category table sets that exponent; the Analyzer does not adjust it. CBC is an exponent, not a multiplier of the final education score. Historical descriptions sometimes reversed this interpretation; they do not define the new table-only policy.
 
 Sources: functions/isr.js:36,53,63,92,108; functions/index.js:352-382; functions/join-issue.js:20-40. The canonical Python normalization is scripts/isr_core.py; the historical normalize_by_mean function in scripts/expertise.py is not the current all-equal rule.
 
@@ -148,7 +147,7 @@ Implementation compares the source-score ceiling with1e-12 floating tolerance fo
 
 For aspect j:
 
-    H_ij = sum_k P_k * max(0,cos(v_ik,u_j))^(CBC_k*a_j)
+    H_ij = sum_k P_k * max(0,cos(v_ik,u_j))^CBC_k
     T_ij = sum_l t_l * max(0,cos(v_il,u_j))
 
 Combination preserving PD-8's outer form:
@@ -159,7 +158,7 @@ Combination preserving PD-8's outer form:
 
 This supersedes the earlier discussion formula sum_j alpha_j*max(A_i,H_ij)+T_i. The earlier formula is a different possible model and is always at least as large as applying the floor once, because max is convex. With A=1, H_1=0, H_2=2 and equal alpha, it gives1.5 while the recommended single-floor form gives1. The author authorized this reviewed single-floor convention in the documentation update on 2026-11-16.
 
-Evaluate every education power before blending. Averaging CBC adjustments/vectors and then applying a nonlinear power is not equivalent. Do not normalize each aspect's Expertise by a different public or add E scores without alpha. Identical scoring specifications can be algebraically merged by adding their alpha weights; matching domain labels alone are insufficient. Such execution optimization must not change which references count toward the chain rule.
+Evaluate every education power before blending. Averaging aspect vectors and then applying a nonlinear power is not equivalent. Do not normalize each aspect's Expertise by a different public or add E scores without alpha. Identical scoring specifications can be algebraically merged by adding their alpha weights; matching domain labels alone are insufficient. Such execution optimization must not change which references count toward the chain rule.
 
 Raw education/experience evidence is evaluated at one fixed registration time. No new recency decay, activity-scoring or qualification-completion rule is implicitly added by the mixture. If those issues are addressed, use separate decisions and acceptance cases.
 
@@ -183,7 +182,7 @@ Precision: current Create/Join round stored raw R/E and parts to three decimals 
 
 ## 8. Representation, provenance and cost
 
-Store reference IDs/scores/alpha, exact library and selection versions, input/context hash, supporting aspect texts, vector metadata/hash, per-reference contextual demographic rules/domain/CBC adjustment, common location/envelope and derivation reasons. Store member per-reference D/S/education/work contributions or enough immutable inputs to reproduce them; expose totals consistent with the formulas. The same contract must drive Check preview, Create, explicit Join, member tooltips and independent JS/Python checking.
+Store reference IDs/scores/alpha, exact library and selection versions, input/context hash, supporting aspect texts, vector metadata/hash, per-reference contextual demographic rules/domain and credential-table/scoring version, common location/envelope and derivation reasons. Store member per-reference D/S/education/work contributions or enough immutable inputs to reproduce them; expose totals consistent with the formulas. The same contract must drive Check preview, Create, explicit Join, member tooltips and independent JS/Python checking.
 
 Reference vectors r_j and actual-issue aspect vectors u_j are not interchangeable. A new aspect embedding step means PR #38's proposed one-embedding-text ceiling is no longer reliable: plan for selection plus the approved bounded reviewed-set aspect texts, possibly retaining a separate whole-issue vector for U10 duplicate matching. Batching several texts still consumes several embedding texts. Reuse only when exact text/model/task/template identities match. Do not re-embed the population solely for this change if compatible existing vectors can be retained. No provider budget is approved by this decision.
 

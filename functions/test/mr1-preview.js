@@ -4,7 +4,7 @@ process.env.FIRESTORE_EMULATOR_HOST='127.0.0.1:8189';process.env.GCLOUD_PROJECT=
 const requireFrom=require('node:module').createRequire(root+'/functions/index.js');
 const AI=requireFrom('./ai-config'),helper=requireFrom('./ai-helper'),R=requireFrom('./context-review');
 const v=Array(768).fill(0);v[0]=1;
-const lib={embedding_model:AI.EMBED_MODEL,examples:[{id:'1',title:'Synthetic building repair',vector:v,params:{classification:{scope_type:'building',issue_category:'building.security.locks'},relevance_weights:{w_demographic:0,w_geographic:0,w_semantic:.8,w_social:.2},aggregation_weights:{w_relevance:.6,w_expertise:.2,w_contribution:.2},geographic_parameters:{mu_distance_meters:40,sigma_distance_meters:30},expertise_domain_parameters:{CBC_adjustment_factor:1,expertise_domain:'locksmith.security'},resources_needed:[]}}]};
+const lib={embedding_model:AI.EMBED_MODEL,examples:[{id:'1',title:'Synthetic building repair',vector:v,params:{classification:{scope_type:'building',issue_category:'building.security.locks'},relevance_weights:{w_demographic:0,w_geographic:0,w_semantic:.8,w_social:.2},aggregation_weights:{w_relevance:.6,w_expertise:.2,w_contribution:.2},geographic_parameters:{mu_distance_meters:40,sigma_distance_meters:30},expertise_domain_parameters:{expertise_domain:'locksmith.security'},resources_needed:[]}}]};
 helper._setExamplesForTests(lib);
 helper.embedIssue=async(title,description)=>({ok:true,vector:v,model:AI.EMBED_MODEL,dims:768,task_type:AI.TASK_TYPE_ISSUE,template_version:AI.EMBED_TEMPLATE_VERSION,text_sha256:require('crypto').createHash('sha256').update(AI.issueText(title,description)).digest('hex')});
 helper.embedTexts=async texts=>texts.map(()=>v);

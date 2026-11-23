@@ -85,7 +85,7 @@ exports.createIssue = onRequest({ cors: true, memory: "512MiB", timeoutSeconds: 
     } catch (err) {
       return res.status(err.status || 400).json({ error: err.message });
     }
-    if (draftData.scoring_version === MR1Review.VERSION) return res.json(await MR1.create(db, req.body, draftData));
+    if (MR1Review.supported(draftData.scoring_version)) return res.json(await MR1.create(db, req.body, draftData));
     // Published legacy drafts replay their recorded response without embedding or rescoring.
     if (!draftData.scoring_version && draftData.creation_result) return res.json(draftData.creation_result);
     return res.status(409).json({error: "Run Check again with the current Analyzer before creating this issue."});

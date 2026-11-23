@@ -7,7 +7,9 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: [X eligibility, MVP cutoff and Values metadata reconciliation/specification](tasks/X-eligibility-values-reconciliation.md), documentation only after the author's 2026-11-21 decisions. Existing C1 PR #50 is separately open/green. New scoring/metadata implementation, backfill and C2/live operations are not implicit.
+Current checkpoint: [CBC table-only scoring and removal from all 100 examples](tasks/CBC-table-only.md), retargeted to main after documentation PR #51 merged; both merges authorized in order. No live migration or deployment.
+
+Previous checkpoint: [X eligibility, MVP cutoff and Values metadata reconciliation/specification](tasks/X-eligibility-values-reconciliation.md), documentation only after the author's 2026-11-21 decisions. Existing C1 PR #50 is separately open/green. New scoring/metadata implementation, backfill and C2/live operations are not implicit.
 
 Current M3 preparation: [one-case quotation retest](tasks/M3-one-case-retest.md), offline only; two-call/US$0.27 proposal needs fresh paid approval.
 

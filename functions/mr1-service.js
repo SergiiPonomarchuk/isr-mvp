@@ -80,6 +80,8 @@ function capacity(db,writes){
  if(commit.encode({database,writes:encoded}).finish().length>10*1024*1024-32768)Engine.error("This public exceeds atomic publication capacity; nothing was published.",413);
 }
 function requireCurrentDraft(draft,input){
+ if(draft.scoring_version!==Review.VERSION || draft.mr1_model?.version!==Review.VERSION)Engine.error("The scoring policy changed; run Check again.");
+ try{require("./cbc-policy").validate(draft.mr1_model);}catch(_){Engine.error("The scoring policy changed; run Check again.");}
  if(draft.fixture_only||draft.ai?.fixture_only||!draft.ai||draft.ai.prompt_version!==Staged.PROMPT_VERSION||draft.ai.schema_sha256!==Staged.contractHash()||!draft.mr1_model||draft.ai.staged_context_hash!==Review.hash(draft.mr1_model.staged_context))Engine.error("The context contract changed; run Check again.");
  try{Staged.verifyBundle(draft.mr1_model,input);}catch(_){Engine.error("The staged context changed; run Check again.");}
 }
@@ -121,4 +123,4 @@ async function create(db,body,draft){
   tx.update(ref,{creation_result:response});tx.set(registry,{revision:require("firebase-admin/firestore").FieldValue.increment(1)},{merge:true});return response;
  });
 }
-module.exports={check,create,capacity,inputHash,flat};
+module.exports={check,create,capacity,inputHash,flat,requireCurrentDraft};

@@ -4871,7 +4871,7 @@ function initTopicDetailViews() {
   function checkedPublicSize(data) {
     const count = data.public_members_count ?? data.members_count;
     return Number.isInteger(count) && count >= 0
-      ? (data.scoring_version === "mr1-context-review-1" ? count : Math.min(count, 100))
+      ? (["mr1-context-review-1", "mr1-cbc-table-1"].includes(data.scoring_version) ? count : Math.min(count, 100))
       : (Array.isArray(data.members) ? data.members.length : 0);
   }
 
@@ -5738,7 +5738,7 @@ function initTopicDetailViews() {
           }
 
           // Calculate aggregated values preview
-          if (data.scoring_version === "mr1-context-review-1") {
+          if (["mr1-context-review-1", "mr1-cbc-table-1"].includes(data.scoring_version)) {
             microcommunityPreviewValues = data.public_values_taxonomy ? mapTaxonomyToUserValues(data.public_values_taxonomy) : null;
           } else if (calculatedMembers && calculatedMembers.length > 0) {
             try {

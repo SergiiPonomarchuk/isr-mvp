@@ -18,7 +18,22 @@ import isr_core as ISR
 import multi_reference as M
 from demo_common import target
 
-VERSION = 'mr1-context-review-1'
+VERSION = 'mr1-cbc-table-1'
+LEGACY_VERSION = 'mr1-context-review-1'
+
+def adjustment(bundle, ref):
+    version = bundle.get('version')
+    if version == VERSION:
+        if any(k in ref for k in ('cbc_adjustment', 'CBC_adjustment_factor', 'cbc_adjustment_factor', 'cbc')):
+            raise ValueError('CBC is fixed by education category')
+        return 1
+    if version != LEGACY_VERSION:
+        raise ValueError('Unsupported scoring version')
+    value = ref.get('cbc_adjustment')
+    if type(value) not in (int, float) or not math.isfinite(value) or value <= 0:
+        raise ValueError('Invalid frozen CBC adjustment')
+    return value
+
 TOL = .00100001
 USER_FIELDS = ['uid', 'displayName', 'birthDate', 'skills', 'geography', 'socialRelations', 'features', 'post']
 VECTOR_FIELDS = ['profile_vector', 'experience_vectors', 'embedding_model', 'embedding_dims', 'embedding_template']
@@ -52,7 +67,7 @@ def evaluate(user, vectors, bundle, location, registered):
             rules['property_kinds'] = [k for k in rules.get('property_kinds', []) if k not in ('flat', 'house')]
         d, _, _ = D.evaluate_demographic_rules(user, rules, E.to_date(registered).year)
         aspects[ref['id']] = dict(D=d, G=g, S=max(0, E.cosine_similarity(profile, a['vector'])), X=0,
-                                 education=E.education_sum(user['skills'], skills, a['vector'], ref['cbc_adjustment']),
+                                 education=E.education_sum(user['skills'], skills, a['vector'], adjustment(bundle, ref)),
                                  experience=E.experience_sum(user['skills'], skills, a['vector']))
     return dict(uid=str(user['uid']), age=E.age_in_years(user['birthDate'], registered), aspects=aspects)
 
@@ -82,9 +97,11 @@ def outgoing(user):
 
 
 def audit(issue, discussion, public, rows, users, vectors):
-    if issue.get('scoring_version') != VERSION:
+    if issue.get('scoring_version') not in (VERSION, LEGACY_VERSION):
         raise ValueError('Use check_demo.py for legacy scoring; unsupported version')
     bundle = issue['mr1_model']
+    if bundle.get('version') != issue['scoring_version']:
+        raise ValueError('Issue and model scoring versions disagree')
     model = bundle['model']
     evaluated = {uid: evaluate(u, vectors[uid], bundle, issue['location'], issue['created_at']) for uid, u in users.items()}
     formed = M.cohorts(model, list(evaluated.values()), {uid: outgoing(u) for uid, u in users.items()})
@@ -142,7 +159,7 @@ def audit(issue, discussion, public, rows, users, vectors):
                 problems.append('public:' + field)
     if set(map(str, discussion.get('participants', []))) != set(by_id):
         problems.append('public:participants')
-    return dict(version=VERSION, population=len(users), members=len(rows), A=len(formed['A']), B=len(formed['B']), problems=problems)
+    return dict(version=issue['scoring_version'], population=len(users), members=len(rows), A=len(formed['A']), B=len(formed['B']), problems=problems)
 
 
 def audit_db(db, issue_id):
