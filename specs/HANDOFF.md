@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: CBC verified; offline Values grounding implemented, 2026-11-23
+## Current checkpoint: #53 merged; #54 reconciled for authorized merge, 2026-11-23
+
+- Author instructed merge PR #53, then PR #54. CBC emulator/browser verification #53 merged as7288a63296a66d22afaf374864b49991dd0dd812 after all final Node/Python checks passed. Grounding #54 is retargeted to main and reconciled without implementation/test changes from reviewed158cbeb.
+- The new grounding helper, version1.0 finalization and canonical metadata retention are described in tasks/Values-grounding-offline-implementation.md. Reviewed local verification remains Node253 passed/six skips, Python154 run/two skips, seven dependency-free tests and local SDK serialization. Final reconciled-head CI must pass before the already authorized #54 merge; verify main merge-head checks afterwards and save scratch/merge-53-54-receipt.json.
+- No deploy, real vectorizer CLI, model request, profile inventory/artifact recovery, database write, regeneration, migration or backfill is authorized by these merges. Existing vectorized profiles have not received overall_grounding. Next data phase needs a concrete field-allowlisted provenance inventory/recovery/backfill plan; never derive missing grounding from domain scores.
+- X eligibility cut/marked-carer recovery boundary, relationship flag population, open C1 #50 and C2 remain separate. Main's existing deployment state is unchanged; Sol Medium is sufficient for the integration.
+
+## Previous checkpoint: CBC verified; offline Values grounding implemented, 2026-11-23
 
 - CBC verification [PR #53](https://github.com/SergiiPonomarchuk/isr-mvp/pull/53) targets main7027110 and passed final Node/Python CI. Actual endpoint/independent Python and browser evidence is tasks/CBC-emulator-report.md; both temporary demo services stopped. No deployment/live writes or provider calls.
 - Next ordered step is implemented separately in [PR #54](https://github.com/SergiiPonomarchuk/isr-mvp/pull/54), branch codex/values-grounding-offline, stacked on #53: [scope, implementation and tests](tasks/Values-grounding-offline-implementation.md). Pure ten-domain mean; strict metadata validation and raw/map adapters; finalized stage versions1.0; formatter preserves canonical metadata. No change to Public Values aggregation, vector dimensions/content, model/API transport or confidence rounding.

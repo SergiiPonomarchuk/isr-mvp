@@ -1,3 +1,7 @@
+## 2026-11-23 - Integrate CBC verification #53 then Values grounding #54
+
+Author authorized ordered merges. #53 merged as7288a63 after final checks passed. Retarget and reconcile #54 to main without implementation/test changes, verify its final CI before the authorized merge, then check main. No deployment, profile inventory, regeneration, database write or backfill.
+
 ## 2026-11-23 - Calculate and retain Values overall_grounding
 
 Both future pipeline stages calculate the plain mean of all ten domain grounding values and finalize schema1.0, replacing model summaries. Add strict pure validation and raw/Firestore-map metadata adapters; formatter preserves canonical metadata alongside unchanged flattened Values. Keep existing confidence semantics and public Values weighting. No provider calls, profile backfill, live data operation or deployment. See specs/tasks/Values-grounding-offline-implementation.md for tests and limits.

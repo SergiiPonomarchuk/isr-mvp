@@ -37,3 +37,7 @@ Full suites: Node253 passed/six optional skips (259 total); Python154 run/two op
 No runtime model, value dimensions/scoring, confidence rounding, education/X policy, credentials, rules or deployment changed. Historical version2.1 artifacts are untouched. Existing-profile coverage requires the separately reviewed provenance inventory/recovery/backfill phase; this implementation does not claim that coverage.
 
 Review PR: [#54](https://github.com/SergiiPonomarchuk/isr-mvp/pull/54), based on CBC verification #53. Required local suites passed; final pushed-head Node/Python CI is checked before handoff. Merge #53 then retarget/recheck #54 to main only when explicitly instructed.
+
+## Authorized integration (2026-11-23)
+
+Author requested merge #53 then #54. #53 merged as7288a63296a66d22afaf374864b49991dd0dd812 with final Node/Python CI passed. #54 is retargeted/reconciled to main without implementation/test changes from reviewed158cbeb. Prior required local suites remain applicable; final reconciled-head CI and subsequent main merge-head checks are verified before completion. No deployment, inventory, production write or backfill.

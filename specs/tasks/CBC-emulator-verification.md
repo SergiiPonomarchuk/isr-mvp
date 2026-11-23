@@ -15,3 +15,5 @@ Record evidence, suites, limitations, HANDOFF and CHANGES; open PR, no merge wit
 - 2026-11-23: isolated endpoint and real-browser checks passed; see CBC-emulator-report.md. Host ports were verified, both temporary services stopped, zero provider calls. New optional test fixture exercises non-neutral education and a separately frozen legacy public with Python parity. Offline OG plan prepared separately; no Values implementation.
 
 Required suites: Node252 passed/six optional skips; Python147 run/two optional skips; opt-in emulator test1 passed. No production changes.
+
+Integration (2026-11-23): author explicitly requested #53 then #54. CBC verification #53 merged as7288a63296a66d22afaf374864b49991dd0dd812 with all final checks successful; #54 follows independently. The emulator/browser evidence and application implementation are unchanged. No deployment/backfill.
