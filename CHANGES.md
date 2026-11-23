@@ -1,3 +1,9 @@
+## 2026-11-23 - C2a isolated emulator publication slice
+
+- Add experimental reads-first SDK publication, guarded loopback commands, pinned complete pages/replay, successor Join and phase fencing; application/runtime/scorers unchanged.
+- 22 tiny emulator scenarios pass, including actual conflict/retry, lost responses, restart, strict UTF8/missing-node/mirror/authority refusal. Largest commit9318B/document2718B;46.172s/114.85MiB under original limits.
+- Node293 passed/seven skips; Python224/four skips. Zero provider/live operations; rules/docs unchanged; C2b/C3 remain separately gated.
+
 ## 2026-11-23 - Review and reconcile C1 offline publication prototype
 
 - Reconcile draft PR50 onto current main, preserving C1 and CBC/Values/recovery histories and prior reports.

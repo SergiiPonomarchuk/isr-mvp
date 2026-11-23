@@ -1,0 +1,34 @@
+{
+  "guards": {
+    "heap_mib": 256,
+    "rss_mib": 512,
+    "timeout_seconds": 120,
+    "minimum_free_mib": 1024
+  },
+  "initial_free_bytes": 3179065344,
+  "source_pins": {
+    "functions/experiments/publication/artifact.js": "adeb78700486c1541710fe91e109023de8a30ea538564f08f3cd854252886b30",
+    "functions/experiments/publication/fixture.js": "2b0219163b5050d1e037f49d29426dc8fa564333ce2da4fd7683ddc3f628ca16",
+    "functions/experiments/publication/protocol.js": "acdc11d381a11543ac5a1d9faea902805f2f68df17ed808a3a35844f3101623d",
+    "functions/experiments/publication/report.js": "625eb699d428aca7ada4fe651649beaa32e1bba06441789f23ddcaa42204fa6f",
+    "functions/experiments/publication/store.js": "059aeb995961454f6fc1fcb49b27d191717901b6aeddcfbfc1a2aa4eeb1eaa08",
+    "functions/experiments/c2a/guard.js": "1866909ae653213f43d87408410002d4358861a569dc709e7276b32892ef0614",
+    "functions/experiments/c2a/core.js": "9cb4ff3a4eb5fe933c8afb16ee61bf028f10a4efc48e11ee40a01c51dd6d2734",
+    "functions/experiments/c2a/http.js": "3ce9a054fd56ab1655a6350d6a28dc515556b60e92693a50ce1bb8bf27f187f3",
+    "functions/experiments/c2a/rehearsal.js": "fcb1e5d7024e5586ce5cb63684918a635c33255e0056318abb675a9b6f717f15",
+    "firestore.rules": "8988548d8648fb238e39a7a6f7c8bff3f0e0db581d3419be965e63e659ed01a8",
+    "functions/test/c2a-publication.test.js": "e082d4eda8d6bda2a215e58432f086c532c6c05f60c7d25c87d6466e3163e528",
+    "functions/test/c2a-emulator.test.js": "3d4b501f1bd513f912b5ee90c8088bbb9df58e4510d087cbcb0f69a50781a06d",
+    "scripts/run_c2a_emulator.py": "a73b8aa3ef8f67c5e2a69e29b9e8c999ce60c79aec22e0b662723b952785dbf8",
+    "scripts/audit_capacity_phase_a.py": "00384e9335bfcdd4b47d76649cf03069168d4574e7d68f6a02340a1c5524e713",
+    "functions/tools/capacity/no-network.js": "999ad257175dda274e09178e429826f22bb71c63c9ae7af40b5107b9a2b69e3a",
+    "functions/test/generation-protocol.test.js": "b1bfc1ae9c0987e56551ec2b03dea940d5ce7ec2dfa1bec39ca28fef5ddae5f9",
+    "tests/test_generation_protocol_runner.py": "d5aef8b227e2236297317a610f02c21398d4fc1daacf0cc746606d9115ea90a2",
+    "tests/test_c2a_runner.py": "d0aab481fca52438a69cd9e1abec0f7137146fd5f228eb100a0cffaddfbec1cf"
+  },
+  "scope": "tiny C2a emulator prototype only",
+  "status": "child_failed",
+  "parent_peak_rss_bytes": 119001088,
+  "elapsed_seconds": 35.688000000081956,
+  "exit_code": 1
+}

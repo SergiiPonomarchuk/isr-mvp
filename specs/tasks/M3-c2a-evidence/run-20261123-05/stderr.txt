@@ -1,0 +1,1 @@
+{"status":"refused","checkpoint":"invalid-utf8","error_code":"ERR_ASSERTION","error_name":"AssertionError"}
