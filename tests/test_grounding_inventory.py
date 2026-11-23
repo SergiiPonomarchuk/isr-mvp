@@ -176,3 +176,34 @@ class InventoryTests(unittest.TestCase):
             with self.assertRaises(ValueError):I.save_report({'bad':float('nan')},invalid)
             self.assertFalse(invalid.exists())
             self.assertEqual(list(Path(folder).iterdir()),[target])
+
+
+class RetainedListAndNullTests(unittest.TestCase):
+    def test_list_source_and_explicit_null_groups_are_exactly_verified(self):
+        raw,data=source(version='1.0')
+        del data['values_taxonomy']['meta']
+        data['values_taxonomy']['items']={f'd{i}':None for i in range(1,11)}
+        with tempfile.TemporaryDirectory() as folder:
+            file=Path(folder)/'vectors.json';file.write_text(json.dumps([raw]),encoding='utf-8')
+            index,summaries=I.load_artifacts([file])
+            self.assertEqual(summaries[0]['format'],'raw_vector_list')
+            before=copy.deepcopy(data)
+            row=I.classify('7',data,index['7'])
+            self.assertEqual(row['state'],'recoverable_from_artifact')
+            self.assertEqual(row['verified_artifact_codecs'],['direct-null-items-1'])
+            self.assertEqual(data,before)
+            changed=copy.deepcopy(data);changed['values_taxonomy']['conflict_resolution'][0]=1
+            self.assertEqual(I.classify('7',changed,index['7'])['reasons'],['artifact_values_mismatch'])
+
+    def test_duplicate_list_uids_remain_conflicting_and_malformed_items_stay_unresolved(self):
+        raw,data=source();del data['values_taxonomy']['meta']
+        other=copy.deepcopy(raw);other['meta']['gl_cs'][0][0]=11
+        with tempfile.TemporaryDirectory() as folder:
+            file=Path(folder)/'vectors.json';file.write_text(json.dumps([raw,other]),encoding='utf-8')
+            index,_=I.load_artifacts([file])
+            self.assertEqual(len(index['7']),2)
+            self.assertEqual(I.classify('7',data,index['7'])['reasons'],['conflicting_verified_sources'])
+        data['values_taxonomy']['items']['d6']=[1]*7
+        row=I.classify('7',data,[artifact(raw)])
+        self.assertEqual(row['reasons'],['invalid_flattened_layout'])
+        self.assertEqual(row['retained_source_entries'],1)

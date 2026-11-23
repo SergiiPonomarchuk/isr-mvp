@@ -61,7 +61,7 @@ def flattened(taxonomy):
         raise ValueError('invalid_flattened_layout')
     if not isinstance(items, dict) or set(items) != {f'd{i}' for i in range(1, 11)}:
         raise ValueError('invalid_flattened_layout')
-    if any(not valid_scalars(items[f'd{i+1}']) or len(items[f'd{i+1}']) != n for i, n in enumerate(SIZES)):
+    if any(items[f'd{i+1}'] is not None and (not valid_scalars(items[f'd{i+1}']) or len(items[f'd{i+1}']) != n) for i, n in enumerate(SIZES)):
         raise ValueError('invalid_flattened_layout')
     if not isinstance(shifts, dict) or set(shifts) != {'work', 'family', 'private', 'crisis'} or any(not valid_scalars(v) or len(v) != 10 for v in shifts.values()):
         raise ValueError('invalid_flattened_layout')
@@ -124,10 +124,17 @@ def load_artifacts(paths, max_bytes=64 * 1024 * 1024):
                 raise ValueError('artifact_too_large')
             summary['file_sha256'] = hashlib.sha256(data).hexdigest()
             vectors = json.loads(data.decode('utf-8-sig'), object_pairs_hook=unique, parse_constant=constant)
-            if not isinstance(vectors, dict):
+            if isinstance(vectors, dict):
+                entries = list(vectors.items())
+                summary['format'] = 'uid_map'
+            elif isinstance(vectors, list):
+                entries = [(str(raw.get('meta', {}).get('uid', '')) if isinstance(raw, dict) and isinstance(raw.get('meta'), dict) else '', raw) for raw in vectors]
+                summary['format'] = 'raw_vector_list'
+                # Keep duplicate UIDs as separate sources; classification detects conflicts.
+            else:
                 raise ValueError('unsupported_artifact_layout')
-            summary['entries'] = len(vectors)
-            for uid, raw in vectors.items():
+            summary['entries'] = len(entries)
+            for uid, raw in entries:
                 if not re.fullmatch(r'[0-9]{1,32}', uid):
                     summary['invalid_entry_ids'] += 1
                     continue
@@ -145,7 +152,7 @@ def load_artifacts(paths, max_bytes=64 * 1024 * 1024):
 
 def classify(uid, data, artifacts=(), update_time=None):
     uid = str(uid)
-    row = dict(uid=safe_id(uid), state='unresolved', reasons=[])
+    row = dict(uid=safe_id(uid), state='unresolved', reasons=[], retained_source_entries=len(artifacts))
     if update_time is not None:
         row['update_time'] = update_time.isoformat()
     taxonomy = data.get('values_taxonomy')
@@ -189,11 +196,18 @@ def classify(uid, data, artifacts=(), update_time=None):
                 canonical = copy.deepcopy(raw)
                 canonical['meta']['version'] = '1.0'  # In-memory layout check only; never a migration.
                 candidate_flat = flattened(format_for_firestore(canonical))
+                # Known legacy serialization: explicit null per-domain item groups.
+                # Compare exact stored values; never pad/repair the profile itself.
+                direct_flat = flattened(dict(domains=raw['core_values']['domains'],
+                    items={f'd{i+1}':v for i,v in enumerate(raw['core_values']['items'])},
+                    conflict_resolution=raw['conflict_resolution'], contextual_shifts=raw['contextual_shifts']))
             except (ValueError, TypeError, KeyError):
                 raise ValueError('artifact_layout_invalid') from None
-            if digest(candidate_flat) != row['taxonomy_sha256']:
+            codecs = [name for name, value in (('formatter-1',candidate_flat),('direct-null-items-1',direct_flat))
+                      if digest(value) == row['taxonomy_sha256']]
+            if not codecs:
                 raise ValueError('artifact_values_mismatch')
-            candidates.append(dict(pairs=pairs, version=meta['version'], route='artifact',
+            candidates.append(dict(pairs=pairs, version=meta['version'], route='artifact', codecs=codecs,
                                    source_id=artifact['source_id'], file_sha256=artifact['file_sha256']))
         except (ValueError, TypeError, KeyError) as e:
             reason = str(e) if isinstance(e, ValueError) else 'artifact_layout_invalid'
@@ -213,6 +227,7 @@ def classify(uid, data, artifacts=(), update_time=None):
     row['verified_source_ids'] = sorted({c['source_id'] for c in candidates})
     row['source_file_sha256'] = sorted({c['file_sha256'] for c in candidates if 'file_sha256' in c})
     row['source_versions'] = sorted({c['version'] for c in candidates})
+    row['verified_artifact_codecs'] = sorted({codec for c in candidates for codec in c.get('codecs',[])})
     row['requires_version_normalization'] = chosen['version'] != '1.0'
     if chosen['route'] == 'artifact':
         row['state'] = 'recoverable_from_artifact'
@@ -248,7 +263,8 @@ def inventory(db, artifacts, artifact_summaries, page_size=200, progress=None):
         reasons.update(row['reasons'])
         rejected.update(row.get('source_rejections', []))
     return dict(version='values-grounding-inventory-1', complete=True, atomic_snapshot=False,
-                scanned=len(rows), vectorized=len(rows)-counts['not_vectorized'], counts=counts,
+                scanned=len(rows), taxonomy_present=len(rows)-counts['not_vectorized'],
+                vectorized=sum(r['state']!='not_vectorized' and r['reasons']!=['invalid_flattened_layout'] for r in rows), counts=counts,
                 unresolved_reasons=dict(sorted(reasons.items())), source_rejection_reasons=dict(sorted(rejected.items())), artifact_summaries=artifact_summaries,
                 rows=rows, production_writes=0, provider_requests=0)
 
@@ -316,7 +332,7 @@ def main(argv=None):
                 close()
         report.update(project=args.project, target=mode, generated_at=dt.datetime.now(dt.timezone.utc).isoformat())
         save_report(report, args.report)
-        print(json.dumps({k: report[k] for k in ('complete', 'scanned', 'vectorized', 'counts', 'unresolved_reasons', 'production_writes', 'provider_requests')}))
+        print(json.dumps({k: report[k] for k in ('complete', 'scanned', 'taxonomy_present', 'vectorized', 'counts', 'unresolved_reasons', 'production_writes', 'provider_requests')}))
         return 0
     except Exception as error:
         print('Inventory aborted; no database writes. Error class: ' + type(error).__name__, file=sys.stderr)

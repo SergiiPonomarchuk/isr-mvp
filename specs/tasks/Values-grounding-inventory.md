@@ -25,3 +25,9 @@ Synthetic cases cover mean correctness, stored/raw-map encodings, unknown/recogn
 - 2026-11-23: read-only inventory plan approved; implementation started. Production writes/AI requests budget: zero. No real-profile/artifact content has been loaded by the new tool yet.
 
 - Local verification before live read: Node253 passed/six optional skips; Python163 run/two optional skips. Nine new inventory cases also pass with python -S, exercising redaction, provenance/conflicts, exact field projection/pagination, target guard and atomic non-overwriting report output. No real artifact/profile loaded during these tests.
+
+## Additional retained source and exact legacy encoding
+
+Structural inspection found the other explicitly named project source C:/isr-mvp/db/values-vector.json (228 raw pipeline vectors in a list). This task authorizes that bounded source read as part of the approved provenance inventory; no personal directories or narrative datasets are searched. The loader supports a UID map or a list whose entries carry meta.uid, retaining duplicate UIDs for conflict detection.
+
+Explicit null item groups are a known raw protocol representation. The inventory accepts this persisted layout only as a separate exact-match codec (direct-null-items-1), alongside formatter-1; it never pads or changes current profile fields. Every external candidate still needs UID/hash/full-layout and exact flattened-content verification. Truly malformed lengths remain unresolved. Reports distinguish nonempty taxonomy payload count from recognized-layout vector count. Initial one-source report and structural diagnostics are retained unchanged; a new report records the two-source scan.
