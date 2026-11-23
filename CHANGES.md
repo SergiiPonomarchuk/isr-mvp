@@ -1,3 +1,8 @@
+## 2026-11-23 - Defer16-case Values recovery at author request
+
+- Retain R2 proposal/evidence as a draft reference; no runner, generation, promotion or merge requested. R1 remains complete.
+- Provide the requested synthetic IDs/names and discuss other development tracks; no new implementation authorized.
+
 ## 2026-11-23 - Proposal for16 deferred Values recovery cases
 
 - Prepare recovery classification, fresh16-profile read-only preflight and bounded two-stage candidate-generation proposal; no runner or paid execution.

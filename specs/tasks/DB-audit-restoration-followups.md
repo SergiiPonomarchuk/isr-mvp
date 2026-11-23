@@ -23,3 +23,5 @@ The224 already-patched profiles have verified source values for the three delibe
 ## 2026-11-23 R2 proposal
 
 R1 optional metadata is now author-verified complete224/zero conflicts. The16 cases remain unresolved; Values-deferred-recovery-proposal.md proposes original-source review, offline candidate-runner implementation, then a separately approved two-case pilot and later per-profile promotion review. Fresh16-profile narratives are available, but no paid call, runner implementation or data replacement is authorized by this proposal. Two additional named local source files supplied no missing grounding metadata.
+
+- 2026-11-23: author requested that the16 unresolved cases be left aside for now. Keep their IDs/evidence and proposal; no further recovery/regeneration work until author instruction. The remaining development tracks may proceed under their own approved scopes.

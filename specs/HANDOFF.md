@@ -4,7 +4,12 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint:16-case R2 recovery proposal prepared, 2026-11-23
+## Current checkpoint:16-case recovery deferred by author, 2026-11-23
+
+- Author requested the16 synthetic profile IDs/names and asked to leave their recovery aside for now. Names were read through an explicit16-user identity projection for the requested answer only; no personal mapping/credentials or full profiles accessed. R2 remains unresolved and deferred: no runner implementation, paid pilot, generation, data replacement or merge requested. Retain PR60 as a draft reference; do not resume R2 without author instruction.
+- Discussed alternatives: first review/reconcile existing draft C1 protocol PR50 against current main, then separately scope emulator integration; X eligibility/policy and shareable-demo access are other development tracks. No new implementation or PR50 merge is authorized by asking for options. R1 remains verified complete224/zero conflicts.
+
+## Previous checkpoint:16-case R2 recovery proposal prepared, 2026-11-23
 
 - #59 merged as410d296; main Node/Python checks passed. R1 remains author-verified complete224/zero conflicts. Author approved preparation of a bounded proposal for16 unresolved cases; [proposal/approval boundaries](tasks/Values-deferred-recovery-proposal.md), [cost assumptions](tasks/Values-deferred-recovery-estimate.json). Branch codex/values-deferred-proposal starts at410d296. No runner implementation, provider call or data replacement in this task.
 - Fresh projected read-only preflight found current narratives for all16; two additional named local source files supplied no grounding/vector metadata for these IDs. Four prior archives still supply no grounding. Per-ID hash/size/update-time evidence stays private under A:/BackUp/isr-mvp/rollouts/deferred-proposal-20261123. Source provenance is not bypassed; no claim of exhaustive disk search.
