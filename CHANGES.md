@@ -1,3 +1,9 @@
+## 2026-11-23 - Proposal for16 deferred Values recovery cases
+
+- Prepare recovery classification, fresh16-profile read-only preflight and bounded two-stage candidate-generation proposal; no runner or paid execution.
+- Propose separate offline implementation, then a reviewed two-case pilot; preserve original provenance and require explicit review of changed Values before promotion.
+- Record public pricing/reservation assumptions and additional named-source checks. Node253 passed/six skips; Python220 tests/four skips. No provider calls, credential loader, database writes, deployment or docs/ edits.
+
 ## 2026-11-23 - R1 live recovery verified complete
 
 - Author completed optional metadata recovery:224 desired, zero conflicts; bound journal has224 acknowledged applies. Private completion receipt saved.

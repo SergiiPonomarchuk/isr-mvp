@@ -19,3 +19,7 @@ The database audit must also track other missing metadata and data it discovers.
 The scoped DB audit is complete; see DB-completeness-audit-report.md. All four retained user archives have matching narratives for the16 profiles but no Values metadata, so they provide zero exact grounding recovery candidates. The original source/layout gates still fail. Do not mark these cases restored or bypass their provenance. The next16-case remedy requires another authoritative original source or separately approved candidate regeneration/provenance comparison. No regeneration was run.
 
 The224 already-patched profiles have verified source values for the three deliberately omitted optional metadata fields; a separate R1 dry-run/recovery implementation is proposed, not executed. All184 message-count mismatches predate this audit and need a counting-convention decision. Values/X coverage gaps remain separate data preparation, not established lost data.
+
+## 2026-11-23 R2 proposal
+
+R1 optional metadata is now author-verified complete224/zero conflicts. The16 cases remain unresolved; Values-deferred-recovery-proposal.md proposes original-source review, offline candidate-runner implementation, then a separately approved two-case pilot and later per-profile promotion review. Fresh16-profile narratives are available, but no paid call, runner implementation or data replacement is authorized by this proposal. Two additional named local source files supplied no missing grounding metadata.

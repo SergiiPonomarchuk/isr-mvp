@@ -4,7 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: R1 live optional-metadata recovery complete, 2026-11-23
+## Current checkpoint:16-case R2 recovery proposal prepared, 2026-11-23
+
+- #59 merged as410d296; main Node/Python checks passed. R1 remains author-verified complete224/zero conflicts. Author approved preparation of a bounded proposal for16 unresolved cases; [proposal/approval boundaries](tasks/Values-deferred-recovery-proposal.md), [cost assumptions](tasks/Values-deferred-recovery-estimate.json). Branch codex/values-deferred-proposal starts at410d296. No runner implementation, provider call or data replacement in this task.
+- Fresh projected read-only preflight found current narratives for all16; two additional named local source files supplied no grounding/vector metadata for these IDs. Four prior archives still supply no grounding. Per-ID hash/size/update-time evidence stays private under A:/BackUp/isr-mvp/rollouts/deferred-proposal-20261123. Source provenance is not bypassed; no claim of exhaustive disk search.
+- Recommend a separate offline-only runner implementation/preflight first, then separately approve a two-case pilot (66/1016, two stages each, max4 generation attempts/no retries) with pinned existing gemini-3.1-flash-lite LOW. Proposed reservation ceiling$0.55; planning estimate$0.0906; neither is a provider-certified billing cap. Recheck price/Paid budget and reviewed request/reservation assumptions before paid approval. Remaining14 and promotion remain unapproved.
+- New generation stays separate from history; only a fully matching candidate payload may qualify for metadata-only promotion. Changed Values need explicit review and a separate author-only live/CAS/recovery plan. No automatic aggregate/score/vote recomputation. No credentials loaded, secret copied, raw narratives saved, AI/provider calls or database writes. Original C serving checkout/docs untouched.
+- Required local suites Node253 passed/six skips; Python220 tests/four skips. Documentation only; final PR checks verified before handoff. Next author decision: offline runner/preflight implementation approval only (no paid calls). Merge proposal PR only on explicit instruction. Sol Medium is sufficient.
+
+## Previous checkpoint: R1 live optional-metadata recovery complete, 2026-11-23
 
 - Author explicitly instructed merge PR #59. Reviewed5ef68b9 passed all four Node/Python checks and is current with main252a319. This final integration records status only; verify final PR-head checks before merging, then main merge-head CI and private receipt. R1 remains author-verified complete; no new live operation, regeneration or paid call follows automatically.
 
