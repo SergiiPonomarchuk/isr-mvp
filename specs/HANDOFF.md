@@ -4,11 +4,13 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: C1 PR50 review/reconciliation in progress, 2026-11-23
+## Current checkpoint: C1 PR50 reconciled and acceptance fixes verified, 2026-11-23
 
-- Author approved resuming capacity work by reviewing/reconciling existing draft PR50 against main410d296, then separately scoping emulator integration. [Review scope/findings](tasks/M3-generation-protocol-review.md). Author additionally approved fixes for mismatched publication mirrors and invalid UTF8 replacement decoding; both are C1 acceptance gaps reproduced with synthetic inputs. No further prototype behavior or C2 implementation approved.
-- Reconcile main's CBC/Values/recovery changes, retaining C1 and main histories and prior artifacts. No application/scoring/docs/ edit beyond importing already-merged main. Required offline suites and new bounded report follow; final CI checked before handoff. Merge only on explicit merge PR50.
-- R1 remains author-verified complete224/zero conflicts. Author requested that the16 unresolved Values cases be left aside; R2/PR60 stays a separate deferred draft, with no generation or new recovery work. No paid/credential-loader/database/emulator operation in this review.
+- Author approved PR50 review/reconciliation against main410d296 and explicitly approved mirror-consistency/strict-UTF8 fixes. Merge85fb980 preserves main CBC/Values/recovery histories; fixes f69976c stay offline. [Review/evidence](tasks/M3-generation-protocol/review-20261123.md), [scope](tasks/M3-generation-protocol-review.md). Original C serving checkout/docs untouched.
+- All29 focused cases pass after four regressions first reproduced old gaps. Current reads/Join activation/phase commands enforce mirror consistency; invalid UTF8 refuses without changing valid Unicode/frozen replay. No application scorer/endpoint/rules/source/profile/database/emulator/provider/loader operation. Main runtime/docs/vectorizer blobs match origin/main.
+- Node282 passed/six skips; Python222 tests/four skips. New immutable run20261123-03:2/7/17 tiny supplied payload/successor/replay traces exact; Create7 reads/10 writes, Join11/10;45.33MiB/0.594s with original gates/fuse. Old runs/sidecar preserved. Final PR50 checks verified before review-ready/handoff; merge only on explicit merge PR50. Sol Medium is sufficient.
+- [Concrete C2a proposal](tasks/M3-generation-emulator-slice-proposal.md) needs separate approval after C1 review/merge: asynchronous reads-first orchestration, provisional allowlisted emulator paths, serializer/resource/refusal checks. No C2 implementation or population/live acceptance implied.
+- R1 remains author-verified complete224/zero conflicts. The16 unresolved Values cases are deferred; PR60 remains a separate draft and is not merged/resumed. X policy/eligibility coverage and security/source-writer/client-cutover remain separate decisions.
 
 ## Previous checkpoint: R1 live optional-metadata recovery complete, 2026-11-23
 

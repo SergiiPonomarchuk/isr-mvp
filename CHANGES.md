@@ -1,7 +1,8 @@
 ## 2026-11-23 - Review and reconcile C1 offline publication prototype
 
 - Reconcile draft PR50 onto current main, preserving C1 and CBC/Values/recovery histories and prior reports.
-- Reproduce two C1 acceptance gaps; author approves mirror-consistency and strict UTF8 refusal fixes with regressions. No C2/runtime/data/AI operation.
+- Fix author-approved C1 gaps: enforce current mirror consistency and refuse invalid UTF8 without replacement decoding;29 focused cases pass.
+- Node282 passed/six skips; Python222 tests/four skips. New bounded report preserves old artifacts; C2a proposed separately. No C2/runtime/data/AI operation.
 
 ## 2026-11-23 - R1 live recovery verified complete
 
