@@ -1,8 +1,10 @@
 # ISR Issue Analyzer Protocol (v2, Firebase / NoSQL)
 
-**2026-11-16 A/B amendment:** [PD-9](../specs/decisions/PD-9-multi-reference-derivation.md) now forms A from weighted direct D/G/S>=Theta (.15), then adds eligible relatives belowTheta as B regardless of score. A receives no X. B receives the full weighted tie only when its resulting R<=the supplying A direct score, otherwise baseline only; equality allowed, no partial cap or second hop. New-policy formation has no top100 cap. Core implemented; application integration pending. Older single-stage threshold/cap descriptions below describe historical behavior only.
+**Historical full-policy A/B baseline (2026-11-16; MVP candidate boundary amended 2026-11-21 below):** [PD-9](../specs/decisions/PD-9-multi-reference-derivation.md) now forms A from weighted direct D/G/S>=Theta (.15), then adds eligible relatives belowTheta as B regardless of score. A receives no X. B receives the full weighted tie only when its resulting R<=the supplying A direct score, otherwise baseline only; equality allowed, no partial cap or second hop. New-policy formation has no top100 cap. Core implemented; application integration pending. Older single-stage threshold/cap descriptions below describe historical behavior only.
 
-**2026-11-16 intended-model revision:** [PD-9 multi-reference derivation](../specs/decisions/PD-9-multi-reference-derivation.md) governs reference selection, notation and member-score combination. Runtime at3c25ef7 still uses the earlier single-vector model. Sections explicitly marked historical are not implementation instructions for mr1.
+**2026-11-21 reconciliation:** PD-9 still governs paired multi-reference arithmetic, actual-issue aspect vectors, maximum geography and the single Expertise floor. Repository main b8014ac contains mr1 logic; the new marked-carer/MVP formation policy is a separate implementation proposal, not current runtime or a deployment claim. [Exact flag, cutoff, version and backfill specification](../specs/tasks/X-eligibility-values-reconciliation.md).
+
+**MVP candidate policy and X update, 2026-11-21:** retain hard D/G exclusions/top-300 direct selection, prune only for UB<Theta, and preserve paired multi-reference arithmetic. The new X adapter uses explicit outgoing child/dependent -> carer flags. Selection remains an approximation, not a global public cap; proposed carer lookup/direct recovery and policy dispatch are in the linked task. Values schema stays 1.0; these are separate scoring-policy identifiers. The Analyzer does not infer relationship eligibility or compute overall_grounding with the model.
 
 This protocol specifies how the AI **Issue Analyzer** processes a newly submitted ISR issue
 and outputs **all starting parameters** needed for Relevance, Expertise, and ISR-score aggregation.
@@ -91,7 +93,7 @@ The Analyzer must infer:
 - `technicality_level`: `low` | `medium` | `high`
 - `safety_sensitivity`: `low` | `medium` | `high`
 - `digital_or_physical`: `physical` | `hybrid` | `digital_only`
-- `legal_coverage`
+- `legal_coverage`: `low` | `medium` | `high`
 - `expertise_domain`: short descriptor used by Expertise functions
   (e.g. `locksmith.security`, `urban_planning.zoning_and_permits`,
   `software.open_source_product_direction`)
@@ -469,8 +471,8 @@ These configure how expertise formulas behave for this issue.
 | Parameter | Description |
 | :--- | :--- |
 | `expertise_domain` | short descriptor string |
-| `recency_decay_rate` (per year) | 0.01–0.03 = slow; 0.05–0.08 = cutting-edge |
-| `CBC_adjustment_factor` [0.7–1.3] | <1.0 = narrow credentials; >1.0 = broader broadcast |
+| `recency_decay_rate` (per year) | Future extension; not applied by current scoring |
+| `CBC_adjustment_factor` [0.7–1.3] | Existing modifier: <1 broader transfer; >1 narrower transfer |
 
 #### 3.1.1 Output structure
 
@@ -478,7 +480,7 @@ These configure how expertise formulas behave for this issue.
 "expertise_domain_parameters": {
   "expertise_domain":        "locksmith.security",
   "recency_decay_rate":      0.02,
-  "CBC_adjustment_factor":   0.9,
+    "CBC_adjustment_factor":   0.9,
   "domain_reasoning":        "short explanation"
 }
 ```
@@ -604,7 +606,7 @@ citing the rule or example. Every run is logged.
   "cautions": [
     { "code": "missing_source", "text": "No source is attached for the claim that the street is owned by the housing association." }
   ],
-  "rules_applied": ["R-scope-01", "ex-017"],
+  "rules_applied": ["R-scope-01", "ex-023"],
   "result": "pass"
 }
 ```
@@ -732,8 +734,7 @@ The Issue Analyzer produces a single JSON object. All fields must be present:
   },
   "expertise_explanations": {
     "reasoning_education":  "...",
-    "reasoning_experience": "...",
-    "reasoning_resources":  "..."
+    "reasoning_experience": "..."
   }
 }
 ```
@@ -775,7 +776,7 @@ For each new issue, the Analyzer must:
 2. Decide **Relevance weights** `w_D, w_G, w_S, w_X` with reasoning
 3. Generate **Demographic rules** (simplified flat schema + optional tiered schema)
 4. Select **Geo parameters** μ and σ with reasoning
-5. Configure **Expertise domain parameters** (domain, importance, decay, CBC)
+5. Configure **Expertise domain parameters** (domain, decay, CBC)
 6. Produce **Resource needs list** for the options' implementation plans (2–4 entries, money first; not scored as Expertise)
 7. Decide **Aggregation weights** `w_Relevance, w_Expertise, w_Contribution` with reasoning
 8. Output everything in a single structured JSON
