@@ -7,7 +7,9 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: [scoped DB completeness audit and restoration proposal](tasks/DB-completeness-audit-report.md): no missing historical scoped documents;224 optional-metadata recovery candidates,16 unresolved grounding cases; no repairs or AI calls.
+Current checkpoint: [R1 optional Values metadata recovery](tasks/Values-optional-metadata-recovery.md), live dry run ready224/zero conflicts and synthetic recovery passed; [author-only runbook](tasks/Values-optional-metadata-author-runbook.md) prepared. No live apply or AI calls.
+
+Previous checkpoint: [scoped DB completeness audit and restoration proposal](tasks/DB-completeness-audit-report.md): no missing historical scoped documents;224 optional-metadata recovery candidates,16 unresolved grounding cases; no repairs or AI calls.
 
 Previous checkpoint: [grounding metadata dry run and recovery rehearsal](tasks/Values-grounding-dry-run.md), ready224/zero conflicts; [post-audit restoration log](tasks/DB-audit-restoration-followups.md) holds16 cases. [Author-only runbook](tasks/Values-grounding-author-runbook.md) prepared; no live writes or AI calls.
 

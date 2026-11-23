@@ -1,3 +1,10 @@
+## 2026-11-23 - R1 optional Values metadata recovery preparation
+
+- Source-bound224-profile plan for three absent historical metadata fields; exact dotted updates preserve grounding metadata/Values and exclude16 unresolved cases.
+- Reuse guarded journal/retry/rollback through a strict store adapter; previous recovery modules and application/scoring code unchanged.
+- Synthetic CLI/SDK rehearsal applied224, retried without duplicate writes and restored241 full documents. Actual live read-only plan ready224/zero conflicts; author-only runbook prepared.
+- Node253 passed/six skips; Python220 tests/four skips. No R1 production writes, provider calls, deployment or docs/ edits.
+
 ## 2026-11-23 - Scoped read-only DB completeness audit
 
 - Record author-verified224 grounding patches; audit25,667 approved-path documents against D1 backup with redacted private receipts.
