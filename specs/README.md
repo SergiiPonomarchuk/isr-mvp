@@ -7,7 +7,9 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: [offline overall-grounding implementation](tasks/Values-grounding-offline-implementation.md), retargeted to main after CBC verification PR #53 merged; both merges authorized in order. Existing-profile backfill remains separate.
+Current checkpoint: [read-only grounding inventory](tasks/Values-grounding-inventory-report.md):224 verified recoverable profiles,16 review cases; no database writes or AI calls.
+
+Previous checkpoint: [offline overall-grounding implementation](tasks/Values-grounding-offline-implementation.md), retargeted to main after CBC verification PR #53 merged; both merges authorized in order. Existing-profile backfill remains separate.
 
 Previous checkpoint: [CBC emulator/browser evidence](tasks/CBC-emulator-report.md), with [offline overall-grounding implementation plan](tasks/Values-grounding-offline-implementation.md) next. No production operations.
 
