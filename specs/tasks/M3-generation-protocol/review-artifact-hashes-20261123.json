@@ -1,0 +1,7 @@
+{
+  "specs/tasks/M3-generation-protocol/review-20261123.md": "3b24b58a1fe63c0f383db7f8b9c89d9041753684eb69183c225308c4bfb9f403",
+  "specs/tasks/M3-generation-protocol/run-20261123-03/report.json": "fae8b3e1a80a7f1b6b1740f2fc6ebdfe5df310138a91cf49355e3b620379cb19",
+  "specs/tasks/M3-generation-protocol/run-20261123-03/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "specs/tasks/M3-generation-protocol/run-20261123-03/stdout.txt": "7b9d681e4b7f24ce440b4467ee0a7abb3a6219afc3029a4d3ba296a41d2f8830",
+  "specs/tasks/M3-generation-protocol/run-20261123-03/worker.json": "4144c12c7251dbf86c01573115ae8e27aba5ee6662bd7f232ddd4545951fff92"
+}

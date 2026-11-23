@@ -4,7 +4,17 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: R1 live optional-metadata recovery complete, 2026-11-23
+## Current checkpoint: C1 PR50 reconciled and acceptance fixes verified, 2026-11-23
+
+- Author explicitly instructed merge PR50. Reviewed f0f8ba2 passed all four Node/Python checks and is current with main410d296. This integration records status only; verify final PR-head checks before the authorized merge, then main merge-head CI/private receipt. No C2/emulator/runtime/database/provider operation follows automatically;16-case Values recovery remains deferred.
+
+- Author approved PR50 review/reconciliation against main410d296 and explicitly approved mirror-consistency/strict-UTF8 fixes. Merge85fb980 preserves main CBC/Values/recovery histories; fixes f69976c stay offline. [Review/evidence](tasks/M3-generation-protocol/review-20261123.md), [scope](tasks/M3-generation-protocol-review.md). Original C serving checkout/docs untouched.
+- All29 focused cases pass after four regressions first reproduced old gaps. Current reads/Join activation/phase commands enforce mirror consistency; invalid UTF8 refuses without changing valid Unicode/frozen replay. No application scorer/endpoint/rules/source/profile/database/emulator/provider/loader operation. Main runtime/docs/vectorizer blobs match origin/main.
+- Node282 passed/six skips; Python222 tests/four skips. New immutable run20261123-03:2/7/17 tiny supplied payload/successor/replay traces exact; Create7 reads/10 writes, Join11/10;45.33MiB/0.594s with original gates/fuse. Old runs/sidecar preserved. Final PR50 checks verified before review-ready/handoff; merge only on explicit merge PR50. Sol Medium is sufficient.
+- [Concrete C2a proposal](tasks/M3-generation-emulator-slice-proposal.md) needs separate approval after C1 review/merge: asynchronous reads-first orchestration, provisional allowlisted emulator paths, serializer/resource/refusal checks. No C2 implementation or population/live acceptance implied.
+- R1 remains author-verified complete224/zero conflicts. The16 unresolved Values cases are deferred; PR60 remains a separate draft and is not merged/resumed. X policy/eligibility coverage and security/source-writer/client-cutover remain separate decisions.
+
+## Previous checkpoint: R1 live optional-metadata recovery complete, 2026-11-23
 
 - Author explicitly instructed merge PR #59. Reviewed5ef68b9 passed all four Node/Python checks and is current with main252a319. This final integration records status only; verify final PR-head checks before merging, then main merge-head CI and private receipt. R1 remains author-verified complete; no new live operation, regeneration or paid call follows automatically.
 
@@ -97,6 +107,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 - Documentation/specification only: no application/math/runtime, Firestore/data/import, key/provider, rules or deployment changes. Planned implementation and author-only live apply require later review/approval. Sol Medium remains sufficient.
 - Prior C1 [PR #50](https://github.com/SergiiPonomarchuk/isr-mvp/pull/50) remains open with final Node/Python CI passed; no merge instruction received. It is independent of this new formation/metadata policy and must not be treated as its implementation.
 - Local required suites: Node 243 passed / six optional skips, Python 145 run / two skips. Original-author-edit hashes, doc links/fences/markers, arithmetic examples and git diff --check pass. Final documentation-head CI is verified before handoff. Merge only on explicit author instruction; current paid counters/evidence remain unchanged.
+
+## Previous checkpoint: C1 offline protocol complete, 2026-11-18
+
+- Author explicitly ordered merge #49 and approved C1. Design #49 merged as **b8014acdce016bc7aaad51cd02ddc851220ebe6d**. Post-merge Node/Python CI passed. Feature branch codex/m3-generation-protocol starts there; draft [PR #50](https://github.com/SergiiPonomarchuk/isr-mvp/pull/50) targets main. Implementation/result head b562d7b passed GitHub Node/Python CI; final documentation-head checks are verified before handoff. [C1 scope/status](tasks/M3-generation-protocol.md), [results and limitations](tasks/M3-generation-protocol/README.md). No further C1 approval is needed.
+- Pure fake transactions, typed payload/manifest pages, lease/checkpoint/seal/CAS activation, frozen replay, Join/race/refusal and never-published cleanup model implemented. No application scoring, SDK/Firestore/model client, source data/import, browser, rules, docs/ or deploy change. No database operations/provider/loader calls.
+- 25 focused Node tests plus two Python output/refusal tests; required suites **Node 268 passed / six skips; Python 147 run / two skips**. Tiny 2/7/17-member traces and one Join each reconstruct supplied payload/replay exactly. Model Create activation 7 reads/10 writes; Join 11/10. Model byte bounds are not Firestore sizes. Peak supervised RSS 57.28 MiB with unchanged resource gates. Final PR-head CI checked before handoff.
+- Initial run/code ee2ae92 preserved; final run 02 tightens missing authority, upload order, replay coverage and unsupported async callback refusal. No published history is collected. These fake closed-writer/logical-time traces are not live security/freshness, distributed SDK, UI or population acceptance.
+- Next after review/merge: **separate C2 isolated-emulator implementation spec/slice approval** using tiny immutable allowlisted source and fake AI, real serializer/transaction checks and complete versioned reader/lifecycle adapters. Legacy retained; live format default-off. No large import, paid call, rules/deploy/live write implicit. Sol Medium remains sufficient.
+- Historical paid counters remain 30 text reviews / 14 embedding texts / 14 POSTs / 44 HTTP attempts; US$1.256788 reserved. Phase A no-go and three 100-reference timeouts remain unresolved by C1. Merge only on explicit PR instruction.
 
 ## Previous checkpoint: Phase C offline design prepared for review, 2026-11-18
 

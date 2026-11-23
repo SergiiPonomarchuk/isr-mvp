@@ -7,7 +7,9 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: [R1 optional Values metadata recovery](tasks/Values-optional-metadata-recovery.md), live dry run ready224/zero conflicts and synthetic recovery passed; [author-only runbook](tasks/Values-optional-metadata-author-runbook.md) prepared. No live apply or AI calls.
+Current checkpoint: [C1 review/reconciliation](tasks/M3-generation-protocol-review.md) verified on current main; [dated evidence](tasks/M3-generation-protocol/review-20261123.md), [C2a proposal](tasks/M3-generation-emulator-slice-proposal.md). No PR50 merge/C2/live operation authorized;16-case Values recovery remains deferred.
+
+Previous checkpoint: [R1 optional Values metadata recovery](tasks/Values-optional-metadata-recovery.md), live dry run ready224/zero conflicts and synthetic recovery passed; [author-only runbook](tasks/Values-optional-metadata-author-runbook.md) prepared. No live apply or AI calls.
 
 Previous checkpoint: [scoped DB completeness audit and restoration proposal](tasks/DB-completeness-audit-report.md): no missing historical scoped documents;224 optional-metadata recovery candidates,16 unresolved grounding cases; no repairs or AI calls.
 
@@ -22,6 +24,8 @@ Previous checkpoint: [CBC emulator/browser evidence](tasks/CBC-emulator-report.m
 Previous checkpoint: [CBC table-only scoring and removal from all 100 examples](tasks/CBC-table-only.md), retargeted to main after documentation PR #51 merged; both merges authorized in order. No live migration or deployment.
 
 Previous checkpoint: [X eligibility, MVP cutoff and Values metadata reconciliation/specification](tasks/X-eligibility-values-reconciliation.md), documentation only after the author's 2026-11-21 decisions. Existing C1 PR #50 is separately open/green. New scoring/metadata implementation, backfill and C2/live operations are not implicit.
+
+Previous checkpoint: [C1 offline publication protocol](tasks/M3-generation-protocol.md) implemented after explicit approval; [result and limitations](tasks/M3-generation-protocol/README.md). Design #49 is merged. Next scope is a separately approved C2 isolated-emulator slice, not automatic runtime/import/rules/deployment work.
 
 Current M3 preparation: [one-case quotation retest](tasks/M3-one-case-retest.md), offline only; two-call/US$0.27 proposal needs fresh paid approval.
 

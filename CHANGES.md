@@ -1,3 +1,9 @@
+## 2026-11-23 - Review and reconcile C1 offline publication prototype
+
+- Reconcile draft PR50 onto current main, preserving C1 and CBC/Values/recovery histories and prior reports.
+- Fix author-approved C1 gaps: enforce current mirror consistency and refuse invalid UTF8 without replacement decoding;29 focused cases pass.
+- Node282 passed/six skips; Python222 tests/four skips. New bounded report preserves old artifacts; C2a proposed separately. No C2/runtime/data/AI operation.
+
 ## 2026-11-23 - R1 live recovery verified complete
 
 - Author completed optional metadata recovery:224 desired, zero conflicts; bound journal has224 acknowledged applies. Private completion receipt saved.
@@ -64,6 +70,10 @@ New scoring version mr1-cbc-table-1; frozen legacy multipliers remain for histor
 ## 2026-11-21 - Reconcile author documents and specify X/Values updates
 
 Transplanted eight author-edited documents from the old checkout onto current main while preserving paired-reference math and corrected examples. Recorded strict UB<Theta pruning, retained MVP D/G/top-300 approximation, directed child-to-carer eligibility/version/data plan, and Values 1.0 host-calculated grounding mean plus metadata-only recovery/backfill requirements. CBC/cutoff-boundary assumptions remain explicit review items. Documentation only; no runtime, data/profile writes, vectorization, paid call, rules or deployment. See specs/tasks/X-eligibility-values-reconciliation.md.
+
+## 2026-11-18 - Complete C1 offline publication protocol prototype
+
+Merged approved design #49 and implemented the authorized fake-store protocol: immutable typed manifests, leases/checkpoints/seal, bounded atomic activation, source/catalog/phase fences, frozen replay and safe never-published cleanup. Tiny failure/restart/race traces and 25 focused Node tests pass; measured constant fake activation inventories, not Firestore sizes or population acceptance. No application/runtime/scoring, database/import, provider/loader, browser/rules/docs/ or deployment change. See specs/tasks/M3-generation-protocol/README.md.
 
 ## 2026-11-18 - Design immutable generations and atomic publication offline
 
