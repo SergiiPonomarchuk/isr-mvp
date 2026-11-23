@@ -1,0 +1,172 @@
+{
+  "version": "db-completeness-audit-1",
+  "complete_for_scoped_paths": true,
+  "atomic_snapshot": false,
+  "counts": {
+    "users": 9151,
+    "user_vectors": 9150,
+    "issues": 93,
+    "discussions": 205,
+    "microcommunities": 205,
+    "microcommunity_members": 3901,
+    "actions": 1188,
+    "issue_drafts": 19,
+    "analyzer_logs": 18,
+    "voting": 0,
+    "tasks": 0,
+    "values": 0,
+    "discussions__messages": 1737
+  },
+  "finding_counts": {
+    "values_invalid_grounding_metadata": 6,
+    "values_narrative_hash_mismatch": 2,
+    "values_artifact_layout_invalid": 2,
+    "values_missing_source_hash": 5,
+    "values_invalid_flattened_layout": 1,
+    "nonparticipant_profile": 1,
+    "message_count_mismatch": 184
+  },
+  "observations": {
+    "pending_x_version_profiles": 9150,
+    "pending_x_flag_links": 53412,
+    "values_metadata_missing_timestamp": 224,
+    "values_metadata_missing_vector_id": 224,
+    "values_metadata_missing_overall_confidence": 224,
+    "narrative_without_values_vector": 1220,
+    "not_vectorized_coverage": 8911
+  },
+  "grounding_counts": {
+    "unresolved": 16,
+    "already_correct": 224,
+    "not_vectorized": 8911
+  },
+  "unassessed_paths": [
+    "issue_vectors",
+    "user_packs",
+    "geocode_cache",
+    "config",
+    "membership_events"
+  ],
+  "limitations": [
+    "not_full_database",
+    "no_atomic_snapshot",
+    "subcollections_only_for_existing_discussion_parents",
+    "no_scoring_or_semantic_quality_audit",
+    "differences_are_review_candidates_not_restore_authorization"
+  ],
+  "production_writes": 0,
+  "provider_calls": 0,
+  "backup_comparison": {
+    "users": {
+      "missing_documents": 0,
+      "added_documents": 0,
+      "previously_populated_now_empty": 0,
+      "changed_projected_documents": 224
+    },
+    "user_vectors": {
+      "missing_documents": 0,
+      "added_documents": 0,
+      "previously_populated_now_empty": 0,
+      "changed_projected_documents": 0
+    },
+    "issues": {
+      "missing_documents": 0,
+      "added_documents": 11,
+      "previously_populated_now_empty": 0,
+      "changed_projected_documents": 82
+    },
+    "discussions": {
+      "missing_documents": 0,
+      "added_documents": 11,
+      "previously_populated_now_empty": 0,
+      "changed_projected_documents": 194
+    },
+    "microcommunities": {
+      "missing_documents": 0,
+      "added_documents": 11,
+      "previously_populated_now_empty": 0,
+      "changed_projected_documents": 0
+    },
+    "microcommunity_members": {
+      "missing_documents": 0,
+      "added_documents": 606,
+      "previously_populated_now_empty": 0,
+      "changed_projected_documents": 0
+    },
+    "actions": {
+      "missing_documents": 0,
+      "added_documents": 0,
+      "previously_populated_now_empty": 0,
+      "changed_projected_documents": 0
+    },
+    "issue_drafts": {
+      "missing_documents": 0,
+      "added_documents": 15,
+      "previously_populated_now_empty": 0,
+      "changed_projected_documents": 0
+    },
+    "analyzer_logs": {
+      "missing_documents": 0,
+      "added_documents": 14,
+      "previously_populated_now_empty": 0,
+      "changed_projected_documents": 0
+    },
+    "voting": {
+      "missing_documents": 0,
+      "added_documents": 0,
+      "previously_populated_now_empty": 0,
+      "changed_projected_documents": 0
+    },
+    "tasks": {
+      "missing_documents": 0,
+      "added_documents": 0,
+      "previously_populated_now_empty": 0,
+      "changed_projected_documents": 0
+    },
+    "values": {
+      "missing_documents": 0,
+      "added_documents": 0,
+      "previously_populated_now_empty": 0,
+      "changed_projected_documents": 0
+    },
+    "discussions__messages": {
+      "missing_documents": 0,
+      "added_documents": 41,
+      "previously_populated_now_empty": 0,
+      "changed_projected_documents": 0
+    }
+  },
+  "message_authors": {
+    "project": "project-a3d59130-5adf-4677-9e2",
+    "discussion_parents": 205,
+    "messages": 1737,
+    "finding_counts": {},
+    "production_writes": 0
+  },
+  "optional_metadata_source_counts": {
+    "timestamp_verified_source_value_available": 224,
+    "vector_id_verified_source_value_available": 224,
+    "overall_confidence_verified_source_value_available": 224
+  },
+  "historical_drift": {
+    "changed_projected_fields": {
+      "issues": {
+        "status": 82
+      },
+      "discussions": {
+        "status": 194
+      }
+    },
+    "backup_message_count_mismatches": 184,
+    "current_message_count_mismatches": 184,
+    "preexisting_mismatch_ids": 184,
+    "new_mismatch_ids": 0
+  },
+  "private_evidence_sha256": {
+    "audit.json": "00e648cfe35aa25c065992653fa66c6acd84908cbd1234f4ac7b992ae43272d4",
+    "deferred-sources.json": "2944da308950f9dceb336463ead3dac2b8cc74446f40093dff801a69d2262bc4",
+    "optional-metadata-sources.json": "f7ef294d92fa56357fd7226f50c17b209717d561a26f9c40c1bc37bce09e778a",
+    "historical-drift.json": "91240b298e61ec942536597f4b977ee7c47e8000d28a52d7ab8dc26f4cbbd039",
+    "message-authors.json": "2162565a57b8ad433b0cb24fe29bdf8d6573b34244b06d6c1d034d4b9cedfcbe"
+  }
+}

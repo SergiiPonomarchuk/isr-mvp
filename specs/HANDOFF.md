@@ -4,7 +4,17 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: grounding dry run and recovery rehearsal ready, 2026-11-23
+## Current checkpoint: scoped DB audit complete; restoration proposal ready, 2026-11-23
+
+- Author explicitly instructed merge PR #57. Reviewed head5c477f7 passed all four Node/Python checks and is current with main45124f2. Integration changes status documentation only; verify final PR-head CI before the authorized merge, then main merge-head checks and a private receipt. No restoration implementation, live write, paid/model request or deployment follows automatically.
+
+- Author ran/verified the live224-profile metadata patch: desired224/before0/conflict0; private journal224 acknowledged applies and verification receipt saved. #56 merged as45124f2 with main Node/Python checks successful. No deployment was needed.
+- Author approved a read-only DB audit and explicitly excepted the additional app collection paths from the older skill list. [Scope](tasks/DB-completeness-audit.md), [results/restoration order](tasks/DB-completeness-audit-report.md), [aggregate evidence](tasks/DB-completeness-audit-summary.json). Feature codex/db-completeness-audit starts at45124f2. Original C serving checkout/docs untouched.
+- Scoped25,667 documents: no missing documents/emptied projected historical top-level fields; all9,150 embedding documents pass current structural/source-hash checks.224 grounding profiles correct;16 still unresolved. Four known archives lack metadata for all16.184 message-count mismatches already existed in D1. Missing optional metadata for224 is available in verified retained sources. Values/X coverage remains separate unfinished preparation; unapproved collections/subcollections remain unassessed.
+- **Next author decision: approve R1 optional-metadata recovery design/implementation only**, with source-bound dry run, synthetic recovery rehearsal and author-only live runbook. No new AI budget or live repair follows this audit/merge. The16-case regeneration/source decision and legacy counter semantics are separate. Sol Medium is sufficient.
+- Node253 passed/six skips; Python200 tests/three skips;20 focused tests pass. Final PR checks verified before handoff; merge requires explicit author instruction. Agent DB writes/provider calls/deployment remain zero. Per-ID evidence remains private under A:/BackUp/isr-mvp/rollouts/db-audit-20261123.
+
+## Previous checkpoint: grounding dry run and recovery rehearsal ready, 2026-11-23
 
 - Author explicitly instructed merge PR #56. Reviewed head b9dd613 has successful Node/Python checks and is current with main d205cc8. This integration updates status documentation only; verify final PR-head checks before the authorized merge, then main merge-head checks and private receipt. No live apply, deployment or additional data operation follows automatically.
 
