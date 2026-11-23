@@ -4,7 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: #53 merged; #54 reconciled for authorized merge, 2026-11-23
+## Current checkpoint: read-only grounding inventory complete, 2026-11-23
+
+- #53 and #54 merged in order; main3dedd1a passed final checks. Author approved the next read-only inventory. Feature codex/values-grounding-inventory contains the no-apply tool, provenance/redaction/pagination tests and [aggregate results](tasks/Values-grounding-inventory-report.md).
+- Observed9,151 users,240 nonempty taxonomy payloads (239 recognized layouts and1 malformed),224 recoverable from retained sources,16 unresolved,8,911 without vectorized payload. Only users.uid/values_taxonomy/values_description read; narrative hashed in memory. No full profiles, names/contact fields, source copies, provider calls or data writes. Two explicit project artifacts verified unchanged.
+- Of224 verified sources,211 are1.0 and13 historical2.1;68 exact legacy explicit-null payloads remain unchanged. Remaining16:6 grounding metadata,5 missing hashes,2 narrative-hash mismatch,2 source-layout and1 stored-layout problem. Do not invent metadata or regenerate automatically.
+- Node253 passed/six skips; Python165 run/two skips;11 new tests also pass without site packages. Final PR checks verified before handoff. Per-profile sanitized evidence stays private under A:/BackUp/isr-mvp/rollouts/grounding-inventory-20261123; only aggregate evidence committed.
+- Proposed next scope: metadata-only dry-run tool for224 verified cases, leave16 untouched, then synthetic emulator apply/rollback rehearsal and an author-only live runbook. No live apply authorized. X eligibility/cut decision, relationship flags, C1 #50 and C2 remain separate. Sol Medium is sufficient.
+
+## Previous checkpoint: #53 merged; #54 reconciled for authorized merge, 2026-11-23
 
 - Author instructed merge PR #53, then PR #54. CBC emulator/browser verification #53 merged as7288a63296a66d22afaf374864b49991dd0dd812 after all final Node/Python checks passed. Grounding #54 is retargeted to main and reconciled without implementation/test changes from reviewed158cbeb.
 - The new grounding helper, version1.0 finalization and canonical metadata retention are described in tasks/Values-grounding-offline-implementation.md. Reviewed local verification remains Node253 passed/six skips, Python154 run/two skips, seven dependency-free tests and local SDK serialization. Final reconciled-head CI must pass before the already authorized #54 merge; verify main merge-head checks afterwards and save scratch/merge-53-54-receipt.json.

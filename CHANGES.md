@@ -1,3 +1,7 @@
+## 2026-11-23 - Inventory existing-profile grounding without writes
+
+Add a paginated, allowlisted read-only inventory with strict UID/hash/Values provenance, explicit retained UID-map/list artifacts, exact null-group codec, conflict detection and sanitized atomic reports. Observed240 taxonomy payloads:224 verified recoverable and16 unresolved;8,911 users have none. No source/profile changes, AI calls, data apply or deployment. See specs/tasks/Values-grounding-inventory-report.md for evidence, tests and proposed next scope.
+
 ## 2026-11-23 - Integrate CBC verification #53 then Values grounding #54
 
 Author authorized ordered merges. #53 merged as7288a63 after final checks passed. Retarget and reconcile #54 to main without implementation/test changes, verify its final CI before the authorized merge, then check main. No deployment, profile inventory, regeneration, database write or backfill.

@@ -1,0 +1,46 @@
+{
+  "version": "values-grounding-inventory-1",
+  "complete": true,
+  "atomic_snapshot": false,
+  "scanned": 9151,
+  "taxonomy_present": 240,
+  "vectorized": 239,
+  "counts": {
+    "already_correct": 0,
+    "calculable_from_stored_grounding": 0,
+    "recoverable_from_artifact": 224,
+    "unresolved": 16,
+    "not_vectorized": 8911
+  },
+  "unresolved_reasons": {
+    "artifact_layout_invalid": 2,
+    "invalid_flattened_layout": 1,
+    "invalid_grounding_metadata": 6,
+    "missing_source_hash": 5,
+    "narrative_hash_mismatch": 2
+  },
+  "artifact_summaries": [
+    {
+      "source_id": "artifact_1",
+      "entries": 13,
+      "invalid_entry_ids": 0,
+      "file_sha256": "2022176f6924d921de66a125cd82af2a754bb0252e582afb2be1ac3b23840fb0",
+      "format": "uid_map"
+    },
+    {
+      "source_id": "artifact_2",
+      "entries": 228,
+      "invalid_entry_ids": 0,
+      "file_sha256": "488b701d4c583135c021ecc55d61ace50751d53a0e3786ff4624658e3a76fd2e",
+      "format": "raw_vector_list"
+    }
+  ],
+  "production_writes": 0,
+  "provider_requests": 0,
+  "source_versions": {
+    "1.0": 211,
+    "2.1": 13
+  },
+  "null_item_codec_only": 68,
+  "profile_update_times_changed_between_scans": 0
+}
