@@ -31,7 +31,7 @@ async function serve(services){
    // Trusted fault injection is configured only in-process, never via JSON.
    if(drops.get(body.command)){drops.set(body.command,drops.get(body.command)-1);res.destroy();return;}
    const text=JSON.stringify(result);if(Buffer.byteLength(text)>65536)A.fail('response_byte_budget');res.writeHead(200,{'content-type':'application/json'});res.end(text);
-  }catch(e){const code=typeof e.code==='string'&&/^[a-z_]{1,64}$/.test(e.code)?e.code:'operation_failed';res.writeHead(['unpublished','job_missing'].includes(code)?404:code.startsWith('c2a_request')?400:409,{'content-type':'application/json'});res.end(JSON.stringify({version:G.VERSION,success:false,error:code}));}
+  }catch(e){const code=typeof e.code==='string'&&/^[a-z][a-z0-9_]{0,63}$/.test(e.code)?e.code:'operation_failed';res.writeHead(['unpublished','job_missing'].includes(code)?404:code.startsWith('c2a_request')?400:409,{'content-type':'application/json'});res.end(JSON.stringify({version:G.VERSION,success:false,error:code}));}
  });
  await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(G.PORT,'127.0.0.1',resolve);});
  return {url:'http://127.0.0.1:'+G.PORT+'/c2a',dropOnce:command=>drops.set(command,1),close:()=>new Promise(resolve=>{server.closeAllConnections();server.close(resolve);})};
