@@ -30,3 +30,9 @@ Run Node/Python required suites. Add meaningful coverage for table-only scoring 
 Final local verification (2026-11-22): Node 252 passed / six optional skips (258 total); Python 147 run / two optional skips. All 100 non-CBC reference objects and vectors match the prior library exactly, 12 worked arithmetic rows independently checked, frontend bytes equal exactly two substitutions with CRLF/final CR preserved. No provider calls, database writes or deployments.
 
 Review checkpoint (2026-11-22): [PR #52](https://github.com/SergiiPonomarchuk/isr-mvp/pull/52) targets codex/docs-x-eligibility (#51). Implementation head f3ef66d passed GitHub Node/Python CI; final documentation-head checks are verified before handoff. Worktree is clean after commit. Merge order: explicit author merge PR 51, then retarget/recheck #52 against main before its separately authorized merge. No author deploy step is implied yet.
+
+## Authorized integration (2026-11-23)
+
+Author requested PR #51 then #52. #51 merged as 70749a01bf5cf9a9cb0777ab132f5800d8d72851 with checks passed. Retargeted #52 to main and merged origin/main into its branch without content changes. Application/library/frontend and test content remain identical to reviewed 9817766; only integration status documentation changes. Required local suites and final reconciled-head CI are verified before the authorized #52 merge; main merge-head checks are then verified read-only. No deploy or data operation.
+
+Reconciled local verification (2026-11-23): Node 252 passed / six optional skips; Python 147 run / two optional skips. Reviewed source/examples/frontend/test content exactly match 9817766. Final pushed-head Node/Python CI and subsequent main merge-head checks are verified before reporting completion.

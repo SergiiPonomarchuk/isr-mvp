@@ -4,7 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: CBC adjustment removal implemented, 2026-11-22
+## Current checkpoint: #51 merged; #52 reconciled for authorized merge, 2026-11-23
+
+- Author instructed PR #51 then PR #52. Documentation reconciliation #51 merged as 70749a01bf5cf9a9cb0777ab132f5800d8d72851 after its final Node/Python checks passed. #52 is retargeted to main and reconciled with that merge; application and example content match reviewed head 9817766 exactly.
+- #52 removes the issue CBC modifier for new mr1-cbc-table-1 scoring. All 100 examples/library params, worked arithmetic, browser version handling and Python audits are aligned; frozen historical scoring/Join/replay remains supported. The CBC task records local and final CI verification. Merge #52 only after the reconciled head's checks pass; the author has authorized that merge.
+- No deployment, migration, rules change, production write or provider call. C:/isr-mvp remains the existing serving checkout with original author edits untouched. CBC changes are not live until an author-run deployment is separately prepared.
+- X eligibility/Values metadata specification is merged, but implementation and profile backfills remain separate. The direct-only gate/marked-carer recovery boundary still requires review before X implementation. C1 PR #50 remains independently open; no merge instruction or C2 approval is implied.
+- After #52 merges, verify its main merge-head checks and record the final receipt privately in scratch/merge-51-52-receipt.json. Sol Medium is sufficient for this integration.
+
+## Previous checkpoint: CBC adjustment removal implemented, 2026-11-22
 
 - Author approved removal: new scoring uses the existing education-category CBC table only. [Task and compatibility contract](tasks/CBC-table-only.md). Branch codex/remove-cbc-adjustment is stacked on documentation PR #51; merge order is #51 then this change, only on explicit author instructions.
 - Removed the factor from all 100 source examples and rebuilt the library offline: unchanged titles/tags/embedding texts/vectors, zero embedding/provider calls. Analyzer/Expertise/PD-9 formulas and four worked tables align with table-only CBC; education mappings/powers are unchanged.
