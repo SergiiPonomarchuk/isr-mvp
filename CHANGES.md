@@ -1,3 +1,7 @@
+## 2026-11-23 - Verify CBC scoring in isolated emulator and browser
+
+Test-only verification of actual Check/Create/Join, category CBC and frozen legacy multiplier, independent Python audit, uncapped preview/saved counts and members list. Synthetic demo-mr1 on8189 only; zero paid calls or production changes. Temporary services stopped. See specs/tasks/CBC-emulator-report.md and the separate offline overall-grounding plan.
+
 ## 2026-11-23 - Integrate documentation #51 then CBC removal #52
 
 Author authorized both merges in order. #51 merged as 70749a0 with checks passed. Retargeted #52 to main and reconciled without application/library/frontend changes; update integration status and verify the reconciled head before its authorized merge. No deployment, data operation, new provider call or X/Values implementation.

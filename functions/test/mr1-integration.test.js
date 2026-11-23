@@ -15,9 +15,9 @@ test("mr1 actual Check/Create/Join on isolated Firestore",{skip:process.env.MR1_
  const batch=db.batch();
  for(let n=1;n<=111;n++){
   const links=n===105?[{relative:106,type:"child",tie:.5},{relative:107,type:"child",tie:.35},{relative:108,type:"cousin",tie:null}]:n===1?[{relative:109,type:"spouse",tie:.2},{relative:105,type:"spouse",tie:1}]:n===109?[{relative:111,type:"spouse",tie:1}]:[];
-  batch.set(db.collection("users").doc(String(n)),{uid:n,displayName:`Synthetic ${n}`,birthDate:"1990-01-01",skills:[],post:[],features:[],...(n===1?{values_taxonomy:{domains:[0]}}:n===109?{values_taxonomy:{domains:[100]}}:{}),socialRelations:links,geography:[{type:"home",geo:[47.59,7.61]}]});
+  batch.set(db.collection("users").doc(String(n)),{uid:n,displayName:`Synthetic ${n}`,birthDate:"1990-01-01",skills:[1,110].includes(n)?[{id:"edu",type:"education",educationLevel:n===1?"Bachelor":"Vocational"}]:[],post:[],features:[],...(n===1?{values_taxonomy:{domains:[0]}}:n===109?{values_taxonomy:{domains:[100]}}:{}),socialRelations:links,geography:[{type:"home",geo:[47.59,7.61]}]});
   const cosine=n<=104?1:n===105?.1875:[106,107].includes(n)?.1:0;
-  batch.set(db.collection("user_vectors").doc(String(n)),{profile_vector:V(cosine),experience_vectors:{},embedding_model:AI.EMBED_MODEL,embedding_dims:768,embedding_template:AI.EMBED_TEMPLATE_VERSION});
+  batch.set(db.collection("user_vectors").doc(String(n)),{profile_vector:V(cosine),experience_vectors:[1,110].includes(n)?{edu:V(n===1?.6:.8)}:{},embedding_model:AI.EMBED_MODEL,embedding_dims:768,embedding_template:AI.EMBED_TEMPLATE_VERSION});
  }
  await batch.commit();
  for(const name of ["checkIssue","createIssue","joinIssue"])app.post('/'+name,handlers[name]);
@@ -26,11 +26,12 @@ test("mr1 actual Check/Create/Join on isolated Firestore",{skip:process.env.MR1_
  const body={title:"Repair our entrance lock",description:"The entrance lock at our building is broken. Residents need a repair.",location:[47.59,7.61],submitterId:"1",clarification:""};
  try{
   mode="clarify";const bad=await call("checkIssue",body);assert.equal(bad.data.success,false);assert.equal((await db.collection("issue_drafts").get()).size,0);
-  mode="pass";const checked=await call("checkIssue",body);assert.equal(checked.status,200,JSON.stringify(checked.data));assert.deepEqual(checked.data.cohort_counts,{A:105,B:4});assert.equal(checked.data.public_members_count,109);
+  mode="pass";const checked=await call("checkIssue",body);assert.equal(checked.status,200,JSON.stringify(checked.data));assert.equal(checked.data.scoring_version,"mr1-cbc-table-1");assert.deepEqual(checked.data.cohort_counts,{A:105,B:4});assert.equal(checked.data.public_members_count,109);
   assert.equal(checked.data.members[0].score,.8);assert.equal(checked.data.public_values_taxonomy.domains[0],5,"aggregate includes members outside the display preview");
   assert.equal(typeof checked.data.viewer_member.isr_score,"number");
   const make={...body,draftId:checked.data.draftId};
   const draftRef=db.collection("issue_drafts").doc(checked.data.draftId),draft=(await draftRef.get()).data();
+  assert.equal(draft.mr1_model.version,"mr1-cbc-table-1");assert.ok(draft.mr1_model.model.refs.every(r=>!Object.hasOwn(r,"cbc_adjustment")));
   assert.equal(draft.ai.prompt_version,require("../staged-context").PROMPT_VERSION);assert.equal(draft.ai.schema_sha256,require("../staged-context").contractHash());assert.deepEqual(draft.mr1_model.aspects.a.demographic_evidence,[]);
   await draftRef.update({"ai.prompt_version":Review.VERSION});assert.equal((await call("createIssue",make)).status,409);assert.equal((await db.collection("issues").get()).size,0);await draftRef.update({"ai.prompt_version":require("../staged-context").PROMPT_VERSION});
 
@@ -48,6 +49,22 @@ test("mr1 actual Check/Create/Join on isolated Firestore",{skip:process.env.MR1_
   const {spawnSync}=require("node:child_process"),path=require("node:path");
   const audit=()=>{const r=spawnSync("python",[path.resolve(__dirname,"../../scripts/mr1_check.py"),"--project","demo-mr1","--issue-id",created.data.issue_id],{encoding:"utf8"});assert.equal(r.status,0,r.stdout+ r.stderr);return JSON.parse(r.stdout);};
   assert.deepEqual(audit().problems,[]);
+  assert.equal((await member(1)).data().education_expertise,2.4);
+  assert.equal((await member(110)).data().education_expertise,1.28);
+  // A separate frozen old-policy public, built under its original multiplier.
+  const Engine=require('../mr1-engine'),CBC=require('../cbc-policy'),oldBundle=structuredClone(draft.mr1_model);
+  oldBundle.version=CBC.LEGACY_VERSION;oldBundle.model.refs.forEach(r=>r.cbc_adjustment=.9);
+  const frozen=await Engine.population(db,oldBundle,issue.location,issue.created_at.toDate().toISOString());
+  const frozenId='frozen-mr1-cbc',oldMaps={relevance_scores:Object.fromEntries(frozen.members.map(m=>[m.user_id,m.relevance_score])),isr_scores:Object.fromEntries(frozen.members.map(m=>[m.user_id,m.isr_score]))};
+  const oldIssue={...issue,...oldMaps,issue_id:frozenId,scoring_version:CBC.LEGACY_VERSION,mr1_model:oldBundle,mr1_model_hash:Review.hash(oldBundle),ends:'2099-12-31'};
+  const seed=db.batch();seed.set(db.collection('issues').doc(frozenId),oldIssue);seed.set(db.collection('discussions').doc(frozenId),{...disc,...oldMaps,scoring_version:CBC.LEGACY_VERSION,participants:frozen.members.map(m=>m.user_id),ends:'2099-12-31'});
+  seed.set(db.collection('microcommunities').doc(frozenId),{issue_id:frozenId,member_count:frozen.members.length,scoring_version:CBC.LEGACY_VERSION});
+  seed.set(db.collection('issue_vectors').doc(frozenId),(await db.collection('issue_vectors').doc(created.data.issue_id).get()).data());
+  frozen.members.forEach(m=>seed.set(db.collection('microcommunity_members').doc(`${frozenId}_${m.user_id}`),{...m,microcommunity_id:frozenId}));await seed.commit();
+  const oldResponse=await call('joinIssue',{issueId:frozenId,submitterId:'110'});assert.equal(oldResponse.status,200,JSON.stringify(oldResponse.data));
+  const oldMember=(await db.collection('microcommunity_members').doc(frozenId+'_110').get()).data();assert.equal(oldMember.scoring_version,CBC.LEGACY_VERSION);assert.equal(oldMember.education_expertise,Math.round(2*.8**1.8*1000)/1000);assert.notEqual(oldMember.education_expertise,1.28);
+  const oldAudit=spawnSync('python',[path.resolve(__dirname,'../../scripts/mr1_check.py'),'--project','demo-mr1','--issue-id',frozenId],{encoding:'utf8'});assert.equal(oldAudit.status,0,oldAudit.stdout+oldAudit.stderr);assert.deepEqual(JSON.parse(oldAudit.stdout).problems,[]);
+  console.log(JSON.stringify({cbc_emulator_evidence:{policy:Review.VERSION,members:109,after_join:110,bachelor_education:2.4,vocational_education:1.28,legacy_vocational_education:oldMember.education_expertise,python_current_and_legacy:'passed',real_provider_calls:0}}));
   const first=(await member(1)).data();await (await member(1)).ref.update({expertise_score:first.expertise_score+1});
   const corrupt=spawnSync("python",[path.resolve(__dirname,"../../scripts/mr1_check.py"),"--project","demo-mr1","--issue-id",created.data.issue_id],{encoding:"utf8"});assert.equal(corrupt.status,1,corrupt.stderr);assert.ok(JSON.parse(corrupt.stdout).problems.includes("1:expertise_score"));await (await member(1)).ref.update({expertise_score:first.expertise_score});
   // Version errors fail before publication, while legacy unversioned issues keep legacy Join.

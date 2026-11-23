@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: #51 merged; #52 reconciled for authorized merge, 2026-11-23
+## Current checkpoint: CBC emulator/browser verification passed, 2026-11-23
+
+- #51 merged as70749a0, then #52 as7027110; both final main checks passed. CBC verification starts at merged main7027110. Test-only feature codex/cbc-emulator-verification adds actual education vectors and frozen legacy .9-multiplier Join/audit to the opt-in HTTP endpoint test, plus guarded demo-project preview selection and isolated emulator ports.
+- [Evidence](tasks/CBC-emulator-report.md): Check/Create109 -> Join110; Bachelor2.400, vocational new1.280 versus frozen legacy1.338; both independent Python audits passed. Actual browser Check/Create/saved/member-list display109 /80% /ISR1.30. Screenshots retained. No application/scoring change, provider/embedding call, real-data operation, deployment or rules change. Temporary demo emulator/preview server stopped; original author documents/serving checkout untouched.
+- Required suites: Node252 passed/six optional skips, Python147 run/two optional skips, plus the opted-in emulator test passed. Final PR checks verified before handoff; merge requires explicit author instruction.
+- The author's go accepted the ordered CBC verification then overall_grounding work. [Concrete offline grounding plan](tasks/Values-grounding-offline-implementation.md) covers pure mean/validation, pipeline version1.0 and additive metadata retention with mocked tests. Implement separately; do not run a real-data inventory/backfill or vectorizer CLI. X eligibility/cut boundary and C2 remain separate.
+
+## Previous checkpoint: #51 merged; #52 reconciled for authorized merge, 2026-11-23
 
 - Author instructed PR #51 then PR #52. Documentation reconciliation #51 merged as 70749a01bf5cf9a9cb0777ab132f5800d8d72851 after its final Node/Python checks passed. #52 is retargeted to main and reconciled with that merge; application and example content match reviewed head 9817766 exactly.
 - #52 removes the issue CBC modifier for new mr1-cbc-table-1 scoring. All 100 examples/library params, worked arithmetic, browser version handling and Python audits are aligned; frozen historical scoring/Join/replay remains supported. The CBC task records local and final CI verification. Merge #52 only after the reconciled head's checks pass; the author has authorized that merge.
