@@ -4,9 +4,12 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: R1 optional-metadata recovery prepared, 2026-11-23
+## Current checkpoint: R1 live optional-metadata recovery complete, 2026-11-23
 
-- #58 merged as252a319 with main checks passed. Author approved live R1 apply; agent reverified before224/desired0/conflict0 and hands full commands to the author, without running apply. Document-only runbook path escaping corrected; implementation/scope/private plan unchanged. Wait for author apply/verify results before marking R1 complete.
+- Author ran and verified the live R1 recovery: desired224/before0/conflict0; private journal contains224 acknowledged applies. Completion receipt saved under A:/BackUp/isr-mvp/rollouts/optional-metadata-20261123/live-verification-receipt.json. No agent production writes or AI calls. R1 is complete; the16 deferred grounding cases remain unresolved.
+- PR59 contains the runbook path correction and this completion record; merge only on explicit instruction after final CI. Next separate decision: locate further authoritative outputs for the16 cases, or approve preparation of a bounded offline regeneration proposal with cost/provenance comparison; no paid call or replacement is authorized yet.
+
+- #58 merged as252a319 with main checks passed. Author approved live R1 apply; agent reverified before224/desired0/conflict0 and hands full commands to the author, without running apply. Document-only runbook path escaping corrected; implementation/scope/private plan unchanged. This preparation checkpoint is superseded by the author verification above.
 
 - Author explicitly instructed merge PR #58. Reviewed head972a5a0 passed all four Node/Python checks and is current with main322ab63. Integration changes status documentation only; verify final PR-head CI before the authorized merge, then main merge-head checks and private receipt. No live apply, regeneration, provider request or deployment follows automatically.
 
