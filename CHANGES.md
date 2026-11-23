@@ -1,3 +1,10 @@
+## 2026-11-23 - Scoped read-only DB completeness audit
+
+- Record author-verified224 grounding patches; audit25,667 approved-path documents against D1 backup with redacted private receipts.
+- No missing historical scoped documents or emptied projected fields;9,150 embeddings pass current structure/source-hash checks. Message authors resolve;184 counter differences predate the audit.
+- Four user archives lack grounding metadata for16 deferred cases. Verified sources contain224 sets of optional metadata; propose separate recovery/regeneration/counter decisions without executing them.
+- Node253 passed/six skips; Python200 tests/three skips. No agent database writes, provider calls, deployment or docs/ edits.
+
 ## 2026-11-23 - Grounding metadata dry run and recovery rehearsal
 
 - Log16 unresolved cases for post-DB-audit restoration; freeze224 verified candidates and source hashes.
