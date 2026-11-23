@@ -1,3 +1,13 @@
+## 2026-11-23 - R1 live recovery verified complete
+
+- Author completed optional metadata recovery:224 desired, zero conflicts; bound journal has224 acknowledged applies. Private completion receipt saved.
+- No agent production writes or AI calls. Sixteen unresolved grounding cases remain separate.
+
+## 2026-11-23 - R1 author-runbook path correction
+
+- Correct escaped Windows path formatting using absolute PowerShell-compatible forward-slash paths. No utility, scope, plan or runtime change.
+- PR58 merged and live step approved; fresh read-only verification before224/desired0/conflict0. Author apply remains pending.
+
 ## 2026-11-23 - R1 optional Values metadata recovery preparation
 
 - Source-bound224-profile plan for three absent historical metadata fields; exact dotted updates preserve grounding metadata/Values and exclude16 unresolved cases.
