@@ -1,3 +1,8 @@
+## 2026-11-23 - R1 author-runbook path correction
+
+- Correct escaped Windows path formatting using absolute PowerShell-compatible forward-slash paths. No utility, scope, plan or runtime change.
+- PR58 merged and live step approved; fresh read-only verification before224/desired0/conflict0. Author apply remains pending.
+
 ## 2026-11-23 - R1 optional Values metadata recovery preparation
 
 - Source-bound224-profile plan for three absent historical metadata fields; exact dotted updates preserve grounding metadata/Values and exclude16 unresolved cases.

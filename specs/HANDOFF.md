@@ -6,6 +6,8 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 ## Current checkpoint: R1 optional-metadata recovery prepared, 2026-11-23
 
+- #58 merged as252a319 with main checks passed. Author approved live R1 apply; agent reverified before224/desired0/conflict0 and hands full commands to the author, without running apply. Document-only runbook path escaping corrected; implementation/scope/private plan unchanged. Wait for author apply/verify results before marking R1 complete.
+
 - Author explicitly instructed merge PR #58. Reviewed head972a5a0 passed all four Node/Python checks and is current with main322ab63. Integration changes status documentation only; verify final PR-head CI before the authorized merge, then main merge-head checks and private receipt. No live apply, regeneration, provider request or deployment follows automatically.
 
 - #57 merged as322ab63 with main Node/Python checks passed. Author approved R1 preparation only. [Scope/implementation](tasks/Values-optional-metadata-recovery.md), [aggregate evidence](tasks/Values-optional-metadata-summary.json), [author-only runbook](tasks/Values-optional-metadata-author-runbook.md). Branch codex/values-optional-metadata starts at322ab63; Sol Medium is sufficient.
