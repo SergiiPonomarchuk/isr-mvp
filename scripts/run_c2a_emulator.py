@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parents[1]
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',type=Path,required=True);args=parser.parse_args();out=args.out.resolve()
     if not out.is_relative_to(ROOT/'specs/tasks/M3-c2a-evidence'):raise ValueError('Output must be a new C2a report directory')
-    files=list((ROOT/'functions/experiments/publication').glob('*.js'))+list((ROOT/'functions/experiments/c2a').glob('*.js'))+[ROOT/'firestore.rules',ROOT/'functions/test/c2a-publication.test.js',ROOT/'functions/test/c2a-emulator.test.js']+[Path(__file__).resolve(),ROOT/'scripts/audit_capacity_phase_a.py',ROOT/'functions/tools/capacity/no-network.js',ROOT/'functions/test/generation-protocol.test.js',ROOT/'tests/test_generation_protocol_runner.py']
+    files=list((ROOT/'functions/experiments/publication').glob('*.js'))+list((ROOT/'functions/experiments/c2a').glob('*.js'))+[ROOT/'firestore.rules',ROOT/'functions/test/c2a-publication.test.js',ROOT/'functions/test/c2a-emulator.test.js']+[Path(__file__).resolve(),ROOT/'scripts/audit_capacity_phase_a.py',ROOT/'functions/tools/capacity/no-network.js',ROOT/'functions/test/generation-protocol.test.js',ROOT/'tests/test_generation_protocol_runner.py',ROOT/'tests/test_c2a_runner.py']
     pins={str(p.relative_to(ROOT)).replace('\\','/'):hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
     # Target refusal happens before process or report creation.
     if os.environ.get('C2A_EMULATOR_TESTS')!='1' or os.environ.get('GCLOUD_PROJECT')!='demo-c2a-publication' or os.environ.get('FIRESTORE_EMULATOR_HOST')!='127.0.0.1:8190':raise ValueError('C2a emulator target refused')
