@@ -1,3 +1,7 @@
+## 2026-11-23 - Integrate read-only grounding inventory PR #55
+
+Author requested merge #55. Reviewed implementation58eafe8 is current with main and passed all checks. Update integration status and verify the final head/main checks; inventory results and tool behavior are unchanged. No profile changes, metadata dry-run/apply, source repair, regeneration, provider call or deployment.
+
 ## 2026-11-23 - Inventory existing-profile grounding without writes
 
 Add a paginated, allowlisted read-only inventory with strict UID/hash/Values provenance, explicit retained UID-map/list artifacts, exact null-group codec, conflict detection and sanitized atomic reports. Observed240 taxonomy payloads:224 verified recoverable and16 unresolved;8,911 users have none. No source/profile changes, AI calls, data apply or deployment. See specs/tasks/Values-grounding-inventory-report.md for evidence, tests and proposed next scope.

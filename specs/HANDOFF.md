@@ -6,6 +6,8 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 ## Current checkpoint: read-only grounding inventory complete, 2026-11-23
 
+- Author explicitly requested merge PR #55. Reviewed implementation head58eafe8 has successful Node/Python checks and is current with main3dedd1a. Integration updates only status documentation; final pushed-head CI is verified before the authorized merge, then main merge-head checks and a private receipt are verified. No dry-run/apply, inventory rerun, source repair or deployment follows automatically.
+
 - #53 and #54 merged in order; main3dedd1a passed final checks. Author approved the next read-only inventory. Feature codex/values-grounding-inventory contains the no-apply tool, provenance/redaction/pagination tests and [aggregate results](tasks/Values-grounding-inventory-report.md).
 - Observed9,151 users,240 nonempty taxonomy payloads (239 recognized layouts and1 malformed),224 recoverable from retained sources,16 unresolved,8,911 without vectorized payload. Only users.uid/values_taxonomy/values_description read; narrative hashed in memory. No full profiles, names/contact fields, source copies, provider calls or data writes. Two explicit project artifacts verified unchanged.
 - Of224 verified sources,211 are1.0 and13 historical2.1;68 exact legacy explicit-null payloads remain unchanged. Remaining16:6 grounding metadata,5 missing hashes,2 narrative-hash mismatch,2 source-layout and1 stored-layout problem. Do not invent metadata or regenerate automatically.

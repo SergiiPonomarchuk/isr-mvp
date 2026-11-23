@@ -39,3 +39,7 @@ Final two-source scan:9,151 users;240 nonempty taxonomy payloads (239 recognized
 Required suites: Node253 passed/six optional skips; Python165 run/two skips; all11 inventory cases pass without site packages. See Values-grounding-inventory-report.md and the aggregate JSON. Backfill/dry-run utility, source repair and author-only live apply remain separate. Production writes and AI requests: zero.
 
 Review checkpoint (2026-11-23): [PR #55](https://github.com/SergiiPonomarchuk/isr-mvp/pull/55) targets main3dedd1a. Final local suites and read-only evidence passed; final pushed-head Node/Python checks are verified before handoff. No merge, metadata apply, regeneration or deployment is authorized by this inventory completion.
+
+## Authorized integration (2026-11-23)
+
+Author requested merge PR #55. Reviewed58eafe8 passed final Node/Python CI and is current with main3dedd1a. Integration changes status documentation only; classifier/tests/aggregate evidence are unchanged, so prior local verification remains applicable. Verify final pushed-head CI before merge and main merge-head CI afterwards; save scratch/merge-55-receipt.json. This merge authorizes no database writes, source repair, data-phase utility or deployment.
