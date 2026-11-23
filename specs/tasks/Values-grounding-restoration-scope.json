@@ -1,0 +1,61 @@
+{
+  "version": "grounding-restoration-scope-1",
+  "project": "project-a3d59130-5adf-4677-9e2",
+  "inventory_sha256": "18256a77aa5e0ac2b1fe6620de5c365bcdc99928ac5b0bebdb2670f2fa68bccf",
+  "expected_candidates": 224,
+  "deferred": {
+    "1": [
+      "invalid_grounding_metadata"
+    ],
+    "1016": [
+      "narrative_hash_mismatch"
+    ],
+    "125": [
+      "artifact_layout_invalid"
+    ],
+    "18": [
+      "artifact_layout_invalid"
+    ],
+    "3688": [
+      "missing_source_hash"
+    ],
+    "3974": [
+      "narrative_hash_mismatch"
+    ],
+    "4453": [
+      "missing_source_hash"
+    ],
+    "4535": [
+      "missing_source_hash"
+    ],
+    "5701": [
+      "invalid_grounding_metadata"
+    ],
+    "5702": [
+      "invalid_grounding_metadata"
+    ],
+    "6017": [
+      "invalid_grounding_metadata"
+    ],
+    "6107": [
+      "invalid_grounding_metadata"
+    ],
+    "66": [
+      "invalid_flattened_layout"
+    ],
+    "7044": [
+      "invalid_grounding_metadata"
+    ],
+    "86": [
+      "missing_source_hash"
+    ],
+    "96": [
+      "missing_source_hash"
+    ]
+  },
+  "artifact_hashes": [
+    "2022176f6924d921de66a125cd82af2a754bb0252e582afb2be1ac3b23840fb0",
+    "488b701d4c583135c021ecc55d61ace50751d53a0e3786ff4624658e3a76fd2e"
+  ],
+  "candidate_uids_sha256": "94103cb663128cf08d8f4221378148141a506337701e753b1c91a2e8256ee88b"
+}
