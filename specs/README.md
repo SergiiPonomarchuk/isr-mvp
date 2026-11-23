@@ -7,7 +7,9 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: [CBC emulator/browser evidence](tasks/CBC-emulator-report.md), with [offline overall-grounding implementation plan](tasks/Values-grounding-offline-implementation.md) next. No production operations.
+Current checkpoint: [offline overall-grounding implementation](tasks/Values-grounding-offline-implementation.md), stacked on CBC verification PR #53. Existing-profile backfill remains separate.
+
+Previous checkpoint: [CBC emulator/browser evidence](tasks/CBC-emulator-report.md), with [offline overall-grounding implementation plan](tasks/Values-grounding-offline-implementation.md) next. No production operations.
 
 Previous checkpoint: [CBC table-only scoring and removal from all 100 examples](tasks/CBC-table-only.md), retargeted to main after documentation PR #51 merged; both merges authorized in order. No live migration or deployment.
 

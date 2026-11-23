@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: CBC emulator/browser verification passed, 2026-11-23
+## Current checkpoint: CBC verified; offline Values grounding implemented, 2026-11-23
+
+- CBC verification [PR #53](https://github.com/SergiiPonomarchuk/isr-mvp/pull/53) targets main7027110 and passed final Node/Python CI. Actual endpoint/independent Python and browser evidence is tasks/CBC-emulator-report.md; both temporary demo services stopped. No deployment/live writes or provider calls.
+- Next ordered step is implemented separately on codex/values-grounding-offline, stacked on #53: [scope, implementation and tests](tasks/Values-grounding-offline-implementation.md). Pure ten-domain mean; strict metadata validation and raw/map adapters; finalized stage versions1.0; formatter preserves canonical metadata. No change to Public Values aggregation, vector dimensions/content, model/API transport or confidence rounding.
+- Required suites: Node253 passed/six skips; Python154 run/two skips. Seven new pure/mocked cases also pass without site packages. Local Firestore serialization accepted the synthetic output without any client/RPC. No real vectorizer CLI, profile-artifact inventory, regeneration, metadata backfill, production operation or deployment.
+- Final PR checks are verified before handoff. Merge #53 then its grounding successor only on explicit author instructions. Existing profiles still need a separately reviewed field-allowlisted provenance inventory and recovery/backfill plan; missing gl_cs cannot be invented from scores. X cut/marked-carer recovery decision, relationship flag population, C1 #50 and C2 remain separate.
+
+## Previous checkpoint: CBC emulator/browser verification passed, 2026-11-23
 
 - #51 merged as70749a0, then #52 as7027110; both final main checks passed. CBC verification starts at merged main7027110. Test-only feature codex/cbc-emulator-verification adds actual education vectors and frozen legacy .9-multiplier Join/audit to the opt-in HTTP endpoint test, plus guarded demo-project preview selection and isolated emulator ports.
 - [Evidence](tasks/CBC-emulator-report.md): Check/Create109 -> Join110; Bachelor2.400, vocational new1.280 versus frozen legacy1.338; both independent Python audits passed. Actual browser Check/Create/saved/member-list display109 /80% /ISR1.30. Screenshots retained. No application/scoring change, provider/embedding call, real-data operation, deployment or rules change. Temporary demo emulator/preview server stopped; original author documents/serving checkout untouched.

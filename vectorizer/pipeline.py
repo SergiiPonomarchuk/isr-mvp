@@ -2,8 +2,12 @@ import json
 import time
 import hashlib
 import datetime
-import requests
-from prompts import STEP_1_SYSTEM_PROMPT, STEP_1_PROMPT, STEP_2_SYSTEM_PROMPT, STEP_2_PROMPT
+if __package__:
+    from .prompts import STEP_1_SYSTEM_PROMPT, STEP_1_PROMPT, STEP_2_SYSTEM_PROMPT, STEP_2_PROMPT
+    from .values_metadata import validate_gl_cs, overall_grounding
+else:
+    from prompts import STEP_1_SYSTEM_PROMPT, STEP_1_PROMPT, STEP_2_SYSTEM_PROMPT, STEP_2_PROMPT
+    from values_metadata import validate_gl_cs, overall_grounding
 
 API_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
 
@@ -25,6 +29,7 @@ class QuotaExhaustedError(Exception):
     pass
 
 def call_gemini_api(system_prompt, user_prompt, api_key, model="gemini-flash-latest", temperature=0.2):
+    import requests  # Only an actual provider call needs this optional dependency.
     url = API_URL.format(model=model, api_key=api_key)
     headers = {"Content-Type": "application/json"}
     
@@ -93,14 +98,9 @@ def validate_vector_schema(vector, is_step2=False):
     if not isinstance(domains, list) or len(domains) != 10:
         raise ValueError("core_values.domains must be a list of exactly 10 values.")
         
-    # Check gl_cs metadata
-    gl_cs = meta.get("gl_cs")
-    if not isinstance(gl_cs, list) or len(gl_cs) != 10:
-        raise ValueError("meta.gl_cs must be a list of exactly 10 pairs.")
-    for idx, pair in enumerate(gl_cs):
-        if not isinstance(pair, list) or len(pair) != 2:
-            raise ValueError(f"meta.gl_cs[{idx}] must be a pair [grounding, confidence].")
-            
+    # Grounding and confidence are numeric inputs, never model-estimated summaries.
+    gl_cs = validate_gl_cs(meta.get("gl_cs"))
+
     # Check conflicts
     if len(conflict_resolution) != 36:
         raise ValueError(f"conflict_resolution must contain exactly 36 elements (got {len(conflict_resolution)}).")
@@ -158,13 +158,12 @@ def run_vectorization_pipeline(uid, narrative, api_key, model="gemini-flash-late
     step1_result["meta"]["version"] = "1.0"
     step1_result["meta"]["hash"] = sha1
     
-    # Calculate overall confidence
-    gl_cs = step1_result["meta"].get("gl_cs", [])
-    if isinstance(gl_cs, list) and len(gl_cs) == 10:
-        confidences = [pair[1] for pair in gl_cs if isinstance(pair, list) and len(pair) == 2]
-        if confidences:
-            step1_result["meta"]["overall_confidence"] = round(sum(confidences) / len(confidences), 1)
-            
+    # Host-calculated summaries; include grounding of every domain, including nulls.
+    gl_cs = validate_gl_cs(step1_result["meta"].get("gl_cs"))
+    step1_result["meta"]["overall_grounding"] = overall_grounding(gl_cs)
+    confidences = [pair[1] for pair in gl_cs]
+    step1_result["meta"]["overall_confidence"] = round(sum(confidences) / len(confidences), 1)
+
     # Validate Step 1 Schema
     validate_vector_schema(step1_result, is_step2=False)
     print(f"[{uid}] Step 1 validated successfully. Overall Confidence: {step1_result['meta']['overall_confidence']}")
@@ -194,9 +193,10 @@ def run_vectorization_pipeline(uid, narrative, api_key, model="gemini-flash-late
     step2_result["meta"]["vector_id"] = f"uid_{uid}_1"
     step2_result["meta"]["uid"] = int(uid)
     step2_result["meta"]["timestamp"] = datetime.datetime.utcnow().isoformat() + "Z"
-    step2_result["meta"]["version"] = "2.1"
+    step2_result["meta"]["version"] = "1.0"
     step2_result["meta"]["hash"] = sha1
     step2_result["meta"]["gl_cs"] = gl_cs
+    step2_result["meta"]["overall_grounding"] = overall_grounding(gl_cs)
     
     # Recalculate confidence
     confidences = [pair[1] for pair in gl_cs]
