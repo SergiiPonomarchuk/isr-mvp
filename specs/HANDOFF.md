@@ -6,6 +6,8 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 ## Current checkpoint: C1 PR50 reconciled and acceptance fixes verified, 2026-11-23
 
+- Author explicitly instructed merge PR50. Reviewed f0f8ba2 passed all four Node/Python checks and is current with main410d296. This integration records status only; verify final PR-head checks before the authorized merge, then main merge-head CI/private receipt. No C2/emulator/runtime/database/provider operation follows automatically;16-case Values recovery remains deferred.
+
 - Author approved PR50 review/reconciliation against main410d296 and explicitly approved mirror-consistency/strict-UTF8 fixes. Merge85fb980 preserves main CBC/Values/recovery histories; fixes f69976c stay offline. [Review/evidence](tasks/M3-generation-protocol/review-20261123.md), [scope](tasks/M3-generation-protocol-review.md). Original C serving checkout/docs untouched.
 - All29 focused cases pass after four regressions first reproduced old gaps. Current reads/Join activation/phase commands enforce mirror consistency; invalid UTF8 refuses without changing valid Unicode/frozen replay. No application scorer/endpoint/rules/source/profile/database/emulator/provider/loader operation. Main runtime/docs/vectorizer blobs match origin/main.
 - Node282 passed/six skips; Python222 tests/four skips. New immutable run20261123-03:2/7/17 tiny supplied payload/successor/replay traces exact; Create7 reads/10 writes, Join11/10;45.33MiB/0.594s with original gates/fuse. Old runs/sidecar preserved. Final PR50 checks verified before review-ready/handoff; merge only on explicit merge PR50. Sol Medium is sufficient.
