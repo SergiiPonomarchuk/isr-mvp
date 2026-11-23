@@ -18,7 +18,7 @@ FIELDS={
  'analyzer_logs':('model','prompt_version','status','created_at','usage','token_count'),
  'voting':('issue_id','status','submitter_id'), 'tasks':('issue_id','user_id','status'),
  'values':('uid','values_taxonomy','meta'),
- 'discussions__messages':('sender_uid','user_id','created_at','timestamp','marks'),
+ 'discussions__messages':('uid','sender_uid','user_id','created_at','timestamp','marks'),
 }
 ROOTS=tuple(k for k in FIELDS if '__' not in k)
 EXCLUDED=('issue_vectors','user_packs','geocode_cache','config','membership_events')
@@ -121,6 +121,11 @@ def pages(db,root,page_size,parent=None):
         if len(batch)<page_size:return
         last=batch[-1]
 
+def message_author_problems(data,user_ids):
+    uid=data.get('uid',data.get('sender_uid',data.get('user_id')))
+    if type(uid) not in (str,int):return ['message_author_missing_or_invalid']
+    return [] if I.safe_id(str(uid)) in user_ids else ['message_author_target_missing']
+
 def compare_backup(current,old):
     missing=sorted(set(old)-set(current));added=sorted(set(current)-set(old));fields=[];changed=0
     for uid in sorted(set(old)&set(current)):
@@ -216,6 +221,7 @@ def audit(db,sources,source_receipts,backup=None,page_size=200,progress=None):
         count=0
         for snap in pages(db,'discussions__messages',page_size,parent):
             rows['discussions__messages'][I.safe_id(parent)+'/'+I.safe_id(snap.id)]={'fields':summarize(snap.to_dict(),FIELDS['discussions__messages']),'update_time':snap.update_time.isoformat()};count+=1
+            for reason in message_author_problems(snap.to_dict(),rows['users']):flag('discussions__messages',parent+'/'+snap.id,reason)
         if 'message_count' in data and data['message_count']!=count:flag('discussions',parent,'message_count_mismatch')
     if progress:progress('discussions__messages',len(rows['discussions__messages']))
     comparisons={};backup_receipt=None

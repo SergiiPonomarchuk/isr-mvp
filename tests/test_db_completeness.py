@@ -76,6 +76,10 @@ class Tests(unittest.TestCase):
   for path,fields in db.reads:
    key='discussions__messages' if '/messages' in path else path
    self.assertEqual(fields,A.FIELDS[key]);self.assertFalse(set(fields)&{'email','password','firstName','lastName','displayName'})
+ def test_actual_message_uid_reference_is_checked(self):
+  self.assertEqual(A.message_author_problems({'uid':1},{'1'}),[])
+  self.assertEqual(A.message_author_problems({'uid':2},{'1'}),['message_author_target_missing'])
+  self.assertEqual(A.message_author_problems({'uid':True},{'1'}),['message_author_missing_or_invalid'])
  def test_backup_changes_are_review_candidates(self):
   old={'1':{'fields':A.summarize({'uid':1,'skills':[1]},('uid','skills'))},'2':{'fields':{}}}
   new={'1':{'fields':A.summarize({'uid':1,'skills':[]},('uid','skills'))},'3':{'fields':{}}}
