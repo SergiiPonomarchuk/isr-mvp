@@ -34,3 +34,5 @@ Implementation detail: provisional SDK records wrap prototype_version/fixture_id
 - 2026-11-23: offline installed-SDK measurement before emulator execution: largest provisional document2372bytes, largest sampled8-write CommitRequest8262bytes across2/7/17 fixtures, including128 transaction-token bytes. These fit the fixed16KiB request/512KiB document limits; no guard raised. Ten pure boundary/codec/planner/serializer/HTTP tests pass with network disabled. Actual transaction/request sizes still need emulator evidence.
 
 - 2026-11-23: implemented and verified isolated C2a; [evidence](M3-c2a-evidence/README.md), accepted source-pinned run07.22 scenarios passed; actual max request9318B/document2718B,46.172s/114.85MiB. Real SDK conflict retried once. Node293 passed/seven skips; Python224/four skips. Temporary services stopped/ports closed. No provider/live/rules/docs/runtime change; C2b/C3 remain separate.
+
+- 2026-11-23: [PR61](https://github.com/SergiiPonomarchuk/isr-mvp/pull/61) opened against main a660233. Final pushed-head CI is verified before handoff; author explicit merge instruction remains required. No deployment follows automatically.
