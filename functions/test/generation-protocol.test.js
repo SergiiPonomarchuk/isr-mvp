@@ -35,3 +35,30 @@ test('protocol report runs without SDK imports and has constant activation inven
 test('missing authority is not silently reinitialized on snapshot recovery',()=>{const f=F.setup(),t=f.p.begin(F.spec(),f.plan,'w');ready(f,t);f.store.run('remove-authority',tx=>tx.delete('control/source'));const s=new Store(JSON.parse(JSON.stringify(f.store.snapshot()))),p=new P.Protocol(s,f.clock);assert.equal(s.get('control/source'),undefined);code('authority_missing',()=>p.activate('b0',t));assert.equal(s.get(P.issueKey('i0')),undefined);});
 test('ordered upload IDs and complete replay directory are required',()=>{const f=F.setup(),reordered={...f.plan,nodes:[...f.plan.nodes].reverse()};code('plan_budget',()=>f.p.begin(F.spec(),reordered,'w'));const t=f.p.begin(F.spec(),f.plan,'w');code('checkpoint',()=>f.p.stage('b0',t,reordered,0));const records=F.fixture();records.find(r=>r.kind==='replay').data.members_count=1;const g=F.setup(),plan=A.prepare(records),gt=g.p.begin(F.spec(),plan,'w');let i=0;while(i<plan.node_count)i=g.p.stage('b0',gt,plan,i).cursor;code('replay_directory',()=>g.p.seal('b0',gt));});
 test('concurrent cancellation and unsupported async callbacks expose no partial writes',()=>{const f=F.setup(),t=f.p.begin(F.spec(),f.plan,'w');ready(f,t);code('conflict',()=>f.p.activate('b0',t,{beforeCommit:()=>f.p.abort('b0')}));assert.equal(f.store.get(P.issueKey('i0')),undefined);const s=new Store();code('async_unsupported',()=>s.run('bad-async',async tx=>tx.set('x',{})));assert.equal(s.get('x'),undefined);});
+
+
+test('validly hashed invalid UTF8 is refused while replacement characters and split Unicode round-trip',()=>{
+ const raw=Buffer.from(JSON.stringify(['string','a']));raw[raw.length-3]=0x80;
+ const body={version:1,type:'fragment',key:'context:x',kind:'context',ordinal:0,part:0,parts:1,payload:raw.toString('base64')},n={id:'n00000',body,hash:A.hash(['n00000',body])};
+ code('payload_utf8',()=>A.validate({version:1,root_id:n.id,root_hash:n.hash,node_count:1,record_count:1,payload_bytes:raw.length},()=>n));
+ const records=[{key:'context:unicode',kind:'context',data:(String.fromCodePoint(0xfffd,0x1f6aa)+' valid ').repeat(40)}],plan=A.prepare(records,{fragment_bytes:32});
+ assert.deepEqual(A.validate(plan,id=>plan.nodes.find(n=>n.id===id)),records);
+});
+test('current reads reject every missing or mismatched discussion/public publication mirror',()=>{
+ for(const path of [P.discKey('i0'),P.publicKey('i0')])for(const field of ['missing','build_id','manifest_hash','epoch','member_count']){
+  const f=published();if(field==='missing')f.store.run('remove-mirror',tx=>tx.delete(path));else f.store.inject(path,{...f.store.get(path),[field]:field==='epoch'||field==='member_count'?99:'wrong'});
+  code('root_mismatch',()=>f.p.readPublished('i0'));code('root_mismatch',()=>join(f));
+ }
+});
+test('Join activation refuses changed mirror tokens and concurrent mirror edits atomically',()=>{
+ for(const concurrent of [false,true]){
+  const f=published(),j=join(f);ready(j,j.t);
+  const corrupt=()=>f.store.inject(P.publicKey('i0'),{...f.store.get(P.publicKey('i0')),epoch:99});
+  if(!concurrent)corrupt();code(concurrent?'conflict':'root_mismatch',()=>f.p.activate('j1',j.t,concurrent?{beforeCommit:corrupt}:{}));
+  assert.equal(f.p.job('b0').state,'active');assert.equal(f.p.job('j1').state,'ready');assert.equal(f.store.get(P.issueKey('i0')).build_id,'b0');assert.equal(f.store.get('public/events/i0:3'),undefined);
+ }
+});
+test('phase changes refuse incomplete mirrors without updating phase or catalog',()=>{
+ const f=published(),catalog=f.store.get('control/catalog');f.store.run('remove-public-mirror',tx=>tx.delete(P.publicKey('i0')));
+ code('root_mismatch',()=>f.p.phase('i0','voting'));assert.equal(f.store.get(P.issueKey('i0')).phase,'chat');assert.deepEqual(f.store.get('control/catalog'),catalog);
+});

@@ -16,3 +16,5 @@ Author approved2026-11-23: resume capacity work by reviewing/reconciling existin
 - 2026-11-23: current main and clean existing C1 worktree verified. Both findings reproduced without database/provider calls. Author clarification requested under AGENTS workflow rule5; independent main reconciliation continues.
 
 - 2026-11-23: author explicitly approved both C1 fixes and regression tests. The pending clarification above is resolved. Four status/design-history conflicts are reconciled while retaining both histories; implementation fixes follow within the existing acceptance contract.
+
+- 2026-11-23: four new focused regressions first failed against the reviewed implementation (25 old tests pass/4 new fail). Added current issue/discussion/public token-and-phase consistency checks for reads/Join activation/phase changes, plus strict UTF8 round-trip validation before JSON decoding. All29 focused tests now pass; valid Unicode and frozen original replay after Join remain covered. Both fixes are within the explicit author approval; shared scoring/runtime code unchanged.
