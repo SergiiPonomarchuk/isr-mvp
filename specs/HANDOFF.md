@@ -6,6 +6,8 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 ## Current checkpoint: R1 live optional-metadata recovery complete, 2026-11-23
 
+- Author explicitly instructed merge PR #59. Reviewed5ef68b9 passed all four Node/Python checks and is current with main252a319. This final integration records status only; verify final PR-head checks before merging, then main merge-head CI and private receipt. R1 remains author-verified complete; no new live operation, regeneration or paid call follows automatically.
+
 - Author ran and verified the live R1 recovery: desired224/before0/conflict0; private journal contains224 acknowledged applies. Completion receipt saved under A:/BackUp/isr-mvp/rollouts/optional-metadata-20261123/live-verification-receipt.json. No agent production writes or AI calls. R1 is complete; the16 deferred grounding cases remain unresolved.
 - PR59 contains the runbook path correction and this completion record; merge only on explicit instruction after final CI. Next separate decision: locate further authoritative outputs for the16 cases, or approve preparation of a bounded offline regeneration proposal with cost/provenance comparison; no paid call or replacement is authorized yet.
 
