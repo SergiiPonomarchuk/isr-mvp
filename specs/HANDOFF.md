@@ -4,7 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: scoped DB audit complete; restoration proposal ready, 2026-11-23
+## Current checkpoint: R1 optional-metadata recovery prepared, 2026-11-23
+
+- #57 merged as322ab63 with main Node/Python checks passed. Author approved R1 preparation only. [Scope/implementation](tasks/Values-optional-metadata-recovery.md), [aggregate evidence](tasks/Values-optional-metadata-summary.json), [author-only runbook](tasks/Values-optional-metadata-author-runbook.md). Branch codex/values-optional-metadata starts at322ab63; Sol Medium is sufficient.
+- Recover exactly three absent dotted metadata fields (historical timestamp/vector_id/overall_confidence), preserving existing five-key metadata and all Values/other fields. Committed scope binds original source/plan hashes and224 IDs, excluding16. Reuses the existing journal engine through a strict R1 store adapter; previous recovery modules remain unchanged. No application/scoring/docs/ changes.
+- Actual live read-only plan ready224/zero conflicts, second verification before224/desired0/conflict0. Private plan and receipt in A:/BackUp/isr-mvp/rollouts/optional-metadata-20261123; task records digest. No R1 live writes/provider calls/deployment. Separate author live decision follows PR review/merge; full PowerShell steps are prepared, not executed.
+- Actual synthetic SDK/CLI rehearsal applied224, retried with zero writes and restored all241 full documents;16 deferred/control timestamps unchanged. Lost-response recovery and uncertain-ownership rollback refusal passed. Emulator stopped/ports closed. Node253 passed/six skips; Python220 tests/four skips;19 pure R1 cases and separate opted-in emulator case passed. Final PR checks verified before handoff; merge only on explicit instruction.
+- The16 unresolved grounding/source cases,184 historical message-counter discrepancies, Values expansion and X eligibility remain separate decisions. No regeneration or new paid allowance is implied. Original C serving checkout/docs untouched.
+
+## Previous checkpoint: scoped DB audit complete; restoration proposal ready, 2026-11-23
 
 - Author explicitly instructed merge PR #57. Reviewed head5c477f7 passed all four Node/Python checks and is current with main45124f2. Integration changes status documentation only; verify final PR-head CI before the authorized merge, then main merge-head checks and a private receipt. No restoration implementation, live write, paid/model request or deployment follows automatically.
 

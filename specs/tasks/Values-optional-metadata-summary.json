@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-23",
+  "plan_sha256": "cae0cc1903acd63d904570f7bb568f1b744c6a0259dfbf16d297749d7be90110",
+  "project": "project-a3d59130-5adf-4677-9e2",
+  "ready": true,
+  "profiles": 224,
+  "fields_per_profile": 3,
+  "verify": {
+    "complete": true,
+    "counts": {
+      "desired": 0,
+      "before": 224,
+      "conflict": 0
+    },
+    "write_attempts": 0
+  },
+  "production_writes": 0,
+  "provider_calls": 0,
+  "emulator": {
+    "applied": 224,
+    "retry_writes": 0,
+    "remaining_confirmed_rollback": 223,
+    "lost_rollback_reconciled": 1,
+    "full_documents_restored": 241,
+    "deferred_untouched": 16,
+    "lost_apply_duplicate_writes": 0,
+    "uncertain_rollback_held": true
+  }
+}
