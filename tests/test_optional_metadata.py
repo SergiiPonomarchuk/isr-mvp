@@ -1,5 +1,6 @@
 """R1 pure/fake tests: real journal and exact dotted-field CAS adapter."""
-import copy,datetime as dt,hashlib,json,sys,tempfile,unittest
+import copy,datetime as dt,hashlib,json,sys,tempfile,unittest,contextlib,io,os
+from unittest.mock import patch
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 import optional_metadata_plan as R
@@ -133,6 +134,17 @@ class OptionalTests(unittest.TestCase):
             with self.assertRaises(G.GuardError):G.Journal(path,p)
             path=Path(d)/'j2';G.Journal(path,p)
             with self.assertRaises(G.GuardError):G.Journal(path,{**p,'plan_sha256':'0'*64})
+    def test_live_scope_override_rejected_before_sdk(self):
+        output=io.StringIO()
+        with patch.dict(os.environ,{},clear=True),contextlib.redirect_stderr(output):
+            result=CLI.main(['verify','--project',I.LIVE_PROJECT,'--i-know-this-is-live','--test-scope','never-read','--plan','never-read'])
+        self.assertEqual(result,1);self.assertEqual(json.loads(output.getvalue())['reason'],'test_scope_forbidden_on_live')
+    def test_write_mode_requires_explicit_apply_and_verify_cannot_write(self):
+        for mode,extra in [('apply',[]),('verify',['--apply'])]:
+            output=io.StringIO()
+            with patch.dict(os.environ,{},clear=True),contextlib.redirect_stderr(output):
+                result=CLI.main([mode,'--project',I.LIVE_PROJECT,'--i-know-this-is-live','--plan','never-read']+extra)
+            self.assertEqual(result,1);self.assertEqual(json.loads(output.getvalue())['reason'],'explicit_write_mode_required')
     def test_adapter_rejects_whole_meta_or_other_fields(self):
         store,index,old,b,scope,p=fixture();engine=R.EngineStore(store,p);snap=engine.read_many(['7'])['7']
         with self.assertRaises(G.GuardError):engine.compare_and_set('7',{},snap)
