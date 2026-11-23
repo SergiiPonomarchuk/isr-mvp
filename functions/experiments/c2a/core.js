@@ -37,7 +37,7 @@ async function open({resume=false}={}){
    if(counters.commits>LIMITS.fixture_commits||counters.bytes>LIMITS.fixture_commit_bytes)A.fail('fixture_commit_budget');session.counters.set(context.fixture,counters);
    session.metrics.push({...context,...m});for(const w of r.writes){const name=w.update?.name||w.delete;session.paths.add(name.slice(prefix.length));}
   }return request(method,r,...rest);};
- db.requestStream=function(method,r,...rest){guardRequest(method,r);return stream(method,r,...rest);};
+ db.requestStream=function(method,bidirectional,r,...rest){guardRequest(method,r);return stream(method,bidirectional,r,...rest);};
  try{
   const roots=(await db.listCollections()).map(r=>r.id).sort();if(roots.some(r=>!['issue_drafts','issues','discussions','microcommunities'].includes(r)))A.fail('unexpected_database_roots');
   const marker=db.doc('issue_drafts/c2a_bootstrap'),value={prototype_version:G.VERSION,project:G.PROJECT,marker:'fresh_disposable_fixture'};
