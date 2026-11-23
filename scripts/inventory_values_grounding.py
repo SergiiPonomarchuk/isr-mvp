@@ -155,6 +155,8 @@ def classify(uid, data, artifacts=(), update_time=None):
     row = dict(uid=safe_id(uid), state='unresolved', reasons=[], retained_source_entries=len(artifacts))
     if update_time is not None:
         row['update_time'] = update_time.isoformat()
+        precise = getattr(update_time, 'rfc3339', None)
+        row['precise_update_time'] = precise() if callable(precise) else update_time.isoformat().replace('+00:00', 'Z')
     taxonomy = data.get('values_taxonomy')
     if taxonomy is None or taxonomy == {}:
         row['state'] = 'not_vectorized'

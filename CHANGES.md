@@ -1,3 +1,10 @@
+## 2026-11-23 - Grounding metadata dry run and recovery rehearsal
+
+- Log16 unresolved cases for post-DB-audit restoration; freeze224 verified candidates and source hashes.
+- Add minimal five-field metadata planner, CAS apply, verification and journaled retry/rollback; no application/scoring or Values edits.
+- Live read-only plan ready224/zero conflicts. Synthetic SDK/CLI apply/retry/rollback restores241 complete documents and leaves16 deferred untouched; uncertain ownership blocks rollback.
+- Node253 passed/six skips; Python180 tests/three skips; opted-in emulator test passed. Author-only live runbook prepared; no production writes, AI calls or deployment.
+
 ## 2026-11-23 - Integrate read-only grounding inventory PR #55
 
 Author requested merge #55. Reviewed implementation58eafe8 is current with main and passed all checks. Update integration status and verify the final head/main checks; inventory results and tool behavior are unchanged. No profile changes, metadata dry-run/apply, source repair, regeneration, provider call or deployment.

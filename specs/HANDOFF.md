@@ -4,7 +4,16 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: read-only grounding inventory complete, 2026-11-23
+## Current checkpoint: grounding dry run and recovery rehearsal ready, 2026-11-23
+
+- Author explicitly instructed merge PR #56. Reviewed head b9dd613 has successful Node/Python checks and is current with main d205cc8. This integration updates status documentation only; verify final PR-head checks before the authorized merge, then main merge-head checks and private receipt. No live apply, deployment or additional data operation follows automatically.
+
+- Author instructed: log the16 unresolved cases for restoration after DB audit and proceed with the rest. [Deferred log](tasks/DB-audit-restoration-followups.md); [approved scope/evidence](tasks/Values-grounding-dry-run.md); [author-only runbook](tasks/Values-grounding-author-runbook.md). Feature codex/values-grounding-dry-run starts at merged #55/main d205cc8. Sol Medium is sufficient.
+- Minimal five-field metadata patch only. Actual live read-only plan is ready for224 frozen profiles, zero conflicts; private plan/digest in the task. No live data writes, provider calls, deployment, source edits, Values changes or automatic repair. The16 excluded cases and other missing metadata return after DB audit.
+- Actual isolated demo emulator CLI rehearsal:224 applied, retry zero writes, rollback restored all241 full synthetic documents;16 deferred/control timestamps unchanged. Lost-response recovery/idempotence and rollback ownership refusal passed. Required suites Node253 pass/six skips; Python180 tests/three skips; opted-in emulator test also passed. Temporary emulator stopped and ports checked.
+- Review/merge the PR only on explicit instruction. Later author-only live apply requires review/decision; full PowerShell commands are prepared, not executed. Preserve private plan/journal. Existing X cut/marked-carer boundary, relationship flag population, C1 #50 and C2 remain separate. Final PR-head CI is checked before handoff.
+
+## Previous checkpoint: read-only grounding inventory complete, 2026-11-23
 
 - Author explicitly requested merge PR #55. Reviewed implementation head58eafe8 has successful Node/Python checks and is current with main3dedd1a. Integration updates only status documentation; final pushed-head CI is verified before the authorized merge, then main merge-head checks and a private receipt are verified. No dry-run/apply, inventory rerun, source repair or deployment follows automatically.
 
