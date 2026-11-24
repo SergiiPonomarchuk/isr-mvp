@@ -1,3 +1,8 @@
+## 2026-11-24 - C3a offline streaming prototype
+
+- Add isolated synthetic disk-backed evaluation/cohorts/normalization/Values/Join and exact whole-oracle comparison, segmented manifests and published directory/replay/rank/UID readers. No production scoring/codec edits.
+- Add independent Python recomputation and fixed24-case supervisor with shared deadlines and cumulative resource guards. Focused16 Node/6 Python tests pass; admitted matrix pending. Zero provider/database/loader operations.
+
 ## 2026-11-24 - C3 population parity and capacity plan
 
 - Record accepted C2b PR63 merge aae2ff7/main CI. Propose bounded offline streaming scorer/format prototype, then separately gated source/resource/emulator/population/recovery work.
