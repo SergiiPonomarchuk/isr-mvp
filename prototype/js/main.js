@@ -1,7 +1,11 @@
 
 // Initialize Firebase
 if (typeof firebase !== 'undefined') {
-  const config = window.firebaseConfig || (typeof firebaseConfig !== 'undefined' ? firebaseConfig : null);
+  const publicationRequested = new URLSearchParams(window.location.search).get('publication_fixture') === '1';
+  if (publicationRequested && !window.ISRPublicationFixture) throw new Error('Publication fixture adapter unavailable');
+  if (publicationRequested) window.ISRPublicationFixture.assertLocation();
+  if (publicationRequested && firebase.apps.length && firebase.app().options.projectId !== 'demo-c2b-integration') throw new Error('Unexpected Firebase application');
+  const config = publicationRequested ? { apiKey: 'demo-c2b-no-real-key', projectId: 'demo-c2b-integration', authDomain: '127.0.0.1' } : (window.firebaseConfig || (typeof firebaseConfig !== 'undefined' ? firebaseConfig : null));
   if (config && !firebase.apps.length) {
     firebase.initializeApp(config);
   }
@@ -2196,6 +2200,12 @@ function initTopicDetailViews() {
   var MESSAGE_SORT_LABELS = { date: 'date', isr: 'ISR', r: 'R', e: 'E' };
   var messageSort = { key: 'date', reversed: false };
   var messageAuthorScores = { topicId: null, mcId: null, byUid: {} };
+  if (window.ISRPublicationFixture && window.ISRPublicationFixture.requested) {
+    window.ISRPublicationFixture.renderers = { chat: renderChatTopic, voting: renderVotingTopic, tasks: renderTasksTopic, create: renderChatCreate, proposal: bindProposalInteractions,
+      authorScores: function(byUid) { messageAuthorScores.byUid = byUid; },
+      sortMessages: function(key) { if (messageSort.key === key) messageSort.reversed = !messageSort.reversed; else { messageSort.key = key; messageSort.reversed = false; } } };
+    return;
+  }
 
   // a, b: {idx, s} with idx = position in date order (oldest first) and s = {isr, r, e} or null.
   // date: newest first; ISR, R, E: highest first; reversed flips that. Messages whose author has
@@ -7657,6 +7667,11 @@ function initTopicDetailViews() {
             description: tempSteps,
             marks: []
           };
+          if (window.ISRPublicationFixture && window.ISRPublicationFixture.requested) {
+            try { await window.ISRPublicationFixture.submitOption(newOption); proposalModalOverlay.hidden = true; }
+            catch (error) { alert(error.message); proposalSubmitBtn.disabled = false; proposalSubmitBtn.textContent = 'Submit Proposal'; }
+            return;
+          }
 
           const db = firebase.firestore();
           const docRef = db.collection("discussions").doc(topicId);
@@ -7883,6 +7898,7 @@ function ensureTopicLocation(disc, topicId) {
 }
 
 function initRealTimeDashboardSync(db, storedUid) {
+  if (window.ISRPublicationFixture && window.ISRPublicationFixture.requested) return window.ISRPublicationFixture.start(db, storedUid);
   let activeIssuesCount = 0;
   let todoCount = 0; // U2: the number of the member's ToDo issues
   let discussionsCount = 0;
@@ -9001,6 +9017,11 @@ function initRealTimeDashboardSync(db, storedUid) {
 }
 
 function initMainPage() {
+  if (window.ISRPublicationFixture && window.ISRPublicationFixture.requested) {
+    initTopicDetailViews();
+    initRealTimeDashboardSync(firebase.firestore(), safeGetStorage('userId') || '1');
+    return;
+  }
   const tooltipsEnabled = localStorage.getItem('tooltipsEnabled') !== 'false';
   if (!tooltipsEnabled) {
     document.body.classList.add('tooltips-disabled');
@@ -9660,6 +9681,7 @@ window.bindValuesSection = bindValuesSection;
 })();
 
 function initApp() {
+  if (window.ISRPublicationFixture && window.ISRPublicationFixture.requested) { initMainPage(); return; }
   if (document.getElementById('menu-button') && document.getElementById('menu')) {
     initMainPage();
   }
