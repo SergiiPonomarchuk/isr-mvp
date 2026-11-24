@@ -1,3 +1,7 @@
+## 2026-11-24 - C2b usability layout correction
+
+- Group similar fixture issues in one rounded list with horizontal dividers; reuse the standard full-width rounded explanation textarea and label spacing. Member-list and Join checks accepted by author.
+
 ## 2026-11-24 - C2b tiny emulator application/lifecycle integration
 
 - Default-off generation adapter, bounded backend commands and actual application renderer/cache integration; unchanged Lifecycle/ISR math. Unsupported legacy consumers refuse the new format.
