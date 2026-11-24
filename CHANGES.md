@@ -1,3 +1,10 @@
+## 2026-11-24 - C2b application/lifecycle/browser proposal
+
+- Record PR61 merge d7f5c30 and successful main CI; preserve C2a evidence and limitations.
+- Refresh consumer inventory and propose one bounded emulator-only adapter/command/UI integration scope, with internal milestones, complete-generation decisions, finite guards and human review.
+- Node293 passed/seven skips (unchanged rerun after subprocess timeouts); Python224/four skips, links/source anchors and documentation diff verified.
+- Documentation only. No implementation, emulator/browser run, provider/data/rules/docs/ change; C2b implementation/path approval and later C3/live gates remain separate.
+
 ## 2026-11-23 - C2a isolated emulator publication slice
 
 - Add experimental reads-first SDK publication, guarded loopback commands, pinned complete pages/replay, successor Join and phase fencing; application/runtime/scorers unchanged.

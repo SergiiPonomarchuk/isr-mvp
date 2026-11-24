@@ -4,7 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: C2a isolated emulator slice verified, 2026-11-23
+## Current checkpoint: C2a merged; C2b proposal prepared, 2026-11-24
+
+- Author explicitly ordered merge PR61. Reviewed3bb4887 merged as d7f5c30; merged tree matched and main Node/Python CI passed. No deployment/data/provider operation followed. C2a accepted evidence/limits remain unchanged.
+- Author requested the next documentation proposal. [C2b proposed application/lifecycle/browser scope](tasks/M3-c2b-integration-proposal.md) refreshes the consumer inventory and specifies a default-off tiny fixture adapter, backend commands, complete outcome publication, actual UI/cache/browser checks, isolated paths and finite limits. Sol Medium sufficient; zero paid allowance needed.
+- Next: review/explicit `merge PR62` for [the documentation PR](https://github.com/SergiiPonomarchuk/isr-mvp/pull/62), then explicit approval of C2b emulator-only implementation including its provisional path exception. Proposal preparation/merge does not authorize implementation. B1-B3 can proceed under one later approval; human usability review follows objective checks.
+- Node293 passed/seven skips on unchanged rerun after two initial subprocess-start timeouts; Python224 tests/four skips passed. Documentation links/anchors/diff verified; final pushed-head CI checked before handoff. No code/test/time-limit change.
+- No source/rules/docs/data/emulator/browser/provider/credential-loader change/run in this proposal. Original C serving checkout and frozen reports unchanged. C3 population parity/import and live access/source-writer/client-cutover/recovery stay gated;16 Values cases/PR60 remain deferred.
+
+## Previous checkpoint: C2a isolated emulator slice verified, 2026-11-23
 
 - C1 PR50 merged as a660233 with main CI passed. Author approved C2a including provisional emulator-only paths. [Spec](tasks/M3-c2a-emulator-publication.md), [evidence/limits](tasks/M3-c2a-evidence/README.md). Branch codex/c2a-emulator-publication; Sol Medium sufficient, zero AI calls.
 - Reads-first SDK orchestration, loopback harness, private build/seal/atomic mirrored activation, complete pinned pages, frozen replay, successor Join and phase fences pass22 scenarios on2/7/17 supplied fixtures. Actual conflict retries once; source-pinned restart/refusals pass. Largest request9318B/document2718B;46.172s/114.85MiB within unchanged gates. Node293 passed/seven skips; Python224/four skips. Temporary services stopped/dedicated ports closed.
