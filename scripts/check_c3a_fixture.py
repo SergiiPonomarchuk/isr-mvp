@@ -20,14 +20,22 @@ def unpack(x):
   for k,vv in v:require(k not in out,'duplicate_key');out[k]=unpack(vv)
   return out
  raise AuditError('typed_version')
+READ_LIMIT=1000000
+READS=0
+def charge_read():
+ global READS
+ require(READS<READ_LIMIT,'audit_work_limit');READS+=1
+
 class Store:
  def __init__(self,d,name,raw=False):self.data=open(d/(name+'.data'),'rb');self.index=open(d/(name+'.index'),'rb');self.raw=raw
  def get(self,i):
+  charge_read()
   require(type(i)==int and 0<=i<=200000,'index_id');self.index.seek(i*16);b=self.index.read(16)
   if not b or b[12:]==bytes(4):return None
   require(len(b)==16,'index_size');at,n,magic=struct.unpack('>QII',b);require(magic==0x43334131 and 0<n<=12*1024**2,'index_shape');self.data.seek(at);b=self.data.read(n);require(len(b)==n,'frame_missing');x=json.loads(b);e=x['encoded'];require(hashlib.sha256(e.encode()).hexdigest()==x['hash'],'frame_hash');self.last_hash=x['hash'];v=json.loads(e);return v if self.raw else unpack(v)
  def close(self):self.data.close();self.index.close()
-def load(d,name):return unpack(json.loads((d/(name+'.json')).read_text(encoding='utf-8')))
+def load(d,name):
+ charge_read();return unpack(json.loads((d/(name+'.json')).read_text(encoding='utf-8')))
 def ids(n,p=''):
  for digit in range(0 if p else 1,10):
   s=p+str(digit);v=int(s)
@@ -36,7 +44,10 @@ def ids(n,p=''):
   if v*10<=n:yield from ids(n,s)
 def r3(x):return math.floor(x*1000+.5)/1000
 def near(a,b,code,tol=TOL):require(type(a) in (int,float) and type(b) in (int,float) and abs(a-b)<=tol,code)
-def audit(directory):
+def audit(directory,read_budget=1000000):
+ global READS,READ_LIMIT
+ require(type(read_budget)==int and 0<read_budget<=1000000,'audit_work_limit')
+ READS=0;READ_LIMIT=read_budget
  import mr1_check as E,multi_reference as M,isr_core as ISR
  d=Path(directory).resolve();allowed=[ROOT/'specs/tasks/M3-c3a-evidence',ROOT/'scratch']
  require(any(d.is_relative_to(x.resolve()) for x in allowed),'output_path');seal=load(d,'source-seal');c=seal['config'];n=int(c['n']);require(1<=n<MAX and seal['version']=='c3a-synthetic-source-1','source_manifest');source=Store(d,'source',True);scored=Store(d,'scores');create=Store(d,'create');join=Store(d,'join');summary=load(d,'job')['summary'];bundle=load(d,'create-artifact-seal')['binding'];require(summary['population_hash']==seal['population_hash'],'source_binding')
@@ -115,12 +126,12 @@ def audit(directory):
     a,b=sums.get(key,[0,0]);return math.floor(a/b+.5) if b>0 else f
    result=None if not present else {'domains':[finish(('domain',j),50) for j in range(10)],'items':{'d'+str(j+1):[finish(('d'+str(j+1),q),50) for q in range(lengths.get('d'+str(j+1),0))] for j in range(10)},'contextual_shifts':{ctx:[finish((ctx,j),0) for j in range(10)] for ctx in ('work','family','private','crisis')},'conflict_resolution':[finish(('conflict',q),50) for q in range(36)]}
    require(result==summary[name+'_values'],'public_values');require(saved['tasks']==([{'title':'Implement option '+str(tally['winner']),'responsible':'1'}] if saved['result']=='todo' else []),'winning_tasks')
-  return {'complete':True,'profiles_evaluated':n,'members':len(order),'join_members':len(order)+1,'policy_acceptance':False,'database_reads':0,'writes':0,'requests':0}
+  return {'complete':True,'audit_read_units':READS,'audit_read_budget':READ_LIMIT,'profiles_evaluated':n,'members':len(order),'join_members':len(order)+1,'policy_acceptance':False,'database_reads':0,'writes':0,'requests':0}
  finally:
   for s in (source,scored,create,join):s.close()
 def main():
- parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--case-dir',type=Path,required=True);args=parser.parse_args()
- try:result=audit(args.case_dir)
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--case-dir',type=Path,required=True);parser.add_argument('--read-budget',type=int,default=1000000);args=parser.parse_args()
+ try:result=audit(args.case_dir,args.read_budget)
  except (AuditError,ValueError,KeyError,OSError,TypeError) as e:result={'complete':False,'code':str(e) if isinstance(e,AuditError) else 'audit_input_refused','database_reads':0,'writes':0,'requests':0}
  print(json.dumps(result));return 0 if result['complete'] else 2
 if __name__=='__main__':raise SystemExit(main())

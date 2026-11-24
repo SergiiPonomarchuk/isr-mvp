@@ -57,6 +57,22 @@ def run_child(command,case_dir,run_dir,deadline,pins,mode):
    else:result['status']='child_refused'
  return result
 
+def reserve_independent(directory,n):
+ # Conservative bound: source hashing <=n+1; evaluator <=2n; social <=n;
+ # membership <=3n; Create/Join normalization/provenance <=6n+3;
+ # Values <=4n+2; fixed checkpoint reads. 32n+512 leaves explicit slack.
+ if type(n)!=int or not 1<=n<=9150:raise RuntimeError('audit_population')
+ file=directory/'budget.json';state=json.loads(file.read_text(encoding='utf-8'))
+ limit=state['limits']['work'];used=state['work'];reserve=32*n+512
+ if type(limit)!=int or not 0<limit<=1000000 or type(used)!=int or not 0<=used<=limit or used+reserve>limit:raise RuntimeError('audit_work_limit')
+ state['work']+=reserve;state['independent_reserved']=state.get('independent_reserved',0)+reserve
+ encoded=json.dumps(state);cost=len(encoded.encode('utf-8'))
+ if state['bytes']['scratch']+cost>state['limits']['scratch']:raise RuntimeError('audit_scratch_limit')
+ state['bytes']['scratch']+=cost
+ # This fixed-size metadata update uses the run's pre-reserved4MiB headroom.
+ file.write_text(json.dumps(state),encoding='utf-8')
+ return reserve
+
 def run_fixture(c,run_dir,pins):
  directory=run_dir/c['id'];directory.mkdir();start=time.monotonic();deadline=time.time()+120;stages=[]
  modes=['structural'] if c.get('structural') else ['source','oracle','candidate','independent']
@@ -64,7 +80,10 @@ def run_fixture(c,run_dir,pins):
   if time.time()>=deadline:stages.append({'mode':mode,'status':'whole_fixture_timeout'});break
   if mode=='independent':
    if not (directory/'candidate-result.json').exists() or json.loads((directory/'candidate-result.json').read_text(encoding='utf-8'))['status']!='completed':break
-   command=[sys.executable,'-W','ignore',str(ROOT/'scripts/check_c3a_fixture.py'),'--case-dir',str(directory)]
+   try:reservation=reserve_independent(directory,c['n'])
+   except (RuntimeError,ValueError,KeyError,OSError,TypeError):
+    stages.append({'mode':mode,'status':'audit_budget_refused'});break
+   command=[sys.executable,'-W','ignore',str(ROOT/'scripts/check_c3a_fixture.py'),'--case-dir',str(directory),'--read-budget',str(reservation)]
   else:command=['node','--max-old-space-size=256',str(ROOT/'functions/experiments/c3a/worker.js'),mode,str(directory),json.dumps(c),str(int(deadline*1000))]
   stage=run_child(command,directory,run_dir,deadline,pins,mode)
   attempts=[]

@@ -1,7 +1,8 @@
-## 2026-11-24 - C3a offline streaming prototype
+## 2026-11-24 - C3a offline prototype and measured capacity limits
 
-- Add isolated synthetic disk-backed evaluation/cohorts/normalization/Values/Join and exact whole-oracle comparison, segmented manifests and published directory/replay/rank/UID readers. No production scoring/codec edits.
-- Add independent Python recomputation and fixed24-case supervisor with shared deadlines and cumulative resource guards. Focused16 Node/6 Python tests pass; admitted matrix pending. Zero provider/database/loader operations.
+- Record PR64 merged6dcb966/main CI. Add isolated disk-backed synthetic evaluator/Create/Join/Values/tally compatibility adapter, segmented offline artifacts, bounded readers and offline SDK serialization; production modules/C1/C2/docs/rules unchanged.
+- Preserve fixed24-case run:13 pass/11 refused or unproven, small exact parity through301/302 Join members; larger cases timed out. C3b NO-GO. No cap increase, source import, provider/database/loader call or deployment.
+- Add independent read-work pre-reservation/refusal after the frozen matrix; report the source-version distinction and conservative combined bound. Preserve failed preflight/helper runs. Full validation and next offline efficiency proposal recorded in HANDOFF/spec/evidence.
 
 ## 2026-11-24 - C3 population parity and capacity plan
 

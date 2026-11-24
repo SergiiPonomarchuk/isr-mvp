@@ -1,0 +1,1169 @@
+{
+  "version": "c3a-closeout-1",
+  "readiness": "NO_GO_C3b",
+  "executed_source_commit": "02f28b8",
+  "raw_report_sha256": "30f80cb638b67b5b58f9a1c28af014e967ade8772b08f538220ff12bb8e8d634",
+  "executed": 24,
+  "passed": 13,
+  "refused_or_unproven": 11,
+  "seconds_sum": 1645.6110000000335,
+  "peak_rss_bytes": 160534528,
+  "retained_files_bytes": 686118870,
+  "quota": {
+    "version": "c3a-quota-1",
+    "limit": 1069547520,
+    "reserved": 743440384
+  },
+  "max_commit_bytes": 16341,
+  "max_document_bytes": 4297,
+  "final_changes_from_executed_pins": [
+    "scripts/run_c3a_offline.py",
+    "scripts/check_c3a_fixture.py",
+    "functions/test/c3a-offline.test.js",
+    "tests/test_c3a_supervisor.py"
+  ],
+  "accounting_note": "Run03 used Node cumulative counters. Independent reads were not pre-reserved in that source version; a post-run conservative32*n+512 read bound proves each completed combined budget remains below1m. Final code now reserves before starting the independent child and counts/refuses its reads. No matrix rerun or retroactive raw-report change.",
+  "fixtures": [
+    {
+      "case": "score-2-1",
+      "n": 2,
+      "structural": false,
+      "status": "completed",
+      "seconds": 9.422000000020489,
+      "retained_files_bytes": 281838,
+      "last_mode": "independent",
+      "failure_mode": null,
+      "failure_code": null,
+      "peak_rss_bytes": 77705216,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 1536,
+        "nodes": 129,
+        "bytes": {
+          "source": 31340,
+          "artifact": 123028,
+          "scratch": 273031
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795541438596,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 576,
+      "combined_work_upper_bound": 2112,
+      "exact_node_parity": true,
+      "independent_complete": true,
+      "create_members": 2,
+      "join_members": 3,
+      "create_nodes": 35,
+      "join_nodes": 41,
+      "create_records": 10,
+      "join_records": 13
+    },
+    {
+      "case": "score-2-3",
+      "n": 2,
+      "structural": false,
+      "status": "completed",
+      "seconds": 9.405999999959022,
+      "retained_files_bytes": 422051,
+      "last_mode": "independent",
+      "failure_mode": null,
+      "failure_code": null,
+      "peak_rss_bytes": 77459456,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 1792,
+        "nodes": 157,
+        "bytes": {
+          "source": 31340,
+          "artifact": 247778,
+          "scratch": 298270
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795541448065,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 576,
+      "combined_work_upper_bound": 2368,
+      "exact_node_parity": true,
+      "independent_complete": true,
+      "create_members": 2,
+      "join_members": 3,
+      "create_nodes": 49,
+      "join_nodes": 55,
+      "create_records": 10,
+      "join_records": 13
+    },
+    {
+      "case": "refuse-corrupt",
+      "n": 7,
+      "structural": false,
+      "status": "completed",
+      "seconds": 9.937999999965541,
+      "retained_files_bytes": 635213,
+      "last_mode": "independent",
+      "failure_mode": null,
+      "failure_code": null,
+      "peak_rss_bytes": 77697024,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 2816,
+        "nodes": 352,
+        "bytes": {
+          "source": 78951,
+          "artifact": 317699,
+          "scratch": 486126
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795541457523,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 736,
+      "combined_work_upper_bound": 3552,
+      "exact_node_parity": true,
+      "independent_complete": true,
+      "create_members": null,
+      "join_members": null,
+      "create_nodes": null,
+      "join_nodes": null,
+      "create_records": null,
+      "join_records": null
+    },
+    {
+      "case": "refuse-missing",
+      "n": 7,
+      "structural": false,
+      "status": "completed",
+      "seconds": 10.468999999924563,
+      "retained_files_bytes": 635213,
+      "last_mode": "independent",
+      "failure_mode": null,
+      "failure_code": null,
+      "peak_rss_bytes": 78901248,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 2816,
+        "nodes": 352,
+        "bytes": {
+          "source": 78951,
+          "artifact": 317699,
+          "scratch": 486126
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795541467531,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 736,
+      "combined_work_upper_bound": 3552,
+      "exact_node_parity": true,
+      "independent_complete": true,
+      "create_members": null,
+      "join_members": null,
+      "create_nodes": null,
+      "join_nodes": null,
+      "create_records": null,
+      "join_records": null
+    },
+    {
+      "case": "restart-checkpoint",
+      "n": 7,
+      "structural": false,
+      "status": "completed",
+      "seconds": 11.75,
+      "retained_files_bytes": 645213,
+      "last_mode": "independent",
+      "failure_mode": null,
+      "failure_code": null,
+      "peak_rss_bytes": 77328384,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 3072,
+        "nodes": 352,
+        "bytes": {
+          "source": 78951,
+          "artifact": 317719,
+          "scratch": 489170
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 2
+        },
+        "deadline": 1795541478075,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 736,
+      "combined_work_upper_bound": 3808,
+      "exact_node_parity": true,
+      "independent_complete": true,
+      "create_members": 7,
+      "join_members": 8,
+      "create_nodes": 91,
+      "join_nodes": 98,
+      "create_records": 30,
+      "join_records": 33
+    },
+    {
+      "case": "restart-seal",
+      "n": 7,
+      "structural": false,
+      "status": "completed",
+      "seconds": 19.390999999945052,
+      "retained_files_bytes": 645147,
+      "last_mode": "independent",
+      "failure_mode": null,
+      "failure_code": null,
+      "peak_rss_bytes": 77578240,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 3072,
+        "nodes": 352,
+        "bytes": {
+          "source": 78951,
+          "artifact": 317687,
+          "scratch": 487836
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 2
+        },
+        "deadline": 1795541489932,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 736,
+      "combined_work_upper_bound": 3808,
+      "exact_node_parity": true,
+      "independent_complete": true,
+      "create_members": 7,
+      "join_members": 8,
+      "create_nodes": 91,
+      "join_nodes": 98,
+      "create_records": 30,
+      "join_records": 33
+    },
+    {
+      "case": "score-7-1",
+      "n": 7,
+      "structural": false,
+      "status": "completed",
+      "seconds": 9.875,
+      "retained_files_bytes": 479872,
+      "last_mode": "independent",
+      "failure_mode": null,
+      "failure_code": null,
+      "peak_rss_bytes": 76611584,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 2560,
+        "nodes": 324,
+        "bytes": {
+          "source": 78951,
+          "artifact": 186717,
+          "scratch": 441972
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795541509439,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 736,
+      "combined_work_upper_bound": 3296,
+      "exact_node_parity": true,
+      "independent_complete": true,
+      "create_members": 7,
+      "join_members": 8,
+      "create_nodes": 77,
+      "join_nodes": 84,
+      "create_records": 30,
+      "join_records": 33
+    },
+    {
+      "case": "score-7-3",
+      "n": 7,
+      "structural": false,
+      "status": "completed",
+      "seconds": 11.780999999959022,
+      "retained_files_bytes": 644969,
+      "last_mode": "independent",
+      "failure_mode": null,
+      "failure_code": null,
+      "peak_rss_bytes": 77881344,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 2816,
+        "nodes": 352,
+        "bytes": {
+          "source": 78951,
+          "artifact": 317603,
+          "scratch": 486090
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795541519437,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 736,
+      "combined_work_upper_bound": 3552,
+      "exact_node_parity": true,
+      "independent_complete": true,
+      "create_members": 7,
+      "join_members": 8,
+      "create_nodes": 91,
+      "join_nodes": 98,
+      "create_records": 30,
+      "join_records": 33
+    },
+    {
+      "case": "score-17-1",
+      "n": 17,
+      "structural": false,
+      "status": "completed",
+      "seconds": 14.047000000020489,
+      "retained_files_bytes": 874094,
+      "last_mode": "independent",
+      "failure_mode": null,
+      "failure_code": null,
+      "peak_rss_bytes": 78450688,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 4864,
+        "nodes": 713,
+        "bytes": {
+          "source": 178301,
+          "artifact": 315138,
+          "scratch": 774273
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795541531333,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 1056,
+      "combined_work_upper_bound": 5920,
+      "exact_node_parity": true,
+      "independent_complete": true,
+      "create_members": 17,
+      "join_members": 18,
+      "create_nodes": 164,
+      "join_nodes": 171,
+      "create_records": 70,
+      "join_records": 73
+    },
+    {
+      "case": "score-17-3",
+      "n": 17,
+      "structural": false,
+      "status": "completed",
+      "seconds": 17.390999999945052,
+      "retained_files_bytes": 1089166,
+      "last_mode": "independent",
+      "failure_mode": null,
+      "failure_code": null,
+      "peak_rss_bytes": 79474688,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 4864,
+        "nodes": 741,
+        "bytes": {
+          "source": 178301,
+          "artifact": 458228,
+          "scratch": 855666
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795541545530,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 1056,
+      "combined_work_upper_bound": 5920,
+      "exact_node_parity": true,
+      "independent_complete": true,
+      "create_members": 17,
+      "join_members": 18,
+      "create_nodes": 178,
+      "join_nodes": 185,
+      "create_records": 70,
+      "join_records": 73
+    },
+    {
+      "case": "score-100-1",
+      "n": 100,
+      "structural": false,
+      "status": "completed",
+      "seconds": 43.03100000007544,
+      "retained_files_bytes": 4178920,
+      "last_mode": "independent",
+      "failure_mode": null,
+      "failure_code": null,
+      "peak_rss_bytes": 84148224,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 23552,
+        "nodes": 4135,
+        "bytes": {
+          "source": 990955,
+          "artifact": 1369938,
+          "scratch": 3749350
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795541563077,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 3712,
+      "combined_work_upper_bound": 27264,
+      "exact_node_parity": true,
+      "independent_complete": true,
+      "create_members": 100,
+      "join_members": 101,
+      "create_nodes": 875,
+      "join_nodes": 881,
+      "create_records": 402,
+      "join_records": 405
+    },
+    {
+      "case": "score-100-3",
+      "n": 100,
+      "structural": false,
+      "status": "completed",
+      "seconds": 50.375,
+      "retained_files_bytes": 4807652,
+      "last_mode": "independent",
+      "failure_mode": null,
+      "failure_code": null,
+      "peak_rss_bytes": 84422656,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 23808,
+        "nodes": 4163,
+        "bytes": {
+          "source": 990955,
+          "artifact": 1614176,
+          "scratch": 4144175
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795541606350,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 3712,
+      "combined_work_upper_bound": 27520,
+      "exact_node_parity": true,
+      "independent_complete": true,
+      "create_members": 100,
+      "join_members": 101,
+      "create_nodes": 889,
+      "join_nodes": 895,
+      "create_records": 402,
+      "join_records": 405
+    },
+    {
+      "case": "boundary-300",
+      "n": 300,
+      "structural": false,
+      "status": "refused_or_unproven",
+      "seconds": 120.14099999994505,
+      "retained_files_bytes": 12468062,
+      "last_mode": "candidate",
+      "failure_mode": "candidate",
+      "failure_code": "whole_fixture_timeout",
+      "peak_rss_bytes": 104722432,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 46336,
+        "nodes": 9591,
+        "bytes": {
+          "source": 2952001,
+          "artifact": 3470524,
+          "scratch": 10771081
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795541656933,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 0,
+      "combined_work_upper_bound": 46336,
+      "exact_node_parity": false,
+      "independent_complete": false,
+      "create_members": null,
+      "join_members": null,
+      "create_nodes": null,
+      "join_nodes": null,
+      "create_records": null,
+      "join_records": null
+    },
+    {
+      "case": "boundary-301",
+      "n": 301,
+      "structural": false,
+      "status": "completed",
+      "seconds": 105.09400000004098,
+      "retained_files_bytes": 13813171,
+      "last_mode": "independent",
+      "failure_mode": null,
+      "failure_code": null,
+      "peak_rss_bytes": 111288320,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 69888,
+        "nodes": 12367,
+        "bytes": {
+          "source": 2962364,
+          "artifact": 4423291,
+          "scratch": 12174088
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795541777352,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 10144,
+      "combined_work_upper_bound": 80032,
+      "exact_node_parity": true,
+      "independent_complete": true,
+      "create_members": 301,
+      "join_members": 302,
+      "create_nodes": 2612,
+      "join_nodes": 2619,
+      "create_records": 1206,
+      "join_records": 1209
+    },
+    {
+      "case": "dense-1000",
+      "n": 1000,
+      "structural": false,
+      "status": "refused_or_unproven",
+      "seconds": 120.06300000008196,
+      "retained_files_bytes": 39905189,
+      "last_mode": "candidate",
+      "failure_mode": "candidate",
+      "failure_code": "whole_fixture_timeout",
+      "peak_rss_bytes": 132194304,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 65536,
+        "nodes": 10071,
+        "bytes": {
+          "source": 16022307,
+          "artifact": 0,
+          "scratch": 33093399
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795541882723,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 0,
+      "combined_work_upper_bound": 65536,
+      "exact_node_parity": false,
+      "independent_complete": false,
+      "create_members": null,
+      "join_members": null,
+      "create_nodes": null,
+      "join_nodes": null,
+      "create_records": null,
+      "join_records": null
+    },
+    {
+      "case": "score-1000-1",
+      "n": 1000,
+      "structural": false,
+      "status": "refused_or_unproven",
+      "seconds": 120.125,
+      "retained_files_bytes": 21146645,
+      "last_mode": "candidate",
+      "failure_mode": "candidate",
+      "failure_code": "whole_fixture_timeout",
+      "peak_rss_bytes": 112766976,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 59904,
+        "nodes": 9786,
+        "bytes": {
+          "source": 9816351,
+          "artifact": 0,
+          "scratch": 18242524
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795542002964,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 0,
+      "combined_work_upper_bound": 59904,
+      "exact_node_parity": false,
+      "independent_complete": false,
+      "create_members": null,
+      "join_members": null,
+      "create_nodes": null,
+      "join_nodes": null,
+      "create_records": null,
+      "join_records": null
+    },
+    {
+      "case": "score-1000-3",
+      "n": 1000,
+      "structural": false,
+      "status": "refused_or_unproven",
+      "seconds": 120.14000000001397,
+      "retained_files_bytes": 30211554,
+      "last_mode": "candidate",
+      "failure_mode": "candidate",
+      "failure_code": "whole_fixture_timeout",
+      "peak_rss_bytes": 113750016,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 82432,
+        "nodes": 14657,
+        "bytes": {
+          "source": 9816351,
+          "artifact": 2274196,
+          "scratch": 27427380
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795542123335,
+        "mode": "candidate"
+      },
+      "independent_read_upper_bound": 0,
+      "combined_work_upper_bound": 82432,
+      "exact_node_parity": false,
+      "independent_complete": false,
+      "create_members": null,
+      "join_members": null,
+      "create_nodes": null,
+      "join_nodes": null,
+      "create_records": null,
+      "join_records": null
+    },
+    {
+      "case": "all-9150",
+      "n": 9150,
+      "structural": false,
+      "status": "refused_or_unproven",
+      "seconds": 120.125,
+      "retained_files_bytes": 108303035,
+      "last_mode": "oracle",
+      "failure_mode": "oracle",
+      "failure_code": "deadline",
+      "peak_rss_bytes": 138252288,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 71424,
+        "nodes": 17557,
+        "bytes": {
+          "source": 87803208,
+          "artifact": 0,
+          "scratch": 26128280
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1
+        },
+        "deadline": 1795542243677,
+        "mode": "oracle"
+      },
+      "independent_read_upper_bound": 0,
+      "combined_work_upper_bound": 71424,
+      "exact_node_parity": false,
+      "independent_complete": false,
+      "create_members": null,
+      "join_members": null,
+      "create_nodes": null,
+      "join_nodes": null,
+      "create_records": null,
+      "join_records": null
+    },
+    {
+      "case": "score-9150-1",
+      "n": 9150,
+      "structural": false,
+      "status": "refused_or_unproven",
+      "seconds": 120.06300000008196,
+      "retained_files_bytes": 109385435,
+      "last_mode": "oracle",
+      "failure_mode": "oracle",
+      "failure_code": "whole_fixture_timeout",
+      "peak_rss_bytes": 150102016,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 77824,
+        "nodes": 19772,
+        "bytes": {
+          "source": 89801180,
+          "artifact": 0,
+          "scratch": 25931094
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1
+        },
+        "deadline": 1795542363971,
+        "mode": "oracle"
+      },
+      "independent_read_upper_bound": 0,
+      "combined_work_upper_bound": 77824,
+      "exact_node_parity": false,
+      "independent_complete": false,
+      "create_members": null,
+      "join_members": null,
+      "create_nodes": null,
+      "join_nodes": null,
+      "create_records": null,
+      "join_records": null
+    },
+    {
+      "case": "score-9150-3",
+      "n": 9150,
+      "structural": false,
+      "status": "refused_or_unproven",
+      "seconds": 120.10999999998603,
+      "retained_files_bytes": 123779518,
+      "last_mode": "oracle",
+      "failure_mode": "oracle",
+      "failure_code": "deadline",
+      "peak_rss_bytes": 160534528,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 88576,
+        "nodes": 23337,
+        "bytes": {
+          "source": 89801180,
+          "artifact": 0,
+          "scratch": 41483718
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1
+        },
+        "deadline": 1795542484214,
+        "mode": "oracle"
+      },
+      "independent_read_upper_bound": 0,
+      "combined_work_upper_bound": 88576,
+      "exact_node_parity": false,
+      "independent_complete": false,
+      "create_members": null,
+      "join_members": null,
+      "create_nodes": null,
+      "join_nodes": null,
+      "create_records": null,
+      "join_records": null
+    },
+    {
+      "case": "structural-100-1",
+      "n": 9150,
+      "structural": true,
+      "status": "refused_or_unproven",
+      "seconds": 120.04700000002049,
+      "retained_files_bytes": 84307584,
+      "last_mode": "structural",
+      "failure_mode": "structural",
+      "failure_code": "whole_fixture_timeout",
+      "peak_rss_bytes": 113405952,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 81152,
+        "nodes": 26310,
+        "bytes": {
+          "source": 0,
+          "artifact": 83861844,
+          "scratch": 9241742
+        },
+        "attempts": {
+          "structural": 1
+        },
+        "deadline": 1795542604488,
+        "mode": "structural"
+      },
+      "independent_read_upper_bound": 0,
+      "combined_work_upper_bound": 81152,
+      "exact_node_parity": false,
+      "independent_complete": false,
+      "create_members": null,
+      "join_members": null,
+      "create_nodes": null,
+      "join_nodes": null,
+      "create_records": null,
+      "join_records": null
+    },
+    {
+      "case": "structural-100-3",
+      "n": 9150,
+      "structural": true,
+      "status": "refused_or_unproven",
+      "seconds": 120.07799999997951,
+      "retained_files_bytes": 90258739,
+      "last_mode": "structural",
+      "failure_mode": "structural",
+      "failure_code": "whole_fixture_timeout",
+      "peak_rss_bytes": 113930240,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 87040,
+        "nodes": 28168,
+        "bytes": {
+          "source": 0,
+          "artifact": 89782762,
+          "scratch": 9893774
+        },
+        "attempts": {
+          "structural": 1
+        },
+        "deadline": 1795542724753,
+        "mode": "structural"
+      },
+      "independent_read_upper_bound": 0,
+      "combined_work_upper_bound": 87040,
+      "exact_node_parity": false,
+      "independent_complete": false,
+      "create_members": null,
+      "join_members": null,
+      "create_nodes": null,
+      "join_nodes": null,
+      "create_records": null,
+      "join_records": null
+    },
+    {
+      "case": "structural-19-1",
+      "n": 9150,
+      "structural": true,
+      "status": "refused_or_unproven",
+      "seconds": 120.21799999999348,
+      "retained_files_bytes": 32970464,
+      "last_mode": "structural",
+      "failure_mode": "structural",
+      "failure_code": "whole_fixture_timeout",
+      "peak_rss_bytes": 88055808,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 53248,
+        "nodes": 16460,
+        "bytes": {
+          "source": 0,
+          "artifact": 32195977,
+          "scratch": 6751641
+        },
+        "attempts": {
+          "structural": 1
+        },
+        "deadline": 1795542845050,
+        "mode": "structural"
+      },
+      "independent_read_upper_bound": 0,
+      "combined_work_upper_bound": 53248,
+      "exact_node_parity": false,
+      "independent_complete": false,
+      "create_members": null,
+      "join_members": null,
+      "create_nodes": null,
+      "join_nodes": null,
+      "create_records": null,
+      "join_records": null
+    },
+    {
+      "case": "structural-19-3",
+      "n": 9150,
+      "structural": true,
+      "status": "refused_or_unproven",
+      "seconds": 122.53100000007544,
+      "retained_files_bytes": 4230061,
+      "last_mode": "structural",
+      "failure_mode": "structural",
+      "failure_code": "deadline",
+      "peak_rss_bytes": 70320128,
+      "last_persisted_budget": {
+        "version": "c3a-budget-1",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 6912,
+        "nodes": 2110,
+        "bytes": {
+          "source": 0,
+          "artifact": 4128834,
+          "scratch": 832812
+        },
+        "attempts": {
+          "structural": 1
+        },
+        "deadline": 1795542966246,
+        "mode": "structural"
+      },
+      "independent_read_upper_bound": 0,
+      "combined_work_upper_bound": 6912,
+      "exact_node_parity": false,
+      "independent_complete": false,
+      "create_members": null,
+      "join_members": null,
+      "create_nodes": null,
+      "join_nodes": null,
+      "create_records": null,
+      "join_records": null
+    }
+  ]
+}
