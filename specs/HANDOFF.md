@@ -4,7 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: C2b merged; C3 plan prepared, 2026-11-24
+## Current checkpoint: C3a offline prototype complete; C3b NO-GO, 2026-11-24
+
+- Author ordered merge PR64 and approved C3a including section3 limits. PR64 merged as6dcb966; main Node/Python CI passed. Implemented on codex/c3a-offline-prototype; [contract/status](tasks/M3-c3a-implementation.md), [evidence](tasks/M3-c3a-evidence/README.md), [aggregate counters](tasks/M3-c3a-evidence/summary.json). Original C serving checkout and production/docs/rules remain unchanged.
+- Fixed24-case run03 at source02f28b8 completed:13 passes/11 refused or unproven. Exact Node and independent Python parity pass through301 source/302 Join members, including actual Values/tally/tasks. Corrupt/missing and process-restart checks pass.300 candidate timed out despite301 passing; no monotonic capacity claim.1000 candidate and9150 oracle/structural cases exhausted the shared120s deadline. Peak child RSS153.10MiB; max measured request16341B/document4297B; retained686118870B. No caps raised or failed cases retried for acceptance.
+- Post-run independent-checker accounting gap fixed: reserve32*n+512 units before its child and count/refuse indexed/checkpoint reads. Raw source-pinned report stays unchanged; conservative post-run bound proves combined completed budgets below1m (largest across all fixtures88576). The four changed source/test pins are named in summary.json; final guard has focused/whole-entry coverage, not another matrix claim. Earlier preflight/helper-failure runs retained.
+- Verification: Python236 tests/four skips passed. Default npm test333 passed/seven skips with two existing capacity child-start timeouts; unchanged serial suite 334 passed/seven skips with one remaining existing startup timeout; the unchanged capacity-audit file then passed all7 checks in isolation. Standard final-head CI is checked before handoff. No source/export access, DB/provider/credential-loader operation, import or deployment.
+- Next: review/explicit author merge of [PR65](https://github.com/SergiiPonomarchuk/isr-mvp/pull/65), then propose a bounded offline efficiency increment (batched append/index/checkpoint work) under unchanged limits. C3b is NO-GO; no real source preflight/import or larger runtime/path budget is authorized. New marked-X/top300/direct-recovery decisions, source vector/flag coverage, paged SDK/UI/access/restore remain separate;16 Values cases/PR60 deferred. Sol Medium sufficient.
+
+## Previous checkpoint: C2b merged; C3 plan prepared, 2026-11-24
 
 - Author explicitly ordered merge PR63. Reviewed ced4bb5 merged as aae2ff7; reviewed tree matched, main Node/Python CI passed. C2b author usability checks accepted after grouped matches/two-row explanation/visible Save corrections. No deploy/source/provider operation followed.
 - Author requested the next plan. [C3 population parity/capacity plan](tasks/M3-c3-population-plan.md) separates current-oracle compatibility from unimplemented marked-X/MVP candidate policy. Recommended next implementation approval is C3a offline streaming scorer/format prototype, within proposed section3 finite synthetic/file limits; zero database/export access/provider calls. Sol Medium sufficient.

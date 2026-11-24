@@ -7,7 +7,7 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: C2b PR63 merged as aae2ff7; main CI passed. [C3 population parity/capacity plan](tasks/M3-c3-population-plan.md) prepared. C3a offline implementation, X-policy clarification/coverage, source/resource/import and population/recovery gates require separate approval.16 Values cases remain deferred.
+Current checkpoint: PR64 merged6dcb966; approved [C3a offline prototype](tasks/M3-c3a-implementation.md) complete with [fixed24-case evidence](tasks/M3-c3a-evidence/README.md):13 pass/11 refused or unproven. Small exact parity passes; large capacity is unproven, so C3b is NO-GO. A separate offline efficiency increment is recommended before source/resource/import work. New X policy/coverage, population/recovery and16 Values cases remain separate.
 
 Previous checkpoint: [R1 optional Values metadata recovery](tasks/Values-optional-metadata-recovery.md), live dry run ready224/zero conflicts and synthetic recovery passed; [author-only runbook](tasks/Values-optional-metadata-author-runbook.md) prepared. No live apply or AI calls.
 

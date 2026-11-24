@@ -1,3 +1,9 @@
+## 2026-11-24 - C3a offline prototype and measured capacity limits
+
+- Record PR64 merged6dcb966/main CI. Add isolated disk-backed synthetic evaluator/Create/Join/Values/tally compatibility adapter, segmented offline artifacts, bounded readers and offline SDK serialization; production modules/C1/C2/docs/rules unchanged.
+- Preserve fixed24-case run:13 pass/11 refused or unproven, small exact parity through301/302 Join members; larger cases timed out. C3b NO-GO. No cap increase, source import, provider/database/loader call or deployment.
+- Add independent read-work pre-reservation/refusal after the frozen matrix; report the source-version distinction and conservative combined bound. Preserve failed preflight/helper runs. Full validation and next offline efficiency proposal recorded in HANDOFF/spec/evidence.
+
 ## 2026-11-24 - C3 population parity and capacity plan
 
 - Record accepted C2b PR63 merge aae2ff7/main CI. Propose bounded offline streaming scorer/format prototype, then separately gated source/resource/emulator/population/recovery work.

@@ -1,0 +1,7 @@
+"use strict";
+function initial(){return {domains:Array.from({length:10},()=>[0,0]),shifts:Object.fromEntries(['work','family','private','crisis'].map(k=>[k,Array.from({length:10},()=>[0,0])])),items:Object.fromEntries(Array.from({length:10},(_,i)=>['d'+(i+1),null])),conflicts:Array.from({length:36},()=>[0,0])};}
+function add(pair,v,r){if(v!==undefined&&v!==null){pair[0]+=v*r;pair[1]+=r;}}
+function accept(s,t,r){if(!t)return;s.present=true;for(let i=0;i<10;i++){add(s.domains[i],(t.domains||[])[i],r);for(const ctx of ['work','family','private','crisis'])add(s.shifts[ctx][i],((t.contextual_shifts||{})[ctx]||[])[i],r);const k='d'+(i+1),xs=(t.items||{})[k]||[];if(!s.items[k]&&xs.length)s.items[k]=xs.map(()=>[0,0]);if(s.items[k])for(let j=0;j<s.items[k].length;j++)add(s.items[k][j],xs[j],r);}for(let i=0;i<36;i++){let v=(t.conflict_resolution||[])[i];if(v!==undefined&&v!==null&&typeof v==='object')v=v.weight;add(s.conflicts[i],v,r);}}
+function finish(s){if(!s.present)return null;const done=(p,f)=>p[1]>0?Math.round(p[0]/p[1]):f;return {domains:s.domains.map(p=>done(p,50)),items:Object.fromEntries(Object.entries(s.items).map(([k,x])=>[k,(x||[]).map(p=>done(p,50))])),contextual_shifts:Object.fromEntries(Object.entries(s.shifts).map(([k,x])=>[k,x.map(p=>done(p,0))])),conflict_resolution:s.conflicts.map(p=>done(p,50))};}
+function refreshed(t){if(!t)return null;return {...t,domains:(t.domains||[]).map(v=>v===null?v:(v+7)%101)};}
+module.exports={initial,accept,finish,refreshed};

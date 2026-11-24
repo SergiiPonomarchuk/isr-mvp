@@ -1,0 +1,156 @@
+[
+  {
+    "id": "score-2-1",
+    "n": 2,
+    "refs": 1,
+    "aspects": 1
+  },
+  {
+    "id": "score-2-3",
+    "n": 2,
+    "refs": 3,
+    "aspects": 3
+  },
+  {
+    "id": "refuse-corrupt",
+    "n": 7,
+    "refs": 3,
+    "aspects": 3,
+    "fault": "corrupt"
+  },
+  {
+    "id": "refuse-missing",
+    "n": 7,
+    "refs": 3,
+    "aspects": 3,
+    "fault": "missing"
+  },
+  {
+    "id": "restart-checkpoint",
+    "n": 7,
+    "refs": 3,
+    "aspects": 3,
+    "fault": "checkpoint"
+  },
+  {
+    "id": "restart-seal",
+    "n": 7,
+    "refs": 3,
+    "aspects": 3,
+    "fault": "seal"
+  },
+  {
+    "id": "score-7-1",
+    "n": 7,
+    "refs": 1,
+    "aspects": 1
+  },
+  {
+    "id": "score-7-3",
+    "n": 7,
+    "refs": 3,
+    "aspects": 3
+  },
+  {
+    "id": "score-17-1",
+    "n": 17,
+    "refs": 1,
+    "aspects": 1
+  },
+  {
+    "id": "score-17-3",
+    "n": 17,
+    "refs": 3,
+    "aspects": 3
+  },
+  {
+    "id": "score-100-1",
+    "n": 100,
+    "refs": 1,
+    "aspects": 1
+  },
+  {
+    "id": "score-100-3",
+    "n": 100,
+    "refs": 3,
+    "aspects": 3
+  },
+  {
+    "id": "boundary-300",
+    "n": 300,
+    "refs": 3,
+    "aspects": 3
+  },
+  {
+    "id": "boundary-301",
+    "n": 301,
+    "refs": 3,
+    "aspects": 3
+  },
+  {
+    "id": "dense-1000",
+    "n": 1000,
+    "refs": 3,
+    "aspects": 3,
+    "dense": true
+  },
+  {
+    "id": "score-1000-1",
+    "n": 1000,
+    "refs": 1,
+    "aspects": 1
+  },
+  {
+    "id": "score-1000-3",
+    "n": 1000,
+    "refs": 3,
+    "aspects": 3
+  },
+  {
+    "id": "all-9150",
+    "n": 9150,
+    "refs": 3,
+    "aspects": 3,
+    "all": true
+  },
+  {
+    "id": "score-9150-1",
+    "n": 9150,
+    "refs": 1,
+    "aspects": 1
+  },
+  {
+    "id": "score-9150-3",
+    "n": 9150,
+    "refs": 3,
+    "aspects": 3
+  },
+  {
+    "id": "structural-100-1",
+    "n": 9150,
+    "refs": 100,
+    "aspects": 1,
+    "structural": true
+  },
+  {
+    "id": "structural-100-3",
+    "n": 9150,
+    "refs": 100,
+    "aspects": 3,
+    "structural": true
+  },
+  {
+    "id": "structural-19-1",
+    "n": 9150,
+    "refs": 19,
+    "aspects": 1,
+    "structural": true
+  },
+  {
+    "id": "structural-19-3",
+    "n": 9150,
+    "refs": 19,
+    "aspects": 3,
+    "structural": true
+  }
+]

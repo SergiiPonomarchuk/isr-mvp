@@ -1,0 +1,5689 @@
+{
+  "version": "c3a-offline-1",
+  "scope": "synthetic current-oracle compatibility; not intended-policy/population/server acceptance",
+  "matrix": [
+    {
+      "id": "score-2-1",
+      "n": 2,
+      "refs": 1,
+      "aspects": 1
+    },
+    {
+      "id": "score-2-3",
+      "n": 2,
+      "refs": 3,
+      "aspects": 3
+    },
+    {
+      "id": "refuse-corrupt",
+      "n": 7,
+      "refs": 3,
+      "aspects": 3,
+      "fault": "corrupt"
+    },
+    {
+      "id": "refuse-missing",
+      "n": 7,
+      "refs": 3,
+      "aspects": 3,
+      "fault": "missing"
+    },
+    {
+      "id": "restart-checkpoint",
+      "n": 7,
+      "refs": 3,
+      "aspects": 3,
+      "fault": "checkpoint"
+    },
+    {
+      "id": "restart-seal",
+      "n": 7,
+      "refs": 3,
+      "aspects": 3,
+      "fault": "seal"
+    },
+    {
+      "id": "score-7-1",
+      "n": 7,
+      "refs": 1,
+      "aspects": 1
+    },
+    {
+      "id": "score-7-3",
+      "n": 7,
+      "refs": 3,
+      "aspects": 3
+    },
+    {
+      "id": "score-17-1",
+      "n": 17,
+      "refs": 1,
+      "aspects": 1
+    },
+    {
+      "id": "score-17-3",
+      "n": 17,
+      "refs": 3,
+      "aspects": 3
+    },
+    {
+      "id": "score-100-1",
+      "n": 100,
+      "refs": 1,
+      "aspects": 1
+    },
+    {
+      "id": "score-100-3",
+      "n": 100,
+      "refs": 3,
+      "aspects": 3
+    },
+    {
+      "id": "boundary-300",
+      "n": 300,
+      "refs": 3,
+      "aspects": 3
+    },
+    {
+      "id": "boundary-301",
+      "n": 301,
+      "refs": 3,
+      "aspects": 3
+    },
+    {
+      "id": "dense-1000",
+      "n": 1000,
+      "refs": 3,
+      "aspects": 3,
+      "dense": true
+    },
+    {
+      "id": "score-1000-1",
+      "n": 1000,
+      "refs": 1,
+      "aspects": 1
+    },
+    {
+      "id": "score-1000-3",
+      "n": 1000,
+      "refs": 3,
+      "aspects": 3
+    },
+    {
+      "id": "all-9150",
+      "n": 9150,
+      "refs": 3,
+      "aspects": 3,
+      "all": true
+    },
+    {
+      "id": "score-9150-1",
+      "n": 9150,
+      "refs": 1,
+      "aspects": 1
+    },
+    {
+      "id": "score-9150-3",
+      "n": 9150,
+      "refs": 3,
+      "aspects": 3
+    },
+    {
+      "id": "structural-100-1",
+      "n": 9150,
+      "refs": 100,
+      "aspects": 1,
+      "structural": true
+    },
+    {
+      "id": "structural-100-3",
+      "n": 9150,
+      "refs": 100,
+      "aspects": 3,
+      "structural": true
+    },
+    {
+      "id": "structural-19-1",
+      "n": 9150,
+      "refs": 19,
+      "aspects": 1,
+      "structural": true
+    },
+    {
+      "id": "structural-19-3",
+      "n": 9150,
+      "refs": 19,
+      "aspects": 3,
+      "structural": true
+    }
+  ],
+  "source_pins": {
+    "functions/ai-config.js": "593e86b7d8efbdecc3c19b7a17d186c18cf72e4adfd00c7171f85f925b12b6f0",
+    "functions/ai-helper.js": "72f01c9d22cdf3a51f1b24a6a2a2da478505a8b57b4fa2d52faf5e61bb211690",
+    "functions/analyzer-log.js": "86a774ef71f86ccd69e7b2a80ca1f011079e4b0285ff5ef211ff6549e3a64551",
+    "functions/cbc-policy.js": "9d85dde17eb9b2f9b33728f2005f6808d9a1c6021233a80e7b9df8e21a1d402c",
+    "functions/close-voting.js": "2e35a1b42b8d195e058109c2e553fcd283e00b30698bed71db0911600f335559",
+    "functions/context-review.js": "a8583140fea10bb2b04c5b8552db7026e2e4f36165cb7757bf76990fb2d8f168",
+    "functions/context-schema.js": "5c338c29757dd74a5585fc508ba754ddc8461f8b0c7a10f93749fb5f4ae92beb",
+    "functions/deadlines.js": "9f2dbe696bc90b4727656c725cd6b6f94d35075d4ac8b371d24138f9ce5d3723",
+    "functions/demo-coalition.js": "3c75182140959cd1c8c8b65138f69b2587f0911fe7eb23517021ed3e318bd1b4",
+    "functions/demo-phase.js": "5e4580c6c396534c9dc913d04b44c25030b0df17ccdf3a72860401a3fbd23ab4",
+    "functions/demo-standby.js": "08adf64bf69c528e2fe1708245bd9e7065fa65570f89cca980e011cd1ef3d71a",
+    "functions/demographics.js": "ba1bf10c28067af5f4490d2f12e12e1ccc5106a6a0c735e5a9936435b23e987c",
+    "functions/geo.js": "cfa88bb9227f3cb0d275172e9dec6f8492c89dcbde49697240ea39939aa18088",
+    "functions/geocode.js": "98a40dd08fdff3ef8b0818d3b2b38ec9b8790c8887e58dd6e7bb3fc4093e30cd",
+    "functions/index.js": "2f0019775a5f67629fce56ad462079dfb65a77d7aac9e9ad270d7eeb32deabc9",
+    "functions/isr.js": "0f0db88cee6683a28d58cb87bd88cfee305ecfc1d54390419b41d61d831f4f16",
+    "functions/issue-scope.js": "76b8237eeaac0c90637c4a8916d2899657a4185c2c85364062c292519965b436",
+    "functions/join-issue.js": "6c894989100657c0f1ee2b350439a75a58149b6e2694401e203b83a75c2f5874",
+    "functions/lifecycle.js": "2dec0fa7b10efdedb71f08caa717837301fc6e7ab824bc486a290cd4cf9fb79b",
+    "functions/location.js": "003139fad07b0e8d95ff0304968650437acd9f4c94e14d8c627003277650ecca",
+    "functions/mr1-engine.js": "7d79897c14abd189f4a3b988635a412bb3d506c0bdb667914d9688f2f46e3d06",
+    "functions/mr1-service.js": "db0994a741caa46c4a5e989a5e59988386a2d4a5c9f830e64c406f3c9a6c10f8",
+    "functions/multi-reference.js": "cad5c25433bfd2aec56bf589bbd072d3dc49fa84c0095db2a6e675736cb45d13",
+    "functions/params.js": "98933f5a1b7ba66bbe6388ca2658b11cdc42f726157134c5ca1c82409bc32ed4",
+    "functions/public-values.js": "5c57a2c743ae5d2563494091f363793ee8ad07c1163fd7ea6a90ae2b6c083332",
+    "functions/publication-dispatch.js": "4b8d80f908d1f3ca43bf0fb3a303600e4642d73ff8751fd3a2eccc250fcb1261",
+    "functions/scope-compatibility.js": "14de98432acfbdd6603ee7e878c53197872bdd4c71a810d8eac470b013650fdc",
+    "functions/similar-issues.js": "6b195c4a6c24be6c6966e0df48b73c2b5f09b9307282e10aac4062ee997df46d",
+    "functions/staged-context.js": "e5e3b99bcf71884f47b55110606238afa513250b44e826046a8a3a6d6fea8a61",
+    "functions/strict-json.js": "e47ab8da8e50de06996e535387b023c33d5e70bdebfe88babbb957317b989a1b",
+    "functions/experiments/c3a/disk.js": "1269f78edf633ca8ae8806114165526e1e92a53b70e4ee46691c24d7c9003223",
+    "functions/experiments/c3a/fixture.js": "d1ee057176d15d8c53af9cd31744d2bf495bab15ec47774253a631130afc7678",
+    "functions/experiments/c3a/artifact.js": "477f8b1c1e319295f0488477dc96718882ba66a182a560e2b23084aec2167e62",
+    "functions/experiments/c3a/values.js": "ff8aa29c408e0a120f46e727a6797548ec68cb4195b6a678987fac7d5a605f6d",
+    "functions/experiments/c3a/wire.js": "ed0498928ad9463da38c698d4ea4f6e17cf3c14f1a4a3c76a9fea656999d87a6",
+    "functions/experiments/c3a/sort.js": "82cede8203d38232fab93727d25af9e26271b1141e67079682f9ddbe09fa2870",
+    "functions/experiments/c3a/pipeline.js": "16986db915490e79783914333786c06f4693efd13997d4bc8ddf22c0e1c30e01",
+    "functions/experiments/c3a/offline.js": "6fbe7117b7af4f1d76e252231558e8f9ee153764ebaa3d79a18b168a4f02e2a8",
+    "functions/experiments/c3a/worker.js": "f7e94264e0e6a641202569f3e2929e86ae52fd8420a98c52186e9d2b7e725a42",
+    "functions/experiments/publication/artifact.js": "adeb78700486c1541710fe91e109023de8a30ea538564f08f3cd854252886b30",
+    "functions/tools/capacity/no-network.js": "999ad257175dda274e09178e429826f22bb71c63c9ae7af40b5107b9a2b69e3a",
+    "functions/package-lock.json": "a39381f845aba6e28ec4139e609dbea992340ff3093aa6ae354f381fe8743eec",
+    "scripts/run_c3a_offline.py": "68683033484cd607b6d9988e96268df720006afed6a952d78d04f0e4701dc27a",
+    "scripts/check_c3a_fixture.py": "7ddf3dd1433a8df759dc30e51da3185903b47a3037ab3a6277bc2949e3c1603d",
+    "scripts/audit_capacity_phase_a.py": "00384e9335bfcdd4b47d76649cf03069168d4574e7d68f6a02340a1c5524e713",
+    "scripts/mr1_check.py": "6c8caae7e9708b089a6196d0a641af46e02c7259999c27e3b239c157098bfce5",
+    "scripts/multi_reference.py": "00debff4d23428e5e1ce78b6f59d80a72535eb579b9982abdeeb655006de3c59",
+    "scripts/isr_core.py": "d51fdb7ec6e97991d2370244ca3409f66098a639f6e0296c9caa3c1dae249cc1",
+    "scripts/expertise.py": "d818174d5ebfe800f37fe5d88aecaa55e57bfadd540f82f3595e37959c05a92a",
+    "relevance_evaluator.py": "63265932786d8343f392933b0d2fc48907ec1e0c736f65ca4b2dd05486bfecb3",
+    "specs/tasks/M3-c3a-evidence/matrix.json": "4e188e2a7822405ea7be4ab1330d9655bd2db54d3c3f771f11b63aea677ca0a3",
+    "functions/test/c3a-offline.test.js": "d14f71937b8b784e6481bf0622787853d9c0cf576417bab712d0baf4dca55f4e",
+    "tests/test_c3a_supervisor.py": "52c14695552dc7e4ad87d9ef72fc0e39ab42fcca6e73487cc01fe3e9ad0e3a5e",
+    "scripts/demo_common.py": "52ba640f55cbcaec3dfcdadeee1657a0c71e19f13b9b7724200b7c3ee0e7199b"
+  },
+  "limits": {
+    "cases": 24,
+    "seconds_per_whole_fixture": 120,
+    "heap_mib": 256,
+    "rss_mib": 512,
+    "source_mib": 256,
+    "artifact_mib": 256,
+    "scratch_mib": 512,
+    "run_mib": 1024,
+    "decoded_mib": 4,
+    "quantum_profiles": 75,
+    "emitted_records": 200000,
+    "work_units": 1000000,
+    "attempts": 3
+  },
+  "provider_calls": 0,
+  "database_rpcs": 0,
+  "credential_loader_invocations": 0,
+  "fixtures": [
+    {
+      "case": {
+        "id": "score-2-1",
+        "n": 2,
+        "refs": 1,
+        "aspects": 1
+      },
+      "status": "refused_or_unproven",
+      "seconds": 8.343999999924563,
+      "files_bytes": 264629,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 61587456,
+          "seconds": 2.344000000040978,
+          "resources": {
+            "ram": 3286724608,
+            "a_disk": 313180553216,
+            "c_disk": 10979459072
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "source",
+            "result": {
+              "version": "c3a-synthetic-source-1",
+              "config": {
+                "id": "score-2-1",
+                "n": 2,
+                "refs": 1,
+                "aspects": 1
+              },
+              "source_hash": "06fc709bd0f0a0a220a5107960f6510b92dd07e08875a11736829c943d3889c5",
+              "population_hash": "7dcdcb2b46a34c251f19d56aa7e5c4e86efced09fc6c34817599c649bb37a204",
+              "count": 2,
+              "with_join": 3,
+              "bundle_hash": "db94b7b194d4b30700923b193ea1fd15b49ab698f2764fead99d12f4e9529774",
+              "scoring_day": "2026-11-24"
+            },
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 256,
+              "nodes": 3,
+              "bytes": {
+                "source": 31340,
+                "artifact": 0,
+                "scratch": 6031
+              },
+              "attempts": {
+                "source": 1
+              },
+              "deadline": 1795540933290,
+              "mode": "source"
+            },
+            "cpu_seconds": {
+              "user": 0.031,
+              "system": 0.032
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 65622016,
+          "seconds": 2.98499999998603,
+          "resources": {
+            "ram": 3267166208,
+            "a_disk": 313178980352,
+            "c_disk": 10979233792
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "oracle",
+            "result": {
+              "population_hash": "7dcdcb2b46a34c251f19d56aa7e5c4e86efced09fc6c34817599c649bb37a204",
+              "A": 2,
+              "B": 0,
+              "create_count": 2,
+              "join_count": 3,
+              "create_values": {
+                "domains": [
+                  16,
+                  19,
+                  22,
+                  25,
+                  28,
+                  31,
+                  34,
+                  37,
+                  40,
+                  43
+                ],
+                "items": {
+                  "d1": [
+                    1,
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34
+                  ],
+                  "d2": [
+                    2,
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44
+                  ],
+                  "d3": [
+                    3,
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42
+                  ],
+                  "d4": [
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46
+                  ],
+                  "d5": [
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d6": [
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51
+                  ],
+                  "d7": [
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46
+                  ],
+                  "d8": [
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d9": [
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51
+                  ],
+                  "d10": [
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -19,
+                    -18,
+                    -17,
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10
+                  ],
+                  "family": [
+                    -18,
+                    -17,
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9
+                  ],
+                  "private": [
+                    -17,
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8
+                  ],
+                  "crisis": [
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7
+                  ]
+                },
+                "conflict_resolution": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36
+                ]
+              },
+              "join_values": {
+                "domains": [
+                  23,
+                  26,
+                  29,
+                  32,
+                  35,
+                  38,
+                  41,
+                  44,
+                  47,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    1,
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34
+                  ],
+                  "d2": [
+                    2,
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44
+                  ],
+                  "d3": [
+                    3,
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42
+                  ],
+                  "d4": [
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46
+                  ],
+                  "d5": [
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d6": [
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51
+                  ],
+                  "d7": [
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46
+                  ],
+                  "d8": [
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d9": [
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51
+                  ],
+                  "d10": [
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -19,
+                    -18,
+                    -17,
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10
+                  ],
+                  "family": [
+                    -18,
+                    -17,
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9
+                  ],
+                  "private": [
+                    -17,
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8
+                  ],
+                  "crisis": [
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7
+                  ]
+                },
+                "conflict_resolution": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36
+                ]
+              },
+              "create_tally": {
+                "scores": [
+                  0,
+                  0.949,
+                  1.051
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 2,
+                "voted": 2,
+                "share": 1,
+                "result": "todo",
+                "counted": 2,
+                "excluded": 1,
+                "counted_hash": "c37d6f726678bdeb50476bbd99a49d7fe42584b30d3e35a0a88fe9ecbf92eadb",
+                "excluded_hash": "fbb83dc97802c4b028b06ebb5fad85a2992dbd4f556b79c9522c188bd41d853a",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "join_tally": {
+                "scores": [
+                  0.418,
+                  1.246,
+                  1.336
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 3,
+                "voted": 3,
+                "share": 1,
+                "result": "todo",
+                "counted": 3,
+                "excluded": 0,
+                "counted_hash": "87c6775eabcf3ddfefa8503eea3ef5d23996bfc479259bc079ca318a0f9c881d",
+                "excluded_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "relationship_diagnostics": {
+                "ignored_untyped_links": 0
+              }
+            },
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 512,
+              "nodes": 8,
+              "bytes": {
+                "source": 31340,
+                "artifact": 0,
+                "scratch": 32266
+              },
+              "attempts": {
+                "source": 1,
+                "oracle": 1
+              },
+              "deadline": 1795540933290,
+              "mode": "oracle"
+            },
+            "cpu_seconds": {
+              "user": 0.078,
+              "system": 0
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "candidate",
+          "status": "refused",
+          "exit_code": 2,
+          "peak_rss_bytes": 75894784,
+          "seconds": 2.875,
+          "resources": {
+            "ram": 3676106752,
+            "a_disk": 313177407488,
+            "c_disk": 10979233792
+          },
+          "worker": {
+            "status": "refused",
+            "mode": "candidate",
+            "code": "worker_error",
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 1280,
+              "nodes": 106,
+              "bytes": {
+                "source": 31340,
+                "artifact": 123028,
+                "scratch": 258385
+              },
+              "attempts": {
+                "source": 1,
+                "oracle": 1,
+                "candidate": 1
+              },
+              "deadline": 1795540933290,
+              "mode": "candidate"
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "score-2-3",
+        "n": 2,
+        "refs": 3,
+        "aspects": 3
+      },
+      "status": "refused_or_unproven",
+      "seconds": 7.202999999979511,
+      "files_bytes": 404845,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 63729664,
+          "seconds": 1.75,
+          "resources": {
+            "ram": 3688726528,
+            "a_disk": 313169805312,
+            "c_disk": 10989182976
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "source",
+            "result": {
+              "version": "c3a-synthetic-source-1",
+              "config": {
+                "id": "score-2-3",
+                "n": 2,
+                "refs": 3,
+                "aspects": 3
+              },
+              "source_hash": "06fc709bd0f0a0a220a5107960f6510b92dd07e08875a11736829c943d3889c5",
+              "population_hash": "7dcdcb2b46a34c251f19d56aa7e5c4e86efced09fc6c34817599c649bb37a204",
+              "count": 2,
+              "with_join": 3,
+              "bundle_hash": "2d0d0bb932b7c43ae1181d1f8a04d67371add81d26112dd6095bac957a460549",
+              "scoring_day": "2026-11-24"
+            },
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 256,
+              "nodes": 3,
+              "bytes": {
+                "source": 31340,
+                "artifact": 0,
+                "scratch": 12357
+              },
+              "attempts": {
+                "source": 1
+              },
+              "deadline": 1795540941664,
+              "mode": "source"
+            },
+            "cpu_seconds": {
+              "user": 0.031,
+              "system": 0
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 67780608,
+          "seconds": 2.1880000000819564,
+          "resources": {
+            "ram": 3698831360,
+            "a_disk": 313168232448,
+            "c_disk": 10989182976
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "oracle",
+            "result": {
+              "population_hash": "7dcdcb2b46a34c251f19d56aa7e5c4e86efced09fc6c34817599c649bb37a204",
+              "A": 2,
+              "B": 0,
+              "create_count": 2,
+              "join_count": 3,
+              "create_values": {
+                "domains": [
+                  16,
+                  19,
+                  22,
+                  25,
+                  28,
+                  31,
+                  34,
+                  37,
+                  40,
+                  43
+                ],
+                "items": {
+                  "d1": [
+                    1,
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34
+                  ],
+                  "d2": [
+                    2,
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44
+                  ],
+                  "d3": [
+                    3,
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42
+                  ],
+                  "d4": [
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46
+                  ],
+                  "d5": [
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d6": [
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51
+                  ],
+                  "d7": [
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46
+                  ],
+                  "d8": [
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d9": [
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51
+                  ],
+                  "d10": [
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -19,
+                    -18,
+                    -17,
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10
+                  ],
+                  "family": [
+                    -18,
+                    -17,
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9
+                  ],
+                  "private": [
+                    -17,
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8
+                  ],
+                  "crisis": [
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7
+                  ]
+                },
+                "conflict_resolution": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36
+                ]
+              },
+              "join_values": {
+                "domains": [
+                  23,
+                  26,
+                  29,
+                  32,
+                  35,
+                  38,
+                  41,
+                  44,
+                  47,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    1,
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34
+                  ],
+                  "d2": [
+                    2,
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44
+                  ],
+                  "d3": [
+                    3,
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42
+                  ],
+                  "d4": [
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46
+                  ],
+                  "d5": [
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d6": [
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51
+                  ],
+                  "d7": [
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46
+                  ],
+                  "d8": [
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d9": [
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51
+                  ],
+                  "d10": [
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -19,
+                    -18,
+                    -17,
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10
+                  ],
+                  "family": [
+                    -18,
+                    -17,
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9
+                  ],
+                  "private": [
+                    -17,
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8
+                  ],
+                  "crisis": [
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7
+                  ]
+                },
+                "conflict_resolution": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36
+                ]
+              },
+              "create_tally": {
+                "scores": [
+                  0,
+                  0.96,
+                  1.04
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 2,
+                "voted": 2,
+                "share": 1,
+                "result": "todo",
+                "counted": 2,
+                "excluded": 1,
+                "counted_hash": "509998bf7a2a54745204f06b2b390a247148458fb14489d959a918f594c70783",
+                "excluded_hash": "fbb83dc97802c4b028b06ebb5fad85a2992dbd4f556b79c9522c188bd41d853a",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "join_tally": {
+                "scores": [
+                  0.406,
+                  1.259,
+                  1.335
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 3,
+                "voted": 3,
+                "share": 1,
+                "result": "todo",
+                "counted": 3,
+                "excluded": 0,
+                "counted_hash": "26f89443a2e4508dc1d46b4602c57bbf6d33b39932bc3d34e13861e5d0b9b746",
+                "excluded_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "relationship_diagnostics": {
+                "ignored_untyped_links": 0
+              }
+            },
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 512,
+              "nodes": 8,
+              "bytes": {
+                "source": 31340,
+                "artifact": 0,
+                "scratch": 41285
+              },
+              "attempts": {
+                "source": 1,
+                "oracle": 1
+              },
+              "deadline": 1795540941664,
+              "mode": "oracle"
+            },
+            "cpu_seconds": {
+              "user": 0.031,
+              "system": 0.015
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "candidate",
+          "status": "refused",
+          "exit_code": 2,
+          "peak_rss_bytes": 76021760,
+          "seconds": 3.155999999959022,
+          "resources": {
+            "ram": 3695001600,
+            "a_disk": 313166659584,
+            "c_disk": 10989166592
+          },
+          "worker": {
+            "status": "refused",
+            "mode": "candidate",
+            "code": "worker_error",
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 1280,
+              "nodes": 134,
+              "bytes": {
+                "source": 31340,
+                "artifact": 247778,
+                "scratch": 283277
+              },
+              "attempts": {
+                "source": 1,
+                "oracle": 1,
+                "candidate": 1
+              },
+              "deadline": 1795540941664,
+              "mode": "candidate"
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "refuse-corrupt",
+        "n": 7,
+        "refs": 3,
+        "aspects": 3,
+        "fault": "corrupt"
+      },
+      "status": "refused_or_unproven",
+      "seconds": 8.061999999918044,
+      "files_bytes": 616357,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 65830912,
+          "seconds": 1.890999999945052,
+          "resources": {
+            "ram": 3692396544,
+            "a_disk": 313159319552,
+            "c_disk": 10989166592
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "source",
+            "result": {
+              "version": "c3a-synthetic-source-1",
+              "config": {
+                "id": "refuse-corrupt",
+                "n": 7,
+                "refs": 3,
+                "aspects": 3,
+                "fault": "corrupt"
+              },
+              "source_hash": "03986a120decd8e0428471cfe3905eed029c3df9e1174c74386da6394f499aa3",
+              "population_hash": "f8774819edb61f0ae84fd922ecdcd54ba10b9d568269820d9406a75b42860f93",
+              "count": 7,
+              "with_join": 8,
+              "bundle_hash": "2d0d0bb932b7c43ae1181d1f8a04d67371add81d26112dd6095bac957a460549",
+              "scoring_day": "2026-11-24"
+            },
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 256,
+              "nodes": 8,
+              "bytes": {
+                "source": 78951,
+                "artifact": 0,
+                "scratch": 13883
+              },
+              "attempts": {
+                "source": 1
+              },
+              "deadline": 1795540948913,
+              "mode": "source"
+            },
+            "cpu_seconds": {
+              "user": 0.031,
+              "system": 0.032
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 73478144,
+          "seconds": 2.202999999979511,
+          "resources": {
+            "ram": 3696607232,
+            "a_disk": 313157746688,
+            "c_disk": 10989162496
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "oracle",
+            "result": {
+              "population_hash": "f8774819edb61f0ae84fd922ecdcd54ba10b9d568269820d9406a75b42860f93",
+              "A": 5,
+              "B": 2,
+              "create_count": 7,
+              "join_count": 8,
+              "create_values": {
+                "domains": [
+                  42,
+                  45,
+                  48,
+                  51,
+                  54,
+                  57,
+                  60,
+                  55,
+                  47,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37
+                  ],
+                  "d2": [
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d3": [
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45
+                  ],
+                  "d4": [
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d5": [
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d6": [
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d7": [
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d8": [
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d9": [
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d10": [
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52,
+                    55
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7
+                  ],
+                  "family": [
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6
+                  ],
+                  "private": [
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5
+                  ],
+                  "crisis": [
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5,
+                    -4
+                  ]
+                },
+                "conflict_resolution": [
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  38,
+                  39
+                ]
+              },
+              "join_values": {
+                "domains": [
+                  56,
+                  59,
+                  46,
+                  49,
+                  52,
+                  55,
+                  42,
+                  53,
+                  48,
+                  51
+                ],
+                "items": {
+                  "d1": [
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37
+                  ],
+                  "d2": [
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d3": [
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45
+                  ],
+                  "d4": [
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d5": [
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d6": [
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d7": [
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d8": [
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d9": [
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d10": [
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52,
+                    55
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7
+                  ],
+                  "family": [
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6
+                  ],
+                  "private": [
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5
+                  ],
+                  "crisis": [
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5,
+                    -4
+                  ]
+                },
+                "conflict_resolution": [
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  38,
+                  39
+                ]
+              },
+              "create_tally": {
+                "scores": [
+                  0.9750000000000001,
+                  3.521,
+                  2.504
+                ],
+                "winner": 1,
+                "note": "",
+                "pool": 7,
+                "voted": 7,
+                "share": 1,
+                "result": "todo",
+                "counted": 7,
+                "excluded": 1,
+                "counted_hash": "7515651c667a8bf3b42fddcf3f89c901c1a2f00a70e43fca6acf5dc7c8c5d5b3",
+                "excluded_hash": "ce7b4835737822984c60e49f617425d84fb1d3a6e65ad65a81cee659582e85a5",
+                "tasks": [
+                  {
+                    "title": "Implement option 1",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "join_tally": {
+                "scores": [
+                  0.98,
+                  3.4330000000000003,
+                  3.5869999999999997
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 8,
+                "voted": 8,
+                "share": 1,
+                "result": "todo",
+                "counted": 8,
+                "excluded": 0,
+                "counted_hash": "802ae412bab14d06b486b60a499d2a06f3e06ff6ff02892069873e92537a0640",
+                "excluded_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "relationship_diagnostics": {
+                "ignored_untyped_links": 0
+              }
+            },
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 512,
+              "nodes": 23,
+              "bytes": {
+                "source": 78951,
+                "artifact": 0,
+                "scratch": 70287
+              },
+              "attempts": {
+                "source": 1,
+                "oracle": 1
+              },
+              "deadline": 1795540948913,
+              "mode": "oracle"
+            },
+            "cpu_seconds": {
+              "user": 0.078,
+              "system": 0
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "candidate",
+          "status": "refused",
+          "exit_code": 2,
+          "peak_rss_bytes": 77045760,
+          "seconds": 3.843999999924563,
+          "resources": {
+            "ram": 3698233344,
+            "a_disk": 313156173824,
+            "c_disk": 10989162496
+          },
+          "worker": {
+            "status": "refused",
+            "mode": "candidate",
+            "code": "worker_error",
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 2048,
+              "nodes": 289,
+              "bytes": {
+                "source": 78951,
+                "artifact": 317699,
+                "scratch": 445890
+              },
+              "attempts": {
+                "source": 1,
+                "oracle": 1,
+                "candidate": 1
+              },
+              "deadline": 1795540948913,
+              "mode": "candidate"
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "refuse-missing",
+        "n": 7,
+        "refs": 3,
+        "aspects": 3,
+        "fault": "missing"
+      },
+      "status": "refused_or_unproven",
+      "seconds": 6.407000000006519,
+      "files_bytes": 181335,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 65167360,
+          "seconds": 1.8900000000139698,
+          "resources": {
+            "ram": 3671674880,
+            "a_disk": 313147785216,
+            "c_disk": 10989223936
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "source",
+            "result": {
+              "version": "c3a-synthetic-source-1",
+              "config": {
+                "id": "refuse-missing",
+                "n": 7,
+                "refs": 3,
+                "aspects": 3,
+                "fault": "missing"
+              },
+              "source_hash": "03986a120decd8e0428471cfe3905eed029c3df9e1174c74386da6394f499aa3",
+              "population_hash": "f8774819edb61f0ae84fd922ecdcd54ba10b9d568269820d9406a75b42860f93",
+              "count": 7,
+              "with_join": 8,
+              "bundle_hash": "2d0d0bb932b7c43ae1181d1f8a04d67371add81d26112dd6095bac957a460549",
+              "scoring_day": "2026-11-24"
+            },
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 256,
+              "nodes": 8,
+              "bytes": {
+                "source": 78951,
+                "artifact": 0,
+                "scratch": 13883
+              },
+              "attempts": {
+                "source": 1
+              },
+              "deadline": 1795540957025,
+              "mode": "source"
+            },
+            "cpu_seconds": {
+              "user": 0.047,
+              "system": 0.031
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 73363456,
+          "seconds": 2.343999999924563,
+          "resources": {
+            "ram": 3670839296,
+            "a_disk": 313146212352,
+            "c_disk": 10989223936
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "oracle",
+            "result": {
+              "population_hash": "f8774819edb61f0ae84fd922ecdcd54ba10b9d568269820d9406a75b42860f93",
+              "A": 5,
+              "B": 2,
+              "create_count": 7,
+              "join_count": 8,
+              "create_values": {
+                "domains": [
+                  42,
+                  45,
+                  48,
+                  51,
+                  54,
+                  57,
+                  60,
+                  55,
+                  47,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37
+                  ],
+                  "d2": [
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d3": [
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45
+                  ],
+                  "d4": [
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d5": [
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d6": [
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d7": [
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d8": [
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d9": [
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d10": [
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52,
+                    55
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7
+                  ],
+                  "family": [
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6
+                  ],
+                  "private": [
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5
+                  ],
+                  "crisis": [
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5,
+                    -4
+                  ]
+                },
+                "conflict_resolution": [
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  38,
+                  39
+                ]
+              },
+              "join_values": {
+                "domains": [
+                  56,
+                  59,
+                  46,
+                  49,
+                  52,
+                  55,
+                  42,
+                  53,
+                  48,
+                  51
+                ],
+                "items": {
+                  "d1": [
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37
+                  ],
+                  "d2": [
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d3": [
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45
+                  ],
+                  "d4": [
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d5": [
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d6": [
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d7": [
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d8": [
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d9": [
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d10": [
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52,
+                    55
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7
+                  ],
+                  "family": [
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6
+                  ],
+                  "private": [
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5
+                  ],
+                  "crisis": [
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5,
+                    -4
+                  ]
+                },
+                "conflict_resolution": [
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  38,
+                  39
+                ]
+              },
+              "create_tally": {
+                "scores": [
+                  0.9750000000000001,
+                  3.521,
+                  2.504
+                ],
+                "winner": 1,
+                "note": "",
+                "pool": 7,
+                "voted": 7,
+                "share": 1,
+                "result": "todo",
+                "counted": 7,
+                "excluded": 1,
+                "counted_hash": "7515651c667a8bf3b42fddcf3f89c901c1a2f00a70e43fca6acf5dc7c8c5d5b3",
+                "excluded_hash": "ce7b4835737822984c60e49f617425d84fb1d3a6e65ad65a81cee659582e85a5",
+                "tasks": [
+                  {
+                    "title": "Implement option 1",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "join_tally": {
+                "scores": [
+                  0.98,
+                  3.4330000000000003,
+                  3.5869999999999997
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 8,
+                "voted": 8,
+                "share": 1,
+                "result": "todo",
+                "counted": 8,
+                "excluded": 0,
+                "counted_hash": "802ae412bab14d06b486b60a499d2a06f3e06ff6ff02892069873e92537a0640",
+                "excluded_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "relationship_diagnostics": {
+                "ignored_untyped_links": 0
+              }
+            },
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 512,
+              "nodes": 23,
+              "bytes": {
+                "source": 78951,
+                "artifact": 0,
+                "scratch": 70287
+              },
+              "attempts": {
+                "source": 1,
+                "oracle": 1
+              },
+              "deadline": 1795540957025,
+              "mode": "oracle"
+            },
+            "cpu_seconds": {
+              "user": 0.11,
+              "system": 0.031
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "candidate",
+          "status": "refused",
+          "exit_code": 2,
+          "peak_rss_bytes": 70283264,
+          "seconds": 2.047000000020489,
+          "resources": {
+            "ram": 3700838400,
+            "a_disk": 313144639488,
+            "c_disk": 10989158400
+          },
+          "worker": {
+            "status": "refused",
+            "mode": "candidate",
+            "code": "EPERM",
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 768,
+              "nodes": 40,
+              "bytes": {
+                "source": 78951,
+                "artifact": 0,
+                "scratch": 126744
+              },
+              "attempts": {
+                "source": 1,
+                "oracle": 1,
+                "candidate": 1
+              },
+              "deadline": 1795540957025,
+              "mode": "candidate"
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "restart-checkpoint",
+        "n": 7,
+        "refs": 3,
+        "aspects": 3,
+        "fault": "checkpoint"
+      },
+      "status": "refused_or_unproven",
+      "seconds": 12.422000000020489,
+      "files_bytes": 616441,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 65245184,
+          "seconds": 2.827999999979511,
+          "resources": {
+            "ram": 3711004672,
+            "a_disk": 313141755904,
+            "c_disk": 10989092864
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "source",
+            "result": {
+              "version": "c3a-synthetic-source-1",
+              "config": {
+                "id": "restart-checkpoint",
+                "n": 7,
+                "refs": 3,
+                "aspects": 3,
+                "fault": "checkpoint"
+              },
+              "source_hash": "03986a120decd8e0428471cfe3905eed029c3df9e1174c74386da6394f499aa3",
+              "population_hash": "f8774819edb61f0ae84fd922ecdcd54ba10b9d568269820d9406a75b42860f93",
+              "count": 7,
+              "with_join": 8,
+              "bundle_hash": "2d0d0bb932b7c43ae1181d1f8a04d67371add81d26112dd6095bac957a460549",
+              "scoring_day": "2026-11-24"
+            },
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 256,
+              "nodes": 8,
+              "bytes": {
+                "source": 78951,
+                "artifact": 0,
+                "scratch": 13890
+              },
+              "attempts": {
+                "source": 1
+              },
+              "deadline": 1795540963470,
+              "mode": "source"
+            },
+            "cpu_seconds": {
+              "user": 0.047,
+              "system": 0.016
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 70565888,
+          "seconds": 2.875,
+          "resources": {
+            "ram": 3518521344,
+            "a_disk": 313140183040,
+            "c_disk": 10989105152
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "oracle",
+            "result": {
+              "population_hash": "f8774819edb61f0ae84fd922ecdcd54ba10b9d568269820d9406a75b42860f93",
+              "A": 5,
+              "B": 2,
+              "create_count": 7,
+              "join_count": 8,
+              "create_values": {
+                "domains": [
+                  42,
+                  45,
+                  48,
+                  51,
+                  54,
+                  57,
+                  60,
+                  55,
+                  47,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37
+                  ],
+                  "d2": [
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d3": [
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45
+                  ],
+                  "d4": [
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d5": [
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d6": [
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d7": [
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d8": [
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d9": [
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d10": [
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52,
+                    55
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7
+                  ],
+                  "family": [
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6
+                  ],
+                  "private": [
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5
+                  ],
+                  "crisis": [
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5,
+                    -4
+                  ]
+                },
+                "conflict_resolution": [
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  38,
+                  39
+                ]
+              },
+              "join_values": {
+                "domains": [
+                  56,
+                  59,
+                  46,
+                  49,
+                  52,
+                  55,
+                  42,
+                  53,
+                  48,
+                  51
+                ],
+                "items": {
+                  "d1": [
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37
+                  ],
+                  "d2": [
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d3": [
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45
+                  ],
+                  "d4": [
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d5": [
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d6": [
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d7": [
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d8": [
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d9": [
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d10": [
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52,
+                    55
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7
+                  ],
+                  "family": [
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6
+                  ],
+                  "private": [
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5
+                  ],
+                  "crisis": [
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5,
+                    -4
+                  ]
+                },
+                "conflict_resolution": [
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  38,
+                  39
+                ]
+              },
+              "create_tally": {
+                "scores": [
+                  0.9750000000000001,
+                  3.521,
+                  2.504
+                ],
+                "winner": 1,
+                "note": "",
+                "pool": 7,
+                "voted": 7,
+                "share": 1,
+                "result": "todo",
+                "counted": 7,
+                "excluded": 1,
+                "counted_hash": "7515651c667a8bf3b42fddcf3f89c901c1a2f00a70e43fca6acf5dc7c8c5d5b3",
+                "excluded_hash": "ce7b4835737822984c60e49f617425d84fb1d3a6e65ad65a81cee659582e85a5",
+                "tasks": [
+                  {
+                    "title": "Implement option 1",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "join_tally": {
+                "scores": [
+                  0.98,
+                  3.4330000000000003,
+                  3.5869999999999997
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 8,
+                "voted": 8,
+                "share": 1,
+                "result": "todo",
+                "counted": 8,
+                "excluded": 0,
+                "counted_hash": "802ae412bab14d06b486b60a499d2a06f3e06ff6ff02892069873e92537a0640",
+                "excluded_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "relationship_diagnostics": {
+                "ignored_untyped_links": 0
+              }
+            },
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 512,
+              "nodes": 23,
+              "bytes": {
+                "source": 78951,
+                "artifact": 0,
+                "scratch": 70294
+              },
+              "attempts": {
+                "source": 1,
+                "oracle": 1
+              },
+              "deadline": 1795540963470,
+              "mode": "oracle"
+            },
+            "cpu_seconds": {
+              "user": 0.094,
+              "system": 0.062
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "candidate",
+          "status": "refused",
+          "exit_code": 2,
+          "peak_rss_bytes": 76722176,
+          "seconds": 3.5929999999934807,
+          "resources": {
+            "ram": 3461578752,
+            "a_disk": 313137299456,
+            "c_disk": 10989068288
+          },
+          "worker": {
+            "status": "refused",
+            "mode": "candidate",
+            "code": "worker_error",
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 2304,
+              "nodes": 289,
+              "bytes": {
+                "source": 78951,
+                "artifact": 317719,
+                "scratch": 448934
+              },
+              "attempts": {
+                "source": 1,
+                "oracle": 1,
+                "candidate": 2
+              },
+              "deadline": 1795540963470,
+              "mode": "candidate"
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          },
+          "prior_processes": [
+            {
+              "mode": "candidate",
+              "status": "refused",
+              "exit_code": 2,
+              "peak_rss_bytes": 66084864,
+              "seconds": 2.89000000001397,
+              "resources": {
+                "ram": 3353661440,
+                "a_disk": 313138610176,
+                "c_disk": 10989105152
+              },
+              "worker": {
+                "status": "refused",
+                "mode": "candidate",
+                "code": "injected_crash",
+                "counters": {
+                  "version": "c3a-budget-1",
+                  "limits": {
+                    "source": 268435456,
+                    "artifact": 268435456,
+                    "scratch": 536870912,
+                    "decoded": 4194304,
+                    "nodes": 200000,
+                    "work": 1000000,
+                    "attempts": 3
+                  },
+                  "work": 768,
+                  "nodes": 26,
+                  "bytes": {
+                    "source": 78951,
+                    "artifact": 0,
+                    "scratch": 80226
+                  },
+                  "attempts": {
+                    "source": 1,
+                    "oracle": 1,
+                    "candidate": 1
+                  },
+                  "deadline": 1795540963470,
+                  "mode": "candidate"
+                },
+                "provider_calls": 0,
+                "database_rpcs": 0,
+                "credential_loader_invocations": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "restart-seal",
+        "n": 7,
+        "refs": 3,
+        "aspects": 3,
+        "fault": "seal"
+      },
+      "status": "refused_or_unproven",
+      "seconds": 10.03200000000652,
+      "files_bytes": 616379,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 64749568,
+          "seconds": 2.187999999965541,
+          "resources": {
+            "ram": 3487272960,
+            "a_disk": 313129959424,
+            "c_disk": 10989006848
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "source",
+            "result": {
+              "version": "c3a-synthetic-source-1",
+              "config": {
+                "id": "restart-seal",
+                "n": 7,
+                "refs": 3,
+                "aspects": 3,
+                "fault": "seal"
+              },
+              "source_hash": "03986a120decd8e0428471cfe3905eed029c3df9e1174c74386da6394f499aa3",
+              "population_hash": "f8774819edb61f0ae84fd922ecdcd54ba10b9d568269820d9406a75b42860f93",
+              "count": 7,
+              "with_join": 8,
+              "bundle_hash": "2d0d0bb932b7c43ae1181d1f8a04d67371add81d26112dd6095bac957a460549",
+              "scoring_day": "2026-11-24"
+            },
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 256,
+              "nodes": 8,
+              "bytes": {
+                "source": 78951,
+                "artifact": 0,
+                "scratch": 13878
+              },
+              "attempts": {
+                "source": 1
+              },
+              "deadline": 1795540975978,
+              "mode": "source"
+            },
+            "cpu_seconds": {
+              "user": 0.047,
+              "system": 0.016
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 70795264,
+          "seconds": 1.9059999999590218,
+          "resources": {
+            "ram": 3506003968,
+            "a_disk": 313128386560,
+            "c_disk": 10989006848
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "oracle",
+            "result": {
+              "population_hash": "f8774819edb61f0ae84fd922ecdcd54ba10b9d568269820d9406a75b42860f93",
+              "A": 5,
+              "B": 2,
+              "create_count": 7,
+              "join_count": 8,
+              "create_values": {
+                "domains": [
+                  42,
+                  45,
+                  48,
+                  51,
+                  54,
+                  57,
+                  60,
+                  55,
+                  47,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37
+                  ],
+                  "d2": [
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d3": [
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45
+                  ],
+                  "d4": [
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d5": [
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d6": [
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d7": [
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d8": [
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d9": [
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d10": [
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52,
+                    55
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7
+                  ],
+                  "family": [
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6
+                  ],
+                  "private": [
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5
+                  ],
+                  "crisis": [
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5,
+                    -4
+                  ]
+                },
+                "conflict_resolution": [
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  38,
+                  39
+                ]
+              },
+              "join_values": {
+                "domains": [
+                  56,
+                  59,
+                  46,
+                  49,
+                  52,
+                  55,
+                  42,
+                  53,
+                  48,
+                  51
+                ],
+                "items": {
+                  "d1": [
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37
+                  ],
+                  "d2": [
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d3": [
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45
+                  ],
+                  "d4": [
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d5": [
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d6": [
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d7": [
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d8": [
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d9": [
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d10": [
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52,
+                    55
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7
+                  ],
+                  "family": [
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6
+                  ],
+                  "private": [
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5
+                  ],
+                  "crisis": [
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5,
+                    -4
+                  ]
+                },
+                "conflict_resolution": [
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  38,
+                  39
+                ]
+              },
+              "create_tally": {
+                "scores": [
+                  0.9750000000000001,
+                  3.521,
+                  2.504
+                ],
+                "winner": 1,
+                "note": "",
+                "pool": 7,
+                "voted": 7,
+                "share": 1,
+                "result": "todo",
+                "counted": 7,
+                "excluded": 1,
+                "counted_hash": "7515651c667a8bf3b42fddcf3f89c901c1a2f00a70e43fca6acf5dc7c8c5d5b3",
+                "excluded_hash": "ce7b4835737822984c60e49f617425d84fb1d3a6e65ad65a81cee659582e85a5",
+                "tasks": [
+                  {
+                    "title": "Implement option 1",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "join_tally": {
+                "scores": [
+                  0.98,
+                  3.4330000000000003,
+                  3.5869999999999997
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 8,
+                "voted": 8,
+                "share": 1,
+                "result": "todo",
+                "counted": 8,
+                "excluded": 0,
+                "counted_hash": "802ae412bab14d06b486b60a499d2a06f3e06ff6ff02892069873e92537a0640",
+                "excluded_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "relationship_diagnostics": {
+                "ignored_untyped_links": 0
+              }
+            },
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 512,
+              "nodes": 23,
+              "bytes": {
+                "source": 78951,
+                "artifact": 0,
+                "scratch": 70282
+              },
+              "attempts": {
+                "source": 1,
+                "oracle": 1
+              },
+              "deadline": 1795540975978,
+              "mode": "oracle"
+            },
+            "cpu_seconds": {
+              "user": 0.094,
+              "system": 0.031
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "candidate",
+          "status": "refused",
+          "exit_code": 2,
+          "peak_rss_bytes": 73154560,
+          "seconds": 2.797000000020489,
+          "resources": {
+            "ram": 3509964800,
+            "a_disk": 313120522240,
+            "c_disk": 10989006848
+          },
+          "worker": {
+            "status": "refused",
+            "mode": "candidate",
+            "code": "worker_error",
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 2304,
+              "nodes": 289,
+              "bytes": {
+                "source": 78951,
+                "artifact": 317687,
+                "scratch": 447600
+              },
+              "attempts": {
+                "source": 1,
+                "oracle": 1,
+                "candidate": 2
+              },
+              "deadline": 1795540975978,
+              "mode": "candidate"
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          },
+          "prior_processes": [
+            {
+              "mode": "candidate",
+              "status": "refused",
+              "exit_code": 2,
+              "peak_rss_bytes": 75612160,
+              "seconds": 2.969000000040978,
+              "resources": {
+                "ram": 3501912064,
+                "a_disk": 313126813696,
+                "c_disk": 10989006848
+              },
+              "worker": {
+                "status": "refused",
+                "mode": "candidate",
+                "code": "injected_crash",
+                "counters": {
+                  "version": "c3a-budget-1",
+                  "limits": {
+                    "source": 268435456,
+                    "artifact": 268435456,
+                    "scratch": 536870912,
+                    "decoded": 4194304,
+                    "nodes": 200000,
+                    "work": 1000000,
+                    "attempts": 3
+                  },
+                  "work": 1536,
+                  "nodes": 183,
+                  "bytes": {
+                    "source": 78951,
+                    "artifact": 155535,
+                    "scratch": 354092
+                  },
+                  "attempts": {
+                    "source": 1,
+                    "oracle": 1,
+                    "candidate": 1
+                  },
+                  "deadline": 1795540975978,
+                  "mode": "candidate"
+                },
+                "provider_calls": 0,
+                "database_rpcs": 0,
+                "credential_loader_invocations": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "score-7-1",
+        "n": 7,
+        "refs": 1,
+        "aspects": 1
+      },
+      "status": "refused_or_unproven",
+      "seconds": 8.687000000034459,
+      "files_bytes": 451059,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 65011712,
+          "seconds": 1.8589999999385327,
+          "resources": {
+            "ram": 3505377280,
+            "a_disk": 313118162944,
+            "c_disk": 10988859392
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "source",
+            "result": {
+              "version": "c3a-synthetic-source-1",
+              "config": {
+                "id": "score-7-1",
+                "n": 7,
+                "refs": 1,
+                "aspects": 1
+              },
+              "source_hash": "03986a120decd8e0428471cfe3905eed029c3df9e1174c74386da6394f499aa3",
+              "population_hash": "f8774819edb61f0ae84fd922ecdcd54ba10b9d568269820d9406a75b42860f93",
+              "count": 7,
+              "with_join": 8,
+              "bundle_hash": "db94b7b194d4b30700923b193ea1fd15b49ab698f2764fead99d12f4e9529774",
+              "scoring_day": "2026-11-24"
+            },
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 256,
+              "nodes": 8,
+              "bytes": {
+                "source": 78951,
+                "artifact": 0,
+                "scratch": 7516
+              },
+              "attempts": {
+                "source": 1
+              },
+              "deadline": 1795540986083,
+              "mode": "source"
+            },
+            "cpu_seconds": {
+              "user": 0.062,
+              "system": 0.015
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 68603904,
+          "seconds": 2.468999999924563,
+          "resources": {
+            "ram": 3487535104,
+            "a_disk": 313116590080,
+            "c_disk": 10988851200
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "oracle",
+            "result": {
+              "population_hash": "f8774819edb61f0ae84fd922ecdcd54ba10b9d568269820d9406a75b42860f93",
+              "A": 5,
+              "B": 2,
+              "create_count": 7,
+              "join_count": 8,
+              "create_values": {
+                "domains": [
+                  42,
+                  45,
+                  48,
+                  51,
+                  54,
+                  57,
+                  60,
+                  55,
+                  46,
+                  49
+                ],
+                "items": {
+                  "d1": [
+                    4,
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37
+                  ],
+                  "d2": [
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47
+                  ],
+                  "d3": [
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45
+                  ],
+                  "d4": [
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d5": [
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d6": [
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d7": [
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49
+                  ],
+                  "d8": [
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d9": [
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51,
+                    54
+                  ],
+                  "d10": [
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52,
+                    55
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -16,
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7
+                  ],
+                  "family": [
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6
+                  ],
+                  "private": [
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5
+                  ],
+                  "crisis": [
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5,
+                    -4
+                  ]
+                },
+                "conflict_resolution": [
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  38,
+                  39
+                ]
+              },
+              "join_values": {
+                "domains": [
+                  57,
+                  60,
+                  46,
+                  49,
+                  52,
+                  55,
+                  42,
+                  53,
+                  48,
+                  51
+                ],
+                "items": {
+                  "d1": [
+                    5,
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38
+                  ],
+                  "d2": [
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48
+                  ],
+                  "d3": [
+                    7,
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46
+                  ],
+                  "d4": [
+                    8,
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d5": [
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51
+                  ],
+                  "d6": [
+                    10,
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52,
+                    55
+                  ],
+                  "d7": [
+                    11,
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50
+                  ],
+                  "d8": [
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30,
+                    33,
+                    36,
+                    39,
+                    42,
+                    45,
+                    48,
+                    51
+                  ],
+                  "d9": [
+                    13,
+                    16,
+                    19,
+                    22,
+                    25,
+                    28,
+                    31,
+                    34,
+                    37,
+                    40,
+                    43,
+                    46,
+                    49,
+                    52,
+                    55
+                  ],
+                  "d10": [
+                    14,
+                    17,
+                    20,
+                    23,
+                    26,
+                    29,
+                    32,
+                    35,
+                    38,
+                    41,
+                    44,
+                    47,
+                    50,
+                    53,
+                    56
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -15,
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6
+                  ],
+                  "family": [
+                    -14,
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5
+                  ],
+                  "private": [
+                    -13,
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5,
+                    -4
+                  ],
+                  "crisis": [
+                    -12,
+                    -11,
+                    -10,
+                    -9,
+                    -8,
+                    -7,
+                    -6,
+                    -5,
+                    -4,
+                    -3
+                  ]
+                },
+                "conflict_resolution": [
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  38,
+                  39,
+                  40
+                ]
+              },
+              "create_tally": {
+                "scores": [
+                  0.9890000000000001,
+                  3.5490000000000004,
+                  2.4619999999999997
+                ],
+                "winner": 1,
+                "note": "",
+                "pool": 7,
+                "voted": 7,
+                "share": 1,
+                "result": "todo",
+                "counted": 7,
+                "excluded": 1,
+                "counted_hash": "eca241d7085e4541c904563f6546f2c230911869877d0b3229a363fc7c9562d4",
+                "excluded_hash": "ce7b4835737822984c60e49f617425d84fb1d3a6e65ad65a81cee659582e85a5",
+                "tasks": [
+                  {
+                    "title": "Implement option 1",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "join_tally": {
+                "scores": [
+                  1.001,
+                  3.4640000000000004,
+                  3.536
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 8.001000000000001,
+                "voted": 8.001000000000001,
+                "share": 1,
+                "result": "todo",
+                "counted": 8,
+                "excluded": 0,
+                "counted_hash": "6c7dcb97ce343eb971f08bfc3f74e9a8eb94d925d942b72c62c1a78b4bf1d1c0",
+                "excluded_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "relationship_diagnostics": {
+                "ignored_untyped_links": 0
+              }
+            },
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 512,
+              "nodes": 23,
+              "bytes": {
+                "source": 78951,
+                "artifact": 0,
+                "scratch": 55848
+              },
+              "attempts": {
+                "source": 1,
+                "oracle": 1
+              },
+              "deadline": 1795540986083,
+              "mode": "oracle"
+            },
+            "cpu_seconds": {
+              "user": 0.109,
+              "system": 0.047
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "candidate",
+          "status": "refused",
+          "exit_code": 2,
+          "peak_rss_bytes": 76394496,
+          "seconds": 4.202999999979511,
+          "resources": {
+            "ram": 3500953600,
+            "a_disk": 313115017216,
+            "c_disk": 10988847104
+          },
+          "worker": {
+            "status": "refused",
+            "mode": "candidate",
+            "code": "worker_error",
+            "counters": {
+              "version": "c3a-budget-1",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 2048,
+              "nodes": 261,
+              "bytes": {
+                "source": 78951,
+                "artifact": 186717,
+                "scratch": 402091
+              },
+              "attempts": {
+                "source": 1,
+                "oracle": 1,
+                "candidate": 1
+              },
+              "deadline": 1795540986083,
+              "mode": "candidate"
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        }
+      ]
+    }
+  ],
+  "artifacts": "scratch/c3a-runs/run-20261124-02",
+  "status": "stopped_on_harness_error",
+  "harness_code": "measurement_case_binding",
+  "admitted": 24,
+  "executed": 7,
+  "interrupted_case_directories": [
+    "score-7-3"
+  ]
+}

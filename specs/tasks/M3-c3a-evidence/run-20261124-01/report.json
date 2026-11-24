@@ -1,0 +1,10 @@
+{
+  "status": "preflight_refused",
+  "code": "source_pin_path_missing",
+  "source": "relevance_evaluator.py",
+  "fixture_workers_started": 0,
+  "fixtures": [],
+  "provider_calls": 0,
+  "database_rpcs": 0,
+  "credential_loader_invocations": 0
+}

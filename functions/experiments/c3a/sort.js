@@ -1,0 +1,5 @@
+"use strict";
+const {Store}=require('./disk');
+const compare=(a,b)=>b.score-a.score||(a.uid<b.uid?-1:a.uid>b.uid?1:0);
+function rank(g,name,input,count){let inputStore=new Store(g,name+'-sort0'),runs=[],chunk=[],written=0;function flush(){chunk.sort(compare);const start=written;for(const x of chunk)inputStore.set(written++,x);runs.push({start,count:chunk.length});chunk=[];}for(const x of input){chunk.push(x);if(chunk.length===75)flush();}if(chunk.length)flush();let stage=0;while(runs.length>1){const output=new Store(g,name+'-sort'+(++stage)),next=[];let at=0;for(let i=0;i<runs.length;i+=8){const group=runs.slice(i,i+8).map(r=>({...r,pos:0,head:inputStore.get(r.start)})),start=at;for(;;){let best=-1;for(let j=0;j<group.length;j++)if(group[j].head&&(best<0||compare(group[j].head,group[best].head)<0))best=j;if(best<0)break;const r=group[best];output.set(at++,r.head);r.pos++;r.head=r.pos<r.count?inputStore.get(r.start+r.pos):null;}next.push({start,count:at-start});}inputStore.close();inputStore=output;runs=next;}return {store:inputStore,count};}
+module.exports={rank,compare};
