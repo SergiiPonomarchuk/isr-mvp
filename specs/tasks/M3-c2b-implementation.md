@@ -47,3 +47,6 @@ Use the ten acceptance rows in the approved proposal, plus serializer-before-wri
 
 - Author usability: member pagination/search and actor18 Join passed. Author reported adjacent similar cards and an unstyled explanation textarea. Fix within B3: one rounded similar-issue list with internal dividers; explanation reuses topic-form-field/topic-form-textarea with spacing and explicit label. No backend/math/schema/limit changes.
 - Layout correction verified in actual browser: two issue rows share one border/divider; standard textarea width equals list width (646.49px), label and spacing correct. Node316 passed/seven skips; Python227/four skips. UI-only change does not alter final SDK backend evidence; screenshot browser-layout-corrected.jpg retained.
+
+- Author accepted corrected comparison layout and Create7. Requested two-row explanation field: rows=2 with scoped min-height override, retaining standard textarea appearance and vertical resize. Human voting/task acceptance remains next.
+- Two-row adjustment validation: Python227/four skips passed; unchanged Node rerun316/seven skips passed after two capacity-test subprocess startup timeouts (initial log retained). No test/code/time-limit change for the rerun.

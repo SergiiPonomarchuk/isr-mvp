@@ -2781,3 +2781,5 @@ body.publication-fixture-mode .relevant-context-card{display:none}
 .publication-fixture-mode .pf-similar-item{margin:0;border:0;border-radius:0;box-shadow:none}
 .publication-fixture-mode .pf-similar-item + .pf-similar-item{border-top:1px solid var(--border)}
 .publication-fixture-mode .pf-difference-field{margin-top:16px}
+
+.publication-fixture-mode .pf-difference-field .topic-form-textarea{min-height:0}
