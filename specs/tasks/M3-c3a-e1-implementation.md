@@ -13,3 +13,7 @@ Author approved merge PR65, then PR66, and E1 section5 on2026-11-24. Merged main
 ## Status
 
 - Design recorded before runtime edits; Sol Medium sufficient. All original C3a evidence/fixtures/production modules remain frozen.
+
+- Resource subdivision: the approved64MiB small-test allowance is conservatively split into40MiB cumulative unit-file reservations and24MiB for the four actual interruption directories. The later1GiB run ledger reserves the entire40MiB unit pool before admitting any worker. The unit ledger is persistent, never reset across test invocations. Its initial16MiB charge covers the finite first development unit outputs (3188956 physical bytes) and the bounded seven-person legacy reference comparisons; subsequent E1 unit growth is pre-reserved. No extra capacity cases are introduced.
+
+- Before admission:23 focused Node cases (19 original plus4 E1) and12 supervisor cases pass. Exact artifact roots/digests match the v1 seven-person producer; E1 pending writes, corruption, private replay and pre-seal resume verified. Legacy production/fixture/C1/C2 blobs unchanged. About to run the committed four process-interruption cases, then12 matrix cases once under fixed pins and caps.

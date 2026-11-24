@@ -63,4 +63,29 @@ class C3aSupervisor(unittest.TestCase):
    self.assertEqual(A.READS,1)
  def test_committed_matrix_exact_finite_count(self):
   cases=json.loads((R.EVIDENCE/'matrix.json').read_text(encoding='utf-8'));self.assertEqual(len(cases),24);self.assertEqual(len({c['id'] for c in cases}),24);self.assertTrue(all(c['n']<=9150 and c['refs']<=100 for c in cases))
+ def test_e1_environment_and_exact_reviewed_schedule(self):
+  env=R.safe_env(True,'data-before-index');self.assertEqual(env['C3A_E1'],'1');self.assertEqual(env['C3A_E1_HOOK'],'data-before-index')
+  p=R.ROOT/'specs/tasks/M3-c3a-e1-evidence/admission.json';a=json.loads(p.read_text(encoding='utf-8'))
+  old=json.loads((R.EVIDENCE/'matrix.json').read_text(encoding='utf-8'));self.assertEqual(len(a['cases']),12);self.assertTrue(all(c in old for c in a['cases']))
+  self.assertEqual({x['hook'] for x in a['regressions']},{'reservation-before-data','data-before-index','index-before-checkpoint','checkpoint-before-seal'})
+ def test_e1_monotonic_guard_refuses_even_if_epoch_deadline_is_future(self):
+  good={'ram':2*1024**3,'a_disk':8*1024**3,'c_disk':2*1024**3}
+  with tempfile.TemporaryDirectory() as tmp,patch.object(R,'preflight',return_value=good),patch.object(R,'child_memory',return_value=0),patch.object(R.subprocess,'Popen',return_value=FakeChild()):
+   row=R.run_child(['synthetic'],Path(tmp),Path(tmp),time.time()+120,{},'test',e1=True,monotonic_end=time.monotonic()-1)
+   self.assertEqual(row['status'],'whole_fixture_timeout')
+ def test_e1_exit86_requires_bound_marker_and_reuses_original_deadline(self):
+  calls=[]
+  def child(command,directory,run_dir,deadline,pins,mode,**kw):
+   calls.append((mode,deadline,kw['monotonic_end']))
+   if mode=='candidate':
+    if sum(m=='candidate' for m,d,clock in calls)==1:
+     (directory/'e1-fault-injected.json').write_text(json.dumps({'stage':'data-before-index'}),encoding='utf-8')
+     return {'mode':mode,'status':'child_refused','exit_code':86}
+    (directory/'candidate-result.json').write_text(json.dumps({'status':'completed'}),encoding='utf-8')
+    return {'mode':mode,'status':'completed','worker':{'result':{'comparison':{'status':'exact_node_parity'}}}}
+   return {'mode':mode,'status':'completed','audit':{'complete':True}}
+  with tempfile.TemporaryDirectory() as tmp,patch.object(R,'run_child',side_effect=child),patch.object(R,'reserve_independent',return_value=736):
+   row=R.run_fixture({'id':'score-7-3','n':7},Path(tmp),{},e1=True,hook='data-before-index',case_id='e1-data-before-index')
+   self.assertEqual(row['status'],'completed');self.assertTrue(row['fault_verified']);self.assertEqual(len({(d,c) for m,d,c in calls}),1)
+
 if __name__=='__main__':unittest.main()

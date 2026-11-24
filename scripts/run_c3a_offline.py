@@ -12,31 +12,36 @@ def preflight():
  return {'ram':free_memory(),'a_disk':shutil.disk_usage(ROOT).free,'c_disk':shutil.disk_usage(Path('C:/') if os.name=='nt' else ROOT).free}
 def prerequisites(p):
  return p['ram']>=1024**3 and p['a_disk']>=4*1024**3 and p['c_disk']>=1024**3
-def safe_env():
+def safe_env(e1=False,hook=None):
  keep={'PATH','SystemRoot','WINDIR','TEMP','TMP','COMSPEC','PATHEXT','USERPROFILE','HOME'}
  env={k:os.environ[k] for k in keep if k in os.environ};env['C3A_OFFLINE']='1'
+ if e1:env['C3A_E1']='1'
+ if hook:env['C3A_E1_HOOK']=hook
  if os.name=='nt':env['NODE_PATH']='C:/isr-mvp/functions/node_modules'
  elif os.environ.get('NODE_PATH'):env['NODE_PATH']=os.environ['NODE_PATH']
  return env
 def source_pins():
  files=list((ROOT/'functions').glob('*.js'))+list((ROOT/'functions/experiments/c3a').glob('*.js'))+[ROOT/'functions/experiments/publication/artifact.js',ROOT/'functions/tools/capacity/no-network.js',ROOT/'functions/package-lock.json',Path(__file__),ROOT/'scripts/check_c3a_fixture.py',ROOT/'scripts/audit_capacity_phase_a.py',ROOT/'scripts/mr1_check.py',ROOT/'scripts/multi_reference.py',ROOT/'scripts/isr_core.py',ROOT/'scripts/expertise.py',ROOT/'relevance_evaluator.py',ROOT/'specs/tasks/M3-c3a-evidence/matrix.json',ROOT/'functions/test/c3a-offline.test.js',ROOT/'tests/test_c3a_supervisor.py',ROOT/'scripts/demo_common.py']
+ for extra in [ROOT/'functions/test/c3a-e1.test.js',ROOT/'specs/tasks/M3-c3a-e1-evidence/admission.json']:
+  if extra.exists():files.append(extra)
  return {p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
 def check_pins(pins):
  if any(hashlib.sha256((ROOT/p).read_bytes()).hexdigest()!=h for p,h in pins.items()):raise RuntimeError('source_changed')
-def run_child(command,case_dir,run_dir,deadline,pins,mode):
+def run_child(command,case_dir,run_dir,deadline,pins,mode,*,e1=False,hook=None,monotonic_end=None):
  check_pins(pins);before=preflight()
  if not prerequisites(before):return {'mode':mode,'status':'resource_prerequisite_refused','resources':before}
- process=subprocess.Popen(command,cwd=ROOT,env=safe_env(),stdout=subprocess.PIPE,stderr=subprocess.PIPE,creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0);peak=0;refusal=None;start=time.monotonic();last_disk=0
+ process=subprocess.Popen(command,cwd=ROOT,env=safe_env(e1,hook),stdout=subprocess.PIPE,stderr=subprocess.PIPE,creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0);peak=0;refusal=None;start=time.monotonic();last_disk=0
  try:
   while process.poll() is None:
    try:peak=max(peak,child_memory(process.pid))
    except (OSError,RuntimeError):
     if process.poll() is None:refusal='monitor_refused';break
    if peak>RSS_LIMIT:refusal='rss_limit';break
-   if time.time()>=deadline:refusal='whole_fixture_timeout';break
+   if time.time()>=deadline or monotonic_end is not None and time.monotonic()>=monotonic_end:refusal='whole_fixture_timeout';break
    if time.monotonic()-last_disk>.5:
     if size(run_dir)>RUN_BYTES:refusal='run_file_limit';break
     if size(case_dir)>1024**3:refusal='case_file_limit';break
+    if hook and sum(size(p) for p in run_dir.glob('e1-*') if p.is_dir())>24*1024**2:refusal='regression_file_limit';break
     last_disk=time.monotonic()
    time.sleep(.1)
   if refusal:process.terminate()
@@ -73,8 +78,11 @@ def reserve_independent(directory,n):
  file.write_text(json.dumps(state),encoding='utf-8')
  return reserve
 
-def run_fixture(c,run_dir,pins):
- directory=run_dir/c['id'];directory.mkdir();start=time.monotonic();deadline=time.time()+120;stages=[]
+def run_fixture(c,run_dir,pins,*,e1=False,hook=None,case_id=None):
+ directory=run_dir/(case_id or c['id']);directory.mkdir();start=time.monotonic();deadline=time.time()+120;stages=[]
+ def invoke(command,mode):
+  if e1:return run_child(command,directory,run_dir,deadline,pins,mode,e1=True,hook=hook,monotonic_end=start+120)
+  return run_child(command,directory,run_dir,deadline,pins,mode)
  modes=['structural'] if c.get('structural') else ['source','oracle','candidate','independent']
  for mode in modes:
   if time.time()>=deadline:stages.append({'mode':mode,'status':'whole_fixture_timeout'});break
@@ -85,10 +93,10 @@ def run_fixture(c,run_dir,pins):
     stages.append({'mode':mode,'status':'audit_budget_refused'});break
    command=[sys.executable,'-W','ignore',str(ROOT/'scripts/check_c3a_fixture.py'),'--case-dir',str(directory),'--read-budget',str(reservation)]
   else:command=['node','--max-old-space-size=256',str(ROOT/'functions/experiments/c3a/worker.js'),mode,str(directory),json.dumps(c),str(int(deadline*1000))]
-  stage=run_child(command,directory,run_dir,deadline,pins,mode)
+  stage=invoke(command,mode)
   attempts=[]
-  while mode=='candidate' and stage.get('worker',{}).get('code')=='injected_crash' and len(attempts)<2 and time.time()<deadline:
-   attempts.append(stage);stage=run_child(command,directory,run_dir,deadline,pins,mode)
+  while mode=='candidate' and (stage.get('worker',{}).get('code')=='injected_crash' or hook and stage.get('exit_code')==86) and len(attempts)<2 and time.time()<deadline:
+   attempts.append(stage);stage=invoke(command,mode)
   if attempts:stage['prior_processes']=attempts
   stages.append(stage)
   if stage['status']!='completed' and mode!='oracle':break
@@ -96,9 +104,46 @@ def run_fixture(c,run_dir,pins):
  complete=len(stages)==len(modes) and all(s['status']=='completed' for s in stages)
  if complete and not c.get('structural'):
   comparison=stages[2]['worker']['result'].get('comparison',{});complete=comparison.get('status')=='exact_node_parity' and stages[-1].get('audit',{}).get('complete') is True
- return {'case':c,'status':'completed' if complete else 'refused_or_unproven','seconds':time.monotonic()-start,'files_bytes':size(directory),'stages':stages}
+ fault_verified=None
+ if hook:
+  marker=directory/'e1-fault-injected.json'
+  fault_verified=marker.exists() and json.loads(marker.read_text(encoding='utf-8')).get('stage')==hook and any(p.get('exit_code')==86 for s in stages for p in s.get('prior_processes',[]))
+  complete=complete and fault_verified
+ return {'case':c,'id':case_id or c['id'],'fault_hook':hook,'fault_verified':fault_verified,'status':'completed' if complete else 'refused_or_unproven','seconds':time.monotonic()-start,'files_bytes':size(directory),'stages':stages}
+def e1_main(out):
+ evidence=ROOT/'specs/tasks/M3-c3a-e1-evidence'
+ if out.parent!=evidence.resolve() or not out.name.startswith('run-'):raise ValueError('output_path')
+ admission=json.loads((evidence/'admission.json').read_text(encoding='utf-8'));cases=admission['cases'];regressions=admission['regressions']
+ old=json.loads((EVIDENCE/'matrix.json').read_text(encoding='utf-8'))
+ if len(cases)!=12 or len(regressions)!=4 or not all(c in old for c in cases):raise ValueError('admission')
+ out.mkdir(exist_ok=False);run_dir=ROOT/'scratch/c3a-runs'/out.name;run_dir.mkdir(parents=True,exist_ok=False)
+ # Reserve the bounded40MiB unit pool before any admitted worker. Four actual
+ # interruption directories additionally share24MiB: combined64MiB.
+ (run_dir/'run-quota.json').write_text(json.dumps({'version':'c3a-quota-1','limit':RUN_BYTES-4*1024**2,'reserved':40*1024**2}),encoding='utf-8')
+ (run_dir/'regression-quota.json').write_text(json.dumps({'version':'c3a-regression-quota-1','limit':24*1024**2,'reserved':0}),encoding='utf-8')
+ pins=source_pins();report={'version':'c3a-e1-report-1','io':'c3a-io-2','scope':'synthetic compatibility only; C3b NO-GO','admission':admission,'source_pins':pins,'provider_calls':0,'database_rpcs':0,'credential_loader_invocations':0,'regressions':[],'fixtures':[],'artifacts':run_dir.relative_to(ROOT).as_posix(),'unit_pool_reserved_bytes':40*1024**2,'regression_pool_bytes':24*1024**2}
+ def save(): (out/'report.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
+ save()
+ for item in regressions:
+  c=next(x for x in old if x['id']==item['fixture'])
+  row=run_fixture(c,run_dir,pins,e1=True,hook=item['hook'],case_id=item['id']);report['regressions'].append(row);save()
+  print(json.dumps({'regression':item['id'],'status':row['status'],'seconds':round(row['seconds'],3)}),flush=True)
+  if row['status']!='completed':
+   report['status']='stopped_on_recovery_failure';report['matrix_executed']=0;save();return 2
+ stopped=False
+ for c in cases:
+  if stopped:report['fixtures'].append({'case':c,'status':'not_run_file_limit'});continue
+  row=run_fixture(c,run_dir,pins,e1=True);report['fixtures'].append(row)
+  stopped=any(s.get('worker',{}).get('code') in ('run_file_limit','regression_file_limit') or s.get('status')=='run_file_limit' for s in row['stages'])
+  save();print(json.dumps({'case':c['id'],'status':row['status'],'seconds':round(row['seconds'],3)}),flush=True)
+ report['matrix_executed']=sum('stages' in r for r in report['fixtures']);report['matrix_passed']=sum(r['status']=='completed' for r in report['fixtures']);report['status']='completed' if report['matrix_executed']==12 else 'stopped'
+ report['retained_files_bytes']=size(run_dir);report['run_quota']=json.loads((run_dir/'run-quota.json').read_text(encoding='utf-8'));save()
+ print(json.dumps({'status':report['status'],'matrix_passed':report['matrix_passed'],'matrix_admitted':12,'regressions_passed':4}),flush=True)
+ return 0
+
 def main():
- parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',type=Path,required=True);args=parser.parse_args();out=args.out.resolve()
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',type=Path,required=True);parser.add_argument('--e1',action='store_true');args=parser.parse_args();out=args.out.resolve()
+ if args.e1:return e1_main(out)
  if out.parent!=EVIDENCE.resolve() or not out.name.startswith('run-'):raise ValueError('output_path')
  cases=json.loads((EVIDENCE/'matrix.json').read_text(encoding='utf-8'));assert len(cases)==24 and len({c['id'] for c in cases})==24
  out.mkdir(exist_ok=False);run_dir=ROOT/'scratch/c3a-runs'/out.name;run_dir.mkdir(parents=True,exist_ok=False);(run_dir/'run-quota.json').write_text(json.dumps({'version':'c3a-quota-1','limit':RUN_BYTES-4*1024**2,'reserved':0}),encoding='utf-8');pins=source_pins();report={'version':'c3a-offline-1','scope':'synthetic current-oracle compatibility; not intended-policy/population/server acceptance','matrix':cases,'source_pins':pins,'limits':{'cases':24,'seconds_per_whole_fixture':120,'heap_mib':256,'rss_mib':512,'source_mib':256,'artifact_mib':256,'scratch_mib':512,'run_mib':1024,'decoded_mib':4,'quantum_profiles':75,'emitted_records':200000,'work_units':1000000,'attempts':3},'provider_calls':0,'database_rpcs':0,'credential_loader_invocations':0,'fixtures':[],'artifacts':'scratch/c3a-runs/'+out.name}
