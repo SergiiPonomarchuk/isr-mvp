@@ -25,3 +25,5 @@ Author approved PR64 merge and C3a section3 limits on2026-11-24. Base6dcb966. No
 - Required verification: Python236 tests/four skips passed; npm default333 pass/seven skips/two pre-existing capacity subprocess-start timeouts. Unchanged serial suite 334 passed/seven skips with one remaining existing startup timeout; the unchanged capacity-audit file then passed all7 checks in isolation. New19 Node/nine Python supervisor cases included. Final pushed-head standard CI checked before handoff; merge only on explicit author instruction. Zero provider/DB/loader/deploy operations. Recommend a separately reviewed offline write/checkpoint batching increment; Sol Medium sufficient.
 
 - CI prerequisite: the new Node-to-Python independent audit test imports the existing NumPy evaluator, so the Node job explicitly provisions Python3.11/NumPy, matching the Python job. This changes test setup only.
+
+- [PR65](https://github.com/SergiiPonomarchuk/isr-mvp/pull/65) opened against main6dcb966. Final pushed-head standard Node/Python CI is checked before handoff. Merge requires explicit author instruction; no source/import/deploy follows.
