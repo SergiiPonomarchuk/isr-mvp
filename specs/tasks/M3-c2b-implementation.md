@@ -33,3 +33,5 @@ Keep section7 limits exactly:16writes/16KiB requests/512KiB doc,600reads/1024dis
 Use the ten acceptance rows in the approved proposal, plus serializer-before-write, default-off/legacy invariants, strict path/RPC/client targeting, content loss/restart and immutable old cursor tests. Required Node/Python suites, independent fixture tally check, actual SDK envelope/resource report, objective actual-browser evidence, then author usability review and PR. No new approval between B1-B3; ask on material conflict/path/limit/behavior change only.
 
 - 2026-11-24: concrete schema/plan recorded before implementation; PR62 merge approved/completed. No C2b runtime/database/browser operation yet.
+
+- B1 offline: six boundary/codec/full-reader/replay/Join/content/cursor/installed-SDK tests pass. Initial application activation preflight max9464bytes (128 dummy transaction bytes included), within16KiB; zero network calls. Historical cursor physical issue-ID mismatch reproduced and fixed. Public raw roots have no persisted full member maps. No C2b emulator write yet.
