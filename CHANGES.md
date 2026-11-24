@@ -1,3 +1,9 @@
+## 2026-11-24 - C2b tiny emulator application/lifecycle integration
+
+- Default-off generation adapter, bounded backend commands and actual application renderer/cache integration; unchanged Lifecycle/ISR math. Unsupported legacy consumers refuse the new format.
+- Final SDK fixtures/retries/races/replay passed: max12411B commit/2817B document,63.281s/120.39MiB; independent tally/task audit passed. Node316 passed/seven skips; Python227/four skips.
+- Browser Create/reload, members/Join, options/messages/voting/tasks/results/comments verified. Human usability pending; no provider/live/rules/docs changes or population/scoring acceptance.
+
 ## 2026-11-24 - C2b application/lifecycle/browser proposal
 
 - Record PR61 merge d7f5c30 and successful main CI; preserve C2a evidence and limitations.
