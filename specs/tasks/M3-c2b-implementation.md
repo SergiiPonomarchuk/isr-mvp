@@ -50,3 +50,6 @@ Use the ten acceptance rows in the approved proposal, plus serializer-before-wri
 
 - Author accepted corrected comparison layout and Create7. Requested two-row explanation field: rows=2 with scoped min-height override, retaining standard textarea appearance and vertical resize. Human voting/task acceptance remains next.
 - Two-row adjustment validation: Python227/four skips passed; unchanged Node rerun316/seven skips passed after two capacity-test subprocess startup timeouts (initial log retained). No test/code/time-limit change for the rerun.
+
+- Author accepted proposal, voting and complete winner/task creation. Results Save was visually invisible: shared renderer uses undefined --accent with white text. Scoped C2b task/subtask Save buttons now use existing --primary and white text/capsule radius; persistence acceptance pending. No backend/scoring/limits changes.
+- Save visibility verified on actual completed author fixture: blue capsule Save appears below results textarea. Screenshot browser-save-visible.jpg retained. Backend persistence behavior unchanged.

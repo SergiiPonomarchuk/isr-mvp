@@ -1,3 +1,7 @@
+## 2026-11-24 - C2b visible task result actions
+
+- Restore visible blue task/subtask Save buttons in fixture mode; their inherited accent variable was undefined. Author accepted proposal/voting/winner/task checks.
+
 ## 2026-11-24 - C2b usability layout correction
 
 - Group similar fixture issues in one rounded list with horizontal dividers; reuse the standard full-width rounded explanation textarea and label spacing. Member-list and Join checks accepted by author.

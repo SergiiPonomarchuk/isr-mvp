@@ -2783,3 +2783,5 @@ body.publication-fixture-mode .relevant-context-card{display:none}
 .publication-fixture-mode .pf-difference-field{margin-top:16px}
 
 .publication-fixture-mode .pf-difference-field .topic-form-textarea{min-height:0}
+
+.publication-fixture-mode .task-save-results-btn,.publication-fixture-mode .subtask-save-results-btn{background:var(--primary)!important;color:#fff!important;border-radius:999px!important}
