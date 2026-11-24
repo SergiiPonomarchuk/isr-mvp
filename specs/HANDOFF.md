@@ -4,7 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: C3a offline prototype complete; C3b NO-GO, 2026-11-24
+## Current checkpoint: C3a-E1 offline efficiency proposal prepared, 2026-11-24
+
+- Author requested continuation after PR65. [C3a-E1 proposal](tasks/M3-c3a-efficiency-plan.md) is documentation only, stacked on PR65 head9afbde1. PR65 remains open and requires an explicit merge command; its final push/PR Node/Python CI passed.
+- Propose bounded append/index batching and fewer budget rewrites, preserving exact logical outputs, typed frames, pre-write reservations, social WAL, original deadline and all existing resource caps. I/O remains a hypothesis until instrumentation measures it. No physical artifact packing or scoring/policy changes.
+- Proposed new allowance: one12-case matrix plus four small process-interruption regressions, maximum32 minutes admitted time combined, shared1GiB new-file allowance; unchanged256MiB heap/512MiB RSS/120s per whole fixture and cumulative work/byte/attempt ceilings. No benchmark has run; implementation/section5 schedule need separate approval.
+- Validation: required npm test335 passed/seven skips; Python236 tests/four skips passed. Links/whitespace and documentation-only scope verified; final-head standard CI checked before handoff. [PR66](https://github.com/SergiiPonomarchuk/isr-mvp/pull/66) is stacked on PR65; reconcile/retarget after PR65 merge.
+- Next: explicit merge PR65, review/merge PR66, then approve C3a-E1 including section5. Original evidence is frozen. C3b remains NO-GO; real source/import/SDK/access/restore and new X policy/coverage remain gated;16 Values cases/PR60 deferred. Sol Medium sufficient; zero paid AI allowance needed.
+
+## Previous checkpoint: C3a offline prototype complete; C3b NO-GO, 2026-11-24
 
 - Author ordered merge PR64 and approved C3a including section3 limits. PR64 merged as6dcb966; main Node/Python CI passed. Implemented on codex/c3a-offline-prototype; [contract/status](tasks/M3-c3a-implementation.md), [evidence](tasks/M3-c3a-evidence/README.md), [aggregate counters](tasks/M3-c3a-evidence/summary.json). Original C serving checkout and production/docs/rules remain unchanged.
 - Fixed24-case run03 at source02f28b8 completed:13 passes/11 refused or unproven. Exact Node and independent Python parity pass through301 source/302 Join members, including actual Values/tally/tasks. Corrupt/missing and process-restart checks pass.300 candidate timed out despite301 passing; no monotonic capacity claim.1000 candidate and9150 oracle/structural cases exhausted the shared120s deadline. Peak child RSS153.10MiB; max measured request16341B/document4297B; retained686118870B. No caps raised or failed cases retried for acceptance.

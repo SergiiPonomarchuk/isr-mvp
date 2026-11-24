@@ -1,3 +1,9 @@
+## 2026-11-24 - C3a-E1 bounded offline efficiency proposal
+
+- Propose coalesced private-file writes and checkpoint journals with exact parity, pre-write cumulative reservations and crash recovery under unchanged resource ceilings.
+- Specify one12-case follow-up matrix and four small interruption regressions (32 minutes admitted time total), shared1GiB new-file budget; execution needs explicit review/approval. PR65 remains open; C3b stays NO-GO.
+- Documentation only; no runtime/scoring/fixture/test/docs/rules changes, capacity run, source import, database/provider/credential-loader operation or deployment.
+
 ## 2026-11-24 - C3a offline prototype and measured capacity limits
 
 - Record PR64 merged6dcb966/main CI. Add isolated disk-backed synthetic evaluator/Create/Join/Values/tally compatibility adapter, segmented offline artifacts, bounded readers and offline SDK serialization; production modules/C1/C2/docs/rules unchanged.
