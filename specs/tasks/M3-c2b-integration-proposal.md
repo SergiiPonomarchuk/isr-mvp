@@ -36,7 +36,7 @@ Current Lifecycle rules remain authoritative: management support and voted share
 
 ## 3. Proposed format, adapter and authority
 
-Introduce a strictly parsed experimental publication_version **c2b-emulator-1**, separate from scoring_version. Precomputed fixtures explicitly declare fixture provenance; do not label them as outputs of the real MR1 engine. Do not reinterpret C2a prototype_version wrappers as normal issue documents. Reuse the typed private artifact codec/protocol where appropriate; retain old reports and C2a target/refusal regression coverage. Any shared-boundary refactor must rerun affected C2a tests, not weaken its target checks.
+Introduce a strictly parsed experimental publication_version **c2b-emulator-1**, separate from scoring_version. Precomputed fixtures explicitly declare fixture provenance; do not label them as outputs of the real MR1 engine. Absence of publication_version permits legacy dispatch only after validating the legacy shape. A declared new/unknown format with missing fields refuses; it never falls back to legacy. Do not reinterpret C2a prototype_version wrappers as normal issue documents. Reuse the typed private artifact codec/protocol where appropriate; retain old reports and C2a target/refusal regression coverage. Any shared-boundary refactor must rerun affected C2a tests, not weaken its target checks.
 
 Bounded application-shaped roots expose title/topic, description, classification/context summary, current status/ends, public ID, member_count and an exact publication token. The token binds issue ID, active build/generation, manifest digest, publication epoch and format. Discussion/public mirrors match it. Phase, options, votes, management choices, tasks and conversation have separate explicit revisions. Immutable member/context/values/replay evidence stays private. No full isr_scores/relevance_scores/participants shadow arrays are stored on new-format roots.
 
@@ -125,3 +125,5 @@ Requested next decision after documentation review/merge: **Approve C2b emulator
 ## Status
 
 - 2026-11-24: author requested C2b proposal after PR61 merge d7f5c30; refreshed parent design, C2a evidence and application/helper consumer inventory. Documentation-only branch codex/c2b-integration-proposal; implementation and emulator/browser runs await explicit approval. No source/data/provider/loader/rules/docs/ operation.
+
+- 2026-11-24: [PR62](https://github.com/SergiiPonomarchuk/isr-mvp/pull/62) opened against main d7f5c30. Relative links/source anchors, documentation-only scope and git diff --check verified. Node293 passed/seven skips on unchanged rerun (13.300s); initial concurrent run had two existing child-start timeout failures, retained in private scratch logs; no code/test/time-limit change. Python224 tests/four skips passed. Final pushed-head Node/Python CI is checked before handoff. No emulator/browser/provider/data operation; merge and implementation approval remain separate.
