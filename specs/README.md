@@ -7,7 +7,7 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: [E1 continuation evidence](tasks/M3-c3a-e1-evidence/README.md): four actual recoveries total and seven matrix passes;301/1000 checkpoint EPERM failures stopped completion. Retry/technical-stop fixes tested; [six-case bounded completion](tasks/M3-c3a-e1-checkpoint-completion.md) awaits approval in draft PR67. Charges/evidence retained; C3b remains NO-GO.
+Current checkpoint: [E1 bounded completion/evidence](tasks/M3-c3a-e1-evidence/README.md) finished; PR67 review-ready. Six cases attempted:100/301 numerical and structural19 pass;1000 exact Node but audit timeout,9150 candidate timeout, structural100 timeout. Prior charges/caps retained; C3b remains NO-GO. Next is explicit PR67 review/merge, then a separate offline performance design.
 
 Previous checkpoint: [R1 optional Values metadata recovery](tasks/Values-optional-metadata-recovery.md), live dry run ready224/zero conflicts and synthetic recovery passed; [author-only runbook](tasks/Values-optional-metadata-author-runbook.md) prepared. No live apply or AI calls.
 

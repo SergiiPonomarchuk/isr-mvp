@@ -1,0 +1,1345 @@
+{
+  "version": "c3a-e1-completion-summary-1",
+  "approval_date": "2026-11-25",
+  "executed_commit": "509b26c9750bbfe06ce9421ec6d955f697c73cdc",
+  "raw_report_sha256": "177625e9469ce07b7fe71a46b2d238b132036f3cdc8551c736efe3c9f13e4237",
+  "status": "bounded_engineering_increment_complete",
+  "c3b_readiness": "NO_GO",
+  "six_cases_attempted": 6,
+  "whole_cases_passed": 3,
+  "whole_cases_unproven_time_limit": 3,
+  "technical_failures": 0,
+  "seconds_total": 510.1720000001369,
+  "peak_child_rss_bytes": 191238144,
+  "retained_new_run_bytes": 548739852,
+  "run_quota": {
+    "version": "c3a-quota-1",
+    "limit": 1069547520,
+    "reserved": 840957952
+  },
+  "regression_quota": {
+    "version": "c3a-regression-quota-1",
+    "limit": 25165824,
+    "reserved": 17825792
+  },
+  "unit_quota": {
+    "version": "c3a-unit-quota-1",
+    "limit": 41943040,
+    "reserved": 40894464
+  },
+  "max_measured_commit_bytes": 16378,
+  "max_measured_document_bytes": 4298,
+  "provider_calls": 0,
+  "database_rpcs": 0,
+  "credential_loader_invocations": 0,
+  "cases": [
+    {
+      "id": "score-100-3",
+      "status": "completed",
+      "seconds": 16.266000000061467,
+      "new_file_bytes": 5441754,
+      "node_comparison": {
+        "status": "exact_node_parity",
+        "compared_rows": 201
+      },
+      "independent_status": "completed",
+      "independent_audit": {
+        "complete": true,
+        "audit_read_units": 1543,
+        "audit_read_budget": 3712,
+        "profiles_evaluated": 100,
+        "members": 100,
+        "join_members": 101,
+        "policy_acceptance": false,
+        "database_reads": 0,
+        "writes": 0,
+        "requests": 0
+      },
+      "last_persisted_budget": {
+        "version": "c3a-budget-2",
+        "io": "c3a-io-2",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 77569,
+        "nodes": 8326,
+        "bytes": {
+          "source": 1981910,
+          "artifact": 3228352,
+          "scratch": 20855825
+        },
+        "attempts": {
+          "source": 2,
+          "oracle": 2,
+          "candidate": 2
+        },
+        "deadline": 1795560937388,
+        "sequence": 306,
+        "metrics": {
+          "total": {
+            "journal_writes": 2940,
+            "quota_writes": 16,
+            "sets": 8326,
+            "wal_writes": 918,
+            "data_writes": 490,
+            "index_writes": 878,
+            "batches": 306,
+            "checkpoint_writes": 714,
+            "gets": 17980,
+            "index_reads": 17788,
+            "data_reads": 17858
+          },
+          "phases": {
+            "unit": {
+              "journal_writes": 1,
+              "quota_writes": 1
+            },
+            "source": {
+              "journal_writes": 40,
+              "sets": 202,
+              "quota_writes": 4,
+              "wal_writes": 18,
+              "data_writes": 6,
+              "index_writes": 44,
+              "batches": 6,
+              "checkpoint_writes": 2
+            },
+            "oracle": {
+              "journal_writes": 52,
+              "gets": 804,
+              "index_reads": 804,
+              "data_reads": 804,
+              "sets": 402,
+              "wal_writes": 24,
+              "data_writes": 10,
+              "index_writes": 10,
+              "batches": 8,
+              "checkpoint_writes": 2,
+              "quota_writes": 1
+            },
+            "candidate": {
+              "journal_writes": 2847,
+              "quota_writes": 10,
+              "data_reads": 17054,
+              "gets": 17176,
+              "index_reads": 16984,
+              "sets": 7722,
+              "wal_writes": 876,
+              "data_writes": 474,
+              "index_writes": 824,
+              "batches": 292,
+              "checkpoint_writes": 710
+            }
+          },
+          "classes": {
+            "source": {
+              "sets": 202,
+              "data_writes": 6,
+              "index_writes": 44,
+              "gets": 1408,
+              "index_reads": 1408,
+              "data_reads": 1408
+            },
+            "scratch": {
+              "sets": 4556,
+              "data_writes": 376,
+              "index_writes": 726,
+              "data_reads": 6604,
+              "gets": 6726,
+              "index_reads": 6534
+            },
+            "artifact": {
+              "sets": 3568,
+              "data_writes": 108,
+              "index_writes": 108,
+              "gets": 9846,
+              "index_reads": 9846,
+              "data_reads": 9846
+            }
+          },
+          "pending_records_max": 64,
+          "pending_bytes_max": 625629,
+          "direct_bytes_max": 0
+        },
+        "mode": "candidate",
+        "independent_reserved": 7424,
+        "exhausted_replacements": [],
+        "replacement": null
+      },
+      "seed_budget": {
+        "version": "c3a-budget-2",
+        "io": "c3a-io-2",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 38528,
+        "nodes": 4163,
+        "bytes": {
+          "source": 990955,
+          "artifact": 1614176,
+          "scratch": 10231999
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795559340738,
+        "sequence": 153,
+        "metrics": {
+          "total": {
+            "journal_writes": 1469,
+            "quota_writes": 8,
+            "sets": 4163,
+            "wal_writes": 459,
+            "data_writes": 245,
+            "index_writes": 439,
+            "batches": 153,
+            "checkpoint_writes": 357,
+            "gets": 8990,
+            "index_reads": 8894,
+            "data_reads": 8929
+          },
+          "phases": {
+            "unit": {
+              "journal_writes": 1,
+              "quota_writes": 1
+            },
+            "source": {
+              "journal_writes": 20,
+              "sets": 101,
+              "quota_writes": 2,
+              "wal_writes": 9,
+              "data_writes": 3,
+              "index_writes": 22,
+              "batches": 3,
+              "checkpoint_writes": 1
+            },
+            "oracle": {
+              "journal_writes": 26,
+              "gets": 402,
+              "index_reads": 402,
+              "data_reads": 402,
+              "sets": 201,
+              "wal_writes": 12,
+              "data_writes": 5,
+              "index_writes": 5,
+              "batches": 4,
+              "checkpoint_writes": 1
+            },
+            "candidate": {
+              "journal_writes": 1422,
+              "quota_writes": 5,
+              "data_reads": 8527,
+              "gets": 8588,
+              "index_reads": 8492,
+              "sets": 3861,
+              "wal_writes": 438,
+              "data_writes": 237,
+              "index_writes": 412,
+              "batches": 146,
+              "checkpoint_writes": 355
+            }
+          },
+          "classes": {
+            "source": {
+              "sets": 101,
+              "data_writes": 3,
+              "index_writes": 22,
+              "gets": 704,
+              "index_reads": 704,
+              "data_reads": 704
+            },
+            "scratch": {
+              "sets": 2278,
+              "data_writes": 188,
+              "index_writes": 363,
+              "data_reads": 3302,
+              "gets": 3363,
+              "index_reads": 3267
+            },
+            "artifact": {
+              "sets": 1784,
+              "data_writes": 54,
+              "index_writes": 54,
+              "gets": 4923,
+              "index_reads": 4923,
+              "data_reads": 4923
+            }
+          },
+          "pending_records_max": 64,
+          "pending_bytes_max": 625629,
+          "direct_bytes_max": 0
+        },
+        "mode": "candidate",
+        "independent_reserved": 3712
+      },
+      "new_metrics": {
+        "sets": 4163,
+        "data_reads": 8929,
+        "index_reads": 8894,
+        "data_writes": 245,
+        "index_writes": 439,
+        "journal_writes": 1471,
+        "wal_writes": 459,
+        "checkpoint_writes": 357,
+        "rename_retries": 0
+      },
+      "stage_results": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "code": null,
+          "seconds": 1.75
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "code": null,
+          "seconds": 1.8439999999245629
+        },
+        {
+          "mode": "candidate",
+          "status": "completed",
+          "code": null,
+          "seconds": 11.047000000020489
+        },
+        {
+          "mode": "independent",
+          "status": "completed",
+          "code": null,
+          "seconds": 1.4530000000959262
+        }
+      ]
+    },
+    {
+      "id": "boundary-301",
+      "status": "completed",
+      "seconds": 37.84400000004098,
+      "new_file_bytes": 14448100,
+      "node_comparison": {
+        "status": "exact_node_parity",
+        "compared_rows": 603
+      },
+      "independent_status": "completed",
+      "independent_audit": {
+        "complete": true,
+        "audit_read_units": 4625,
+        "audit_read_budget": 10144,
+        "profiles_evaluated": 301,
+        "members": 301,
+        "join_members": 302,
+        "policy_acceptance": false,
+        "database_reads": 0,
+        "writes": 0,
+        "requests": 0
+      },
+      "last_persisted_budget": {
+        "version": "c3a-budget-2",
+        "io": "c3a-io-2",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 156577,
+        "nodes": 17439,
+        "bytes": {
+          "source": 5924728,
+          "artifact": 5596903,
+          "scratch": 52862808
+        },
+        "attempts": {
+          "source": 2,
+          "oracle": 2,
+          "candidate": 2
+        },
+        "deadline": 1795560953682,
+        "sequence": 741,
+        "metrics": {
+          "total": {
+            "journal_writes": 7555,
+            "quota_writes": 32,
+            "sets": 17439,
+            "wal_writes": 2223,
+            "data_writes": 1166,
+            "index_writes": 2324,
+            "batches": 741,
+            "checkpoint_writes": 2000,
+            "gets": 34968,
+            "index_reads": 34960,
+            "data_reads": 35162
+          },
+          "phases": {
+            "unit": {
+              "journal_writes": 1,
+              "quota_writes": 1
+            },
+            "source": {
+              "journal_writes": 86,
+              "sets": 604,
+              "quota_writes": 7,
+              "wal_writes": 42,
+              "data_writes": 14,
+              "index_writes": 128,
+              "batches": 14,
+              "checkpoint_writes": 2
+            },
+            "oracle": {
+              "journal_writes": 124,
+              "quota_writes": 4,
+              "gets": 2412,
+              "index_reads": 2412,
+              "data_reads": 2412,
+              "sets": 1206,
+              "wal_writes": 60,
+              "data_writes": 22,
+              "index_writes": 22,
+              "batches": 20,
+              "checkpoint_writes": 2
+            },
+            "candidate": {
+              "journal_writes": 7344,
+              "quota_writes": 20,
+              "data_reads": 32750,
+              "gets": 32556,
+              "index_reads": 32548,
+              "sets": 15629,
+              "wal_writes": 2121,
+              "data_writes": 1130,
+              "index_writes": 2174,
+              "batches": 707,
+              "checkpoint_writes": 1996
+            }
+          },
+          "classes": {
+            "source": {
+              "sets": 604,
+              "data_writes": 14,
+              "index_writes": 128,
+              "gets": 4222,
+              "index_reads": 4222,
+              "data_reads": 4222
+            },
+            "scratch": {
+              "sets": 10543,
+              "data_writes": 973,
+              "index_writes": 2017,
+              "data_reads": 16412,
+              "gets": 16218,
+              "index_reads": 16210
+            },
+            "artifact": {
+              "sets": 6292,
+              "data_writes": 179,
+              "index_writes": 179,
+              "gets": 14528,
+              "index_reads": 14528,
+              "data_reads": 14528
+            }
+          },
+          "pending_records_max": 64,
+          "pending_bytes_max": 626618,
+          "direct_bytes_max": 0
+        },
+        "mode": "candidate",
+        "exhausted_replacements": [],
+        "replacement": null,
+        "independent_reserved": 10144
+      },
+      "seed_budget": {
+        "version": "c3a-budget-2",
+        "io": "c3a-io-2",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 42496,
+        "nodes": 5072,
+        "bytes": {
+          "source": 2962364,
+          "artifact": 1173612,
+          "scratch": 22153812
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795559419990,
+        "sequence": 302,
+        "metrics": {
+          "total": {
+            "journal_writes": 3309,
+            "quota_writes": 13,
+            "sets": 5072,
+            "wal_writes": 906,
+            "data_writes": 457,
+            "index_writes": 1036,
+            "batches": 302,
+            "checkpoint_writes": 963,
+            "gets": 8231,
+            "index_reads": 8227,
+            "data_reads": 8327
+          },
+          "phases": {
+            "unit": {
+              "journal_writes": 1,
+              "quota_writes": 1
+            },
+            "source": {
+              "journal_writes": 43,
+              "sets": 302,
+              "quota_writes": 3,
+              "wal_writes": 21,
+              "data_writes": 7,
+              "index_writes": 64,
+              "batches": 7,
+              "checkpoint_writes": 1
+            },
+            "oracle": {
+              "journal_writes": 62,
+              "quota_writes": 2,
+              "gets": 1206,
+              "index_reads": 1206,
+              "data_reads": 1206,
+              "sets": 603,
+              "wal_writes": 30,
+              "data_writes": 11,
+              "index_writes": 11,
+              "batches": 10,
+              "checkpoint_writes": 1
+            },
+            "candidate": {
+              "journal_writes": 3203,
+              "quota_writes": 7,
+              "data_reads": 7121,
+              "gets": 7025,
+              "index_reads": 7021,
+              "sets": 4167,
+              "wal_writes": 855,
+              "data_writes": 439,
+              "index_writes": 961,
+              "batches": 285,
+              "checkpoint_writes": 961
+            }
+          },
+          "classes": {
+            "source": {
+              "sets": 302,
+              "data_writes": 7,
+              "index_writes": 64,
+              "gets": 2111,
+              "index_reads": 2111,
+              "data_reads": 2111
+            },
+            "scratch": {
+              "sets": 3709,
+              "data_writes": 419,
+              "index_writes": 941,
+              "data_reads": 6216,
+              "gets": 6120,
+              "index_reads": 6116
+            },
+            "artifact": {
+              "sets": 1061,
+              "data_writes": 31,
+              "index_writes": 31
+            }
+          },
+          "pending_records_max": 64,
+          "pending_bytes_max": 626618,
+          "direct_bytes_max": 0
+        },
+        "mode": "candidate"
+      },
+      "new_metrics": {
+        "sets": 12367,
+        "data_reads": 26835,
+        "index_reads": 26733,
+        "data_writes": 709,
+        "index_writes": 1288,
+        "journal_writes": 4246,
+        "wal_writes": 1317,
+        "checkpoint_writes": 1037,
+        "rename_retries": 0
+      },
+      "stage_results": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "code": null,
+          "seconds": 2.484000000054948
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "code": null,
+          "seconds": 2.484000000054948
+        },
+        {
+          "mode": "candidate",
+          "status": "completed",
+          "code": null,
+          "seconds": 29.95299999997951
+        },
+        {
+          "mode": "independent",
+          "status": "completed",
+          "code": null,
+          "seconds": 2.797000000020489
+        }
+      ]
+    },
+    {
+      "id": "score-1000-3",
+      "status": "refused_or_unproven",
+      "seconds": 120.01599999994505,
+      "new_file_bytes": 46235564,
+      "node_comparison": {
+        "status": "exact_node_parity",
+        "compared_rows": 2001
+      },
+      "independent_status": "whole_fixture_timeout",
+      "independent_audit": null,
+      "last_persisted_budget": {
+        "version": "c3a-budget-2",
+        "io": "c3a-io-2",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 429569,
+        "nodes": 47706,
+        "bytes": {
+          "source": 19632702,
+          "artifact": 14189543,
+          "scratch": 136306297
+        },
+        "attempts": {
+          "source": 2,
+          "oracle": 2,
+          "candidate": 2
+        },
+        "deadline": 1795560991562,
+        "sequence": 1860,
+        "metrics": {
+          "total": {
+            "journal_writes": 18747,
+            "quota_writes": 77,
+            "sets": 47706,
+            "wal_writes": 5580,
+            "data_writes": 2903,
+            "index_writes": 5527,
+            "batches": 1859,
+            "checkpoint_writes": 4859,
+            "gets": 97291,
+            "index_reads": 97196,
+            "data_reads": 97691,
+            "rename_retries": 1
+          },
+          "phases": {
+            "unit": {
+              "journal_writes": 1,
+              "quota_writes": 1
+            },
+            "source": {
+              "journal_writes": 278,
+              "sets": 2002,
+              "quota_writes": 21,
+              "wal_writes": 150,
+              "data_writes": 50,
+              "index_writes": 422,
+              "batches": 50,
+              "checkpoint_writes": 2
+            },
+            "oracle": {
+              "journal_writes": 380,
+              "quota_writes": 10,
+              "gets": 8004,
+              "index_reads": 8004,
+              "data_reads": 8004,
+              "sets": 4002,
+              "wal_writes": 192,
+              "data_writes": 66,
+              "index_writes": 66,
+              "batches": 64,
+              "checkpoint_writes": 2
+            },
+            "candidate": {
+              "journal_writes": 18088,
+              "quota_writes": 45,
+              "data_reads": 89687,
+              "gets": 89287,
+              "index_reads": 89192,
+              "sets": 41702,
+              "wal_writes": 5238,
+              "data_writes": 2787,
+              "index_writes": 5039,
+              "batches": 1745,
+              "checkpoint_writes": 4855,
+              "rename_retries": 1
+            }
+          },
+          "classes": {
+            "source": {
+              "sets": 2002,
+              "data_writes": 50,
+              "index_writes": 422,
+              "gets": 12006,
+              "index_reads": 12006,
+              "data_reads": 12006
+            },
+            "scratch": {
+              "sets": 28492,
+              "data_writes": 2382,
+              "index_writes": 4634,
+              "data_reads": 38725,
+              "gets": 38325,
+              "index_reads": 38230
+            },
+            "artifact": {
+              "sets": 17212,
+              "data_writes": 471,
+              "index_writes": 471,
+              "gets": 46960,
+              "index_reads": 46960,
+              "data_reads": 46960
+            }
+          },
+          "pending_records_max": 64,
+          "pending_bytes_max": 630549,
+          "direct_bytes_max": 0
+        },
+        "mode": "candidate",
+        "exhausted_replacements": [],
+        "replacement": null,
+        "independent_reserved": 32512
+      },
+      "seed_budget": {
+        "version": "c3a-budget-2",
+        "io": "c3a-io-2",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 43264,
+        "nodes": 4814,
+        "bytes": {
+          "source": 9816351,
+          "artifact": 0,
+          "scratch": 34108530
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1,
+          "candidate": 1
+        },
+        "deadline": 1795559453570,
+        "sequence": 408,
+        "metrics": {
+          "total": {
+            "journal_writes": 4755,
+            "quota_writes": 20,
+            "sets": 4814,
+            "wal_writes": 1224,
+            "data_writes": 571,
+            "index_writes": 1268,
+            "batches": 407,
+            "checkpoint_writes": 1468,
+            "gets": 7752,
+            "index_reads": 7752,
+            "data_reads": 7912
+          },
+          "phases": {
+            "unit": {
+              "journal_writes": 1,
+              "quota_writes": 1
+            },
+            "source": {
+              "journal_writes": 139,
+              "sets": 1001,
+              "quota_writes": 10,
+              "wal_writes": 75,
+              "data_writes": 25,
+              "index_writes": 211,
+              "batches": 25,
+              "checkpoint_writes": 1
+            },
+            "oracle": {
+              "journal_writes": 190,
+              "quota_writes": 5,
+              "gets": 4002,
+              "index_reads": 4002,
+              "data_reads": 4002,
+              "sets": 2001,
+              "wal_writes": 96,
+              "data_writes": 33,
+              "index_writes": 33,
+              "batches": 32,
+              "checkpoint_writes": 1
+            },
+            "candidate": {
+              "journal_writes": 4425,
+              "quota_writes": 4,
+              "data_reads": 3910,
+              "gets": 3750,
+              "index_reads": 3750,
+              "sets": 1812,
+              "wal_writes": 1053,
+              "data_writes": 513,
+              "index_writes": 1024,
+              "batches": 350,
+              "checkpoint_writes": 1466
+            }
+          },
+          "classes": {
+            "source": {
+              "sets": 1001,
+              "data_writes": 25,
+              "index_writes": 211,
+              "gets": 5002,
+              "index_reads": 5002,
+              "data_reads": 5002
+            },
+            "scratch": {
+              "sets": 3813,
+              "data_writes": 546,
+              "index_writes": 1057,
+              "data_reads": 2910,
+              "gets": 2750,
+              "index_reads": 2750
+            }
+          },
+          "pending_records_max": 64,
+          "pending_bytes_max": 630549,
+          "direct_bytes_max": 0
+        },
+        "mode": "candidate"
+      },
+      "new_metrics": {
+        "sets": 42892,
+        "data_reads": 89779,
+        "index_reads": 89444,
+        "data_writes": 2332,
+        "index_writes": 4259,
+        "journal_writes": 13992,
+        "wal_writes": 4356,
+        "checkpoint_writes": 3391,
+        "rename_retries": 1
+      },
+      "stage_results": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "code": null,
+          "seconds": 4.329000000027008
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "code": null,
+          "seconds": 5.594000000040978
+        },
+        {
+          "mode": "candidate",
+          "status": "completed",
+          "code": null,
+          "seconds": 102.68700000003446
+        },
+        {
+          "mode": "independent",
+          "status": "whole_fixture_timeout",
+          "code": null,
+          "seconds": 7.265999999945052
+        }
+      ]
+    },
+    {
+      "id": "score-9150-3",
+      "status": "refused_or_unproven",
+      "seconds": 120.06200000003446,
+      "new_file_bytes": 155449594,
+      "node_comparison": null,
+      "independent_status": "not_run",
+      "independent_audit": null,
+      "last_persisted_budget": {
+        "version": "c3a-budget-2",
+        "io": "c3a-io-2",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 326657,
+        "nodes": 46446,
+        "bytes": {
+          "source": 179602360,
+          "artifact": 0,
+          "scratch": 331285465
+        },
+        "attempts": {
+          "source": 2,
+          "oracle": 2,
+          "candidate": 1
+        },
+        "deadline": 1795561111634,
+        "sequence": 1269,
+        "metrics": {
+          "total": {
+            "journal_writes": 9318,
+            "quota_writes": 246,
+            "sets": 46446,
+            "wal_writes": 3805,
+            "data_writes": 1408,
+            "index_writes": 6784,
+            "batches": 1268,
+            "checkpoint_writes": 1358,
+            "gets": 62932,
+            "index_reads": 62932,
+            "data_reads": 63065
+          },
+          "phases": {
+            "unit": {
+              "journal_writes": 1,
+              "quota_writes": 1
+            },
+            "source": {
+              "journal_writes": 2504,
+              "sets": 18302,
+              "quota_writes": 175,
+              "wal_writes": 1392,
+              "data_writes": 464,
+              "index_writes": 3864,
+              "batches": 464,
+              "checkpoint_writes": 2
+            },
+            "oracle": {
+              "journal_writes": 1732,
+              "quota_writes": 47,
+              "gets": 51447,
+              "index_reads": 51447,
+              "data_reads": 51447,
+              "sets": 18301,
+              "wal_writes": 858,
+              "data_writes": 287,
+              "index_writes": 287,
+              "batches": 286,
+              "checkpoint_writes": 1
+            },
+            "candidate": {
+              "journal_writes": 5081,
+              "quota_writes": 23,
+              "data_reads": 11618,
+              "gets": 11485,
+              "index_reads": 11485,
+              "sets": 9843,
+              "wal_writes": 1555,
+              "data_writes": 657,
+              "index_writes": 2633,
+              "batches": 518,
+              "checkpoint_writes": 1355
+            }
+          },
+          "classes": {
+            "source": {
+              "sets": 18302,
+              "data_writes": 464,
+              "index_writes": 3864,
+              "gets": 60597,
+              "index_reads": 60597,
+              "data_reads": 60597
+            },
+            "scratch": {
+              "sets": 28144,
+              "data_writes": 944,
+              "index_writes": 2920,
+              "data_reads": 2468,
+              "gets": 2335,
+              "index_reads": 2335
+            }
+          },
+          "pending_records_max": 64,
+          "pending_bytes_max": 631382,
+          "direct_bytes_max": 0
+        },
+        "mode": "candidate",
+        "exhausted_replacements": [],
+        "replacement": {
+          "key": "6d967e90b04b152f5065305153ba9fbaefc5b1bcf404fd3df5d908bd449cb050",
+          "attempts": 1
+        }
+      },
+      "seed_budget": {
+        "version": "c3a-budget-2",
+        "io": "c3a-io-2",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 65536,
+        "nodes": 9151,
+        "bytes": {
+          "source": 89801180,
+          "artifact": 0,
+          "scratch": 92409743
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1
+        },
+        "deadline": 1795559495857,
+        "sequence": 232,
+        "metrics": {
+          "total": {
+            "journal_writes": 1311,
+            "quota_writes": 89,
+            "sets": 9151,
+            "wal_writes": 696,
+            "data_writes": 232,
+            "index_writes": 1932,
+            "batches": 232,
+            "checkpoint_writes": 1,
+            "gets": 14845,
+            "index_reads": 14845,
+            "data_reads": 14845
+          },
+          "phases": {
+            "unit": {
+              "journal_writes": 1,
+              "quota_writes": 1
+            },
+            "source": {
+              "journal_writes": 1251,
+              "sets": 9151,
+              "quota_writes": 87,
+              "wal_writes": 696,
+              "data_writes": 232,
+              "index_writes": 1932,
+              "batches": 232,
+              "checkpoint_writes": 1
+            },
+            "oracle": {
+              "journal_writes": 59,
+              "quota_writes": 1,
+              "gets": 14845,
+              "index_reads": 14845,
+              "data_reads": 14845
+            }
+          },
+          "classes": {
+            "source": {
+              "sets": 9151,
+              "data_writes": 232,
+              "index_writes": 1932,
+              "gets": 14845,
+              "index_reads": 14845,
+              "data_reads": 14845
+            }
+          },
+          "pending_records_max": 64,
+          "pending_bytes_max": 631382,
+          "direct_bytes_max": 0
+        },
+        "mode": "oracle"
+      },
+      "new_metrics": {
+        "sets": 37295,
+        "data_reads": 48220,
+        "index_reads": 48087,
+        "data_writes": 1176,
+        "index_writes": 4852,
+        "journal_writes": 8007,
+        "wal_writes": 3109,
+        "checkpoint_writes": 1357,
+        "rename_retries": 0
+      },
+      "stage_results": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "code": null,
+          "seconds": 41.59399999992456
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "code": null,
+          "seconds": 38.686999999918044
+        },
+        {
+          "mode": "candidate",
+          "status": "whole_fixture_timeout",
+          "code": null,
+          "seconds": 39.68700000003446
+        }
+      ]
+    },
+    {
+      "id": "structural-19-3",
+      "status": "completed",
+      "seconds": 95.92200000002049,
+      "new_file_bytes": 112686592,
+      "node_comparison": null,
+      "independent_status": "not_run",
+      "independent_audit": null,
+      "last_persisted_budget": {
+        "version": "c3a-budget-2",
+        "io": "c3a-io-2",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 412416,
+        "nodes": 56209,
+        "bytes": {
+          "source": 0,
+          "artifact": 109944195,
+          "scratch": 137731090
+        },
+        "attempts": {
+          "structural": 1
+        },
+        "deadline": 1795561231721,
+        "sequence": 1145,
+        "metrics": {
+          "total": {
+            "journal_writes": 8485,
+            "quota_writes": 120,
+            "sets": 56209,
+            "wal_writes": 3435,
+            "data_writes": 2290,
+            "index_writes": 2290,
+            "batches": 1145,
+            "checkpoint_writes": 1146,
+            "gets": 94460,
+            "index_reads": 94460,
+            "data_reads": 94460
+          },
+          "phases": {
+            "unit": {
+              "journal_writes": 1,
+              "quota_writes": 1
+            },
+            "structural": {
+              "journal_writes": 8484,
+              "sets": 56209,
+              "wal_writes": 3435,
+              "data_writes": 2290,
+              "index_writes": 2290,
+              "batches": 1145,
+              "checkpoint_writes": 1146,
+              "quota_writes": 119,
+              "gets": 94460,
+              "index_reads": 94460,
+              "data_reads": 94460
+            }
+          },
+          "classes": {
+            "artifact": {
+              "sets": 47059,
+              "data_writes": 1145,
+              "index_writes": 1145,
+              "gets": 94289,
+              "index_reads": 94289,
+              "data_reads": 94289
+            },
+            "scratch": {
+              "sets": 9150,
+              "data_writes": 1145,
+              "index_writes": 1145,
+              "gets": 171,
+              "index_reads": 171,
+              "data_reads": 171
+            }
+          },
+          "pending_records_max": 52,
+          "pending_bytes_max": 102576,
+          "direct_bytes_max": 0
+        },
+        "exhausted_replacements": [],
+        "mode": "structural",
+        "replacement": null
+      },
+      "seed_budget": {},
+      "new_metrics": {
+        "sets": 56209,
+        "data_reads": 94460,
+        "index_reads": 94460,
+        "data_writes": 2290,
+        "index_writes": 2290,
+        "journal_writes": 8485,
+        "wal_writes": 3435,
+        "checkpoint_writes": 1146,
+        "rename_retries": 0
+      },
+      "stage_results": [
+        {
+          "mode": "structural",
+          "status": "completed",
+          "code": null,
+          "seconds": 95.875
+        }
+      ]
+    },
+    {
+      "id": "structural-100-3",
+      "status": "refused_or_unproven",
+      "seconds": 120.06200000003446,
+      "new_file_bytes": 214478105,
+      "node_comparison": null,
+      "independent_status": "not_run",
+      "independent_audit": null,
+      "last_persisted_budget": {
+        "version": "c3a-budget-2",
+        "io": "c3a-io-2",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 370688,
+        "nodes": 66867,
+        "bytes": {
+          "source": 0,
+          "artifact": 213132857,
+          "scratch": 238088361
+        },
+        "attempts": {
+          "structural": 1
+        },
+        "deadline": 1795561327677,
+        "sequence": 1463,
+        "metrics": {
+          "total": {
+            "journal_writes": 8278,
+            "quota_writes": 218,
+            "sets": 66867,
+            "wal_writes": 4389,
+            "data_writes": 2926,
+            "index_writes": 2926,
+            "batches": 1463,
+            "checkpoint_writes": 488,
+            "gets": 44,
+            "index_reads": 44,
+            "data_reads": 44,
+            "rename_retries": 1
+          },
+          "phases": {
+            "unit": {
+              "journal_writes": 1,
+              "quota_writes": 1
+            },
+            "structural": {
+              "journal_writes": 8277,
+              "sets": 66867,
+              "wal_writes": 4389,
+              "data_writes": 2926,
+              "index_writes": 2926,
+              "batches": 1463,
+              "checkpoint_writes": 488,
+              "quota_writes": 217,
+              "gets": 44,
+              "index_reads": 44,
+              "data_reads": 44,
+              "rename_retries": 1
+            }
+          },
+          "classes": {
+            "artifact": {
+              "sets": 62967,
+              "data_writes": 1463,
+              "index_writes": 1463,
+              "gets": 22,
+              "index_reads": 22,
+              "data_reads": 22
+            },
+            "scratch": {
+              "sets": 3900,
+              "data_writes": 1463,
+              "index_writes": 1463,
+              "gets": 22,
+              "index_reads": 22,
+              "data_reads": 22
+            }
+          },
+          "pending_records_max": 64,
+          "pending_bytes_max": 215239,
+          "direct_bytes_max": 0
+        },
+        "exhausted_replacements": [],
+        "mode": "structural",
+        "replacement": null
+      },
+      "seed_budget": {},
+      "new_metrics": {
+        "sets": 66867,
+        "data_reads": 44,
+        "index_reads": 44,
+        "data_writes": 2926,
+        "index_writes": 2926,
+        "journal_writes": 8278,
+        "wal_writes": 4389,
+        "checkpoint_writes": 488,
+        "rename_retries": 1
+      },
+      "stage_results": [
+        {
+          "mode": "structural",
+          "status": "whole_fixture_timeout",
+          "code": null,
+          "seconds": 120.03100000007544
+        }
+      ]
+    }
+  ]
+}

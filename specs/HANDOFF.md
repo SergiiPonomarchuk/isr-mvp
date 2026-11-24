@@ -4,7 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: E1 continuation stopped on checkpoint EPERM; fix ready, 2026-11-25
+## Current checkpoint: E1 bounded completion finished; PR67 review-ready, 2026-11-25
+
+- Author approved the exact six-case completion with fresh120s deadlines and retained prior charges. Executed once at509b26c: all six attempted in510.172s; three whole-case passes, three guarded time refusals/unproven, zero new technical stops. [Evidence](tasks/M3-c3a-e1-evidence/README.md), [carried-budget/delta summary](tasks/M3-c3a-e1-evidence/completion-summary.json).
+-100/301 profiles passed full Node/independent Python, serialize/readers.1000 candidate/serialize/readers/exact Node2001 Create+Join rows completed; independent Python hit the shared deadline.9150 source/oracle completed, candidate exhausted remaining39.687s. Structural19 sealed9150 records; structural100 timed out unsealed. These results are not full9150 numerical or intended-policy acceptance.
+- Actual replacement retry succeeded in the1000 worker; no new EPERM stop. I/O gains measured without altered math/typed payloads. Four historical actual-process recoveries remain attributed to their executed versions; revised retry/exhaustion unit coverage/full source-head CI passed.
+- Final reservations802MiB/1GiB including old charges/unit pool; peak RSS182.38MiB/512, unit39/40MiB and interruption17/24MiB remain charged. Do not reset them for redundant local reruns. No source change occurred during admission; older reports/outputs retained.
+- Next: review/explicit author merge [PR67](https://github.com/SergiiPonomarchuk/isr-mvp/pull/67), then prepare a separate offline performance design from measured phase/counter bottlenecks. E1 engineering increment complete; C3b NO-GO. New matrix/accounting/caps/source import/policy/application SDK/access/restore require their own review. Zero source-export/DB/emulator/provider/loader/deploy operations; production/docs/rules/fixtures unchanged;16 Values cases deferred. Sol Medium sufficient. Final pushed-head CI verified before handoff.
+
+## Previous checkpoint: E1 continuation stopped on checkpoint EPERM; fix ready, 2026-11-25
 
 - Author approved three remaining recoveries/12 cases with a fresh interrupted-case deadline and retained charges. Executed once at fbb17ba: all three recoveries passed, giving four total pinned boundaries. Seven matrix passes include100 profiles28.969s and300 profiles50.094s, exact Node/independent parity and measured fewer file writes. [Evidence](tasks/M3-c3a-e1-evidence/README.md).
 -301/1000 candidates failed EPERM. The supervisor incorrectly advanced after the first; agent stopped the exact parent/worker after9150 source completed and its oracle began. Two structural cases unrun. Stop-gate overshoot/raw results/partial budget are preserved; no failed case replayed.

@@ -123,3 +123,5 @@ The author's current "ok, go" authorizes preparing this concrete plan. It does n
 
 - Validation: required npm test passed335/seven optional skips; Python236 tests/four optional skips passed. Proposal links, whitespace, baseline and documentation-only blob scope verified. No capacity matrix ran.
 - [PR66](https://github.com/SergiiPonomarchuk/isr-mvp/pull/66) opened against PR65's feature branch. GitHub initially rejected creation through git push with two HTTP/server errors; creating the same authorized branch at its existing base through the GitHub API allowed the documentation push. No unrelated branch or PR65 update. Final pushed-head standard Node/Python CI is checked before handoff. After explicit PR65 merge, reconcile/retarget PR66 to main before its separately authorized merge.
+
+-2026-11-25: Approved E1 and bounded continuations completed as documented in [E1 implementation](M3-c3a-e1-implementation.md)/[evidence](M3-c3a-e1-evidence/README.md). Batching and exact small parity/recovery checks pass; retained larger time refusals remain. Reviewable engineering increment, not C3b readiness; no source import or new admission follows automatically.

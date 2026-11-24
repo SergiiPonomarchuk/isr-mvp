@@ -1,3 +1,9 @@
+## 2026-11-25 - E1 six-case bounded completion
+
+- Finish the approved six-case admission once:100/301 full Node/Python and9150-record structural19 passes;1000 Node exact but audit timeout,9150 candidate timeout, structural100 timeout. No new technical stop.
+- Retain source/seed/cumulative charges and all prior evidence; measured I/O deltas and an observed successful checkpoint retry.802MiB reserved/1GiB,182.38MiB peak RSS/512; no limit reset or increase.
+- E1 engineering increment review-ready in PR67; C3b/full-population readiness remains NO-GO. No production, policy, source import, provider/DB/loader or deploy action follows.
+
 ## 2026-11-25 - E1 recovery passes, checkpoint IO fixes and bounded completion
 
 - Retain approved continuation: all three remaining recoveries pass; seven matrix passes include exact100/300-profile results and fewer data/index/journal writes.

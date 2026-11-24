@@ -42,3 +42,5 @@ Suggested approval: **Approve the six-case E1 checkpoint-fix completion, up to12
 ## Status
 
 Prepared for author review under the approved E1 stop/new-proposal rule. PR67 remains draft. Final-head Node/Python CI is checked before handoff; no completion worker ran. Sol Medium sufficient; zero paid AI allowance.
+
+-2026-11-25: Author approved the exact six-case completion/fresh deadlines with retained charges. Executed once at509b26c; all six attempted, three whole-case passes/three time-limit refusals, no new technical stop.100/301 passed full Node/Python;1000 passed exact Node but Python timed out;9150 candidate timed out after source/oracle; structural19 sealed9150 records; structural100 timed out. [Final evidence](M3-c3a-e1-evidence/README.md), [carried-budget summary](M3-c3a-e1-evidence/completion-summary.json). E1 engineering increment complete; C3b NO-GO. PR67 review-ready after final CI; no further admission or merge is automatic.

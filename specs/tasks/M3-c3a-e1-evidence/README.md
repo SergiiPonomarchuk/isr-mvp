@@ -1,3 +1,46 @@
+# C3a-E1 bounded completion, 2026-11-25
+
+**The approved E1 engineering increment is complete and PR67 is ready for review. Full-population/C3b readiness remains NO-GO.** All six newly approved cases were attempted once at509b26c: three whole-case passes, three time-limit/unproven results, zero new technical stops. No allowance was reset or raised and no expired case was replayed outside the authorized admission.
+
+[Six-case contract](continuation-02.json), [raw completed execution](run-20261125-01/report.json), [source/seed-bound summary](completion-summary.json). The summary binds the raw SHA256, records cumulative and seed budgets plus new-run deltas, and verifies that prior work/node/byte/attempt charges were retained. Earlier failure/recovery evidence remains below and in its original files.
+
+| Case | Whole-case result | Seconds | Validation reached |
+|---|---|---:|---|
+|100 profiles /101 after Join | pass |16.266 | exact Node and independent Python; serialization/readers |
+|301 profiles /302 after Join | pass |37.844 | exact Node and independent Python; serialization/readers |
+|1000 profiles /1001 after Join | unproven |120.016 | candidate, serialization/readers and exact Node2001 rows passed; Python audit timed out |
+|9150 profiles | unproven |120.062 | source41.594s/oracle38.687s complete; candidate timed out with remaining39.687s |
+|9150 structural records /19 refs | storage-only pass |95.922 | sealed9150 records; serialization, no semantic-scoring acceptance |
+|9150 structural records /100 refs | unproven |120.062 | last checkpoint3897 records, unsealed |
+
+The1000 result is exact Node compatibility evidence, not an independent-check or whole-fixture pass. The9150 result includes source generation and the oracle within one120s deadline; it does not measure a candidate given an isolated fresh120s. Structural references19/100 are deliberately storage-only multiplicity, not admitted real Analyzer contexts. No new numerical mismatch was reported.
+
+## I/O and resource findings
+
+For100 profiles the new execution added4163 logical sets,245 data writes,439 index writes and1471 journal writes;301 added12367/709/1288/4246 respectively. These are deltas from the carried seed budgets, not totals that double-count previous attempts. The unchanged v1 set does at least one data/index/journal write per successful set, giving a static comparison. WAL/checkpoint overhead is included separately in the summary. The100-profile times50.375s (C3a),28.969s (prior E1) and16.266s (current) are single host observations, not controlled statistical speed claims.
+
+The completed1000-profile worker recorded one native replacement retry and then passed full comparison/serialization/readers. Structural100 recorded one additional retry attempt before its timeout; it is not a completed-case validation. No EPERM/other technical error stopped this admission.
+
+Summed fixture elapsed510.172s (about8.5min). Peak child RSS191238144B (182.38MiB), below512MiB; Node heap capped256MiB. All attempted phases, restarts and the independent audit shared each newly authorized120s deadline. Parent teardown adds small elapsed overhead on refusals; no over-deadline fixture passed.
+
+Run reservations finish840957952B (802MiB) of the unchanged1GiB allowance, including inherited233832448B and the already-reserved40MiB unit pool. New run retained548739852B; older outputs remain. Interruption pool stays17/24MiB and unit pool39/40MiB; neither was reset/refunded. Per-case work/node/byte/attempt caps remain enforced; summary contains every retained seed and final persisted budget.
+
+Installed-SDK envelope measurements use the same offline non-client serializer/dummy transaction approach; maximum request/document sizes and fixed limits are in the summary. They are not Firestore server, index, authentication or distributed quota acceptance. Zero DB/provider/loader operations or real source access occurred.
+
+## Disposition and next recommendation
+
+All four actual-process recovery boundaries passed in the earlier pinned evidence. The revised metadata retry/exhaustion policy has fault-injected unit coverage and an observed successful retry in the1000 execution. Historical recovery results are not relabeled as having run on a later source version.
+
+The bounded producer/codec/parity/I/O increment is reviewable with the time refusals retained. Do not import the actual population, deploy, change policy, raise caps or claim full9150 acceptance. Even a later9150 numerical pass would not establish omitted dense/all-member/one-reference/two-aspect cases, marked-X coverage, real source/embedding freshness, paged application/SDK consumers, access control or restore.
+
+Recommended next work, after PR67 review/explicit merge: prepare a separate offline performance design for source preparation, the social pass, repeated validation/reader work and the large structural layout. Use the observed phase/counter breakdown; preserve exact outputs and current failures. Any new matrix or changed accounting/resource contract needs review. No new experiment is proposed as already authorized.
+
+The executed source509b26c passed full Node/Python CI. This closeout changes only evidence/status/PR description; final-head standard CI is verified before handoff. The nearly full A-drive unit pool is preserved and not reset for redundant local tests. Sol Medium sufficient; zero AI cost.
+
+---
+
+## Earlier continuation and stopped-attempt evidence
+
 # C3a-E1 evidence: continuation stopped on checkpoint I/O, 2026-11-25
 
 **Draft PR67; E1 acceptance remains incomplete and C3b NO-GO.** The approved continuation ran once at fbb17ba. All three remaining actual-process recovery checks passed. Combined with the original reservation-before-data pass, all four scheduled boundaries have pinned evidence for that writer version.
