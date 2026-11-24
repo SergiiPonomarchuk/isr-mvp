@@ -44,6 +44,8 @@ class C3aSupervisor(unittest.TestCase):
   with tempfile.TemporaryDirectory() as tmp,patch.object(R,'run_child',side_effect=child):
    row=R.run_fixture({'id':'mock-restart'},Path(tmp),{})
    self.assertEqual(row['status'],'completed');self.assertEqual(len(calls),5);self.assertEqual(len({d for m,d in calls}),1);self.assertEqual(len(row['stages'][2]['prior_processes']),1)
+ def test_all_pinned_sources_exist_and_verify(self):
+  pins=R.source_pins();self.assertIn('relevance_evaluator.py',pins);R.check_pins(pins)
  def test_committed_matrix_exact_finite_count(self):
   cases=json.loads((R.EVIDENCE/'matrix.json').read_text(encoding='utf-8'));self.assertEqual(len(cases),24);self.assertEqual(len({c['id'] for c in cases}),24);self.assertTrue(all(c['n']<=9150 and c['refs']<=100 for c in cases))
 if __name__=='__main__':unittest.main()

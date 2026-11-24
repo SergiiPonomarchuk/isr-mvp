@@ -19,8 +19,8 @@ def safe_env():
  elif os.environ.get('NODE_PATH'):env['NODE_PATH']=os.environ['NODE_PATH']
  return env
 def source_pins():
- files=list((ROOT/'functions').glob('*.js'))+list((ROOT/'functions/experiments/c3a').glob('*.js'))+[ROOT/'functions/experiments/publication/artifact.js',ROOT/'functions/tools/capacity/no-network.js',ROOT/'functions/package-lock.json',Path(__file__),ROOT/'scripts/check_c3a_fixture.py',ROOT/'scripts/audit_capacity_phase_a.py',ROOT/'scripts/mr1_check.py',ROOT/'scripts/multi_reference.py',ROOT/'scripts/isr_core.py',ROOT/'scripts/expertise.py',ROOT/'scripts/relevance_evaluator.py',ROOT/'specs/tasks/M3-c3a-evidence/matrix.json']
- return {str(p.relative_to(ROOT)).replace('\\','/'):hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
+ files=list((ROOT/'functions').glob('*.js'))+list((ROOT/'functions/experiments/c3a').glob('*.js'))+[ROOT/'functions/experiments/publication/artifact.js',ROOT/'functions/tools/capacity/no-network.js',ROOT/'functions/package-lock.json',Path(__file__),ROOT/'scripts/check_c3a_fixture.py',ROOT/'scripts/audit_capacity_phase_a.py',ROOT/'scripts/mr1_check.py',ROOT/'scripts/multi_reference.py',ROOT/'scripts/isr_core.py',ROOT/'scripts/expertise.py',ROOT/'relevance_evaluator.py',ROOT/'specs/tasks/M3-c3a-evidence/matrix.json',ROOT/'functions/test/c3a-offline.test.js',ROOT/'tests/test_c3a_supervisor.py',ROOT/'scripts/demo_common.py']
+ return {p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
 def check_pins(pins):
  if any(hashlib.sha256((ROOT/p).read_bytes()).hexdigest()!=h for p,h in pins.items()):raise RuntimeError('source_changed')
 def run_child(command,case_dir,run_dir,deadline,pins,mode):
