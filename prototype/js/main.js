@@ -23,6 +23,7 @@ if (typeof firebase !== 'undefined') {
   } catch (e) {
     console.warn('Firestore emulator switch failed:', e);
   }
+  if (publicationRequested) window.ISRPublicationFixture.installDatabaseGuard(firebase.firestore());
 }
 
 const sectionTitles = {
@@ -7404,6 +7405,7 @@ function initTopicDetailViews() {
   }
 
   function bindProposalInteractions(disc, topicId) {
+    const proposalNotice = text => { if (window.ISRPublicationFixture && window.ISRPublicationFixture.requested) window.ISRPublicationFixture.reportError(new Error(text)); else alert(text); };
     const proposalModalOverlay = document.getElementById('proposal-modal-overlay');
     const proposalModalCloseBtn = document.getElementById('proposal-modal-close-btn');
     const proposalModalTitle = document.getElementById('proposal-modal-title');
@@ -7569,7 +7571,7 @@ function initTopicDetailViews() {
           const value = resourceInput.value.trim();
           if (!value) return;
           if (tempResources.length >= ISROptions.LIMITS.resources) {
-            alert('At most ' + ISROptions.LIMITS.resources + ' resources.');
+            proposalNotice('At most ' + ISROptions.LIMITS.resources + ' resources.');
             return;
           }
           tempResources.push(value);
@@ -7611,7 +7613,7 @@ function initTopicDetailViews() {
         addStepBtn.onclick = function() {
           const desc = stepDescInput.value.trim();
           if (!desc) {
-            alert("Please type a step description.");
+            proposalNotice("Please type a step description.");
             return;
           }
           const leaderUid = stepLeaderSelect.value;
@@ -7642,11 +7644,11 @@ function initTopicDetailViews() {
             resources: tempResources.concat([resourceInput.value])
           });
           if (!checked.ok) {
-            alert(checked.errors.join('\n'));
+            proposalNotice(checked.errors.join('\n'));
             return;
           }
           if (tempSteps.length === 0) {
-            alert("Please add at least one implementation step.");
+            proposalNotice("Please add at least one implementation step.");
             return;
           }
 
@@ -7668,8 +7670,8 @@ function initTopicDetailViews() {
             marks: []
           };
           if (window.ISRPublicationFixture && window.ISRPublicationFixture.requested) {
-            try { await window.ISRPublicationFixture.submitOption(newOption); proposalModalOverlay.hidden = true; }
-            catch (error) { alert(error.message); proposalSubmitBtn.disabled = false; proposalSubmitBtn.textContent = 'Submit Proposal'; }
+            try { await window.ISRPublicationFixture.submitOption(newOption); proposalModalOverlay.hidden = true; window.ISRPublicationFixture.renderCurrent(); }
+            catch (error) { proposalNotice(error.message); proposalSubmitBtn.disabled = false; proposalSubmitBtn.textContent = 'Submit Proposal'; }
             return;
           }
 
@@ -7689,7 +7691,7 @@ function initTopicDetailViews() {
             proposalModalOverlay.hidden = true;
           } catch (err) {
             console.error("Failed to submit option:", err);
-            alert("Failed to submit proposal: " + err.message);
+            proposalNotice("Failed to submit proposal: " + err.message);
             proposalSubmitBtn.disabled = false;
             proposalSubmitBtn.textContent = "Submit Proposal";
           }
