@@ -1,3 +1,7 @@
+## 2026-11-24 - C2b author usability accepted
+
+- Record completed member/Join/Create/proposal/voting/winner/task/results-persistence review after layout, two-row explanation and visible Save corrections. PR63 ready for explicit author merge; C3/live gates remain separate.
+
 ## 2026-11-24 - C2b visible task result actions
 
 - Restore visible blue task/subtask Save buttons in fixture mode; their inherited accent variable was undefined. Author accepted proposal/voting/winner/task checks.

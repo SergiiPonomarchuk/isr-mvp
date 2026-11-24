@@ -13,7 +13,7 @@ Approved sections6/7: tiny supplied2/7/17 fixtures and bounded successors, not r
 
 Actual browser checks:17-member last page/search; actor18 Join18/frozen17 replay; actor-cache clearing; original proposal dialog; Create7 across immediate reload with one complete catalog entry; edited text invalidates Check; canceled discard preserves draft; saved proposal refresh; messages/replies;145 supplied Values/context; Start Voting/vote/Finish Voting; complete winner/tasks; delegated subtask; completion/results/comments/nested reply. Browser/preview work is separate from Node capacity evidence. Preview01 auto-stopped dedicated ports before fresh preview02; no exports/imports.
 
-## Human usability review
+## Human usability review (accepted)
 
 Agent starts fresh preview, verifies readiness and supplies exact expiry before asking author to open:
 http://127.0.0.1:5800/main.html?emulator=1&publication_fixture=1
@@ -46,3 +46,5 @@ python scripts/run_c2b_preview.py
 ```
 
 Remaining gates: human usability/final PR CI; C3 population/9151st Join/source/scoring parity, dynamic catalogs, recursive restore, authentication/rules/IAM/old-client REST cutover. Private reads403/public roots200 observed; listener-only facade prevents accidental calls, not unauthorized access.16 Values cases/PR60 deferred.
+
+Author accepted the numbered member/Join/Create/proposal/voting/winner/task/results-persistence checks on2026-11-24. Reported UI issues fixed: grouped match panel, standard two-row explanation, visible blue Save buttons. Screenshots browser-layout-corrected.jpg/browser-save-visible.jpg retain corrections. Required suites and final code-head CI passed. PR63 awaits explicit merge; no live rollout implied.

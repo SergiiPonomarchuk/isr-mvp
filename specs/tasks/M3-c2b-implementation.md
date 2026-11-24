@@ -53,3 +53,5 @@ Use the ten acceptance rows in the approved proposal, plus serializer-before-wri
 
 - Author accepted proposal, voting and complete winner/task creation. Results Save was visually invisible: shared renderer uses undefined --accent with white text. Scoped C2b task/subtask Save buttons now use existing --primary and white text/capsule radius; persistence acceptance pending. No backend/scoring/limits changes.
 - Save visibility verified on actual completed author fixture: blue capsule Save appears below results textarea. Screenshot browser-save-visible.jpg retained. Backend persistence behavior unchanged.
+
+- Final author acceptance: member pagination/search, Join, Create, corrected grouping/two-row field, proposal, start/vote/finish, winner/task and completed-task results Save/reload accepted. Save contrast correction browser-verified; required Node316/seven skips and Python227/four skips passed; final code-head CI passed. C2b tiny-slice acceptance complete. PR63 ready for review; explicit author merge required. C3/live/security/population/source gates remain separate.
