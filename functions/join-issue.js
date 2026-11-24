@@ -51,6 +51,8 @@ async function joinIssue(db, input, timestamp) {
     const issueSnap = await tx.get(issueRef), discSnap = await tx.get(discussionRef);
     if (!issueSnap.exists || !discSnap.exists) fail("The issue is unavailable.", 404);
     const issue = issueSnap.data(), disc = discSnap.data();
+    require("./publication-dispatch").legacyOnly(issue);
+    require("./publication-dispatch").legacyOnly(disc);
     const mcSnaps = await tx.get(db.collection("microcommunities").where("issue_id", "==", issueId));
     if (mcSnaps.size !== 1) fail("The issue's public could not be resolved.");
     const mc = mcSnaps.docs[0];

@@ -60,6 +60,8 @@ def check_plan(db,plan):
         ident=entry['issue_id'];snap=db.collection('issues').document(ident).get();disc_snap=db.collection('discussions').document(ident).get()
         if not snap.exists or not disc_snap.exists:problems.append(key+': topic pair missing');continue
         issue=snap.to_dict();disc=disc_snap.to_dict();checked+=1
+        if any(x and any(k in x for k in ('publication_version', 'prototype_version', 'build_id')) for x in (issue, disc)):
+            raise ValueError('publication_adapter_required: use the generation audit')
         phase=entry['phase'];expected={'chat':('open','discussion'),'voting':('in_process','Voting'),'todo':('approved','approved'),'standby':('archived','archived'),'live':(issue.get('status'),disc.get('status'))}[phase]
         if not (plan.get('presentation_started') and key=='D1-01') and (issue.get('status'),disc.get('status'))!=expected:problems.append(key+': phase drift')
         if phase!='standby':visible+=1

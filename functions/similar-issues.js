@@ -103,12 +103,14 @@ function requireReview(result, review) {
   return { reason, matches: result.matches.map(({ issue_id, version }) => ({ issue_id, version })), matching_version: VERSION };
 }
 
-const ISSUE_FIELDS = ["title", "description", "location", "classification", "mu_distance_meters", "status", "ends", "isr_scores"];
+const ISSUE_FIELDS = ["title", "description", "location", "classification", "mu_distance_meters", "status", "ends", "isr_scores", "publication_version", "prototype_version", "build_id"];
 const DISCUSSION_FIELDS = ["topic", "last_message_text", "location", "status", "ends", "participants", "isr_scores"];
 async function findSimilar(db, query, submitterId, transaction) {
   const read = ref => transaction ? transaction.get(ref) : ref.get();
   const issues = await read(db.collection("issues").select(...ISSUE_FIELDS));
   const discussions = await read(db.collection("discussions").select(...DISCUSSION_FIELDS));
+  issues.forEach(s => require("./publication-dispatch").legacyOnly(s.data()));
+  discussions.forEach(s => require("./publication-dispatch").legacyOnly(s.data()));
   const embeddings = await read(db.collection("issue_vectors").select("model", "dims", "template_version", "task_type", "text_sha256", "vector"));
   const byId = new Map();
   issues.forEach(s => byId.set(s.id, { id: s.id, issue: s.data(), discussion: {} }));

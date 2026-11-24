@@ -19,14 +19,15 @@ class Service extends C.Service{
     const result=callback(proxy);if(result.replayed)return result;
     const old=tx.get(STATE),global=tx.get('control/global_catalog');if(!global||global.policy!=='c2b_closed_fixture_catalog')A.fail('catalog_policy_changed');
     const state=old||freshState(s.get('control/day').local);if(old&&old.phase!=='chat')A.fail('not_chat');state.generation={build_id:result.build_id,manifest_hash:result.manifest_hash,epoch:result.epoch,member_count:result.member_count};state.revision++;state.work++;if(state.work>512)A.fail('fixture_operation_budget');
-    const input=tx.get('private/commands/create_input'),projection={id:this.id,title:input?.title||this.title,description:input?.description||this.description};
+    const input=tx.get('private/commands/input_'+id),projection={id:this.id,title:input?.title||written.get(P.issueKey('i0'))?.v.title||this.title,description:input?.description||written.get(P.issueKey('i0'))?.v.description||this.description};
+    if(input&&global.revision!==input.review)A.fail('catalog_stale');
     for(const [key,kind]of [[P.issueKey('i0'),'issues'],[P.discKey('i0'),'discussions'],[P.publicKey('i0'),'publics']]){const w=written.get(key);if(!w)A.fail('activation_inventory');proxy[w.kind](key,header(w.v,state,projection,kind));}
     if(old)tx.set(STATE,state);else tx.create(STATE,state);tx.set('control/global_catalog',{...global,revision:global.revision+1});return result;
    },bounds);return p.activate(id,t);
   },fault);
  }
  async start(input,fault={}){if(input.kind==='join'){const v=await this.snapshot();if(v.state.phase!=='chat'||v.state.status!=='discussion')A.fail('not_chat');}return super.start(input,fault);}
- async setCreateInput(input,review){F.text(input.title,true);F.text(input.description,true);return this.execute('create-input',(_,s)=>s.run('create-input',tx=>{const old=tx.get('private/commands/create_input'),global=tx.get('control/global_catalog');if(!global||review!==global.revision)A.fail('catalog_stale');const value={title:input.title,description:input.description,review};if(old&&!F.same(old,value))A.fail('input_changed');if(!old)tx.create('private/commands/create_input',value);return value;}));}
+ async setCreateInput(input,review,id){F.id(id);F.text(input.title,true);F.text(input.description,true);return this.execute('create-input',(_,s)=>s.run('create-input',tx=>{const old=tx.get('private/commands/input_'+id),global=tx.get('control/global_catalog');if(!global||review!==global.revision)A.fail('catalog_stale');const value={title:input.title,description:input.description,review};if(old&&!F.same(old,value))A.fail('input_changed');if(!old)tx.create('private/commands/input_'+id,value);return value;}));}
  async snapshot(build){return this.execute('snapshot',(p,s)=>{const published=p.readPublished('i0',build),root=roots(s),state=s.get(STATE);if(!state||!F.same(state.generation,{build_id:root.build_id,manifest_hash:root.manifest_hash,epoch:root.epoch,member_count:root.member_count})||root.state_revision!==state.revision)A.fail('root_mismatch');return {root,state,token:F.token({...root,...(build?published.token:{}),issue_id:root.issue_id}),records:published.records,historical:!!build&&build!==root.build_id};});}
  async page({cursor=null,page_size=8,query='',order='directory',build}={}){
   if(!Number.isInteger(page_size)||page_size<1||page_size>8||!['directory','rank','name'].includes(order))A.fail('page_size');F.text(query);
