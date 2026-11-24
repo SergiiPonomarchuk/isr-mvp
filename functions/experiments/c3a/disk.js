@@ -264,4 +264,3 @@ class SelectedBudget {constructor(dir,options={}){return options.io===IO_VERSION
 class SelectedStore {constructor(g,...args){return g.io===IO_VERSION?new BatchStore(g,...args):new Store(g,...args);}}
 module.exports={Budget:SelectedBudget,Store:SelectedStore,LegacyBudget:Budget,LegacyStore:Store,
  BatchBudget,BatchStore,IO_VERSION,BUDGET_VERSION,PENDING_RECORDS,PENDING_BYTES,LIMITS,hash,fail,lexIds};
-
