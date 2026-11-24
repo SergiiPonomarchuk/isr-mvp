@@ -40,3 +40,19 @@ test('E1 private batching preserves exact whole-oracle rows, full artifacts and 
  assert.deepStrictEqual(result.create_artifact,reference.create_artifact);assert.deepStrictEqual(result.join_artifact,reference.join_artifact);
  assert.ok(reopened.state.metrics.total.batches>0);
 });
+
+test('E1 transient checkpoint replacement retries are precharged and preserve exact bytes',()=>{
+ const g=budget(),original=fs.renameSync,attempts=[];
+ try{fs.renameSync=(from,to)=>{if(to.endsWith('retry-probe.json')){attempts.push(g.state.replacement.attempts);if(attempts.length<3)throw Object.assign(new Error('synthetic sharing refusal'),{code:'EPERM'});}return original(from,to);};
+ g.checkpoint('retry-probe',{n:-0,text:'Ω'});assert.deepStrictEqual(attempts,[1,2,3]);assert.equal(g.state.metrics.total.rename_retries,2);assert.equal(g.state.replacement,null);
+ const got=g.load('retry-probe');assert.ok(Object.is(got.n,-0));assert.equal(got.text,'Ω');
+ }finally{fs.renameSync=original;}
+});
+test('E1 exhausted replacement refuses and cannot regain attempts on reopen',()=>{
+ const g=budget(),original=fs.renameSync;let calls=0;
+ try{fs.renameSync=(from,to)=>{if(to.endsWith('exhausted.json')){calls++;throw Object.assign(new Error('synthetic sharing refusal'),{code:'EPERM'});}return original(from,to);};
+ assert.throws(()=>g.checkpoint('exhausted',{n:1}),e=>e.code==='EPERM'&&e.io_operation==='checkpoint_replace'&&e.io_attempts===3);assert.equal(calls,3);
+ }finally{fs.renameSync=original;}
+ const reopened=new D.Budget(g.dir,{io:D.IO_VERSION});assert.equal(reopened.state.replacement.attempts,3);reopened.checkpoint('other',{n:2});
+ assert.throws(()=>reopened.checkpoint('exhausted',{n:1}),/replacement_attempt_limit/);assert.ok(!fs.existsSync(path.join(g.dir,'exhausted.json')));
+});

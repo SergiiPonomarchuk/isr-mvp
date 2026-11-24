@@ -37,3 +37,5 @@ Suggested approval: **Approve E1 continuation: three recovery checks and the unc
 ## Status
 
 - Proposal and dormant continuation support prepared after the stopped attempt. Required suites pass; source/report/contract bindings and final PR CI checked before handoff. No continuation claim or new worker has been created. Implementation PR remains draft pending this experiment evidence. Sol Medium sufficient; zero paid AI allowance.
+
+-2026-11-25: Author approved the exact continuation; ran once at fbb17ba. All three recovery checks passed; matrix seven passes/two EPERM failures,9150 interrupted and two structural cases unrun. Retained source/quotas; fixed checkpoint replacement retries/diagnostics and immediate technical-stop gate. [Evidence](M3-c3a-e1-evidence/README.md); [new six-case proposal](M3-c3a-e1-checkpoint-completion.md). No automatic replay.

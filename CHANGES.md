@@ -1,3 +1,9 @@
+## 2026-11-25 - E1 recovery passes, checkpoint IO fixes and bounded completion
+
+- Retain approved continuation: all three remaining recoveries pass; seven matrix passes include exact100/300-profile results and fewer data/index/journal writes.
+- Preserve301/1000 EPERM failures and interrupted9150 oracle; fix immediate technical stopping and durable bounded checkpoint replacement retries/diagnostics. No capacity replay or cap reset.
+- Draft PR67 includes a source/seed/quota-bound six-case completion proposal (12 minutes); new approval needed for fresh deadlines. Production/math/fixtures/C1/C2 unchanged; zero provider/data/deploy operations.
+
 ## 2026-11-24 - E1 bounded I/O batching and stopped recovery evidence
 
 - Record authorized PR65/66 merges4add752/eb50bae and main CI. Add explicit E1 private-file batching, pre-write reservations, checksummed afterimage replay, resumable artifact prefixes and exact v1 compatibility tests; production math/fixtures/C1/C2 unchanged.

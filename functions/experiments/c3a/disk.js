@@ -30,7 +30,7 @@ function* lexIds(max,prefix=''){for(let digit=prefix?'0'.charCodeAt(0):49;digit<
 const IO_VERSION='c3a-io-2',BUDGET_VERSION='c3a-budget-2';
 const PENDING_RECORDS=64,PENDING_BYTES=1024**2;
 const METRICS=['gets','sets','data_reads','index_reads','data_writes','index_writes',
- 'journal_writes','checkpoint_writes','wal_reads','wal_writes','batches','replays','quota_writes'];
+ 'journal_writes','checkpoint_writes','wal_reads','wal_writes','batches','replays','quota_writes','rename_retries'];
 class BatchBudget {
  constructor(dir,{deadline=Date.now()+120000,limits={},fault=()=>{}}={}) {
   this.dir=path.resolve(dir);fs.mkdirSync(this.dir,{recursive:true});this.io=IO_VERSION;
@@ -55,6 +55,10 @@ class BatchBudget {
    this.deadline=Math.min(deadline,this.state.deadline);this.state.deadline=this.deadline;this.state.limits=this.limits;
    this.monotonicEnd=performance.now()+Math.max(0,this.deadline-Date.now());
   }
+  this.state.exhausted_replacements??=[];
+  if(!Array.isArray(this.state.exhausted_replacements)||this.state.exhausted_replacements.length>32||this.state.exhausted_replacements.some(k=>!(/^[a-f0-9]{64}$/).test(k)))fail('replacement_failure_index');
+  if(this.state.replacement?.attempts>=3&&!this.state.exhausted_replacements.includes(this.state.replacement.key))this.state.exhausted_replacements.push(this.state.replacement.key);
+  if(this.state.exhausted_replacements.length>32)fail('replacement_failure_index');
   this.check();this.recover();
  }
  filePath(name){return Budget.prototype.filePath.call(this,name);}
@@ -112,9 +116,31 @@ class BatchBudget {
  // Atomic private metadata is reserved before its temporary file is written.
  metadata(name,value,metric='checkpoint_writes'){
   const b=Buffer.from(JSON.stringify(value));if(b.length>this.limits.decoded)fail('quantum_limit');
-  this.write('scratch',b.length);this.grow(b.length);this.persist();
+  this.write('scratch',b.length);this.grow(b.length);
+  const key=hash({name,bytes:hash(b)}),prior=this.state.replacement?.key===key?this.state.replacement:null;
+  if(this.state.exhausted_replacements.includes(key))fail('replacement_attempt_limit');
+  if(prior&&(!Number.isSafeInteger(prior.attempts)||prior.attempts<0||prior.attempts>=3))fail('replacement_attempt_limit');
+  this.state.replacement={key,attempts:(prior?.attempts||0)+1};this.persist();
   const target=this.filePath(name);this.meter(metric);
-  fs.writeFileSync(target+'.tmp',b);fs.renameSync(target+'.tmp',target);
+  try{fs.writeFileSync(target+'.tmp',b);}catch(e){e.io_operation='checkpoint_temporary_write';e.io_record=name;throw e;}
+  this.replaceMetadata(target+'.tmp',target,name);
+ }
+ replaceMetadata(from,to,name){
+  for(;;){
+   this.check();const attempt=this.state.replacement.attempts;
+   try{fs.renameSync(from,to);this.state.replacement=null;return;}
+   catch(e){
+    e.io_operation='checkpoint_replace';e.io_record=name;e.io_attempts=attempt;
+    if(attempt>=3){
+     const key=this.state.replacement.key;
+     if(!this.state.exhausted_replacements.includes(key)){if(this.state.exhausted_replacements.length>=32)fail('replacement_failure_index');this.state.exhausted_replacements.push(key);this.persist();}
+     throw e;
+    }
+    if(!['EPERM','EACCES','EBUSY'].includes(e.code))throw e;
+    this.check();this.state.replacement.attempts++;this.meter('rename_retries');this.persist();
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,attempt===1?50:200);this.time();
+   }
+  }
  }
  checkpoint(name,value){
   this.check();this.flush();const encoded=A.pack(value);

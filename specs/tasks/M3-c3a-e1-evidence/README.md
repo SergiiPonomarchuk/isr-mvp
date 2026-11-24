@@ -1,33 +1,56 @@
-# C3a-E1 partial evidence, 2026-11-24
+# C3a-E1 evidence: continuation stopped on checkpoint I/O, 2026-11-25
 
-**Acceptance incomplete; C3b NO-GO.** The author approved E1 section5 after merging PR65/66. The single source-pinned attempt completed one of four actual-process interruption checks, then stopped on a parent file-monitor race during the next source worker. No capacity fixture ran. No automatic replacement run or deadline reset was performed.
+**Draft PR67; E1 acceptance remains incomplete and C3b NO-GO.** The approved continuation ran once at fbb17ba. All three remaining actual-process recovery checks passed. Combined with the original reservation-before-data pass, all four scheduled boundaries have pinned evidence for that writer version.
 
-## Preserved attempt and result
+The matrix produced seven passes, two EPERM filesystem failures and one manually interrupted case; two cases were not started. The checkpoint retry/diagnostic and immediate-stop fixes described below were made afterward. They are not relabeled as matrix-tested.
 
-- [Committed admission](admission.json):12 unchanged capacity/fault fixtures and four distinct seven-person process-interruption schedules.
-- [Raw stopped run](run-20261124-01/report.json), executed source29fbdd8; [aggregate summary](summary.json) binds its SHA256 and retains the interrupted source budget, unrun cases, resource counters and old quotas. Private files remain at the report's owned A-drive scratch path.
-- e1-reservation-before-data completed in13.422s. The child actually exited86 after durable reservation/private afterimage metadata; a new child replayed the batch, preserving the original deadline. Full ordered Node Create/Join rows matched exactly (15 rows); independent Python7-person/7-member/8-joined-member membership/numerics/Values/tally audit passed. Peak child RSS79,302,656B. No partial accepted root was visible.
-- The second directory, e1-data-before-index, was interrupted during **source**, before any fault injection or worker result. It is unproven, not a tested data-before-index recovery. The remaining two recovery schedules and all12 capacity fixtures were not run.
-- Parent monitoring called is_file then stat while the writer atomically renamed batch-pending.json.tmp. The second stat raised FileNotFoundError; the supervisor's finally block stopped its owned child. The stopped report was finalized from retained safe metadata with fixed code temporary_rename_stat_race; its original source pins remain unchanged.
+## Retained evidence and exact result
 
-## Implemented and independently tested
+[Admission](admission.json), [original stopped report](run-20261124-01/report.json), [approved continuation contract](continuation-01.json), [continuation report](run-20261124-02/report.json), [derived continuation summary](continuation-summary.json). [Original notes](run01-notes.md) and [original summary](summary.json) are retained. Directory labels keep the previously approved20261124 names; the continuation was approved/executed on2026-11-25.
 
-E1 is explicitly selected c3a-io-2/private c3a-budget-2; v1 callers retain their old writer. One job-wide buffer holds at most64 pending records/1MiB, with bounded direct-record handling. Data/index appends coalesce; the typed frame shape,3072B fragments,fanout8, logical record/node order and c3a-offline-1 format remain. Pre-reserved binary private afterimages are applied idempotently before checkpoints/seals. New workers reject old budget resume. Source/oracle/candidate/independent stages share the original120s allowance, plus a monotonic parent guard.
+| Case | Result | Seconds |
+|---|---|---:|
+| data-before-index recovery | pass |16.796 |
+| index-before-checkpoint recovery | pass |10.250 |
+| checkpoint-before-seal recovery | pass |10.765 |
+| score-7-3 | pass |8.953 |
+| restart-checkpoint | pass |12.204 |
+| restart-seal | pass |19.406 |
+| refuse-corrupt | expected refusal passed |17.000 |
+| refuse-missing | expected refusal passed |14.344 |
+| score-100-3 | pass |28.969 |
+| boundary-300 | pass |50.094 |
+| boundary-301 | candidate EPERM |33.531 |
+| score-1000-3 | candidate EPERM |42.219 |
+| score-9150-3 | source complete; oracle interrupted on stop | not a completed fixture |
+| structural-19-3 / structural-100-3 | not run | - |
 
-Small tests preserve signed zero/Unicode, read-your-writes and overwrites, exact full rows and exact v1 artifact roots/digests, corruption refusal, cumulative work/byte limits and checkpoint-before-seal resume. Artifact construction now resumes deterministic member/context/UID/rank prefixes. This is necessary for the approved fourth interruption boundary; it has not yet passed that actual-process admission.
+Every completed numerical case passed full ordered Node Create/Join output comparison and the independent Python membership/numerics/Values/tally audit. Actual recoveries exited86, resumed in a fresh child under the same newly admitted whole-case deadline, and retained cumulative charges. The interrupted old source's work/bytes/attempts were carried; the already passed first recovery was not repeated.
 
-The completed seven-person recovery recorded359 logical sets,37 physical data writes,44 index writes and210 budget-journal writes across source/oracle/candidate/restart. A separate18-set unit proves one contiguous data write/two index writes and fewer than17 journals. The unchanged v1 set issues a data write/index write/budget save per call, providing a static call-count reference. These are **not** a measured100-person result or a syscall percentage versus run03. The100-person acceptance criterion and all large capacity claims remain unproven.
+## Measured improvement and limits
 
-## Monitor fix and continuation preparation
+The100-profile fixture completed in28.969s versus50.375s in C3a run03. The300-profile fixture completed in50.094s versus a prior shared-deadline timeout. These are single host observations, not statistical throughput/capacity bounds;301's I/O failure is not evidence of a numerical population cutoff.
 
-After stopping, the scan was changed to take one stat per entry, tolerate only disappeared owned .tmp entries and preserve primary writer pre-write quotas. Other disk-monitor IO errors fail closed and stop only the owned child. Regression tests cover both paths. No Node writer or fixture changed after the attempted admission; the new Python supervisor/tests are not relabeled as run-tested.
+At100 profiles, instrumentation recorded4163 logical sets,245 data writes,439 index writes,1469 journal writes,459 WAL writes and357 checkpoint writes. At300:12328 sets,702 data writes,1278 index writes and4209 journal writes. The v1 Store.set performs at least one data/index/journal write per successful set; this is a static call-count lower bound, not a syscall percentage from the uninstrumented run03. Include WAL/checkpoint overhead when comparing totals. No Node arithmetic, source vectors or logical artifact payload were simplified for these results.
 
-[Continuation proposal](../M3-c3a-e1-continuation.md) and [exact source-bound contract](continuation-01.json) are prepared, **not executed**. They skip the passed check, propose three remaining recovery checks plus the unchanged12-case matrix, and explicitly request a fresh120s allowance for the interrupted source case. Its old work/bytes/attempts are carried; old run/regression reserved growth is carried, with no quota refund. An exclusive claim prevents a second invocation from reusing the old allowance.
+## Why execution stopped and what changed
 
-## Resource disposition and validation
+The301 failure left a valid create-artifact-writer.json.tmp containing496 logical records. The1000 failure left batch-pending.json.tmp. Their source/oracle stages completed; candidate results report EPERM. The files' attributes were Archive, not ReadOnly. This is consistent with a checkpoint replacement/sharing failure; the old diagnostic did not preserve the exact failing operation, so its cause is not asserted more narrowly.
 
-No limit was raised. The64MiB small-test allowance is conservatively divided40MiB persistent unit pool/24MiB actual interruption pool. The admitted run pre-reserved the entire40MiB unit pool within its1GiB ceiling. Unit pool is now36MiB reserved, below40; stopped run45MiB reserved including that pool, actual interruption pool5MiB/24. Summary records exact byte counters. All failed/partial outputs are retained.
+The supervisor incorrectly advanced after the first technical error:1000 then failed, and9150 started. The agent preserved a valid report snapshot, stopped only the exact supervisor and its branch/output-bound child, and finalized the interrupted metadata. The report explicitly records this stop-gate overshoot; it was not a planned retry or a passing result.
 
-Required npm test:339 passed/seven optional skips (346 total). Python243 tests/four optional skips passed. Sixteen focused supervisor tests include the monitor fix, carried counters and exclusive continuation claim; four E1 Node cases supplement the19 original C3a checks. Final pushed-head standard Node/Python CI is verified before handoff.
+After stopping:
+- Metadata replacement now makes at most three attempts for EPERM/EACCES/EBUSY, with50/200ms waits inside the original deadline. Attempts are precharged and persisted; exhausted operation keys stay refused across reopen and unrelated operations, in a bounded32-key index. There is no deletion of the prior checkpoint.
+- Worker failures include fixed operation/file tags and attempt counts, never raw profile content.
+- The matrix loop now stops immediately on technical failures, including EPERM/parity/monitor errors. Guarded resource refusals remain distinct. Tests exercise the loop boundary, not just the classifier.
+- Transient success and persistent refusal are tested with injected filesystem errors. These changes have not had a new actual-worker/capacity admission.
 
-Production scoring, fixtures, UI, C1/C2 artifacts, docs/ and rules remain unchanged. Zero source-export access, DB/provider/credential-loader calls, imports or deployments. Marked-X/top300/source-vector coverage and16 Values cases remain separate. Sol Medium remains sufficient.
+## Resource accounting and next review
+
+All old outputs/charges remain. Reserved run growth is233832448B (223MiB), interruption pool17825792B/24MiB (17MiB), persistent unit pool40894464B/40MiB (39MiB). The40MiB unit pool is already included in run reservations; no double allocation/refund. The overall1GiB and per-fixture limits were not raised. Source-pinned reports name the executed versions; later fixes are separately tested.
+
+[Six-case completion proposal](../M3-c3a-e1-checkpoint-completion.md) and [exact contract](continuation-02.json) are prepared, not run. It rechecks100,301,1000,9150 and the two unstarted structural shapes, up to12 minutes, carrying global and per-case charges. No extra process-crash trials or new shapes are proposed; prior recovery evidence remains attributed to its actual writer version.
+
+Validation: prior full Node339/seven skips, new targeted transient/exhausted tests passed, Python245/four skips. The enhanced exhaustion/interleaving assertion and full revised Node suite are checked in final-head CI, whose fresh runner uses its own bounded test pool. The nearly full A-drive unit pool is not reset to rerun it locally.
+
+Production scoring/fixtures/UI/C1/C2/docs/rules are unchanged. Zero DB/emulator/provider/credential-loader operations, source-export access, imports or deployments. New X policy/source coverage and16 Values cases remain separate. Sol Medium sufficient.

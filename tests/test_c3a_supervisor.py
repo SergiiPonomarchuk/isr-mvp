@@ -119,4 +119,26 @@ class C3aSupervisor(unittest.TestCase):
    R.claim_continuation(parent,Path(tmp)/'new',proposal)
    with self.assertRaises(FileExistsError):R.claim_continuation(parent,Path(tmp)/'another',proposal)
 
+ def test_technical_gate_stops_io_and_parity_but_preserves_guarded_refusals(self):
+  for code in ('EPERM','EACCES','worker_error','parity_mismatch','replacement_attempt_limit'):
+   self.assertTrue(R.technical_failure({'stages':[{'status':'refused','worker':{'code':code}}]}))
+  for code in ('deadline','work_limit','node_limit','byte_limit_artifact'):
+   self.assertFalse(R.technical_failure({'stages':[{'status':'refused','worker':{'code':code}}]}))
+  self.assertTrue(R.technical_failure({'stages':[{'status':'monitor_io_error'}]}))
+  self.assertFalse(R.technical_failure({'stages':[{'status':'completed'},{'status':'whole_fixture_timeout'}]}))
+
+ def test_e1_matrix_does_not_advance_after_first_technical_error(self):
+  admission=json.loads((R.ROOT/'specs/tasks/M3-c3a-e1-evidence/admission.json').read_text(encoding='utf-8'))
+  calls=[]
+  def fixture(c,*args,**kw):
+   calls.append(kw.get('hook') or c['id'])
+   if kw.get('hook'):return {'status':'completed','case':c,'seconds':0}
+   return {'case':c,'status':'refused_or_unproven','seconds':0,'stages':[{'status':'refused','worker':{'code':'EPERM'}}]}
+  with tempfile.TemporaryDirectory() as tmp:
+   root=Path(tmp);e=root/'specs/tasks/M3-c3a-e1-evidence';e.mkdir(parents=True);(e/'admission.json').write_text(json.dumps(admission),encoding='utf-8')
+   with patch.object(R,'ROOT',root),patch.object(R,'source_pins',return_value={}),patch.object(R,'run_fixture',side_effect=fixture):
+    result=R.e1_main((e/'run-unit').resolve())
+   report=json.loads((e/'run-unit/report.json').read_text(encoding='utf-8'))
+   self.assertEqual(result,2);self.assertEqual(len(calls),5);self.assertEqual(report['status'],'stopped_on_technical_error');self.assertEqual(len(report['not_run_matrix']),11)
+
 if __name__=='__main__':unittest.main()

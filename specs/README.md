@@ -7,7 +7,7 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: PR65/66 merged; [E1 batch implementation](tasks/M3-c3a-e1-implementation.md) has small exact-parity tests and one actual-process recovery pass. Parent monitor race stopped the next source before the matrix; fix/tests complete. [Bounded continuation proposal](tasks/M3-c3a-e1-continuation.md) awaits approval. [Evidence](tasks/M3-c3a-e1-evidence/README.md); C3b remains NO-GO.
+Current checkpoint: [E1 continuation evidence](tasks/M3-c3a-e1-evidence/README.md): four actual recoveries total and seven matrix passes;301/1000 checkpoint EPERM failures stopped completion. Retry/technical-stop fixes tested; [six-case bounded completion](tasks/M3-c3a-e1-checkpoint-completion.md) awaits approval in draft PR67. Charges/evidence retained; C3b remains NO-GO.
 
 Previous checkpoint: [R1 optional Values metadata recovery](tasks/Values-optional-metadata-recovery.md), live dry run ready224/zero conflicts and synthetic recovery passed; [author-only runbook](tasks/Values-optional-metadata-author-runbook.md) prepared. No live apply or AI calls.
 

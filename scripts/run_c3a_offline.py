@@ -32,7 +32,7 @@ def safe_env(e1=False,hook=None):
  return env
 def source_pins():
  files=list((ROOT/'functions').glob('*.js'))+list((ROOT/'functions/experiments/c3a').glob('*.js'))+[ROOT/'functions/experiments/publication/artifact.js',ROOT/'functions/tools/capacity/no-network.js',ROOT/'functions/package-lock.json',Path(__file__),ROOT/'scripts/check_c3a_fixture.py',ROOT/'scripts/audit_capacity_phase_a.py',ROOT/'scripts/mr1_check.py',ROOT/'scripts/multi_reference.py',ROOT/'scripts/isr_core.py',ROOT/'scripts/expertise.py',ROOT/'relevance_evaluator.py',ROOT/'specs/tasks/M3-c3a-evidence/matrix.json',ROOT/'functions/test/c3a-offline.test.js',ROOT/'tests/test_c3a_supervisor.py',ROOT/'scripts/demo_common.py']
- for extra in [ROOT/'functions/test/c3a-e1.test.js',ROOT/'specs/tasks/M3-c3a-e1-evidence/admission.json',ROOT/'specs/tasks/M3-c3a-e1-evidence/continuation-01.json']:
+ for extra in [ROOT/'functions/test/c3a-e1.test.js',ROOT/'specs/tasks/M3-c3a-e1-evidence/admission.json',ROOT/'specs/tasks/M3-c3a-e1-evidence/continuation-01.json',ROOT/'specs/tasks/M3-c3a-e1-evidence/continuation-02.json']:
   if extra.exists():files.append(extra)
  return {p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
 def check_pins(pins):
@@ -92,13 +92,13 @@ def reserve_independent(directory,n):
  file.write_text(json.dumps(state),encoding='utf-8')
  return reserve
 
-def run_fixture(c,run_dir,pins,*,e1=False,hook=None,case_id=None,seed_budget=None):
+def run_fixture(c,run_dir,pins,*,e1=False,hook=None,case_id=None,seed_budget=None,seed_authorized=False):
  directory=run_dir/(case_id or c['id']);directory.mkdir();start=time.monotonic();deadline=time.time()+120;stages=[]
  def invoke(command,mode):
   if e1:return run_child(command,directory,run_dir,deadline,pins,mode,e1=True,hook=hook,monotonic_end=start+120)
   return run_child(command,directory,run_dir,deadline,pins,mode)
  if seed_budget is not None:
-  if not e1 or hook!='data-before-index':raise ValueError('continuation_seed')
+  if not e1 or not (hook=='data-before-index' or seed_authorized):raise ValueError('continuation_seed')
   state=json.loads(json.dumps(seed_budget))
   if state.get('version')!='c3a-budget-2' or state.get('io')!='c3a-io-2':raise ValueError('continuation_version')
   # Explicitly proposed fresh deadline; all prior work/bytes/attempts remain charged.
@@ -141,25 +141,48 @@ def claim_continuation(parent,out,proposal):
  with claim.open('x',encoding='utf-8') as f:json.dump({'version':'c3a-e1-claim-1','output':str(out),'parent_report_sha256':proposal['parent_report_sha256']},f)
  return claim
 
+def technical_failure(row):
+ bounded={'deadline','work_limit','node_limit','byte_limit_source','byte_limit_artifact','byte_limit_scratch','journal_budget','run_file_limit','regression_file_limit','quantum_limit','node_bytes','key_probe_limit'}
+ harmless={'completed','whole_fixture_timeout','rss_limit','run_file_limit','case_file_limit','regression_file_limit','resource_prerequisite_refused'}
+ for stage in row.get('stages',[]):
+  if stage.get('status')=='refused':
+   if stage.get('worker',{}).get('code') not in bounded:return True
+  elif stage.get('status') not in harmless:return True
+ return False
+
 def e1_main(out,continuation_path=None):
  evidence=ROOT/'specs/tasks/M3-c3a-e1-evidence'
  if out.parent!=evidence.resolve() or not out.name.startswith('run-'):raise ValueError('output_path')
  admission=json.loads((evidence/'admission.json').read_text(encoding='utf-8'));cases=admission['cases'];regressions=admission['regressions']
  old=json.loads((EVIDENCE/'matrix.json').read_text(encoding='utf-8'))
  if len(cases)!=12 or len(regressions)!=4 or not all(c in old for c in cases):raise ValueError('admission')
- continuation=None;parent=None
+ continuation=None;parent=None;completion=False;seeds={}
  if continuation_path:
   path=continuation_path.resolve()
-  if path!=evidence/'continuation-01.json':raise ValueError('continuation_path')
+  if path not in (evidence/'continuation-01.json',evidence/'continuation-02.json'):raise ValueError('continuation_path')
   continuation=json.loads(path.read_text(encoding='utf-8'));parent_file=(ROOT/continuation['parent_report']).resolve()
   if not parent_file.is_relative_to(evidence.resolve()) or hashlib.sha256(parent_file.read_bytes()).hexdigest()!=continuation['parent_report_sha256']:raise ValueError('continuation_binding')
   parent=json.loads(parent_file.read_text(encoding='utf-8'))
-  if continuation['version']!='c3a-e1-continuation-1' or parent['status']!='stopped_on_monitor_error' or continuation['cases']!=[c['id'] for c in cases] or continuation['regression_ids']!=[x['id'] for x in regressions[1:]]:raise ValueError('continuation_scope')
-  if len(parent['regressions'])!=1 or parent['regressions'][0]['status']!='completed' or parent['regressions'][0]['fault_verified'] is not True:raise ValueError('continuation_prior_pass')
-  core={p:h for p,h in parent['source_pins'].items() if p not in ('scripts/run_c3a_offline.py','tests/test_c3a_supervisor.py')}
-  check_pins(core)
+  completion=continuation['version']=='c3a-e1-completion-1'
+  if completion:
+   expected=['score-100-3','boundary-301','score-1000-3','score-9150-3','structural-19-3','structural-100-3']
+   if path.name!='continuation-02.json' or parent['status']!='stopped_on_technical_error' or continuation['cases']!=expected or continuation['regression_ids']!=[]:raise ValueError('completion_scope')
+   if len(parent['regressions'])!=3 or not all(x['status']=='completed' and x['fault_verified'] is True for x in parent['regressions']):raise ValueError('completion_prior_recovery')
+   changed={'functions/experiments/c3a/disk.js','functions/experiments/c3a/worker.js','functions/test/c3a-e1.test.js','scripts/run_c3a_offline.py','tests/test_c3a_supervisor.py'}
+   if set(continuation['revision_pins'])!=changed:raise ValueError('completion_revision')
+   check_pins(continuation['revision_pins']);check_pins({p:h for p,h in parent['source_pins'].items() if p not in changed})
+   cases=[next(c for c in cases if c['id']==name) for name in expected];regressions=[]
+   if set(continuation['seed_budgets'])!=set(expected[:4]):raise ValueError('completion_seeds')
+   for name,entry in continuation['seed_budgets'].items():
+    file=(ROOT/entry['path']).resolve()
+    if not file.is_relative_to((ROOT/parent['artifacts']).resolve()) or hashlib.sha256(file.read_bytes()).hexdigest()!=entry['sha256']:raise ValueError('completion_seed_binding')
+    seeds[name]=json.loads(file.read_text(encoding='utf-8'))
+  else:
+   if continuation['version']!='c3a-e1-continuation-1' or parent['status']!='stopped_on_monitor_error' or continuation['cases']!=[c['id'] for c in cases] or continuation['regression_ids']!=[x['id'] for x in regressions[1:]]:raise ValueError('continuation_scope')
+   if len(parent['regressions'])!=1 or parent['regressions'][0]['status']!='completed' or parent['regressions'][0]['fault_verified'] is not True:raise ValueError('continuation_prior_pass')
+   check_pins({p:h for p,h in parent['source_pins'].items() if p not in ('scripts/run_c3a_offline.py','tests/test_c3a_supervisor.py')})
+   regressions=regressions[1:]
   if continuation['carry_run_reserved']!=parent['run_quota']['reserved'] or continuation['carry_regression_reserved']!=parent['regression_quota']['reserved']:raise ValueError('continuation_quota')
-  regressions=regressions[1:]
   if out.exists():raise ValueError('continuation_output_exists')
   claim_continuation(parent,out,continuation)
  out.mkdir(exist_ok=False);run_dir=ROOT/'scratch/c3a-runs'/out.name;run_dir.mkdir(parents=True,exist_ok=False)
@@ -167,7 +190,7 @@ def e1_main(out,continuation_path=None):
  # interruption directories additionally share24MiB: combined64MiB.
  (run_dir/'run-quota.json').write_text(json.dumps({'version':'c3a-quota-1','limit':RUN_BYTES-4*1024**2,'reserved':continuation['carry_run_reserved'] if continuation else 40*1024**2}),encoding='utf-8')
  (run_dir/'regression-quota.json').write_text(json.dumps({'version':'c3a-regression-quota-1','limit':24*1024**2,'reserved':continuation['carry_regression_reserved'] if continuation else 0}),encoding='utf-8')
- pins=source_pins();report={'version':'c3a-e1-report-1','io':'c3a-io-2','scope':'synthetic compatibility only; C3b NO-GO','admission':admission,'source_pins':pins,'provider_calls':0,'database_rpcs':0,'credential_loader_invocations':0,'regressions':[],'fixtures':[],'artifacts':run_dir.relative_to(ROOT).as_posix(),'unit_pool_reserved_bytes':40*1024**2,'regression_pool_bytes':24*1024**2,'continuation':continuation}
+ pins=source_pins();report={'version':'c3a-e1-report-1','io':'c3a-io-2','scope':'synthetic compatibility only; C3b NO-GO','admission':admission,'source_pins':pins,'provider_calls':0,'database_rpcs':0,'credential_loader_invocations':0,'regressions':[],'fixtures':[],'artifacts':run_dir.relative_to(ROOT).as_posix(),'unit_pool_reserved_bytes':40*1024**2,'regression_pool_bytes':24*1024**2,'continuation':continuation,'selected_matrix_ids':[c['id'] for c in cases],'prior_recovery_passes':4 if completion else 1 if continuation else 0}
  def save(): (out/'report.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
  save()
  for item in regressions:
@@ -180,12 +203,14 @@ def e1_main(out,continuation_path=None):
  stopped=False
  for c in cases:
   if stopped:report['fixtures'].append({'case':c,'status':'not_run_file_limit'});continue
-  row=run_fixture(c,run_dir,pins,e1=True);report['fixtures'].append(row)
+  row=run_fixture(c,run_dir,pins,e1=True,seed_budget=seeds.get(c['id']),seed_authorized=completion);report['fixtures'].append(row)
   stopped=any(s.get('worker',{}).get('code') in ('run_file_limit','regression_file_limit') or s.get('status')=='run_file_limit' for s in row['stages'])
   save();print(json.dumps({'case':c['id'],'status':row['status'],'seconds':round(row['seconds'],3)}),flush=True)
- report['matrix_executed']=sum('stages' in r for r in report['fixtures']);report['matrix_passed']=sum(r['status']=='completed' for r in report['fixtures']);report['status']='completed' if report['matrix_executed']==12 else 'stopped'
+  if technical_failure(row):
+   report['status']='stopped_on_technical_error';report['matrix_executed']=sum('stages' in r for r in report['fixtures']);report['matrix_passed']=sum(r['status']=='completed' for r in report['fixtures']);report['not_run_matrix']=[x['id'] for x in cases[len(report['fixtures']):]];save();return 2
+ report['matrix_executed']=sum('stages' in r for r in report['fixtures']);report['matrix_passed']=sum(r['status']=='completed' for r in report['fixtures']);report['status']='completed' if report['matrix_executed']==len(cases) else 'stopped'
  report['retained_files_bytes']=size(run_dir);report['run_quota']=json.loads((run_dir/'run-quota.json').read_text(encoding='utf-8'));save()
- print(json.dumps({'status':report['status'],'matrix_passed':report['matrix_passed'],'matrix_admitted':12,'regressions_passed':len(regressions),'prior_regressions_passed':1 if continuation else 0}),flush=True)
+ print(json.dumps({'status':report['status'],'matrix_passed':report['matrix_passed'],'matrix_admitted':len(cases),'regressions_passed':len(regressions),'prior_regressions_passed':4 if completion else 1 if continuation else 0}),flush=True)
  return 0
 
 def main():

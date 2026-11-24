@@ -4,7 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: PR65/66 merged; E1 monitor fixed, continuation proposed, 2026-11-24
+## Current checkpoint: E1 continuation stopped on checkpoint EPERM; fix ready, 2026-11-25
+
+- Author approved three remaining recoveries/12 cases with a fresh interrupted-case deadline and retained charges. Executed once at fbb17ba: all three recoveries passed, giving four total pinned boundaries. Seven matrix passes include100 profiles28.969s and300 profiles50.094s, exact Node/independent parity and measured fewer file writes. [Evidence](tasks/M3-c3a-e1-evidence/README.md).
+-301/1000 candidates failed EPERM. The supervisor incorrectly advanced after the first; agent stopped the exact parent/worker after9150 source completed and its oracle began. Two structural cases unrun. Stop-gate overshoot/raw results/partial budget are preserved; no failed case replayed.
+- Added durable max-three checkpoint replacement attempts with50/200ms waits, bounded persistent exhaustion and safe operation tags; matrix now stops immediately on technical errors. Targeted IO tests pass; Python245/four skips. Full revised Node/Python CI checked before handoff. Node bulk writer/math/typed output remain; latest retry policy not large-case-tested.
+- [Draft PR67](https://github.com/SergiiPonomarchuk/isr-mvp/pull/67) updated with [six-case completion proposal](tasks/M3-c3a-e1-checkpoint-completion.md): up to12 minutes, fresh120s per newly admitted case, retained global/per-case charges, unchanged caps. Bound contract/admission prepared and preflighted read-only; no claim/new worker. No merge required to approve the branch rehearsal.
+- Used reservations:223MiB run,17/24MiB interruption pool,39/40MiB unit pool; do not reset pools for more local tests. No new actual crash trials proposed. All old evidence retained. Production/docs/rules/fixtures unchanged; zero source-export/DB/emulator/provider/loader/deploy operations. E1 incomplete/C3b NO-GO; new X/source/SDK/access/restore and16 Values cases remain separate. Sol Medium sufficient.
+
+## Previous checkpoint: PR65/66 merged; E1 monitor fixed, continuation proposed, 2026-11-24
 
 - Author explicitly merged PR65, then PR66, and approved E1 section5. PR65 merged4add752; PR66 reconciled6c99b7f/mergedeb50bae; reviewed content preserved and main Node/Python CI passed. E1 branch codex/c3a-e1-batching starts fromeb50bae; [implementation](tasks/M3-c3a-e1-implementation.md).
 - Explicit c3a-io-2 batches/private afterimage recovery preserve v1 typed artifact hashes/order and math.23 focused Node/16 supervisor checks pass; required full Node339 pass/seven skips, Python243/four skips. Production/C1/C2/UI/fixtures/docs/rules unchanged; no DB/provider/loader/deploy operations.
