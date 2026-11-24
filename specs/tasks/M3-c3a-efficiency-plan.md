@@ -120,3 +120,6 @@ The author's current "ok, go" authorizes preparing this concrete plan. It does n
 ## Status
 
 - 2026-11-24: Prepared on codex/c3a-efficiency-plan, stacked on PR65 head 9afbde1. Reviewed actual Store/Budget/Artifact/checkpoint/oracle/supervisor behavior and retained phase timings. No runtime, fixture, test, docs/ or rules changes; no capacity experiment, DB/source-export access, emulator/provider/credential-loader operation. Documentation checks and final PR CI are recorded before handoff.
+
+- Validation: required npm test passed335/seven optional skips; Python236 tests/four optional skips passed. Proposal links, whitespace, baseline and documentation-only blob scope verified. No capacity matrix ran.
+- [PR66](https://github.com/SergiiPonomarchuk/isr-mvp/pull/66) opened against PR65's feature branch. GitHub initially rejected creation through git push with two HTTP/server errors; creating the same authorized branch at its existing base through the GitHub API allowed the documentation push. No unrelated branch or PR65 update. Final pushed-head standard Node/Python CI is checked before handoff. After explicit PR65 merge, reconcile/retarget PR66 to main before its separately authorized merge.
