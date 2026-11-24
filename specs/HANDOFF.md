@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: C2b accepted; PR63 ready for review, 2026-11-24
+## Current checkpoint: C2b merged; C3 plan prepared, 2026-11-24
+
+- Author explicitly ordered merge PR63. Reviewed ced4bb5 merged as aae2ff7; reviewed tree matched, main Node/Python CI passed. C2b author usability checks accepted after grouped matches/two-row explanation/visible Save corrections. No deploy/source/provider operation followed.
+- Author requested the next plan. [C3 population parity/capacity plan](tasks/M3-c3-population-plan.md) separates current-oracle compatibility from unimplemented marked-X/MVP candidate policy. Recommended next implementation approval is C3a offline streaming scorer/format prototype, within proposed section3 finite synthetic/file limits; zero database/export access/provider calls. Sol Medium sufficient.
+- Current tiny64-record/64KiB artifact is not a scalable population codec. C3a must propose/measure a separate format without changing C1/C2b caps. C3b source/resource preflight, exact paths/durable budgets/import and C3c actual immutable population/recovery each remain separately gated. Existing6GiB old-import prerequisite and application512MiB remain. Matching aspect vectors/relationship coverage and unresolved direct-recovery policy cannot be invented.
+- Documentation only now: no runtime/test/tool/rules/docs edits, source archive decoding, DB/model/loader calls, import or deploy.16 Values cases/PR60 remain deferred. Open-root/access/old-client/live gates remain separate. Review/explicit merge of the plan PR does not authorize C3a execution without its own scope approval.
+
+## Previous checkpoint: C2b accepted; PR63 ready for review, 2026-11-24
 
 - Author ordered merge PR62 and approved C2b sections6/7. PR62 merged as7def2b0; main CI passed. Branch codex/c2b-integration completes B1-B3. [Contract/status](tasks/M3-c2b-implementation.md), [evidence/checklist](tasks/M3-c2b-evidence/README.md), [consumer disposition](tasks/M3-c2b-consumer-inventory.md).
 - Final source-pinned SDK run03: three2/7/17 fixtures/five failure-race traces passed. Largest commit12411B/document2817B;63.281s/120.39MiB under unchanged limits. Independent tally/task audit passed. Node316 passed/seven skips; Python227 tests/four skips.

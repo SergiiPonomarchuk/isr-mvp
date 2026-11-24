@@ -1,3 +1,8 @@
+## 2026-11-24 - C3 population parity and capacity plan
+
+- Record accepted C2b PR63 merge aae2ff7/main CI. Propose bounded offline streaming scorer/format prototype, then separately gated source/resource/emulator/population/recovery work.
+- Separate current-engine numerical parity from unimplemented marked-X/direct-candidate policy; preserve old limits/artifacts and defer actual source/vector/flag gaps. Documentation only; no DB/provider/runtime/rules/docs changes.
+
 ## 2026-11-24 - C2b author usability accepted
 
 - Record completed member/Join/Create/proposal/voting/winner/task/results-persistence review after layout, two-row explanation and visible Save corrections. PR63 ready for explicit author merge; C3/live gates remain separate.

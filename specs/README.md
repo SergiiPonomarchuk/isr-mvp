@@ -7,7 +7,7 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: PR62 merged as7def2b0; approved [C2b implementation](tasks/M3-c2b-implementation.md) and [evidence/checklist](tasks/M3-c2b-evidence/README.md) passed author usability review; PR63 awaits explicit merge instruction. Tiny emulator fixtures only; C3/live and16 deferred Values cases remain separate.
+Current checkpoint: C2b PR63 merged as aae2ff7; main CI passed. [C3 population parity/capacity plan](tasks/M3-c3-population-plan.md) prepared. C3a offline implementation, X-policy clarification/coverage, source/resource/import and population/recovery gates require separate approval.16 Values cases remain deferred.
 
 Previous checkpoint: [R1 optional Values metadata recovery](tasks/Values-optional-metadata-recovery.md), live dry run ready224/zero conflicts and synthetic recovery passed; [author-only runbook](tasks/Values-optional-metadata-author-runbook.md) prepared. No live apply or AI calls.
 
