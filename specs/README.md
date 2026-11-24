@@ -7,7 +7,7 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: C1 PR50 merged(a660233); author-approved [C2a isolated emulator slice](tasks/M3-c2a-emulator-publication.md) implemented and verified; [evidence/limits](tasks/M3-c2a-evidence/README.md). Review/explicit merge precedes later C2b scope; no application/live/scoring acceptance. The16 Values cases remain deferred.
+Current checkpoint: C2a PR61 merged as d7f5c30 with main CI passed; [C2b application/lifecycle/browser proposal](tasks/M3-c2b-integration-proposal.md) prepared for review. Documentation only; explicit implementation/path approval required. C3/live gates and16 deferred Values cases remain separate.
 
 Previous checkpoint: [R1 optional Values metadata recovery](tasks/Values-optional-metadata-recovery.md), live dry run ready224/zero conflicts and synthetic recovery passed; [author-only runbook](tasks/Values-optional-metadata-author-runbook.md) prepared. No live apply or AI calls.
 
