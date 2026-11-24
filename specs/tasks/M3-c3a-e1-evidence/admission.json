@@ -1,0 +1,105 @@
+{
+  "version": "c3a-e1-admission-1",
+  "cases": [
+    {
+      "id": "score-7-3",
+      "n": 7,
+      "refs": 3,
+      "aspects": 3
+    },
+    {
+      "id": "restart-checkpoint",
+      "n": 7,
+      "refs": 3,
+      "aspects": 3,
+      "fault": "checkpoint"
+    },
+    {
+      "id": "restart-seal",
+      "n": 7,
+      "refs": 3,
+      "aspects": 3,
+      "fault": "seal"
+    },
+    {
+      "id": "refuse-corrupt",
+      "n": 7,
+      "refs": 3,
+      "aspects": 3,
+      "fault": "corrupt"
+    },
+    {
+      "id": "refuse-missing",
+      "n": 7,
+      "refs": 3,
+      "aspects": 3,
+      "fault": "missing"
+    },
+    {
+      "id": "score-100-3",
+      "n": 100,
+      "refs": 3,
+      "aspects": 3
+    },
+    {
+      "id": "boundary-300",
+      "n": 300,
+      "refs": 3,
+      "aspects": 3
+    },
+    {
+      "id": "boundary-301",
+      "n": 301,
+      "refs": 3,
+      "aspects": 3
+    },
+    {
+      "id": "score-1000-3",
+      "n": 1000,
+      "refs": 3,
+      "aspects": 3
+    },
+    {
+      "id": "score-9150-3",
+      "n": 9150,
+      "refs": 3,
+      "aspects": 3
+    },
+    {
+      "id": "structural-19-3",
+      "n": 9150,
+      "refs": 19,
+      "aspects": 3,
+      "structural": true
+    },
+    {
+      "id": "structural-100-3",
+      "n": 9150,
+      "refs": 100,
+      "aspects": 3,
+      "structural": true
+    }
+  ],
+  "regressions": [
+    {
+      "id": "e1-reservation-before-data",
+      "fixture": "score-7-3",
+      "hook": "reservation-before-data"
+    },
+    {
+      "id": "e1-data-before-index",
+      "fixture": "score-7-3",
+      "hook": "data-before-index"
+    },
+    {
+      "id": "e1-index-before-checkpoint",
+      "fixture": "score-7-3",
+      "hook": "index-before-checkpoint"
+    },
+    {
+      "id": "e1-checkpoint-before-seal",
+      "fixture": "score-7-3",
+      "hook": "checkpoint-before-seal"
+    }
+  ]
+}
