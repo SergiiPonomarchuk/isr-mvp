@@ -1,3 +1,9 @@
+## 2026-11-24 - E1 bounded I/O batching and stopped recovery evidence
+
+- Record authorized PR65/66 merges4add752/eb50bae and main CI. Add explicit E1 private-file batching, pre-write reservations, checksummed afterimage replay, resumable artifact prefixes and exact v1 compatibility tests; production math/fixtures/C1/C2 unchanged.
+- Preserve one actual-process recovery pass and the next source interrupted by an atomic-temp stat race. Fix owned monitor handling/fail-closed behavior; no capacity matrix or automatic rerun.
+- Prepare source-bound one-time continuation with old quotas/work/bytes/attempts carried and one explicitly proposed fresh deadline. New approval required by E1 section5. Full Node339 passed/seven skips; Python243/four skips. C3b NO-GO; zero data/provider/loader/deploy operations.
+
 ## 2026-11-24 - C3a-E1 bounded offline efficiency proposal
 
 - Propose coalesced private-file writes and checkpoint journals with exact parity, pre-write cumulative reservations and crash recovery under unchanged resource ceilings.

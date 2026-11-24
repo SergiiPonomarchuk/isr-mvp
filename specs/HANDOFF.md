@@ -4,7 +4,15 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: C3a-E1 offline efficiency proposal prepared, 2026-11-24
+## Current checkpoint: PR65/66 merged; E1 monitor fixed, continuation proposed, 2026-11-24
+
+- Author explicitly merged PR65, then PR66, and approved E1 section5. PR65 merged4add752; PR66 reconciled6c99b7f/mergedeb50bae; reviewed content preserved and main Node/Python CI passed. E1 branch codex/c3a-e1-batching starts fromeb50bae; [implementation](tasks/M3-c3a-e1-implementation.md).
+- Explicit c3a-io-2 batches/private afterimage recovery preserve v1 typed artifact hashes/order and math.23 focused Node/16 supervisor checks pass; required full Node339 pass/seven skips, Python243/four skips. Production/C1/C2/UI/fixtures/docs/rules unchanged; no DB/provider/loader/deploy operations.
+- One fixed actual-process attempt29fbdd8: reservation-before-data passed exact Node/independent Python at7 people/8 Join members; next source worker was stopped by a parent stat/temporary-rename race. Two recovery checks and all12 capacity cases remain unrun. [Retained evidence](tasks/M3-c3a-e1-evidence/README.md). Monitor now handles vanished.tmp only and fails closed on other IO errors; no automatic rerun.
+- Next author decision: review the draft implementation PR and [approve bounded continuation](tasks/M3-c3a-e1-continuation.md): three remaining recovery checks, unchanged12-case matrix, one explicit fresh120s allowance for the interrupted source with prior quota/work/byte/attempt charges carried. Maximum30 minutes admitted time, unchanged caps. Prepared command is not run; no continuation claim exists. No merge is required just to approve the branch rehearsal.
+- E1 acceptance incomplete;100-person performance criterion unmeasured. C3b remains NO-GO. Source import/vector/flag coverage/new X policy/SDK/access/restore and16 Values cases remain separate. Sol Medium sufficient. Final PR-head CI is verified before handoff.
+
+## Previous checkpoint: C3a-E1 offline efficiency proposal prepared, 2026-11-24
 
 - Author requested continuation after PR65. [C3a-E1 proposal](tasks/M3-c3a-efficiency-plan.md) is documentation only, stacked on PR65 head9afbde1. PR65 remains open and requires an explicit merge command; its final push/PR Node/Python CI passed.
 - Propose bounded append/index batching and fewer budget rewrites, preserving exact logical outputs, typed frames, pre-write reservations, social WAL, original deadline and all existing resource caps. I/O remains a hypothesis until instrumentation measures it. No physical artifact packing or scoring/policy changes.

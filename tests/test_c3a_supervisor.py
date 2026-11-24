@@ -1,6 +1,6 @@
 import base64,json,os,struct,sys,tempfile,time,unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch,Mock
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 import run_c3a_offline as R
 from check_c3a_fixture import unpack,AuditError
@@ -87,5 +87,36 @@ class C3aSupervisor(unittest.TestCase):
   with tempfile.TemporaryDirectory() as tmp,patch.object(R,'run_child',side_effect=child),patch.object(R,'reserve_independent',return_value=736):
    row=R.run_fixture({'id':'score-7-3','n':7},Path(tmp),{},e1=True,hook='data-before-index',case_id='e1-data-before-index')
    self.assertEqual(row['status'],'completed');self.assertTrue(row['fault_verified']);self.assertEqual(len({(d,c) for m,d,c in calls}),1)
+
+ def test_atomic_temporary_rename_scan_skips_only_disappeared_tmp(self):
+  tmp=Mock();tmp.suffix='.tmp';tmp.stat.side_effect=FileNotFoundError()
+  fixed=Mock();fixed.stat.return_value=Mock(st_mode=R.stat.S_IFREG,st_size=17)
+  directory=Mock();directory.rglob.return_value=[tmp,fixed];self.assertEqual(R.size(directory),17)
+  missing=Mock();missing.suffix='.data';missing.stat.side_effect=FileNotFoundError();directory.rglob.return_value=[missing]
+  with self.assertRaises(FileNotFoundError):R.size(directory)
+ def test_unexpected_disk_monitor_error_stops_only_owned_child(self):
+  good={'ram':2*1024**3,'a_disk':8*1024**3,'c_disk':2*1024**3}
+  with tempfile.TemporaryDirectory() as tmp,patch.object(R,'preflight',return_value=good),patch.object(R,'child_memory',return_value=0),patch.object(R,'size',side_effect=OSError('synthetic')),patch.object(R.subprocess,'Popen',return_value=FakeChild()):
+   result=R.run_child(['synthetic'],Path(tmp),Path(tmp),time.time()+120,{},'test')
+   self.assertEqual(result['status'],'monitor_io_error')
+
+ def test_continuation_carries_counters_and_attempts_without_refund(self):
+  seen=[]
+  seed={'version':'c3a-budget-2','io':'c3a-io-2','work':256,'bytes':{'source':83,'artifact':0,'scratch':100},'limits':{'work':1000000,'scratch':536870912},'attempts':{'source':1},'deadline':1}
+  def child(command,directory,run_dir,deadline,pins,mode,**kw):
+   state=json.loads((directory/'budget.json').read_text(encoding='utf-8'))
+   seen.append((state['work'],state['bytes']['source'],state['bytes']['scratch'],state['attempts']['source'],state['deadline']))
+   return {'mode':mode,'status':'refused','code':'synthetic-stop'}
+  with tempfile.TemporaryDirectory() as tmp,patch.object(R,'run_child',side_effect=child):
+   row=R.run_fixture({'id':'score-7-3','n':7},Path(tmp),{},e1=True,hook='data-before-index',case_id='e1-data-before-index',seed_budget=seed)
+   self.assertEqual(row['status'],'refused_or_unproven');self.assertEqual(seen[0][0],257);self.assertEqual(seen[0][1],83);self.assertGreater(seen[0][2],100);self.assertEqual(seen[0][3],1);self.assertGreater(seen[0][4],1)
+   self.assertEqual(seed['deadline'],1);self.assertEqual(seed['work'],256)
+
+ def test_continuation_admission_cannot_reuse_prior_quota_twice(self):
+  with tempfile.TemporaryDirectory() as tmp,patch.object(R,'ROOT',Path(tmp)):
+   directory=Path(tmp)/'scratch/c3a-runs/old';directory.mkdir(parents=True)
+   parent={'artifacts':'scratch/c3a-runs/old'};proposal={'parent_report_sha256':'a'*64}
+   R.claim_continuation(parent,Path(tmp)/'new',proposal)
+   with self.assertRaises(FileExistsError):R.claim_continuation(parent,Path(tmp)/'another',proposal)
 
 if __name__=='__main__':unittest.main()

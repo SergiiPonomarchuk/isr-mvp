@@ -1,0 +1,30 @@
+{
+  "version": "c3a-e1-continuation-1",
+  "parent_report": "specs/tasks/M3-c3a-e1-evidence/run-20261124-01/report.json",
+  "parent_report_sha256": "53992a014863ecea979c3cd73c5a2bab99de567bcd9f0f57a335ad088e930afe",
+  "regression_ids": [
+    "e1-data-before-index",
+    "e1-index-before-checkpoint",
+    "e1-checkpoint-before-seal"
+  ],
+  "cases": [
+    "score-7-3",
+    "restart-checkpoint",
+    "restart-seal",
+    "refuse-corrupt",
+    "refuse-missing",
+    "score-100-3",
+    "boundary-300",
+    "boundary-301",
+    "score-1000-3",
+    "score-9150-3",
+    "structural-19-3",
+    "structural-100-3"
+  ],
+  "fresh_deadline_for_interrupted": "e1-data-before-index",
+  "time_seconds_each": 120,
+  "quota_limit_unchanged": 1073741824,
+  "carry_run_reserved": 47185920,
+  "carry_regression_reserved": 5242880,
+  "status": "proposed_not_executed"
+}
