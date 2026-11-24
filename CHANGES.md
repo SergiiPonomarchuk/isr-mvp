@@ -1,3 +1,21 @@
+## 2026-11-24 - C2b author usability accepted
+
+- Record completed member/Join/Create/proposal/voting/winner/task/results-persistence review after layout, two-row explanation and visible Save corrections. PR63 ready for explicit author merge; C3/live gates remain separate.
+
+## 2026-11-24 - C2b visible task result actions
+
+- Restore visible blue task/subtask Save buttons in fixture mode; their inherited accent variable was undefined. Author accepted proposal/voting/winner/task checks.
+
+## 2026-11-24 - C2b usability layout correction
+
+- Group similar fixture issues in one rounded list with horizontal dividers; reuse the standard full-width rounded explanation textarea and label spacing. Member-list and Join checks accepted by author.
+
+## 2026-11-24 - C2b tiny emulator application/lifecycle integration
+
+- Default-off generation adapter, bounded backend commands and actual application renderer/cache integration; unchanged Lifecycle/ISR math. Unsupported legacy consumers refuse the new format.
+- Final SDK fixtures/retries/races/replay passed: max12411B commit/2817B document,63.281s/120.39MiB; independent tally/task audit passed. Node316 passed/seven skips; Python227/four skips.
+- Browser Create/reload, members/Join, options/messages/voting/tasks/results/comments verified. Human usability pending; no provider/live/rules/docs changes or population/scoring acceptance.
+
 ## 2026-11-24 - C2b application/lifecycle/browser proposal
 
 - Record PR61 merge d7f5c30 and successful main CI; preserve C2a evidence and limitations.

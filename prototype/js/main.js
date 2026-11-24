@@ -1,7 +1,11 @@
 
 // Initialize Firebase
 if (typeof firebase !== 'undefined') {
-  const config = window.firebaseConfig || (typeof firebaseConfig !== 'undefined' ? firebaseConfig : null);
+  const publicationRequested = new URLSearchParams(window.location.search).get('publication_fixture') === '1';
+  if (publicationRequested && !window.ISRPublicationFixture) throw new Error('Publication fixture adapter unavailable');
+  if (publicationRequested) window.ISRPublicationFixture.assertLocation();
+  if (publicationRequested && firebase.apps.length && firebase.app().options.projectId !== 'demo-c2b-integration') throw new Error('Unexpected Firebase application');
+  const config = publicationRequested ? { apiKey: 'demo-c2b-no-real-key', projectId: 'demo-c2b-integration', authDomain: '127.0.0.1' } : (window.firebaseConfig || (typeof firebaseConfig !== 'undefined' ? firebaseConfig : null));
   if (config && !firebase.apps.length) {
     firebase.initializeApp(config);
   }
@@ -19,6 +23,7 @@ if (typeof firebase !== 'undefined') {
   } catch (e) {
     console.warn('Firestore emulator switch failed:', e);
   }
+  if (publicationRequested) window.ISRPublicationFixture.installDatabaseGuard(firebase.firestore());
 }
 
 const sectionTitles = {
@@ -2196,6 +2201,12 @@ function initTopicDetailViews() {
   var MESSAGE_SORT_LABELS = { date: 'date', isr: 'ISR', r: 'R', e: 'E' };
   var messageSort = { key: 'date', reversed: false };
   var messageAuthorScores = { topicId: null, mcId: null, byUid: {} };
+  if (window.ISRPublicationFixture && window.ISRPublicationFixture.requested) {
+    window.ISRPublicationFixture.renderers = { chat: renderChatTopic, voting: renderVotingTopic, tasks: renderTasksTopic, create: renderChatCreate, proposal: bindProposalInteractions,
+      authorScores: function(byUid) { messageAuthorScores.byUid = byUid; },
+      sortMessages: function(key) { if (messageSort.key === key) messageSort.reversed = !messageSort.reversed; else { messageSort.key = key; messageSort.reversed = false; } } };
+    return;
+  }
 
   // a, b: {idx, s} with idx = position in date order (oldest first) and s = {isr, r, e} or null.
   // date: newest first; ISR, R, E: highest first; reversed flips that. Messages whose author has
@@ -7394,6 +7405,7 @@ function initTopicDetailViews() {
   }
 
   function bindProposalInteractions(disc, topicId) {
+    const proposalNotice = text => { if (window.ISRPublicationFixture && window.ISRPublicationFixture.requested) window.ISRPublicationFixture.reportError(new Error(text)); else alert(text); };
     const proposalModalOverlay = document.getElementById('proposal-modal-overlay');
     const proposalModalCloseBtn = document.getElementById('proposal-modal-close-btn');
     const proposalModalTitle = document.getElementById('proposal-modal-title');
@@ -7559,7 +7571,7 @@ function initTopicDetailViews() {
           const value = resourceInput.value.trim();
           if (!value) return;
           if (tempResources.length >= ISROptions.LIMITS.resources) {
-            alert('At most ' + ISROptions.LIMITS.resources + ' resources.');
+            proposalNotice('At most ' + ISROptions.LIMITS.resources + ' resources.');
             return;
           }
           tempResources.push(value);
@@ -7601,7 +7613,7 @@ function initTopicDetailViews() {
         addStepBtn.onclick = function() {
           const desc = stepDescInput.value.trim();
           if (!desc) {
-            alert("Please type a step description.");
+            proposalNotice("Please type a step description.");
             return;
           }
           const leaderUid = stepLeaderSelect.value;
@@ -7632,11 +7644,11 @@ function initTopicDetailViews() {
             resources: tempResources.concat([resourceInput.value])
           });
           if (!checked.ok) {
-            alert(checked.errors.join('\n'));
+            proposalNotice(checked.errors.join('\n'));
             return;
           }
           if (tempSteps.length === 0) {
-            alert("Please add at least one implementation step.");
+            proposalNotice("Please add at least one implementation step.");
             return;
           }
 
@@ -7657,6 +7669,11 @@ function initTopicDetailViews() {
             description: tempSteps,
             marks: []
           };
+          if (window.ISRPublicationFixture && window.ISRPublicationFixture.requested) {
+            try { await window.ISRPublicationFixture.submitOption(newOption); proposalModalOverlay.hidden = true; window.ISRPublicationFixture.renderCurrent(); }
+            catch (error) { proposalNotice(error.message); proposalSubmitBtn.disabled = false; proposalSubmitBtn.textContent = 'Submit Proposal'; }
+            return;
+          }
 
           const db = firebase.firestore();
           const docRef = db.collection("discussions").doc(topicId);
@@ -7674,7 +7691,7 @@ function initTopicDetailViews() {
             proposalModalOverlay.hidden = true;
           } catch (err) {
             console.error("Failed to submit option:", err);
-            alert("Failed to submit proposal: " + err.message);
+            proposalNotice("Failed to submit proposal: " + err.message);
             proposalSubmitBtn.disabled = false;
             proposalSubmitBtn.textContent = "Submit Proposal";
           }
@@ -7883,6 +7900,7 @@ function ensureTopicLocation(disc, topicId) {
 }
 
 function initRealTimeDashboardSync(db, storedUid) {
+  if (window.ISRPublicationFixture && window.ISRPublicationFixture.requested) return window.ISRPublicationFixture.start(db, storedUid);
   let activeIssuesCount = 0;
   let todoCount = 0; // U2: the number of the member's ToDo issues
   let discussionsCount = 0;
@@ -9001,6 +9019,11 @@ function initRealTimeDashboardSync(db, storedUid) {
 }
 
 function initMainPage() {
+  if (window.ISRPublicationFixture && window.ISRPublicationFixture.requested) {
+    initTopicDetailViews();
+    initRealTimeDashboardSync(firebase.firestore(), safeGetStorage('userId') || '1');
+    return;
+  }
   const tooltipsEnabled = localStorage.getItem('tooltipsEnabled') !== 'false';
   if (!tooltipsEnabled) {
     document.body.classList.add('tooltips-disabled');
@@ -9660,6 +9683,7 @@ window.bindValuesSection = bindValuesSection;
 })();
 
 function initApp() {
+  if (window.ISRPublicationFixture && window.ISRPublicationFixture.requested) { initMainPage(); return; }
   if (document.getElementById('menu-button') && document.getElementById('menu')) {
     initMainPage();
   }

@@ -132,7 +132,7 @@ exports.onIssueStatusChange = onDocumentUpdated({ document: "issues/{issueId}", 
   const after = event.data.after.data() || {};
   if (after.status !== "approved" || before.status === "approved") return;
 
-  await tallyApprovedIssue(db, event.params.issueId, FieldValue);
+  await require("./publication-dispatch").approved(after, { legacy: () => tallyApprovedIssue(db, event.params.issueId, FieldValue) });
 });
 
 

@@ -16,6 +16,8 @@ async function tallyApprovedIssue(db, issueId, FieldValue) {
     const discSnap = await tx.get(db.collection("discussions").doc(issueId));
     if (!issueSnap.exists) return {changed: false};
     const issue = issueSnap.data();
+    require("./publication-dispatch").legacyOnly(issue);
+    if (discSnap.exists) require("./publication-dispatch").legacyOnly(discSnap.data());
     if (issue.status !== "approved" || Lifecycle.phaseOf(discSnap.exists ? discSnap.data() : null, issue) === "archived") return {changed: false};
     const publics = await tx.get(db.collection("microcommunities").where("issue_id", "==", issueId).limit(1));
     const mcId = publics.empty ? issueId : publics.docs[0].id;

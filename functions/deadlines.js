@@ -49,15 +49,24 @@ async function closeExpiredTopics(db, FieldValue, today, options) {
   // "Ongoing" and missing deadlines are not returned). Phases are decided below.
   const ids = new Set();
   const [issSnap, discSnap] = await Promise.all([
-    db.collection("issues").where("ends", "<", today).select("status").get(),
-    db.collection("discussions").where("ends", "<", today).select("status").get()
+    db.collection("issues").where("ends", "<", today).select("status", "publication_version", "prototype_version", "build_id").get(),
+    db.collection("discussions").where("ends", "<", today).select("status", "publication_version", "prototype_version", "build_id").get()
   ]);
   const votingIds = new Set();
+  const publicationCandidates = new Map();
+  issSnap.forEach(d => publicationCandidates.set(d.id, d.data()));
+  discSnap.forEach(d => { if (d.data().publication_version !== undefined || d.data().prototype_version !== undefined || d.data().build_id !== undefined) publicationCandidates.set(d.id, d.data()); });
   issSnap.forEach((d) => { ids.add(d.id); if (d.data().status === "in_process") votingIds.add(d.id); });
   discSnap.forEach((d) => ids.add(d.id));
 
   const changes = [];
   for (const id of ids) {
+    const dispatch = require("./publication-dispatch");
+    if (dispatch.format(publicationCandidates.get(id)) !== "legacy") {
+      const result = await dispatch.deadline(publicationCandidates.get(id), { publication: opts.publication && opts.publication(id), today, operation_id: "deadline_" + today.replace(/-/g, "") });
+      changes.push({ id, ...result });
+      continue;
+    }
     const isrByUid = votingIds.has(id) ? await loadIsrByUid(db, id) : null;
     const discRef = db.collection("discussions").doc(id);
     const issueRef = db.collection("issues").doc(id);
@@ -65,6 +74,8 @@ async function closeExpiredTopics(db, FieldValue, today, options) {
       const [dSnap, iSnap] = await Promise.all([tx.get(discRef), tx.get(issueRef)]);
       const disc = dSnap.exists ? dSnap.data() : null;
       const issue = iSnap.exists ? iSnap.data() : null;
+      require("./publication-dispatch").legacyOnly(issue);
+      require("./publication-dispatch").legacyOnly(disc);
       const phase = L.phaseOf(disc, issue);
       if (phase !== "chat" && phase !== "voting") return null;
       if (phase === "chat" && !disc) return null;

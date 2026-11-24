@@ -165,6 +165,8 @@ def audit(issue, discussion, public, rows, users, vectors):
 def audit_db(db, issue_id):
     issue = db.collection('issues').document(issue_id).get().to_dict()
     discussion = db.collection('discussions').document(issue_id).get().to_dict()
+    if any(x and any(k in x for k in ('publication_version', 'prototype_version', 'build_id')) for x in (issue, discussion)):
+        raise ValueError('publication_adapter_required: use the generation audit')
     publics = list(db.collection('microcommunities').where('issue_id', '==', issue_id).stream())
     if len(publics) != 1:
         raise ValueError('Expected one public')

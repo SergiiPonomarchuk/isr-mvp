@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: C2a merged; C2b proposal prepared, 2026-11-24
+## Current checkpoint: C2b accepted; PR63 ready for review, 2026-11-24
+
+- Author ordered merge PR62 and approved C2b sections6/7. PR62 merged as7def2b0; main CI passed. Branch codex/c2b-integration completes B1-B3. [Contract/status](tasks/M3-c2b-implementation.md), [evidence/checklist](tasks/M3-c2b-evidence/README.md), [consumer disposition](tasks/M3-c2b-consumer-inventory.md).
+- Final source-pinned SDK run03: three2/7/17 fixtures/five failure-race traces passed. Largest commit12411B/document2817B;63.281s/120.39MiB under unchanged limits. Independent tally/task audit passed. Node316 passed/seven skips; Python227 tests/four skips.
+- Actual browser checks passed: member directory/Join/replay, Check/Create across reload, edited-text recheck, canceled discard, supplied context/145 Values, proposals/messages/replies, voting through complete winner/tasks, delegated subtask, completion/results/comments/nested reply. Author accepted the member-list, Join, Create, proposal, voting/winner/task and final results-persistence checks after UI corrections. [PR63](https://github.com/SergiiPonomarchuk/isr-mvp/pull/63) is ready for review; merge requires explicit `merge PR63`. No deploy follows.
+- Zero provider/loader/production operations. Rules/docs/source population/accepted exports and original C serving checkout unchanged. Open public roots remain a live access/old-client/REST blocker. C3 formation/population/import/access/recovery needs separate approval.16 Values cases/PR60 remain deferred. Sol Medium sufficient.
+
+## Previous checkpoint: C2a merged; C2b proposal prepared, 2026-11-24
 
 - Author explicitly ordered merge PR61. Reviewed3bb4887 merged as d7f5c30; merged tree matched and main Node/Python CI passed. No deployment/data/provider operation followed. C2a accepted evidence/limits remain unchanged.
 - Author requested the next documentation proposal. [C2b proposed application/lifecycle/browser scope](tasks/M3-c2b-integration-proposal.md) refreshes the consumer inventory and specifies a default-off tiny fixture adapter, backend commands, complete outcome publication, actual UI/cache/browser checks, isolated paths and finite limits. Sol Medium sufficient; zero paid allowance needed.
