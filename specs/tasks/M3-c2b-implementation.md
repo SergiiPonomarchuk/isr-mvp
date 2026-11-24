@@ -35,3 +35,5 @@ Use the ten acceptance rows in the approved proposal, plus serializer-before-wri
 - 2026-11-24: concrete schema/plan recorded before implementation; PR62 merge approved/completed. No C2b runtime/database/browser operation yet.
 
 - B1 offline: six boundary/codec/full-reader/replay/Join/content/cursor/installed-SDK tests pass. Initial application activation preflight max9464bytes (128 dummy transaction bytes included), within16KiB; zero network calls. Historical cursor physical issue-ID mismatch reproduced and fixed. Public raw roots have no persisted full member maps. No C2b emulator write yet.
+
+- B2 offline:14 new adapter/command/dispatch/preflight cases pass; full Node307 passed/seven skips. Initial SDK activation envelope9464B; maximum-option/lifecycle envelope10876B, both include128 dummy transaction bytes and fit fixed16KiB. Legacy trigger/deadline/Join/Similar and Python audit entry points explicitly dispatch/refuse the new format. Real C2b SDK/browser evidence still pending.
