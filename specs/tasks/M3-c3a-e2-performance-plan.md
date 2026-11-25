@@ -126,3 +126,5 @@ No model switch is needed. Sol Medium is sufficient; application Gemini models/p
 ## Status
 
 -2026-11-25: PR67 merged1651d91, reviewed tree equal and main Node/Python CI passed. Prepared this proposal from code and retained aggregate evidence; no runtime/test/fixture/docs/rules changes, new benchmark, source-data access, DB/emulator/provider/loader operation or deployment. Documentation links/scope/diff and final-head CI checked before handoff.
+
+- [PR68](https://github.com/SergiiPonomarchuk/isr-mvp/pull/68) opened against main1651d91. Four-file documentation-only scope/links/whitespace verified; initial proposal head6acc8fb passed standard Node/Python CI. Final pushed-head CI is verified before handoff. No E2 worker or local E1-pool test rerun occurred; merge/implementation require the author's explicit instructions.
