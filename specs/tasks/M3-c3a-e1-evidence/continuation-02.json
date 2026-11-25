@@ -1,0 +1,43 @@
+{
+  "version": "c3a-e1-completion-1",
+  "parent_report": "specs/tasks/M3-c3a-e1-evidence/run-20261124-02/report.json",
+  "parent_report_sha256": "a251582fd820675b94c866e092170f626ed22f7653df0e82647f8dd9731dc227",
+  "regression_ids": [],
+  "cases": [
+    "score-100-3",
+    "boundary-301",
+    "score-1000-3",
+    "score-9150-3",
+    "structural-19-3",
+    "structural-100-3"
+  ],
+  "seed_budgets": {
+    "score-100-3": {
+      "path": "scratch/c3a-runs/run-20261124-02/score-100-3/budget.json",
+      "sha256": "cb82f19e7b9218fdb1255ccbcd2eb806a8aa769d285ad63585d1b18d86a041f3"
+    },
+    "boundary-301": {
+      "path": "scratch/c3a-runs/run-20261124-02/boundary-301/budget.json",
+      "sha256": "6e551c35787cd2abcea2151e4713ef03521782586bf5970db021b08737ed3c55"
+    },
+    "score-1000-3": {
+      "path": "scratch/c3a-runs/run-20261124-02/score-1000-3/budget.json",
+      "sha256": "1dbd922afc1cfb6c008d9de898b42e2c438fce03f97f29dfdcb6f9c49ad7f899"
+    },
+    "score-9150-3": {
+      "path": "scratch/c3a-runs/run-20261124-02/score-9150-3/budget.json",
+      "sha256": "eee4b0afebbc16068873af36c453e7d7582fff4cc6e9cb1c43f198f7b7755762"
+    }
+  },
+  "revision_pins": {
+    "functions/experiments/c3a/disk.js": "f3dba4db3486a375339808b644c9a4e279f34dbb0ea65610c8847f2e09fef6f0",
+    "functions/experiments/c3a/worker.js": "4c4e341238c21d49f2bd99b9680aab5bc576c0b8d2fb6ba09f2f29f5ec7f5a96",
+    "functions/test/c3a-e1.test.js": "c2bb0a366de546d4d3e1145f617198d6225dc054b44264e1bb4cb2308c5791cb",
+    "scripts/run_c3a_offline.py": "abc50eb592bf6f31e03e534bb0a1333f8d24b9f661c2add87efadbda8531c00f",
+    "tests/test_c3a_supervisor.py": "31d2e93244bc073ec2c5546cad4c0adde304be56e695453034e07a401440adff"
+  },
+  "time_seconds_each": 120,
+  "carry_run_reserved": 233832448,
+  "carry_regression_reserved": 17825792,
+  "status": "proposed_not_executed"
+}

@@ -1,0 +1,175 @@
+{
+  "version": "c3a-e1-summary-1",
+  "status": "incomplete_monitor_fixed_continuation_not_run",
+  "c3b_readiness": "NO_GO",
+  "raw_report_sha256": "53992a014863ecea979c3cd73c5a2bab99de567bcd9f0f57a335ad088e930afe",
+  "executed_commit": "29fbdd8",
+  "regressions_passed": 1,
+  "regressions_interrupted": 1,
+  "regressions_not_run": 2,
+  "matrix_executed": 0,
+  "passed_regression": {
+    "id": "e1-reservation-before-data",
+    "seconds": 13.421999999904074,
+    "peak_rss_bytes": 79302656,
+    "comparison": {
+      "status": "exact_node_parity",
+      "compared_rows": 15
+    },
+    "independent": {
+      "complete": true,
+      "audit_read_units": 117,
+      "audit_read_budget": 736,
+      "profiles_evaluated": 7,
+      "members": 7,
+      "join_members": 8,
+      "policy_acceptance": false,
+      "database_reads": 0,
+      "writes": 0,
+      "requests": 0
+    },
+    "final_persisted_budget": {
+      "version": "c3a-budget-2",
+      "io": "c3a-io-2",
+      "limits": {
+        "source": 268435456,
+        "artifact": 268435456,
+        "scratch": 536870912,
+        "decoded": 4194304,
+        "nodes": 200000,
+        "work": 1000000,
+        "attempts": 3
+      },
+      "work": 4832,
+      "nodes": 366,
+      "bytes": {
+        "source": 78951,
+        "artifact": 317603,
+        "scratch": 1328869
+      },
+      "attempts": {
+        "source": 1,
+        "oracle": 1,
+        "candidate": 2
+      },
+      "deadline": 1795551914277,
+      "sequence": 23,
+      "metrics": {
+        "total": {
+          "journal_writes": 210,
+          "quota_writes": 8,
+          "sets": 359,
+          "wal_writes": 69,
+          "data_writes": 37,
+          "index_writes": 44,
+          "batches": 22,
+          "checkpoint_writes": 46,
+          "gets": 1029,
+          "index_reads": 984,
+          "data_reads": 989,
+          "wal_reads": 7,
+          "replays": 1
+        },
+        "phases": {
+          "unit": {
+            "journal_writes": 1,
+            "quota_writes": 2
+          },
+          "source": {
+            "journal_writes": 9,
+            "sets": 8,
+            "wal_writes": 3,
+            "data_writes": 1,
+            "index_writes": 1,
+            "batches": 1,
+            "checkpoint_writes": 1,
+            "quota_writes": 2
+          },
+          "oracle": {
+            "journal_writes": 9,
+            "gets": 30,
+            "index_reads": 30,
+            "data_reads": 30,
+            "sets": 15,
+            "wal_writes": 3,
+            "data_writes": 2,
+            "index_writes": 2,
+            "batches": 1,
+            "checkpoint_writes": 1
+          },
+          "candidate": {
+            "journal_writes": 191,
+            "quota_writes": 4,
+            "data_reads": 959,
+            "gets": 999,
+            "index_reads": 954,
+            "sets": 336,
+            "wal_writes": 63,
+            "wal_reads": 7,
+            "replays": 1,
+            "data_writes": 34,
+            "index_writes": 41,
+            "batches": 20,
+            "checkpoint_writes": 44
+          }
+        },
+        "classes": {
+          "source": {
+            "sets": 8,
+            "data_writes": 1,
+            "index_writes": 1,
+            "gets": 60,
+            "index_reads": 60,
+            "data_reads": 60
+          },
+          "scratch": {
+            "sets": 162,
+            "data_writes": 26,
+            "index_writes": 33,
+            "data_reads": 195,
+            "gets": 235,
+            "index_reads": 190
+          },
+          "artifact": {
+            "sets": 189,
+            "data_writes": 10,
+            "index_writes": 10,
+            "gets": 734,
+            "index_reads": 734,
+            "data_reads": 734
+          }
+        },
+        "pending_records_max": 50,
+        "pending_bytes_max": 105350,
+        "direct_bytes_max": 0
+      },
+      "mode": "candidate",
+      "recovery": {
+        "sequence": 3,
+        "attempts": 1
+      },
+      "independent_reserved": 736
+    }
+  },
+  "run_quota": {
+    "version": "c3a-quota-1",
+    "limit": 1069547520,
+    "reserved": 47185920
+  },
+  "regression_quota": {
+    "version": "c3a-regression-quota-1",
+    "limit": 25165824,
+    "reserved": 5242880
+  },
+  "unit_quota": {
+    "version": "c3a-unit-quota-1",
+    "limit": 41943040,
+    "reserved": 37748736
+  },
+  "retained_admitted_files_bytes": 941530,
+  "monitor_fix_tested_after_run": true,
+  "continuation_executed": false,
+  "provider_calls": 0,
+  "database_rpcs": 0,
+  "credential_loader_invocations": 0
+}

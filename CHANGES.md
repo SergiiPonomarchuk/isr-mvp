@@ -1,3 +1,21 @@
+## 2026-11-25 - E1 six-case bounded completion
+
+- Finish the approved six-case admission once:100/301 full Node/Python and9150-record structural19 passes;1000 Node exact but audit timeout,9150 candidate timeout, structural100 timeout. No new technical stop.
+- Retain source/seed/cumulative charges and all prior evidence; measured I/O deltas and an observed successful checkpoint retry.802MiB reserved/1GiB,182.38MiB peak RSS/512; no limit reset or increase.
+- E1 engineering increment review-ready in PR67; C3b/full-population readiness remains NO-GO. No production, policy, source import, provider/DB/loader or deploy action follows.
+
+## 2026-11-25 - E1 recovery passes, checkpoint IO fixes and bounded completion
+
+- Retain approved continuation: all three remaining recoveries pass; seven matrix passes include exact100/300-profile results and fewer data/index/journal writes.
+- Preserve301/1000 EPERM failures and interrupted9150 oracle; fix immediate technical stopping and durable bounded checkpoint replacement retries/diagnostics. No capacity replay or cap reset.
+- Draft PR67 includes a source/seed/quota-bound six-case completion proposal (12 minutes); new approval needed for fresh deadlines. Production/math/fixtures/C1/C2 unchanged; zero provider/data/deploy operations.
+
+## 2026-11-24 - E1 bounded I/O batching and stopped recovery evidence
+
+- Record authorized PR65/66 merges4add752/eb50bae and main CI. Add explicit E1 private-file batching, pre-write reservations, checksummed afterimage replay, resumable artifact prefixes and exact v1 compatibility tests; production math/fixtures/C1/C2 unchanged.
+- Preserve one actual-process recovery pass and the next source interrupted by an atomic-temp stat race. Fix owned monitor handling/fail-closed behavior; no capacity matrix or automatic rerun.
+- Prepare source-bound one-time continuation with old quotas/work/bytes/attempts carried and one explicitly proposed fresh deadline. New approval required by E1 section5. Full Node339 passed/seven skips; Python243/four skips. C3b NO-GO; zero data/provider/loader/deploy operations.
+
 ## 2026-11-24 - C3a-E1 bounded offline efficiency proposal
 
 - Propose coalesced private-file writes and checkpoint journals with exact parity, pre-write cumulative reservations and crash recovery under unchanged resource ceilings.

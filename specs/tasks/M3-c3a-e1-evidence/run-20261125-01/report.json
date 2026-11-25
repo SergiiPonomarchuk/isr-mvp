@@ -1,0 +1,6391 @@
+{
+  "version": "c3a-e1-report-1",
+  "io": "c3a-io-2",
+  "scope": "synthetic compatibility only; C3b NO-GO",
+  "admission": {
+    "version": "c3a-e1-admission-1",
+    "cases": [
+      {
+        "id": "score-7-3",
+        "n": 7,
+        "refs": 3,
+        "aspects": 3
+      },
+      {
+        "id": "restart-checkpoint",
+        "n": 7,
+        "refs": 3,
+        "aspects": 3,
+        "fault": "checkpoint"
+      },
+      {
+        "id": "restart-seal",
+        "n": 7,
+        "refs": 3,
+        "aspects": 3,
+        "fault": "seal"
+      },
+      {
+        "id": "refuse-corrupt",
+        "n": 7,
+        "refs": 3,
+        "aspects": 3,
+        "fault": "corrupt"
+      },
+      {
+        "id": "refuse-missing",
+        "n": 7,
+        "refs": 3,
+        "aspects": 3,
+        "fault": "missing"
+      },
+      {
+        "id": "score-100-3",
+        "n": 100,
+        "refs": 3,
+        "aspects": 3
+      },
+      {
+        "id": "boundary-300",
+        "n": 300,
+        "refs": 3,
+        "aspects": 3
+      },
+      {
+        "id": "boundary-301",
+        "n": 301,
+        "refs": 3,
+        "aspects": 3
+      },
+      {
+        "id": "score-1000-3",
+        "n": 1000,
+        "refs": 3,
+        "aspects": 3
+      },
+      {
+        "id": "score-9150-3",
+        "n": 9150,
+        "refs": 3,
+        "aspects": 3
+      },
+      {
+        "id": "structural-19-3",
+        "n": 9150,
+        "refs": 19,
+        "aspects": 3,
+        "structural": true
+      },
+      {
+        "id": "structural-100-3",
+        "n": 9150,
+        "refs": 100,
+        "aspects": 3,
+        "structural": true
+      }
+    ],
+    "regressions": [
+      {
+        "id": "e1-reservation-before-data",
+        "fixture": "score-7-3",
+        "hook": "reservation-before-data"
+      },
+      {
+        "id": "e1-data-before-index",
+        "fixture": "score-7-3",
+        "hook": "data-before-index"
+      },
+      {
+        "id": "e1-index-before-checkpoint",
+        "fixture": "score-7-3",
+        "hook": "index-before-checkpoint"
+      },
+      {
+        "id": "e1-checkpoint-before-seal",
+        "fixture": "score-7-3",
+        "hook": "checkpoint-before-seal"
+      }
+    ]
+  },
+  "source_pins": {
+    "functions/ai-config.js": "593e86b7d8efbdecc3c19b7a17d186c18cf72e4adfd00c7171f85f925b12b6f0",
+    "functions/ai-helper.js": "72f01c9d22cdf3a51f1b24a6a2a2da478505a8b57b4fa2d52faf5e61bb211690",
+    "functions/analyzer-log.js": "86a774ef71f86ccd69e7b2a80ca1f011079e4b0285ff5ef211ff6549e3a64551",
+    "functions/cbc-policy.js": "9d85dde17eb9b2f9b33728f2005f6808d9a1c6021233a80e7b9df8e21a1d402c",
+    "functions/close-voting.js": "2e35a1b42b8d195e058109c2e553fcd283e00b30698bed71db0911600f335559",
+    "functions/context-review.js": "a8583140fea10bb2b04c5b8552db7026e2e4f36165cb7757bf76990fb2d8f168",
+    "functions/context-schema.js": "5c338c29757dd74a5585fc508ba754ddc8461f8b0c7a10f93749fb5f4ae92beb",
+    "functions/deadlines.js": "9f2dbe696bc90b4727656c725cd6b6f94d35075d4ac8b371d24138f9ce5d3723",
+    "functions/demo-coalition.js": "3c75182140959cd1c8c8b65138f69b2587f0911fe7eb23517021ed3e318bd1b4",
+    "functions/demo-phase.js": "5e4580c6c396534c9dc913d04b44c25030b0df17ccdf3a72860401a3fbd23ab4",
+    "functions/demo-standby.js": "08adf64bf69c528e2fe1708245bd9e7065fa65570f89cca980e011cd1ef3d71a",
+    "functions/demographics.js": "ba1bf10c28067af5f4490d2f12e12e1ccc5106a6a0c735e5a9936435b23e987c",
+    "functions/geo.js": "cfa88bb9227f3cb0d275172e9dec6f8492c89dcbde49697240ea39939aa18088",
+    "functions/geocode.js": "98a40dd08fdff3ef8b0818d3b2b38ec9b8790c8887e58dd6e7bb3fc4093e30cd",
+    "functions/index.js": "2f0019775a5f67629fce56ad462079dfb65a77d7aac9e9ad270d7eeb32deabc9",
+    "functions/isr.js": "0f0db88cee6683a28d58cb87bd88cfee305ecfc1d54390419b41d61d831f4f16",
+    "functions/issue-scope.js": "76b8237eeaac0c90637c4a8916d2899657a4185c2c85364062c292519965b436",
+    "functions/join-issue.js": "6c894989100657c0f1ee2b350439a75a58149b6e2694401e203b83a75c2f5874",
+    "functions/lifecycle.js": "2dec0fa7b10efdedb71f08caa717837301fc6e7ab824bc486a290cd4cf9fb79b",
+    "functions/location.js": "003139fad07b0e8d95ff0304968650437acd9f4c94e14d8c627003277650ecca",
+    "functions/mr1-engine.js": "7d79897c14abd189f4a3b988635a412bb3d506c0bdb667914d9688f2f46e3d06",
+    "functions/mr1-service.js": "db0994a741caa46c4a5e989a5e59988386a2d4a5c9f830e64c406f3c9a6c10f8",
+    "functions/multi-reference.js": "cad5c25433bfd2aec56bf589bbd072d3dc49fa84c0095db2a6e675736cb45d13",
+    "functions/params.js": "98933f5a1b7ba66bbe6388ca2658b11cdc42f726157134c5ca1c82409bc32ed4",
+    "functions/public-values.js": "5c57a2c743ae5d2563494091f363793ee8ad07c1163fd7ea6a90ae2b6c083332",
+    "functions/publication-dispatch.js": "4b8d80f908d1f3ca43bf0fb3a303600e4642d73ff8751fd3a2eccc250fcb1261",
+    "functions/scope-compatibility.js": "14de98432acfbdd6603ee7e878c53197872bdd4c71a810d8eac470b013650fdc",
+    "functions/similar-issues.js": "6b195c4a6c24be6c6966e0df48b73c2b5f09b9307282e10aac4062ee997df46d",
+    "functions/staged-context.js": "e5e3b99bcf71884f47b55110606238afa513250b44e826046a8a3a6d6fea8a61",
+    "functions/strict-json.js": "e47ab8da8e50de06996e535387b023c33d5e70bdebfe88babbb957317b989a1b",
+    "functions/experiments/c3a/artifact.js": "c290732ae8dd8b5312db0e51bc84b0e5320260f107b30badfc64946321d29b40",
+    "functions/experiments/c3a/disk.js": "f3dba4db3486a375339808b644c9a4e279f34dbb0ea65610c8847f2e09fef6f0",
+    "functions/experiments/c3a/fixture.js": "d1ee057176d15d8c53af9cd31744d2bf495bab15ec47774253a631130afc7678",
+    "functions/experiments/c3a/offline.js": "6fbe7117b7af4f1d76e252231558e8f9ee153764ebaa3d79a18b168a4f02e2a8",
+    "functions/experiments/c3a/pipeline.js": "245eaefd2b9f3b1d8f753de569c780033b83011b53573e0d00eb86f1b281891a",
+    "functions/experiments/c3a/sort.js": "82cede8203d38232fab93727d25af9e26271b1141e67079682f9ddbe09fa2870",
+    "functions/experiments/c3a/values.js": "ff8aa29c408e0a120f46e727a6797548ec68cb4195b6a678987fac7d5a605f6d",
+    "functions/experiments/c3a/wire.js": "ed0498928ad9463da38c698d4ea4f6e17cf3c14f1a4a3c76a9fea656999d87a6",
+    "functions/experiments/c3a/worker.js": "4c4e341238c21d49f2bd99b9680aab5bc576c0b8d2fb6ba09f2f29f5ec7f5a96",
+    "functions/experiments/publication/artifact.js": "adeb78700486c1541710fe91e109023de8a30ea538564f08f3cd854252886b30",
+    "functions/tools/capacity/no-network.js": "999ad257175dda274e09178e429826f22bb71c63c9ae7af40b5107b9a2b69e3a",
+    "functions/package-lock.json": "a39381f845aba6e28ec4139e609dbea992340ff3093aa6ae354f381fe8743eec",
+    "scripts/run_c3a_offline.py": "abc50eb592bf6f31e03e534bb0a1333f8d24b9f661c2add87efadbda8531c00f",
+    "scripts/check_c3a_fixture.py": "48c1b9e011874adc7915f7c2ab8b35c92a2875f99479f417d96ac548a0e8b203",
+    "scripts/audit_capacity_phase_a.py": "00384e9335bfcdd4b47d76649cf03069168d4574e7d68f6a02340a1c5524e713",
+    "scripts/mr1_check.py": "6c8caae7e9708b089a6196d0a641af46e02c7259999c27e3b239c157098bfce5",
+    "scripts/multi_reference.py": "00debff4d23428e5e1ce78b6f59d80a72535eb579b9982abdeeb655006de3c59",
+    "scripts/isr_core.py": "d51fdb7ec6e97991d2370244ca3409f66098a639f6e0296c9caa3c1dae249cc1",
+    "scripts/expertise.py": "d818174d5ebfe800f37fe5d88aecaa55e57bfadd540f82f3595e37959c05a92a",
+    "relevance_evaluator.py": "63265932786d8343f392933b0d2fc48907ec1e0c736f65ca4b2dd05486bfecb3",
+    "specs/tasks/M3-c3a-evidence/matrix.json": "30e6d12733238fd989e602f98bdf40b8e47e7067f638f2eefd83b166247ad21b",
+    "functions/test/c3a-offline.test.js": "ea0d6119f91ff15db1b3b23313653d2f0f06f4dfe624ae42e44ac7feb8b474cf",
+    "tests/test_c3a_supervisor.py": "31d2e93244bc073ec2c5546cad4c0adde304be56e695453034e07a401440adff",
+    "scripts/demo_common.py": "52ba640f55cbcaec3dfcdadeee1657a0c71e19f13b9b7724200b7c3ee0e7199b",
+    "functions/test/c3a-e1.test.js": "c2bb0a366de546d4d3e1145f617198d6225dc054b44264e1bb4cb2308c5791cb",
+    "specs/tasks/M3-c3a-e1-evidence/admission.json": "34da1e5883a5d552f874658edb353b3c2a50d75b42ff0a65855534343b799c37",
+    "specs/tasks/M3-c3a-e1-evidence/continuation-01.json": "c54c75abc974d6bc3d536ac466d1a5869f11178e19e6240bd42fdc94977b189e",
+    "specs/tasks/M3-c3a-e1-evidence/continuation-02.json": "fa407d75b2678d8dc469fbe3cac15ff392a1a21fb422ffada50ff206d389bcbf"
+  },
+  "provider_calls": 0,
+  "database_rpcs": 0,
+  "credential_loader_invocations": 0,
+  "regressions": [],
+  "fixtures": [
+    {
+      "case": {
+        "id": "score-100-3",
+        "n": 100,
+        "refs": 3,
+        "aspects": 3
+      },
+      "id": "score-100-3",
+      "fault_hook": null,
+      "fault_verified": null,
+      "status": "completed",
+      "seconds": 16.266000000061467,
+      "files_bytes": 5441754,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 74530816,
+          "seconds": 1.75,
+          "resources": {
+            "ram": 2570055680,
+            "a_disk": 309199634432,
+            "c_disk": 10297843712
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "source",
+            "result": {
+              "version": "c3a-synthetic-source-1",
+              "config": {
+                "id": "score-100-3",
+                "n": 100,
+                "refs": 3,
+                "aspects": 3
+              },
+              "source_hash": "ecff057e2faaa703364e8f61d3cf93e69e54de4897d791996f273da37bab6579",
+              "population_hash": "5b7ddcd8f75bdf6d6d14f8cd9d3663a55e4e6610b93159f461bc1cfaac39b71e",
+              "count": 100,
+              "with_join": 101,
+              "bundle_hash": "2d0d0bb932b7c43ae1181d1f8a04d67371add81d26112dd6095bac957a460549",
+              "scoring_day": "2026-11-24"
+            },
+            "counters": {
+              "version": "c3a-budget-2",
+              "io": "c3a-io-2",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 39297,
+              "nodes": 4264,
+              "bytes": {
+                "source": 1981910,
+                "artifact": 1614176,
+                "scratch": 11285326
+              },
+              "attempts": {
+                "source": 2,
+                "oracle": 1,
+                "candidate": 1
+              },
+              "deadline": 1795560937388,
+              "sequence": 156,
+              "metrics": {
+                "total": {
+                  "journal_writes": 1489,
+                  "quota_writes": 10,
+                  "sets": 4264,
+                  "wal_writes": 468,
+                  "data_writes": 248,
+                  "index_writes": 461,
+                  "batches": 156,
+                  "checkpoint_writes": 358,
+                  "gets": 8990,
+                  "index_reads": 8894,
+                  "data_reads": 8929
+                },
+                "phases": {
+                  "unit": {
+                    "journal_writes": 1,
+                    "quota_writes": 1
+                  },
+                  "source": {
+                    "journal_writes": 39,
+                    "sets": 202,
+                    "quota_writes": 4,
+                    "wal_writes": 18,
+                    "data_writes": 6,
+                    "index_writes": 44,
+                    "batches": 6,
+                    "checkpoint_writes": 2
+                  },
+                  "oracle": {
+                    "journal_writes": 26,
+                    "gets": 402,
+                    "index_reads": 402,
+                    "data_reads": 402,
+                    "sets": 201,
+                    "wal_writes": 12,
+                    "data_writes": 5,
+                    "index_writes": 5,
+                    "batches": 4,
+                    "checkpoint_writes": 1
+                  },
+                  "candidate": {
+                    "journal_writes": 1423,
+                    "quota_writes": 5,
+                    "data_reads": 8527,
+                    "gets": 8588,
+                    "index_reads": 8492,
+                    "sets": 3861,
+                    "wal_writes": 438,
+                    "data_writes": 237,
+                    "index_writes": 412,
+                    "batches": 146,
+                    "checkpoint_writes": 355
+                  }
+                },
+                "classes": {
+                  "source": {
+                    "sets": 202,
+                    "data_writes": 6,
+                    "index_writes": 44,
+                    "gets": 704,
+                    "index_reads": 704,
+                    "data_reads": 704
+                  },
+                  "scratch": {
+                    "sets": 2278,
+                    "data_writes": 188,
+                    "index_writes": 363,
+                    "data_reads": 3302,
+                    "gets": 3363,
+                    "index_reads": 3267
+                  },
+                  "artifact": {
+                    "sets": 1784,
+                    "data_writes": 54,
+                    "index_writes": 54,
+                    "gets": 4923,
+                    "index_reads": 4923,
+                    "data_reads": 4923
+                  }
+                },
+                "pending_records_max": 64,
+                "pending_bytes_max": 625629,
+                "direct_bytes_max": 0
+              },
+              "mode": "source",
+              "independent_reserved": 3712,
+              "exhausted_replacements": [],
+              "replacement": null
+            },
+            "cpu_seconds": {
+              "user": 0.141,
+              "system": 0.094
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 79310848,
+          "seconds": 1.8439999999245629,
+          "resources": {
+            "ram": 2586349568,
+            "a_disk": 309196488704,
+            "c_disk": 10297778176
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "oracle",
+            "result": {
+              "population_hash": "5b7ddcd8f75bdf6d6d14f8cd9d3663a55e4e6610b93159f461bc1cfaac39b71e",
+              "A": 67,
+              "B": 33,
+              "create_count": 100,
+              "join_count": 101,
+              "create_values": {
+                "domains": [
+                  47,
+                  47,
+                  48,
+                  50,
+                  51,
+                  50,
+                  54,
+                  52,
+                  52,
+                  51
+                ],
+                "items": {
+                  "d1": [
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50
+                  ],
+                  "d2": [
+                    50,
+                    49,
+                    49,
+                    50,
+                    49,
+                    51,
+                    50,
+                    50,
+                    49,
+                    49,
+                    48,
+                    49,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d3": [
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    52,
+                    51
+                  ],
+                  "d4": [
+                    50,
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d5": [
+                    49,
+                    49,
+                    50,
+                    49,
+                    51,
+                    50,
+                    50,
+                    49,
+                    49,
+                    48,
+                    49,
+                    51,
+                    50,
+                    50,
+                    49
+                  ],
+                  "d6": [
+                    50,
+                    50,
+                    51,
+                    50,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    52,
+                    51,
+                    51,
+                    50,
+                    51
+                  ],
+                  "d7": [
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d8": [
+                    49,
+                    50,
+                    49,
+                    51,
+                    50,
+                    50,
+                    49,
+                    49,
+                    48,
+                    49,
+                    51,
+                    50,
+                    50,
+                    49
+                  ],
+                  "d9": [
+                    50,
+                    51,
+                    50,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    52,
+                    51,
+                    51,
+                    50,
+                    51
+                  ],
+                  "d10": [
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -2,
+                    -2,
+                    -1,
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1
+                  ],
+                  "family": [
+                    -2,
+                    -1,
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1
+                  ],
+                  "private": [
+                    -1,
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    0
+                  ],
+                  "crisis": [
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    0,
+                    -1
+                  ]
+                },
+                "conflict_resolution": [
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  50,
+                  50,
+                  49,
+                  50,
+                  50,
+                  51,
+                  51,
+                  51,
+                  50,
+                  51,
+                  51,
+                  50,
+                  51,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  51,
+                  50,
+                  49,
+                  50,
+                  50,
+                  49,
+                  50,
+                  49,
+                  49,
+                  50,
+                  49,
+                  49,
+                  49
+                ]
+              },
+              "join_values": {
+                "domains": [
+                  47,
+                  50,
+                  50,
+                  51,
+                  52,
+                  54,
+                  52,
+                  51,
+                  48,
+                  48
+                ],
+                "items": {
+                  "d1": [
+                    49,
+                    49,
+                    49,
+                    48,
+                    49,
+                    49,
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50
+                  ],
+                  "d2": [
+                    49,
+                    48,
+                    48,
+                    49,
+                    49,
+                    50,
+                    50,
+                    49,
+                    49,
+                    48,
+                    48,
+                    49,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d3": [
+                    50,
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51
+                  ],
+                  "d4": [
+                    49,
+                    49,
+                    48,
+                    49,
+                    49,
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d5": [
+                    48,
+                    48,
+                    49,
+                    49,
+                    50,
+                    50,
+                    49,
+                    49,
+                    48,
+                    48,
+                    49,
+                    50,
+                    50,
+                    50,
+                    49
+                  ],
+                  "d6": [
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    51
+                  ],
+                  "d7": [
+                    49,
+                    48,
+                    49,
+                    49,
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d8": [
+                    48,
+                    49,
+                    49,
+                    50,
+                    50,
+                    49,
+                    49,
+                    48,
+                    48,
+                    49,
+                    50,
+                    50,
+                    50,
+                    49
+                  ],
+                  "d9": [
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    51
+                  ],
+                  "d10": [
+                    48,
+                    49,
+                    49,
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -2,
+                    -2,
+                    -1,
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1
+                  ],
+                  "family": [
+                    -2,
+                    -1,
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    0
+                  ],
+                  "private": [
+                    -1,
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    0,
+                    0
+                  ],
+                  "crisis": [
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "conflict_resolution": [
+                  50,
+                  49,
+                  50,
+                  49,
+                  49,
+                  50,
+                  49,
+                  49,
+                  49,
+                  49,
+                  50,
+                  51,
+                  50,
+                  50,
+                  51,
+                  50,
+                  49,
+                  50,
+                  50,
+                  49,
+                  50,
+                  50,
+                  49,
+                  50,
+                  50,
+                  49,
+                  50,
+                  49,
+                  49,
+                  50,
+                  49,
+                  49,
+                  49,
+                  49,
+                  48,
+                  49
+                ]
+              },
+              "create_tally": {
+                "scores": [
+                  14.281,
+                  38.327999999999996,
+                  39.075
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 99.99600000000002,
+                "voted": 91.68400000000003,
+                "share": 0.9168766750670028,
+                "result": "todo",
+                "counted": 91,
+                "excluded": 10,
+                "counted_hash": "f7ed8c61511ff8f7390617f01758bea1231f91c32f29dcd97e59c3417fa223db",
+                "excluded_hash": "952ccba7e19ea3fb3719ab208e0dd3e38c910bf92906523c47bd52eb87b7b4ca",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "join_tally": {
+                "scores": [
+                  14.277999999999999,
+                  38.223,
+                  40.217999999999996
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 101.01000000000005,
+                "voted": 92.71900000000004,
+                "share": 0.9179190179190179,
+                "result": "todo",
+                "counted": 92,
+                "excluded": 9,
+                "counted_hash": "942aa32a7288fbfd62a8b82400a4be4497f47f823afa97b3fd140d58beb337e9",
+                "excluded_hash": "807cde594401e45f2ef8f8520a4643f9d2818752dcbe24b9561b9ab2aef0a5c0",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "relationship_diagnostics": {
+                "ignored_untyped_links": 0
+              }
+            },
+            "counters": {
+              "version": "c3a-budget-2",
+              "io": "c3a-io-2",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 40833,
+              "nodes": 4465,
+              "bytes": {
+                "source": 1981910,
+                "artifact": 1614176,
+                "scratch": 12338826
+              },
+              "attempts": {
+                "source": 2,
+                "oracle": 2,
+                "candidate": 1
+              },
+              "deadline": 1795560937388,
+              "sequence": 160,
+              "metrics": {
+                "total": {
+                  "journal_writes": 1515,
+                  "quota_writes": 11,
+                  "sets": 4465,
+                  "wal_writes": 480,
+                  "data_writes": 253,
+                  "index_writes": 466,
+                  "batches": 160,
+                  "checkpoint_writes": 359,
+                  "gets": 9392,
+                  "index_reads": 9296,
+                  "data_reads": 9331
+                },
+                "phases": {
+                  "unit": {
+                    "journal_writes": 1,
+                    "quota_writes": 1
+                  },
+                  "source": {
+                    "journal_writes": 40,
+                    "sets": 202,
+                    "quota_writes": 4,
+                    "wal_writes": 18,
+                    "data_writes": 6,
+                    "index_writes": 44,
+                    "batches": 6,
+                    "checkpoint_writes": 2
+                  },
+                  "oracle": {
+                    "journal_writes": 51,
+                    "gets": 804,
+                    "index_reads": 804,
+                    "data_reads": 804,
+                    "sets": 402,
+                    "wal_writes": 24,
+                    "data_writes": 10,
+                    "index_writes": 10,
+                    "batches": 8,
+                    "checkpoint_writes": 2,
+                    "quota_writes": 1
+                  },
+                  "candidate": {
+                    "journal_writes": 1423,
+                    "quota_writes": 5,
+                    "data_reads": 8527,
+                    "gets": 8588,
+                    "index_reads": 8492,
+                    "sets": 3861,
+                    "wal_writes": 438,
+                    "data_writes": 237,
+                    "index_writes": 412,
+                    "batches": 146,
+                    "checkpoint_writes": 355
+                  }
+                },
+                "classes": {
+                  "source": {
+                    "sets": 202,
+                    "data_writes": 6,
+                    "index_writes": 44,
+                    "gets": 1106,
+                    "index_reads": 1106,
+                    "data_reads": 1106
+                  },
+                  "scratch": {
+                    "sets": 2479,
+                    "data_writes": 193,
+                    "index_writes": 368,
+                    "data_reads": 3302,
+                    "gets": 3363,
+                    "index_reads": 3267
+                  },
+                  "artifact": {
+                    "sets": 1784,
+                    "data_writes": 54,
+                    "index_writes": 54,
+                    "gets": 4923,
+                    "index_reads": 4923,
+                    "data_reads": 4923
+                  }
+                },
+                "pending_records_max": 64,
+                "pending_bytes_max": 625629,
+                "direct_bytes_max": 0
+              },
+              "mode": "oracle",
+              "independent_reserved": 3712,
+              "exhausted_replacements": [],
+              "replacement": null
+            },
+            "cpu_seconds": {
+              "user": 0.297,
+              "system": 0.078
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "candidate",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 91942912,
+          "seconds": 11.047000000020489,
+          "resources": {
+            "ram": 2575765504,
+            "a_disk": 309194915840,
+            "c_disk": 10297876480
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "candidate",
+            "result": {
+              "population_hash": "5b7ddcd8f75bdf6d6d14f8cd9d3663a55e4e6610b93159f461bc1cfaac39b71e",
+              "A": 67,
+              "B": 33,
+              "create_count": 100,
+              "join_count": 101,
+              "create_values": {
+                "domains": [
+                  47,
+                  47,
+                  48,
+                  50,
+                  51,
+                  50,
+                  54,
+                  52,
+                  52,
+                  51
+                ],
+                "items": {
+                  "d1": [
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50
+                  ],
+                  "d2": [
+                    50,
+                    49,
+                    49,
+                    50,
+                    49,
+                    51,
+                    50,
+                    50,
+                    49,
+                    49,
+                    48,
+                    49,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d3": [
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    52,
+                    51
+                  ],
+                  "d4": [
+                    50,
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d5": [
+                    49,
+                    49,
+                    50,
+                    49,
+                    51,
+                    50,
+                    50,
+                    49,
+                    49,
+                    48,
+                    49,
+                    51,
+                    50,
+                    50,
+                    49
+                  ],
+                  "d6": [
+                    50,
+                    50,
+                    51,
+                    50,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    52,
+                    51,
+                    51,
+                    50,
+                    51
+                  ],
+                  "d7": [
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d8": [
+                    49,
+                    50,
+                    49,
+                    51,
+                    50,
+                    50,
+                    49,
+                    49,
+                    48,
+                    49,
+                    51,
+                    50,
+                    50,
+                    49
+                  ],
+                  "d9": [
+                    50,
+                    51,
+                    50,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    52,
+                    51,
+                    51,
+                    50,
+                    51
+                  ],
+                  "d10": [
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -2,
+                    -2,
+                    -1,
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1
+                  ],
+                  "family": [
+                    -2,
+                    -1,
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1
+                  ],
+                  "private": [
+                    -1,
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    0
+                  ],
+                  "crisis": [
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    0,
+                    -1
+                  ]
+                },
+                "conflict_resolution": [
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  50,
+                  50,
+                  49,
+                  50,
+                  50,
+                  51,
+                  51,
+                  51,
+                  50,
+                  51,
+                  51,
+                  50,
+                  51,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  51,
+                  50,
+                  49,
+                  50,
+                  50,
+                  49,
+                  50,
+                  49,
+                  49,
+                  50,
+                  49,
+                  49,
+                  49
+                ]
+              },
+              "join_values": {
+                "domains": [
+                  47,
+                  50,
+                  50,
+                  51,
+                  52,
+                  54,
+                  52,
+                  51,
+                  48,
+                  48
+                ],
+                "items": {
+                  "d1": [
+                    49,
+                    49,
+                    49,
+                    48,
+                    49,
+                    49,
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50
+                  ],
+                  "d2": [
+                    49,
+                    48,
+                    48,
+                    49,
+                    49,
+                    50,
+                    50,
+                    49,
+                    49,
+                    48,
+                    48,
+                    49,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d3": [
+                    50,
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51
+                  ],
+                  "d4": [
+                    49,
+                    49,
+                    48,
+                    49,
+                    49,
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d5": [
+                    48,
+                    48,
+                    49,
+                    49,
+                    50,
+                    50,
+                    49,
+                    49,
+                    48,
+                    48,
+                    49,
+                    50,
+                    50,
+                    50,
+                    49
+                  ],
+                  "d6": [
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    51
+                  ],
+                  "d7": [
+                    49,
+                    48,
+                    49,
+                    49,
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d8": [
+                    48,
+                    49,
+                    49,
+                    50,
+                    50,
+                    49,
+                    49,
+                    48,
+                    48,
+                    49,
+                    50,
+                    50,
+                    50,
+                    49
+                  ],
+                  "d9": [
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    51
+                  ],
+                  "d10": [
+                    48,
+                    49,
+                    49,
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    -2,
+                    -2,
+                    -1,
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1
+                  ],
+                  "family": [
+                    -2,
+                    -1,
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    0
+                  ],
+                  "private": [
+                    -1,
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    0,
+                    0
+                  ],
+                  "crisis": [
+                    -2,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "conflict_resolution": [
+                  50,
+                  49,
+                  50,
+                  49,
+                  49,
+                  50,
+                  49,
+                  49,
+                  49,
+                  49,
+                  50,
+                  51,
+                  50,
+                  50,
+                  51,
+                  50,
+                  49,
+                  50,
+                  50,
+                  49,
+                  50,
+                  50,
+                  49,
+                  50,
+                  50,
+                  49,
+                  50,
+                  49,
+                  49,
+                  50,
+                  49,
+                  49,
+                  49,
+                  49,
+                  48,
+                  49
+                ]
+              },
+              "create_tally": {
+                "scores": [
+                  14.281,
+                  38.327999999999996,
+                  39.075
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 99.99600000000002,
+                "voted": 91.68400000000003,
+                "share": 0.9168766750670028,
+                "result": "todo",
+                "counted": 91,
+                "excluded": 10,
+                "counted_hash": "f7ed8c61511ff8f7390617f01758bea1231f91c32f29dcd97e59c3417fa223db",
+                "excluded_hash": "952ccba7e19ea3fb3719ab208e0dd3e38c910bf92906523c47bd52eb87b7b4ca",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "join_tally": {
+                "scores": [
+                  14.277999999999999,
+                  38.223,
+                  40.217999999999996
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 101.01000000000005,
+                "voted": 92.71900000000004,
+                "share": 0.9179190179190179,
+                "result": "todo",
+                "counted": 92,
+                "excluded": 9,
+                "counted_hash": "942aa32a7288fbfd62a8b82400a4be4497f47f823afa97b3fd140d58beb337e9",
+                "excluded_hash": "807cde594401e45f2ef8f8520a4643f9d2818752dcbe24b9561b9ab2aef0a5c0",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "relationship_diagnostics": {
+                "ignored_untyped_links": 0
+              },
+              "create_artifact": {
+                "version": "c3a-offline-1",
+                "records": 402,
+                "node_count": 889,
+                "root": {
+                  "n": 888,
+                  "h": "2d62695efc74a823708ecb277299aabd84907b378e619e7ecf1f46df00c5f794",
+                  "count": 402
+                },
+                "binding": {
+                  "source": "ecff057e2faaa703364e8f61d3cf93e69e54de4897d791996f273da37bab6579",
+                  "config": "9a9aa4856e21e96d5719985275ab44f38b982c5ff7408537f124c2b438f4fdc3",
+                  "name": "create",
+                  "count": 100,
+                  "source_count": 101
+                },
+                "digest": "7601a7ed2e4476e17818013e02a6b70278cefe921f4532798aa6c9430e0c2212"
+              },
+              "join_artifact": {
+                "version": "c3a-offline-1",
+                "records": 405,
+                "node_count": 895,
+                "root": {
+                  "n": 894,
+                  "h": "54b592287e2e401a355c98e400c1c01b146bfbd787fe473571d8ea8108418b2e",
+                  "count": 405
+                },
+                "binding": {
+                  "source": "ecff057e2faaa703364e8f61d3cf93e69e54de4897d791996f273da37bab6579",
+                  "config": "9a9aa4856e21e96d5719985275ab44f38b982c5ff7408537f124c2b438f4fdc3",
+                  "name": "join",
+                  "count": 101,
+                  "source_count": 101
+                },
+                "digest": "57fbd858c05f694491629c865c71e16f5ace9c7178d9a18973ac22dcce054e93"
+              },
+              "comparison": {
+                "status": "exact_node_parity",
+                "compared_rows": 201
+              },
+              "wire": {
+                "create": {
+                  "max_commit_bytes": 16202,
+                  "max_document_bytes": 4296,
+                  "commits": 66,
+                  "total_bytes": 697694,
+                  "transaction_token_bytes": 128,
+                  "server_acceptance": false,
+                  "db_instances": 0
+                },
+                "join": {
+                  "max_commit_bytes": 16280,
+                  "max_document_bytes": 4296,
+                  "commits": 66,
+                  "total_bytes": 709716,
+                  "transaction_token_bytes": 128,
+                  "server_acceptance": false,
+                  "db_instances": 0
+                }
+              }
+            },
+            "counters": {
+              "version": "c3a-budget-2",
+              "io": "c3a-io-2",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 73857,
+              "nodes": 8326,
+              "bytes": {
+                "source": 1981910,
+                "artifact": 3228352,
+                "scratch": 20853962
+              },
+              "attempts": {
+                "source": 2,
+                "oracle": 2,
+                "candidate": 2
+              },
+              "deadline": 1795560937388,
+              "sequence": 306,
+              "metrics": {
+                "total": {
+                  "journal_writes": 2940,
+                  "quota_writes": 16,
+                  "sets": 8326,
+                  "wal_writes": 918,
+                  "data_writes": 490,
+                  "index_writes": 878,
+                  "batches": 306,
+                  "checkpoint_writes": 714,
+                  "gets": 17980,
+                  "index_reads": 17788,
+                  "data_reads": 17858
+                },
+                "phases": {
+                  "unit": {
+                    "journal_writes": 1,
+                    "quota_writes": 1
+                  },
+                  "source": {
+                    "journal_writes": 40,
+                    "sets": 202,
+                    "quota_writes": 4,
+                    "wal_writes": 18,
+                    "data_writes": 6,
+                    "index_writes": 44,
+                    "batches": 6,
+                    "checkpoint_writes": 2
+                  },
+                  "oracle": {
+                    "journal_writes": 52,
+                    "gets": 804,
+                    "index_reads": 804,
+                    "data_reads": 804,
+                    "sets": 402,
+                    "wal_writes": 24,
+                    "data_writes": 10,
+                    "index_writes": 10,
+                    "batches": 8,
+                    "checkpoint_writes": 2,
+                    "quota_writes": 1
+                  },
+                  "candidate": {
+                    "journal_writes": 2847,
+                    "quota_writes": 10,
+                    "data_reads": 17054,
+                    "gets": 17176,
+                    "index_reads": 16984,
+                    "sets": 7722,
+                    "wal_writes": 876,
+                    "data_writes": 474,
+                    "index_writes": 824,
+                    "batches": 292,
+                    "checkpoint_writes": 710
+                  }
+                },
+                "classes": {
+                  "source": {
+                    "sets": 202,
+                    "data_writes": 6,
+                    "index_writes": 44,
+                    "gets": 1408,
+                    "index_reads": 1408,
+                    "data_reads": 1408
+                  },
+                  "scratch": {
+                    "sets": 4556,
+                    "data_writes": 376,
+                    "index_writes": 726,
+                    "data_reads": 6604,
+                    "gets": 6726,
+                    "index_reads": 6534
+                  },
+                  "artifact": {
+                    "sets": 3568,
+                    "data_writes": 108,
+                    "index_writes": 108,
+                    "gets": 9846,
+                    "index_reads": 9846,
+                    "data_reads": 9846
+                  }
+                },
+                "pending_records_max": 64,
+                "pending_bytes_max": 625629,
+                "direct_bytes_max": 0
+              },
+              "mode": "candidate",
+              "independent_reserved": 3712,
+              "exhausted_replacements": [],
+              "replacement": null
+            },
+            "cpu_seconds": {
+              "user": 2.657,
+              "system": 4.219
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "independent",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 35168256,
+          "seconds": 1.4530000000959262,
+          "resources": {
+            "ram": 2602127360,
+            "a_disk": 309182857216,
+            "c_disk": 10297872384
+          },
+          "audit": {
+            "complete": true,
+            "audit_read_units": 1543,
+            "audit_read_budget": 3712,
+            "profiles_evaluated": 100,
+            "members": 100,
+            "join_members": 101,
+            "policy_acceptance": false,
+            "database_reads": 0,
+            "writes": 0,
+            "requests": 0
+          }
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "boundary-301",
+        "n": 301,
+        "refs": 3,
+        "aspects": 3
+      },
+      "id": "boundary-301",
+      "fault_hook": null,
+      "fault_verified": null,
+      "status": "completed",
+      "seconds": 37.84400000004098,
+      "files_bytes": 14448100,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 75497472,
+          "seconds": 2.484000000054948,
+          "resources": {
+            "ram": 2598445056,
+            "a_disk": 309182332928,
+            "c_disk": 10297806848
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "source",
+            "result": {
+              "version": "c3a-synthetic-source-1",
+              "config": {
+                "id": "boundary-301",
+                "n": 301,
+                "refs": 3,
+                "aspects": 3
+              },
+              "source_hash": "e7d40e0ec2996f8cbd0717877dac96f87d2d6d6d35a0034e9e05d9a0653debe8",
+              "population_hash": "3af0df439c6a054ae8ac07d2e50425b7a768a1b833b44c2aaff485303225fb1a",
+              "count": 301,
+              "with_join": 302,
+              "bundle_hash": "2d0d0bb932b7c43ae1181d1f8a04d67371add81d26112dd6095bac957a460549",
+              "scoring_day": "2026-11-24"
+            },
+            "counters": {
+              "version": "c3a-budget-2",
+              "io": "c3a-io-2",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 44289,
+              "nodes": 5374,
+              "bytes": {
+                "source": 5924728,
+                "artifact": 1173612,
+                "scratch": 25247342
+              },
+              "attempts": {
+                "source": 2,
+                "oracle": 1,
+                "candidate": 1
+              },
+              "deadline": 1795560953682,
+              "sequence": 309,
+              "metrics": {
+                "total": {
+                  "journal_writes": 3352,
+                  "quota_writes": 17,
+                  "sets": 5374,
+                  "wal_writes": 927,
+                  "data_writes": 464,
+                  "index_writes": 1100,
+                  "batches": 309,
+                  "checkpoint_writes": 964,
+                  "gets": 8231,
+                  "index_reads": 8227,
+                  "data_reads": 8327
+                },
+                "phases": {
+                  "unit": {
+                    "journal_writes": 1,
+                    "quota_writes": 1
+                  },
+                  "source": {
+                    "journal_writes": 85,
+                    "sets": 604,
+                    "quota_writes": 7,
+                    "wal_writes": 42,
+                    "data_writes": 14,
+                    "index_writes": 128,
+                    "batches": 14,
+                    "checkpoint_writes": 2
+                  },
+                  "oracle": {
+                    "journal_writes": 62,
+                    "quota_writes": 2,
+                    "gets": 1206,
+                    "index_reads": 1206,
+                    "data_reads": 1206,
+                    "sets": 603,
+                    "wal_writes": 30,
+                    "data_writes": 11,
+                    "index_writes": 11,
+                    "batches": 10,
+                    "checkpoint_writes": 1
+                  },
+                  "candidate": {
+                    "journal_writes": 3204,
+                    "quota_writes": 7,
+                    "data_reads": 7121,
+                    "gets": 7025,
+                    "index_reads": 7021,
+                    "sets": 4167,
+                    "wal_writes": 855,
+                    "data_writes": 439,
+                    "index_writes": 961,
+                    "batches": 285,
+                    "checkpoint_writes": 961
+                  }
+                },
+                "classes": {
+                  "source": {
+                    "sets": 604,
+                    "data_writes": 14,
+                    "index_writes": 128,
+                    "gets": 2111,
+                    "index_reads": 2111,
+                    "data_reads": 2111
+                  },
+                  "scratch": {
+                    "sets": 3709,
+                    "data_writes": 419,
+                    "index_writes": 941,
+                    "data_reads": 6216,
+                    "gets": 6120,
+                    "index_reads": 6116
+                  },
+                  "artifact": {
+                    "sets": 1061,
+                    "data_writes": 31,
+                    "index_writes": 31
+                  }
+                },
+                "pending_records_max": 64,
+                "pending_bytes_max": 626618,
+                "direct_bytes_max": 0
+              },
+              "mode": "source",
+              "exhausted_replacements": [],
+              "replacement": null
+            },
+            "cpu_seconds": {
+              "user": 0.469,
+              "system": 0.265
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 98205696,
+          "seconds": 2.484000000054948,
+          "resources": {
+            "ram": 2561015808,
+            "a_disk": 309177090048,
+            "c_disk": 10302001152
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "oracle",
+            "result": {
+              "population_hash": "3af0df439c6a054ae8ac07d2e50425b7a768a1b833b44c2aaff485303225fb1a",
+              "A": 201,
+              "B": 100,
+              "create_count": 301,
+              "join_count": 302,
+              "create_values": {
+                "domains": [
+                  50,
+                  49,
+                  49,
+                  50,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51
+                  ],
+                  "d2": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51
+                  ],
+                  "d3": [
+                    50,
+                    50,
+                    49,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50
+                  ],
+                  "d4": [
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d5": [
+                    50,
+                    50,
+                    50,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50
+                  ],
+                  "d6": [
+                    50,
+                    49,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d7": [
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d8": [
+                    50,
+                    50,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50
+                  ],
+                  "d9": [
+                    49,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d10": [
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "family": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "private": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "crisis": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "conflict_resolution": [
+                  50,
+                  50,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  51,
+                  51,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ]
+              },
+              "join_values": {
+                "domains": [
+                  49,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    50,
+                    49,
+                    49,
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51
+                  ],
+                  "d2": [
+                    50,
+                    50,
+                    49,
+                    49,
+                    49,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    51
+                  ],
+                  "d3": [
+                    50,
+                    50,
+                    49,
+                    49,
+                    49,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50
+                  ],
+                  "d4": [
+                    49,
+                    49,
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d5": [
+                    50,
+                    49,
+                    49,
+                    49,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    51,
+                    50
+                  ],
+                  "d6": [
+                    50,
+                    49,
+                    49,
+                    49,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d7": [
+                    49,
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d8": [
+                    49,
+                    49,
+                    49,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    51,
+                    50
+                  ],
+                  "d9": [
+                    49,
+                    49,
+                    49,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d10": [
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "family": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "private": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "crisis": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "conflict_resolution": [
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ]
+              },
+              "create_tally": {
+                "scores": [
+                  43.13200000000001,
+                  114.72200000000001,
+                  118.13599999999994
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 300.9800000000001,
+                "voted": 275.99,
+                "share": 0.9169712273240745,
+                "result": "todo",
+                "counted": 274,
+                "excluded": 28,
+                "counted_hash": "d6afc6d0010485d0bd8786c8b5bbf05afafdbcbd92908655058264fdf482920a",
+                "excluded_hash": "56f32ff9d1046f4ba44a53fc954860649da0c63d02ff8530a68c044fc21942d4",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "join_tally": {
+                "scores": [
+                  43.085,
+                  114.598,
+                  119.35400000000004
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 302.007,
+                "voted": 277.03700000000015,
+                "share": 0.9173197972232436,
+                "result": "todo",
+                "counted": 275,
+                "excluded": 27,
+                "counted_hash": "3243a276b0dfb59c040f1811ed430675c1dadf7711dd971978e9ace9bb10951b",
+                "excluded_hash": "581d8f0fd932835756844a7590a2c025800870c50194af37cbb01fe3ae5e73ce",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "relationship_diagnostics": {
+                "ignored_untyped_links": 0
+              }
+            },
+            "counters": {
+              "version": "c3a-budget-2",
+              "io": "c3a-io-2",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 48897,
+              "nodes": 5977,
+              "bytes": {
+                "source": 5924728,
+                "artifact": 1173612,
+                "scratch": 28351364
+              },
+              "attempts": {
+                "source": 2,
+                "oracle": 2,
+                "candidate": 1
+              },
+              "deadline": 1795560953682,
+              "sequence": 319,
+              "metrics": {
+                "total": {
+                  "journal_writes": 3414,
+                  "quota_writes": 19,
+                  "sets": 5977,
+                  "wal_writes": 957,
+                  "data_writes": 475,
+                  "index_writes": 1111,
+                  "batches": 319,
+                  "checkpoint_writes": 965,
+                  "gets": 9437,
+                  "index_reads": 9433,
+                  "data_reads": 9533
+                },
+                "phases": {
+                  "unit": {
+                    "journal_writes": 1,
+                    "quota_writes": 1
+                  },
+                  "source": {
+                    "journal_writes": 86,
+                    "sets": 604,
+                    "quota_writes": 7,
+                    "wal_writes": 42,
+                    "data_writes": 14,
+                    "index_writes": 128,
+                    "batches": 14,
+                    "checkpoint_writes": 2
+                  },
+                  "oracle": {
+                    "journal_writes": 123,
+                    "quota_writes": 4,
+                    "gets": 2412,
+                    "index_reads": 2412,
+                    "data_reads": 2412,
+                    "sets": 1206,
+                    "wal_writes": 60,
+                    "data_writes": 22,
+                    "index_writes": 22,
+                    "batches": 20,
+                    "checkpoint_writes": 2
+                  },
+                  "candidate": {
+                    "journal_writes": 3204,
+                    "quota_writes": 7,
+                    "data_reads": 7121,
+                    "gets": 7025,
+                    "index_reads": 7021,
+                    "sets": 4167,
+                    "wal_writes": 855,
+                    "data_writes": 439,
+                    "index_writes": 961,
+                    "batches": 285,
+                    "checkpoint_writes": 961
+                  }
+                },
+                "classes": {
+                  "source": {
+                    "sets": 604,
+                    "data_writes": 14,
+                    "index_writes": 128,
+                    "gets": 3317,
+                    "index_reads": 3317,
+                    "data_reads": 3317
+                  },
+                  "scratch": {
+                    "sets": 4312,
+                    "data_writes": 430,
+                    "index_writes": 952,
+                    "data_reads": 6216,
+                    "gets": 6120,
+                    "index_reads": 6116
+                  },
+                  "artifact": {
+                    "sets": 1061,
+                    "data_writes": 31,
+                    "index_writes": 31
+                  }
+                },
+                "pending_records_max": 64,
+                "pending_bytes_max": 626618,
+                "direct_bytes_max": 0
+              },
+              "mode": "oracle",
+              "exhausted_replacements": [],
+              "replacement": null
+            },
+            "cpu_seconds": {
+              "user": 0.734,
+              "system": 0.375
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "candidate",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 109608960,
+          "seconds": 29.95299999997951,
+          "resources": {
+            "ram": 2578395136,
+            "a_disk": 309174468608,
+            "c_disk": 10302001152
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "candidate",
+            "result": {
+              "population_hash": "3af0df439c6a054ae8ac07d2e50425b7a768a1b833b44c2aaff485303225fb1a",
+              "A": 201,
+              "B": 100,
+              "create_count": 301,
+              "join_count": 302,
+              "create_values": {
+                "domains": [
+                  50,
+                  49,
+                  49,
+                  50,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    50,
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51
+                  ],
+                  "d2": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51
+                  ],
+                  "d3": [
+                    50,
+                    50,
+                    49,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50
+                  ],
+                  "d4": [
+                    50,
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d5": [
+                    50,
+                    50,
+                    50,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50
+                  ],
+                  "d6": [
+                    50,
+                    49,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d7": [
+                    50,
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d8": [
+                    50,
+                    50,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50
+                  ],
+                  "d9": [
+                    49,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d10": [
+                    49,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "family": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "private": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "crisis": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "conflict_resolution": [
+                  50,
+                  50,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  51,
+                  51,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ]
+              },
+              "join_values": {
+                "domains": [
+                  49,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    50,
+                    49,
+                    49,
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51
+                  ],
+                  "d2": [
+                    50,
+                    50,
+                    49,
+                    49,
+                    49,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    51
+                  ],
+                  "d3": [
+                    50,
+                    50,
+                    49,
+                    49,
+                    49,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50
+                  ],
+                  "d4": [
+                    49,
+                    49,
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d5": [
+                    50,
+                    49,
+                    49,
+                    49,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    51,
+                    50
+                  ],
+                  "d6": [
+                    50,
+                    49,
+                    49,
+                    49,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d7": [
+                    49,
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50
+                  ],
+                  "d8": [
+                    49,
+                    49,
+                    49,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    51,
+                    50
+                  ],
+                  "d9": [
+                    49,
+                    49,
+                    49,
+                    51,
+                    51,
+                    50,
+                    50,
+                    49,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d10": [
+                    49,
+                    49,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    49,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "family": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "private": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "crisis": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "conflict_resolution": [
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ]
+              },
+              "create_tally": {
+                "scores": [
+                  43.13200000000001,
+                  114.72200000000001,
+                  118.13599999999994
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 300.9800000000001,
+                "voted": 275.99,
+                "share": 0.9169712273240745,
+                "result": "todo",
+                "counted": 274,
+                "excluded": 28,
+                "counted_hash": "d6afc6d0010485d0bd8786c8b5bbf05afafdbcbd92908655058264fdf482920a",
+                "excluded_hash": "56f32ff9d1046f4ba44a53fc954860649da0c63d02ff8530a68c044fc21942d4",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "join_tally": {
+                "scores": [
+                  43.085,
+                  114.598,
+                  119.35400000000004
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 302.007,
+                "voted": 277.03700000000015,
+                "share": 0.9173197972232436,
+                "result": "todo",
+                "counted": 275,
+                "excluded": 27,
+                "counted_hash": "3243a276b0dfb59c040f1811ed430675c1dadf7711dd971978e9ace9bb10951b",
+                "excluded_hash": "581d8f0fd932835756844a7590a2c025800870c50194af37cbb01fe3ae5e73ce",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "relationship_diagnostics": {
+                "ignored_untyped_links": 0
+              },
+              "create_artifact": {
+                "version": "c3a-offline-1",
+                "records": 1206,
+                "node_count": 2612,
+                "root": {
+                  "n": 2611,
+                  "h": "6d7ec33cfe91fec8bd2f2dc37a129d82c9821aa74f7a6bb51f4187791a22844a",
+                  "count": 1206
+                },
+                "binding": {
+                  "source": "e7d40e0ec2996f8cbd0717877dac96f87d2d6d6d35a0034e9e05d9a0653debe8",
+                  "config": "038cba9efa50f07ae2b2d7ff6217617cdabd76524ff26ff1c072d7f771d64ddf",
+                  "name": "create",
+                  "count": 301,
+                  "source_count": 302
+                },
+                "digest": "cca8f874b96c4f02a703f7cf19101cef12a61b8a810b079b396cec9a0cd23efb"
+              },
+              "join_artifact": {
+                "version": "c3a-offline-1",
+                "records": 1209,
+                "node_count": 2619,
+                "root": {
+                  "n": 2618,
+                  "h": "0a3ef6eb2c0479b08921f88f0c94649d0342f7abd3f7f2ee4a51423fe1f16c09",
+                  "count": 1209
+                },
+                "binding": {
+                  "source": "e7d40e0ec2996f8cbd0717877dac96f87d2d6d6d35a0034e9e05d9a0653debe8",
+                  "config": "038cba9efa50f07ae2b2d7ff6217617cdabd76524ff26ff1c072d7f771d64ddf",
+                  "name": "join",
+                  "count": 302,
+                  "source_count": 302
+                },
+                "digest": "07223fa8ab769c00ca1f69e38d02b89e9df727ba28f0612db792d41e7d512fd8"
+              },
+              "comparison": {
+                "status": "exact_node_parity",
+                "compared_rows": 603
+              },
+              "wire": {
+                "create": {
+                  "max_commit_bytes": 16269,
+                  "max_document_bytes": 4297,
+                  "commits": 180,
+                  "total_bytes": 1891815,
+                  "transaction_token_bytes": 128,
+                  "server_acceptance": false,
+                  "db_instances": 0
+                },
+                "join": {
+                  "max_commit_bytes": 16341,
+                  "max_document_bytes": 4297,
+                  "commits": 181,
+                  "total_bytes": 1918986,
+                  "transaction_token_bytes": 128,
+                  "server_acceptance": false,
+                  "db_instances": 0
+                }
+              }
+            },
+            "counters": {
+              "version": "c3a-budget-2",
+              "io": "c3a-io-2",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 146433,
+              "nodes": 17439,
+              "bytes": {
+                "source": 5924728,
+                "artifact": 5596903,
+                "scratch": 52860913
+              },
+              "attempts": {
+                "source": 2,
+                "oracle": 2,
+                "candidate": 2
+              },
+              "deadline": 1795560953682,
+              "sequence": 741,
+              "metrics": {
+                "total": {
+                  "journal_writes": 7555,
+                  "quota_writes": 32,
+                  "sets": 17439,
+                  "wal_writes": 2223,
+                  "data_writes": 1166,
+                  "index_writes": 2324,
+                  "batches": 741,
+                  "checkpoint_writes": 2000,
+                  "gets": 34968,
+                  "index_reads": 34960,
+                  "data_reads": 35162
+                },
+                "phases": {
+                  "unit": {
+                    "journal_writes": 1,
+                    "quota_writes": 1
+                  },
+                  "source": {
+                    "journal_writes": 86,
+                    "sets": 604,
+                    "quota_writes": 7,
+                    "wal_writes": 42,
+                    "data_writes": 14,
+                    "index_writes": 128,
+                    "batches": 14,
+                    "checkpoint_writes": 2
+                  },
+                  "oracle": {
+                    "journal_writes": 124,
+                    "quota_writes": 4,
+                    "gets": 2412,
+                    "index_reads": 2412,
+                    "data_reads": 2412,
+                    "sets": 1206,
+                    "wal_writes": 60,
+                    "data_writes": 22,
+                    "index_writes": 22,
+                    "batches": 20,
+                    "checkpoint_writes": 2
+                  },
+                  "candidate": {
+                    "journal_writes": 7344,
+                    "quota_writes": 20,
+                    "data_reads": 32750,
+                    "gets": 32556,
+                    "index_reads": 32548,
+                    "sets": 15629,
+                    "wal_writes": 2121,
+                    "data_writes": 1130,
+                    "index_writes": 2174,
+                    "batches": 707,
+                    "checkpoint_writes": 1996
+                  }
+                },
+                "classes": {
+                  "source": {
+                    "sets": 604,
+                    "data_writes": 14,
+                    "index_writes": 128,
+                    "gets": 4222,
+                    "index_reads": 4222,
+                    "data_reads": 4222
+                  },
+                  "scratch": {
+                    "sets": 10543,
+                    "data_writes": 973,
+                    "index_writes": 2017,
+                    "data_reads": 16412,
+                    "gets": 16218,
+                    "index_reads": 16210
+                  },
+                  "artifact": {
+                    "sets": 6292,
+                    "data_writes": 179,
+                    "index_writes": 179,
+                    "gets": 14528,
+                    "index_reads": 14528,
+                    "data_reads": 14528
+                  }
+                },
+                "pending_records_max": 64,
+                "pending_bytes_max": 626618,
+                "direct_bytes_max": 0
+              },
+              "mode": "candidate",
+              "exhausted_replacements": [],
+              "replacement": null
+            },
+            "cpu_seconds": {
+              "user": 6.156,
+              "system": 12.547
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "independent",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 35815424,
+          "seconds": 2.797000000020489,
+          "resources": {
+            "ram": 2670067712,
+            "a_disk": 309156118528,
+            "c_disk": 10306109440
+          },
+          "audit": {
+            "complete": true,
+            "audit_read_units": 4625,
+            "audit_read_budget": 10144,
+            "profiles_evaluated": 301,
+            "members": 301,
+            "join_members": 302,
+            "policy_acceptance": false,
+            "database_reads": 0,
+            "writes": 0,
+            "requests": 0
+          }
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "score-1000-3",
+        "n": 1000,
+        "refs": 3,
+        "aspects": 3
+      },
+      "id": "score-1000-3",
+      "fault_hook": null,
+      "fault_verified": null,
+      "status": "refused_or_unproven",
+      "seconds": 120.01599999994505,
+      "files_bytes": 46235564,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 98164736,
+          "seconds": 4.329000000027008,
+          "resources": {
+            "ram": 2677047296,
+            "a_disk": 309155594240,
+            "c_disk": 10306109440
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "source",
+            "result": {
+              "version": "c3a-synthetic-source-1",
+              "config": {
+                "id": "score-1000-3",
+                "n": 1000,
+                "refs": 3,
+                "aspects": 3
+              },
+              "source_hash": "1c4e377a768ca47d9c3ff38105c9db890e4714649ed9cd3062d2716983a29e53",
+              "population_hash": "b96a83499c6d52d0f2f18ef5567349d5b827e67aa9d78f40c6d178d21743d094",
+              "count": 1000,
+              "with_join": 1001,
+              "bundle_hash": "2d0d0bb932b7c43ae1181d1f8a04d67371add81d26112dd6095bac957a460549",
+              "scoring_day": "2026-11-24"
+            },
+            "counters": {
+              "version": "c3a-budget-2",
+              "io": "c3a-io-2",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 48897,
+              "nodes": 5815,
+              "bytes": {
+                "source": 19632702,
+                "artifact": 0,
+                "scratch": 44320045
+              },
+              "attempts": {
+                "source": 2,
+                "oracle": 1,
+                "candidate": 1
+              },
+              "deadline": 1795560991562,
+              "sequence": 433,
+              "metrics": {
+                "total": {
+                  "journal_writes": 4894,
+                  "quota_writes": 31,
+                  "sets": 5815,
+                  "wal_writes": 1299,
+                  "data_writes": 596,
+                  "index_writes": 1479,
+                  "batches": 432,
+                  "checkpoint_writes": 1469,
+                  "gets": 7752,
+                  "index_reads": 7752,
+                  "data_reads": 7912
+                },
+                "phases": {
+                  "unit": {
+                    "journal_writes": 1,
+                    "quota_writes": 1
+                  },
+                  "source": {
+                    "journal_writes": 277,
+                    "sets": 2002,
+                    "quota_writes": 21,
+                    "wal_writes": 150,
+                    "data_writes": 50,
+                    "index_writes": 422,
+                    "batches": 50,
+                    "checkpoint_writes": 2
+                  },
+                  "oracle": {
+                    "journal_writes": 190,
+                    "quota_writes": 5,
+                    "gets": 4002,
+                    "index_reads": 4002,
+                    "data_reads": 4002,
+                    "sets": 2001,
+                    "wal_writes": 96,
+                    "data_writes": 33,
+                    "index_writes": 33,
+                    "batches": 32,
+                    "checkpoint_writes": 1
+                  },
+                  "candidate": {
+                    "journal_writes": 4426,
+                    "quota_writes": 4,
+                    "data_reads": 3910,
+                    "gets": 3750,
+                    "index_reads": 3750,
+                    "sets": 1812,
+                    "wal_writes": 1053,
+                    "data_writes": 513,
+                    "index_writes": 1024,
+                    "batches": 350,
+                    "checkpoint_writes": 1466
+                  }
+                },
+                "classes": {
+                  "source": {
+                    "sets": 2002,
+                    "data_writes": 50,
+                    "index_writes": 422,
+                    "gets": 5002,
+                    "index_reads": 5002,
+                    "data_reads": 5002
+                  },
+                  "scratch": {
+                    "sets": 3813,
+                    "data_writes": 546,
+                    "index_writes": 1057,
+                    "data_reads": 2910,
+                    "gets": 2750,
+                    "index_reads": 2750
+                  }
+                },
+                "pending_records_max": 64,
+                "pending_bytes_max": 630549,
+                "direct_bytes_max": 0
+              },
+              "mode": "source",
+              "exhausted_replacements": [],
+              "replacement": null
+            },
+            "cpu_seconds": {
+              "user": 1.578,
+              "system": 0.671
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 113852416,
+          "seconds": 5.594000000040978,
+          "resources": {
+            "ram": 2689257472,
+            "a_disk": 309143535616,
+            "c_disk": 10306109440
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "oracle",
+            "result": {
+              "population_hash": "b96a83499c6d52d0f2f18ef5567349d5b827e67aa9d78f40c6d178d21743d094",
+              "A": 667,
+              "B": 333,
+              "create_count": 1000,
+              "join_count": 1001,
+              "create_values": {
+                "domains": [
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    49,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51
+                  ],
+                  "d2": [
+                    49,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d3": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50
+                  ],
+                  "d4": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d5": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d6": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d7": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d8": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d9": [
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d10": [
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "family": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "private": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "crisis": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "conflict_resolution": [
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ]
+              },
+              "join_values": {
+                "domains": [
+                  49,
+                  50,
+                  50,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  49,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    49,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51
+                  ],
+                  "d2": [
+                    49,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d3": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50
+                  ],
+                  "d4": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d5": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d6": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d7": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d8": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d9": [
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d10": [
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "family": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "private": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "crisis": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "conflict_resolution": [
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ]
+              },
+              "create_tally": {
+                "scores": [
+                  143.09199999999998,
+                  378.96599999999995,
+                  394.63
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 1000.000999999999,
+                "voted": 916.6879999999996,
+                "share": 0.9166870833129173,
+                "result": "todo",
+                "counted": 910,
+                "excluded": 91,
+                "counted_hash": "d4981a2d58fd17b52d75db715ee414afb08729c96a214efdc11b48575113ddad",
+                "excluded_hash": "018bd7ef3de2ba44ee4ba1f4ecbd80a2e94a16eceec8b507bdcfccac4367e7b4",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "join_tally": {
+                "scores": [
+                  143.1149999999999,
+                  378.91099999999983,
+                  394.46999999999986
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 1001.0119999999998,
+                "voted": 916.4960000000002,
+                "share": 0.9155694437229527,
+                "result": "todo",
+                "counted": 910,
+                "excluded": 91,
+                "counted_hash": "e7cd9373ed1d90f55c0237ec7c1d3cb933ba3b397240dd090dc5a3588555208c",
+                "excluded_hash": "018bd7ef3de2ba44ee4ba1f4ecbd80a2e94a16eceec8b507bdcfccac4367e7b4",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "relationship_diagnostics": {
+                "ignored_untyped_links": 0
+              }
+            },
+            "counters": {
+              "version": "c3a-budget-2",
+              "io": "c3a-io-2",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 63745,
+              "nodes": 7816,
+              "bytes": {
+                "source": 19632702,
+                "artifact": 0,
+                "scratch": 54557126
+              },
+              "attempts": {
+                "source": 2,
+                "oracle": 2,
+                "candidate": 1
+              },
+              "deadline": 1795560991562,
+              "sequence": 465,
+              "metrics": {
+                "total": {
+                  "journal_writes": 5084,
+                  "quota_writes": 36,
+                  "sets": 7816,
+                  "wal_writes": 1395,
+                  "data_writes": 629,
+                  "index_writes": 1512,
+                  "batches": 464,
+                  "checkpoint_writes": 1470,
+                  "gets": 11754,
+                  "index_reads": 11754,
+                  "data_reads": 11914
+                },
+                "phases": {
+                  "unit": {
+                    "journal_writes": 1,
+                    "quota_writes": 1
+                  },
+                  "source": {
+                    "journal_writes": 278,
+                    "sets": 2002,
+                    "quota_writes": 21,
+                    "wal_writes": 150,
+                    "data_writes": 50,
+                    "index_writes": 422,
+                    "batches": 50,
+                    "checkpoint_writes": 2
+                  },
+                  "oracle": {
+                    "journal_writes": 379,
+                    "quota_writes": 10,
+                    "gets": 8004,
+                    "index_reads": 8004,
+                    "data_reads": 8004,
+                    "sets": 4002,
+                    "wal_writes": 192,
+                    "data_writes": 66,
+                    "index_writes": 66,
+                    "batches": 64,
+                    "checkpoint_writes": 2
+                  },
+                  "candidate": {
+                    "journal_writes": 4426,
+                    "quota_writes": 4,
+                    "data_reads": 3910,
+                    "gets": 3750,
+                    "index_reads": 3750,
+                    "sets": 1812,
+                    "wal_writes": 1053,
+                    "data_writes": 513,
+                    "index_writes": 1024,
+                    "batches": 350,
+                    "checkpoint_writes": 1466
+                  }
+                },
+                "classes": {
+                  "source": {
+                    "sets": 2002,
+                    "data_writes": 50,
+                    "index_writes": 422,
+                    "gets": 9004,
+                    "index_reads": 9004,
+                    "data_reads": 9004
+                  },
+                  "scratch": {
+                    "sets": 5814,
+                    "data_writes": 579,
+                    "index_writes": 1090,
+                    "data_reads": 2910,
+                    "gets": 2750,
+                    "index_reads": 2750
+                  }
+                },
+                "pending_records_max": 64,
+                "pending_bytes_max": 630549,
+                "direct_bytes_max": 0
+              },
+              "mode": "oracle",
+              "exhausted_replacements": [],
+              "replacement": null
+            },
+            "cpu_seconds": {
+              "user": 2.547,
+              "system": 1.281
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "candidate",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 125116416,
+          "seconds": 102.68700000003446,
+          "resources": {
+            "ram": 2584305664,
+            "a_disk": 309137506304,
+            "c_disk": 10306076672
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "candidate",
+            "result": {
+              "population_hash": "b96a83499c6d52d0f2f18ef5567349d5b827e67aa9d78f40c6d178d21743d094",
+              "A": 667,
+              "B": 333,
+              "create_count": 1000,
+              "join_count": 1001,
+              "create_values": {
+                "domains": [
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    49,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51
+                  ],
+                  "d2": [
+                    49,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d3": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50
+                  ],
+                  "d4": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d5": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d6": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d7": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d8": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d9": [
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d10": [
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "family": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "private": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "crisis": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "conflict_resolution": [
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ]
+              },
+              "join_values": {
+                "domains": [
+                  49,
+                  50,
+                  50,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  49,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    49,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51
+                  ],
+                  "d2": [
+                    49,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d3": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50
+                  ],
+                  "d4": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d5": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d6": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d7": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d8": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d9": [
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d10": [
+                    50,
+                    50,
+                    50,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    51,
+                    51,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "family": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "private": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "crisis": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "conflict_resolution": [
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  51,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ]
+              },
+              "create_tally": {
+                "scores": [
+                  143.09199999999998,
+                  378.96599999999995,
+                  394.63
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 1000.000999999999,
+                "voted": 916.6879999999996,
+                "share": 0.9166870833129173,
+                "result": "todo",
+                "counted": 910,
+                "excluded": 91,
+                "counted_hash": "d4981a2d58fd17b52d75db715ee414afb08729c96a214efdc11b48575113ddad",
+                "excluded_hash": "018bd7ef3de2ba44ee4ba1f4ecbd80a2e94a16eceec8b507bdcfccac4367e7b4",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "join_tally": {
+                "scores": [
+                  143.1149999999999,
+                  378.91099999999983,
+                  394.46999999999986
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 1001.0119999999998,
+                "voted": 916.4960000000002,
+                "share": 0.9155694437229527,
+                "result": "todo",
+                "counted": 910,
+                "excluded": 91,
+                "counted_hash": "e7cd9373ed1d90f55c0237ec7c1d3cb933ba3b397240dd090dc5a3588555208c",
+                "excluded_hash": "018bd7ef3de2ba44ee4ba1f4ecbd80a2e94a16eceec8b507bdcfccac4367e7b4",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "relationship_diagnostics": {
+                "ignored_untyped_links": 0
+              },
+              "create_artifact": {
+                "version": "c3a-offline-1",
+                "records": 4002,
+                "node_count": 8603,
+                "root": {
+                  "n": 8602,
+                  "h": "de5e9695861d48619114d1bce9dd691748cf54b2fe6074085674dddd80824263",
+                  "count": 4002
+                },
+                "binding": {
+                  "source": "1c4e377a768ca47d9c3ff38105c9db890e4714649ed9cd3062d2716983a29e53",
+                  "config": "16b4c6a457619f04b7029b046a2d00872af31af143f9cab398b6329f1b9963c5",
+                  "name": "create",
+                  "count": 1000,
+                  "source_count": 1001
+                },
+                "digest": "28f7912453558d08c4d99f16a67c0eef6d0d771f141bb47af38eb3419c160b74"
+              },
+              "join_artifact": {
+                "version": "c3a-offline-1",
+                "records": 4005,
+                "node_count": 8609,
+                "root": {
+                  "n": 8608,
+                  "h": "90ac510afbf26bd268535c877a8cd3629ffa60c2e9ac34df7d26471d15f92f02",
+                  "count": 4005
+                },
+                "binding": {
+                  "source": "1c4e377a768ca47d9c3ff38105c9db890e4714649ed9cd3062d2716983a29e53",
+                  "config": "16b4c6a457619f04b7029b046a2d00872af31af143f9cab398b6329f1b9963c5",
+                  "name": "join",
+                  "count": 1001,
+                  "source_count": 1001
+                },
+                "digest": "0cb7b2f6c2b89d428f209f3716398b9e0ebca64a4dba3e22350aa6e1034195d0"
+              },
+              "comparison": {
+                "status": "exact_node_parity",
+                "compared_rows": 2001
+              },
+              "wire": {
+                "create": {
+                  "max_commit_bytes": 16306,
+                  "max_document_bytes": 4297,
+                  "commits": 580,
+                  "total_bytes": 6048253,
+                  "transaction_token_bytes": 128,
+                  "server_acceptance": false,
+                  "db_instances": 0
+                },
+                "join": {
+                  "max_commit_bytes": 16378,
+                  "max_document_bytes": 4297,
+                  "commits": 580,
+                  "total_bytes": 6125109,
+                  "transaction_token_bytes": 128,
+                  "server_acceptance": false,
+                  "db_instances": 0
+                }
+              }
+            },
+            "counters": {
+              "version": "c3a-budget-2",
+              "io": "c3a-io-2",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 397057,
+              "nodes": 47706,
+              "bytes": {
+                "source": 19632702,
+                "artifact": 14189543,
+                "scratch": 136304340
+              },
+              "attempts": {
+                "source": 2,
+                "oracle": 2,
+                "candidate": 2
+              },
+              "deadline": 1795560991562,
+              "sequence": 1860,
+              "metrics": {
+                "total": {
+                  "journal_writes": 18747,
+                  "quota_writes": 77,
+                  "sets": 47706,
+                  "wal_writes": 5580,
+                  "data_writes": 2903,
+                  "index_writes": 5527,
+                  "batches": 1859,
+                  "checkpoint_writes": 4859,
+                  "gets": 97291,
+                  "index_reads": 97196,
+                  "data_reads": 97691,
+                  "rename_retries": 1
+                },
+                "phases": {
+                  "unit": {
+                    "journal_writes": 1,
+                    "quota_writes": 1
+                  },
+                  "source": {
+                    "journal_writes": 278,
+                    "sets": 2002,
+                    "quota_writes": 21,
+                    "wal_writes": 150,
+                    "data_writes": 50,
+                    "index_writes": 422,
+                    "batches": 50,
+                    "checkpoint_writes": 2
+                  },
+                  "oracle": {
+                    "journal_writes": 380,
+                    "quota_writes": 10,
+                    "gets": 8004,
+                    "index_reads": 8004,
+                    "data_reads": 8004,
+                    "sets": 4002,
+                    "wal_writes": 192,
+                    "data_writes": 66,
+                    "index_writes": 66,
+                    "batches": 64,
+                    "checkpoint_writes": 2
+                  },
+                  "candidate": {
+                    "journal_writes": 18088,
+                    "quota_writes": 45,
+                    "data_reads": 89687,
+                    "gets": 89287,
+                    "index_reads": 89192,
+                    "sets": 41702,
+                    "wal_writes": 5238,
+                    "data_writes": 2787,
+                    "index_writes": 5039,
+                    "batches": 1745,
+                    "checkpoint_writes": 4855,
+                    "rename_retries": 1
+                  }
+                },
+                "classes": {
+                  "source": {
+                    "sets": 2002,
+                    "data_writes": 50,
+                    "index_writes": 422,
+                    "gets": 12006,
+                    "index_reads": 12006,
+                    "data_reads": 12006
+                  },
+                  "scratch": {
+                    "sets": 28492,
+                    "data_writes": 2382,
+                    "index_writes": 4634,
+                    "data_reads": 38725,
+                    "gets": 38325,
+                    "index_reads": 38230
+                  },
+                  "artifact": {
+                    "sets": 17212,
+                    "data_writes": 471,
+                    "index_writes": 471,
+                    "gets": 46960,
+                    "index_reads": 46960,
+                    "data_reads": 46960
+                  }
+                },
+                "pending_records_max": 64,
+                "pending_bytes_max": 630549,
+                "direct_bytes_max": 0
+              },
+              "mode": "candidate",
+              "exhausted_replacements": [],
+              "replacement": null
+            },
+            "cpu_seconds": {
+              "user": 18.531,
+              "system": 47.625
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "independent",
+          "status": "whole_fixture_timeout",
+          "exit_code": 1,
+          "peak_rss_bytes": 35770368,
+          "seconds": 7.265999999945052,
+          "resources": {
+            "ram": 2458501120,
+            "a_disk": 309098446848,
+            "c_disk": 10303410176
+          }
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "score-9150-3",
+        "n": 9150,
+        "refs": 3,
+        "aspects": 3
+      },
+      "id": "score-9150-3",
+      "fault_hook": null,
+      "fault_verified": null,
+      "status": "refused_or_unproven",
+      "seconds": 120.06200000003446,
+      "files_bytes": 155449594,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 109010944,
+          "seconds": 41.59399999992456,
+          "resources": {
+            "ram": 2396921856,
+            "a_disk": 309097922560,
+            "c_disk": 10303193088
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "source",
+            "result": {
+              "version": "c3a-synthetic-source-1",
+              "config": {
+                "id": "score-9150-3",
+                "n": 9150,
+                "refs": 3,
+                "aspects": 3
+              },
+              "source_hash": "6868317c4eab54583fdf8fdfcf3a40404db05cc71b2f67f7ab9751358f94b4df",
+              "population_hash": "a54c64c4495b57ae36adcd6298115a642edd708a4d480d5ad8d266be2581b617",
+              "count": 9150,
+              "with_join": 9151,
+              "bundle_hash": "2d0d0bb932b7c43ae1181d1f8a04d67371add81d26112dd6095bac957a460549",
+              "scoring_day": "2026-11-24"
+            },
+            "counters": {
+              "version": "c3a-budget-2",
+              "io": "c3a-io-2",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 116481,
+              "nodes": 18302,
+              "bytes": {
+                "source": 179602360,
+                "artifact": 0,
+                "scratch": 185198823
+              },
+              "attempts": {
+                "source": 2,
+                "oracle": 1
+              },
+              "deadline": 1795561111634,
+              "sequence": 464,
+              "metrics": {
+                "total": {
+                  "journal_writes": 2564,
+                  "quota_writes": 177,
+                  "sets": 18302,
+                  "wal_writes": 1392,
+                  "data_writes": 464,
+                  "index_writes": 3864,
+                  "batches": 464,
+                  "checkpoint_writes": 2,
+                  "gets": 14845,
+                  "index_reads": 14845,
+                  "data_reads": 14845
+                },
+                "phases": {
+                  "unit": {
+                    "journal_writes": 1,
+                    "quota_writes": 1
+                  },
+                  "source": {
+                    "journal_writes": 2503,
+                    "sets": 18302,
+                    "quota_writes": 175,
+                    "wal_writes": 1392,
+                    "data_writes": 464,
+                    "index_writes": 3864,
+                    "batches": 464,
+                    "checkpoint_writes": 2
+                  },
+                  "oracle": {
+                    "journal_writes": 60,
+                    "quota_writes": 1,
+                    "gets": 14845,
+                    "index_reads": 14845,
+                    "data_reads": 14845
+                  }
+                },
+                "classes": {
+                  "source": {
+                    "sets": 18302,
+                    "data_writes": 464,
+                    "index_writes": 3864,
+                    "gets": 14845,
+                    "index_reads": 14845,
+                    "data_reads": 14845
+                  }
+                },
+                "pending_records_max": 64,
+                "pending_bytes_max": 631382,
+                "direct_bytes_max": 0
+              },
+              "mode": "source",
+              "exhausted_replacements": [],
+              "replacement": null
+            },
+            "cpu_seconds": {
+              "user": 14.985,
+              "system": 6.078
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 191238144,
+          "seconds": 38.686999999918044,
+          "resources": {
+            "ram": 2693263360,
+            "a_disk": 309005910016,
+            "c_disk": 10303819776
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "oracle",
+            "result": {
+              "population_hash": "a54c64c4495b57ae36adcd6298115a642edd708a4d480d5ad8d266be2581b617",
+              "A": 6100,
+              "B": 3050,
+              "create_count": 9150,
+              "join_count": 9151,
+              "create_values": {
+                "domains": [
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d2": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d3": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d4": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d5": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d6": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d7": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d8": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d9": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d10": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "family": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "private": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "crisis": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "conflict_resolution": [
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ]
+              },
+              "join_values": {
+                "domains": [
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ],
+                "items": {
+                  "d1": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d2": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d3": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d4": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d5": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d6": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d7": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d8": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d9": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ],
+                  "d10": [
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50,
+                    50
+                  ]
+                },
+                "contextual_shifts": {
+                  "work": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "family": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "private": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "crisis": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "conflict_resolution": [
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50,
+                  50
+                ]
+              },
+              "create_tally": {
+                "scores": [
+                  1307.2299999999996,
+                  3461.1450000000045,
+                  3612.40799999997
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 9150.084999999835,
+                "voted": 8380.782999999781,
+                "share": 0.9159240597218421,
+                "result": "todo",
+                "counted": 8319,
+                "excluded": 832,
+                "counted_hash": "8a0c641c6a101aaa77e66a302ae5e08655ebad455d71068ead7f8224cf930ae1",
+                "excluded_hash": "3b5db1bd08edc9edee603a1dd19711e3afdf306ecae8c3a98806ff0d643fd1b2",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "join_tally": {
+                "scores": [
+                  1307.2299999999996,
+                  3462.250999999998,
+                  3611.992999999975
+                ],
+                "winner": 2,
+                "note": "",
+                "pool": 9150.775999999796,
+                "voted": 8381.473999999716,
+                "share": 0.9159304085249058,
+                "result": "todo",
+                "counted": 8320,
+                "excluded": 831,
+                "counted_hash": "07b89e09a152cbc21848ef5a8f8a2cf6169e7aa92452c76de45fe39a581601cd",
+                "excluded_hash": "22a10ea606f85730a0b3fafc13f712b251d4ba6823053a1e956daee640290991",
+                "tasks": [
+                  {
+                    "title": "Implement option 2",
+                    "responsible": "1"
+                  }
+                ]
+              },
+              "relationship_diagnostics": {
+                "ignored_untyped_links": 0
+              }
+            },
+            "counters": {
+              "version": "c3a-budget-2",
+              "io": "c3a-io-2",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 250625,
+              "nodes": 36603,
+              "bytes": {
+                "source": 179602360,
+                "artifact": 0,
+                "scratch": 278374167
+              },
+              "attempts": {
+                "source": 2,
+                "oracle": 2
+              },
+              "deadline": 1795561111634,
+              "sequence": 750,
+              "metrics": {
+                "total": {
+                  "journal_writes": 4236,
+                  "quota_writes": 223,
+                  "sets": 36603,
+                  "wal_writes": 2250,
+                  "data_writes": 751,
+                  "index_writes": 4151,
+                  "batches": 750,
+                  "checkpoint_writes": 3,
+                  "gets": 51447,
+                  "index_reads": 51447,
+                  "data_reads": 51447
+                },
+                "phases": {
+                  "unit": {
+                    "journal_writes": 1,
+                    "quota_writes": 1
+                  },
+                  "source": {
+                    "journal_writes": 2504,
+                    "sets": 18302,
+                    "quota_writes": 175,
+                    "wal_writes": 1392,
+                    "data_writes": 464,
+                    "index_writes": 3864,
+                    "batches": 464,
+                    "checkpoint_writes": 2
+                  },
+                  "oracle": {
+                    "journal_writes": 1731,
+                    "quota_writes": 47,
+                    "gets": 51447,
+                    "index_reads": 51447,
+                    "data_reads": 51447,
+                    "sets": 18301,
+                    "wal_writes": 858,
+                    "data_writes": 287,
+                    "index_writes": 287,
+                    "batches": 286,
+                    "checkpoint_writes": 1
+                  }
+                },
+                "classes": {
+                  "source": {
+                    "sets": 18302,
+                    "data_writes": 464,
+                    "index_writes": 3864,
+                    "gets": 51447,
+                    "index_reads": 51447,
+                    "data_reads": 51447
+                  },
+                  "scratch": {
+                    "sets": 18301,
+                    "data_writes": 287,
+                    "index_writes": 287
+                  }
+                },
+                "pending_records_max": 64,
+                "pending_bytes_max": 631382,
+                "direct_bytes_max": 0
+              },
+              "mode": "oracle",
+              "exhausted_replacements": [],
+              "replacement": null
+            },
+            "cpu_seconds": {
+              "user": 19.703,
+              "system": 8.485
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        },
+        {
+          "mode": "candidate",
+          "status": "whole_fixture_timeout",
+          "exit_code": 1,
+          "peak_rss_bytes": 102141952,
+          "seconds": 39.68700000003446,
+          "resources": {
+            "ram": 2787631104,
+            "a_disk": 308960821248,
+            "c_disk": 10303262720
+          }
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "structural-19-3",
+        "n": 9150,
+        "refs": 19,
+        "aspects": 3,
+        "structural": true
+      },
+      "id": "structural-19-3",
+      "fault_hook": null,
+      "fault_verified": null,
+      "status": "completed",
+      "seconds": 95.92200000002049,
+      "files_bytes": 112686592,
+      "stages": [
+        {
+          "mode": "structural",
+          "status": "completed",
+          "exit_code": 0,
+          "peak_rss_bytes": 124915712,
+          "seconds": 95.875,
+          "resources": {
+            "ram": 2738122752,
+            "a_disk": 308937490432,
+            "c_disk": 10300936192
+          },
+          "worker": {
+            "status": "completed",
+            "mode": "structural",
+            "result": {
+              "structural_only": true,
+              "scoring_acceptance": false,
+              "records": 9150,
+              "wire": {
+                "max_commit_bytes": 16287,
+                "max_document_bytes": 4298,
+                "commits": 6871,
+                "total_bytes": 106464494,
+                "transaction_token_bytes": 128,
+                "server_acceptance": false,
+                "db_instances": 0
+              },
+              "manifest_hash": "deffc48594c024cd1e34d838be17cb0c2dfd7273a64a2c61a3fa58930d79a7ec"
+            },
+            "counters": {
+              "version": "c3a-budget-2",
+              "io": "c3a-io-2",
+              "limits": {
+                "source": 268435456,
+                "artifact": 268435456,
+                "scratch": 536870912,
+                "decoded": 4194304,
+                "nodes": 200000,
+                "work": 1000000,
+                "attempts": 3
+              },
+              "work": 412416,
+              "nodes": 56209,
+              "bytes": {
+                "source": 0,
+                "artifact": 109944195,
+                "scratch": 137731090
+              },
+              "attempts": {
+                "structural": 1
+              },
+              "deadline": 1795561231721,
+              "sequence": 1145,
+              "metrics": {
+                "total": {
+                  "journal_writes": 8485,
+                  "quota_writes": 120,
+                  "sets": 56209,
+                  "wal_writes": 3435,
+                  "data_writes": 2290,
+                  "index_writes": 2290,
+                  "batches": 1145,
+                  "checkpoint_writes": 1146,
+                  "gets": 94460,
+                  "index_reads": 94460,
+                  "data_reads": 94460
+                },
+                "phases": {
+                  "unit": {
+                    "journal_writes": 1,
+                    "quota_writes": 1
+                  },
+                  "structural": {
+                    "journal_writes": 8484,
+                    "sets": 56209,
+                    "wal_writes": 3435,
+                    "data_writes": 2290,
+                    "index_writes": 2290,
+                    "batches": 1145,
+                    "checkpoint_writes": 1146,
+                    "quota_writes": 119,
+                    "gets": 94460,
+                    "index_reads": 94460,
+                    "data_reads": 94460
+                  }
+                },
+                "classes": {
+                  "artifact": {
+                    "sets": 47059,
+                    "data_writes": 1145,
+                    "index_writes": 1145,
+                    "gets": 94289,
+                    "index_reads": 94289,
+                    "data_reads": 94289
+                  },
+                  "scratch": {
+                    "sets": 9150,
+                    "data_writes": 1145,
+                    "index_writes": 1145,
+                    "gets": 171,
+                    "index_reads": 171,
+                    "data_reads": 171
+                  }
+                },
+                "pending_records_max": 52,
+                "pending_bytes_max": 102576,
+                "direct_bytes_max": 0
+              },
+              "exhausted_replacements": [],
+              "mode": "structural",
+              "replacement": null
+            },
+            "cpu_seconds": {
+              "user": 25.329,
+              "system": 38.907
+            },
+            "provider_calls": 0,
+            "database_rpcs": 0,
+            "credential_loader_invocations": 0
+          }
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "structural-100-3",
+        "n": 9150,
+        "refs": 100,
+        "aspects": 3,
+        "structural": true
+      },
+      "id": "structural-100-3",
+      "fault_hook": null,
+      "fault_verified": null,
+      "status": "refused_or_unproven",
+      "seconds": 120.06200000003446,
+      "files_bytes": 214478105,
+      "stages": [
+        {
+          "mode": "structural",
+          "status": "whole_fixture_timeout",
+          "exit_code": 1,
+          "peak_rss_bytes": 116011008,
+          "seconds": 120.03100000007544,
+          "resources": {
+            "ram": 2665349120,
+            "a_disk": 308822671360,
+            "c_disk": 10304393216
+          }
+        }
+      ]
+    }
+  ],
+  "artifacts": "scratch/c3a-runs/run-20261125-01",
+  "unit_pool_reserved_bytes": 41943040,
+  "regression_pool_bytes": 25165824,
+  "continuation": {
+    "version": "c3a-e1-completion-1",
+    "parent_report": "specs/tasks/M3-c3a-e1-evidence/run-20261124-02/report.json",
+    "parent_report_sha256": "a251582fd820675b94c866e092170f626ed22f7653df0e82647f8dd9731dc227",
+    "regression_ids": [],
+    "cases": [
+      "score-100-3",
+      "boundary-301",
+      "score-1000-3",
+      "score-9150-3",
+      "structural-19-3",
+      "structural-100-3"
+    ],
+    "seed_budgets": {
+      "score-100-3": {
+        "path": "scratch/c3a-runs/run-20261124-02/score-100-3/budget.json",
+        "sha256": "cb82f19e7b9218fdb1255ccbcd2eb806a8aa769d285ad63585d1b18d86a041f3"
+      },
+      "boundary-301": {
+        "path": "scratch/c3a-runs/run-20261124-02/boundary-301/budget.json",
+        "sha256": "6e551c35787cd2abcea2151e4713ef03521782586bf5970db021b08737ed3c55"
+      },
+      "score-1000-3": {
+        "path": "scratch/c3a-runs/run-20261124-02/score-1000-3/budget.json",
+        "sha256": "1dbd922afc1cfb6c008d9de898b42e2c438fce03f97f29dfdcb6f9c49ad7f899"
+      },
+      "score-9150-3": {
+        "path": "scratch/c3a-runs/run-20261124-02/score-9150-3/budget.json",
+        "sha256": "eee4b0afebbc16068873af36c453e7d7582fff4cc6e9cb1c43f198f7b7755762"
+      }
+    },
+    "revision_pins": {
+      "functions/experiments/c3a/disk.js": "f3dba4db3486a375339808b644c9a4e279f34dbb0ea65610c8847f2e09fef6f0",
+      "functions/experiments/c3a/worker.js": "4c4e341238c21d49f2bd99b9680aab5bc576c0b8d2fb6ba09f2f29f5ec7f5a96",
+      "functions/test/c3a-e1.test.js": "c2bb0a366de546d4d3e1145f617198d6225dc054b44264e1bb4cb2308c5791cb",
+      "scripts/run_c3a_offline.py": "abc50eb592bf6f31e03e534bb0a1333f8d24b9f661c2add87efadbda8531c00f",
+      "tests/test_c3a_supervisor.py": "31d2e93244bc073ec2c5546cad4c0adde304be56e695453034e07a401440adff"
+    },
+    "time_seconds_each": 120,
+    "carry_run_reserved": 233832448,
+    "carry_regression_reserved": 17825792,
+    "status": "proposed_not_executed"
+  },
+  "selected_matrix_ids": [
+    "score-100-3",
+    "boundary-301",
+    "score-1000-3",
+    "score-9150-3",
+    "structural-19-3",
+    "structural-100-3"
+  ],
+  "prior_recovery_passes": 4,
+  "matrix_executed": 6,
+  "matrix_passed": 3,
+  "status": "completed",
+  "retained_files_bytes": 548739852,
+  "run_quota": {
+    "version": "c3a-quota-1",
+    "limit": 1069547520,
+    "reserved": 840957952
+  }
+}

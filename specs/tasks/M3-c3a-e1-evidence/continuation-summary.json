@@ -1,0 +1,420 @@
+{
+  "version": "c3a-e1-continuation-summary-1",
+  "date": "2026-11-25",
+  "status": "stopped_checkpoint_EPERM_then_fixed_not_replayed",
+  "c3b_readiness": "NO_GO",
+  "executed_commit": "fbb17ba",
+  "raw_report_sha256": "a251582fd820675b94c866e092170f626ed22f7653df0e82647f8dd9731dc227",
+  "recovery_checks_passed_this_run": 3,
+  "prior_recovery_checks_passed": 1,
+  "matrix_passed": 7,
+  "matrix_technical_failures": 2,
+  "matrix_interrupted": 1,
+  "matrix_not_run": 2,
+  "run_quota": {
+    "version": "c3a-quota-1",
+    "limit": 1069547520,
+    "reserved": 233832448
+  },
+  "regression_quota": {
+    "version": "c3a-regression-quota-1",
+    "limit": 25165824,
+    "reserved": 17825792
+  },
+  "unit_quota": {
+    "version": "c3a-unit-quota-1",
+    "limit": 41943040,
+    "reserved": 40894464
+  },
+  "completed_cases": [
+    {
+      "id": "score-7-3",
+      "status": "completed",
+      "seconds": 8.952999999979511,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "candidate",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "independent",
+          "status": "completed",
+          "code": null
+        }
+      ]
+    },
+    {
+      "id": "restart-checkpoint",
+      "status": "completed",
+      "seconds": 12.204000000027008,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "candidate",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "independent",
+          "status": "completed",
+          "code": null
+        }
+      ]
+    },
+    {
+      "id": "restart-seal",
+      "status": "completed",
+      "seconds": 19.405999999959022,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "candidate",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "independent",
+          "status": "completed",
+          "code": null
+        }
+      ]
+    },
+    {
+      "id": "refuse-corrupt",
+      "status": "completed",
+      "seconds": 17.0,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "candidate",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "independent",
+          "status": "completed",
+          "code": null
+        }
+      ]
+    },
+    {
+      "id": "refuse-missing",
+      "status": "completed",
+      "seconds": 14.344000000040978,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "candidate",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "independent",
+          "status": "completed",
+          "code": null
+        }
+      ]
+    },
+    {
+      "id": "score-100-3",
+      "status": "completed",
+      "seconds": 28.968999999924563,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "candidate",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "independent",
+          "status": "completed",
+          "code": null
+        }
+      ]
+    },
+    {
+      "id": "boundary-300",
+      "status": "completed",
+      "seconds": 50.09400000004098,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "candidate",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "independent",
+          "status": "completed",
+          "code": null
+        }
+      ]
+    },
+    {
+      "id": "boundary-301",
+      "status": "refused_or_unproven",
+      "seconds": 33.53099999995902,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "candidate",
+          "status": "refused",
+          "code": "EPERM"
+        }
+      ]
+    },
+    {
+      "id": "score-1000-3",
+      "status": "refused_or_unproven",
+      "seconds": 42.21900000004098,
+      "stages": [
+        {
+          "mode": "source",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "oracle",
+          "status": "completed",
+          "code": null
+        },
+        {
+          "mode": "candidate",
+          "status": "refused",
+          "code": "EPERM"
+        }
+      ]
+    }
+  ],
+  "interrupted": [
+    {
+      "id": "score-9150-3",
+      "status": "interrupted_on_technical_stop",
+      "last_mode": "oracle",
+      "counters": {
+        "version": "c3a-budget-2",
+        "io": "c3a-io-2",
+        "limits": {
+          "source": 268435456,
+          "artifact": 268435456,
+          "scratch": 536870912,
+          "decoded": 4194304,
+          "nodes": 200000,
+          "work": 1000000,
+          "attempts": 3
+        },
+        "work": 65536,
+        "nodes": 9151,
+        "bytes": {
+          "source": 89801180,
+          "artifact": 0,
+          "scratch": 92409743
+        },
+        "attempts": {
+          "source": 1,
+          "oracle": 1
+        },
+        "deadline": 1795559495857,
+        "sequence": 232,
+        "metrics": {
+          "total": {
+            "journal_writes": 1311,
+            "quota_writes": 89,
+            "sets": 9151,
+            "wal_writes": 696,
+            "data_writes": 232,
+            "index_writes": 1932,
+            "batches": 232,
+            "checkpoint_writes": 1,
+            "gets": 14845,
+            "index_reads": 14845,
+            "data_reads": 14845
+          },
+          "phases": {
+            "unit": {
+              "journal_writes": 1,
+              "quota_writes": 1
+            },
+            "source": {
+              "journal_writes": 1251,
+              "sets": 9151,
+              "quota_writes": 87,
+              "wal_writes": 696,
+              "data_writes": 232,
+              "index_writes": 1932,
+              "batches": 232,
+              "checkpoint_writes": 1
+            },
+            "oracle": {
+              "journal_writes": 59,
+              "quota_writes": 1,
+              "gets": 14845,
+              "index_reads": 14845,
+              "data_reads": 14845
+            }
+          },
+          "classes": {
+            "source": {
+              "sets": 9151,
+              "data_writes": 232,
+              "index_writes": 1932,
+              "gets": 14845,
+              "index_reads": 14845,
+              "data_reads": 14845
+            }
+          },
+          "pending_records_max": 64,
+          "pending_bytes_max": 631382,
+          "direct_bytes_max": 0
+        },
+        "mode": "oracle"
+      },
+      "source_completed": true,
+      "oracle_completed": false
+    }
+  ],
+  "performance": {
+    "score-100-3": {
+      "seconds": 28.968999999924563,
+      "exact_node": {
+        "status": "exact_node_parity",
+        "compared_rows": 201
+      },
+      "independent": {
+        "complete": true,
+        "audit_read_units": 1543,
+        "audit_read_budget": 3712,
+        "profiles_evaluated": 100,
+        "members": 100,
+        "join_members": 101,
+        "policy_acceptance": false,
+        "database_reads": 0,
+        "writes": 0,
+        "requests": 0
+      },
+      "metrics": {
+        "journal_writes": 1469,
+        "quota_writes": 8,
+        "sets": 4163,
+        "wal_writes": 459,
+        "data_writes": 245,
+        "index_writes": 439,
+        "batches": 153,
+        "checkpoint_writes": 357,
+        "gets": 8990,
+        "index_reads": 8894,
+        "data_reads": 8929
+      },
+      "peak_rss_bytes": 103223296
+    },
+    "boundary-300": {
+      "seconds": 50.09400000004098,
+      "exact_node": {
+        "status": "exact_node_parity",
+        "compared_rows": 601
+      },
+      "independent": {
+        "complete": true,
+        "audit_read_units": 4609,
+        "audit_read_budget": 10112,
+        "profiles_evaluated": 300,
+        "members": 300,
+        "join_members": 301,
+        "policy_acceptance": false,
+        "database_reads": 0,
+        "writes": 0,
+        "requests": 0
+      },
+      "metrics": {
+        "journal_writes": 4209,
+        "quota_writes": 19,
+        "sets": 12328,
+        "wal_writes": 1302,
+        "data_writes": 702,
+        "index_writes": 1278,
+        "batches": 434,
+        "checkpoint_writes": 1033,
+        "gets": 26651,
+        "index_reads": 26649,
+        "data_reads": 26750
+      },
+      "peak_rss_bytes": 108847104
+    }
+  },
+  "completion_executed": false
+}

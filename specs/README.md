@@ -7,7 +7,7 @@ This folder is the single, living specification of the ISR MVP. For each compone
 
 Task specs live in `tasks/` and decisions in `decisions/`.
 
-Current checkpoint: [C3a-E1 offline efficiency proposal](tasks/M3-c3a-efficiency-plan.md) prepared on PR65, which remains open. Proposes bounded I/O batching with unchanged resource caps, one12-case matrix and four bounded interruption regressions; implementation requires review/approval. [C3a evidence](tasks/M3-c3a-evidence/README.md) remains13 pass/11 refused or unproven. C3b/source import is still NO-GO;16 Values cases stay deferred.
+Current checkpoint: [E1 bounded completion/evidence](tasks/M3-c3a-e1-evidence/README.md) finished; PR67 review-ready. Six cases attempted:100/301 numerical and structural19 pass;1000 exact Node but audit timeout,9150 candidate timeout, structural100 timeout. Prior charges/caps retained; C3b remains NO-GO. Next is explicit PR67 review/merge, then a separate offline performance design.
 
 Previous checkpoint: [R1 optional Values metadata recovery](tasks/Values-optional-metadata-recovery.md), live dry run ready224/zero conflicts and synthetic recovery passed; [author-only runbook](tasks/Values-optional-metadata-author-runbook.md) prepared. No live apply or AI calls.
 
