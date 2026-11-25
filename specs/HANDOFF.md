@@ -4,7 +4,14 @@ Claude Code wrote this file when development moved to Codex for about a month. T
 
 **Update this file** when a step is done or the plan changes.
 
-## Current checkpoint: E1 bounded completion finished; PR67 review-ready, 2026-11-25
+## Current checkpoint: PR67 merged; E2 offline performance proposal prepared, 2026-11-25
+
+- Author explicitly ordered merge PR67. Reviewed041abe0 merged1651d91; trees matched, main Node/Python CI passed. No deployment/data operation followed.
+- [E2 performance proposal](tasks/M3-c3a-e2-performance-plan.md) is documentation only. Target full1000-profile independent audit first, then bounded9150 progress, via single source serialization, multi-source social WAL and independent checker pass fusion/scalar reuse. Exact math/order/artifact format and existing per-case limits remain; no runtime or new experiment changes/runs.
+- Proposed section5: eight unchanged inputs plus two17-person social-transaction crash schedules (max20 minutes); explicitly additional1GiB E2 file allocation including64MiB small-test pool. Old E1802MiB/unit39/40/interruption17/24 remain retained and charged. No silent reset; combined proposed reservation upper1826MiB.
+- Next: review/explicit merge of this documentation PR, then approve E2 including section5 schedule and additional allocation. Current source/import/policy/application/SDK/access/restore gates remain; C3b NO-GO,16 Values cases deferred. Sol Medium sufficient; zero paid AI allowance. Final standard Node/Python CI checked before handoff; existing A-drive E1 pools not rerun/reset.
+
+## Previous checkpoint: E1 bounded completion finished; PR67 review-ready, 2026-11-25
 
 - Author approved the exact six-case completion with fresh120s deadlines and retained prior charges. Executed once at509b26c: all six attempted in510.172s; three whole-case passes, three guarded time refusals/unproven, zero new technical stops. [Evidence](tasks/M3-c3a-e1-evidence/README.md), [carried-budget/delta summary](tasks/M3-c3a-e1-evidence/completion-summary.json).
 -100/301 profiles passed full Node/independent Python, serialize/readers.1000 candidate/serialize/readers/exact Node2001 Create+Join rows completed; independent Python hit the shared deadline.9150 source/oracle completed, candidate exhausted remaining39.687s. Structural19 sealed9150 records; structural100 timed out unsealed. These results are not full9150 numerical or intended-policy acceptance.

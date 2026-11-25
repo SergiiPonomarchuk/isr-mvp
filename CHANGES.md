@@ -1,3 +1,9 @@
+## 2026-11-25 - E2 offline performance proposal after PR67 merge
+
+- Record authorized PR67 merge1651d91/reviewed-tree equality/main CI. Propose single source serialization, bounded multi-source social transactions and independent-checker read reduction with exact math/typed artifact parity.
+- Specify eight unchanged fixtures/two small social crash schedules (20 minutes max) and explicitly additional1GiB file allocation; old E1 charges remain. New implementation/admission require approval.
+- Documentation only; no runtime/test/fixture/docs/rules changes, benchmark, real data/provider/loader operation or deployment. C3b remains NO-GO.
+
 ## 2026-11-25 - E1 six-case bounded completion
 
 - Finish the approved six-case admission once:100/301 full Node/Python and9150-record structural19 passes;1000 Node exact but audit timeout,9150 candidate timeout, structural100 timeout. No new technical stop.
